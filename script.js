@@ -165,7 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
-
+    
     function addPurchasedUpgrade(img, name, earnings) {
         const purchasedList = document.getElementById('purchasedList');
         const upgradeElement = document.createElement('div');
@@ -174,11 +174,17 @@ document.addEventListener('DOMContentLoaded', () => {
             <img src="${img}" alt="${name}">
             <div>
                 <p>${name}</p>
-                <p>+${earnings.copiumPerSecond || 0} CPS, +${earnings.delusionPerSecond || 0} DPS, +${earnings.yarmulkesPerSecond || 0} YPS, +${earnings.trollPointsPerSecond || 0} TPS</p>
+                <div class="upgrade-earnings">
+                    <p>+${earnings.copiumPerSecond || 0} CPS</p>
+                    <p>+${earnings.delusionPerSecond || 0} DPS</p>
+                    <p>+${earnings.yarmulkesPerSecond || 0} YPS</p>
+                    <p>+${earnings.trollPointsPerSecond || 0} TPS</p>
+                </div>
             </div>
         `;
         purchasedList.appendChild(upgradeElement);
     }
+    
 
     function updateUpgradeList() {
         const upgradeList = document.getElementById('upgradeList');
@@ -194,13 +200,21 @@ document.addEventListener('DOMContentLoaded', () => {
             const upgradeElement = document.createElement('div');
             upgradeElement.classList.add('upgrade');
             upgradeElement.innerHTML = `
-                <button onclick="buyUpgrade('${upgrade.name.replace(/'/g, "\\'")}')">${upgrade.name} (Cost: ${upgrade.cost.copium} copium, ${upgrade.cost.delusion} delusion, ${upgrade.cost.yarmulkes} yarmulkes, ${upgrade.cost.trollPoints} troll points)</button>
+                <button onclick="buyUpgrade('${upgrade.name.replace(/'/g, "\\'")}')">${upgrade.name}</button>
+                <div class="upgrade-cost">
+                    <p>Cost:</p>
+                    <p>Copium: ${upgrade.cost.copium}</p>
+                    <p>Delusion: ${upgrade.cost.delusion}</p>
+                    <p>Yarmulkes: ${upgrade.cost.yarmulkes}</p>
+                    <p>Troll Points: ${upgrade.cost.trollPoints}</p>
+                </div>
             `;
             upgradeList.appendChild(upgradeElement);
         });
     
         updateUpgradeButtons();
     }
+    
     
     
 
@@ -217,6 +231,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+    
     
 
     // Make the buyUpgrade function globally accessible
