@@ -151,25 +151,19 @@ document.addEventListener('DOMContentLoaded', () => {
             name: "WE MADE IT!",
             cost: { copium: 1000000, delusion: 1000000, yarmulkes: 1000000, trollPoints: 1000000 },
             earnings: { copiumPerSecond: 5, delusionPerSecond: 5, yarmulkesPerSecond: 5, trollPointsPerSecond: 99 },
-            img: "imgs/rewriting_history.jpg",
+            img: "imgs/titanic.jpg",
         },
         {
             name: "Deal with the devil",
             cost: { copium: 0, delusion: 0, yarmulkes: 10000, trollPoints: 0 },
             earnings: { copiumPerSecond: -1, delusionPerSecond: 2, yarmulkesPerSecond: 2, trollPointsPerSecond: 1 },
-            img: "imgs/rewriting_history.jpg",
+            img: "imgs/warren_buffet.jpg",
         },
         {
             name: "Hes an Ancient",
             cost: { copium: 2000, delusion: 0, yarmulkes: 1000, trollPoints: 2000 },
             earnings: { copiumPerSecond: 5, delusionPerSecond: 0, yarmulkesPerSecond: 27, trollPointsPerSecond: 5 },
-            img: "imgs/rewriting_history.jpg",
-        },
-        {
-            name: "Suss",
-            cost: { copium: 12000, delusion: 0, yarmulkes: 0, trollPoints: 0 },
-            earnings: { copiumPerSecond: 25, delusionPerSecond: 0, yarmulkesPerSecond: 0, trollPointsPerSecond: 50 },
-            img: "imgs/morty.PNG",
+            img: "imgs/farming_sim.jpg",
         },
         {
             name: "Suss",
@@ -181,13 +175,13 @@ document.addEventListener('DOMContentLoaded', () => {
             name: "Swing and a Miss",
             cost: { copium: 2400, delusion: 1600, yarmulkes: 0, trollPoints: 0 },
             earnings: { copiumPerSecond: 24, delusionPerSecond: 16, yarmulkesPerSecond: 0, trollPointsPerSecond: 3 },
-            img: "imgs/morty.PNG",
+            img: "imgs/swing_and_a_miss.jpg",
         },
         {
             name: "I dont get this game",
             cost: { copium: 5000, delusion: 5000, yarmulkes: 5000, trollPoints: 5000 },
             earnings: { copiumPerSecond: -10, delusionPerSecond: 40, yarmulkesPerSecond: 20, trollPointsPerSecond: 30 },
-            img: "imgs/morty.PNG",
+            img: "imgs/standard.jpg",
         }
     ];
 
