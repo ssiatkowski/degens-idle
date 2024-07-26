@@ -178,8 +178,8 @@ button:disabled {
     }
 
     .purchased-upgrade img, .upgrade-img {
-        width: 100px; /* Adjusted width for mobile */
-        height: 100px; /* Adjusted height for mobile */
+        width: 150px; /* Adjusted width for mobile */
+        height: 150px; /* Adjusted height for mobile */
     }
 
     button {
