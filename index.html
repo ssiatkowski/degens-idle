@@ -39,10 +39,33 @@
                 </div>
             </div>
         </div>
-        <div id="purchasedUpgrades">
-            <h2>Purchased Upgrades</h2>
-            <div id="purchasedList" class="grid">
-                <!-- Purchased upgrades will be shown here with images -->
+        <div id="right-section">
+            <div id="tradeSection">
+                <h2>Trade Resources</h2>
+                <label for="fromResource">From:</label>
+                <select id="fromResource">
+                    <option value="copium">Copium</option>
+                    <option value="delusion">Delusion</option>
+                    <option value="yarmulkes">Yarmulkes</option>
+                    <option value="trollPoints">Troll Points</option>
+                </select>
+                <label for="toResource">To:</label>
+                <select id="toResource">
+                    <option value="copium">Copium</option>
+                    <option value="delusion">Delusion</option>
+                    <option value="yarmulkes">Yarmulkes</option>
+                    <option value="trollPoints">Troll Points</option>
+                </select>
+                <label for="tradeAmount">Amount:</label>
+                <input type="number" id="tradeAmount" value="5" min="5" step="5">
+                <p>Trade ratio is 5:1</p>
+                <button id="tradeButton">Trade</button>
+            </div>
+            <div id="purchasedUpgrades">
+                <h2>Purchased Upgrades</h2>
+                <div id="purchasedList" class="grid">
+                    <!-- Purchased upgrades will be shown here with images -->
+                </div>
             </div>
         </div>
     </div>

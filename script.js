@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
         {
             name: "Wifes AirBnb Business",
             cost: { copium: 200, delusion: 400, yarmulkes: 1000, trollPoints: 0 },
-            earnings: { copiumPerSecond: 5, delusionPerSecond: 8, yarmulkesPerSecond: -5, trollPointsPerSecond: 2 },
+            earnings: { copiumPerSecond: 5, delusionPerSecond: 8, yarmulkesPerSecond: -5, trollPointsPerSecond: 33 },
             img: "imgs/airbnb.jpg",
         },
         {
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
         {
             name: "Havent Smoked Foool",
             cost: { copium: 10, delusion: 0, yarmulkes: 0, trollPoints: 10 },
-            earnings: { copiumPerSecond: 3, delusionPerSecond: 0, yarmulkesPerSecond: 0, trollPointsPerSecond: 1 },
+            earnings: { copiumPerSecond: 3, delusionPerSecond: 0, yarmulkesPerSecond: 0, trollPointsPerSecond: 2 },
             img: "imgs/ez_blunt.jpg",
         },
         {
@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
         {
             name: "Is he alive?",
             cost: { copium: 10, delusion: 0, yarmulkes: 50, trollPoints: 35 },
-            earnings: { copiumPerSecond: 2, delusionPerSecond: 0, yarmulkesPerSecond: 7, trollPointsPerSecond: 1 },
+            earnings: { copiumPerSecond: 2, delusionPerSecond: 0, yarmulkesPerSecond: 8, trollPointsPerSecond: 1 },
             img: "imgs/is_he_alive.jpg",
         },
         {
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
         {
             name: "Never Admit Mistakes",
             cost: { copium: 100, delusion: 100, yarmulkes: 0, trollPoints: 0 },
-            earnings: { copiumPerSecond: 2, delusionPerSecond: 2, yarmulkesPerSecond: 0, trollPointsPerSecond: 3 },
+            earnings: { copiumPerSecond: 2, delusionPerSecond: 4, yarmulkesPerSecond: 0, trollPointsPerSecond: 3 },
             img: "imgs/marv.jpg",
         },
         {
@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
         {
             name: "The Perfect Girl",
             cost: { copium: 3000, delusion: 3000, yarmulkes: 3000, trollPoints: 0 },
-            earnings: { copiumPerSecond: 25, delusionPerSecond: 25, yarmulkesPerSecond: -2, trollPointsPerSecond: 5 },
+            earnings: { copiumPerSecond: 10, delusionPerSecond: 25, yarmulkesPerSecond: -2, trollPointsPerSecond: 5 },
             img: "imgs/the_perfect_girl.jpg",
         },
         {
@@ -108,8 +108,20 @@ document.addEventListener('DOMContentLoaded', () => {
         {
             name: "Yom Kippur",
             cost: { copium: 0, delusion: 0, yarmulkes: 999, trollPoints: 0 },
-            earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yarmulkesPerSecond: 25, trollPointsPerSecond: 0 },
-            img: "imgs/yom_kippur.jpg.jpg",
+            earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yarmulkesPerSecond: 30, trollPointsPerSecond: 0 },
+            img: "imgs/yom_kippur.jpg",
+        },
+        {
+            name: "Kamala 2024",
+            cost: { copium: 0, delusion: 400, yarmulkes: 0, trollPoints: 0 },
+            earnings: { copiumPerSecond: 3, delusionPerSecond: 0, yarmulkesPerSecond: 10, trollPointsPerSecond: 0 },
+            img: "imgs/kamala.jpg",
+        },
+        {
+            name: "Email Safety First",
+            cost: { copium: 1000, delusion: 0, yarmulkes: 0, trollPoints: 150 },
+            earnings: { copiumPerSecond: 0, delusionPerSecond: 9, yarmulkesPerSecond: 0, trollPointsPerSecond: 0 },
+            img: "imgs/proton.jpg",
         }
     ];
 
@@ -118,6 +130,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('collectYarmulkesButton').addEventListener('click', () => { collectResource('yarmulkes'); });
     document.getElementById('collectTrollPointsButton').addEventListener('click', () => { collectResource('trollPoints'); });
 
+    document.getElementById('tradeButton').addEventListener('click', tradeResources);
+
     function collectResource(resource) {
         if (resource === 'copium') copium += 1;
         if (resource === 'delusion') delusion += 1;
@@ -125,6 +139,41 @@ document.addEventListener('DOMContentLoaded', () => {
         if (resource === 'trollPoints') trollPoints += 1;
         updateDisplay();
     }
+
+    function tradeResources() {
+        const fromResource = document.getElementById('fromResource').value;
+        const toResource = document.getElementById('toResource').value;
+        const tradeAmount = parseInt(document.getElementById('tradeAmount').value);
+    
+        if (fromResource === toResource) {
+            alert("Cannot trade the same resource.");
+            return;
+        }
+    
+        const resourceAmount = {
+            copium: copium,
+            delusion: delusion,
+            yarmulkes: yarmulkes,
+            trollPoints: trollPoints
+        };
+    
+        if (resourceAmount[fromResource] < tradeAmount) {
+            alert(`Not enough ${fromResource} to trade.`);
+            return;
+        }
+    
+        resourceAmount[fromResource] -= tradeAmount;
+        resourceAmount[toResource] += tradeAmount / 5;
+    
+        copium = resourceAmount.copium;
+        delusion = resourceAmount.delusion;
+        yarmulkes = resourceAmount.yarmulkes;
+        trollPoints = resourceAmount.trollPoints;
+    
+        updateDisplay();
+    }
+    
+
 
     function updateDisplay() {
         document.getElementById('copium').textContent = copium;
@@ -137,6 +186,8 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('tpps').textContent = trollPointsPerSecond;
         updateUpgradeButtons();
     }
+    
+
 
     function generateResources() {
         copium += copiumPerSecond;
@@ -166,6 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     
+
     function addPurchasedUpgrade(img, name, earnings) {
         const purchasedList = document.getElementById('purchasedList');
         const upgradeElement = document.createElement('div');
@@ -184,6 +236,7 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
         purchasedList.appendChild(upgradeElement);
     }
+    
     
 
     function updateUpgradeList() {
@@ -216,8 +269,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     
-    
-
     function updateUpgradeButtons() {
         upgrades.forEach(upgrade => {
             const button = document.querySelector(`button[onclick="buyUpgrade('${upgrade.name.replace(/'/g, "\\'")}')"]`);

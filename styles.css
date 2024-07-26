@@ -85,6 +85,12 @@ button.affordable {
     text-align: center;
 }
 
+#right-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
 .upgrade {
     display: flex;
     align-items: center;
@@ -106,13 +112,15 @@ button.affordable {
 }
 
 .purchased-upgrade img {
-    width: 50px;
-    height: 50px;
+    width: 90px; /* Increased width */
+    height: 90px; /* Increased height */
     margin-bottom: 5px;
 }
 
-.purchased-upgrade .upgrade-earnings {
-    margin-top: 5px;
+.upgrade-img {
+    width: 90px; /* Increased width */
+    height: 90px; /* Increased height */
+    margin-right: 10px;
 }
 
 .grid {
