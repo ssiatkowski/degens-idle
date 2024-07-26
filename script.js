@@ -284,21 +284,36 @@ document.addEventListener('DOMContentLoaded', () => {
     function buyUpgrade(upgradeName) {
         const upgrade = upgrades.find(up => up.name === upgradeName);
         const { cost, earnings, img, name } = upgrade;
-        if (copium >= cost.copium && delusion >= cost.delusion && yarmulkes >= cost.yarmulkes && trollPoints >= cost.trollPoints) {
-            copium -= cost.copium;
-            delusion -= cost.delusion;
-            yarmulkes -= cost.yarmulkes;
-            trollPoints -= cost.trollPoints;
+    
+        const totalCost = {
+            copium: copium - cost.copium,
+            delusion: delusion - cost.delusion,
+            yarmulkes: yarmulkes - cost.yarmulkes,
+            trollPoints: trollPoints - cost.trollPoints
+        };
+    
+        const hasEnoughResources = Object.values(totalCost).every(val => val >= 0);
+    
+        if (hasEnoughResources) {
+            copium = Math.max(0, copium - cost.copium);
+            delusion = Math.max(0, delusion - cost.delusion);
+            yarmulkes = Math.max(0, yarmulkes - cost.yarmulkes);
+            trollPoints = Math.max(0, trollPoints - cost.trollPoints);
+    
             copiumPerSecond += earnings.copiumPerSecond || 0;
             delusionPerSecond += earnings.delusionPerSecond || 0;
             yarmulkesPerSecond += earnings.yarmulkesPerSecond || 0;
             trollPointsPerSecond += earnings.trollPointsPerSecond || 0;
+    
             addPurchasedUpgrade(img, name, earnings);
             upgrades.splice(upgrades.indexOf(upgrade), 1); // Remove the purchased upgrade
             updateUpgradeList();
             updateDisplay();
+        } else {
+            alert('Not enough resources to purchase this upgrade.');
         }
     }
+    
     
     
 
