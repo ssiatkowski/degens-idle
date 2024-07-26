@@ -16,25 +16,50 @@ h1, h2 {
 #main-container {
     display: flex;
     gap: 20px;
-    position: relative;
-    margin-left: 100px;
+}
+
+#title-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 17%;
 }
 
 #title-container {
-    position: absolute;
-    left: -280px; /* Adjusted value to move title further to the left */
-    top: 100%; /* Move the title 60% down from the top */
-    transform: translateY(-50%) rotate(-90deg);
-    transform-origin: left top 0;
+    text-align: center;
     background-color: #333;
     color: #fff;
-    padding: 10px 20px;
-    border-radius: 10px;
+    padding: 150px 0px;
+    border-radius: 80px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    font-size: 3em; /* Increased font size */
+    margin-bottom: 10px; /* Add margin to space out from the button */
+}
+
+#title {
+    transform: rotate(-90deg);
+    font-size: 3em;
     font-weight: bold;
     animation: flash 2s infinite;
+}
+
+#button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#restartButton {
+    background-color: #e74c3c; /* Red background */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#restartButton:hover {
+    background-color: #c0392b; /* Darker red on hover */
 }
 
 @keyframes flash {
@@ -178,6 +203,10 @@ button:disabled {
         transform: none;
         margin-bottom: 20px;
         font-size: 2em; 
+    }
+
+    #button-container {
+        margin-left: 0; /* Adjust as necessary for mobile layout */
     }
 
     #game {
