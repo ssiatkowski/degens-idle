@@ -133,7 +133,7 @@ button:disabled {
 .purchased-upgrade .upgrade-earnings p {
     margin-top: 2.5px; /* Reduced spacing by half */
     margin-bottom: 2.5px; /* Reduced spacing by half */
-}
+} 
 
 .grid {
     display: grid;
