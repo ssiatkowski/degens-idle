@@ -299,7 +299,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 let clicksPerSecond = points / duration;
                 let reward;
                 if (clicksPerSecond > 3) { // More than 3 clicks per second
-                    reward = Math.floor(copium * ((clicksPerSecond - 3) * 0.015));
+                    reward = Math.floor(copium * ((clicksPerSecond - 3) * 0.02));
                     alert(`You tapped ${points} times in ${duration} seconds (${clicksPerSecond.toFixed(2)} taps per second). You won and earned ${reward} copium!`);
                 } else {
                     reward = -Math.max(Math.floor(Math.random() * Math.abs(copium) * 0.1), 10);
@@ -321,7 +321,7 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 let userSequence = prompt('Enter the sequence:');
                 let correct = userSequence === sequence;
-                let reward = correct ? Math.max(Math.floor(delusion * 0.1), 10) : -Math.max(Math.floor(Math.random() * Math.abs(delusion) * 0.1), 10);
+                let reward = correct ? Math.max(Math.floor(delusion * 0.2), 10) : -Math.max(Math.floor(Math.random() * Math.abs(delusion) * 0.1), 10);
                 if (delusion < 0 && !correct) reward += 10;
                 delusion += reward;
                 alert(`You ${correct ? 'won' : 'lost'} and earned ${reward} delusion!`);
@@ -341,7 +341,7 @@ document.addEventListener('DOMContentLoaded', () => {
             let correctAnswer = eval(question.replace('/', '* 1.0 /')); // Ensure floating point division
             
             let answer = prompt(`What is ${question}?`);
-            let reward = Math.abs(Number(answer) - correctAnswer) < 0.01 ? Math.max(Math.floor(yarmulkes * 0.1), 10) : -Math.max(Math.floor(Math.random() * Math.abs(yarmulkes) * 0.1), 10);
+            let reward = Math.abs(Number(answer) - correctAnswer) < 0.01 ? Math.max(Math.floor(yarmulkes * 0.2), 10) : -Math.max(Math.floor(Math.random() * Math.abs(yarmulkes) * 0.1), 10);
             if (yarmulkes < 0 && Math.abs(Number(answer) - correctAnswer) >= 0.01) reward += 10;
             yarmulkes += reward;
             alert(`You ${Math.abs(Number(answer) - correctAnswer) < 0.01 ? 'won' : 'lost'} and earned ${reward} yarmulkes!`);
