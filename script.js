@@ -1,3 +1,5 @@
+
+
 document.addEventListener('DOMContentLoaded', () => {
     let copium = 0;
     let copiumPerSecond = 0;
@@ -13,6 +15,12 @@ document.addEventListener('DOMContentLoaded', () => {
         yarmulkes: false,
         trollPoints: false
     };
+
+    let prestiges = 0;
+    let epsMultiplier = 1;
+    let prestigeRequirement = 1000;
+    let purchasedUpgrades = [];
+
 
     const upgrades = [
         {
@@ -258,13 +266,13 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('tradeButton').addEventListener('click', tradeResources);
 
     function collectResource(resource) {
-        if (resource === 'copium') copium += 1;
-        if (resource === 'delusion') delusion += 1;
-        if (resource === 'yarmulkes') yarmulkes += 1;
-        if (resource === 'trollPoints') trollPoints += 1;
+        if (resource === 'copium') copium += epsMultiplier;
+        if (resource === 'delusion') delusion += epsMultiplier;
+        if (resource === 'yarmulkes') yarmulkes += epsMultiplier;
+        if (resource === 'trollPoints') trollPoints += epsMultiplier;
         updateDisplay();
     }
-
+    
     function playMiniGame(resource) {
         if (cooldowns[resource]) return;
     
@@ -405,24 +413,76 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     function updateDisplay() {
-        document.getElementById('copium').textContent = copium;
-        document.getElementById('cps').textContent = copiumPerSecond;
-        document.getElementById('delusion').textContent = delusion;
-        document.getElementById('dps').textContent = delusionPerSecond;
-        document.getElementById('yarmulkes').textContent = yarmulkes;
-        document.getElementById('yps').textContent = yarmulkesPerSecond;
-        document.getElementById('trollPoints').textContent = trollPoints;
-        document.getElementById('tpps').textContent = trollPointsPerSecond;
+        document.getElementById('copium').textContent = copium.toFixed(2);
+        document.getElementById('cps').textContent = (copiumPerSecond * epsMultiplier).toFixed(2);
+        document.getElementById('delusion').textContent = delusion.toFixed(2);
+        document.getElementById('dps').textContent = (delusionPerSecond * epsMultiplier).toFixed(2);
+        document.getElementById('yarmulkes').textContent = yarmulkes.toFixed(2);
+        document.getElementById('yps').textContent = (yarmulkesPerSecond * epsMultiplier).toFixed(2);
+        document.getElementById('trollPoints').textContent = trollPoints.toFixed(2);
+        document.getElementById('tpps').textContent = (trollPointsPerSecond * epsMultiplier).toFixed(2);
+        document.getElementById('prestiges').textContent = prestiges;
+        document.getElementById('multiplier').textContent = `(x${epsMultiplier.toFixed(2)} multiplier on everything)`;
+    
+        // Update the prestige count style
+        const prestigeElement = document.getElementById('prestiges');
+        const prestigeText = document.querySelector('.prestige-text');
+        prestigeElement.className = 'prestige-count';
+        prestigeText.className = 'prestige-text';
+        if (prestiges > 0) {
+            const level = Math.min(prestiges, 5); // Adjust max level as needed
+            prestigeElement.classList.add(`prestige-level-${level}`);
+            prestigeText.classList.add(`prestige-level-${level}`);
+        }
+    
+        // Show prestige button if eligible
+        if (copium > prestigeRequirement && delusion > prestigeRequirement && yarmulkes > prestigeRequirement && trollPoints > prestigeRequirement) {
+            document.getElementById('prestigeButton').style.display = 'block';
+        } else {
+            document.getElementById('prestigeButton').style.display = 'none';
+        }
+    
         updateUpgradeButtons();
     }
     
+    function prestige() {
+        prestiges++;
+        epsMultiplier *= 1.5;
+        prestigeRequirement *= 10; // Increase the requirement by 10x for the next prestige
+    
+        // Reset resources and earnings per second
+        copium = 0;
+        delusion = 0;
+        yarmulkes = 0;
+        trollPoints = 0;
+        copiumPerSecond = 0;
+        delusionPerSecond = 0;
+        yarmulkesPerSecond = 0;
+        trollPointsPerSecond = 0;
+    
+        // Move purchased upgrades back to available upgrades
+        purchasedUpgrades.forEach(upgrade => {
+            upgrades.push(upgrade);
+        });
+        purchasedUpgrades = [];
+        document.getElementById('purchasedList').innerHTML = ''; // Clear the purchased upgrades list
+    
+        updateDisplay();
+        updateUpgradeButtons();
+        updateUpgradeList();
+        alert(`Prestige activated! Current EPS multiplier: x${epsMultiplier.toFixed(2)}. Next prestige requirement: ${prestigeRequirement}`);
+    }
+    
+    
+    
     function generateResources() {
-        copium += copiumPerSecond;
-        delusion += delusionPerSecond;
-        yarmulkes += yarmulkesPerSecond;
-        trollPoints += trollPointsPerSecond;
+        copium += copiumPerSecond * epsMultiplier;
+        delusion += delusionPerSecond * epsMultiplier;
+        yarmulkes += yarmulkesPerSecond * epsMultiplier;
+        trollPoints += trollPointsPerSecond * epsMultiplier;
         updateDisplay();
     }
+    
 
     function buyUpgrade(upgradeName) {
         const upgrade = upgrades.find(up => up.name === upgradeName);
@@ -445,12 +505,14 @@ document.addEventListener('DOMContentLoaded', () => {
     
             addPurchasedUpgrade(img, name, earnings);
             upgrades.splice(upgrades.indexOf(upgrade), 1); // Remove the purchased upgrade
+            purchasedUpgrades.push(upgrade); // Track purchased upgrade
             updateUpgradeList();
             updateDisplay();
         } else {
             alert('Not enough resources to purchase this upgrade.');
         }
     }
+    
     
     
     
@@ -532,11 +594,17 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-    
-    
 
-    // Make the buyUpgrade function globally accessible
+    
+    // Make the functions globally accessible
+    window.prestige = prestige;
+    window.updateDisplay = updateDisplay;
+    window.updateUpgradeButtons = updateUpgradeButtons;
+    window.updateUpgradeList = updateUpgradeList;
+    window.collectResource = collectResource;
+    window.generateResources = generateResources;
     window.buyUpgrade = buyUpgrade;
+
 
     setInterval(generateResources, 1000);
     updateDisplay();
