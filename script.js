@@ -285,12 +285,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const upgrade = upgrades.find(up => up.name === upgradeName);
         const { cost, earnings, img, name } = upgrade;
     
-        // Calculate total cost in terms of available resources
-        const totalAvailableResources = copium + delusion + yarmulkes + trollPoints;
-        const totalCost = cost.copium + cost.delusion + cost.yarmulkes + cost.trollPoints;
+        // Check if each individual resource is sufficient to cover its respective cost if the cost is greater than zero
+        if ((cost.copium === 0 || copium >= cost.copium) &&
+            (cost.delusion === 0 || delusion >= cost.delusion) &&
+            (cost.yarmulkes === 0 || yarmulkes >= cost.yarmulkes) &&
+            (cost.trollPoints === 0 || trollPoints >= cost.trollPoints)) {
     
-        // Check if total available resources are enough to cover the total cost
-        if (totalAvailableResources >= totalCost) {
             // Deduct the cost from the resources
             copium -= cost.copium;
             delusion -= cost.delusion;
@@ -311,6 +311,7 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('Not enough resources to purchase this upgrade.');
         }
     }
+    
     
     
     
@@ -371,10 +372,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const button = document.querySelector(`button[onclick="buyUpgrade('${upgrade.name.replace(/'/g, "\\'")}')"]`);
             if (button) {
                 const { cost } = upgrade;
-                const totalAvailableResources = copium + delusion + yarmulkes + trollPoints;
-                const totalCost = cost.copium + cost.delusion + cost.yarmulkes + cost.trollPoints;
-    
-                if (totalAvailableResources >= totalCost) {
+                // Check if each individual resource is sufficient to cover its respective cost if the cost is greater than zero
+                if ((cost.copium === 0 || copium >= cost.copium) &&
+                    (cost.delusion === 0 || delusion >= cost.delusion) &&
+                    (cost.yarmulkes === 0 || yarmulkes >= cost.yarmulkes) &&
+                    (cost.trollPoints === 0 || trollPoints >= cost.trollPoints)) {
                     button.classList.add('affordable');
                 } else {
                     button.classList.remove('affordable');
@@ -382,6 +384,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+    
     
     
     
