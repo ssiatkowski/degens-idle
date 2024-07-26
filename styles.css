@@ -1,0 +1,116 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100vh;
+    background-color: #f0f0f0;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+h1, h2 {
+    color: #333;
+}
+
+#main-container {
+    display: flex;
+    gap: 20px;
+    position: relative; /* Relative positioning for the container */
+    margin-left: 80px; /* Added margin to avoid overlap */
+}
+
+#title-container {
+    position: absolute;
+    left: -300px; /* Adjusted value to align with main content */
+    top: 80%;
+    transform: translateY(-50%) rotate(-90deg);
+    transform-origin: left top 0;
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-size: 3em; /* Increased font size */
+    font-weight: bold;
+    animation: flash 2s infinite;
+}
+
+@keyframes flash {
+    0% { color: #fff; text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #ff00ff, 0 0 20px #ff00ff, 0 0 30px #ff00ff, 0 0 40px #ff00ff, 0 0 50px #ff00ff, 0 0 75px #ff00ff; }
+    50% { color: #ff0; text-shadow: 0 0 5px #ff0, 0 0 10px #ff0, 0 0 15px #ff0000, 0 0 20px #ff0000, 0 0 30px #ff0000, 0 0 40px #ff0000, 0 0 50px #ff0000, 0 0 75px #ff0000; }
+    100% { color: #fff; text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff, 0 0 40px #00ffff, 0 0 50px #00ffff, 0 0 75px #00ffff; }
+}
+
+#game {
+    background-color: #fff;
+    border: 1px solid #000;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 300px;
+}
+
+.resource {
+    margin-bottom: 20px;
+}
+
+.resource-value {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.per-second {
+    font-size: 0.8em;
+    color: #666;
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    margin-top: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button.affordable {
+    background-color: #4CAF50; /* Green */
+    color: white;
+}
+
+#specialUpgrades, #purchasedUpgrades {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.upgrade {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.upgrade-img {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+}
+
+.purchased-upgrade {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.purchased-upgrade img {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 10px;
+}

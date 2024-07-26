@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Degens Idle</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="main-container">
+        <div id="title-container">
+            <h1 id="title">Degens Idle</h1>
+        </div>
+        <div id="game">
+            <div class="resource">
+                <p>Copium: <span id="copium" class="resource-value">0</span></p>
+                <p class="per-second">Copium per second: <span id="cps">0</span></p>
+                <button id="collectCopiumButton">Collect Copium</button>
+            </div>
+            <div class="resource">
+                <p>Delusion: <span id="delusion" class="resource-value">0</span></p>
+                <p class="per-second">Delusion per second: <span id="dps">0</span></p>
+                <button id="collectDelusionButton">Collect Delusion</button>
+            </div>
+            <div class="resource">
+                <p>Yarmulkes: <span id="yarmulkes" class="resource-value">0</span></p>
+                <p class="per-second">Yarmulkes per second: <span id="yps">0</span></p>
+                <button id="collectYarmulkesButton">Collect Yarmulkes</button>
+            </div>
+            <div class="resource">
+                <p>Troll Points: <span id="trollPoints" class="resource-value">0</span></p>
+                <p class="per-second">Troll Points per second: <span id="tpps">0</span></p>
+                <button id="collectTrollPointsButton">Collect Troll Points</button>
+            </div>
+            <div id="specialUpgrades">
+                <h2>Special Upgrades</h2>
+                <div id="upgradeList">
+                    <!-- Special upgrades will be dynamically added here -->
+                </div>
+            </div>
+        </div>
+        <div id="purchasedUpgrades">
+            <h2>Purchased Upgrades</h2>
+            <div id="purchasedList" class="grid">
+                <!-- Purchased upgrades will be shown here with images -->
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
