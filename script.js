@@ -7,8 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let yarmulkesPerSecond = 0;
     let trollPoints = 0;
     let trollPointsPerSecond = 0;
-    let holdInterval;
-    let activeButton;
 
     const upgrades = [
         {
@@ -124,6 +122,30 @@ document.addEventListener('DOMContentLoaded', () => {
             cost: { copium: 1000, delusion: 0, yarmulkes: 0, trollPoints: 150 },
             earnings: { copiumPerSecond: 0, delusionPerSecond: 9, yarmulkesPerSecond: 0, trollPointsPerSecond: 0 },
             img: "imgs/proton.jpg",
+        },
+        {
+            name: "Transcendence",
+            cost: { copium: 99999, delusion: 99999, yarmulkes: 99999, trollPoints: 99999 },
+            earnings: { copiumPerSecond: 500, delusionPerSecond: 500, yarmulkesPerSecond: 500, trollPointsPerSecond: 500 },
+            img: "imgs/transcendence.jpg",
+        },
+        {
+            name: "Sex Change",
+            cost: { copium: 2000000, delusion: 2000000, yarmulkes: 0, trollPoints: 0 },
+            earnings: { copiumPerSecond: 250, delusionPerSecond: 250, yarmulkesPerSecond: 0, trollPointsPerSecond: 0 },
+            img: "imgs/transcendence.jpg",
+        },
+        {
+            name: "Pudge",
+            cost: { copium: 1000000, delusion: 0, yarmulkes: 0, trollPoints: 1000000 },
+            earnings: { copiumPerSecond: 25, delusionPerSecond: 0, yarmulkesPerSecond: 100, trollPointsPerSecond: 100 },
+            img: "imgs/pudge.jpg",
+        },
+        {
+            name: "Rewriting History",
+            cost: { copium: 5000000, delusion: 0, yarmulkes: 0, trollPoints: 0 },
+            earnings: { copiumPerSecond: 25, delusionPerSecond: 0, yarmulkesPerSecond: 1000, trollPointsPerSecond: 0 },
+            img: "imgs/rewriting_history.jpg",
         }
     ];
 
@@ -133,170 +155,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('collectTrollPointsButton').addEventListener('click', () => { collectResource('trollPoints'); });
 
     document.getElementById('tradeButton').addEventListener('click', tradeResources);
-
-    const startHold = (button, task, index) => {
-        holdInterval = setInterval(() => {
-            task.completed = true;
-            task.lastCompleted = new Date().toISOString();
-            saveTasks();
-            renderTasks();
-        }, 200); // 200 milliseconds for 5 clicks per second
-        activeButton = button;
-    };
-    
-    const stopHold = () => {
-        clearInterval(holdInterval);
-        activeButton = null;
-    };
-
-    document.addEventListener('DOMContentLoaded', () => {
-        const taskNameInput = document.getElementById('taskName');
-        const frequencySelect = document.getElementById('frequency');
-        const highlightValueInput = document.getElementById('highlightValue');
-        const highlightUnitSelect = document.getElementById('highlightUnit');
-        const addTaskButton = document.getElementById('addTaskButton');
-        const clearStorageButton = document.getElementById('clearStorageButton');
-        const tasksContainer = document.getElementById('tasksContainer');
-    
-        let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-    
-        const saveTasks = () => {
-            localStorage.setItem('tasks', JSON.stringify(tasks));
-        };
-    
-        const renderTasks = () => {
-            tasksContainer.innerHTML = '';
-            tasks.forEach((task, index) => {
-                const taskItem = document.createElement('div');
-                taskItem.className = 'task-item';
-    
-                const now = new Date();
-                const lastCompleted = new Date(task.lastCompleted);
-                let timeDiff;
-                if (task.highlightUnit === 'days') {
-                    timeDiff = Math.floor((now - lastCompleted) / (1000 * 60 * 60 * 24)); 
-                } else if (task.highlightUnit === 'seconds') {
-                    timeDiff = Math.floor((now - lastCompleted) / 1000); 
-                }
-                let highlightClass = '';
-    
-                if (!task.completed) {
-                    const interval = parseInt(task.highlightValue, 10);
-                    if (timeDiff >= 1 && timeDiff <= interval) {
-                        highlightClass = `task-highlight-${Math.min(timeDiff, 5)}`;
-                    } else if (timeDiff > interval) {
-                        highlightClass = 'task-highlight-5';
-                    }
-                }
-    
-                if (highlightClass) {
-                    taskItem.classList.add(highlightClass);
-                }
-    
-                taskItem.innerHTML = `
-                    <input type="checkbox" id="task-${index}" ${task.completed ? 'checked' : ''}>
-                    <label for="task-${index}">${task.name} (${task.frequency})</label>
-                    <button class="remove-task" data-index="${index}">Remove</button>
-                    <button class="collect-task" data-index="${index}">Collect</button>
-                `;
-    
-                taskItem.querySelector('input').addEventListener('change', (e) => {
-                    task.completed = e.target.checked;
-                    task.lastCompleted = task.completed ? new Date().toISOString() : task.lastCompleted;
-                    saveTasks();
-                    renderTasks();
-                });
-    
-                taskItem.querySelector('.remove-task').addEventListener('click', () => {
-                    tasks.splice(index, 1);
-                    saveTasks();
-                    renderTasks();
-                });
-    
-                const collectButton = taskItem.querySelector('.collect-task');
-                collectButton.addEventListener('mousedown', () => startHold(collectButton, task, index));
-                collectButton.addEventListener('mouseup', stopHold);
-                collectButton.addEventListener('mouseleave', stopHold);
-    
-                tasksContainer.appendChild(taskItem);
-            });
-        };
-    
-        addTaskButton.addEventListener('click', () => {
-            const taskName = taskNameInput ? taskNameInput.value.trim() : '';
-            const frequency = frequencySelect ? frequencySelect.value : '';
-            const highlightValue = highlightValueInput ? highlightValueInput.value.trim() : '';
-            const highlightUnit = highlightUnitSelect ? highlightUnitSelect.value : '';
-            if (taskName && highlightValue) {
-                tasks.push({
-                    name: taskName,
-                    frequency,
-                    highlightValue,
-                    highlightUnit,
-                    completed: false,
-                    lastCompleted: new Date().toISOString(),
-                    lastReset: new Date().toISOString()
-                });
-                if (taskNameInput) taskNameInput.value = '';
-                if (highlightValueInput) highlightValueInput.value = '';
-                saveTasks();
-                renderTasks();
-            } else {
-                console.error('Task name or highlight value is missing');
-            }
-        });
-    
-        clearStorageButton.addEventListener('click', () => {
-            localStorage.clear();
-            tasks = [];
-            renderTasks();
-        });
-    
-        const resetTasks = () => {
-            const now = new Date();
-            const nextReset = new Date();
-            nextReset.setHours(4, 0, 0, 0); 
-    
-            if (now > nextReset) {
-                nextReset.setDate(nextReset.getDate() + 1); 
-            }
-    
-            const timeToReset = nextReset - now;
-            setTimeout(() => {
-                tasks.forEach(task => {
-                    if (task.frequency === 'daily') {
-                        task.completed = false;
-                    } else if (task.frequency === 'weekly') {
-                        const lastCompleted = new Date(task.lastCompleted);
-                        if (now - lastCompleted >= 6 * 24 * 60 * 60 * 1000) { 
-                            task.completed = false;
-                        }
-                    }
-                });
-                saveTasks();
-                renderTasks();
-                resetTasks(); 
-            }, timeToReset);
-    
-            setInterval(() => {
-                const now = new Date();
-                tasks.forEach(task => {
-                    if (task.frequency === 'every10seconds') {
-                        const lastReset = new Date(task.lastReset);
-                        if ((now - lastReset) >= 10 * 1000) { 
-                            task.completed = false;
-                            task.lastReset = new Date().toISOString();
-                        }
-                    }
-                });
-                saveTasks();
-                renderTasks();
-            }, 1000); 
-        };
-    
-        renderTasks();
-        resetTasks(); 
-    });
 
     function collectResource(resource) {
         if (resource === 'copium') copium += 1;
