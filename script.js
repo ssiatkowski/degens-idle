@@ -164,6 +164,12 @@ document.addEventListener('DOMContentLoaded', () => {
             cost: { copium: 2000, delusion: 0, yarmulkes: 1000, trollPoints: 2000 },
             earnings: { copiumPerSecond: 5, delusionPerSecond: 0, yarmulkesPerSecond: 27, trollPointsPerSecond: 5 },
             img: "imgs/rewriting_history.jpg",
+        },
+        {
+            name: "Suss",
+            cost: { copium: 12000, delusion: 0, yarmulkes: 0, trollPoints: 0 },
+            earnings: { copiumPerSecond: 25, delusionPerSecond: 0, yarmulkesPerSecond: 0, trollPointsPerSecond: 50 },
+            img: "imgs/morty.PNG",
         }
     ];
 
