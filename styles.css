@@ -75,9 +75,15 @@ button {
     cursor: pointer;
 }
 
-button.affordable {
+button.affordable, .game-button.affordable {
     background-color: #4CAF50; /* Green */
     color: white;
+}
+
+button:disabled {
+    background-color: #ccc; /* Gray */
+    color: #666; /* Darker gray */
+    cursor: not-allowed;
 }
 
 #specialUpgrades, #purchasedUpgrades {
@@ -131,10 +137,6 @@ button.affordable {
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr); /* Five columns layout */
+    grid-template-columns: repeat(5, 1fr); /* Adjusted for a 5-column layout */
     gap: 10px;
-}
-
-.grid .purchased-upgrade {
-    grid-column: span 1; /* Each image spans 1 column */
 }

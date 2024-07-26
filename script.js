@@ -7,6 +7,12 @@ document.addEventListener('DOMContentLoaded', () => {
     let yarmulkesPerSecond = 0;
     let trollPoints = 0;
     let trollPointsPerSecond = 0;
+    let cooldowns = {
+        copium: false,
+        delusion: false,
+        yarmulkes: false,
+        trollPoints: false
+    };
 
     const upgrades = [
         {
@@ -208,7 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
             img: "imgs/hawk_tuah.jpg",
         },
         {
-            name: "Hard Work Doesnt Mean Success",
+            name: "Hard Work Dont Mean Success",
             cost: { copium: 2000, delusion: 0, yarmulkes: 1400, trollPoints: 0 },
             earnings: { copiumPerSecond: 10, delusionPerSecond: -5, yarmulkesPerSecond: 1, trollPointsPerSecond: 0 },
             img: "imgs/hard_to_swallow.jpg",
@@ -222,7 +228,7 @@ document.addEventListener('DOMContentLoaded', () => {
         {
             name: "Music",
             cost: { copium: 100, delusion: 25, yarmulkes: 150, trollPoints: 25 },
-            earnings: { copiumPerSecond: 10, delusionPerSecond: 0, yarmulkesPerSecond: 0, trollPointsPerSecond: 0 },
+            earnings: { copiumPerSecond: 10, delusionPerSecond: -1, yarmulkesPerSecond: 0, trollPointsPerSecond: 0 },
             img: "imgs/linkin_park.jpg",
         },
         {
@@ -238,6 +244,17 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('collectYarmulkesButton').addEventListener('click', () => { collectResource('yarmulkes'); });
     document.getElementById('collectTrollPointsButton').addEventListener('click', () => { collectResource('trollPoints'); });
 
+    document.getElementById('playCopiumGame').addEventListener('click', () => { playMiniGame('copium'); });
+    document.getElementById('playDelusionGame').addEventListener('click', () => { playMiniGame('delusion'); });
+    document.getElementById('playYarmulkesGame').addEventListener('click', () => { playMiniGame('yarmulkes'); });
+    document.getElementById('playTrollPointsGame').addEventListener('click', () => { playMiniGame('trollPoints'); });
+
+    document.getElementById('playCopiumGame').classList.add('affordable');
+    document.getElementById('playDelusionGame').classList.add('affordable');
+    document.getElementById('playYarmulkesGame').classList.add('affordable');
+    document.getElementById('playTrollPointsGame').classList.add('affordable');
+
+
     document.getElementById('tradeButton').addEventListener('click', tradeResources);
 
     function collectResource(resource) {
@@ -247,6 +264,107 @@ document.addEventListener('DOMContentLoaded', () => {
         if (resource === 'trollPoints') trollPoints += 1;
         updateDisplay();
     }
+
+    function playMiniGame(resource) {
+        if (cooldowns[resource]) return;
+    
+        const button = document.getElementById(`play${capitalize(resource)}Game`);
+        button.disabled = true; // Disable button at the start of the game
+        button.classList.remove('affordable'); // Remove the green class
+    
+        if (resource === 'copium') {
+            // Copium point and click game
+            let points = 0;
+            let duration = Math.floor(Math.random() * 10) + 1; // Random duration between 1 and 10 seconds
+            alert(`Click on the screen as many times as you can in ${duration} seconds!`);
+    
+            // Define clickHandler within the scope
+            function clickHandler() {
+                points++;
+            }
+    
+            document.addEventListener('click', clickHandler);
+            setTimeout(() => {
+                document.removeEventListener('click', clickHandler);
+                let clicksPerSecond = points / duration;
+                let reward;
+                if (clicksPerSecond > 3) { // More than 3 clicks per second
+                    reward = Math.floor(copium * ((clicksPerSecond - 3) * 0.015));
+                    alert(`You clicked ${points} times in ${duration} seconds (${clicksPerSecond.toFixed(2)} clicks per second). You won and earned ${reward} copium!`);
+                } else {
+                    reward = -Math.max(Math.floor(Math.random() * Math.abs(copium) * 0.1), 10);
+                    alert(`You clicked ${points} times in ${duration} seconds (${clicksPerSecond.toFixed(2)} clicks per second). You lost and earned ${reward} copium!`);
+                }
+                copium += reward;
+                updateDisplay();
+                startCooldown(resource); // Start cooldown
+            }, duration * 1000);
+        } else if (resource === 'delusion') {
+            // Delusion memory game
+            let sequenceLength = Math.floor(Math.random() * 6) + 3; // Random length between 3 and 8
+            let sequence = '';
+            for (let i = 0; i < sequenceLength; i++) {
+                sequence += Math.floor(Math.random() * 10); // Random digit between 0 and 9
+            }
+            let timeout = Math.floor(Math.random() * 58) + 3; // Random timeout between 3 and 60 seconds
+            alert('Remember this sequence: ' + sequence);
+            setTimeout(() => {
+                let userSequence = prompt('Enter the sequence:');
+                let correct = userSequence === sequence;
+                let reward = correct ? Math.max(Math.floor(delusion * 0.1), 10) : -Math.max(Math.floor(Math.random() * Math.abs(delusion) * 0.1), 10);
+                if (delusion < 0 && !correct) reward += 10;
+                delusion += reward;
+                alert(`You ${correct ? 'won' : 'lost'} and earned ${reward} delusion!`);
+                updateDisplay();
+                startCooldown(resource); // Start cooldown
+            }, timeout * 1000);
+        } else if (resource === 'yarmulkes') {
+            // Yarmulkes quick math game
+            let num1 = Math.floor(Math.random() * 100) + 1;
+            let num2 = Math.floor(Math.random() * 100) + 1;
+            let num3 = Math.floor(Math.random() * 10) + 1;
+            let operations = ['+', '-', '*', '/'];
+            let op1 = operations[Math.floor(Math.random() * operations.length)];
+            let op2 = operations[Math.floor(Math.random() * operations.length)];
+            
+            let question = `${num1} ${op1} ${num2} ${op2} ${num3}`;
+            let correctAnswer = eval(question.replace('/', '* 1.0 /')); // Ensure floating point division
+            
+            let answer = prompt(`What is ${question}?`);
+            let reward = Math.abs(Number(answer) - correctAnswer) < 0.01 ? Math.max(Math.floor(yarmulkes * 0.1), 10) : -Math.max(Math.floor(Math.random() * Math.abs(yarmulkes) * 0.1), 10);
+            if (yarmulkes < 0 && Math.abs(Number(answer) - correctAnswer) >= 0.01) reward += 10;
+            yarmulkes += reward;
+            alert(`You ${Math.abs(Number(answer) - correctAnswer) < 0.01 ? 'won' : 'lost'} and earned ${reward} yarmulkes!`);
+            updateDisplay();
+            startCooldown(resource); // Start cooldown
+        } else if (resource === 'trollPoints') {
+            // Troll Points random gain/loss
+            let reward = Math.floor(Math.random() * (trollPoints * 2 + 1)) - trollPoints;
+            trollPoints += reward;
+            alert(`You earned ${reward} troll points!`);
+            updateDisplay();
+            startCooldown(resource); // Start cooldown
+        }
+    }
+    
+    function startCooldown(resource) {
+        const button = document.getElementById(`play${capitalize(resource)}Game`);
+        cooldowns[resource] = true;
+        button.classList.remove('affordable');
+        
+        setTimeout(() => {
+            cooldowns[resource] = false;
+            button.disabled = false;
+            button.classList.add('affordable');
+        }, 180000); // 3 minute cooldown
+    }
+    
+    function capitalize(str) {
+        return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+    
+    
+    
 
     function tradeResources() {
         const fromResource = document.getElementById('fromResource').value;
@@ -295,8 +413,6 @@ document.addEventListener('DOMContentLoaded', () => {
         updateUpgradeButtons();
     }
     
-
-
     function generateResources() {
         copium += copiumPerSecond;
         delusion += delusionPerSecond;
@@ -309,19 +425,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const upgrade = upgrades.find(up => up.name === upgradeName);
         const { cost, earnings, img, name } = upgrade;
     
-        // Check if each individual resource is sufficient to cover its respective cost if the cost is greater than zero
         if ((cost.copium === 0 || copium >= cost.copium) &&
             (cost.delusion === 0 || delusion >= cost.delusion) &&
             (cost.yarmulkes === 0 || yarmulkes >= cost.yarmulkes) &&
             (cost.trollPoints === 0 || trollPoints >= cost.trollPoints)) {
     
-            // Deduct the cost from the resources
             copium -= cost.copium;
             delusion -= cost.delusion;
             yarmulkes -= cost.yarmulkes;
             trollPoints -= cost.trollPoints;
     
-            // Increase the earnings
             copiumPerSecond += earnings.copiumPerSecond || 0;
             delusionPerSecond += earnings.delusionPerSecond || 0;
             yarmulkesPerSecond += earnings.yarmulkesPerSecond || 0;
@@ -338,14 +451,11 @@ document.addEventListener('DOMContentLoaded', () => {
     
     
     
-    
-
     function addPurchasedUpgrade(img, name, earnings) {
         const purchasedList = document.getElementById('purchasedList');
         const upgradeElement = document.createElement('div');
         upgradeElement.classList.add('purchased-upgrade');
     
-        // Function to format earnings correctly
         const formatEarnings = (value) => {
             if (value > 0) {
                 return `+${value}`;
@@ -370,7 +480,6 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
         purchasedList.appendChild(upgradeElement);
     }
-    
     
     
 
@@ -409,7 +518,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const button = document.querySelector(`button[onclick="buyUpgrade('${upgrade.name.replace(/'/g, "\\'")}')"]`);
             if (button) {
                 const { cost } = upgrade;
-                // Check if each individual resource is sufficient to cover its respective cost if the cost is greater than zero
                 if ((cost.copium === 0 || copium >= cost.copium) &&
                     (cost.delusion === 0 || delusion >= cost.delusion) &&
                     (cost.yarmulkes === 0 || yarmulkes >= cost.yarmulkes) &&
@@ -421,8 +529,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-    
-    
     
     
 
