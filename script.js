@@ -127,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
             name: "Transcendence",
             cost: { copium: 99999, delusion: 99999, yarmulkes: 99999, trollPoints: 99999 },
             earnings: { copiumPerSecond: 500, delusionPerSecond: 500, yarmulkesPerSecond: 500, trollPointsPerSecond: 500 },
-            img: "imgs/transcendence.jpg",
+            img: "imgs/sex_change.jpg",
         },
         {
             name: "Sex Change",
@@ -200,6 +200,12 @@ document.addEventListener('DOMContentLoaded', () => {
             cost: { copium: 500, delusion: 0, yarmulkes: 250, trollPoints: 500 },
             earnings: { copiumPerSecond: 2, delusionPerSecond: -25, yarmulkesPerSecond: 10, trollPointsPerSecond: 30 },
             img: "imgs/over_9000.jpg",
+        },
+        {
+            name: "Spit on that thang",
+            cost: { copium: 100000, delusion: 0, yarmulkes: 25000, trollPoints: 50000 },
+            earnings: { copiumPerSecond: 75, delusionPerSecond: 0, yarmulkesPerSecond: 25, trollPointsPerSecond: 25 },
+            img: "imgs/hawk_tuah.jpg",
         }
     ];
 
