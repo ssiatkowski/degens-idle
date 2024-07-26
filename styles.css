@@ -99,8 +99,9 @@ button.affordable {
     text-align: left;
 }
 
-.upgrade .upgrade-cost {
-    margin-top: 5px;
+.upgrade .upgrade-cost p {
+    margin-top: 2.5px; /* Reduced spacing by half */
+    margin-bottom: 2.5px; /* Reduced spacing by half */
 }
 
 .purchased-upgrade {
@@ -114,13 +115,18 @@ button.affordable {
 .purchased-upgrade img {
     width: 90px; /* Increased width */
     height: 90px; /* Increased height */
-    margin-bottom: 5px;
+    margin-bottom: 2.5px; /* Reduced spacing by half */
 }
 
 .upgrade-img {
     width: 90px; /* Increased width */
     height: 90px; /* Increased height */
     margin-right: 10px;
+}
+
+.purchased-upgrade .upgrade-earnings p {
+    margin-top: 2.5px; /* Reduced spacing by half */
+    margin-bottom: 2.5px; /* Reduced spacing by half */
 }
 
 .grid {
