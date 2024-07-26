@@ -208,7 +208,7 @@ document.addEventListener('DOMContentLoaded', () => {
             img: "imgs/hawk_tuah.jpg",
         },
         {
-            name: "Hard Work Doesn't Mean Success",
+            name: "Hard Work Doesnt Mean Success",
             cost: { copium: 2000, delusion: 0, yarmulkes: 1400, trollPoints: 0 },
             earnings: { copiumPerSecond: 10, delusionPerSecond: -5, yarmulkesPerSecond: 1, trollPointsPerSecond: 0 },
             img: "imgs/hard_to_swallow.jpg",
