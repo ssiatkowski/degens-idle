@@ -2,7 +2,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    height: 100vh;
+    min-height: 100vh;
     background-color: #f0f0f0;
     margin: 0;
     font-family: Arial, sans-serif;
@@ -16,12 +16,12 @@ h1, h2 {
     display: flex;
     gap: 20px;
     position: relative; /* Relative positioning for the container */
-    margin-left: 80px; /* Added margin to avoid overlap */
+    margin-left: 100px; /* Slightly increased margin to make room for the title */
 }
 
 #title-container {
     position: absolute;
-    left: -280px; /* Adjusted value to align with main content */
+    left: -280px; /* Adjusted value to move title further to the left */
     top: 50%;
     transform: translateY(-50%) rotate(-90deg);
     transform-origin: left top 0;
@@ -152,6 +152,7 @@ button:disabled {
         flex-direction: column;
         align-items: center;
         margin-left: 0; /* Remove left margin for mobile */
+        margin-top: 20px; /* Added margin to ensure content is visible */
         width: 100%; /* Full width for mobile */
     }
 
@@ -184,6 +185,6 @@ button:disabled {
     button {
         font-size: 14px; /* Adjust font size for mobile */
         padding: 8px 16px; /* Adjust padding for mobile */
-        width: 100%; /* Full width for mobile */
+        width: auto; /* Auto width for mobile */
     }
 }
