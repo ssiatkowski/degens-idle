@@ -311,7 +311,7 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 let userSequence = prompt('Enter the sequence:');
                 let correct = userSequence === sequence;
-                let reward = correct ? Math.max(Math.floor(delusion * 0.1), 10) : -Math.max(Math.floor(Math.random() * Math.abs(delusion) * 0.1), 10);
+                let reward = correct ? Math.max(Math.floor(delusion * 0.15), 10) : -Math.max(Math.floor(Math.random() * Math.abs(delusion) * 0.1), 10);
                 if (delusion < 0 && !correct) reward += 10;
                 delusion += reward;
                 alert(`You ${correct ? 'won' : 'lost'} and earned ${reward} delusion!`);
@@ -331,7 +331,7 @@ document.addEventListener('DOMContentLoaded', () => {
             let correctAnswer = eval(question.replace('/', '* 1.0 /')); // Ensure floating point division
             
             let answer = prompt(`What is ${question}?`);
-            let reward = Math.abs(Number(answer) - correctAnswer) < 0.01 ? Math.max(Math.floor(yarmulkes * 0.1), 10) : -Math.max(Math.floor(Math.random() * Math.abs(yarmulkes) * 0.1), 10);
+            let reward = Math.abs(Number(answer) - correctAnswer) < 0.01 ? Math.max(Math.floor(yarmulkes * 0.15), 10) : -Math.max(Math.floor(Math.random() * Math.abs(yarmulkes) * 0.1), 10);
             if (yarmulkes < 0 && Math.abs(Number(answer) - correctAnswer) >= 0.01) reward += 10;
             yarmulkes += reward;
             alert(`You ${Math.abs(Number(answer) - correctAnswer) < 0.01 ? 'won' : 'lost'} and earned ${reward} yarmulkes!`);
@@ -339,7 +339,7 @@ document.addEventListener('DOMContentLoaded', () => {
             startCooldown(resource); // Start cooldown
         } else if (resource === 'trollPoints') {
             // Troll Points random gain/loss
-            let reward = Math.floor(Math.random() * (trollPoints * 2 + 1)) - trollPoints;
+            let reward = Math.floor(Math.random() * (trollPoints * 2 + 10)) - trollPoints;
             trollPoints += reward;
             alert(`You earned ${reward} troll points!`);
             updateDisplay();

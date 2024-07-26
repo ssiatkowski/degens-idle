@@ -140,3 +140,50 @@ button:disabled {
     grid-template-columns: repeat(5, 1fr); /* Adjusted for a 5-column layout */
     gap: 10px;
 }
+
+/* Media Queries for Mobile Devices */
+@media (max-width: 768px) {
+    body {
+        flex-direction: column; /* Stack vertically for mobile */
+        align-items: center;
+    }
+
+    #main-container {
+        flex-direction: column;
+        align-items: center;
+        margin-left: 0; /* Remove left margin for mobile */
+        width: 100%; /* Full width for mobile */
+    }
+
+    #title-container {
+        position: relative;
+        left: 0;
+        top: 0;
+        transform: none;
+        margin-bottom: 20px;
+        font-size: 2em; /* Adjust font size for mobile */
+    }
+
+    #game {
+        width: 90%; /* Full width for mobile */
+    }
+
+    #specialUpgrades, #purchasedUpgrades, #right-section {
+        width: 100%; /* Full width for mobile */
+    }
+
+    .grid {
+        grid-template-columns: repeat(2, 1fr); /* 2-column layout for mobile */
+    }
+
+    .purchased-upgrade img {
+        width: 60px; /* Adjust image size for mobile */
+        height: 60px; /* Adjust image size for mobile */
+    }
+
+    button {
+        font-size: 14px; /* Adjust font size for mobile */
+        padding: 8px 16px; /* Adjust padding for mobile */
+        width: 100%; /* Full width for mobile */
+    }
+}
