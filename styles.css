@@ -177,9 +177,9 @@ button:disabled {
         grid-template-columns: repeat(2, 1fr); /* 2-column layout for mobile */
     }
 
-    .purchased-upgrade img {
-        width: 60px; /* Adjust image size for mobile */
-        height: 60px; /* Adjust image size for mobile */
+    .purchased-upgrade img, .upgrade-img {
+        width: 180px; /* Double the width for mobile */
+        height: 180px; /* Double the height for mobile */
     }
 
     button {
