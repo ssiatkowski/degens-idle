@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
             img: "imgs/is_he_alive.jpg",
         },
         {
-            name: "It's group time!",
+            name: "Its group time!",
             cost: { copium: 10, delusion: 10, yarmulkes: 10, trollPoints: 10 },
             earnings: { copiumPerSecond: 2, delusionPerSecond: 2, yarmulkesPerSecond: 2, trollPointsPerSecond: 2 },
             img: "imgs/joker.jpg",
@@ -154,9 +154,15 @@ document.addEventListener('DOMContentLoaded', () => {
             img: "imgs/rewriting_history.jpg",
         },
         {
-            name: "Deal with devil",
+            name: "Deal with the devil",
             cost: { copium: 0, delusion: 0, yarmulkes: 10000, trollPoints: 0 },
-            earnings: { copiumPerSecond: 0, delusionPerSecond: 5, yarmulkesPerSecond: 5, trollPointsPerSecond: 1 },
+            earnings: { copiumPerSecond: -1, delusionPerSecond: 2, yarmulkesPerSecond: 2, trollPointsPerSecond: 1 },
+            img: "imgs/rewriting_history.jpg",
+        },
+        {
+            name: "Hes an Ancient",
+            cost: { copium: 2000, delusion: 0, yarmulkes: 1000, trollPoints: 2000 },
+            earnings: { copiumPerSecond: 5, delusionPerSecond: 0, yarmulkesPerSecond: 27, trollPointsPerSecond: 5 },
             img: "imgs/rewriting_history.jpg",
         }
     ];
