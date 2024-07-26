@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
         {
             name: "Face of Defeat",
             cost: { copium: 10000, delusion: 0, yarmulkes: 666, trollPoints: 100 },
-            earnings: { copiumPerSecond: 100, delusionPerSecond: 2, yarmulkesPerSecond: 0, trollPointsPerSecond: 0 },
+            earnings: { copiumPerSecond: 100, delusionPerSecond: 2, yarmulkesPerSecond: 0, trollPointsPerSecond: -2 },
             img: "imgs/face_of_defeat.jpg",
         },
         {
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
         {
             name: "Luigis Idol",
             cost: { copium: 1234, delusion: 0, yarmulkes: 7777, trollPoints: 7777 },
-            earnings: { copiumPerSecond: 12, delusionPerSecond: 0, yarmulkesPerSecond: 50, trollPointsPerSecond: 50 },
+            earnings: { copiumPerSecond: 12, delusionPerSecond: 0, yarmulkesPerSecond: 40, trollPointsPerSecond: 50 },
             img: "imgs/luigis_idol.png",
         },
         {
@@ -90,37 +90,37 @@ document.addEventListener('DOMContentLoaded', () => {
         {
             name: "The Perfect Girl",
             cost: { copium: 3000, delusion: 3000, yarmulkes: 3000, trollPoints: 0 },
-            earnings: { copiumPerSecond: 10, delusionPerSecond: 25, yarmulkesPerSecond: -2, trollPointsPerSecond: 5 },
+            earnings: { copiumPerSecond: 5, delusionPerSecond: 25, yarmulkesPerSecond: -5, trollPointsPerSecond: 5 },
             img: "imgs/the_perfect_girl.jpg",
         },
         {
             name: "The Savior",
             cost: { copium: 0, delusion: 0, yarmulkes: 2500, trollPoints: 2500 },
-            earnings: { copiumPerSecond: 10, delusionPerSecond: 10, yarmulkesPerSecond: -10, trollPointsPerSecond: 5 },
+            earnings: { copiumPerSecond: 10, delusionPerSecond: 10, yarmulkesPerSecond: -10, trollPointsPerSecond: 3 },
             img: "imgs/the_savior.jpg",
         },
         {
             name: "Unhackable",
             cost: { copium: 5000, delusion: 2000, yarmulkes: 1500, trollPoints: 0 },
-            earnings: { copiumPerSecond: 50, delusionPerSecond: 30, yarmulkesPerSecond: -3, trollPointsPerSecond: -3 },
+            earnings: { copiumPerSecond: 45, delusionPerSecond: 30, yarmulkesPerSecond: -3, trollPointsPerSecond: -3 },
             img: "imgs/unhackable.jpg",
         },
         {
             name: "Yom Kippur",
             cost: { copium: 0, delusion: 0, yarmulkes: 999, trollPoints: 0 },
-            earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yarmulkesPerSecond: 30, trollPointsPerSecond: 0 },
+            earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yarmulkesPerSecond: 28, trollPointsPerSecond: 0 },
             img: "imgs/yom_kippur.jpg",
         },
         {
             name: "Kamala 2024",
             cost: { copium: 0, delusion: 400, yarmulkes: 0, trollPoints: 0 },
-            earnings: { copiumPerSecond: 3, delusionPerSecond: 0, yarmulkesPerSecond: 10, trollPointsPerSecond: 0 },
+            earnings: { copiumPerSecond: 3, delusionPerSecond: 0, yarmulkesPerSecond: 9, trollPointsPerSecond: 0 },
             img: "imgs/kamala.jpg",
         },
         {
             name: "Email Safety First",
             cost: { copium: 1000, delusion: 0, yarmulkes: 0, trollPoints: 150 },
-            earnings: { copiumPerSecond: 0, delusionPerSecond: 9, yarmulkesPerSecond: 0, trollPointsPerSecond: 0 },
+            earnings: { copiumPerSecond: 0, delusionPerSecond: 9, yarmulkesPerSecond: -1, trollPointsPerSecond: 0 },
             img: "imgs/proton.jpg",
         },
         {
@@ -132,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
         {
             name: "Sex Change",
             cost: { copium: 50000, delusion: 50000, yarmulkes: 0, trollPoints: 0 },
-            earnings: { copiumPerSecond: 250, delusionPerSecond: 250, yarmulkesPerSecond: 0, trollPointsPerSecond: -100 },
+            earnings: { copiumPerSecond: 250, delusionPerSecond: 250, yarmulkesPerSecond: -50, trollPointsPerSecond: -100 },
             img: "imgs/transcendence.jpg",
         },
         {
@@ -206,6 +206,12 @@ document.addEventListener('DOMContentLoaded', () => {
             cost: { copium: 100000, delusion: 0, yarmulkes: 25000, trollPoints: 50000 },
             earnings: { copiumPerSecond: 75, delusionPerSecond: 0, yarmulkesPerSecond: 25, trollPointsPerSecond: 25 },
             img: "imgs/hawk_tuah.jpg",
+        },
+        {
+            name: "Hard Work Doesn't Mean Success",
+            cost: { copium: 2000, delusion: 0, yarmulkes: 1400, trollPoints: 0 },
+            earnings: { copiumPerSecond: 10, delusionPerSecond: -5, yarmulkesPerSecond: 1, trollPointsPerSecond: 0 },
+            img: "imgs/hard_to_swallow.jpg",
         }
     ];
 

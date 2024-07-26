@@ -131,6 +131,10 @@ button.affordable {
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Expand to 3 columns */
+    grid-template-columns: repeat(1, 1fr); /* Expand to 1 column to ensure images take up 4 rows */
     gap: 10px;
+}
+
+.grid img {
+    grid-row: span 4; /* Make images span 4 rows */
 }
