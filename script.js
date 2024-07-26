@@ -182,6 +182,24 @@ document.addEventListener('DOMContentLoaded', () => {
             cost: { copium: 5000, delusion: 5000, yarmulkes: 5000, trollPoints: 5000 },
             earnings: { copiumPerSecond: -10, delusionPerSecond: 40, yarmulkesPerSecond: 20, trollPointsPerSecond: 30 },
             img: "imgs/standard.jpg",
+        },
+        {
+            name: "Im gonna come",
+            cost: { copium: 75000, delusion: 75000, yarmulkes: 0, trollPoints: 50000 },
+            earnings: { copiumPerSecond: -100, delusionPerSecond: 0, yarmulkesPerSecond: -200, trollPointsPerSecond: 500 },
+            img: "imgs/do_not_come.jpg",
+        },
+        {
+            name: "Do not come!",
+            cost: { copium: 200000, delusion: 0, yarmulkes: 0, trollPoints: 0 },
+            earnings: { copiumPerSecond: 0, delusionPerSecond: 100, yarmulkesPerSecond: 300, trollPointsPerSecond: 100 },
+            img: "imgs/im_gonna_come.jpg",
+        },
+        {
+            name: "Jokers Rage Level",
+            cost: { copium: 500, delusion: 0, yarmulkes: 250, trollPoints: 500 },
+            earnings: { copiumPerSecond: 2, delusionPerSecond: -25, yarmulkesPerSecond: 10, trollPointsPerSecond: 30 },
+            img: "imgs/over_9000.jpg",
         }
     ];
 
