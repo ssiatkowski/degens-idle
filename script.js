@@ -131,8 +131,8 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         {
             name: "Sex Change",
-            cost: { copium: 2000000, delusion: 2000000, yarmulkes: 0, trollPoints: 0 },
-            earnings: { copiumPerSecond: 250, delusionPerSecond: 250, yarmulkesPerSecond: 0, trollPointsPerSecond: 0 },
+            cost: { copium: 50000, delusion: 50000, yarmulkes: 0, trollPoints: 0 },
+            earnings: { copiumPerSecond: 250, delusionPerSecond: 250, yarmulkesPerSecond: 0, trollPointsPerSecond: -100 },
             img: "imgs/transcendence.jpg",
         },
         {
