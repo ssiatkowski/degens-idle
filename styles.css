@@ -133,7 +133,7 @@ button:disabled {
 .purchased-upgrade .upgrade-earnings p {
     margin-top: 2.5px; /* Reduced spacing by half */
     margin-bottom: 2.5px; /* Reduced spacing by half */
-} 
+}
 
 .grid {
     display: grid;
@@ -178,8 +178,8 @@ button:disabled {
     }
 
     .purchased-upgrade img, .upgrade-img {
-        width: 180px; /* Double the width for mobile */
-        height: 180px; /* Double the height for mobile */
+        width: 100px; /* Adjusted width for mobile */
+        height: 100px; /* Adjusted height for mobile */
     }
 
     button {

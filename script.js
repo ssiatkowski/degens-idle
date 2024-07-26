@@ -144,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
         {
             name: "Pudge",
             cost: { copium: 1000000, delusion: 0, yarmulkes: 0, trollPoints: 1000000 },
-            earnings: { copiumPerSecond: 25, delusionPerSecond: 0, yarmulkesPerSecond: 100, trollPointsPerSecond: 100 },
+            earnings: { copiumPerSecond: 25, delusionPerSecond: 0, yarmulkesPerSecond: 400, trollPointsPerSecond: 100 },
             img: "imgs/pudge.jpg",
         },
         {
@@ -156,7 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
         {
             name: "WE MADE IT!",
             cost: { copium: 1000000, delusion: 1000000, yarmulkes: 1000000, trollPoints: 1000000 },
-            earnings: { copiumPerSecond: 5, delusionPerSecond: 5, yarmulkesPerSecond: 5, trollPointsPerSecond: 99 },
+            earnings: { copiumPerSecond: 99, delusionPerSecond: 5, yarmulkesPerSecond: 5, trollPointsPerSecond: 99 },
             img: "imgs/titanic.jpg",
         },
         {
