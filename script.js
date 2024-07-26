@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
             name: "Luigis Idol",
             cost: { copium: 1234, delusion: 0, yarmulkes: 7777, trollPoints: 7777 },
             earnings: { copiumPerSecond: 12, delusionPerSecond: 0, yarmulkesPerSecond: 50, trollPointsPerSecond: 50 },
-            img: "imgs/luigis_idol.png.jpg",
+            img: "imgs/luigis_idol.png",
         },
         {
             name: "Never Admit Mistakes",
@@ -145,6 +145,18 @@ document.addEventListener('DOMContentLoaded', () => {
             name: "Rewriting History",
             cost: { copium: 5000000, delusion: 0, yarmulkes: 0, trollPoints: 0 },
             earnings: { copiumPerSecond: 25, delusionPerSecond: 0, yarmulkesPerSecond: 1000, trollPointsPerSecond: 0 },
+            img: "imgs/rewriting_history.jpg",
+        },
+        {
+            name: "WE MADE IT!",
+            cost: { copium: 1000000, delusion: 1000000, yarmulkes: 1000000, trollPoints: 1000000 },
+            earnings: { copiumPerSecond: 5, delusionPerSecond: 5, yarmulkesPerSecond: 5, trollPointsPerSecond: 99 },
+            img: "imgs/rewriting_history.jpg",
+        },
+        {
+            name: "Deal with devil",
+            cost: { copium: 0, delusion: 0, yarmulkes: 10000, trollPoints: 0 },
+            earnings: { copiumPerSecond: 0, delusionPerSecond: 5, yarmulkesPerSecond: 5, trollPointsPerSecond: 1 },
             img: "imgs/rewriting_history.jpg",
         }
     ];
