@@ -119,8 +119,8 @@ button:disabled {
 }
 
 .purchased-upgrade img {
-    width: 90px; /* Increased width */
-    height: 90px; /* Increased height */
+    width: 130px; /* Increased width */
+    height: 130px; /* Increased height */
     margin-bottom: 2.5px; /* Reduced spacing by half */
 }
 
