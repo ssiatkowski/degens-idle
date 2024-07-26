@@ -127,13 +127,13 @@ document.addEventListener('DOMContentLoaded', () => {
             name: "Transcendence",
             cost: { copium: 99999, delusion: 99999, yarmulkes: 99999, trollPoints: 99999 },
             earnings: { copiumPerSecond: 500, delusionPerSecond: 500, yarmulkesPerSecond: 500, trollPointsPerSecond: 500 },
-            img: "imgs/sex_change.jpg",
+            img: "imgs/transcendence.jpg",
         },
         {
             name: "Sex Change",
             cost: { copium: 50000, delusion: 50000, yarmulkes: 0, trollPoints: 0 },
             earnings: { copiumPerSecond: 250, delusionPerSecond: 250, yarmulkesPerSecond: -50, trollPointsPerSecond: -100 },
-            img: "imgs/transcendence.jpg",
+            img: "imgs/sex_change.jpg",
         },
         {
             name: "Pudge",
