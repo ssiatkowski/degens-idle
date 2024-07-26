@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
             img: "imgs/is_he_alive.jpg",
         },
         {
-            name: "Group up!",
+            name: "It's group time!",
             cost: { copium: 10, delusion: 10, yarmulkes: 10, trollPoints: 10 },
             earnings: { copiumPerSecond: 2, delusionPerSecond: 2, yarmulkesPerSecond: 2, trollPointsPerSecond: 2 },
             img: "imgs/joker.jpg",
