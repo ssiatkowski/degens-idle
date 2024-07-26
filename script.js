@@ -626,9 +626,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
     
     
-    
-    
-    
     function addPurchasedUpgrade(img, name, earnings) {
         const purchasedList = document.getElementById('purchasedList');
         const upgradeElement = document.createElement('div');
@@ -656,39 +653,41 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             </div>
         `;
-        purchasedList.appendChild(upgradeElement);
+        purchasedList.prepend(upgradeElement); // Prepend to show the most recent first
     }
     
     
+    function getTotalCost(upgrade) {
+        return (upgrade.cost.copium || 0) + (upgrade.cost.delusion || 0) + (upgrade.cost.yarmulkes || 0) + (upgrade.cost.trollPoints || 0);
+    }
 
     function updateUpgradeList() {
         const upgradeList = document.getElementById('upgradeList');
-        upgradeList.innerHTML = ''; // Clear current list
+        upgradeList.innerHTML = '';
     
-        const sortedUpgrades = upgrades.sort((a, b) => {
-            const totalCostA = Object.values(a.cost).reduce((sum, value) => sum + value, 0);
-            const totalCostB = Object.values(b.cost).reduce((sum, value) => sum + value, 0);
-            return totalCostA - totalCostB;
+        // Sort upgrades by total cost
+        const sortedUpgrades = upgrades.slice().sort((a, b) => getTotalCost(a) - getTotalCost(b));
+    
+        // Limit to top 7 upgrades
+        const topUpgrades = sortedUpgrades.slice(0, 7);
+    
+        topUpgrades.forEach(upgrade => {
+            const upgradeElement = document.createElement('div');
+            upgradeElement.classList.add('upgrade');
+            upgradeElement.innerHTML = `
+                <button onclick="buyUpgrade('${upgrade.name}')">${upgrade.name}</button>
+                <div class="upgrade-cost">
+                    <p>Cost:</p>
+                    <p>Copium: ${upgrade.cost.copium}</p>
+                    <p>Delusion: ${upgrade.cost.delusion}</p>
+                    <p>Yarmulkes: ${upgrade.cost.yarmulkes}</p>
+                    <p>Troll Points: ${upgrade.cost.trollPoints}</p>
+                </div>
+            `;
+            upgradeList.appendChild(upgradeElement);
         });
     
-        sortedUpgrades.slice(0, 7).forEach(upgrade => { // Display only top 8 upgrades
-            if (!purchasedUpgrades.includes(upgrade)) {
-                const upgradeElement = document.createElement('div');
-                upgradeElement.classList.add('upgrade');
-                upgradeElement.innerHTML = `
-                    <button onclick="buyUpgrade('${upgrade.name.replace(/'/g, "\\'")}')">${upgrade.name}</button>
-                    <div class="upgrade-cost">
-                        <p>Cost:</p>
-                        <p>Copium: ${upgrade.cost.copium}</p>
-                        <p>Delusion: ${upgrade.cost.delusion}</p>
-                        <p>Yarmulkes: ${upgrade.cost.yarmulkes}</p>
-                        <p>Troll Points: ${upgrade.cost.trollPoints}</p>
-                    </div>
-                `;
-                upgradeList.appendChild(upgradeElement);
-            }
-        });
-    
+        // Update the upgrade buttons to highlight affordable ones
         updateUpgradeButtons();
     }
     
