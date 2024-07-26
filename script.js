@@ -191,7 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         {
             name: "Do not come!",
-            cost: { copium: 200000, delusion: 0, yarmulkes: 0, trollPoints: 0 },
+            cost: { copium: 300000, delusion: 0, yarmulkes: 0, trollPoints: 0 },
             earnings: { copiumPerSecond: 0, delusionPerSecond: 100, yarmulkesPerSecond: 300, trollPointsPerSecond: 100 },
             img: "imgs/im_gonna_come.jpg",
         },
