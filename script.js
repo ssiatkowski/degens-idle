@@ -186,7 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
         {
             name: "Im gonna come",
             cost: { copium: 75000, delusion: 75000, yarmulkes: 0, trollPoints: 50000 },
-            earnings: { copiumPerSecond: -100, delusionPerSecond: 0, yarmulkesPerSecond: -200, trollPointsPerSecond: 500 },
+            earnings: { copiumPerSecond: -100, delusionPerSecond: 0, yarmulkesPerSecond: -225, trollPointsPerSecond: 500 },
             img: "imgs/do_not_come.jpg",
         },
         {
@@ -212,6 +212,24 @@ document.addEventListener('DOMContentLoaded', () => {
             cost: { copium: 2000, delusion: 0, yarmulkes: 1400, trollPoints: 0 },
             earnings: { copiumPerSecond: 10, delusionPerSecond: -5, yarmulkesPerSecond: 1, trollPointsPerSecond: 0 },
             img: "imgs/hard_to_swallow.jpg",
+        },
+        {
+            name: "Job Application",
+            cost: { copium: 3000, delusion: 55000, yarmulkes: 0, trollPoints: 69000 },
+            earnings: { copiumPerSecond: 300, delusionPerSecond: 0, yarmulkesPerSecond: 0, trollPointsPerSecond: 0 },
+            img: "imgs/job_application.jpg",
+        },
+        {
+            name: "Music",
+            cost: { copium: 100, delusion: 25, yarmulkes: 150, trollPoints: 25 },
+            earnings: { copiumPerSecond: 10, delusionPerSecond: 0, yarmulkesPerSecond: 0, trollPointsPerSecond: 0 },
+            img: "imgs/linkin_park.jpg",
+        },
+        {
+            name: "Ultimate Solution",
+            cost: { copium: 0, delusion: 25000, yarmulkes: 0, trollPoints: 80000 },
+            earnings: { copiumPerSecond: 100, delusionPerSecond: 100, yarmulkesPerSecond: 0, trollPointsPerSecond: 0 },
+            img: "imgs/use_useless.jpg",
         }
     ];
 
@@ -326,20 +344,33 @@ document.addEventListener('DOMContentLoaded', () => {
         const purchasedList = document.getElementById('purchasedList');
         const upgradeElement = document.createElement('div');
         upgradeElement.classList.add('purchased-upgrade');
+    
+        // Function to format earnings correctly
+        const formatEarnings = (value) => {
+            if (value > 0) {
+                return `+${value}`;
+            } else if (value < 0) {
+                return `-${Math.abs(value)}`;
+            } else {
+                return `${value}`;
+            }
+        };
+    
         upgradeElement.innerHTML = `
             <img src="${img}" alt="${name}">
             <div>
                 <p>${name}</p>
                 <div class="upgrade-earnings">
-                    <p>+${earnings.copiumPerSecond || 0} CPS</p>
-                    <p>+${earnings.delusionPerSecond || 0} DPS</p>
-                    <p>+${earnings.yarmulkesPerSecond || 0} YPS</p>
-                    <p>+${earnings.trollPointsPerSecond || 0} TPS</p>
+                    <p>${formatEarnings(earnings.copiumPerSecond || 0)} CPS</p>
+                    <p>${formatEarnings(earnings.delusionPerSecond || 0)} DPS</p>
+                    <p>${formatEarnings(earnings.yarmulkesPerSecond || 0)} YPS</p>
+                    <p>${formatEarnings(earnings.trollPointsPerSecond || 0)} TPS</p>
                 </div>
             </div>
         `;
         purchasedList.appendChild(upgradeElement);
     }
+    
     
     
 
