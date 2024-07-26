@@ -3,26 +3,27 @@ body {
     justify-content: center;
     align-items: flex-start;
     min-height: 100vh;
-    background-color: #f0f0f0;
+    background-color: #121212; /* Dark background */
+    color: #e0e0e0; /* Light text color */
     margin: 0;
     font-family: Arial, sans-serif;
 }
 
 h1, h2 {
-    color: #333;
+    color: #e0e0e0; /* Light text color */
 }
 
 #main-container {
     display: flex;
     gap: 20px;
-    position: relative; /* Relative positioning for the container */
-    margin-left: 100px; /* Slightly increased margin to make room for the title */
+    position: relative;
+    margin-left: 100px;
 }
 
 #title-container {
     position: absolute;
     left: -280px; /* Adjusted value to move title further to the left */
-    top: 50%;
+    top: 100%; /* Move the title 60% down from the top */
     transform: translateY(-50%) rotate(-90deg);
     transform-origin: left top 0;
     background-color: #333;
@@ -37,17 +38,17 @@ h1, h2 {
 }
 
 @keyframes flash {
-    0% { color: #fff; text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #ff00ff, 0 0 20px #ff00ff, 0 0 30px #ff00ff, 0 0 40px #ff00ff, 0 0 50px #ff00ff, 0 0 75px #ff00ff; }
-    50% { color: #ff0; text-shadow: 0 0 5px #ff0, 0 0 10px #ff0, 0 0 15px #ff0000, 0 0 20px #ff0000, 0 0 30px #ff0000, 0 0 40px #ff0000, 0 0 50px #ff0000, 0 0 75px #ff0000; }
-    100% { color: #fff; text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff, 0 0 40px #00ffff, 0 0 50px #00ffff, 0 0 75px #00ffff; }
+    0% { color: #fff; text-shadow: 0 0 5px #fff, 0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 40px #ff00ff, 0 0 80px #ff00ff; }
+    50% { color: #ff0; text-shadow: 0 0 5px #ff0, 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 40px #ff0000, 0 0 80px #ff0000; }
+    100% { color: #fff; text-shadow: 0 0 5px #fff, 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 40px #00ffff, 0 0 80px #00ffff; }
 }
 
 #game {
-    background-color: #fff;
-    border: 1px solid #000;
+    background-color: #1e1e1e; /* Dark background for game container */
+    border: 1px solid #333; /* Darker border */
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     text-align: center;
     width: 300px;
 }
@@ -59,11 +60,12 @@ h1, h2 {
 .resource-value {
     font-size: 2em;
     font-weight: bold;
+    color: #76ff03; /* Light green for resource values */
 }
 
 .per-second {
     font-size: 0.8em;
-    color: #666;
+    color: #bdbdbd; /* Lighter text color for per second info */
     margin-top: -10px;
     margin-bottom: 10px;
 }
@@ -73,22 +75,35 @@ button {
     margin-top: 10px;
     font-size: 16px;
     cursor: pointer;
+    background-color: #424242; /* Dark button background */
+    color: #e0e0e0; /* Light button text */
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #616161; /* Lighter on hover */
 }
 
 button.affordable, .game-button.affordable {
-    background-color: #4CAF50; /* Green */
+    background-color: #4caf50; /* Green */
     color: white;
 }
 
 button:disabled {
-    background-color: #ccc; /* Gray */
-    color: #666; /* Darker gray */
+    background-color: #333; /* Darker gray */
+    color: #666; /* Darker text */
     cursor: not-allowed;
 }
 
 #specialUpgrades, #purchasedUpgrades {
     margin-top: 20px;
     text-align: center;
+}
+
+#specialUpgrades {
+    width: 300px; /* Adjust as needed for your layout */
 }
 
 #right-section {
@@ -106,8 +121,8 @@ button:disabled {
 }
 
 .upgrade .upgrade-cost p {
-    margin-top: 2.5px; /* Reduced spacing by half */
-    margin-bottom: 2.5px; /* Reduced spacing by half */
+    margin-top: 2.5px; 
+    margin-bottom: 2.5px; 
 }
 
 .purchased-upgrade {
@@ -119,41 +134,41 @@ button:disabled {
 }
 
 .purchased-upgrade img {
-    width: 130px; /* Increased width */
-    height: 130px; /* Increased height */
-    margin-bottom: 2.5px; /* Reduced spacing by half */
+    width: 130px; 
+    height: 130px; 
+    margin-bottom: 2.5px; 
 }
 
 .upgrade-img {
-    width: 90px; /* Increased width */
-    height: 90px; /* Increased height */
+    width: 90px; 
+    height: 90px; 
     margin-right: 10px;
 }
 
 .purchased-upgrade .upgrade-earnings p {
-    margin-top: 2.5px; /* Reduced spacing by half */
-    margin-bottom: 2.5px; /* Reduced spacing by half */
+    margin-top: 2.5px; 
+    margin-bottom: 2.5px; 
 }
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr); /* Adjusted for a 5-column layout */
+    grid-template-columns: repeat(5, 1fr); 
     gap: 10px;
 }
 
 /* Media Queries for Mobile Devices */
 @media (max-width: 768px) {
     body {
-        flex-direction: column; /* Stack vertically for mobile */
+        flex-direction: column; 
         align-items: center;
     }
 
     #main-container {
         flex-direction: column;
         align-items: center;
-        margin-left: 0; /* Remove left margin for mobile */
-        margin-top: 20px; /* Added margin to ensure content is visible */
-        width: 100%; /* Full width for mobile */
+        margin-left: 0; 
+        margin-top: 20px; 
+        width: 100%; 
     }
 
     #title-container {
@@ -162,30 +177,30 @@ button:disabled {
         top: 0;
         transform: none;
         margin-bottom: 20px;
-        font-size: 2em; /* Adjust font size for mobile */
+        font-size: 2em; 
     }
 
     #game {
-        width: 90%; /* Full width for mobile */
+        width: 90%; 
     }
 
     #specialUpgrades, #purchasedUpgrades, #right-section {
-        width: 100%; /* Full width for mobile */
+        width: 100%; 
     }
 
     .grid {
-        grid-template-columns: repeat(2, 1fr); /* 2-column layout for mobile */
+        grid-template-columns: repeat(2, 1fr); 
     }
 
     .purchased-upgrade img, .upgrade-img {
-        width: 150px; /* Adjusted width for mobile */
-        height: 150px; /* Adjusted height for mobile */
+        width: 150px; 
+        height: 150px; 
     }
 
     button {
-        font-size: 14px; /* Adjust font size for mobile */
-        padding: 8px 16px; /* Adjust padding for mobile */
-        width: auto; /* Auto width for mobile */
+        font-size: 14px; 
+        padding: 8px 16px; 
+        width: auto; 
     }
 }
 
@@ -218,7 +233,7 @@ button:disabled {
 }
 
 .multiplier-count {
-    font-size: 0.75em; /* Smaller font size */
+    font-size: 0.75em; 
     color: gold;
     font-weight: normal;
 }
@@ -248,8 +263,4 @@ button:disabled {
     text-shadow: 0 0 25px #ffd700, 0 0 50px #ffd700;
 }
 
-
-
-
 /* Add more levels as needed */
-

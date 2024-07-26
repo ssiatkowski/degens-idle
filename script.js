@@ -262,17 +262,69 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('playYarmulkesGame').classList.add('affordable');
     document.getElementById('playTrollPointsGame').classList.add('affordable');
 
+    document.getElementById('tradeButton').addEventListener('click', () => {
+        tradeResources();
+        saveGameState();
+    });
 
-    document.getElementById('tradeButton').addEventListener('click', tradeResources);
-
+    // Modified functions to include saveGameState
     function collectResource(resource) {
         if (resource === 'copium') copium += epsMultiplier;
         if (resource === 'delusion') delusion += epsMultiplier;
         if (resource === 'yarmulkes') yarmulkes += epsMultiplier;
         if (resource === 'trollPoints') trollPoints += epsMultiplier;
         updateDisplay();
+        saveGameState();
     }
     
+    // Load game state from localStorage
+    function loadGameState() {
+        copium = parseFloat(localStorage.getItem('copium')) || 0;
+        copiumPerSecond = parseFloat(localStorage.getItem('copiumPerSecond')) || 0;
+        delusion = parseFloat(localStorage.getItem('delusion')) || 0;
+        delusionPerSecond = parseFloat(localStorage.getItem('delusionPerSecond')) || 0;
+        yarmulkes = parseFloat(localStorage.getItem('yarmulkes')) || 0;
+        yarmulkesPerSecond = parseFloat(localStorage.getItem('yarmulkesPerSecond')) || 0;
+        trollPoints = parseFloat(localStorage.getItem('trollPoints')) || 0;
+        trollPointsPerSecond = parseFloat(localStorage.getItem('trollPointsPerSecond')) || 0;
+        prestiges = parseInt(localStorage.getItem('prestiges')) || 0;
+        epsMultiplier = parseFloat(localStorage.getItem('epsMultiplier')) || 1;
+        prestigeRequirement = parseFloat(localStorage.getItem('prestigeRequirement')) || 1000;
+        const lastInteraction = parseInt(localStorage.getItem('lastInteraction')) || Date.now();
+
+        // Calculate idle earnings
+        const now = Date.now();
+        const elapsedSeconds = (now - lastInteraction) / 1000;
+        generateIdleResources(elapsedSeconds);
+
+        updateDisplay();
+        updateUpgradeList();
+    }
+
+        // Save game state to localStorage
+        function saveGameState() {
+            localStorage.setItem('copium', copium);
+            localStorage.setItem('copiumPerSecond', copiumPerSecond);
+            localStorage.setItem('delusion', delusion);
+            localStorage.setItem('delusionPerSecond', delusionPerSecond);
+            localStorage.setItem('yarmulkes', yarmulkes);
+            localStorage.setItem('yarmulkesPerSecond', yarmulkesPerSecond);
+            localStorage.setItem('trollPoints', trollPoints);
+            localStorage.setItem('trollPointsPerSecond', trollPointsPerSecond);
+            localStorage.setItem('prestiges', prestiges);
+            localStorage.setItem('epsMultiplier', epsMultiplier);
+            localStorage.setItem('prestigeRequirement', prestigeRequirement);
+            localStorage.setItem('lastInteraction', Date.now());
+    }
+
+    // Generate resources based on elapsed time
+    function generateIdleResources(elapsedSeconds) {
+        copium += copiumPerSecond * epsMultiplier * elapsedSeconds;
+        delusion += delusionPerSecond * epsMultiplier * elapsedSeconds;
+        yarmulkes += yarmulkesPerSecond * epsMultiplier * elapsedSeconds;
+        trollPoints += trollPointsPerSecond * epsMultiplier * elapsedSeconds;
+    }
+
     function playMiniGame(resource) {
         if (cooldowns[resource]) return;
     
@@ -449,7 +501,7 @@ document.addEventListener('DOMContentLoaded', () => {
         prestiges++;
         epsMultiplier *= 1.5;
         prestigeRequirement *= 10; // Increase the requirement by 10x for the next prestige
-    
+
         // Reset resources and earnings per second
         copium = 0;
         delusion = 0;
@@ -459,18 +511,19 @@ document.addEventListener('DOMContentLoaded', () => {
         delusionPerSecond = 0;
         yarmulkesPerSecond = 0;
         trollPointsPerSecond = 0;
-    
+
         // Move purchased upgrades back to available upgrades
         purchasedUpgrades.forEach(upgrade => {
             upgrades.push(upgrade);
         });
         purchasedUpgrades = [];
         document.getElementById('purchasedList').innerHTML = ''; // Clear the purchased upgrades list
-    
+
         updateDisplay();
         updateUpgradeButtons();
         updateUpgradeList();
         alert(`Prestige activated! Current EPS multiplier: x${epsMultiplier.toFixed(2)}. Next prestige requirement: ${prestigeRequirement}`);
+        saveGameState();
     }
     
     
@@ -481,33 +534,35 @@ document.addEventListener('DOMContentLoaded', () => {
         yarmulkes += yarmulkesPerSecond * epsMultiplier;
         trollPoints += trollPointsPerSecond * epsMultiplier;
         updateDisplay();
+        saveGameState();
     }
     
 
     function buyUpgrade(upgradeName) {
         const upgrade = upgrades.find(up => up.name === upgradeName);
         const { cost, earnings, img, name } = upgrade;
-    
+
         if ((cost.copium === 0 || copium >= cost.copium) &&
             (cost.delusion === 0 || delusion >= cost.delusion) &&
             (cost.yarmulkes === 0 || yarmulkes >= cost.yarmulkes) &&
             (cost.trollPoints === 0 || trollPoints >= cost.trollPoints)) {
-    
+
             copium -= cost.copium;
             delusion -= cost.delusion;
             yarmulkes -= cost.yarmulkes;
             trollPoints -= cost.trollPoints;
-    
+
             copiumPerSecond += earnings.copiumPerSecond || 0;
             delusionPerSecond += earnings.delusionPerSecond || 0;
             yarmulkesPerSecond += earnings.yarmulkesPerSecond || 0;
             trollPointsPerSecond += earnings.trollPointsPerSecond || 0;
-    
+
             addPurchasedUpgrade(img, name, earnings);
             upgrades.splice(upgrades.indexOf(upgrade), 1); // Remove the purchased upgrade
             purchasedUpgrades.push(upgrade); // Track purchased upgrade
             updateUpgradeList();
             updateDisplay();
+            saveGameState();
         } else {
             alert('Not enough resources to purchase this upgrade.');
         }
@@ -606,7 +661,10 @@ document.addEventListener('DOMContentLoaded', () => {
     window.buyUpgrade = buyUpgrade;
 
 
+    window.addEventListener('beforeunload', saveGameState);
+
     setInterval(generateResources, 1000);
     updateDisplay();
     updateUpgradeList();
+    loadGameState();
 });
