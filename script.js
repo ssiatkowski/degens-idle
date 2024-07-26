@@ -170,6 +170,18 @@ document.addEventListener('DOMContentLoaded', () => {
             cost: { copium: 12000, delusion: 0, yarmulkes: 0, trollPoints: 0 },
             earnings: { copiumPerSecond: 25, delusionPerSecond: 0, yarmulkesPerSecond: 0, trollPointsPerSecond: 50 },
             img: "imgs/morty.PNG",
+        },
+        {
+            name: "Suss",
+            cost: { copium: 12000, delusion: 0, yarmulkes: 0, trollPoints: 0 },
+            earnings: { copiumPerSecond: 25, delusionPerSecond: 0, yarmulkesPerSecond: 0, trollPointsPerSecond: 50 },
+            img: "imgs/morty.PNG",
+        },
+        {
+            name: "Swing and a Miss",
+            cost: { copium: 2400, delusion: 1600, yarmulkes: 0, trollPoints: 0 },
+            earnings: { copiumPerSecond: 24, delusionPerSecond: 16, yarmulkesPerSecond: 0, trollPointsPerSecond: 3 },
+            img: "imgs/morty.PNG",
         }
     ];
 
