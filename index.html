@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Degens Idle v0.35</title>
+    <title>Degens Idle v0.4</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div id="main-container">
         <div id="title-column">
             <div id="title-container">
-                <h1 id="title">Degens Idle v0.35</h1>
+                <h1 id="title">Degens Idle v0.4</h1>
             </div>
             <div id="button-container">
                 <button id="restartButton">Restart Game</button>
@@ -20,34 +20,51 @@
             <div class="resource">
                 <p>Copium: <span id="copium" class="resource-value">0</span></p>
                 <p class="per-second">Copium per second: <span id="cps">0</span></p>
-                <button id="collectCopiumButton">Collect Copium</button>
-                <button id="playCopiumGame" class="game-button">Play Copium Game</button>
+                <div class="buttons">
+                    <button id="collectCopiumButton" class="collect-button">Collect Copium</button>
+                    <button id="speedGame" class="game-button">Speed Game</button>
+                </div>
             </div>
             <div class="resource">
                 <p>Delusion: <span id="delusion" class="resource-value">0</span></p>
                 <p class="per-second">Delusion per second: <span id="dps">0</span></p>
-                <button id="collectDelusionButton">Collect Delusion</button>
-                <button id="playDelusionGame" class="game-button">Play Delusion Game</button>
+                <div class="buttons">
+                    <button id="collectDelusionButton" class="collect-button">Collect Delusion</button>
+                    <button id="memoryGame" class="game-button">Memory Game</button>
+                </div>
             </div>
             <div class="resource">
                 <p>Yarmulkes: <span id="yarmulkes" class="resource-value">0</span></p>
                 <p class="per-second">Yarmulkes per second: <span id="yps">0</span></p>
-                <button id="collectYarmulkesButton">Collect Yarmulkes</button>
-                <button id="playYarmulkesGame" class="game-button">Play Yarmulkes Game</button>
+                <div class="buttons">
+                    <button id="collectYarmulkesButton" class="collect-button">Collect Yarmulkes</button>
+                    <button id="mathGame" class="game-button">Math Game</button>
+                </div>
             </div>
             <div class="resource">
                 <p>Troll Points: <span id="trollPoints" class="resource-value">0</span></p>
                 <p class="per-second">Troll Points per second: <span id="tpps">0</span></p>
-                <button id="collectTrollPointsButton">Collect Troll Points</button>
-                <button id="playTrollPointsGame" class="game-button">Play Troll Points Game</button>
+                <div class="buttons">
+                    <button id="collectTrollPointsButton" class="collect-button">Collect Troll Points</button>
+                    <button id="luckGame" class="game-button">Luck Game</button>
+                </div>
+            </div>
+            <div class="resource">
+                <p>Hopium: <span id="hopium" class="resource-value">0</span></p>
+                <p class="per-second">Hopium per second: <span id="hps">0</span></p>
+                <!-- No collect button for Hopium -->
+            </div>
+            <div id="cookieContainer" style="text-align: center;">
+                <button id="cookieButton" style="display: none;">
+                    <img src="imgs/cookie.jpg" alt="Cookie Button">
+                </button>
             </div>
             <p class="prestige-text">
                 Prestige: <span id="prestiges" class="prestige-count">0</span>
                 <br>
                 <span id="multiplier" class="multiplier-count">(x1.00 multiplier on everything)</span>
             </p>
-            <button id="prestigeButton" style="display: none;" onclick="prestige()">Prestige</button>
-            <button id="ascendButton" style="display: none;" onclick="ascend()">Ascend Above Mortals</button>
+            <button id="prestigeButton">Prestige</button>
         </div>
         <div id="upgrades">
             <h2>Upgrades</h2>
@@ -59,22 +76,23 @@
             <div id="tradeSection">
                 <h2>Trade Resources</h2>
                 <label for="fromResource">From:</label>
-                <select id="fromResource">
+                <select id="fromResource" onchange="updateTradeRatio()">
                     <option value="copium">Copium</option>
                     <option value="delusion">Delusion</option>
                     <option value="yarmulkes">Yarmulkes</option>
                     <option value="trollPoints">Troll Points</option>
                 </select>
-                <label for="toResource">To:</label>
-                <select id="toResource">
+                
+                <select id="toResource" onchange="updateTradeRatio()">
                     <option value="copium">Copium</option>
                     <option value="delusion">Delusion</option>
                     <option value="yarmulkes">Yarmulkes</option>
                     <option value="trollPoints">Troll Points</option>
+                    <option value="hopium">Hopium</option> <!-- Add Hopium as a tradeable resource -->
                 </select>
                 <label for="tradeAmount">Amount:</label>
                 <input type="number" id="tradeAmount" value="5" min="5" step="5">
-                <p>Trade ratio is 5:1</p>
+                <p id="tradeRatioDisplay">Trade ratio is 5:1</p>
                 <button id="tradeButton">Trade</button>
             </div>
             <div id="purchasedUpgrades">
@@ -85,6 +103,7 @@
             </div>
         </div>
     </div>
+    <script src="upgrades.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

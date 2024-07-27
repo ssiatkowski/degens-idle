@@ -122,6 +122,36 @@ button:disabled {
     cursor: not-allowed;
 }
 
+/* Styles for the collect buttons */
+button.collect-button, button.game-button {
+    background-color: #28a745; /* Green background */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 5px; /* Add margin for spacing */
+    display: inline-block; /* Ensure buttons are inline */
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button.collect-button:hover, button.game-button:hover {
+    background-color: #218838; /* Darker green on hover */
+    transform: scale(1.1); /* Slightly larger on hover */
+}
+
+button.collect-button:active, button.game-button:active {
+    background-color: #1e7e34; /* Even darker green on click */
+    transform: scale(1.05); /* Slightly smaller on click */
+}
+
+/* Ensure buttons are aligned next to each other */
+.resource .buttons {
+    display: flex;
+    gap: 10px;
+}
+
 #specialUpgrades, #purchasedUpgrades {
     margin-top: 20px;
     text-align: center;
@@ -129,6 +159,12 @@ button:disabled {
 
 #specialUpgrades {
     width: 300px; /* Adjust as needed for your layout */
+}
+
+button.disabled {
+    background-color: #333; /* Darker gray */
+    color: #666; /* Darker text */
+    cursor: not-allowed;
 }
 
 #right-section {
@@ -234,17 +270,27 @@ button:disabled {
 }
 
 #prestigeButton {
-    background-color: #f39c12;
+    display: block;
+    margin: 20px auto; /* Center horizontally */
+    background-color: #f39c12; /* Noticeable background color */
     color: white;
     border: none;
-    padding: 10px 20px;
-    margin-top: 10px;
-    font-size: 16px;
+    padding: 15px 30px; /* Larger padding for a bigger button */
+    font-size: 18px; /* Larger font size */
+    font-weight: bold; /* Bold text */
     cursor: pointer;
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Add a shadow for depth */
+    transition: transform 0.3s ease, background-color 0.3s ease; /* Smooth transitions */
 }
 
 #prestigeButton:hover {
-    background-color: #e67e22;
+    background-color: #e67e22; /* Slightly darker on hover */
+    transform: scale(1.1); /* Slightly larger on hover */
+}
+
+#prestigeButton:active {
+    transform: scale(1.05); /* Slightly smaller on click */
 }
 
 .prestige-text {
@@ -292,4 +338,30 @@ button:disabled {
     text-shadow: 0 0 25px #ffd700, 0 0 50px #ffd700;
 }
 
-/* Add more levels as needed */
+#cookieButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+#cookieButton img {
+    width: 100px; /* Adjust size as needed */
+    height: auto;
+    transition: transform 0.1s;
+}
+
+#cookieButton:active img {
+    transform: scale(0.9);
+}
+
+@keyframes clickAnimation {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
