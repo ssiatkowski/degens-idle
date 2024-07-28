@@ -411,3 +411,41 @@ button.disabled {
         transform: scale(1);
     }
 }
+
+#ascendButton {
+    display: block;
+    margin: 20px auto; /* Center horizontally */
+    background-color: #8e44ad; /* Purple background */
+    color: white;
+    border: none;
+    padding: 15px 30px; /* Larger padding for a bigger button */
+    font-size: 18px; /* Larger font size */
+    font-weight: bold; /* Bold text */
+    cursor: pointer;
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Add a shadow for depth */
+    transition: transform 0.3s ease, background-color 0.3s ease; /* Smooth transitions */
+}
+
+#ascendButton:hover {
+    background-color: #7d3c98; /* Slightly darker on hover */
+    transform: scale(1.1); /* Slightly larger on hover */
+}
+
+#ascendButton:active {
+    transform: scale(1.05); /* Slightly smaller on click */
+}
+
+.god-mode-text {
+    font-size: 1.5em;
+    color: lightgoldenrodyellow;
+    font-weight: bold;
+    transition: all 0.5s ease;
+    margin-top: 10px;
+}
+
+.god-mode-level, .god-mode-multiplier {
+    font-size: 1.75em; 
+    color: gold;
+    font-weight: normal;
+}

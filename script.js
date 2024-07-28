@@ -22,6 +22,10 @@ let epsMultiplier = 1;
 let prestigeRequirement = 1000;
 let purchasedUpgrades = [];
 
+let godModeLevel = 0;
+let godModeMultiplier = 1;
+
+
 let firstTimeCookieUnlock = true;
 
 let modalQueue = [];
@@ -38,10 +42,10 @@ const miniGameTimeouts = {
 
 // Function to handle cookie click
 function collectAllResources() {
-    copium += 10 * epsMultiplier;
-    delusion += 10 * epsMultiplier;
-    yarmulkes += 10 * epsMultiplier;
-    trollPoints += 10 * epsMultiplier;
+    copium += 10 * epsMultiplier * godModeMultiplier;
+    delusion += 10 * epsMultiplier * godModeMultiplier;
+    yarmulkes += 10 * epsMultiplier * godModeMultiplier;
+    trollPoints += 10 * epsMultiplier * godModeMultiplier;
     updateDisplay();
     saveGameState();
 }
@@ -49,10 +53,10 @@ function collectAllResources() {
 // Function to collect a specific resource and update the game state
 function collectResource(resource) {
     // Increase the appropriate resource by the epsMultiplier
-    if (resource === 'copium') copium += epsMultiplier;
-    if (resource === 'delusion') delusion += epsMultiplier;
-    if (resource === 'yarmulkes') yarmulkes += epsMultiplier;
-    if (resource === 'trollPoints') trollPoints += epsMultiplier;
+    if (resource === 'copium') copium += epsMultiplier * godModeMultiplier;
+    if (resource === 'delusion') delusion += epsMultiplier * godModeMultiplier;
+    if (resource === 'yarmulkes') yarmulkes += epsMultiplier * godModeMultiplier;
+    if (resource === 'trollPoints') trollPoints += epsMultiplier * godModeMultiplier;
     
     // Update the display to reflect the new resource values
     updateDisplay();
@@ -79,6 +83,10 @@ function loadGameState() {
     prestiges = parseInt(localStorage.getItem('prestiges')) || 0;
     epsMultiplier = parseFloat(localStorage.getItem('epsMultiplier')) || 1;
     prestigeRequirement = parseFloat(localStorage.getItem('prestigeRequirement')) || 1000;
+
+    // Retrieve and parse the gpd mode values from local storage, defaulting to 0 or 1 if not found
+    godModeLevel = parseInt(localStorage.getItem('godModeLevel')) || 0;
+    godModeMultiplier = parseFloat(localStorage.getItem('godModeMultiplier')) || 1;
     
     // Retrieve the last interaction time, defaulting to the current time if not found
     const lastInteraction = parseInt(localStorage.getItem('lastInteraction')) || Date.now();
@@ -135,6 +143,10 @@ function saveGameState() {
     localStorage.setItem('epsMultiplier', epsMultiplier);
     localStorage.setItem('prestigeRequirement', prestigeRequirement);
     
+    // Save the god mode values to local storage
+    localStorage.setItem('godModeLevel', godModeLevel);
+    localStorage.setItem('godModeMultiplier', godModeMultiplier);
+
     // Save the current time as the last interaction time
     localStorage.setItem('lastInteraction', Date.now());
     
@@ -146,14 +158,15 @@ function saveGameState() {
 
 // Generate resources based on elapsed time
 function generateResources() {
-    copium += copiumPerSecond * epsMultiplier;
-    delusion += delusionPerSecond * epsMultiplier;
-    yarmulkes += yarmulkesPerSecond * epsMultiplier;
-    trollPoints += trollPointsPerSecond * epsMultiplier;
-    hopium += hopiumPerSecond * epsMultiplier;
+    copium += copiumPerSecond * epsMultiplier * godModeMultiplier;
+    delusion += delusionPerSecond * epsMultiplier * godModeMultiplier;
+    yarmulkes += yarmulkesPerSecond * epsMultiplier * godModeMultiplier;
+    trollPoints += trollPointsPerSecond * epsMultiplier * godModeMultiplier;
+    hopium += hopiumPerSecond * epsMultiplier * godModeMultiplier;
     updateDisplay();
     saveGameState();
 }
+
 
 
 
@@ -239,12 +252,29 @@ function playMiniGame(gameType) {
         startCooldown(gameType); // Start cooldown for the mini-game
     } else if (gameType === 'luck') {
         // Luck mini-game logic
-        let reward = Math.floor(Math.random() * (trollPoints * 2 + 25)) - trollPoints;
+        let result = (Math.random() * 200) - 75; // Generates a random number between -75 and +125%
+        let message = "";
+        let reward = Math.floor(trollPoints * (result / 100)); // Calculate reward based on the result percentage
+        let gainLossMessage = reward >= 0 ? "gained" : "lost";
+    
+        if (result > 100) {
+            message = "SUPER LUCKY!!! 🍀🍀🍀";
+        } else if (result > 75) {
+            message = "Very Lucky!!";
+        } else if (result > 0) {
+            message = "Lucky!";
+        } else if (result > -40) {
+            message = "Unlucky!";
+        } else {
+            message = "Extremely Unlucky 😞😞😞";
+        }
+    
         trollPoints += reward;
-        showMessageModal(`You earned ${reward.toFixed(2)} troll points!`);
+        showMessageModal(`You rolled ${result.toFixed(2)}%. ${message} You ${gainLossMessage} ${Math.abs(reward).toFixed(2)} troll points!`);
         updateDisplay(); // Update the display
         startCooldown(gameType); // Start cooldown for the mini-game
     }
+    
 }
 
 // Function to start the cooldown for a mini-game
@@ -327,8 +357,8 @@ function unlockMiniGames() {
 
 
 
-function restartGame() {
-    if (confirm("Are you sure you want to restart the game? This will reset all your progress.")) {
+function restartGame(isPrestige = false, isAscend = false) {
+    if (isPrestige || isAscend || confirm("Are you sure you want to restart the game? This will reset all your progress.")) {
         // Reset all resources and earnings per second
         copium = 0;
         copiumPerSecond = 0;
@@ -341,10 +371,21 @@ function restartGame() {
         hopium = 0;
         hopiumPerSecond = 0;
 
-        // Reset prestiges and multipliers
-        prestiges = 0;
-        epsMultiplier = 1;
-        prestigeRequirement = 1000;
+        // Reset prestiges and multipliers if it's not a prestige
+        if (!isPrestige) {
+            prestiges = 0;
+            epsMultiplier = 1;
+            prestigeRequirement = 1000;
+        }
+
+        // Reset ascends and multipliers if it's a full restart
+        if (!isAscend && !isPrestige) {
+            godModeLevel = 0;
+            godModeMultiplier = 1;
+            // Hide the cookie button
+            document.getElementById('cookieButton').style.display = 'none';
+            firstTimeCookieUnlock = true;
+        }
 
         // Clear purchased upgrades
         purchasedUpgrades = [];
@@ -352,10 +393,6 @@ function restartGame() {
 
         // Restore all upgrades
         availableUpgrades = upgrades.slice(); // Reset available upgrades to the original state
-
-        // Hide the cookie button
-        document.getElementById('cookieButton').style.display = 'none';
-        firstTimeCookieUnlock = true;
 
         // Save game state
         saveGameState();
@@ -449,24 +486,30 @@ function tradeResources() {
 function updateDisplay() {
     // Update the text content of each resource element
     document.getElementById('copium').textContent = copium.toFixed(2);
-    document.getElementById('cps').textContent = (copiumPerSecond * epsMultiplier).toFixed(2);
+    document.getElementById('cps').textContent = (copiumPerSecond * epsMultiplier * godModeMultiplier).toFixed(2);
     document.getElementById('delusion').textContent = delusion.toFixed(2);
-    document.getElementById('dps').textContent = (delusionPerSecond * epsMultiplier).toFixed(2);
+    document.getElementById('dps').textContent = (delusionPerSecond * epsMultiplier * godModeMultiplier).toFixed(2);
     document.getElementById('yarmulkes').textContent = yarmulkes.toFixed(2);
-    document.getElementById('yps').textContent = (yarmulkesPerSecond * epsMultiplier).toFixed(2);
+    document.getElementById('yps').textContent = (yarmulkesPerSecond * epsMultiplier * godModeMultiplier).toFixed(2);
     document.getElementById('trollPoints').textContent = trollPoints.toFixed(2);
-    document.getElementById('tpps').textContent = (trollPointsPerSecond * epsMultiplier).toFixed(2);
+    document.getElementById('tpps').textContent = (trollPointsPerSecond * epsMultiplier * godModeMultiplier).toFixed(2);
     document.getElementById('hopium').textContent = hopium.toFixed(2);
-    document.getElementById('hps').textContent = (hopiumPerSecond * epsMultiplier).toFixed(2);
+    document.getElementById('hps').textContent = (hopiumPerSecond * epsMultiplier * godModeMultiplier).toFixed(2);
 
     // Update the prestige count and multiplier display
     document.getElementById('prestige-multiplier').textContent = `Prestige: x${epsMultiplier.toFixed(2)} mult`;
 
-    updatePrestigeButton();
+    // Show god mode level and multiplier
+    document.getElementById('god-mode-level').textContent = `God Mode Level: ${godModeLevel}`;
+    document.getElementById('god-mode-multiplier').textContent = `God Mode Multiplier: x${godModeMultiplier.toFixed(2)}`;
 
+    updatePrestigeButton();
+    updateAscendButton();
+    
     // Update the upgrade buttons to reflect the current game state
     updateUpgradeButtons();
 }
+
 
 
 // Function to calculate the prestige multiplier based on the lowest of the first four resources
@@ -481,25 +524,19 @@ function canPrestige() {
     return minResource >= prestigeRequirement;
 }
 
-// Function to handle the prestige action
 function prestige() {
     if (canPrestige()) {
         epsMultiplier = calculatePrestigeMultiplier();
         prestigeRequirement = Math.min(copium, delusion, yarmulkes, trollPoints);
-        copium = 0;
-        delusion = 0;
-        yarmulkes = 0;
-        trollPoints = 0;
-        hopium = 0;
-        copiumPerSecond = 0;
-        delusionPerSecond = 0;
-        yarmulkesPerSecond = 0;
-        trollPointsPerSecond = 0;
-        hopiumPerSecond = 0;
+        
+        // Call restartGame with isPrestige flag set to true
+        restartGame(true,false);
+
         prestiges += 1;
-        purchasedUpgrades = [];
-        availableUpgrades = upgrades.slice();
+
+        // Save game state after prestige
         saveGameState();
+
         showMessageModal('Prestige Successful!', `Your multiplier is now x${epsMultiplier.toFixed(2)}. All resources have been reset.`);
         updateDisplay();
         updateUpgradeList();
@@ -519,15 +556,37 @@ function updatePrestigeButton() {
     }
 }
 
+function canAscend() {
+    return purchasedUpgrades.some(upgrade => upgrade.name === "Transcendence");
+}
+
+function ascend() {
+    if (confirm('Are you sure you want to enter God-Mode (level ${godModeLevel})?')) {
+        godModeLevel += 1;
+        godModeMultiplier = 2 ** godModeLevel;
+        restartGame(false,true); // Use the existing restartGame function with prestige mode
+        showMessageModal('Ascendance Successful!', `You have entered God-Mode Level ${godModeLevel}. Your multiplier is now x${godModeMultiplier.toFixed(2)}.`);
+    }
+}
+
+function updateAscendButton() {
+    const ascendButton = document.getElementById('ascendButton');
+    if (canAscend()) {
+        ascendButton.style.display = 'block';
+    } else {
+        ascendButton.style.display = 'none';
+    }
+}
+
 
 // Function to generate idle resources based on the elapsed time
 function generateIdleResources(elapsedSeconds) {
     // Increase resources based on their per second values, elapsed time, and the multiplier
-    copium += copiumPerSecond * epsMultiplier * elapsedSeconds;
-    delusion += delusionPerSecond * epsMultiplier * elapsedSeconds;
-    yarmulkes += yarmulkesPerSecond * epsMultiplier * elapsedSeconds;
-    trollPoints += trollPointsPerSecond * epsMultiplier * elapsedSeconds;
-    hopium += hopiumPerSecond * epsMultiplier * elapsedSeconds;
+    copium += copiumPerSecond * epsMultiplier * godModeMultiplier * elapsedSeconds;
+    delusion += delusionPerSecond * epsMultiplier * godModeMultiplier * elapsedSeconds;
+    yarmulkes += yarmulkesPerSecond * epsMultiplier * godModeMultiplier * elapsedSeconds;
+    trollPoints += trollPointsPerSecond * epsMultiplier * godModeMultiplier * elapsedSeconds;
+    hopium += hopiumPerSecond * epsMultiplier * godModeMultiplier * elapsedSeconds;
 }
 
 // Function to encode a name for safe usage in URLs or storage
@@ -879,11 +938,14 @@ document.addEventListener('DOMContentLoaded', () => {
         saveGameState(); // Save the game state after trading
     });
     // Add event listener for the restart button
-    document.getElementById('restartButton').addEventListener('click', restartGame);
+    document.getElementById('restartButton').addEventListener('click', () => restartGame(false, false));
+
 
     // Add event listener for the prestige button
     document.getElementById('prestigeButton').addEventListener('click', prestige);
 
+    // Add event listener for the ascend button
+    document.getElementById('ascendButton').addEventListener('click', ascend);
 
     showWelcomeModal();
 
