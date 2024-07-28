@@ -613,15 +613,15 @@ function updatePrestigeButton() {
 }
 
 function canAscend() {
-    return purchasedUpgrades.some(upgrade => upgrade.name === "Transcendence");
+    return purchasedUpgrades.some(upgrade => upgrade.name === "Ascension");
 }
 
 async function ascend() {
 
-    const confirmed = await showMessageModal('God-Mode Ascension', `Are you sure you want to enter God-Mode level ${godModeLevel+1}? You will lose all your Upgrades and Prestige progress!`, true, false);
+    const confirmed = await showMessageModal('God-Mode Ascension', `Are you sure you want to enter God-Mode level ${godModeLevel+1}? You will lose all your Upgrades and Prestige progress!<br><br>Tip: Tip: While you can ascend to as many God-Mode levels as you desire, it's not necessary to achieve every level to proceed to the next chapter.`, true, false);
     if (confirmed) {
         godModeLevel += 1;
-        godModeMultiplier = 2 ** godModeLevel;
+        godModeMultiplier = 1.1 ** godModeLevel;
 
         const selectedUpgrade = await showMessageModal("Select God-Mode Upgrade", "Select one of your purchased upgrades to enhance (10x multiplier).", false, true);
 
@@ -630,7 +630,7 @@ async function ascend() {
         restartGame(false,true); // Use the existing restartGame function with prestige mode
         // Save game state after ascending
         saveGameState();
-        showMessageModal('Ascension Successful!', `You have entered God-Mode Level ${godModeLevel}. Your multiplier is now x${godModeMultiplier.toFixed(2)}.`);
+        showMessageModal('Ascension Successful!', `You have entered God-Mode Level ${godModeLevel}. Your multiplier is now x${godModeMultiplier.toFixed(2)} and your chosen upgrade is 10x stronger.`);
         updateEffectiveMultipliers();
         updateDisplay();
     }
@@ -720,9 +720,9 @@ function buyUpgrade(encodedUpgradeName) {
             document.getElementById('cookieButton').style.display = 'block';
         }
 
-        // Special case for unlocking the "Transcendence" upgrade
-        if (name === "Transcendence" && godModeLevel < 1) {
-            showMessageModal('Transcendence', "Congratulations, brave soul! With the purchase of the Transcendence upgrade, you have unlocked the extraordinary ability to Ascend Above Mortals and enter the revered God Mode. Prepare yourself for an epic journey where the limits of mortality no longer bind you.\n\nWelcome to the next chapter of your legendary adventure. Ascend and let your godlike journey begin!");
+        // Special case for unlocking the "Ascension" upgrade
+        if (name === "Ascension" && godModeLevel < 1) {
+            showMessageModal('Ascension', "Congratulations, brave soul! With the purchase of the Ascension upgrade, you have unlocked the extraordinary ability to Ascend Above Mortals and enter the revered God Mode. Prepare yourself for an epic journey where the limits of mortality no longer bind you.\n\nWelcome to the next chapter of your legendary adventure. Ascend and let your godlike journey begin!");
         } 
 
         // Show a message if the upgrade has one
@@ -953,16 +953,13 @@ function displayNextModal() {
 
     const { title, message, isConfirm, isUpgradeSelection, resolve } = modalQueue.shift();
 
-    // Set the title and message, handle cases where they might be undefined
     modalTitle.textContent = title || '';
     modalMessage.innerHTML = message || '';
-
-    // Show the modal
     modal.style.display = 'block';
 
     const closeModal = (result) => {
         modal.style.display = 'none';
-        displayNextModal(); // Display the next modal in the queue
+        displayNextModal();
         resolve(result);
     };
 
@@ -996,7 +993,7 @@ function displayNextModal() {
                 const selected = ascendUpgradeList.querySelector('.selected');
                 if (selected) selected.classList.remove('selected');
                 upgradeItem.classList.add('selected');
-                upgradeConfirmButton.style.display = 'block'; // Show confirm button when an upgrade is selected
+                upgradeConfirmButton.style.display = 'block';
             };
             ascendUpgradeList.appendChild(upgradeItem);
         });
@@ -1009,7 +1006,6 @@ function displayNextModal() {
             }
         };
 
-        // Disable the ability to cancel or close the modal without making a selection
         modalCancelButton.style.display = 'none';
         closeButton.style.display = 'none';
         window.onclick = null;
@@ -1029,6 +1025,7 @@ function displayNextModal() {
         };
     }
 }
+
 
 
 

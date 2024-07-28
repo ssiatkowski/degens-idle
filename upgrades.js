@@ -225,10 +225,10 @@ const upgrades = [
         img: "imgs/im_gonna_come.jpg",
     },
     {
-        name: "Transcendence",
+        name: "Ascension",
         cost: { copium: 99999, delusion: 99999, yarmulkes: 99999, trollPoints: 99999, hopium: 0 },
         earnings: { copiumPerSecond: 100, delusionPerSecond: 100, yarmulkesPerSecond: 100, trollPointsPerSecond: 100, hopiumPerSecond: 0 },
-        img: "imgs/transcendence.jpg",
+        img: "imgs/Ascension.jpg",
     },
     {
         name: "420",
