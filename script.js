@@ -460,7 +460,7 @@ function updateDisplay() {
     document.getElementById('hps').textContent = (hopiumPerSecond * epsMultiplier).toFixed(2);
 
     // Update the prestige count and multiplier display
-    document.getElementById('prestige-multiplier').textContent = `Prestige: x${epsMultiplier.toFixed(2)} multiplier`;
+    document.getElementById('prestige-multiplier').textContent = `Prestige: x${epsMultiplier.toFixed(2)} mult`;
 
     updatePrestigeButton();
 
