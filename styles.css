@@ -70,6 +70,29 @@
     background-color: #c0392b; /* Darker red on hover */
 }
 
+#modalConfirmButtons {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+#modalConfirmButton, #modalCancelButton {
+    background-color: #4CAF50; /* Green */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#modalCancelButton {
+    background-color: #f44336; /* Red */
+}
 
 
 body {
@@ -190,6 +213,20 @@ button.affordable, .game-button.affordable {
     color: white;
 }
 
+/* God Mode Affordable Button */
+button.affordable-godmode {
+    background-color: #1e90ff; /* DodgerBlue */
+    color: white;
+    border: 2px solid #00bfff; /* DeepSkyBlue */
+    box-shadow: 0 0 10px #1e90ff, 0 0 20px #00bfff; /* Blue shadow for glow effect */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+button.affordable-godmode:hover {
+    background-color: #1c86ee; /* Slightly darker DodgerBlue */
+    box-shadow: 0 0 15px #1e90ff, 0 0 30px #00bfff; /* Brighter blue shadow on hover */
+}
+
 button:disabled {
     background-color: #333; /* Darker gray */
     color: #666; /* Darker text */
@@ -285,6 +322,13 @@ button.disabled {
     margin-bottom: 2.5px; 
 }
 
+/* Blue glow for God Mode Purchased Upgrades */
+.purchased-upgrade-godmode img {
+    box-shadow: 0 0 40px #1e90ff, 0 0 80px #00bfff; /* Blue shadow for glow effect */
+    border: 5px solid #00bfff; /* DeepSkyBlue */
+}
+
+
 .grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr); 
@@ -343,6 +387,37 @@ button.disabled {
     }
 }
 
+#ascendUpgradeSelection {
+    margin-top: 20px;
+    text-align: center;
+}
+
+#ascendUpgradeList {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.ascend-upgrade-item {
+    background-color: #4CAF50; /* Green */
+    color: white;
+    border: 2px solid #fff;
+    padding: 10px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: transform 0.2s;
+}
+
+.ascend-upgrade-item:hover {
+    transform: scale(1.1);
+}
+
+.ascend-upgrade-item.selected {
+    background-color: #3672f4; /* Red */
+}
+
 /* Prestige Button Styling */
 #prestigeButton {
     display: block;
@@ -370,16 +445,22 @@ button.disabled {
 
 .prestige-multiplier-text {
     font-size: 1.5em;
-    color: lightgoldenrodyellow;
+    color: #ffa500; /* Orange color */
     font-weight: bold;
+    margin-top: 10px;
+    text-align: center;
     transition: all 0.5s ease;
 }
 
 .prestige-multiplier-count {
     font-size: 1.75em; 
-    color: gold;
+    color: #ffd700; /* Gold color */
     font-weight: normal;
+    text-shadow: 0 0 4px #ffff99, 0 0 10px #ffa500, 0 0 15px #ff8c00;
 }
+
+
+
 
 
 #cookieButton {
@@ -437,15 +518,12 @@ button.disabled {
 }
 
 .god-mode-text {
-    font-size: 1.5em;
-    color: lightgoldenrodyellow;
+    font-size: 2em;
+    color: white;
     font-weight: bold;
+    text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00bfff, 0 0 40px #00bfff, 0 0 50px #00bfff, 0 0 60px #00bfff, 0 0 70px #00bfff;
+    margin-top: 20px;
+    text-align: center;
     transition: all 0.5s ease;
-    margin-top: 10px;
 }
 
-.god-mode-level, .god-mode-multiplier {
-    font-size: 1.75em; 
-    color: gold;
-    font-weight: normal;
-}

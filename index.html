@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Degens Idle v0.42</title>
+    <title>Degens Idle v0.5</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -20,9 +20,14 @@
             <p>
                 Are you ready to transcend the ordinary? To not only witness but harness the power of memes in their truest, most profound form? Every action you take will push you to ponder life’s greatest mysteries and your role in this meme-laden multiverse.
             </p>
-            <p>
-                <strong>Dive into Degens Idle, where every click is a step towards meme mastery and self-realization. Your journey into the meme-iverse and the meaning of existence begins here.</strong>
-            </p>
+            <h2>How to Play:</h2>
+            <ul>
+                <li><strong>Click to Gather Resources:</strong> Start by clicking to collect Copium and other essential resources. Each click brings you closer to unlocking new memes and upgrades.</li>
+                <li><strong>Upgrade Your Abilities:</strong> Use your resources to purchase upgrades. These will enhance your clicking power and resource generation, allowing you to progress faster.</li>
+                <li><strong>Unlock New Content:</strong> Venture into the unknown and unveil hidden secrets of the meme-iverse. Each resource collected and upgrade acquired opens portals to mysterious realms, revealing cryptic memes and arcane powers that will enhance your journey.</li>
+                <li><strong>Explore the Meme-iverse:</strong> Dive into various aspects of internet culture. Each upgrade and unlocked meme will reveal more about the meme-iverse and your place within it.</li>
+                <li><strong>Ponder and Reflect:</strong> As you progress, take a moment to ponder the deeper meanings behind the memes. What do they say about life, existence, and your role in this digital realm?</li>
+            </ul>
         </div>
     </div>
     <div id="messageModal" class="modal">
@@ -31,12 +36,21 @@
             <h2 id="modalTitle"></h2>
             <p id="modalMessage"></p>
             <button id="modalCloseButton">Close</button>
+            <div id="modalConfirmButtons" style="display:none;">
+                <button id="modalConfirmButton">Confirm</button>
+                <button id="modalCancelButton">Cancel</button>
+            </div>
+            <div id="ascendUpgradeSelection" style="display:none;">
+                <h3>Select an Upgrade for God Mode:</h3>
+                <div id="ascendUpgradeList"></div>
+                <button id="upgradeConfirmButton" style="display:none;">Confirm Selection</button>
+            </div>
         </div>
-    </div>
+    </div>    
     <div id="main-container">
         <div id="title-column">
             <div id="title-container">
-                <h1 id="title">Degens Idle v0.42</h1>
+                <h1 id="title">Degens Idle v0.5</h1>
             </div>
             <div id="button-container">
                 <button id="restartButton">Restart Game</button>
@@ -90,12 +104,7 @@
                 <span id="prestige-multiplier" class="prestige-multiplier-count">Prestige: x1.00 mult</span>
             </p>
             <button id="ascendButton" style="display:none;">Ascend Above Mortals</button>
-            <p class="god-mode-text">
-                <span id="god-mode-level" class="god-mode-level">God Mode Level: 0</span>
-            </p>
-            <p class="god-mode-text">
-                <span id="god-mode-multiplier" class="god-mode-multiplier">God Mode Multiplier: x1.00</span>
-            </p>
+            <p class="god-mode-text" id="god-mode-display">God-Mode Level 0 (x1.00 mult)</p>
         </div>
         <div id="upgrades">
             <h2>Upgrades</h2>

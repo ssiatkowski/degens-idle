@@ -2,19 +2,19 @@ const upgrades = [
     {
         name: "Haven't Smoked Foool",
         cost: { copium: 5, delusion: 0, yarmulkes: 0, trollPoints: 0, hopium: 0 },
-        earnings: { copiumPerSecond: 1.5, delusionPerSecond: 0, yarmulkesPerSecond: 0, trollPointsPerSecond: 0.9, hopiumPerSecond: 0 },
+        earnings: { copiumPerSecond: 1.4, delusionPerSecond: 0, yarmulkesPerSecond: 0, trollPointsPerSecond: 0.8, hopiumPerSecond: 0 },
         img: "imgs/ez_blunt.jpg",
     },
     {
         name: "She Old",
         cost: { copium: 0, delusion: 5, yarmulkes: 10, trollPoints: 10, hopium: 0 },
-        earnings: { copiumPerSecond: 1, delusionPerSecond: 0, yarmulkesPerSecond: 0, trollPointsPerSecond: 2.2, hopiumPerSecond: 0 },
+        earnings: { copiumPerSecond: 0.7, delusionPerSecond: 0, yarmulkesPerSecond: 0, trollPointsPerSecond: 2.1, hopiumPerSecond: 0 },
         img: "imgs/leo.jpg",
     },
     {
         name: "It's group time!",
         cost: { copium: 10, delusion: 10, yarmulkes: 10, trollPoints: 10, hopium: 0 },
-        earnings: { copiumPerSecond: 2, delusionPerSecond: 2.3, yarmulkesPerSecond: 2, trollPointsPerSecond: 1, hopiumPerSecond: 0 },
+        earnings: { copiumPerSecond: 1.8, delusionPerSecond: 2.2, yarmulkesPerSecond: 1.9, trollPointsPerSecond: 1, hopiumPerSecond: 0 },
         img: "imgs/joker.jpg",
     },
     {
@@ -26,25 +26,25 @@ const upgrades = [
     {
         name: "Is he alive?",
         cost: { copium: 10, delusion: 0, yarmulkes: 50, trollPoints: 35, hopium: 0 },
-        earnings: { copiumPerSecond: 1, delusionPerSecond: 0, yarmulkesPerSecond: 6.7, trollPointsPerSecond: 1, hopiumPerSecond: 0 },
+        earnings: { copiumPerSecond: 1, delusionPerSecond: 0, yarmulkesPerSecond: 6.2, trollPointsPerSecond: 1, hopiumPerSecond: 0 },
         img: "imgs/is_he_alive.jpg",
     },
     {
         name: "Never Admit Mistakes",
         cost: { copium: 100, delusion: 100, yarmulkes: 0, trollPoints: 0, hopium: 0 },
-        earnings: { copiumPerSecond: 2, delusionPerSecond: 4.2, yarmulkesPerSecond: 0, trollPointsPerSecond: 2.5, hopiumPerSecond: 0 },
+        earnings: { copiumPerSecond: 1.3, delusionPerSecond: 4.2, yarmulkesPerSecond: 0, trollPointsPerSecond: 2.5, hopiumPerSecond: 0 },
         img: "imgs/marv.jpg",
     },
     {
         name: "Party Animals",
         cost: { copium: 50, delusion: 100, yarmulkes: 50, trollPoints: 0, hopium: 0 },
-        earnings: { copiumPerSecond: 2, delusionPerSecond: 3, yarmulkesPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0 },
+        earnings: { copiumPerSecond: 1.7, delusionPerSecond: 3.3, yarmulkesPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0 },
         img: "imgs/party_animals.jpg",
     },
     {
         name: "Music",
         cost: { copium: 100, delusion: 25, yarmulkes: 150, trollPoints: 25, hopium: 0 },
-        earnings: { copiumPerSecond: 8.4, delusionPerSecond: -1, yarmulkesPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0 },
+        earnings: { copiumPerSecond: 8.4, delusionPerSecond: -1.5, yarmulkesPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0 },
         img: "imgs/linkin_park.jpg",
     },
     {
@@ -56,31 +56,31 @@ const upgrades = [
     {
         name: "Yom Kippur",
         cost: { copium: 0, delusion: 0, yarmulkes: 999, trollPoints: 0, hopium: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yarmulkesPerSecond: 26.4, trollPointsPerSecond: 0, hopiumPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yarmulkesPerSecond: 25.5, trollPointsPerSecond: 0, hopiumPerSecond: 0 },
         img: "imgs/yom_kippur.jpg",
     },
     {
         name: "Email Safety First",
         cost: { copium: 1000, delusion: 0, yarmulkes: 0, trollPoints: 150, hopium: 0 },
-        earnings: { copiumPerSecond: 0.2, delusionPerSecond: 9, yarmulkesPerSecond: -1, trollPointsPerSecond: 0, hopiumPerSecond: 0 },
+        earnings: { copiumPerSecond: 0.2, delusionPerSecond: 8.5, yarmulkesPerSecond: -1, trollPointsPerSecond: 0, hopiumPerSecond: 0 },
         img: "imgs/proton.jpg",
     },
     {
         name: "Joker's Rage Level",
         cost: { copium: 500, delusion: 0, yarmulkes: 250, trollPoints: 500, hopium: 0 },
-        earnings: { copiumPerSecond: 2, delusionPerSecond: -24, yarmulkesPerSecond: 10, trollPointsPerSecond: 28, hopiumPerSecond: 0 },
+        earnings: { copiumPerSecond: 2, delusionPerSecond: -24, yarmulkesPerSecond: 10, trollPointsPerSecond: 24, hopiumPerSecond: 0 },
         img: "imgs/over_9000.jpg",
     },
     {
         name: "Wife's AirBnb Business",
         cost: { copium: 200, delusion: 400, yarmulkes: 1000, trollPoints: 0, hopium: 0 },
-        earnings: { copiumPerSecond: 5, delusionPerSecond: 8, yarmulkesPerSecond: -8, trollPointsPerSecond: 24, hopiumPerSecond: 0 },
+        earnings: { copiumPerSecond: 5, delusionPerSecond: 8, yarmulkesPerSecond: -8, trollPointsPerSecond: 22, hopiumPerSecond: 0 },
         img: "imgs/airbnb.jpg",
     },
     {
         name: "Hard Work Don't Mean Success",
         cost: { copium: 2000, delusion: 0, yarmulkes: 1400, trollPoints: 0, hopium: 0 },
-        earnings: { copiumPerSecond: 10, delusionPerSecond: -5, yarmulkesPerSecond: 1, trollPointsPerSecond: 0, hopiumPerSecond: 0 },
+        earnings: { copiumPerSecond: 10, delusionPerSecond: -5, yarmulkesPerSecond: 0.5, trollPointsPerSecond: 0, hopiumPerSecond: 0 },
         img: "imgs/hard_to_swallow.jpg",
     },
     {
@@ -93,31 +93,31 @@ const upgrades = [
     {
         name: "Swing and a Miss",
         cost: { copium: 2400, delusion: 1600, yarmulkes: 0, trollPoints: 0, hopium: 0 },
-        earnings: { copiumPerSecond: 22, delusionPerSecond: 15, yarmulkesPerSecond: 0, trollPointsPerSecond: 3, hopiumPerSecond: 0 },
+        earnings: { copiumPerSecond: 20, delusionPerSecond: 15, yarmulkesPerSecond: 0, trollPointsPerSecond: 3, hopiumPerSecond: 0 },
         img: "imgs/swing_and_a_miss.jpg",
     },
     {
         name: "The Savior",
         cost: { copium: 0, delusion: 0, yarmulkes: 2500, trollPoints: 2500, hopium: 0 },
-        earnings: { copiumPerSecond: 10, delusionPerSecond: 10, yarmulkesPerSecond: -10, trollPointsPerSecond: 3.3, hopiumPerSecond: 0 },
+        earnings: { copiumPerSecond: 8.8, delusionPerSecond: 8.8, yarmulkesPerSecond: -10, trollPointsPerSecond: 3.3, hopiumPerSecond: 0 },
         img: "imgs/the_savior.jpg",
     },
     {
         name: "He's an Ancient",
         cost: { copium: 2000, delusion: 0, yarmulkes: 1000, trollPoints: 2000, hopium: 0 },
-        earnings: { copiumPerSecond: 5, delusionPerSecond: 0, yarmulkesPerSecond: 26, trollPointsPerSecond: 5, hopiumPerSecond: 0 },
+        earnings: { copiumPerSecond: 5, delusionPerSecond: 0, yarmulkesPerSecond: 21, trollPointsPerSecond: 5, hopiumPerSecond: 0 },
         img: "imgs/farming_sim.jpg",
     },
     {
         name: "Unhackable",
         cost: { copium: 5000, delusion: 2000, yarmulkes: 1500, trollPoints: 0, hopium: 0 },
-        earnings: { copiumPerSecond: 44, delusionPerSecond: 30, yarmulkesPerSecond: -3, trollPointsPerSecond: -3, hopiumPerSecond: 0 },
+        earnings: { copiumPerSecond: 38, delusionPerSecond: 26, yarmulkesPerSecond: -3, trollPointsPerSecond: -3, hopiumPerSecond: 0 },
         img: "imgs/unhackable.jpg",
     },
     {
         name: "The Perfect Girl",
         cost: { copium: 3000, delusion: 3000, yarmulkes: 3000, trollPoints: 0, hopium: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 30, yarmulkesPerSecond: -7, trollPointsPerSecond: 0, hopiumPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 30, yarmulkesPerSecond: -12, trollPointsPerSecond: 0, hopiumPerSecond: 0 },
         img: "imgs/the_perfect_girl.jpg",
     },
     {
@@ -129,13 +129,13 @@ const upgrades = [
     {
         name: "Deal with the devil",
         cost: { copium: 0, delusion: 0, yarmulkes: 12000, trollPoints: 0, hopium: 0 },
-        earnings: { copiumPerSecond: -1, delusionPerSecond: 2, yarmulkesPerSecond: 2, trollPointsPerSecond: 1, hopiumPerSecond: 0 },
+        earnings: { copiumPerSecond: -1, delusionPerSecond: 2, yarmulkesPerSecond: 2, trollPointsPerSecond: 1.1, hopiumPerSecond: 0 },
         img: "imgs/warren_buffet.jpg",
     },
     {
         name: "Face of Defeat",
         cost: { copium: 10000, delusion: 0, yarmulkes: 666, trollPoints: 2000, hopium: 0 },
-        earnings: { copiumPerSecond: 100, delusionPerSecond: 2, yarmulkesPerSecond: 0, trollPointsPerSecond: -2, hopiumPerSecond: 0 },
+        earnings: { copiumPerSecond: 90, delusionPerSecond: 2, yarmulkesPerSecond: 0, trollPointsPerSecond: -2, hopiumPerSecond: 0 },
         img: "imgs/face_of_defeat.jpg",
     },
     {
@@ -147,13 +147,13 @@ const upgrades = [
     {
         name: "Suss",
         cost: { copium: 11000, delusion: 0, yarmulkes: 0, trollPoints: 5000, hopium: 0 },
-        earnings: { copiumPerSecond: 25, delusionPerSecond: -3, yarmulkesPerSecond: 0, trollPointsPerSecond: 50, hopiumPerSecond: 0 },
+        earnings: { copiumPerSecond: 25, delusionPerSecond: -3, yarmulkesPerSecond: 0, trollPointsPerSecond: 40, hopiumPerSecond: 0 },
         img: "imgs/morty.PNG",
     },
     {
         name: "Luigi's Idol",
         cost: { copium: 1234, delusion: 0, yarmulkes: 7777, trollPoints: 7777, hopium: 0 },
-        earnings: { copiumPerSecond: 10, delusionPerSecond: 0, yarmulkesPerSecond: 40, trollPointsPerSecond: 40, hopiumPerSecond: 0 },
+        earnings: { copiumPerSecond: 10, delusionPerSecond: 0, yarmulkesPerSecond: 35, trollPointsPerSecond: 35, hopiumPerSecond: 0 },
         img: "imgs/luigis_idol.png",
     },
     {
@@ -165,7 +165,7 @@ const upgrades = [
     {
         name: "I don't get this game",
         cost: { copium: 5000, delusion: 5000, yarmulkes: 5000, trollPoints: 5000, hopium: 0 },
-        earnings: { copiumPerSecond: -15, delusionPerSecond: 40, yarmulkesPerSecond: 20, trollPointsPerSecond: 30, hopiumPerSecond: 0 },
+        earnings: { copiumPerSecond: -15, delusionPerSecond: 35, yarmulkesPerSecond: 18, trollPointsPerSecond: 30, hopiumPerSecond: 0 },
         img: "imgs/standard.jpg",
     },
     {
@@ -185,13 +185,13 @@ const upgrades = [
     {
         name: "Ultimate Solution",
         cost: { copium: 0, delusion: 25000, yarmulkes: 0, trollPoints: 80000, hopium: 0 },
-        earnings: { copiumPerSecond: 92, delusionPerSecond: 97, yarmulkesPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0 },
+        earnings: { copiumPerSecond: 90, delusionPerSecond: 95, yarmulkesPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0 },
         img: "imgs/use_useless.jpg",
     },
     {
         name: "Fully Autonomous Cars",
         cost: { copium: 80000, delusion: 80000, yarmulkes: 10000, trollPoints: 25000, hopium: 0 },
-        earnings: { copiumPerSecond: 75, delusionPerSecond: 20, yarmulkesPerSecond: 10, trollPointsPerSecond: 10, hopiumPerSecond: 0 },
+        earnings: { copiumPerSecond: 65, delusionPerSecond: 5, yarmulkesPerSecond: 20, trollPointsPerSecond: 20, hopiumPerSecond: 0 },
         img: "imgs/elon_tesla.jpg",
     },
     {
@@ -203,7 +203,7 @@ const upgrades = [
     {
         name: "Spit on that thang",
         cost: { copium: 100000, delusion: 0, yarmulkes: 25000, trollPoints: 50000, hopium: 0 },
-        earnings: { copiumPerSecond: 80, delusionPerSecond: 0, yarmulkesPerSecond: 35, trollPointsPerSecond: 35, hopiumPerSecond: 0 },
+        earnings: { copiumPerSecond: 75, delusionPerSecond: 0, yarmulkesPerSecond: 35, trollPointsPerSecond: 35, hopiumPerSecond: 0 },
         img: "imgs/hawk_tuah.jpg",
     },
     {
@@ -215,22 +215,20 @@ const upgrades = [
     {
         name: "BrOadEn IN God",
         cost: { copium: 150000, delusion: 20000, yarmulkes: 20000, trollPoints: 40000, hopium: 0 },
-        earnings: { copiumPerSecond: 500, delusionPerSecond: 500, yarmulkesPerSecond: -10, trollPointsPerSecond: 250, hopiumPerSecond: 0 },
+        earnings: { copiumPerSecond: 400, delusionPerSecond: 400, yarmulkesPerSecond: -10, trollPointsPerSecond: 250, hopiumPerSecond: 0 },
         img: "imgs/boeing.jpg",
     },
     {
         name: "Do not come!",
         cost: { copium: 300000, delusion: 0, yarmulkes: 0, trollPoints: 0, hopium: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 100, yarmulkesPerSecond: 300, trollPointsPerSecond: 100, hopiumPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 120, yarmulkesPerSecond: 250, trollPointsPerSecond: 120, hopiumPerSecond: 0 },
         img: "imgs/im_gonna_come.jpg",
     },
     {
         name: "Transcendence",
         cost: { copium: 99999, delusion: 99999, yarmulkes: 99999, trollPoints: 99999, hopium: 0 },
-        earnings: { copiumPerSecond: 500, delusionPerSecond: 500, yarmulkesPerSecond: 500, trollPointsPerSecond: 500, hopiumPerSecond: 0 },
+        earnings: { copiumPerSecond: 100, delusionPerSecond: 100, yarmulkesPerSecond: 100, trollPointsPerSecond: 100, hopiumPerSecond: 0 },
         img: "imgs/transcendence.jpg",
-        message: "You feel permanently stronger! SPOILER ALERT: in future versions this will lead to another ascendency path.",
-        miniPrestigeMultiplier: 1.03
     },
     {
         name: "420",

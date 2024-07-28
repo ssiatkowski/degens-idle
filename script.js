@@ -17,6 +17,12 @@ let cooldowns = {
     trollPoints: false
 };
 
+let effectiveCopiumPerSecond = 0;
+let effectiveDelusionPerSecond = 0;
+let effectiveYarmulkesPerSecond = 0;
+let effectiveTrollPointsPerSecond = 0;
+let effectiveHopiumPerSecond = 0;
+
 let prestiges = 0;
 let epsMultiplier = 1;
 let prestigeRequirement = 1000;
@@ -25,7 +31,7 @@ let purchasedUpgrades = [];
 let godModeLevel = 0;
 let godModeMultiplier = 1;
 
-
+let firstTimePrestigeButtonAvailable = true; // Default to true, will be updated based on saved state
 let firstTimeCookieUnlock = true;
 
 let modalQueue = [];
@@ -39,6 +45,14 @@ const miniGameTimeouts = {
     luck: 3 * 60 * 1000     // 3 minutes
 };
 
+function updateEffectiveMultipliers() {
+    effectiveCopiumPerSecond = copiumPerSecond * epsMultiplier * godModeMultiplier;
+    effectiveDelusionPerSecond = delusionPerSecond * epsMultiplier * godModeMultiplier;
+    effectiveYarmulkesPerSecond = yarmulkesPerSecond * epsMultiplier * godModeMultiplier;
+    effectiveTrollPointsPerSecond = trollPointsPerSecond * epsMultiplier * godModeMultiplier;
+    effectiveHopiumPerSecond = hopiumPerSecond * epsMultiplier * godModeMultiplier;
+}
+
 
 // Function to handle cookie click
 function collectAllResources() {
@@ -47,7 +61,6 @@ function collectAllResources() {
     yarmulkes += 10 * epsMultiplier * godModeMultiplier;
     trollPoints += 10 * epsMultiplier * godModeMultiplier;
     updateDisplay();
-    saveGameState();
 }
 
 // Function to collect a specific resource and update the game state
@@ -60,9 +73,6 @@ function collectResource(resource) {
     
     // Update the display to reflect the new resource values
     updateDisplay();
-    
-    // Save the current game state to local storage
-    saveGameState();
 }
 
 // Function to load the game state from local storage
@@ -84,32 +94,52 @@ function loadGameState() {
     epsMultiplier = parseFloat(localStorage.getItem('epsMultiplier')) || 1;
     prestigeRequirement = parseFloat(localStorage.getItem('prestigeRequirement')) || 1000;
 
-    // Retrieve and parse the gpd mode values from local storage, defaulting to 0 or 1 if not found
+    // Retrieve and parse the god mode values from local storage, defaulting to 0 or 1 if not found
     godModeLevel = parseInt(localStorage.getItem('godModeLevel')) || 0;
     godModeMultiplier = parseFloat(localStorage.getItem('godModeMultiplier')) || 1;
     
+    // Load the first time prestige button available flag
+    firstTimePrestigeButtonAvailable = JSON.parse(localStorage.getItem('firstTimePrestigeButtonAvailable')) || true;
+
     // Retrieve the last interaction time, defaulting to the current time if not found
     const lastInteraction = parseInt(localStorage.getItem('lastInteraction')) || Date.now();
+
+    // Retrieve and parse all upgrades with the isGodMode property from local storage
+    const savedUpgrades = JSON.parse(localStorage.getItem('upgrades')) || [];
+    
+    // Restore the isGodMode property for each upgrade
+    upgrades.forEach(upgrade => {
+        const savedUpgrade = savedUpgrades.find(up => up.name === upgrade.name);
+        if (savedUpgrade) {
+            upgrade.isGodMode = savedUpgrade.isGodMode;
+        }
+    });
 
     // Retrieve and parse the purchased upgrades from local storage, defaulting to an empty array if not found
     const savedPurchasedUpgrades = JSON.parse(localStorage.getItem('purchasedUpgrades')) || [];
     
     // Map the saved purchased upgrade names to the actual upgrade objects
-    purchasedUpgrades = savedPurchasedUpgrades.map(upgradeName => upgrades.find(up => up.name === upgradeName));
+    purchasedUpgrades = savedPurchasedUpgrades.map(savedUpgradeName => upgrades.find(up => up.name === savedUpgradeName)).filter(Boolean);
 
-    // Filter out the available upgrades that have not been purchased yet
-    availableUpgrades = upgrades.filter(upgrade => !savedPurchasedUpgrades.includes(upgrade.name));
+    // Filter out the available upgrades that have been purchased
+    availableUpgrades = upgrades.filter(upgrade => !purchasedUpgrades.includes(upgrade));
 
     // Reapply the purchased upgrades and handle any special cases (e.g., "Cookie Clicker")
     purchasedUpgrades.forEach(upgrade => {
         if (upgrade) {
-            addPurchasedUpgrade(upgrade.img, upgrade.name, upgrade.earnings);
+            addPurchasedUpgrade(upgrade.img, upgrade.name, upgrade.earnings, upgrade.isGodMode);
             if (upgrade.name === "Cookie Clicker") {
                 document.getElementById('cookieButton').style.display = 'block';
                 firstTimeCookieUnlock = false; // Indicate that the cookie button has been previously unlocked
             }
         }
     });
+
+    // Load the state of the Cookie Clicker button
+    const cookieButtonVisible = JSON.parse(localStorage.getItem('cookieButtonVisible'));
+    if (cookieButtonVisible) {
+        document.getElementById('cookieButton').style.display = 'block';
+    }
 
     // Calculate the elapsed time since the last interaction
     const now = Date.now();
@@ -124,7 +154,9 @@ function loadGameState() {
     unlockMiniGames();
 }
 
-// Function to save the current game state to local storage
+
+
+
 function saveGameState() {
     // Save the resource values to local storage
     localStorage.setItem('copium', copium);
@@ -150,22 +182,38 @@ function saveGameState() {
     // Save the current time as the last interaction time
     localStorage.setItem('lastInteraction', Date.now());
     
-    // Save the purchased upgrades as a JSON string
+    // Save all upgrades with the isGodMode property
+    localStorage.setItem('upgrades', JSON.stringify(upgrades.map(upgrade => ({
+        name: upgrade.name,
+        isGodMode: upgrade.isGodMode || false
+    }))));
+    
+    // Save the purchased upgrades
     localStorage.setItem('purchasedUpgrades', JSON.stringify(purchasedUpgrades.map(upgrade => upgrade.name)));
+
+    // Save the first time prestige button available flag
+    localStorage.setItem('firstTimePrestigeButtonAvailable', firstTimePrestigeButtonAvailable);
+    
+    // Save the state of the Cookie Clicker button
+    localStorage.setItem('cookieButtonVisible', document.getElementById('cookieButton').style.display === 'block');
+
 }
+
+
+
 
 
 
 // Generate resources based on elapsed time
 function generateResources() {
-    copium += copiumPerSecond * epsMultiplier * godModeMultiplier;
-    delusion += delusionPerSecond * epsMultiplier * godModeMultiplier;
-    yarmulkes += yarmulkesPerSecond * epsMultiplier * godModeMultiplier;
-    trollPoints += trollPointsPerSecond * epsMultiplier * godModeMultiplier;
-    hopium += hopiumPerSecond * epsMultiplier * godModeMultiplier;
+    copium += effectiveCopiumPerSecond;
+    delusion += effectiveDelusionPerSecond;
+    yarmulkes += effectiveYarmulkesPerSecond;
+    trollPoints += effectiveTrollPointsPerSecond;
+    hopium += effectiveHopiumPerSecond;
     updateDisplay();
-    saveGameState();
 }
+
 
 
 
@@ -185,7 +233,7 @@ function playMiniGame(gameType) {
     if (gameType === 'speed') {
         let points = 0;
         let duration = Math.floor(Math.random() * 8) + 1; // Random duration between 1 and 8 seconds
-        showMessageModal(`Tap on the screen as many times as you can in ${duration} seconds!`);
+        showMessageModal('Speed Game', `Tap on the screen as many times as you can in ${duration} seconds!`, false, false);
 
         // Function to handle clicks
         function clickHandler() {
@@ -203,10 +251,10 @@ function playMiniGame(gameType) {
             let reward;
             if (clicksPerSecond > 3) { // More than 3 clicks per second
                 reward = Math.max(Math.floor(copium * ((clicksPerSecond - 3) * 0.03)), 25);
-                showMessageModal(`You tapped ${points} times in ${duration} seconds (${clicksPerSecond.toFixed(1)} taps per second). You won and earned ${reward.toFixed(2)} copium!`);
+                showMessageModal('Speed Game Result', `You tapped ${points} times in ${duration} seconds (${clicksPerSecond.toFixed(1)} taps per second). You won and earned ${reward.toFixed(2)} copium!`, false, false);
             } else {
                 reward = -Math.max(Math.floor(Math.random() * Math.abs(copium) * 0.1), 10);
-                showMessageModal(`You tapped ${points} times in ${duration} seconds (${clicksPerSecond.toFixed(1)} taps per second). You lost and earned ${reward.toFixed(2)} copium!`);
+                showMessageModal('Speed Game Result', `You tapped ${points} times in ${duration} seconds (${clicksPerSecond.toFixed(1)} taps per second). You lost and earned ${reward.toFixed(2)} copium!`, false, false);
             }
             copium += reward;
             updateDisplay(); // Update the display
@@ -220,14 +268,14 @@ function playMiniGame(gameType) {
             sequence += Math.floor(Math.random() * 10); // Random digit between 0 and 9
         }
         let timeout = Math.floor(Math.random() * 48) + 3; // Random timeout between 3 and 50 seconds
-        showMessageModal('Remember this sequence: ' + sequence);
+        showMessageModal('Memory Game', 'Remember this sequence: ' + sequence);
         setTimeout(() => {
             let userSequence = prompt('Enter the sequence:');
             let correct = userSequence === sequence;
             let reward = correct ? Math.max(Math.floor(delusion * 0.5), 25) : -Math.max(Math.floor(Math.random() * Math.abs(delusion) * 0.1), 10);
             if (delusion < 0 && !correct) reward += 10;
             delusion += reward;
-            showMessageModal(`You ${correct ? 'won' : 'lost'} and earned ${reward.toFixed(2)} delusion!`);
+            showMessageModal('Memory Game Result', `You ${correct ? 'won' : 'lost'} and earned ${reward.toFixed(2)} delusion!`);
             updateDisplay(); // Update the display
             startCooldown(gameType); // Start cooldown for the mini-game
         }, timeout * 1000);
@@ -247,7 +295,7 @@ function playMiniGame(gameType) {
         let reward = Math.abs(Number(answer) - correctAnswer) < 0.01 ? Math.max(Math.floor(yarmulkes * 0.25), 10) : -Math.max(Math.floor(Math.random() * Math.abs(yarmulkes) * 0.1), 10);
         if (yarmulkes < 0 && Math.abs(Number(answer) - correctAnswer) >= 0.01) reward += 10;
         yarmulkes += reward;
-        showMessageModal(`You ${Math.abs(Number(answer) - correctAnswer) < 0.01 ? 'won' : 'lost'} and earned ${reward.toFixed(2)} yarmulkes!`);
+        showMessageModal('Math Game Result', `You ${Math.abs(Number(answer) - correctAnswer) < 0.01 ? 'won' : 'lost'} and earned ${reward.toFixed(2)} yarmulkes!`);
         updateDisplay(); // Update the display
         startCooldown(gameType); // Start cooldown for the mini-game
     } else if (gameType === 'luck') {
@@ -270,7 +318,7 @@ function playMiniGame(gameType) {
         }
     
         trollPoints += reward;
-        showMessageModal(`You rolled ${result.toFixed(2)}%. ${message} You ${gainLossMessage} ${Math.abs(reward).toFixed(2)} troll points!`);
+        showMessageModal('Luck Game Result', `You rolled ${result.toFixed(2)}%. ${message} You ${gainLossMessage} ${Math.abs(reward).toFixed(2)} troll points!`);
         updateDisplay(); // Update the display
         startCooldown(gameType); // Start cooldown for the mini-game
     }
@@ -357,9 +405,11 @@ function unlockMiniGames() {
 
 
 
-function restartGame(isPrestige = false, isAscend = false) {
-    if (isPrestige || isAscend || confirm("Are you sure you want to restart the game? This will reset all your progress.")) {
-        // Reset all resources and earnings per second
+async function restartGame(isPrestige = false, isAscend = false) {
+    const confirmMessage = "Are you sure you want to restart the game? This will reset all your progress.";
+    
+    if (isPrestige || isAscend || await showMessageModal("Confirm Restart", confirmMessage, true, false)) {
+         // Reset all resources and earnings per second
         copium = 0;
         copiumPerSecond = 0;
         delusion = 0;
@@ -385,6 +435,10 @@ function restartGame(isPrestige = false, isAscend = false) {
             // Hide the cookie button
             document.getElementById('cookieButton').style.display = 'none';
             firstTimeCookieUnlock = true;
+            // Reset the isGodMode property for all upgrades
+            upgrades.forEach(upgrade => {
+                upgrade.isGodMode = false;
+            });
         }
 
         // Clear purchased upgrades
@@ -407,10 +461,12 @@ function restartGame(isPrestige = false, isAscend = false) {
         unlockMiniGames();
 
         // Update display
+        updateEffectiveMultipliers();
         updateDisplay();
         updateUpgradeList();
     }
 }
+
 
 // Function to update the displayed trade ratio based on selected resources
 function updateTradeRatio() {
@@ -436,7 +492,7 @@ function tradeResources() {
 
     // Check if the same resource is selected for both from and to
     if (fromResource === toResource) {
-        showMessageModal("Cannot trade the same resource.");
+        showMessageModal('Trade Error', "Cannot trade the same resource.");
         return;
     }
 
@@ -452,18 +508,18 @@ function tradeResources() {
     // Special trade case for converting Copium to Hopium
     if (fromResource === 'copium' && toResource === 'hopium') {
         if (resourceAmount[fromResource] < tradeAmount) {
-            showMessageModal(`Not enough ${fromResource} to trade.`);
+            showMessageModal('Trade Error', `Not enough ${fromResource} to trade.`);
             return;
         }
         resourceAmount[fromResource] -= tradeAmount;
         resourceAmount[toResource] += tradeAmount / 100000000;
     } else if (toResource === 'hopium') {
-        showMessageModal("Only Copium can convert to Hopium.");
+        showMessageModal('Trade Error', "Only Copium can convert to Hopium.");
         return;
     } else {
         // General trade case for other resources
         if (resourceAmount[fromResource] < tradeAmount) {
-            showMessageModal(`Not enough ${fromResource} to trade.`);
+            showMessageModal('Trade Error', `Not enough ${fromResource} to trade.`);
             return;
         }
         resourceAmount[fromResource] -= tradeAmount;
@@ -484,31 +540,26 @@ function tradeResources() {
 
 // Function to update the display with the current game state
 function updateDisplay() {
-    // Update the text content of each resource element
     document.getElementById('copium').textContent = copium.toFixed(2);
-    document.getElementById('cps').textContent = (copiumPerSecond * epsMultiplier * godModeMultiplier).toFixed(2);
+    document.getElementById('cps').textContent = effectiveCopiumPerSecond.toFixed(2);
     document.getElementById('delusion').textContent = delusion.toFixed(2);
-    document.getElementById('dps').textContent = (delusionPerSecond * epsMultiplier * godModeMultiplier).toFixed(2);
+    document.getElementById('dps').textContent = effectiveDelusionPerSecond.toFixed(2);
     document.getElementById('yarmulkes').textContent = yarmulkes.toFixed(2);
-    document.getElementById('yps').textContent = (yarmulkesPerSecond * epsMultiplier * godModeMultiplier).toFixed(2);
+    document.getElementById('yps').textContent = effectiveYarmulkesPerSecond.toFixed(2);
     document.getElementById('trollPoints').textContent = trollPoints.toFixed(2);
-    document.getElementById('tpps').textContent = (trollPointsPerSecond * epsMultiplier * godModeMultiplier).toFixed(2);
+    document.getElementById('tpps').textContent = effectiveTrollPointsPerSecond.toFixed(2);
     document.getElementById('hopium').textContent = hopium.toFixed(2);
-    document.getElementById('hps').textContent = (hopiumPerSecond * epsMultiplier * godModeMultiplier).toFixed(2);
-
-    // Update the prestige count and multiplier display
+    document.getElementById('hps').textContent = effectiveHopiumPerSecond.toFixed(2);
     document.getElementById('prestige-multiplier').textContent = `Prestige: x${epsMultiplier.toFixed(2)} mult`;
 
-    // Show god mode level and multiplier
-    document.getElementById('god-mode-level').textContent = `God Mode Level: ${godModeLevel}`;
-    document.getElementById('god-mode-multiplier').textContent = `God Mode Multiplier: x${godModeMultiplier.toFixed(2)}`;
+    // Update combined God Mode Level and Multiplier display
+    document.getElementById('god-mode-display').textContent = `God-Mode Level ${godModeLevel} (x${godModeMultiplier.toFixed(2)} mult)`;
 
     updatePrestigeButton();
     updateAscendButton();
-    
-    // Update the upgrade buttons to reflect the current game state
     updateUpgradeButtons();
 }
+
 
 
 
@@ -538,8 +589,8 @@ function prestige() {
         saveGameState();
 
         showMessageModal('Prestige Successful!', `Your multiplier is now x${epsMultiplier.toFixed(2)}. All resources have been reset.`);
+        updateEffectiveMultipliers();
         updateDisplay();
-        updateUpgradeList();
     }
 }
 
@@ -548,6 +599,11 @@ function updatePrestigeButton() {
     
     const prestigeButton = document.getElementById('prestigeButton');
     if (canPrestige()) {
+        if (firstTimePrestigeButtonAvailable) {
+            showMessageModal('Prestige Unlocked: Rise Stronger!', 'Congratulations, mighty player! You have unlocked the legendary path of Prestige. This powerful option allows you to reset your game progress, but with a game-changing twist: you gain a new multiplier that enhances everything you do.<br><br>Prestige represents more than just a reset. It symbolizes the resilience of the human spirit, the relentless pursuit of growth, and the ability to rise stronger after every fall. Just as life sometimes knocks you down, this journey will set you back temporarily. But with each Prestige, you come back more powerful, your abilities amplified, and your potential limitless.<br><br>Embrace the opportunity to start anew with greater strength. Every click, every resource gathered, and every upgrade purchased will now be boosted by your newfound multiplier. It\'s a fresh start, a chance to overcome challenges with enhanced vigor and wisdom.<br><br>Are you ready to embark on this transformative journey? To not only rebuild but to surpass your previous achievements? Prestige now, and let your ascent to greatness begin anew!');
+            firstTimePrestigeButtonAvailable = false; // Set the flag to false after showing the message
+            saveGameState(); // Save the game state to persist the flag
+        }
         const newMultiplier = calculatePrestigeMultiplier();
         prestigeButton.textContent = `Prestige (x${(newMultiplier / epsMultiplier).toFixed(2)} multiplier)`;
         prestigeButton.style.display = 'block';
@@ -560,12 +616,23 @@ function canAscend() {
     return purchasedUpgrades.some(upgrade => upgrade.name === "Transcendence");
 }
 
-function ascend() {
-    if (confirm('Are you sure you want to enter God-Mode (level ${godModeLevel})?')) {
+async function ascend() {
+
+    const confirmed = await showMessageModal('God-Mode Ascension', `Are you sure you want to enter God-Mode level ${godModeLevel+1}? You will lose all your Upgrades and Prestige progress!`, true, false);
+    if (confirmed) {
         godModeLevel += 1;
         godModeMultiplier = 2 ** godModeLevel;
+
+        const selectedUpgrade = await showMessageModal("Select God-Mode Upgrade", "Select one of your purchased upgrades to enhance (10x multiplier).", false, true);
+
+        selectedUpgrade.isGodMode = true;
+
         restartGame(false,true); // Use the existing restartGame function with prestige mode
-        showMessageModal('Ascendance Successful!', `You have entered God-Mode Level ${godModeLevel}. Your multiplier is now x${godModeMultiplier.toFixed(2)}.`);
+        // Save game state after ascending
+        saveGameState();
+        showMessageModal('Ascension Successful!', `You have entered God-Mode Level ${godModeLevel}. Your multiplier is now x${godModeMultiplier.toFixed(2)}.`);
+        updateEffectiveMultipliers();
+        updateDisplay();
     }
 }
 
@@ -629,52 +696,61 @@ function buyUpgrade(encodedUpgradeName) {
         trollPoints -= cost.trollPoints;
         hopium -= cost.hopium;
 
-        // Increase the per second earnings for each resource
-        copiumPerSecond += earnings.copiumPerSecond || 0;
-        delusionPerSecond += earnings.delusionPerSecond || 0;
-        yarmulkesPerSecond += earnings.yarmulkesPerSecond || 0;
-        trollPointsPerSecond += earnings.trollPointsPerSecond || 0;
-        hopiumPerSecond += earnings.hopiumPerSecond || 0;
+        // Increase the per second earnings for each resource, apply God Mode multiplier if applicable
+        const multiplier = upgrade.isGodMode ? 10 : 1;
+        copiumPerSecond += (earnings.copiumPerSecond || 0) * multiplier;
+        delusionPerSecond += (earnings.delusionPerSecond || 0) * multiplier;
+        yarmulkesPerSecond += (earnings.yarmulkesPerSecond || 0) * multiplier;
+        trollPointsPerSecond += (earnings.trollPointsPerSecond || 0) * multiplier;
+        hopiumPerSecond += (earnings.hopiumPerSecond || 0) * multiplier;
 
         // Add the purchased upgrade to the display
-        addPurchasedUpgrade(img, name, earnings);
+        addPurchasedUpgrade(img, name, earnings, upgrade.isGodMode);
         // Remove the upgrade from the available upgrades list
         availableUpgrades.splice(availableUpgrades.indexOf(upgrade), 1);
         // Add the upgrade to the purchased upgrades list
         purchasedUpgrades.push(upgrade);
-        // Update the upgrade list and display
-        updateUpgradeList();
-        updateDisplay();
-        // Save the game state
-        saveGameState();
 
         // Special case for unlocking the "Cookie Clicker" upgrade
         if (name === "Cookie Clicker" && firstTimeCookieUnlock) {
             document.getElementById('cookieButton').style.display = 'block';
-            showMessageModal("In the vast world of idle games, one title stands as the beacon that lit the path for all others: Cookie Clicker. Launched in 2013, Cookie Clicker captivated millions with its simple yet endlessly engaging premise. The thrill of watching numbers grow, the joy of achieving milestones, and the addictiveness of endless clicking and upgrading—all these elements combined to create a phenomenon that transcended the gaming community.\n\nIn homage to this legendary game, you have now unlocked a cookie! Clicking this cookie will count as clicking each collect button 10 times! It will persist across Prestiges! Happy clicking!");
+            showMessageModal('Cookie Clicker', "In the vast world of idle games, one title stands as the beacon that lit the path for all others: Cookie Clicker. Launched in 2013, Cookie Clicker captivated millions with its simple yet endlessly engaging premise. The thrill of watching numbers grow, the joy of achieving milestones, and the addictiveness of endless clicking and upgrading—all these elements combined to create a phenomenon that transcended the gaming community.\n\nIn homage to this legendary game, you have now unlocked a cookie! Clicking this cookie will count as clicking each collect button 10 times! It will persist across Prestiges! Happy clicking!");
             firstTimeCookieUnlock = false;
         } else if (name === "Cookie Clicker") {
             document.getElementById('cookieButton').style.display = 'block';
         }
 
+        // Special case for unlocking the "Transcendence" upgrade
+        if (name === "Transcendence" && godModeLevel < 1) {
+            showMessageModal('Transcendence', "Congratulations, brave soul! With the purchase of the Transcendence upgrade, you have unlocked the extraordinary ability to Ascend Above Mortals and enter the revered God Mode. Prepare yourself for an epic journey where the limits of mortality no longer bind you.\n\nWelcome to the next chapter of your legendary adventure. Ascend and let your godlike journey begin!");
+        } 
+
         // Show a message if the upgrade has one
         if (message) {
-            showMessageModal(message);
+            showMessageModal(name, message);
         }
 
         // Special case for the "Hunt for Hussein" upgrade
         if (name === "Hunt for Hussein") {
-            showMessageModal("This is the end of v0.4. You can sit here and watch your Hopium infinitely decrease. At this pace should have another big update within a couple days.");
+            showMessageModal('Sadly', "This is the end of v0.5. You can sit here and watch your Hopium infinitely decrease. At this pace should have another big update within a couple days.");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one
         if (miniPrestigeMultiplier) {
             epsMultiplier *= miniPrestigeMultiplier;
-            showMessageModal(`Prestige multiplier changed to x${epsMultiplier.toFixed(2)}`);
+            showMessageModal('Multiplier Changed', `Prestige multiplier changed to x${epsMultiplier.toFixed(2)}`);
         }
+
+        // Update the upgrade list and display
+        updateUpgradeList();
+        updateEffectiveMultipliers();
+        updateDisplay();
+        // Save the game state
+        saveGameState();
+
     } else {
         // Show an alert if the player does not have enough resources
-        showMessageModal('Not enough resources to purchase this upgrade.');
+        showMessageModal('Purchase Denied', 'Not enough resources to purchase this upgrade.');
     }
     // Update the upgrade buttons to reflect the current state
     updateUpgradeButtons();
@@ -683,8 +759,11 @@ function buyUpgrade(encodedUpgradeName) {
 
 
 
+
+
+
 // Function to format the cost or earnings of an upgrade for display
-function formatCostOrEarnings(costOrEarnings) {
+function formatCostOrEarnings(costOrEarnings, isGodMode = false) {
     // Abbreviations for resource per second values
     const abbreviations = {
         copiumPerSecond: 'CPS',
@@ -701,17 +780,24 @@ function formatCostOrEarnings(costOrEarnings) {
         if (value !== 0) {
             // Get the display name using abbreviations or capitalize the resource name
             const displayName = abbreviations[resource] || resource.charAt(0).toUpperCase() + resource.slice(1);
-            result += `<p>${displayName}: ${value}</p>`; // Format as HTML paragraph
+            const adjustedValue = isGodMode ? value * 10 : value;
+            result += `<p>${displayName}: ${adjustedValue}</p>`; // Format as HTML paragraph
         }
     }
     return result;
 }
 
+
 // Function to add a purchased upgrade to the display
-function addPurchasedUpgrade(img, name, earnings) {
+function addPurchasedUpgrade(img, name, earnings, isGodMode = false) {
     const purchasedList = document.getElementById('purchasedList'); // Get the purchased list container
     const upgradeElement = document.createElement('div'); // Create a new div element
     upgradeElement.classList.add('purchased-upgrade'); // Add the 'purchased-upgrade' class
+
+    // Add the God Mode class if applicable
+    if (isGodMode) {
+        upgradeElement.classList.add('purchased-upgrade-godmode');
+    }
 
     // Set the inner HTML of the new div element
     upgradeElement.innerHTML = `
@@ -719,12 +805,13 @@ function addPurchasedUpgrade(img, name, earnings) {
         <div>
             <p>${name}</p> <!-- Upgrade name -->
             <div class="upgrade-earnings">
-                ${formatCostOrEarnings(earnings)} <!-- Formatted earnings -->
+                ${formatCostOrEarnings(earnings, isGodMode)} <!-- Formatted earnings -->
             </div>
         </div>
     `;
     purchasedList.prepend(upgradeElement); // Prepend to show the most recent first
 }
+
 
 // Function to get the total cost of an upgrade
 function getTotalCost(upgrade) {
@@ -784,12 +871,20 @@ function updateUpgradeButtons() {
             const affordable = (cost.copium === 0 || copium >= cost.copium) &&
                                (cost.delusion === 0 || delusion >= cost.delusion) &&
                                (cost.yarmulkes === 0 || yarmulkes >= cost.yarmulkes) &&
-                               (cost.trollPoints === 0 || trollPoints >= cost.trollPoints);
-            // Add or remove the 'affordable' class based on affordability
+                               (cost.trollPoints === 0 || trollPoints >= cost.trollPoints) &&
+                               (cost.hopium === 0 || hopium >= cost.hopium);
+
+            // Add or remove the appropriate class based on affordability and God Mode status
             if (affordable) {
-                button.classList.add('affordable');
+                if (upgrade.isGodMode) {
+                    button.classList.add('affordable-godmode');
+                    button.classList.remove('affordable');
+                } else {
+                    button.classList.add('affordable');
+                    button.classList.remove('affordable-godmode');
+                }
             } else {
-                button.classList.remove('affordable');
+                button.classList.remove('affordable', 'affordable-godmode');
             }
         }
     });
@@ -802,20 +897,21 @@ let developerMode = false;
 function toggleDeveloperMode() {
     developerMode = !developerMode; // Toggle the developer mode state
     if (developerMode) {
-        // Increase resource generation rates by 100x in developer mode
-        copiumPerSecond *= 100;
-        delusionPerSecond *= 100;
-        yarmulkesPerSecond *= 100;
-        trollPointsPerSecond *= 100;
-        showMessageModal("Developer Mode Activated: Resource generation is now 100x faster!");
+        // Increase resource generation rates by 1000x in developer mode
+        copiumPerSecond *= 1000;
+        delusionPerSecond *= 1000;
+        yarmulkesPerSecond *= 1000;
+        trollPointsPerSecond *= 1000;
+        showMessageModal('Dev Mode', "Developer Mode Activated: Resource generation is now 1000x faster!");
     } else {
         // Reset resource generation rates to normal
-        copiumPerSecond /= 100;
-        delusionPerSecond /= 100;
-        yarmulkesPerSecond /= 100;
-        trollPointsPerSecond /= 100;
-        showMessageModal("Developer Mode Deactivated: Resource generation is back to normal.");
+        copiumPerSecond /= 1000;
+        delusionPerSecond /= 1000;
+        yarmulkesPerSecond /= 1000;
+        trollPointsPerSecond /= 1000;
+        showMessageModal('Dev Mode', "Developer Mode Deactivated: Resource generation is back to normal.");
     }
+    updateEffectiveMultipliers();
     updateDisplay(); // Update the display to reflect the changes
 }
 
@@ -827,15 +923,15 @@ document.addEventListener('keydown', (event) => {
     }
 });
 
-// Function to show a message modal
-function showMessageModal(title, message) {
-    modalQueue.push({ title, message });
-    if (!isModalOpen) {
-        displayNextModal();
-    }
+function showMessageModal(title, message, isConfirm = false, isUpgradeSelection = false) {
+    return new Promise((resolve, reject) => {
+        modalQueue.push({ title, message, isConfirm, isUpgradeSelection, resolve, reject });
+        if (!isModalOpen) {
+            displayNextModal();
+        }
+    });
 }
 
-// Function to display the next modal in the queue
 function displayNextModal() {
     if (modalQueue.length === 0) {
         isModalOpen = false;
@@ -846,35 +942,95 @@ function displayNextModal() {
     const modal = document.getElementById('messageModal');
     const closeButton = document.getElementById('closeMessageModal');
     const modalCloseButton = document.getElementById('modalCloseButton');
+    const modalConfirmButtons = document.getElementById('modalConfirmButtons');
+    const modalConfirmButton = document.getElementById('modalConfirmButton');
+    const modalCancelButton = document.getElementById('modalCancelButton');
+    const upgradeConfirmButton = document.getElementById('upgradeConfirmButton');
     const modalTitle = document.getElementById('modalTitle');
     const modalMessage = document.getElementById('modalMessage');
+    const ascendUpgradeSelection = document.getElementById('ascendUpgradeSelection');
+    const ascendUpgradeList = document.getElementById('ascendUpgradeList');
 
-    const { title, message } = modalQueue.shift();
+    const { title, message, isConfirm, isUpgradeSelection, resolve } = modalQueue.shift();
 
-    // Set the title and message
-    modalTitle.textContent = title;
-    modalMessage.textContent = message;
+    // Set the title and message, handle cases where they might be undefined
+    modalTitle.textContent = title || '';
+    modalMessage.innerHTML = message || '';
 
     // Show the modal
     modal.style.display = 'block';
 
-    // Function to close the modal
-    const closeModal = () => {
+    const closeModal = (result) => {
         modal.style.display = 'none';
         displayNextModal(); // Display the next modal in the queue
+        resolve(result);
     };
 
-    // When the user clicks on the close button or the close modal button, close the modal
-    closeButton.onclick = closeModal;
-    modalCloseButton.onclick = closeModal;
+    if (isConfirm) {
+        modalCloseButton.style.display = 'none';
+        modalConfirmButtons.style.display = 'flex';
+        upgradeConfirmButton.style.display = 'none';
+        ascendUpgradeSelection.style.display = 'none';
 
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            closeModal();
-        }
-    };
+        modalConfirmButton.onclick = () => closeModal(true);
+        modalCancelButton.onclick = () => closeModal(false);
+
+        closeButton.onclick = () => closeModal(false);
+        window.onclick = (event) => {
+            if (event.target == modal) {
+                closeModal(false);
+            }
+        };
+    } else if (isUpgradeSelection) {
+        modalCloseButton.style.display = 'none';
+        modalConfirmButtons.style.display = 'none';
+        upgradeConfirmButton.style.display = 'none';
+        ascendUpgradeSelection.style.display = 'block';
+        ascendUpgradeList.innerHTML = '';
+
+        purchasedUpgrades.forEach((upgrade, index) => {
+            const upgradeItem = document.createElement('div');
+            upgradeItem.className = 'ascend-upgrade-item';
+            upgradeItem.textContent = upgrade.name;
+            upgradeItem.onclick = () => {
+                const selected = ascendUpgradeList.querySelector('.selected');
+                if (selected) selected.classList.remove('selected');
+                upgradeItem.classList.add('selected');
+                upgradeConfirmButton.style.display = 'block'; // Show confirm button when an upgrade is selected
+            };
+            ascendUpgradeList.appendChild(upgradeItem);
+        });
+
+        upgradeConfirmButton.onclick = () => {
+            const selectedUpgrade = ascendUpgradeList.querySelector('.selected');
+            if (selectedUpgrade) {
+                const selectedIndex = Array.from(ascendUpgradeList.children).indexOf(selectedUpgrade);
+                closeModal(purchasedUpgrades[selectedIndex]);
+            }
+        };
+
+        // Disable the ability to cancel or close the modal without making a selection
+        modalCancelButton.style.display = 'none';
+        closeButton.style.display = 'none';
+        window.onclick = null;
+    } else {
+        modalCloseButton.style.display = 'block';
+        modalConfirmButtons.style.display = 'none';
+        ascendUpgradeSelection.style.display = 'none';
+        upgradeConfirmButton.style.display = 'none';
+
+        modalCloseButton.onclick = () => closeModal();
+        closeButton.onclick = () => closeModal();
+
+        window.onclick = (event) => {
+            if (event.target == modal) {
+                closeModal();
+            }
+        };
+    }
 }
+
+
 
 // Function to show the welcome modal
 function showWelcomeModal() {
@@ -933,10 +1089,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('luckGame').addEventListener('click', () => { playMiniGame('luck'); });
 
     // Add event listener for the trade button
-    document.getElementById('tradeButton').addEventListener('click', () => {
-        tradeResources(); // Perform the trade
-        saveGameState(); // Save the game state after trading
-    });
+    document.getElementById('tradeButton').addEventListener('click', () => { tradeResources(); });
     // Add event listener for the restart button
     document.getElementById('restartButton').addEventListener('click', () => restartGame(false, false));
 
@@ -947,10 +1100,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Add event listener for the ascend button
     document.getElementById('ascendButton').addEventListener('click', ascend);
 
-    showWelcomeModal();
-
     // Load the game state from local storage
     loadGameState();
+    // Initialize effective multipliers
+    updateEffectiveMultipliers();
     // Unlock mini-games based on the current game state
     unlockMiniGames(); 
     // Set an interval to generate resources every second
