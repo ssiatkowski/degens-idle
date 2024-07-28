@@ -78,7 +78,7 @@ const upgrades = [
         img: "imgs/airbnb.jpg",
     },
     {
-        name: "Hard Work Dont Mean Success",
+        name: "Hard Work Don't Mean Success",
         cost: { copium: 2000, delusion: 0, yarmulkes: 1400, trollPoints: 0, hopium: 0 },
         earnings: { copiumPerSecond: 10, delusionPerSecond: -5, yarmulkesPerSecond: 1, trollPointsPerSecond: 0, hopiumPerSecond: 0 },
         img: "imgs/hard_to_swallow.jpg",
@@ -173,7 +173,7 @@ const upgrades = [
         cost: { copium: 50000, delusion: 50000, yarmulkes: 0, trollPoints: 0, hopium: 0 },
         earnings: { copiumPerSecond: 250, delusionPerSecond: 250, yarmulkesPerSecond: -10, trollPointsPerSecond: -20, hopiumPerSecond: 0 },
         img: "imgs/sex_change.jpg",
-        message: "You feel like you've gotten permanently weaker...",
+        message: "You feel like you've gotten permanently weaker... (if you had to estimate, you'd say about 3% weaker)",
         miniPrestigeMultiplier: 0.97
     },
     {
@@ -181,6 +181,12 @@ const upgrades = [
         cost: { copium: 0, delusion: 25000, yarmulkes: 0, trollPoints: 80000, hopium: 0 },
         earnings: { copiumPerSecond: 92, delusionPerSecond: 97, yarmulkesPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0 },
         img: "imgs/use_useless.jpg",
+    },
+    {
+        name: "Fully Autonomous Cars",
+        cost: { copium: 80000, delusion: 80000, yarmulkes: 10000, trollPoints: 25000, hopium: 0 },
+        earnings: { copiumPerSecond: 75, delusionPerSecond: 20, yarmulkesPerSecond: 10, trollPointsPerSecond: 10, hopiumPerSecond: 0 },
+        img: "imgs/elon_tesla.jpg",
     },
     {
         name: "Job Application",
@@ -201,24 +207,30 @@ const upgrades = [
         img: "imgs/do_not_come.jpg",
     },
     {
-        name: "Do not come!",
-        cost: { copium: 300000, delusion: 0, yarmulkes: 0, trollPoints: 0, hopium: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 100, yarmulkesPerSecond: 300, trollPointsPerSecond: 100, hopiumPerSecond: 0 },
-        img: "imgs/im_gonna_come.jpg",
-    },
-    {
         name: "BrOadEn IN God",
         cost: { copium: 150000, delusion: 20000, yarmulkes: 20000, trollPoints: 40000, hopium: 0 },
         earnings: { copiumPerSecond: 500, delusionPerSecond: 500, yarmulkesPerSecond: -10, trollPointsPerSecond: 250, hopiumPerSecond: 0 },
         img: "imgs/boeing.jpg",
     },
     {
+        name: "Do not come!",
+        cost: { copium: 300000, delusion: 0, yarmulkes: 0, trollPoints: 0, hopium: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 100, yarmulkesPerSecond: 300, trollPointsPerSecond: 100, hopiumPerSecond: 0 },
+        img: "imgs/im_gonna_come.jpg",
+    },
+    {
         name: "Transcendence",
         cost: { copium: 99999, delusion: 99999, yarmulkes: 99999, trollPoints: 99999, hopium: 0 },
         earnings: { copiumPerSecond: 500, delusionPerSecond: 500, yarmulkesPerSecond: 500, trollPointsPerSecond: 500, hopiumPerSecond: 0 },
         img: "imgs/transcendence.jpg",
-        message: "You feel permanently stronger! (SPOILER ALERT: in future versions this will lead to another ascendency path.",
-        miniPrestigeMultiplier: 1.01
+        message: "You feel permanently stronger! SPOILER ALERT: in future versions this will lead to another ascendency path.",
+        miniPrestigeMultiplier: 1.03
+    },
+    {
+        name: "420",
+        cost: { copium: 420000, delusion: 420000, yarmulkes: 420000, trollPoints: 420000, hopium: 0 },
+        earnings: { copiumPerSecond: 420, delusionPerSecond: 420, yarmulkesPerSecond: 420, trollPointsPerSecond: 420, hopiumPerSecond: 0 },
+        img: "imgs/blaze_it.jpg",
     },
     {
         name: "Pudge",

@@ -1,3 +1,77 @@
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.8); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #1e1e1e; /* Dark background */
+    margin: 10% auto; /* 10% from the top and centered */
+    padding: 20px;
+    border: 1px solid #333; /* Dark border */
+    width: 60%; /* Could be more or less, depending on screen size */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Shadow for depth */
+    color: #e0e0e0; /* Light text color */
+    font-family: Arial, sans-serif;
+    position: relative;
+}
+
+/* The Close Button */
+.close-button {
+    color: #e0e0e0;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Modal title */
+#modalTitle {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Modal message */
+#modalMessage {
+    margin: 10px 0;
+    line-height: 1.6;
+}
+
+/* Modal close button */
+#modalCloseButton {
+    display: block;
+    margin: 20px auto 0;
+    padding: 10px 20px;
+    background-color: #e74c3c; /* Red background */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#modalCloseButton:hover {
+    background-color: #c0392b; /* Darker red on hover */
+}
+
+
+
 body {
     display: flex;
     justify-content: center;
@@ -269,6 +343,7 @@ button.disabled {
     }
 }
 
+/* Prestige Button Styling */
 #prestigeButton {
     display: block;
     margin: 20px auto; /* Center horizontally */
@@ -293,59 +368,30 @@ button.disabled {
     transform: scale(1.05); /* Slightly smaller on click */
 }
 
-.prestige-text {
-    font-size: 2em;
-    color: gold;
+.prestige-multiplier-text {
+    font-size: 1.5em;
+    color: lightgoldenrodyellow;
     font-weight: bold;
     transition: all 0.5s ease;
 }
 
-.prestige-count {
-    font-size: 2em;
-    color: gold;
-    font-weight: bold;
-    transition: all 0.5s ease;
-}
-
-.multiplier-count {
-    font-size: 0.75em; 
+.prestige-multiplier-count {
+    font-size: 1.5em; 
     color: gold;
     font-weight: normal;
 }
 
-.prestige-level-1 {
-    color: gold;
-    text-shadow: 0 0 5px #ffd700;
-}
-
-.prestige-level-2 {
-    color: gold;
-    text-shadow: 0 0 10px #ffd700, 0 0 20px #ffd700;
-}
-
-.prestige-level-3 {
-    color: gold;
-    text-shadow: 0 0 15px #ffd700, 0 0 30px #ffd700;
-}
-
-.prestige-level-4 {
-    color: gold;
-    text-shadow: 0 0 20px #ffd700, 0 0 40px #ffd700;
-}
-
-.prestige-level-5 {
-    color: gold;
-    text-shadow: 0 0 25px #ffd700, 0 0 50px #ffd700;
-}
 
 #cookieButton {
     background: none;
     border: none;
     cursor: pointer;
+    display: block;
+    margin: 0 auto; /* Center horizontally */
 }
 
 #cookieButton img {
-    width: 100px; /* Adjust size as needed */
+    width: 125px; /* Adjust size as needed */
     height: auto;
     transition: transform 0.1s;
 }

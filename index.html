@@ -3,14 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Degens Idle v0.4</title>
+    <title>Degens Idle v0.41</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <div id="welcomeModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="closeWelcomeModal">&times;</span>
+            <h2>Welcome to Degens Idle</h2>
+            <p>
+                Step into a world where the dankest memes meet the depths of introspective contemplation. In Degens Idle, you’re not just collecting resources—you’re diving headfirst into a journey of existential discovery.
+            </p>
+            <p>
+                Embrace the grind as you gather Copium, Delusion, Yarmulkes, Troll Points, and the elusive Hopium. Each click and upgrade is a step closer to understanding the universe of internet culture and your place within it.
+            </p>
+            <p>
+                Are you ready to transcend the ordinary? To not only witness but harness the power of memes in their truest, most profound form? Every action you take will push you to ponder life’s greatest mysteries and your role in this meme-laden multiverse.
+            </p>
+            <p>
+                <strong>Dive into Degens Idle, where every click is a step towards meme mastery and self-realization. Your journey into the meme-iverse and the meaning of existence begins here.</strong>
+            </p>
+        </div>
+    </div>
+    <div id="messageModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="closeMessageModal">&times;</span>
+            <h2 id="modalTitle"></h2>
+            <p id="modalMessage"></p>
+            <button id="modalCloseButton">Close</button>
+        </div>
+    </div>
     <div id="main-container">
         <div id="title-column">
             <div id="title-container">
-                <h1 id="title">Degens Idle v0.4</h1>
+                <h1 id="title">Degens Idle v0.41</h1>
             </div>
             <div id="button-container">
                 <button id="restartButton">Restart Game</button>
@@ -59,12 +85,10 @@
                     <img src="imgs/cookie.jpg" alt="Cookie Button">
                 </button>
             </div>
-            <p class="prestige-text">
-                Prestige: <span id="prestiges" class="prestige-count">0</span>
-                <br>
-                <span id="multiplier" class="multiplier-count">(x1.00 multiplier on everything)</span>
+            <p class="prestige=multiplier-text">
+                <span id="prestige-multiplier" class="prestige-multiplier-count">Prestige: x1.00 multiplier</span>
             </p>
-            <button id="prestigeButton">Prestige</button>
+            <button id="prestigeButton" style="display:none;">Prestige</button>
         </div>
         <div id="upgrades">
             <h2>Upgrades</h2>
