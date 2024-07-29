@@ -267,7 +267,7 @@ function playMiniGame(gameType) {
         for (let i = 0; i < sequenceLength; i++) {
             sequence += Math.floor(Math.random() * 10); // Random digit between 0 and 9
         }
-        let timeout = Math.floor(Math.random() * 48) + 3; // Random timeout between 3 and 50 seconds
+        let timeout = Math.floor(Math.random() * 41) + 5; // Random timeout between 5 and 45 seconds
         showMessageModal('Memory Game', `Remember this sequence: ${sequence}`).then(() => {
             setTimeout(() => {
                 showMessageModal('Memory Game', 'Enter the sequence:', false, false, true).then(userSequence => {
@@ -692,7 +692,7 @@ async function ascend() {
 
     const selectedUpgrade = await showMessageModal(
         'God-Mode Ascension',
-        `Are you sure you want to enter God-Mode level ${godModeLevel + 1}? You will lose all your Upgrades and Prestige progress!<br><br><strong>Select one of your purchased upgrades to enhance (10x multiplier).</strong><br>Tip: While you can ascend to as many God-Mode levels as you desire, it's not necessary to achieve every level to proceed to the next chapter.`,
+        `Are you sure you want to enter God-Mode level ${godModeLevel + 1}? You will lose all your Upgrades and Prestige progress!<br><br><strong>Select one of your purchased upgrades to enhance (10x multiplier).</strong><br>Tip: You will want to drive up your God-Mode level quickly. However, while you can ascend to as many God-Mode levels as you desire, it's not necessary to achieve every level to proceed to the next chapter.`,
         true,
         true
     );

@@ -322,45 +322,39 @@ const upgrades = [
         cost: { copium: 1e10, delusion: 8e9, yachtMoney: 4e9, trollPoints: 1e10, hopium: 0 },
         earnings: { copiumPerSecond: 500000, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0.001 },
         img: "imgs/antimatter_dimensions.jpg",
-        message: `<div>
-    <h2>Antimatter Dimensions: A Game-Changing Milestone</h2>
-    <p>
-        Ladies and gentlemen, behold the pinnacle of gaming excellence: <strong>Antimatter Dimensions</strong>. 
-        This upgrade is not just a mere enhancement to your experience—it's a transformative journey into the 
-        very fabric of reality and beyond. A game so profoundly influential that it has reshaped the landscape 
-        of entertainment and culture.
-    </p>
-    <p>
-        <strong>Antimatter Dimensions</strong> stands tall as a beacon of creativity and innovation, overshadowing the combined legacies of GTA, Skyrim, Dota, Quake, and FIFA. 
-        These iconic titles, while legendary in their own right, pale in comparison to the revolutionary impact of Antimatter Dimensions. 
-        This game has not only set new standards in gaming but has also permeated popular culture, philosophy, and even scientific thought.
-    </p>
-    <h3>The Secret to Unlocking "Truth"</h3>
-    <p>
-        Amidst the infinite possibilities lies a secret—an elusive new resource known as <strong>"Truth"</strong>. This resource is not for the faint of heart, 
-        as it requires players to transcend conventional boundaries and embrace the unknown.
-    </p>
-    <p>
-        To unlock <strong>Truth</strong>, one must first achieve the seemingly impossible feat of reaching <strong>negative one trillion delusion</strong>. 
-        This herculean task demands perseverance, strategy, and an unwavering belief in the layers yet to be discovered.
-    </p>
-    <p><strong>This game taught us that there are always more layers.</strong></p>
-    <div style="font-size: 48px; font-weight: bold; text-align: center;">
-        TRUTH
-    </div>
-    <p>
-        Unlocking <strong>Truth</strong> is more than just a milestone—it's a testament to the limitless potential of the human spirit 
-        and the boundless nature of the universe. <strong>Antimatter Dimensions</strong> has not just entertained us; it has enlightened us, 
-        revealing that the pursuit of knowledge and understanding is a journey with infinite horizons.
-    </p>
-    <p>Embark on this extraordinary adventure and discover the profound secrets that lie within <strong>Antimatter Dimensions</strong>. The universe awaits your exploration.</p>
-</div>`
+        message: 
+                `<div>
+                    <h2>Antimatter Dimensions: A Game-Changing Milestone</h2>
+                    <p>
+                        Ladies and gentlemen, behold the pinnacle of gaming excellence: <strong>Antimatter Dimensions</strong>. 
+                        This upgrade is not just a mere enhancement—it's a transformative journey into the very fabric of reality and beyond. 
+                        A game so influential that it has reshaped the landscape of entertainment and culture, overshadowing the combined legacies of GTA, Skyrim, Dota, Quake, FIFA, Pokemon, and Tetris.
+                    </p>
+                    <h3>The Secret to Unlocking "Knowledge"</h3>
+                    <p>
+                        Amidst the infinite possibilities lies a secret—an elusive new resource known as <strong>"Knowledge"</strong>. 
+                        This resource requires players to transcend conventional boundaries and embrace the unknown.
+                    </p>
+                    <p>
+                        To unlock <strong>Knowledge</strong>, one must first achieve the seemingly impossible feat of reaching 
+                        <strong>negative one quadrillion delusion</strong>. This task demands perseverance, strategy, and an unwavering belief in the layers yet to be discovered.
+                    </p>
+                    <p><strong>This game taught us that there are always more layers.</strong></p>
+                    <div style="font-size: 48px; font-weight: bold; text-align: center;">
+                        KNOWLEDGE
+                    </div>
+                    <p>
+                        Unlocking <strong>Knowledge</strong> is more than just a milestone—it's a testament to the limitless potential of the human spirit 
+                        and the boundless nature of the universe. <strong>Antimatter Dimensions</strong> has not just entertained us; it has enlightened us, 
+                        revealing that the pursuit of knowledge and understanding is a journey with infinite horizons.
+                    </p>
+                </div>`
     },  
     {
         name: "Don't fuck this up Netflix",
         cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 1000 },
         earnings: { copiumPerSecond: 500000, delusionPerSecond: -1000000, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0.01 },
-        img: "imgs/3_body_problem.JPG",
+        img: "imgs/3_body_problem.jpg",
     },    
     {
         name: "Haven't Smoked Foool (not done)",
