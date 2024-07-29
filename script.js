@@ -1173,6 +1173,18 @@ window.collectResource = collectResource;
 window.generateResources = generateResources;
 window.buyUpgrade = buyUpgrade;
 
+document.addEventListener('DOMContentLoaded', () => {
+    let lastTouchEnd = 0;
+
+    document.addEventListener('touchend', (event) => {
+        let now = (new Date()).getTime();
+        if (now - lastTouchEnd <= 300) {
+            event.preventDefault();
+        }
+        lastTouchEnd = now;
+    }, false);
+});
+
 // Add event listeners after the DOM content is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
     // Add event listener for the cookie button to collect all resources

@@ -14,7 +14,7 @@ const upgrades = [
     {
         name: "Foreshadowing",
         cost: { copium: 10, delusion: 10, yachtMoney: 10, trollPoints: 10, hopium: 0 },
-        earnings: { copiumPerSecond: 1.8, delusionPerSecond: 2.2, yachtMoneyPerSecond: 1.9, trollPointsPerSecond: 1, hopiumPerSecond: 0 },
+        earnings: { copiumPerSecond: 1.8, delusionPerSecond: 2.3, yachtMoneyPerSecond: 1.9, trollPointsPerSecond: 1, hopiumPerSecond: 0 },
         img: "imgs/distracted_boyfriend.jpg",
     },
     {
@@ -38,13 +38,13 @@ const upgrades = [
     {
         name: "Keyboard Warrior",
         cost: { copium: 50, delusion: 100, yachtMoney: 50, trollPoints: 0, hopium: 0 },
-        earnings: { copiumPerSecond: 1.7, delusionPerSecond: 3.3, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0 },
+        earnings: { copiumPerSecond: 1.7, delusionPerSecond: 3.5, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0 },
         img: "imgs/keyboard_warrior.jpg",
     },
     {
         name: "Music",
         cost: { copium: 100, delusion: 25, yachtMoney: 150, trollPoints: 25, hopium: 0 },
-        earnings: { copiumPerSecond: 8.4, delusionPerSecond: -1.5, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0 },
+        earnings: { copiumPerSecond: 8.4, delusionPerSecond: -0.9, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0 },
         img: "imgs/linkin_park.jpg",
     },
     {
@@ -62,7 +62,7 @@ const upgrades = [
     {
         name: "Email Safety First",
         cost: { copium: 1000, delusion: 0, yachtMoney: 0, trollPoints: 150, hopium: 0 },
-        earnings: { copiumPerSecond: 0.2, delusionPerSecond: 8.5, yachtMoneyPerSecond: -1, trollPointsPerSecond: 0, hopiumPerSecond: 0 },
+        earnings: { copiumPerSecond: 0.2, delusionPerSecond: 8.7, yachtMoneyPerSecond: -1, trollPointsPerSecond: 0, hopiumPerSecond: 0 },
         img: "imgs/proton.jpg",
     },
     {
