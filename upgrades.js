@@ -229,7 +229,7 @@ const upgrades = [
         name: "Ascension",
         cost: { copium: 99999, delusion: 99999, yachtMoney: 99999, trollPoints: 99999, hopium: 0 },
         earnings: { copiumPerSecond: 10, delusionPerSecond: 10, yachtMoneyPerSecond: 10, trollPointsPerSecond: 10, hopiumPerSecond: 0 },
-        img: "imgs/Ascension.jpg",
+        img: "imgs/ascension.jpg",
     },
     {
         name: "420",
