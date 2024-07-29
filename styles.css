@@ -202,6 +202,7 @@ button {
     border: none;
     border-radius: 5px;
     transition: background-color 0.3s ease;
+    touch-action: manipulation;
 }
 
 button:hover {
@@ -247,7 +248,7 @@ button.collect-button, button.game-button {
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-button.collect-button:hover, button.game-button:hover {
+button.collect-button:not(.disabled):hover, button.game-button:not(.disabled):hover, button.affordable:hover, .game-button.affordable:hover {
     background-color: #218838; /* Darker green on hover */
     transform: scale(1.1); /* Slightly larger on hover */
 }

@@ -407,9 +407,18 @@ function unlockMiniGames() {
 
 
 async function restartGame(isPrestige = false, isAscend = false) {
-    const confirmMessage = "Are you sure you want to restart the game? This will reset all your progress.";
+    const confirmTitle1 = "Are You Sure You Want to Restart?"
+    const confirmMessage1 = `<p>Whoa there, brave soul! You're about to hit the big red button and restart your game. Are you sure you want to do this?</p>
+                            <p>Think of all those hard-earned upgrades and epic moments... gone in a flash! But hey, who needs progress when you can start over, right?</p>
+                            <p><strong>Warning:</strong> This action cannot be undone. Like, seriously, once you click it, there’s no going back. Poof! All gone!</p>
+                            <p>If you're absolutely, positively, without a doubt sure, then go ahead and click that button. Otherwise, maybe just take a deep breath and step away from the keyboard for a second. 😅</p>`;
+    const confirmTitle2 = "You Didn't Ask for It, But I'll Give You One More Try"
+    const confirmMessage2 = `<p>This time, for real. So, you’re really, really sure you want to restart? Like, absolutely sure?</p>
+                            <p>All your progress will be history. Forever. Gone. Like that sandwich you left in the fridge. Are you sure you’re ready for that kind of commitment?</p>
+                            <p>This is your last chance to turn back! Once you click this button, there’s no going back. Just like trying to un-toast toast.</p>
+                            <p>If you’re still certain, then hit the button below. Otherwise, maybe rethink this whole restarting thing. 😅</p>`;
     
-    if (isPrestige || isAscend || await showMessageModal("Confirm Restart", confirmMessage, true, false)) {
+    if (isPrestige || isAscend || (await showMessageModal(confirmTitle1, confirmMessage1, true, false) && await showMessageModal(confirmTitle2, confirmMessage2, true, false)) ) {
          // Reset all resources and earnings per second
         copium = 0;
         copiumPerSecond = 0;
@@ -488,12 +497,32 @@ function updateTradeRatio() {
 }
 
 function parseFormattedNumber(str) {
-    const suffixes = { K: 1e3, M: 1e6, B: 1e9, T: 1e12, P: 1e15, E: 1e18 };
-    const regex = /^(\d+(\.\d+)?)([KMBTPE]?)$/i;
+    const suffixes = {
+        K: 1e3,
+        M: 1e6,
+        B: 1e9,
+        T: 1e12,
+        Qa: 1e15,
+        Qi: 1e18,
+        Sx: 1e21,
+        Sp: 1e24,
+        Oc: 1e27,
+        Nn: 1e30,
+        Dc: 1e33
+    };
+
+    // Regular expression to match both suffix-based and scientific notation
+    const regex = /^(\d+(\.\d+)?)([a-zA-Z]+|e[\+\-]?\d+)?$/i;
     const match = str.match(regex);
+
     if (match) {
         const [, num, , suffix] = match;
-        return parseFloat(num) * (suffixes[suffix.toUpperCase()] || 1);
+        // Check if the suffix is in scientific notation (starts with 'e' or 'E')
+        if (suffix && suffix[0].toLowerCase() === 'e') {
+            return parseFloat(num + suffix);  // Convert directly to a number
+        }
+        const factor = suffix ? suffixes[suffix] || 1 : 1;
+        return parseFloat(num) * factor;
     }
     return NaN;
 }
@@ -583,18 +612,29 @@ function customRound(number, digits) {
 
 function formatNumber(num) {
     const suffixes = [
-        { value: 1e18, symbol: "E" }, // Exa
-        { value: 1e15, symbol: "P" }, // Peta
-        { value: 1e12, symbol: "T" }, // Tera
-        { value: 1e9, symbol: "B" },  // Giga (Billion)
-        { value: 1e6, symbol: "M" },  // Mega (Million)
-        { value: 1e3, symbol: "K" }   // Kilo (Thousand)
+        { value: 1e33, symbol: "Dc" },    // Decillion
+        { value: 1e30, symbol: "Nn" },    // Nonillion
+        { value: 1e27, symbol: "Oc" },    // Octillion
+        { value: 1e24, symbol: "Sp" },    // Septillion
+        { value: 1e21, symbol: "Sx" },    // Sextillion
+        { value: 1e18, symbol: "Qi" },    // Quintillion
+        { value: 1e15, symbol: "Qa" },    // Quadrillion
+        { value: 1e12, symbol: "T" },     // Trillion
+        { value: 1e9, symbol: "B" },      // Billion
+        { value: 1e6, symbol: "M" },      // Million
+        { value: 1e3, symbol: "K" }       // Thousand
     ];
+
     for (let i = 0; i < suffixes.length; i++) {
         if (Math.abs(num) >= suffixes[i].value) {
             return customRound(num / suffixes[i].value, 3) + suffixes[i].symbol;
         }
     }
+    
+    if (Math.abs(num) >= 1e36) {
+        return num.toExponential(3);  // Switch to scientific notation for values >= 1e36
+    }
+
     return customRound(num, 3);
 }
 
