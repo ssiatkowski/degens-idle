@@ -250,11 +250,11 @@ function playMiniGame(gameType) {
             let clicksPerSecond = points / duration;
             let reward;
             if (clicksPerSecond > 3) { // More than 3 clicks per second
-                reward = Math.max(Math.floor(copium * ((clicksPerSecond - 3) * 0.03)), 25);
-                showMessageModal('Speed Game Result', `You tapped ${points} times in ${duration} seconds (${clicksPerSecond.toFixed(1)} taps per second). You won and earned ${formatNumber(reward)} copium!`, false, false);
+                reward = Math.max(Math.floor(Math.abs(copium) * ((clicksPerSecond - 3) * 0.03)), 25);
+                showMessageModal('Speed Game Result - Fast', `You tapped ${points} times in ${duration} seconds (${clicksPerSecond.toFixed(1)} taps per second). For being so fast you earned ${formatNumber(reward)} copium!`, false, false);
             } else {
                 reward = -Math.max(Math.floor(Math.random() * Math.abs(copium) * 0.1), 10);
-                showMessageModal('Speed Game Result', `You tapped ${points} times in ${duration} seconds (${clicksPerSecond.toFixed(1)} taps per second). You lost and earned ${formatNumber(reward)} copium!`, false, false);
+                showMessageModal('Speed Game Result - Slow', `You tapped ${points} times in ${duration} seconds (${clicksPerSecond.toFixed(1)} taps per second). For being so slow you lost ${formatNumber(reward)} copium!`, false, false);
             }
             copium += reward;
             updateDisplay(); // Update the display
@@ -267,13 +267,12 @@ function playMiniGame(gameType) {
         for (let i = 0; i < sequenceLength; i++) {
             sequence += Math.floor(Math.random() * 10); // Random digit between 0 and 9
         }
-        let timeout = Math.floor(Math.random() * 41) + 5; // Random timeout between 5 and 45 seconds
+        let timeout = Math.floor(Math.random() * 31) + 5; // Random timeout between 5 and 40 seconds
         showMessageModal('Memory Game', `Remember this sequence: ${sequence}`).then(() => {
             setTimeout(() => {
                 showMessageModal('Memory Game', 'Enter the sequence:', false, false, true).then(userSequence => {
                     let correct = userSequence === sequence;
-                    let reward = correct ? Math.max(Math.floor(delusion * 0.5), 25) : -Math.max(Math.floor(Math.random() * Math.abs(delusion) * 0.1), 10);
-                    if (delusion < 0 && !correct) reward += 10;
+                    let reward = correct ? Math.max(Math.floor(Math.abs(delusion) * 0.5), 25) : -Math.max(Math.floor(Math.random() * Math.abs(delusion) * 0.1), 10);
                     delusion += reward;
                     showMessageModal('Memory Game Result', `You ${correct ? 'won' : 'lost'} and earned ${formatNumber(reward)} delusion!`);
                     updateDisplay(); // Update the display
@@ -293,11 +292,10 @@ function playMiniGame(gameType) {
         let question = `${num1} ${op1} ${num2} ${op2} ${num3}`;
         let correctAnswer = eval(question.replace('/', '* 1.0 /')); // Ensure floating point division
 
-        showMessageModal('Math Game', `What is ${question}?`, false, false, true).then(answer => {
-            let reward = Math.abs(Number(answer) - correctAnswer) < 0.01 ? Math.max(Math.floor(yachtMoney * 0.25), 10) : -Math.max(Math.floor(Math.random() * Math.abs(yachtMoney) * 0.1), 10);
-            if (yachtMoney < 0 && Math.abs(Number(answer) - correctAnswer) >= 0.01) reward += 10;
+        showMessageModal('Math Game', `What is ${question}?  (answer within 0.5 is acceptable)`, false, false, true).then(answer => {
+            let reward = Math.abs(Number(answer) - correctAnswer) < 0.5 ? Math.max(Math.floor(Math.abs(yachtMoney) * 0.25), 25) : -Math.max(Math.floor(Math.random() * Math.abs(yachtMoney) * 0.1), 10);
             yachtMoney += reward;
-            showMessageModal('Math Game Result', `You ${Math.abs(Number(answer) - correctAnswer) < 0.01 ? 'won' : 'lost'} and earned ${formatNumber(reward)} yachtMoney!`);
+            showMessageModal('Math Game Result', `You guessed ${answer} and exact answer was ${correctAnswer}. You ${Math.abs(Number(answer) - correctAnswer) < 0.5 ? 'won' : 'lost'} and earned ${formatNumber(reward)} yachtMoney!`);
             updateDisplay(); // Update the display
             startCooldown(gameType); // Start cooldown for the mini-game
         });
@@ -643,7 +641,7 @@ async function prestige() {
 
         const confirmed = await showMessageModal(
             'Prestige Confirmation',
-            `Are you sure you want to prestige? You will reset your progress and all resources, but your Prestige Multiplier will increase from ${formatNumber(epsMultiplier)} to ${formatNumber(calculatePrestigeMultiplier())}.`,
+            `Are you sure you want to prestige? You will reset your progress and all resources, but your Prestige Multiplier will increase <strong>from ${formatNumber(epsMultiplier)} to ${formatNumber(calculatePrestigeMultiplier())}</strong>.<br>(Prestige multiplier is based on the lowest among your first four resources (Copium, Delusion, Yacht Money, and Troll Points). The higher the amount of your smallest resource, the greater your prestige multiplier!)`,
             true
         );
 
@@ -843,11 +841,11 @@ function buyUpgrade(encodedUpgradeName) {
 function formatCostOrEarnings(costOrEarnings, isGodMode = false) {
     // Abbreviations for resource per second values
     const abbreviations = {
-        copiumPerSecond: 'CPS',
-        delusionPerSecond: 'DPS',
-        yachtMoneyPerSecond: 'YMPS',
-        trollPointsPerSecond: 'TPPS',
-        hopiumPerSecond: 'HPS'
+        copiumPerSecond: '<b>C</b>PS',
+        delusionPerSecond: '<b>D</b>PS',
+        yachtMoneyPerSecond: '<b>YM</b>PS',
+        trollPointsPerSecond: '<b>TP</b>PS',
+        hopiumPerSecond: '<b>H</b>PS'
     };
 
     let result = '';
@@ -1172,18 +1170,6 @@ window.updateUpgradeList = updateUpgradeList;
 window.collectResource = collectResource;
 window.generateResources = generateResources;
 window.buyUpgrade = buyUpgrade;
-
-document.addEventListener('DOMContentLoaded', () => {
-    let lastTouchEnd = 0;
-
-    document.addEventListener('touchend', (event) => {
-        let now = (new Date()).getTime();
-        if (now - lastTouchEnd <= 300) {
-            event.preventDefault();
-        }
-        lastTouchEnd = now;
-    }, false);
-});
 
 // Add event listeners after the DOM content is fully loaded
 document.addEventListener('DOMContentLoaded', () => {

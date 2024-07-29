@@ -2,25 +2,25 @@ const upgrades = [
     {
         name: "So what do I do here?",
         cost: { copium: 5, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0 },
-        earnings: { copiumPerSecond: 1.4, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0.8, hopiumPerSecond: 0 },
+        earnings: { copiumPerSecond: 1.4, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0.7, hopiumPerSecond: 0 },
         img: "imgs/john_travolta.jpg",
     },
     {
         name: "Dating a 25 year old",
         cost: { copium: 0, delusion: 5, yachtMoney: 10, trollPoints: 10, hopium: 0 },
-        earnings: { copiumPerSecond: 0.7, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 2.1, hopiumPerSecond: 0 },
+        earnings: { copiumPerSecond: 0.8, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1.9, hopiumPerSecond: 0 },
         img: "imgs/leo.jpg",
     },
     {
         name: "Foreshadowing",
         cost: { copium: 10, delusion: 10, yachtMoney: 10, trollPoints: 10, hopium: 0 },
-        earnings: { copiumPerSecond: 1.8, delusionPerSecond: 2.3, yachtMoneyPerSecond: 1.9, trollPointsPerSecond: 1, hopiumPerSecond: 0 },
+        earnings: { copiumPerSecond: 1.8, delusionPerSecond: 2.3, yachtMoneyPerSecond: 1.9, trollPointsPerSecond: 0.6, hopiumPerSecond: 0 },
         img: "imgs/distracted_boyfriend.jpg",
     },
     {
         name: "Standard Dropout",
         cost: { copium: 0, delusion: 30, yachtMoney: 30, trollPoints: 0, hopium: 0 },
-        earnings: { copiumPerSecond: 1.2, delusionPerSecond: 1.2, yachtMoneyPerSecond: 1, trollPointsPerSecond: -1.5, hopiumPerSecond: 0 },
+        earnings: { copiumPerSecond: 1.2, delusionPerSecond: 1.2, yachtMoneyPerSecond: 1.2, trollPointsPerSecond: -1.6, hopiumPerSecond: 0 },
         img: "imgs/standard_dropout.jpg",
     },
     {
@@ -32,7 +32,7 @@ const upgrades = [
     {
         name: "Decisions, decisions...",
         cost: { copium: 100, delusion: 100, yachtMoney: 0, trollPoints: 0, hopium: 0 },
-        earnings: { copiumPerSecond: 1.3, delusionPerSecond: 4.2, yachtMoneyPerSecond: -1.2, trollPointsPerSecond: 2.5, hopiumPerSecond: 0 },
+        earnings: { copiumPerSecond: 1.4, delusionPerSecond: 4.2, yachtMoneyPerSecond: -1.2, trollPointsPerSecond: 2.2, hopiumPerSecond: 0 },
         img: "imgs/two_buttons.jpg",
     },
     {
@@ -67,8 +67,8 @@ const upgrades = [
     },
     {
         name: "Joker's Rage Level",
-        cost: { copium: 500, delusion: 0, yachtMoney: 250, trollPoints: 500, hopium: 0 },
-        earnings: { copiumPerSecond: 2, delusionPerSecond: -24, yachtMoneyPerSecond: 10, trollPointsPerSecond: 24, hopiumPerSecond: 0 },
+        cost: { copium: 500, delusion: 0, yachtMoney: 250, trollPoints: 700, hopium: 0 },
+        earnings: { copiumPerSecond: 3, delusionPerSecond: -24, yachtMoneyPerSecond: 10, trollPointsPerSecond: 26, hopiumPerSecond: 0 },
         img: "imgs/over_9000.jpg",
     },
     {
