@@ -4,8 +4,8 @@ let copium = 0;
 let copiumPerSecond = 0;
 let delusion = 0;
 let delusionPerSecond = 0;
-let yarmulkes = 0;
-let yarmulkesPerSecond = 0;
+let yachtMoney = 0;
+let yachtMoneyPerSecond = 0;
 let trollPoints = 0;
 let trollPointsPerSecond = 0;
 let hopium = 0;
@@ -13,13 +13,13 @@ let hopiumPerSecond = 0;
 let cooldowns = {
     copium: false,
     delusion: false,
-    yarmulkes: false,
+    yachtMoney: false,
     trollPoints: false
 };
 
 let effectiveCopiumPerSecond = 0;
 let effectiveDelusionPerSecond = 0;
-let effectiveYarmulkesPerSecond = 0;
+let effectiveYachtMoneyPerSecond = 0;
 let effectiveTrollPointsPerSecond = 0;
 let effectiveHopiumPerSecond = 0;
 
@@ -48,7 +48,7 @@ const miniGameTimeouts = {
 function updateEffectiveMultipliers() {
     effectiveCopiumPerSecond = copiumPerSecond * epsMultiplier * godModeMultiplier;
     effectiveDelusionPerSecond = delusionPerSecond * epsMultiplier * godModeMultiplier;
-    effectiveYarmulkesPerSecond = yarmulkesPerSecond * epsMultiplier * godModeMultiplier;
+    effectiveYachtMoneyPerSecond = yachtMoneyPerSecond * epsMultiplier * godModeMultiplier;
     effectiveTrollPointsPerSecond = trollPointsPerSecond * epsMultiplier * godModeMultiplier;
     effectiveHopiumPerSecond = hopiumPerSecond * epsMultiplier * godModeMultiplier;
 }
@@ -58,7 +58,7 @@ function updateEffectiveMultipliers() {
 function collectAllResources() {
     copium += 10 * epsMultiplier * godModeMultiplier;
     delusion += 10 * epsMultiplier * godModeMultiplier;
-    yarmulkes += 10 * epsMultiplier * godModeMultiplier;
+    yachtMoney += 10 * epsMultiplier * godModeMultiplier;
     trollPoints += 10 * epsMultiplier * godModeMultiplier;
     updateDisplay();
 }
@@ -68,7 +68,7 @@ function collectResource(resource) {
     // Increase the appropriate resource by the epsMultiplier
     if (resource === 'copium') copium += epsMultiplier * godModeMultiplier;
     if (resource === 'delusion') delusion += epsMultiplier * godModeMultiplier;
-    if (resource === 'yarmulkes') yarmulkes += epsMultiplier * godModeMultiplier;
+    if (resource === 'yachtMoney') yachtMoney += epsMultiplier * godModeMultiplier;
     if (resource === 'trollPoints') trollPoints += epsMultiplier * godModeMultiplier;
     
     // Update the display to reflect the new resource values
@@ -82,8 +82,8 @@ function loadGameState() {
     copiumPerSecond = parseFloat(localStorage.getItem('copiumPerSecond')) || 0;
     delusion = parseFloat(localStorage.getItem('delusion')) || 0;
     delusionPerSecond = parseFloat(localStorage.getItem('delusionPerSecond')) || 0;
-    yarmulkes = parseFloat(localStorage.getItem('yarmulkes')) || 0;
-    yarmulkesPerSecond = parseFloat(localStorage.getItem('yarmulkesPerSecond')) || 0;
+    yachtMoney = parseFloat(localStorage.getItem('yachtMoney')) || 0;
+    yachtMoneyPerSecond = parseFloat(localStorage.getItem('yachtMoneyPerSecond')) || 0;
     trollPoints = parseFloat(localStorage.getItem('trollPoints')) || 0;
     trollPointsPerSecond = parseFloat(localStorage.getItem('trollPointsPerSecond')) || 0;
     hopium = parseFloat(localStorage.getItem('hopium')) || 0;
@@ -163,8 +163,8 @@ function saveGameState() {
     localStorage.setItem('copiumPerSecond', copiumPerSecond);
     localStorage.setItem('delusion', delusion);
     localStorage.setItem('delusionPerSecond', delusionPerSecond);
-    localStorage.setItem('yarmulkes', yarmulkes);
-    localStorage.setItem('yarmulkesPerSecond', yarmulkesPerSecond);
+    localStorage.setItem('yachtMoney', yachtMoney);
+    localStorage.setItem('yachtMoneyPerSecond', yachtMoneyPerSecond);
     localStorage.setItem('trollPoints', trollPoints);
     localStorage.setItem('trollPointsPerSecond', trollPointsPerSecond);
     localStorage.setItem('hopium', hopium);
@@ -208,7 +208,7 @@ function saveGameState() {
 function generateResources() {
     copium += effectiveCopiumPerSecond;
     delusion += effectiveDelusionPerSecond;
-    yarmulkes += effectiveYarmulkesPerSecond;
+    yachtMoney += effectiveYachtMoneyPerSecond;
     trollPoints += effectiveTrollPointsPerSecond;
     hopium += effectiveHopiumPerSecond;
     updateDisplay();
@@ -251,10 +251,10 @@ function playMiniGame(gameType) {
             let reward;
             if (clicksPerSecond > 3) { // More than 3 clicks per second
                 reward = Math.max(Math.floor(copium * ((clicksPerSecond - 3) * 0.03)), 25);
-                showMessageModal('Speed Game Result', `You tapped ${points} times in ${duration} seconds (${clicksPerSecond.toFixed(1)} taps per second). You won and earned ${reward.toFixed(2)} copium!`, false, false);
+                showMessageModal('Speed Game Result', `You tapped ${points} times in ${duration} seconds (${clicksPerSecond.toFixed(1)} taps per second). You won and earned ${formatNumber(reward)} copium!`, false, false);
             } else {
                 reward = -Math.max(Math.floor(Math.random() * Math.abs(copium) * 0.1), 10);
-                showMessageModal('Speed Game Result', `You tapped ${points} times in ${duration} seconds (${clicksPerSecond.toFixed(1)} taps per second). You lost and earned ${reward.toFixed(2)} copium!`, false, false);
+                showMessageModal('Speed Game Result', `You tapped ${points} times in ${duration} seconds (${clicksPerSecond.toFixed(1)} taps per second). You lost and earned ${formatNumber(reward)} copium!`, false, false);
             }
             copium += reward;
             updateDisplay(); // Update the display
@@ -268,17 +268,19 @@ function playMiniGame(gameType) {
             sequence += Math.floor(Math.random() * 10); // Random digit between 0 and 9
         }
         let timeout = Math.floor(Math.random() * 48) + 3; // Random timeout between 3 and 50 seconds
-        showMessageModal('Memory Game', 'Remember this sequence: ' + sequence);
-        setTimeout(() => {
-            let userSequence = prompt('Enter the sequence:');
-            let correct = userSequence === sequence;
-            let reward = correct ? Math.max(Math.floor(delusion * 0.5), 25) : -Math.max(Math.floor(Math.random() * Math.abs(delusion) * 0.1), 10);
-            if (delusion < 0 && !correct) reward += 10;
-            delusion += reward;
-            showMessageModal('Memory Game Result', `You ${correct ? 'won' : 'lost'} and earned ${reward.toFixed(2)} delusion!`);
-            updateDisplay(); // Update the display
-            startCooldown(gameType); // Start cooldown for the mini-game
-        }, timeout * 1000);
+        showMessageModal('Memory Game', `Remember this sequence: ${sequence}`).then(() => {
+            setTimeout(() => {
+                showMessageModal('Memory Game', 'Enter the sequence:', false, false, true).then(userSequence => {
+                    let correct = userSequence === sequence;
+                    let reward = correct ? Math.max(Math.floor(delusion * 0.5), 25) : -Math.max(Math.floor(Math.random() * Math.abs(delusion) * 0.1), 10);
+                    if (delusion < 0 && !correct) reward += 10;
+                    delusion += reward;
+                    showMessageModal('Memory Game Result', `You ${correct ? 'won' : 'lost'} and earned ${formatNumber(reward)} delusion!`);
+                    updateDisplay(); // Update the display
+                    startCooldown(gameType); // Start cooldown for the mini-game
+                });
+            }, timeout * 1000);
+        });
     } else if (gameType === 'math') {
         // Math mini-game logic
         let num1 = Math.floor(Math.random() * 100) + 1;
@@ -291,13 +293,14 @@ function playMiniGame(gameType) {
         let question = `${num1} ${op1} ${num2} ${op2} ${num3}`;
         let correctAnswer = eval(question.replace('/', '* 1.0 /')); // Ensure floating point division
 
-        let answer = prompt(`What is ${question}?`);
-        let reward = Math.abs(Number(answer) - correctAnswer) < 0.01 ? Math.max(Math.floor(yarmulkes * 0.25), 10) : -Math.max(Math.floor(Math.random() * Math.abs(yarmulkes) * 0.1), 10);
-        if (yarmulkes < 0 && Math.abs(Number(answer) - correctAnswer) >= 0.01) reward += 10;
-        yarmulkes += reward;
-        showMessageModal('Math Game Result', `You ${Math.abs(Number(answer) - correctAnswer) < 0.01 ? 'won' : 'lost'} and earned ${reward.toFixed(2)} yarmulkes!`);
-        updateDisplay(); // Update the display
-        startCooldown(gameType); // Start cooldown for the mini-game
+        showMessageModal('Math Game', `What is ${question}?`, false, false, true).then(answer => {
+            let reward = Math.abs(Number(answer) - correctAnswer) < 0.01 ? Math.max(Math.floor(yachtMoney * 0.25), 10) : -Math.max(Math.floor(Math.random() * Math.abs(yachtMoney) * 0.1), 10);
+            if (yachtMoney < 0 && Math.abs(Number(answer) - correctAnswer) >= 0.01) reward += 10;
+            yachtMoney += reward;
+            showMessageModal('Math Game Result', `You ${Math.abs(Number(answer) - correctAnswer) < 0.01 ? 'won' : 'lost'} and earned ${formatNumber(reward)} yachtMoney!`);
+            updateDisplay(); // Update the display
+            startCooldown(gameType); // Start cooldown for the mini-game
+        });
     } else if (gameType === 'luck') {
         // Luck mini-game logic
         let result = (Math.random() * 200) - 75; // Generates a random number between -75 and +125%
@@ -318,7 +321,7 @@ function playMiniGame(gameType) {
         }
     
         trollPoints += reward;
-        showMessageModal('Luck Game Result', `You rolled ${result.toFixed(2)}%. ${message} You ${gainLossMessage} ${Math.abs(reward).toFixed(2)} troll points!`);
+        showMessageModal('Luck Game Result', `You rolled ${result.toFixed(2)}%. ${message} You ${gainLossMessage} ${formatNumber(Math.abs(reward))} troll points!`);
         updateDisplay(); // Update the display
         startCooldown(gameType); // Start cooldown for the mini-game
     }
@@ -414,8 +417,8 @@ async function restartGame(isPrestige = false, isAscend = false) {
         copiumPerSecond = 0;
         delusion = 0;
         delusionPerSecond = 0;
-        yarmulkes = 0;
-        yarmulkesPerSecond = 0;
+        yachtMoney = 0;
+        yachtMoneyPerSecond = 0;
         trollPoints = 0;
         trollPointsPerSecond = 0;
         hopium = 0;
@@ -439,6 +442,8 @@ async function restartGame(isPrestige = false, isAscend = false) {
             upgrades.forEach(upgrade => {
                 upgrade.isGodMode = false;
             });
+            // Clear all local storage
+            localStorage.clear();
         }
 
         // Clear purchased upgrades
@@ -476,7 +481,7 @@ function updateTradeRatio() {
 
     // Special case for trading Copium to Hopium
     if (fromResource === 'copium' && toResource === 'hopium') {
-        tradeRatioDisplay.textContent = 'Trade ratio is 100,000,000:1';
+        tradeRatioDisplay.textContent = 'Trade ratio is 100M:1';
     } else if (toResource === 'hopium') {
         tradeRatioDisplay.textContent = 'Only Copium can convert to Hopium';
     } else {
@@ -484,11 +489,24 @@ function updateTradeRatio() {
     }
 }
 
+function parseFormattedNumber(str) {
+    const suffixes = { K: 1e3, M: 1e6, B: 1e9, T: 1e12, P: 1e15, E: 1e18 };
+    const regex = /^(\d+(\.\d+)?)([KMBTPE]?)$/i;
+    const match = str.match(regex);
+    if (match) {
+        const [, num, , suffix] = match;
+        return parseFloat(num) * (suffixes[suffix.toUpperCase()] || 1);
+    }
+    return NaN;
+}
+
+
 // Function to handle trading resources between different types
 function tradeResources() {
     const fromResource = document.getElementById('fromResource').value;
     const toResource = document.getElementById('toResource').value;
-    const tradeAmount = parseInt(document.getElementById('tradeAmount').value);
+    const tradeAmountInput = document.getElementById('tradeAmount').value;
+    const tradeAmount = parseFormattedNumber(tradeAmountInput);
 
     // Check if the same resource is selected for both from and to
     if (fromResource === toResource) {
@@ -496,11 +514,17 @@ function tradeResources() {
         return;
     }
 
+    // Check if trade amount is valid
+    if (isNaN(tradeAmount) || tradeAmount <= 0) {
+        showMessageModal('Trade Error', 'Please enter a valid trade amount.');
+        return;
+    }
+
     // Object to store current amounts of each resource
     const resourceAmount = {
         copium: copium,
         delusion: delusion,
-        yarmulkes: yarmulkes,
+        yachtMoney: yachtMoney,
         trollPoints: trollPoints,
         hopium: hopium
     };
@@ -513,6 +537,9 @@ function tradeResources() {
         }
         resourceAmount[fromResource] -= tradeAmount;
         resourceAmount[toResource] += tradeAmount / 100000000;
+        
+        // Show trade success message
+        showMessageModal('Trade Successful', `Traded ${formatNumber(tradeAmount)} ${fromResource} for ${formatNumber(tradeAmount / 100000000)} ${toResource}.`);
     } else if (toResource === 'hopium') {
         showMessageModal('Trade Error', "Only Copium can convert to Hopium.");
         return;
@@ -524,32 +551,68 @@ function tradeResources() {
         }
         resourceAmount[fromResource] -= tradeAmount;
         resourceAmount[toResource] += tradeAmount / 5;
+        
+        // Show trade success message
+        showMessageModal('Trade Successful', `Traded ${formatNumber(tradeAmount)} ${fromResource} for ${formatNumber(tradeAmount / 5)} ${toResource}.`);
     }
 
     // Update global resource variables
     copium = resourceAmount.copium;
     delusion = resourceAmount.delusion;
-    yarmulkes = resourceAmount.yarmulkes;
+    yachtMoney = resourceAmount.yachtMoney;
     trollPoints = resourceAmount.trollPoints;
     hopium = resourceAmount.hopium;
 
     // Update the display to reflect the new resource values
     updateDisplay();
+
+}
+
+function customRound(number, digits) {
+    // Convert the number to a string
+    let numStr = number.toString();
+    // Find the position of the decimal point
+    let decimalIndex = numStr.indexOf('.');
+    
+    // If there is no decimal point or the number of digits is already less than or equal to the specified digits
+    if (decimalIndex === -1 || numStr.length - decimalIndex - 1 <= digits) {
+        return numStr; // Return the original number as a string
+    }
+    
+    // If the number has more digits than the specified digits, round it
+    return number.toFixed(digits);
+}
+
+function formatNumber(num) {
+    const suffixes = [
+        { value: 1e18, symbol: "E" }, // Exa
+        { value: 1e15, symbol: "P" }, // Peta
+        { value: 1e12, symbol: "T" }, // Tera
+        { value: 1e9, symbol: "B" },  // Giga (Billion)
+        { value: 1e6, symbol: "M" },  // Mega (Million)
+        { value: 1e3, symbol: "K" }   // Kilo (Thousand)
+    ];
+    for (let i = 0; i < suffixes.length; i++) {
+        if (Math.abs(num) >= suffixes[i].value) {
+            return customRound(num / suffixes[i].value, 3) + suffixes[i].symbol;
+        }
+    }
+    return customRound(num, 3);
 }
 
 
 // Function to update the display with the current game state
 function updateDisplay() {
-    document.getElementById('copium').textContent = copium.toFixed(2);
-    document.getElementById('cps').textContent = effectiveCopiumPerSecond.toFixed(2);
-    document.getElementById('delusion').textContent = delusion.toFixed(2);
-    document.getElementById('dps').textContent = effectiveDelusionPerSecond.toFixed(2);
-    document.getElementById('yarmulkes').textContent = yarmulkes.toFixed(2);
-    document.getElementById('yps').textContent = effectiveYarmulkesPerSecond.toFixed(2);
-    document.getElementById('trollPoints').textContent = trollPoints.toFixed(2);
-    document.getElementById('tpps').textContent = effectiveTrollPointsPerSecond.toFixed(2);
-    document.getElementById('hopium').textContent = hopium.toFixed(2);
-    document.getElementById('hps').textContent = effectiveHopiumPerSecond.toFixed(2);
+    document.getElementById('copium').textContent = formatNumber(copium);
+    document.getElementById('cps').textContent = formatNumber(effectiveCopiumPerSecond);
+    document.getElementById('delusion').textContent = formatNumber(delusion);
+    document.getElementById('dps').textContent = formatNumber(effectiveDelusionPerSecond);
+    document.getElementById('yachtMoney').textContent = formatNumber(yachtMoney);
+    document.getElementById('ymps').textContent = formatNumber(effectiveYachtMoneyPerSecond);
+    document.getElementById('trollPoints').textContent = formatNumber(trollPoints);
+    document.getElementById('tpps').textContent = formatNumber(effectiveTrollPointsPerSecond);
+    document.getElementById('hopium').textContent = formatNumber(hopium);
+    document.getElementById('hps').textContent = formatNumber(effectiveHopiumPerSecond);
     document.getElementById('prestige-multiplier').textContent = `Prestige: x${epsMultiplier.toFixed(2)} mult`;
 
     // Update combined God Mode Level and Multiplier display
@@ -565,32 +628,41 @@ function updateDisplay() {
 
 // Function to calculate the prestige multiplier based on the lowest of the first four resources
 function calculatePrestigeMultiplier() {
-    const minResource = Math.min(copium, delusion, yarmulkes, trollPoints);
+    const minResource = Math.min(copium, delusion, yachtMoney, trollPoints);
     return 1.5 ** (Math.log10(minResource / 1000) + 1);
 }
 
 // Check if the player can prestige
 function canPrestige() {
-    const minResource = Math.min(copium, delusion, yarmulkes, trollPoints);
+    const minResource = Math.min(copium, delusion, yachtMoney, trollPoints);
     return minResource >= prestigeRequirement;
 }
 
-function prestige() {
+async function prestige() {
     if (canPrestige()) {
-        epsMultiplier = calculatePrestigeMultiplier();
-        prestigeRequirement = Math.min(copium, delusion, yarmulkes, trollPoints);
-        
-        // Call restartGame with isPrestige flag set to true
-        restartGame(true,false);
 
-        prestiges += 1;
+        const confirmed = await showMessageModal(
+            'Prestige Confirmation',
+            `Are you sure you want to prestige? You will reset your progress and all resources, but your Prestige Multiplier will increase from ${formatNumber(epsMultiplier)} to ${formatNumber(calculatePrestigeMultiplier())}.`,
+            true
+        );
 
-        // Save game state after prestige
-        saveGameState();
+        if (confirmed) {
+            epsMultiplier = calculatePrestigeMultiplier();
+            prestigeRequirement = Math.min(copium, delusion, yachtMoney, trollPoints);
+            
+            // Call restartGame with isPrestige flag set to true
+            restartGame(true,false);
 
-        showMessageModal('Prestige Successful!', `Your multiplier is now x${epsMultiplier.toFixed(2)}. All resources have been reset.`);
-        updateEffectiveMultipliers();
-        updateDisplay();
+            prestiges += 1;
+
+            // Save game state after prestige
+            saveGameState();
+
+            showMessageModal('Prestige Successful!', `Your multiplier is now x${epsMultiplier.toFixed(2)}. All resources have been reset.`);
+            updateEffectiveMultipliers();
+            updateDisplay();
+        }
     }
 }
 
@@ -618,19 +690,24 @@ function canAscend() {
 
 async function ascend() {
 
-    const confirmed = await showMessageModal('God-Mode Ascension', `Are you sure you want to enter God-Mode level ${godModeLevel+1}? You will lose all your Upgrades and Prestige progress!<br><br>Tip: Tip: While you can ascend to as many God-Mode levels as you desire, it's not necessary to achieve every level to proceed to the next chapter.`, true, false);
-    if (confirmed) {
+    const selectedUpgrade = await showMessageModal(
+        'God-Mode Ascension',
+        `Are you sure you want to enter God-Mode level ${godModeLevel + 1}? You will lose all your Upgrades and Prestige progress!<br><br><strong>Select one of your purchased upgrades to enhance (10x multiplier).</strong><br>Tip: While you can ascend to as many God-Mode levels as you desire, it's not necessary to achieve every level to proceed to the next chapter.`,
+        true,
+        true
+    );
+
+    if (selectedUpgrade) {
+
         godModeLevel += 1;
-        godModeMultiplier = 1.1 ** godModeLevel;
+        godModeMultiplier = 1.2 ** godModeLevel;
 
-        const selectedUpgrade = await showMessageModal("Select God-Mode Upgrade", "Select one of your purchased upgrades to enhance (10x multiplier).", false, true);
-
+        showMessageModal('Ascension Successful!', `You have entered God-Mode Level ${godModeLevel}. Your multiplier is now x${formatNumber(godModeMultiplier)} and your chosen upgrade (${selectedUpgrade.name}) is 10x stronger.`);        
         selectedUpgrade.isGodMode = true;
-
+        
         restartGame(false,true); // Use the existing restartGame function with prestige mode
         // Save game state after ascending
         saveGameState();
-        showMessageModal('Ascension Successful!', `You have entered God-Mode Level ${godModeLevel}. Your multiplier is now x${godModeMultiplier.toFixed(2)} and your chosen upgrade is 10x stronger.`);
         updateEffectiveMultipliers();
         updateDisplay();
     }
@@ -651,7 +728,7 @@ function generateIdleResources(elapsedSeconds) {
     // Increase resources based on their per second values, elapsed time, and the multiplier
     copium += copiumPerSecond * epsMultiplier * godModeMultiplier * elapsedSeconds;
     delusion += delusionPerSecond * epsMultiplier * godModeMultiplier * elapsedSeconds;
-    yarmulkes += yarmulkesPerSecond * epsMultiplier * godModeMultiplier * elapsedSeconds;
+    yachtMoney += yachtMoneyPerSecond * epsMultiplier * godModeMultiplier * elapsedSeconds;
     trollPoints += trollPointsPerSecond * epsMultiplier * godModeMultiplier * elapsedSeconds;
     hopium += hopiumPerSecond * epsMultiplier * godModeMultiplier * elapsedSeconds;
 }
@@ -685,14 +762,14 @@ function buyUpgrade(encodedUpgradeName) {
     // Check if the player has enough resources to purchase the upgrade
     if ((cost.copium === 0 || copium >= cost.copium) &&
         (cost.delusion === 0 || delusion >= cost.delusion) &&
-        (cost.yarmulkes === 0 || yarmulkes >= cost.yarmulkes) &&
+        (cost.yachtMoney === 0 || yachtMoney >= cost.yachtMoney) &&
         (cost.trollPoints === 0 || trollPoints >= cost.trollPoints) &&
         (cost.hopium === 0 || hopium >= cost.hopium)) {
 
         // Deduct the cost from the player's resources
         copium -= cost.copium;
         delusion -= cost.delusion;
-        yarmulkes -= cost.yarmulkes;
+        yachtMoney -= cost.yachtMoney;
         trollPoints -= cost.trollPoints;
         hopium -= cost.hopium;
 
@@ -700,7 +777,7 @@ function buyUpgrade(encodedUpgradeName) {
         const multiplier = upgrade.isGodMode ? 10 : 1;
         copiumPerSecond += (earnings.copiumPerSecond || 0) * multiplier;
         delusionPerSecond += (earnings.delusionPerSecond || 0) * multiplier;
-        yarmulkesPerSecond += (earnings.yarmulkesPerSecond || 0) * multiplier;
+        yachtMoneyPerSecond += (earnings.yachtMoneyPerSecond || 0) * multiplier;
         trollPointsPerSecond += (earnings.trollPointsPerSecond || 0) * multiplier;
         hopiumPerSecond += (earnings.hopiumPerSecond || 0) * multiplier;
 
@@ -730,9 +807,9 @@ function buyUpgrade(encodedUpgradeName) {
             showMessageModal(name, message);
         }
 
-        // Special case for the "Hunt for Hussein" upgrade
-        if (name === "Hunt for Hussein") {
-            showMessageModal('Sadly', "This is the end of v0.5. You can sit here and watch your Hopium infinitely decrease. At this pace should have another big update within a couple days.");
+        // Special case for the "Antimatter Dimension" upgrade
+        if (name === "Antimatter Dimensions") {
+            showMessageModal('Sadly', "This is around the end of v0.6. You can now restart the game and do some speed runs, or start to strategize how to lower delusion to tackle the next chapter of your existential tale. At this pace should have another big update within a couple days.");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one
@@ -768,8 +845,8 @@ function formatCostOrEarnings(costOrEarnings, isGodMode = false) {
     const abbreviations = {
         copiumPerSecond: 'CPS',
         delusionPerSecond: 'DPS',
-        yarmulkesPerSecond: 'YPS',
-        trollPointsPerSecond: 'TPS',
+        yachtMoneyPerSecond: 'YMPS',
+        trollPointsPerSecond: 'TPPS',
         hopiumPerSecond: 'HPS'
     };
 
@@ -781,7 +858,7 @@ function formatCostOrEarnings(costOrEarnings, isGodMode = false) {
             // Get the display name using abbreviations or capitalize the resource name
             const displayName = abbreviations[resource] || resource.charAt(0).toUpperCase() + resource.slice(1);
             const adjustedValue = isGodMode ? value * 10 : value;
-            result += `<p>${displayName}: ${adjustedValue}</p>`; // Format as HTML paragraph
+            result += `<p>${displayName}: ${formatNumber(adjustedValue)}</p>`; // Format as HTML paragraph
         }
     }
     return result;
@@ -818,8 +895,9 @@ function getTotalCost(upgrade) {
     // Sum up the costs of all resources in the upgrade
     return (upgrade.cost.copium || 0) + 
            (upgrade.cost.delusion || 0) + 
-           (upgrade.cost.yarmulkes || 0) + 
-           (upgrade.cost.trollPoints || 0);
+           (upgrade.cost.yachtMoney || 0) + 
+           (upgrade.cost.trollPoints || 0) + 
+           (upgrade.cost.hopium * 100000000 || 0);
 }
 
 
@@ -870,7 +948,7 @@ function updateUpgradeButtons() {
             // Check if the upgrade is affordable based on current resources
             const affordable = (cost.copium === 0 || copium >= cost.copium) &&
                                (cost.delusion === 0 || delusion >= cost.delusion) &&
-                               (cost.yarmulkes === 0 || yarmulkes >= cost.yarmulkes) &&
+                               (cost.yachtMoney === 0 || yachtMoney >= cost.yachtMoney) &&
                                (cost.trollPoints === 0 || trollPoints >= cost.trollPoints) &&
                                (cost.hopium === 0 || hopium >= cost.hopium);
 
@@ -900,14 +978,14 @@ function toggleDeveloperMode() {
         // Increase resource generation rates by 1000x in developer mode
         copiumPerSecond *= 1000;
         delusionPerSecond *= 1000;
-        yarmulkesPerSecond *= 1000;
+        yachtMoneyPerSecond *= 1000;
         trollPointsPerSecond *= 1000;
         showMessageModal('Dev Mode', "Developer Mode Activated: Resource generation is now 1000x faster!");
     } else {
         // Reset resource generation rates to normal
         copiumPerSecond /= 1000;
         delusionPerSecond /= 1000;
-        yarmulkesPerSecond /= 1000;
+        yachtMoneyPerSecond /= 1000;
         trollPointsPerSecond /= 1000;
         showMessageModal('Dev Mode', "Developer Mode Deactivated: Resource generation is back to normal.");
     }
@@ -945,11 +1023,13 @@ function displayNextModal() {
     const modalConfirmButtons = document.getElementById('modalConfirmButtons');
     const modalConfirmButton = document.getElementById('modalConfirmButton');
     const modalCancelButton = document.getElementById('modalCancelButton');
-    const upgradeConfirmButton = document.getElementById('upgradeConfirmButton');
     const modalTitle = document.getElementById('modalTitle');
     const modalMessage = document.getElementById('modalMessage');
     const ascendUpgradeSelection = document.getElementById('ascendUpgradeSelection');
     const ascendUpgradeList = document.getElementById('ascendUpgradeList');
+    const gameInputSection = document.getElementById('gameInputSection');
+    const gameInput = document.getElementById('gameInput');
+    const submitGameInputButton = document.getElementById('submitGameInputButton');
 
     const { title, message, isConfirm, isUpgradeSelection, resolve } = modalQueue.shift();
 
@@ -963,11 +1043,50 @@ function displayNextModal() {
         resolve(result);
     };
 
-    if (isConfirm) {
+    if (isConfirm && isUpgradeSelection) {
+        // Ascend with upgrade selection logic
         modalCloseButton.style.display = 'none';
         modalConfirmButtons.style.display = 'flex';
-        upgradeConfirmButton.style.display = 'none';
+        ascendUpgradeSelection.style.display = 'block';
+        ascendUpgradeList.innerHTML = '';
+
+        let selectedUpgrade = null;
+
+        purchasedUpgrades.forEach((upgrade, index) => {
+            if (!upgrade.isGodMode) {
+                const upgradeItem = document.createElement('div');
+                upgradeItem.className = 'ascend-upgrade-item';
+                upgradeItem.textContent = upgrade.name;
+                upgradeItem.onclick = () => {
+                    const selected = ascendUpgradeList.querySelector('.selected');
+                    if (selected) selected.classList.remove('selected');
+                    upgradeItem.classList.add('selected');
+                    selectedUpgrade = upgrade;
+                };
+                ascendUpgradeList.appendChild(upgradeItem);
+            }
+        });
+
+        modalConfirmButton.onclick = () => {
+            if (selectedUpgrade) {
+                closeModal(selectedUpgrade);
+            }
+        };
+
+        modalCancelButton.onclick = () => closeModal(null);
+
+        closeButton.onclick = () => closeModal(null);
+        window.onclick = (event) => {
+            if (event.target == modal) {
+                closeModal(null);
+            }
+        };
+    } else if (isConfirm) {
+        // Confirm modal logic
+        modalCloseButton.style.display = 'none';
+        modalConfirmButtons.style.display = 'flex';
         ascendUpgradeSelection.style.display = 'none';
+        gameInputSection.style.display = 'none';
 
         modalConfirmButton.onclick = () => closeModal(true);
         modalCancelButton.onclick = () => closeModal(false);
@@ -978,42 +1097,28 @@ function displayNextModal() {
                 closeModal(false);
             }
         };
-    } else if (isUpgradeSelection) {
+    } else if (message.includes('Enter the sequence:') || message.includes('What is ')) {
+        // Game input modal logic
         modalCloseButton.style.display = 'none';
         modalConfirmButtons.style.display = 'none';
-        upgradeConfirmButton.style.display = 'none';
-        ascendUpgradeSelection.style.display = 'block';
-        ascendUpgradeList.innerHTML = '';
+        ascendUpgradeSelection.style.display = 'none';
+        gameInputSection.style.display = 'block';
 
-        purchasedUpgrades.forEach((upgrade, index) => {
-            const upgradeItem = document.createElement('div');
-            upgradeItem.className = 'ascend-upgrade-item';
-            upgradeItem.textContent = upgrade.name;
-            upgradeItem.onclick = () => {
-                const selected = ascendUpgradeList.querySelector('.selected');
-                if (selected) selected.classList.remove('selected');
-                upgradeItem.classList.add('selected');
-                upgradeConfirmButton.style.display = 'block';
-            };
-            ascendUpgradeList.appendChild(upgradeItem);
-        });
+        gameInput.value = '';
+        submitGameInputButton.onclick = () => closeModal(gameInput.value);
 
-        upgradeConfirmButton.onclick = () => {
-            const selectedUpgrade = ascendUpgradeList.querySelector('.selected');
-            if (selectedUpgrade) {
-                const selectedIndex = Array.from(ascendUpgradeList.children).indexOf(selectedUpgrade);
-                closeModal(purchasedUpgrades[selectedIndex]);
+        closeButton.onclick = () => closeModal(null);
+        window.onclick = (event) => {
+            if (event.target == modal) {
+                closeModal(null);
             }
         };
-
-        modalCancelButton.style.display = 'none';
-        closeButton.style.display = 'none';
-        window.onclick = null;
     } else {
+        // Simple message modal logic
         modalCloseButton.style.display = 'block';
         modalConfirmButtons.style.display = 'none';
         ascendUpgradeSelection.style.display = 'none';
-        upgradeConfirmButton.style.display = 'none';
+        gameInputSection.style.display = 'none';
 
         modalCloseButton.onclick = () => closeModal();
         closeButton.onclick = () => closeModal();
@@ -1029,25 +1134,25 @@ function displayNextModal() {
 
 
 
+
 // Function to show the welcome modal
 function showWelcomeModal() {
-    const modal = document.getElementById('welcomeModal');
-    const closeButton = document.getElementById('closeWelcomeModal');
-
-    // Show the modal
-    modal.style.display = 'block';
-
-    // When the user clicks on the close button, close the modal
-    closeButton.onclick = function() {
-        modal.style.display = 'none';
-    };
-
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = 'none';
-        }
-    };
+    return showMessageModal(
+        'Welcome to Degens Idle',
+        `
+        <p>Step into a world where the dankest memes meet the depths of introspective contemplation. In Degens Idle, you’re not just collecting resources—you’re diving headfirst into a journey of existential discovery.</p>
+        <p>Embrace the grind as you gather Copium, Delusion, Yacht Money, Troll Points, and the elusive Hopium. Each click and upgrade is a step closer to understanding the universe of internet culture and your place within it.</p>
+        <p>Are you ready to transcend the ordinary? To not only witness but harness the power of memes in their truest, most profound form? Every action you take will push you to ponder life’s greatest mysteries and your role in this meme-laden multiverse.</p>
+        <h2>How to Play:</h2>
+        <ul>
+            <li><strong>Click to Gather Resources:</strong> Start by clicking to collect Copium and other essential resources. Each click brings you closer to unlocking new memes and upgrades.</li>
+            <li><strong>Upgrade Your Abilities:</strong> Use your resources to purchase upgrades. These will enhance your clicking power and resource generation, allowing you to progress faster.</li>
+            <li><strong>Unlock New Content:</strong> Venture into the unknown and unveil hidden secrets of the meme-iverse. Each resource collected and upgrade acquired opens portals to mysterious realms, revealing cryptic memes and arcane powers that will enhance your journey.</li>
+            <li><strong>Explore the Meme-iverse:</strong> Dive into various aspects of internet culture. Each upgrade and unlocked meme will reveal more about the meme-iverse and your place within it.</li>
+            <li><strong>Ponder and Reflect:</strong> As you progress, take a moment to ponder the deeper meanings behind the memes. What do they say about life, existence, and your role in this digital realm?</li>
+        </ul>
+        `
+    );
 }
 
 
@@ -1076,7 +1181,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Add event listeners for resource collection buttons
     document.getElementById('collectCopiumButton').addEventListener('click', () => { collectResource('copium'); });
     document.getElementById('collectDelusionButton').addEventListener('click', () => { collectResource('delusion'); });
-    document.getElementById('collectYarmulkesButton').addEventListener('click', () => { collectResource('yarmulkes'); });
+    document.getElementById('collectYachtMoneyButton').addEventListener('click', () => { collectResource('yachtMoney'); });
     document.getElementById('collectTrollPointsButton').addEventListener('click', () => { collectResource('trollPoints'); });
 
     // Add event listeners for mini-game buttons

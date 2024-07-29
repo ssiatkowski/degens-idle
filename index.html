@@ -3,33 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Degens Idle v0.5</title>
+    <title>Degens Idle v0.6</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="welcomeModal" class="modal">
-        <div class="modal-content">
-            <span class="close-button" id="closeWelcomeModal">&times;</span>
-            <h2>Welcome to Degens Idle</h2>
-            <p>
-                Step into a world where the dankest memes meet the depths of introspective contemplation. In Degens Idle, you’re not just collecting resources—you’re diving headfirst into a journey of existential discovery.
-            </p>
-            <p>
-                Embrace the grind as you gather Copium, Delusion, Yarmulkes, Troll Points, and the elusive Hopium. Each click and upgrade is a step closer to understanding the universe of internet culture and your place within it.
-            </p>
-            <p>
-                Are you ready to transcend the ordinary? To not only witness but harness the power of memes in their truest, most profound form? Every action you take will push you to ponder life’s greatest mysteries and your role in this meme-laden multiverse.
-            </p>
-            <h2>How to Play:</h2>
-            <ul>
-                <li><strong>Click to Gather Resources:</strong> Start by clicking to collect Copium and other essential resources. Each click brings you closer to unlocking new memes and upgrades.</li>
-                <li><strong>Upgrade Your Abilities:</strong> Use your resources to purchase upgrades. These will enhance your clicking power and resource generation, allowing you to progress faster.</li>
-                <li><strong>Unlock New Content:</strong> Venture into the unknown and unveil hidden secrets of the meme-iverse. Each resource collected and upgrade acquired opens portals to mysterious realms, revealing cryptic memes and arcane powers that will enhance your journey.</li>
-                <li><strong>Explore the Meme-iverse:</strong> Dive into various aspects of internet culture. Each upgrade and unlocked meme will reveal more about the meme-iverse and your place within it.</li>
-                <li><strong>Ponder and Reflect:</strong> As you progress, take a moment to ponder the deeper meanings behind the memes. What do they say about life, existence, and your role in this digital realm?</li>
-            </ul>
-        </div>
-    </div>
     <div id="messageModal" class="modal">
         <div class="modal-content">
             <span class="close-button" id="closeMessageModal">&times;</span>
@@ -45,12 +22,16 @@
                 <div id="ascendUpgradeList"></div>
                 <button id="upgradeConfirmButton" style="display:none;">Confirm Selection</button>
             </div>
+            <div id="gameInputSection" style="display:none;">
+                <input type="text" id="gameInput" placeholder="Your answer">
+                <button id="submitGameInputButton">Submit</button>
+            </div>
         </div>
     </div>    
     <div id="main-container">
         <div id="title-column">
             <div id="title-container">
-                <h1 id="title">Degens Idle v0.5</h1>
+                <h1 id="title">Degens Idle v0.6</h1>
             </div>
             <div id="button-container">
                 <button id="restartButton">Restart Game</button>
@@ -74,10 +55,10 @@
                 </div>
             </div>
             <div class="resource">
-                <p>Yarmulkes: <span id="yarmulkes" class="resource-value">0</span></p>
-                <p class="per-second">Yarmulkes per second: <span id="yps">0</span></p>
+                <p>Yacht Money: <span id="yachtMoney" class="resource-value">0</span></p>
+                <p class="per-second">Yacht Money per second: <span id="ymps">0</span></p>
                 <div class="buttons">
-                    <button id="collectYarmulkesButton" class="collect-button">Collect Yarmulkes</button>
+                    <button id="collectYachtMoneyButton" class="collect-button">Collect Yacht Money</button>
                     <button id="mathGame" class="game-button">Math Game</button>
                 </div>
             </div>
@@ -119,19 +100,19 @@
                 <select id="fromResource" onchange="updateTradeRatio()">
                     <option value="copium">Copium</option>
                     <option value="delusion">Delusion</option>
-                    <option value="yarmulkes">Yarmulkes</option>
+                    <option value="yachtMoney">Yacht Money</option>
                     <option value="trollPoints">Troll Points</option>
                 </select>
                 
                 <select id="toResource" onchange="updateTradeRatio()">
                     <option value="copium">Copium</option>
                     <option value="delusion">Delusion</option>
-                    <option value="yarmulkes">Yarmulkes</option>
+                    <option value="yachtMoney">Yacht Money</option>
                     <option value="trollPoints">Troll Points</option>
                     <option value="hopium">Hopium</option> <!-- Add Hopium as a tradeable resource -->
                 </select>
                 <label for="tradeAmount">Amount:</label>
-                <input type="number" id="tradeAmount" value="5" min="5" step="5">
+                <input type="text" id="tradeAmount" value="" placeholder="Enter amount (e.g., 1M)">
                 <p id="tradeRatioDisplay">Trade ratio is 5:1</p>
                 <button id="tradeButton">Trade</button>
             </div>
