@@ -359,6 +359,13 @@ button.disabled {
         font-size: 2em; 
     }
 
+    #title {
+        transform: none;
+        font-size: 1.5em;
+        white-space: nowrap;
+        padding: 10px 20px;
+    }
+
     #button-container {
         margin-left: 0; /* Adjust as necessary for mobile layout */
     }
