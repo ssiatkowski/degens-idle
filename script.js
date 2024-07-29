@@ -807,7 +807,7 @@ function buyUpgrade(encodedUpgradeName) {
 
         // Special case for the "Antimatter Dimension" upgrade
         if (name === "Antimatter Dimensions") {
-            showMessageModal('Sadly', "This is around the end of v0.62. You can now restart the game and do some speed runs, or start to strategize how to lower delusion to tackle the next chapter of your existential tale. At this pace should have another big update within a couple days.");
+            showMessageModal('Sadly', "This is around the end of v0.63. You can now restart the game and do some speed runs, or start to strategize how to lower delusion to tackle the next chapter of your existential tale. At this pace should have another big update within a couple days.");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one
