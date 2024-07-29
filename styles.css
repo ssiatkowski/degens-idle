@@ -352,18 +352,17 @@ button.disabled {
 
     #title-container {
         position: relative;
-        left: 0;
-        top: 0;
-        transform: none;
+        transform: none !important; /* Ensure no rotation */
         margin-bottom: 20px;
-        font-size: 2em; 
+        text-align: center; /* Center the text */
     }
 
     #title {
-        transform: none;
-        font-size: 1.5em;
-        white-space: nowrap;
-        padding: 10px 20px;
+        transform: none !important; /* Ensure no rotation */
+        font-size: 1.5em !important; /* Smaller font size */
+        display: inline-block; /* Inline to allow centering */
+        white-space: nowrap; /* Prevent wrapping */
+        padding: 10px 20px; /* Padding for spacing */
     }
 
     #button-container {
