@@ -212,6 +212,7 @@ button:hover {
 button.affordable, .game-button.affordable {
     background-color: #4caf50; /* Green */
     color: white;
+    touch-action: manipulation;
 }
 
 /* God Mode Affordable Button */
@@ -246,6 +247,7 @@ button.collect-button, button.game-button {
     margin: 5px; /* Add margin for spacing */
     display: inline-block; /* Ensure buttons are inline */
     transition: background-color 0.3s ease, transform 0.3s ease;
+    touch-action: manipulation;
 }
 
 button.collect-button:not(.disabled):hover, button.game-button:not(.disabled):hover, button.affordable:hover, .game-button.affordable:hover {
@@ -472,6 +474,7 @@ button.disabled {
     cursor: pointer;
     display: block;
     margin: 0 auto; /* Center horizontally */
+    touch-action: manipulation;
 }
 
 #cookieButton img {
