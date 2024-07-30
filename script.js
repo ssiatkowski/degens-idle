@@ -39,6 +39,7 @@ let prestiges = 0;
 let epsMultiplier = 1;
 let prestigeRequirement = 1000;
 let purchasedUpgrades = [];
+let availableUpgrades = [];
 
 let godModeLevel = 0;
 let godModeMultiplier = 1;
@@ -57,15 +58,16 @@ const miniGameTimeouts = {
     luck: 3 * 60 * 1000     // 3 minutes
 };
 
+// Update the effective multipliers function to consider devMultiplier
 function updateEffectiveMultipliers() {
-    effectiveCopiumPerSecond = copiumPerSecond * epsMultiplier * godModeMultiplier;
-    effectiveDelusionPerSecond = delusionPerSecond * epsMultiplier * godModeMultiplier;
-    effectiveYachtMoneyPerSecond = yachtMoneyPerSecond * epsMultiplier * godModeMultiplier;
-    effectiveTrollPointsPerSecond = trollPointsPerSecond * epsMultiplier * godModeMultiplier;
-    effectiveHopiumPerSecond = hopiumPerSecond * epsMultiplier * godModeMultiplier;
-    effectiveKnowledgePerSecond = knowledgePerSecond * epsMultiplier * godModeMultiplier;
-    effectivePowerPerSecond = powerPerSecond * epsMultiplier * godModeMultiplier;
-    effectiveSerenityPerSecond = serenityPerSecond * epsMultiplier * godModeMultiplier;
+    effectiveCopiumPerSecond = copiumPerSecond * epsMultiplier * godModeMultiplier * devMultiplier;
+    effectiveDelusionPerSecond = delusionPerSecond * epsMultiplier * godModeMultiplier * devMultiplier;
+    effectiveYachtMoneyPerSecond = yachtMoneyPerSecond * epsMultiplier * godModeMultiplier * devMultiplier;
+    effectiveTrollPointsPerSecond = trollPointsPerSecond * epsMultiplier * godModeMultiplier * devMultiplier;
+    effectiveHopiumPerSecond = hopiumPerSecond * epsMultiplier * godModeMultiplier * devMultiplier;
+    effectiveKnowledgePerSecond = knowledgePerSecond * epsMultiplier * godModeMultiplier * devMultiplier;
+    effectivePowerPerSecond = powerPerSecond * epsMultiplier * godModeMultiplier * devMultiplier;
+    effectiveSerenityPerSecond = serenityPerSecond * epsMultiplier * godModeMultiplier * devMultiplier;
 }
 
 
@@ -247,9 +249,13 @@ function generateResources() {
     power += effectivePowerPerSecond;
     serenity += effectiveSerenityPerSecond;
 
-    // Check if delusion drops below negative 1 trillion to unhide Knowledge
-    if (delusion < -1e12 && localStorage.getItem('knowledgeUnlocked') !== 'true') {
-        unhideKnowledge();
+    // Check if delusion drops below negative 1 trillion to start generating Knowledge
+    if (delusion < -1e12 && localStorage.getItem('knowledgeGenerationStarted') !== 'true') {
+        knowledgePerSecond = 0.000001
+        effectiveKnowledgePerSecond = knowledgePerSecond * epsMultiplier * godModeMultiplier;
+        localStorage.setItem('knowledgeGenerationStarted', 'true');
+
+        showMessageModal('The Age of Knowledge', `As you cross the threshold of -1 trillion delusion, the dense fog of confusion and distorted thoughts begins to lift. A sense of clarity pierces through the haze, revealing a world beyond the familiar chaos. The swirling mists part to unveil a luminous realm, shimmering with the light of hidden truths. For the first time, you feel a profound shift within, as the once insurmountable delusion gives way to the dawning of true knowledge. This newfound awareness pulses with a quiet intensity, each revelation a stepping stone towards deeper understanding. Your journey through the labyrinth of the mind has led to this pivotal moment, where the pursuit of enlightenment begins. Your mind expands, absorbing the essence of ancient wisdom and universal secrets, setting the stage for a transformative quest that transcends the ordinary limits of perception.`, false, false);
     }
 
     updateDisplay();
@@ -478,6 +484,8 @@ async function restartGame(isPrestige = false, isAscend = false) {
         serenity = 0;
         serenityPerSecond = 0;
 
+        localStorage.setItem('knowledgeGenerationStarted', 'false');
+
         // Reset ascends and multipliers if it's a full restart
         if (!isAscend && !isPrestige) {
             prestiges = 0;
@@ -495,6 +503,10 @@ async function restartGame(isPrestige = false, isAscend = false) {
             });
             // Clear all local storage
             localStorage.clear();
+
+            document.getElementById('knowledge-container').style.display = 'none';
+            document.getElementById('power-container').style.display = 'none';
+            document.getElementById('serenity-container').style.display = 'none';
         }
 
         // Clear purchased upgrades
@@ -675,7 +687,7 @@ function formatNumber(num) {
         }
     }
     
-    if (Math.abs(num) >= 1e36) {
+    if (Math.abs(num) >= 1e36 || (Math.abs(num)  > 0 && Math.abs(num) < 1e-3) ) {
         return num.toExponential(3);  // Switch to scientific notation for values >= 1e36
     }
 
@@ -715,7 +727,6 @@ function updateDisplay() {
 function unhideKnowledge() {
     document.getElementById('knowledge-container').style.display = 'block';
     localStorage.setItem('knowledgeUnlocked', 'true');
-    
 }
 
 function unhidePower() {
@@ -796,7 +807,7 @@ function canAscend() {
 
 function calculateGodModeMultiplier() {
     let productX = 1; // Initialize the product to 1 for the first element
-    for (let i = 0; i <= godModeLevel; i++) {
+    for (let i = 0; i < godModeLevel; i++) {
         let xi = 1 + 0.25 * Math.pow(0.975, i); // Calculate xi
         productX *= xi; // Multiply the current xi to the cumulative product
     }
@@ -941,7 +952,12 @@ function buyUpgrade(encodedUpgradeName) {
 
         // Special case for the "Antimatter Dimension" upgrade
         if (name === "Antimatter Dimensions") {
-            showMessageModal('Sadly', "This is around the end of v0.63. You can now restart the game and do some speed runs, or start to strategize how to lower delusion to tackle the next chapter of your existential tale. At this pace should have another big update within a couple days.");
+            unhideKnowledge();
+        }
+
+        // Special case for the "Antimatter Dimension" upgrade
+        if (name === "The Library") {
+            showMessageModal('Sadly', "This marks the end of v0.67. With knowledge now unlocked, you can restart the game and embark on speed runs, or take a moment to imagine all the new possibilities that lie ahead. Your journey through this existential tale is just beginning, and the newfound knowledge will open doors to uncharted realms. Stay tuned, as another big update is just a few days away.");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one
@@ -1049,7 +1065,7 @@ function getTotalCost(upgrade) {
            (upgrade.cost.yachtMoney || 0) + 
            (upgrade.cost.trollPoints || 0) + 
            (upgrade.cost.hopium * 100000000 || 0) +
-           (upgrade.cost.knowledge * 1e12 || 0) + 
+           (upgrade.cost.knowledge * 1e13 || 0) + 
            (upgrade.cost.power * 1e20 || 0) + 
            (upgrade.cost.serenity * 1e30 || 0);
 }
@@ -1122,47 +1138,74 @@ function updateUpgradeButtons() {
     }
 }
 
-// Variable to track the state of developer mode
-let developerMode = false;
+// Developer mode multipliers
+let devMultiplier = 1;
 
-// Function to toggle developer mode on and off
-function toggleDeveloperMode() {
-    developerMode = !developerMode; // Toggle the developer mode state
-    if (developerMode) {
-        // Increase resource generation rates by 1000x in developer mode
-        copiumPerSecond *= 1000;
-        delusionPerSecond *= 1000;
-        yachtMoneyPerSecond *= 1000;
-        trollPointsPerSecond *= 1000;
-        hopiumPerSecond *= 1000;
-        knowledgePerSecond *= 1000;
-        powerPerSecond *= 1000;
-        serenityPerSecond *= 1000;
-        showMessageModal('Dev Mode', "Developer Mode Activated: Resource generation is now 1000x faster!");
+// Function to toggle developer mode multipliers
+function toggleDevMultiplier(factor) {
+    if (devMultiplier > 1) {
+        devMultiplier = 1; // Reset to normal if already set to the factor
     } else {
-        // Reset resource generation rates to normal
-        copiumPerSecond /= 1000;
-        delusionPerSecond /= 1000;
-        yachtMoneyPerSecond /= 1000;
-        trollPointsPerSecond /= 1000;
-        hopiumPerSecond /= 1000;
-        knowledgePerSecond /= 1000;
-        powerPerSecond /= 1000;
-        serenityPerSecond /= 1000;
-        showMessageModal('Dev Mode', "Developer Mode Deactivated: Resource generation is back to normal.");
+        devMultiplier = factor; // Set to the new factor
     }
     updateEffectiveMultipliers();
     updateDisplay(); // Update the display to reflect the changes
 }
 
+// Function to ascend and select a random upgrade to set to godmode
+async function devAscend() {
+    const top20AvailableUpgrades = availableUpgrades
+        .slice(0, 20)
+        .filter(up => !up.isGodMode);
 
+    // Combine purchased upgrades and top 7 available upgrades
+    //const possibleUpgrades = purchasedUpgrades.concat(top7AvailableUpgrades);
+    const randomUpgrade = top20AvailableUpgrades[Math.floor(Math.random() * top20AvailableUpgrades.length)];
+    if (randomUpgrade) {
+        randomUpgrade.isGodMode = true;
+        godModeLevel += 1;
+        godModeMultiplier = calculateGodModeMultiplier();
+        epsMultiplier = epsMultiplier ** (1 / 3);
+        prestigeRequirement = calculateMinResource();
+        restartGame(false, true);
+        saveGameState();
+        updateEffectiveMultipliers();
+        updateDisplay();
+        showMessageModal('Dev Mode', `Ascended and set ${randomUpgrade.name} to God Mode.`);
+    }
+}
 
-// Add event listener for the key combination
+// Function to increase prestige multiplier and calculate min resource
+function devIncreasePrestigeMultiplier() {
+    epsMultiplier += 1;
+    prestigeRequirement = calculateMinResource();
+    updateEffectiveMultipliers();
+    updateDisplay();
+}
+
+// Add event listener for the key combinations
 document.addEventListener('keydown', (event) => {
-    if (event.shiftKey && event.key === 'D') {
-        toggleDeveloperMode();
+    if (event.shiftKey) {
+        switch (event.key) {
+            case '!':
+                toggleDevMultiplier(10);
+                break;
+            case '@':
+                toggleDevMultiplier(100);
+                break;
+            case '#':
+                toggleDevMultiplier(1000);
+                break;
+            case 'A':
+                devAscend();
+                break;
+            case 'P':
+                devIncreasePrestigeMultiplier();
+                break;
+        }
     }
 });
+
 
 function showMessageModal(title, message, isConfirm = false, isUpgradeSelection = false) {
     return new Promise((resolve, reject) => {
