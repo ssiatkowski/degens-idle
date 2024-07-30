@@ -963,7 +963,7 @@ function buyUpgrade(encodedUpgradeName) {
         // Apply a mini prestige multiplier if the upgrade has one
         if (miniPrestigeMultiplier) {
             epsMultiplier *= miniPrestigeMultiplier;
-            showMessageModal('Multiplier Changed', `Prestige multiplier changed to x${epsMultiplier.toFixed(2)}`);
+            ///showMessageModal('Multiplier Changed', `Prestige multiplier changed to x${epsMultiplier.toFixed(2)}`);
         }
 
         // Update the upgrade list and display
