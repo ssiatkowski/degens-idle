@@ -10,6 +10,15 @@ let trollPoints = 0;
 let trollPointsPerSecond = 0;
 let hopium = 0;
 let hopiumPerSecond = 0;
+let knowledge = 0;
+let knowledgePerSecond = 0;
+let power = 0;
+let powerPerSecond = 0;
+let serenity = 0;
+let serenityPerSecond = 0;
+
+
+//cooldowns for mini games
 let cooldowns = {
     copium: false,
     delusion: false,
@@ -22,6 +31,9 @@ let effectiveDelusionPerSecond = 0;
 let effectiveYachtMoneyPerSecond = 0;
 let effectiveTrollPointsPerSecond = 0;
 let effectiveHopiumPerSecond = 0;
+let effectiveKnowledgePerSecond = 0;
+let effectivePowerPerSecond = 0;
+let effectiveSerenityPerSecond = 0;
 
 let prestiges = 0;
 let epsMultiplier = 1;
@@ -51,6 +63,9 @@ function updateEffectiveMultipliers() {
     effectiveYachtMoneyPerSecond = yachtMoneyPerSecond * epsMultiplier * godModeMultiplier;
     effectiveTrollPointsPerSecond = trollPointsPerSecond * epsMultiplier * godModeMultiplier;
     effectiveHopiumPerSecond = hopiumPerSecond * epsMultiplier * godModeMultiplier;
+    effectiveKnowledgePerSecond = knowledgePerSecond * epsMultiplier * godModeMultiplier;
+    effectivePowerPerSecond = powerPerSecond * epsMultiplier * godModeMultiplier;
+    effectiveSerenityPerSecond = serenityPerSecond * epsMultiplier * godModeMultiplier;
 }
 
 
@@ -88,7 +103,13 @@ function loadGameState() {
     trollPointsPerSecond = parseFloat(localStorage.getItem('trollPointsPerSecond')) || 0;
     hopium = parseFloat(localStorage.getItem('hopium')) || 0;
     hopiumPerSecond = parseFloat(localStorage.getItem('hopiumPerSecond')) || 0;
-    
+    knowledge = parseFloat(localStorage.getItem('knowledge')) || 0;
+    knowledgePerSecond = parseFloat(localStorage.getItem('knowledgePerSecond')) || 0;
+    power = parseFloat(localStorage.getItem('power')) || 0;
+    powerPerSecond = parseFloat(localStorage.getItem('powerPerSecond')) || 0;
+    serenity = parseFloat(localStorage.getItem('serenity')) || 0;
+    serenityPerSecond = parseFloat(localStorage.getItem('serenityPerSecond')) || 0;
+
     // Retrieve and parse the prestige values from local storage, defaulting to 0 or 1 if not found
     prestiges = parseInt(localStorage.getItem('prestiges')) || 0;
     epsMultiplier = parseFloat(localStorage.getItem('epsMultiplier')) || 1;
@@ -141,6 +162,11 @@ function loadGameState() {
         document.getElementById('cookieButton').style.display = 'block';
     }
 
+    // Check if Knowledge is already unlocked
+    if (localStorage.getItem('knowledgeUnlocked') === 'true') {
+        unhideKnowledge();
+    }
+
     // Calculate the elapsed time since the last interaction
     const now = Date.now();
     const elapsedSeconds = (now - lastInteraction) / 1000;
@@ -169,6 +195,12 @@ function saveGameState() {
     localStorage.setItem('trollPointsPerSecond', trollPointsPerSecond);
     localStorage.setItem('hopium', hopium);
     localStorage.setItem('hopiumPerSecond', hopiumPerSecond);
+    localStorage.setItem('knowledge', knowledge);
+    localStorage.setItem('knowledgePerSecond', knowledgePerSecond);
+    localStorage.setItem('power', power);
+    localStorage.setItem('powerPerSecond', powerPerSecond);
+    localStorage.setItem('serenity', serenity);
+    localStorage.setItem('serenityPerSecond', serenityPerSecond);
     
     // Save the prestige values to local storage
     localStorage.setItem('prestiges', prestiges);
@@ -204,13 +236,22 @@ function saveGameState() {
 
 
 
-// Generate resources based on elapsed time
+// Generate resources every interval
 function generateResources() {
     copium += effectiveCopiumPerSecond;
     delusion += effectiveDelusionPerSecond;
     yachtMoney += effectiveYachtMoneyPerSecond;
     trollPoints += effectiveTrollPointsPerSecond;
     hopium += effectiveHopiumPerSecond;
+    knowledge += effectiveKnowledgePerSecond;
+    power += effectivePowerPerSecond;
+    serenity += effectiveSerenityPerSecond;
+
+    // Check if delusion drops below negative 1 trillion to unhide Knowledge
+    if (delusion < -1e12 && localStorage.getItem('knowledgeUnlocked') !== 'true') {
+        unhideKnowledge();
+    }
+
     updateDisplay();
 }
 
@@ -232,7 +273,7 @@ function playMiniGame(gameType) {
     // Speed mini-game logic
     if (gameType === 'speed') {
         let points = 0;
-        let duration = Math.floor(Math.random() * 8) + 1; // Random duration between 1 and 8 seconds
+        let duration = Math.floor(Math.random() * 6) + 2; // Random duration between 2 and 7 seconds
         showMessageModal('Speed Game', `Tap on the screen as many times as you can in ${duration} seconds!`, false, false);
 
         // Function to handle clicks
@@ -430,6 +471,12 @@ async function restartGame(isPrestige = false, isAscend = false) {
         trollPointsPerSecond = 0;
         hopium = 0;
         hopiumPerSecond = 0;
+        knowledge = 0;
+        knowledgePerSecond = 0;
+        power = 0;
+        powerPerSecond = 0;
+        serenity = 0;
+        serenityPerSecond = 0;
 
         // Reset ascends and multipliers if it's a full restart
         if (!isAscend && !isPrestige) {
@@ -489,23 +536,23 @@ function updateTradeRatio() {
     } else if (toResource === 'hopium') {
         tradeRatioDisplay.textContent = 'Only Copium can convert to Hopium';
     } else {
-        tradeRatioDisplay.textContent = 'Trade ratio is 5:1';
+        tradeRatioDisplay.textContent = 'Trade ratio is 10:1';
     }
 }
 
 function parseFormattedNumber(str) {
     const suffixes = {
-        K: 1e3,
-        M: 1e6,
-        B: 1e9,
-        T: 1e12,
-        Qa: 1e15,
-        Qi: 1e18,
-        Sx: 1e21,
-        Sp: 1e24,
-        Oc: 1e27,
-        Nn: 1e30,
-        Dc: 1e33
+        k: 1e3,
+        m: 1e6,
+        b: 1e9,
+        t: 1e12,
+        qa: 1e15,
+        qi: 1e18,
+        sx: 1e21,
+        sp: 1e24,
+        oc: 1e27,
+        nn: 1e30,
+        dc: 1e33
     };
 
     // Regular expression to match both suffix-based and scientific notation
@@ -518,7 +565,7 @@ function parseFormattedNumber(str) {
         if (suffix && suffix[0].toLowerCase() === 'e') {
             return parseFloat(num + suffix);  // Convert directly to a number
         }
-        const factor = suffix ? suffixes[suffix] || 1 : 1;
+        const factor = suffix ? suffixes[suffix.toLowerCase()] || 1 : 1;
         return parseFloat(num) * factor;
     }
     return NaN;
@@ -574,10 +621,10 @@ function tradeResources() {
             return;
         }
         resourceAmount[fromResource] -= tradeAmount;
-        resourceAmount[toResource] += tradeAmount / 5;
+        resourceAmount[toResource] += tradeAmount / 10;
         
         // Show trade success message
-        showMessageModal('Trade Successful', `Traded ${formatNumber(tradeAmount)} ${fromResource} for ${formatNumber(tradeAmount / 5)} ${toResource}.`);
+        showMessageModal('Trade Successful', `Traded ${formatNumber(tradeAmount)} ${fromResource} for ${formatNumber(tradeAmount / 10)} ${toResource}.`);
     }
 
     // Update global resource variables
@@ -648,6 +695,13 @@ function updateDisplay() {
     document.getElementById('tpps').textContent = formatNumber(effectiveTrollPointsPerSecond);
     document.getElementById('hopium').textContent = formatNumber(hopium);
     document.getElementById('hps').textContent = formatNumber(effectiveHopiumPerSecond);
+    document.getElementById('knowledge').textContent = formatNumber(knowledge);
+    document.getElementById('kps').textContent = formatNumber(effectiveKnowledgePerSecond);
+    document.getElementById('power').textContent = formatNumber(power);
+    document.getElementById('pps').textContent = formatNumber(effectivePowerPerSecond);
+    document.getElementById('serenity').textContent = formatNumber(serenity);
+    document.getElementById('sps').textContent = formatNumber(effectiveSerenityPerSecond);
+
     document.getElementById('prestige-multiplier').textContent = `Prestige: x${epsMultiplier.toFixed(2)} mult`;
 
     // Update combined God Mode Level and Multiplier display
@@ -658,7 +712,19 @@ function updateDisplay() {
     updateUpgradeButtons();
 }
 
+function unhideKnowledge() {
+    document.getElementById('knowledge-container').style.display = 'block';
+    localStorage.setItem('knowledgeUnlocked', 'true');
+    
+}
 
+function unhidePower() {
+    document.getElementById('power-container').style.display = 'block';
+}
+
+function unhideSerenity() {
+    document.getElementById('serenity-container').style.display = 'block';
+}
 
 
 // Function to calculate the prestige multiplier based on the lowest of the first four resources
@@ -728,13 +794,22 @@ function canAscend() {
     return purchasedUpgrades.some(upgrade => upgrade.name === "Ascension");
 }
 
+function calculateGodModeMultiplier() {
+    let productX = 1; // Initialize the product to 1 for the first element
+    for (let i = 0; i <= godModeLevel; i++) {
+        let xi = 1 + 0.25 * Math.pow(0.975, i); // Calculate xi
+        productX *= xi; // Multiply the current xi to the cumulative product
+    }
+    return productX;
+}
+
 async function ascend() {
 
     const selectedUpgrade = await showMessageModal(
         'God-Mode Ascension',
         `Are you sure you want to enter God-Mode level ${godModeLevel + 1}?<br><br>
         Raising the level of God-Mode requires temporarily folding three dimensions in the space around you to a single point, which will unfortunately reduce your Prestige multiplier to its cube root. Your Prestige multiplier will shrink from <strong>x${formatNumber(epsMultiplier)}</strong> to <strong>x${formatNumber(epsMultiplier ** (1/3))}</strong><br><br>
-        On the bright side, your God-Mode multiplier will increase from <strong>x${formatNumber(godModeMultiplier)}</strong> to <strong>x${formatNumber(1.2 ** (godModeLevel+1))}</strong>!`,
+        On the bright side, your God-Mode multiplier will increase from <strong>x${formatNumber(godModeMultiplier)}</strong> to <strong>x${formatNumber(calculateGodModeMultiplier(godModeLevel+1))}</strong>!`,
         true,
         true
     );
@@ -742,7 +817,7 @@ async function ascend() {
     if (selectedUpgrade) {
 
         godModeLevel += 1;
-        godModeMultiplier = 1.2 ** godModeLevel;
+        godModeMultiplier = calculateGodModeMultiplier();
 
         showMessageModal('Ascension Successful!', `<strong>You have entered God-Mode Level ${godModeLevel}.</strong><br> Your multiplier God-Mode is now x${formatNumber(godModeMultiplier)}, your prestige multiplier is x${formatNumber(epsMultiplier)}, and your chosen upgrade (${selectedUpgrade.name}) is 10x stronger.`);        
         selectedUpgrade.isGodMode = true;
@@ -776,6 +851,9 @@ function generateIdleResources(elapsedSeconds) {
     yachtMoney += yachtMoneyPerSecond * epsMultiplier * godModeMultiplier * elapsedSeconds;
     trollPoints += trollPointsPerSecond * epsMultiplier * godModeMultiplier * elapsedSeconds;
     hopium += hopiumPerSecond * epsMultiplier * godModeMultiplier * elapsedSeconds;
+    knowledge += knowledgePerSecond * epsMultiplier * godModeMultiplier * elapsedSeconds;
+    power += powerPerSecond * epsMultiplier * godModeMultiplier * elapsedSeconds;
+    serenity += serenityPerSecond * epsMultiplier * godModeMultiplier * elapsedSeconds;
 }
 
 // Function to encode a name for safe usage in URLs or storage
@@ -809,7 +887,10 @@ function buyUpgrade(encodedUpgradeName) {
         (cost.delusion === 0 || delusion >= cost.delusion) &&
         (cost.yachtMoney === 0 || yachtMoney >= cost.yachtMoney) &&
         (cost.trollPoints === 0 || trollPoints >= cost.trollPoints) &&
-        (cost.hopium === 0 || hopium >= cost.hopium)) {
+        (cost.hopium === 0 || hopium >= cost.hopium) &&
+        (cost.knowledge === 0 || knowledge >= cost.knowledge) &&
+        (cost.power === 0 || power >= cost.power) &&
+        (cost.serenity === 0 || serenity >= cost.serenity)) {
 
         // Deduct the cost from the player's resources
         copium -= cost.copium;
@@ -817,6 +898,9 @@ function buyUpgrade(encodedUpgradeName) {
         yachtMoney -= cost.yachtMoney;
         trollPoints -= cost.trollPoints;
         hopium -= cost.hopium;
+        knowledge -= cost.knowledge;
+        power -= cost.power;
+        serenity -= cost.serenity;
 
         // Increase the per second earnings for each resource, apply God Mode multiplier if applicable
         const multiplier = upgrade.isGodMode ? 10 : 1;
@@ -825,6 +909,9 @@ function buyUpgrade(encodedUpgradeName) {
         yachtMoneyPerSecond += (earnings.yachtMoneyPerSecond || 0) * multiplier;
         trollPointsPerSecond += (earnings.trollPointsPerSecond || 0) * multiplier;
         hopiumPerSecond += (earnings.hopiumPerSecond || 0) * multiplier;
+        knowledgePerSecond += (earnings.knowledgePerSecond || 0) * multiplier;
+        powerPerSecond += (earnings.powerPerSecond || 0) * multiplier;
+        serenityPerSecond += (earnings.serenityPerSecond || 0) * multiplier;
 
         // Add the purchased upgrade to the display
         addPurchasedUpgrade(img, name, earnings, upgrade.isGodMode);
@@ -881,7 +968,7 @@ function buyUpgrade(encodedUpgradeName) {
 function buyAllUpgrades() {
     availableUpgrades.slice(0,7).forEach(upgrade => {
         if (isAffordable(upgrade.cost)) {
-            buyUpgrade(upgrade);
+            buyUpgrade(encodeName(upgrade.name));
         }
     });
 }
@@ -897,7 +984,10 @@ function formatCostOrEarnings(costOrEarnings, isGodMode = false) {
         delusionPerSecond: '<b>D</b>PS',
         yachtMoneyPerSecond: '<b>YM</b>PS',
         trollPointsPerSecond: '<b>TP</b>PS',
-        hopiumPerSecond: '<b>H</b>PS'
+        hopiumPerSecond: '<b>H</b>PS',
+        knowledgePerSecond: '<b>K</b>PS',
+        powerPerSecond: '<b>P</b>PS',
+        serenityPerSecond: '<b>S</b>PS'
     };
 
     let result = '';
@@ -945,17 +1035,23 @@ function isAffordable(cost) {
             (cost.delusion === 0 || delusion >= cost.delusion) &&
             (cost.yachtMoney === 0 || yachtMoney >= cost.yachtMoney) &&
             (cost.trollPoints === 0 || trollPoints >= cost.trollPoints) &&
-            (cost.hopium === 0 || hopium >= cost.hopium);
+            (cost.hopium === 0 || hopium >= cost.hopium) &&
+            (cost.knowledge === 0 || knowledge >= cost.knowledge) &&
+            (cost.power === 0 || power >= cost.power) &&
+            (cost.serenity === 0 || serenity >= cost.serenity);
 }
 
 // Function to get the total cost of an upgrade
 function getTotalCost(upgrade) {
-    // Sum up the costs of all resources in the upgrade
+    // Sum up the costs of all resources in the upgrade with respective conversion factors
     return (upgrade.cost.copium || 0) + 
            (upgrade.cost.delusion || 0) + 
            (upgrade.cost.yachtMoney || 0) + 
            (upgrade.cost.trollPoints || 0) + 
-           (upgrade.cost.hopium * 100000000 || 0);
+           (upgrade.cost.hopium * 100000000 || 0) +
+           (upgrade.cost.knowledge * 1e12 || 0) + 
+           (upgrade.cost.power * 1e20 || 0) + 
+           (upgrade.cost.serenity * 1e30 || 0);
 }
 
 
@@ -998,20 +1094,15 @@ function updateUpgradeList() {
 
 // Function to update the appearance of upgrade buttons based on affordability
 function updateUpgradeButtons() {
-    upgrades.forEach(upgrade => {
+    let foundAffordableUpgrade = false;
+    availableUpgrades.forEach(upgrade => {
         const encodedName = encodeName(upgrade.name);
         const button = document.querySelector(`button[data-upgrade-name="${encodedName}"]`);
         if (button) {
-            const { cost } = upgrade;
             // Check if the upgrade is affordable based on current resources
-            const affordable = (cost.copium === 0 || copium >= cost.copium) &&
-                               (cost.delusion === 0 || delusion >= cost.delusion) &&
-                               (cost.yachtMoney === 0 || yachtMoney >= cost.yachtMoney) &&
-                               (cost.trollPoints === 0 || trollPoints >= cost.trollPoints) &&
-                               (cost.hopium === 0 || hopium >= cost.hopium);
-
             // Add or remove the appropriate class based on affordability and God Mode status
-            if (affordable) {
+            if (isAffordable(upgrade.cost)) {
+                foundAffordableUpgrade = true;
                 if (upgrade.isGodMode) {
                     button.classList.add('affordable-godmode');
                     button.classList.remove('affordable');
@@ -1024,6 +1115,11 @@ function updateUpgradeButtons() {
             }
         }
     });
+    if (foundAffordableUpgrade) {
+        document.getElementById('buyAllButton').classList.add('affordable');
+    } else {
+        document.getElementById('buyAllButton').classList.remove('affordable');
+    }
 }
 
 // Variable to track the state of developer mode
@@ -1038,6 +1134,10 @@ function toggleDeveloperMode() {
         delusionPerSecond *= 1000;
         yachtMoneyPerSecond *= 1000;
         trollPointsPerSecond *= 1000;
+        hopiumPerSecond *= 1000;
+        knowledgePerSecond *= 1000;
+        powerPerSecond *= 1000;
+        serenityPerSecond *= 1000;
         showMessageModal('Dev Mode', "Developer Mode Activated: Resource generation is now 1000x faster!");
     } else {
         // Reset resource generation rates to normal
@@ -1045,11 +1145,16 @@ function toggleDeveloperMode() {
         delusionPerSecond /= 1000;
         yachtMoneyPerSecond /= 1000;
         trollPointsPerSecond /= 1000;
+        hopiumPerSecond /= 1000;
+        knowledgePerSecond /= 1000;
+        powerPerSecond /= 1000;
+        serenityPerSecond /= 1000;
         showMessageModal('Dev Mode', "Developer Mode Deactivated: Resource generation is back to normal.");
     }
     updateEffectiveMultipliers();
     updateDisplay(); // Update the display to reflect the changes
 }
+
 
 
 // Add event listener for the key combination
