@@ -62,7 +62,7 @@ const upgrades = [
     {
         name: "Email Safety First",
         cost: { copium: 1000, delusion: 0, yachtMoney: 0, trollPoints: 150, hopium: 0 },
-        earnings: { copiumPerSecond: 0.2, delusionPerSecond: 8.7, yachtMoneyPerSecond: -1, trollPointsPerSecond: 0, hopiumPerSecond: 0 },
+        earnings: { copiumPerSecond: 0.2, delusionPerSecond: 8.9, yachtMoneyPerSecond: -1, trollPointsPerSecond: 0, hopiumPerSecond: 0 },
         img: "imgs/proton.jpg",
     },
     {
@@ -88,7 +88,7 @@ const upgrades = [
         cost: { copium: 1000, delusion: 1000, yachtMoney: 1000, trollPoints: 1000, hopium: 0 },
         earnings: { copiumPerSecond: 10, delusionPerSecond: 10, yachtMoneyPerSecond: 10, trollPointsPerSecond: 10, hopiumPerSecond: 0 },
         img: "imgs/captain_degen.jpg",
-        message: "Degenerates, assemble!!! With Captain Degen, your prestige multiplier is permanently increased by 0.01%. You'll have to take my word for it since the display rounds to two digits.",
+        message: "Degenerates, assemble!!! With Captain Degen, your prestige multiplier is increased by 0.01%. You'll have to take my word for it since the display rounds to two digits.",
         miniPrestigeMultiplier: 1.001,
     },
     {
@@ -124,7 +124,7 @@ const upgrades = [
     {
         name: "VR Porn",
         cost: { copium: 5000, delusion: 0, yachtMoney: 4000, trollPoints: 1500, hopium: 0 },
-        earnings: { copiumPerSecond: 23, delusionPerSecond: 6.9, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1, hopiumPerSecond: 0 },
+        earnings: { copiumPerSecond: 23, delusionPerSecond: 6.9, yachtMoneyPerSecond: 0, trollPointsPerSecond: 3, hopiumPerSecond: 0 },
         img: "imgs/vr_porn.jpg",
     },
     {
@@ -178,9 +178,9 @@ const upgrades = [
     {
         name: "Sex Change",
         cost: { copium: 50000, delusion: 50000, yachtMoney: 0, trollPoints: 0, hopium: 0 },
-        earnings: { copiumPerSecond: 500, delusionPerSecond: 500, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0 },
+        earnings: { copiumPerSecond: 600, delusionPerSecond: 600, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0 },
         img: "imgs/sex_change.jpg",
-        message: "Congratulations on your bold transformation! However, due to an unexpected complication, you find yourself feeling about 5% weaker permanently. It seems the universe couldn't resist adding a little extra flair to your journey.<br><br>Think of it as a constant reminder that even in the realm of extraordinary changes, there's always a trade-off. Embrace your slightly lighter touch and let it be a testament to the unpredictable nature of life! On the bright side, you feel that becoming a god would surely undo this weakness.",
+        message: "Congratulations on your bold transformation! However, due to an unexpected complication, you find yourself feeling about 5% weaker. It seems the universe couldn't resist adding a little extra flair to your journey.<br><br>Think of it as a constant reminder that even in the realm of extraordinary changes, there's always a trade-off. Embrace your slightly lighter touch and let it be a testament to the unpredictable nature of life! On the bright side, you feel that becoming a god would surely undo this weakness.",
         miniPrestigeMultiplier: 0.95
     },
     {
@@ -188,12 +188,6 @@ const upgrades = [
         cost: { copium: 0, delusion: 25000, yachtMoney: 0, trollPoints: 80000, hopium: 0 },
         earnings: { copiumPerSecond: 90, delusionPerSecond: 95, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0 },
         img: "imgs/use_useless.jpg",
-    },
-    {
-        name: "Fully Autonomous Cars",
-        cost: { copium: 80000, delusion: 80000, yachtMoney: 10000, trollPoints: 25000, hopium: 0 },
-        earnings: { copiumPerSecond: 65, delusionPerSecond: 5, yachtMoneyPerSecond: 20, trollPointsPerSecond: 20, hopiumPerSecond: 0 },
-        img: "imgs/elon_tesla.jpg",
     },
     {
         name: "Job Application",
@@ -208,6 +202,12 @@ const upgrades = [
         img: "imgs/hawk_tuah.jpg",
     },
     {
+        name: "Fully Autonomous Cars",
+        cost: { copium: 80000, delusion: 80000, yachtMoney: 10000, trollPoints: 25000, hopium: 0 },
+        earnings: { copiumPerSecond: 65, delusionPerSecond: 15, yachtMoneyPerSecond: 30, trollPointsPerSecond: 30, hopiumPerSecond: 0 },
+        img: "imgs/elon_tesla.jpg",
+    },
+    {
         name: "I'm gonna come",
         cost: { copium: 75000, delusion: 75000, yachtMoney: 0, trollPoints: 50000, hopium: 0 },
         earnings: { copiumPerSecond: -100, delusionPerSecond: 0, yachtMoneyPerSecond: -225, trollPointsPerSecond: 500, hopiumPerSecond: 0 },
@@ -216,7 +216,7 @@ const upgrades = [
     {
         name: "BrOadEn IN God",
         cost: { copium: 150000, delusion: 20000, yachtMoney: 20000, trollPoints: 40000, hopium: 0 },
-        earnings: { copiumPerSecond: 400, delusionPerSecond: 400, yachtMoneyPerSecond: -10, trollPointsPerSecond: 250, hopiumPerSecond: 0 },
+        earnings: { copiumPerSecond: 400, delusionPerSecond: 200, yachtMoneyPerSecond: -10, trollPointsPerSecond: 250, hopiumPerSecond: 0 },
         img: "imgs/boeing.jpg",
     },
     {
@@ -246,7 +246,7 @@ const upgrades = [
     {
         name: "WE MADE IT!",
         cost: { copium: 1000000, delusion: 1000000, yachtMoney: 1000000, trollPoints: 1000000, hopium: 0 },
-        earnings: { copiumPerSecond: 99, delusionPerSecond: 5, yachtMoneyPerSecond: 5, trollPointsPerSecond: 99, hopiumPerSecond: 0 },
+        earnings: { copiumPerSecond: 84, delusionPerSecond: 84, yachtMoneyPerSecond: 84, trollPointsPerSecond: 84, hopiumPerSecond: 0 },
         img: "imgs/titanic.jpg",
     },
     {
@@ -352,8 +352,8 @@ const upgrades = [
     },  
     {
         name: "Don't fuck this up Netflix",
-        cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 1000 },
-        earnings: { copiumPerSecond: 500000, delusionPerSecond: -1000000, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0.01 },
+        cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 10000 },
+        earnings: { copiumPerSecond: 500000, delusionPerSecond: -200000, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0.01 },
         img: "imgs/3_body_problem.jpg",
     },    
     {

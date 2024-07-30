@@ -431,15 +431,12 @@ async function restartGame(isPrestige = false, isAscend = false) {
         hopium = 0;
         hopiumPerSecond = 0;
 
-        // Reset prestiges and multipliers if it's not a prestige
-        if (!isPrestige) {
+        // Reset ascends and multipliers if it's a full restart
+        if (!isAscend && !isPrestige) {
             prestiges = 0;
             epsMultiplier = 1;
             prestigeRequirement = 1000;
-        }
 
-        // Reset ascends and multipliers if it's a full restart
-        if (!isAscend && !isPrestige) {
             godModeLevel = 0;
             godModeMultiplier = 1;
             // Hide the cookie button
@@ -670,6 +667,11 @@ function calculatePrestigeMultiplier() {
     return 1.5 ** (Math.log10(minResource / 1000) + 1);
 }
 
+//inverse of calculatePrestigeMultiplier
+function calculateMinResource() {
+    return Math.max(1000 * 10 ** ((Math.log10(epsMultiplier) / Math.log10(1.5)) - 1), 1000);
+}
+
 // Check if the player can prestige
 function canPrestige() {
     const minResource = Math.min(copium, delusion, yachtMoney, trollPoints);
@@ -730,7 +732,9 @@ async function ascend() {
 
     const selectedUpgrade = await showMessageModal(
         'God-Mode Ascension',
-        `Are you sure you want to enter God-Mode level ${godModeLevel + 1}? You will lose all your Upgrades and Prestige progress!<br><br><strong>Select one of your purchased upgrades to enhance (10x multiplier).</strong><br>Tip: You will want to drive up your God-Mode level quickly. However, while you can ascend to as many God-Mode levels as you desire, it's not necessary to achieve every level to proceed to the next chapter.`,
+        `Are you sure you want to enter God-Mode level ${godModeLevel + 1}?<br><br>
+        Raising the level of God-Mode requires temporarily folding three dimensions in the space around you to a single point, which will unfortunately reduce your Prestige multiplier to its cube root. Your Prestige multiplier will shrink from <strong>x${formatNumber(epsMultiplier)}</strong> to <strong>x${formatNumber(epsMultiplier ** (1/3))}</strong><br><br>
+        On the bright side, your God-Mode multiplier will increase from <strong>x${formatNumber(godModeMultiplier)}</strong> to <strong>x${formatNumber(1.2 ** (godModeLevel+1))}</strong>!`,
         true,
         true
     );
@@ -740,8 +744,11 @@ async function ascend() {
         godModeLevel += 1;
         godModeMultiplier = 1.2 ** godModeLevel;
 
-        showMessageModal('Ascension Successful!', `You have entered God-Mode Level ${godModeLevel}. Your multiplier is now x${formatNumber(godModeMultiplier)} and your chosen upgrade (${selectedUpgrade.name}) is 10x stronger.`);        
+        showMessageModal('Ascension Successful!', `<strong>You have entered God-Mode Level ${godModeLevel}.</strong><br> Your multiplier God-Mode is now x${formatNumber(godModeMultiplier)}, your prestige multiplier is x${formatNumber(epsMultiplier)}, and your chosen upgrade (${selectedUpgrade.name}) is 10x stronger.`);        
         selectedUpgrade.isGodMode = true;
+
+        epsMultiplier = epsMultiplier ** (1/3)
+        prestigeRequirement = calculateMinResource();
         
         restartGame(false,true); // Use the existing restartGame function with prestige mode
         // Save game state after ascending
@@ -871,8 +878,13 @@ function buyUpgrade(encodedUpgradeName) {
     updateUpgradeButtons();
 }
 
-
-
+function buyAllUpgrades() {
+    availableUpgrades.slice(0,7).forEach(upgrade => {
+        if (isAffordable(upgrade.cost)) {
+            buyUpgrade(upgrade);
+        }
+    });
+}
 
 
 
@@ -927,6 +939,14 @@ function addPurchasedUpgrade(img, name, earnings, isGodMode = false) {
     purchasedList.prepend(upgradeElement); // Prepend to show the most recent first
 }
 
+function isAffordable(cost) {
+    // Check if the upgrade is affordable based on current resources
+    return  (cost.copium === 0 || copium >= cost.copium) &&
+            (cost.delusion === 0 || delusion >= cost.delusion) &&
+            (cost.yachtMoney === 0 || yachtMoney >= cost.yachtMoney) &&
+            (cost.trollPoints === 0 || trollPoints >= cost.trollPoints) &&
+            (cost.hopium === 0 || hopium >= cost.hopium);
+}
 
 // Function to get the total cost of an upgrade
 function getTotalCost(upgrade) {
@@ -1239,6 +1259,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Add event listener for the ascend button
     document.getElementById('ascendButton').addEventListener('click', ascend);
+
+    // Add event listener for the buy all upgrades button
+    document.getElementById('buyAllButton').addEventListener('click', buyAllUpgrades);
+
 
     // Load the game state from local storage
     loadGameState();
