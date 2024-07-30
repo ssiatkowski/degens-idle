@@ -820,7 +820,7 @@ async function ascend() {
         'God-Mode Ascension',
         `Are you sure you want to enter God-Mode level ${godModeLevel + 1}?<br><br>
         Raising the level of God-Mode requires temporarily folding three dimensions in the space around you to a single point, which will unfortunately reduce your Prestige multiplier to its cube root. Your Prestige multiplier will shrink from <strong>x${formatNumber(epsMultiplier)}</strong> to <strong>x${formatNumber(epsMultiplier ** (1/3))}</strong><br><br>
-        On the bright side, your God-Mode multiplier will increase from <strong>x${formatNumber(godModeMultiplier)}</strong> to <strong>x${formatNumber(calculateGodModeMultiplier(godModeLevel+1))}</strong>!`,
+        On the bright side, your God-Mode multiplier will increase from <strong>x${formatNumber(godModeMultiplier)}</strong> to <strong>x${formatNumber(calculateGodModeMultiplier(godModeLevel+1+1))}</strong>!`,
         true,
         true
     );
