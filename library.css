@@ -1,3 +1,5 @@
+/* Existing CSS content */
+
 /* Overlay for the Library */
 .library-overlay {
     position: fixed;
@@ -10,6 +12,7 @@
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    overflow: hidden; /* Prevent body scrolling */
 }
 
 .library-overlay-content {
@@ -19,12 +22,43 @@
     border-radius: 10px;
     text-align: center;
     color: #e0e0e0;
+    width: 80%; /* Adjust width as needed */
+    max-height: 90%; /* Ensure it fits within the screen */
+    overflow-y: auto; /* Enable vertical scrolling */
 }
 
+/* Skill Tree Container */
 #librarySkills {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.skill-level {
+    width: 100%;
+    border: 1px solid #444;
+    padding: 10px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.skill-level-label {
+    position: absolute;
+    top: -15px;
+    left: 10px;
+    background-color: #1e1e1e;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.skill-row {
+    display: flex;
     justify-content: center;
+    margin: 20px 0;
 }
 
 .libraryskill {
@@ -35,26 +69,27 @@
     padding: 20px;
     width: 150px;
     text-align: center;
+    position: relative;
+    cursor: pointer; /* Make it look like a button */
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.skill.locked {
+.libraryskill:hover {
+    transform: translateY(-2px);
+}
+
+.libraryskill.locked {
     background-color: #555;
 }
 
-.skill p {
+.libraryskill.affordable {
+    background-color: #4caf50; /* Green */
+}
+
+.libraryskill.purchased {
+    background-color: #800080; /* Purple */
+}
+
+.libraryskill h3, .libraryskill p {
     margin: 0;
-}
-
-button-skill {
-    padding: 10px 20px;
-    margin-top: 20px;
-    background-color: #4caf50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-button-skill:hover {
-    background-color: #45a049;
 }

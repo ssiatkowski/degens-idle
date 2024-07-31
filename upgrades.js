@@ -180,8 +180,7 @@ const upgrades = [
         cost: { copium: 50000, delusion: 50000, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 600, delusionPerSecond: 600, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/sex_change.jpg",
-        message: "Congratulations on your bold transformation! However, due to an unexpected complication, you find yourself feeling about 5% weaker. It seems the universe couldn't resist adding a little extra flair to your journey.<br><br>Think of it as a constant reminder that even in the realm of extraordinary changes, there's always a trade-off. Embrace your slightly lighter touch and let it be a testament to the unpredictable nature of life! On the bright side, you feel that becoming a god would surely undo this weakness.",
-        miniPrestigeMultiplier: 0.95
+        message: "Congratulations on your bold transformation! It's natural to feel a little weaker—about 5%—after such a significant change. Just like recovering from major surgery, your strength will gradually return.<br><br>This temporary adjustment is a gentle reminder that even extraordinary changes come with their phases of recovery. Embrace this period of healing as a testament to your resilience. With time and patience, your full strength will come back, stronger than ever.",        miniPrestigeMultiplier: 0.95
     },
     {
         name: "Ultimate Solution",
@@ -373,6 +372,7 @@ const upgrades = [
         cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 1, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0.01, knowledgePerSecond: 0.000001, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/the_library.jpg",
+        message: 'By acquiring The Library upgrade, you have proven yourself worthy to enter the esteemed <b>Hall of Knowledge</b>. Your dedication and wisdom have granted you access to this sacred realm of enlightenment.',
     },  
     {
         name: "Foreshadowing #2",
