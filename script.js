@@ -969,7 +969,7 @@ function buyUpgrade(encodedUpgradeName) {
 
         // Special case for the "Antimatter Dimension" upgrade
         if (name === "The Library") {
-            showMessageModal('Sadly', "This marks the end of v0.67. With knowledge now unlocked, you can restart the game and embark on speed runs, or take a moment to imagine all the new possibilities that lie ahead. Your journey through this existential tale is just beginning, and the newfound knowledge will open doors to uncharted realms. Stay tuned, as another big update is just a few days away.");
+            showMessageModal('Sadly', "This marks the end of v0.68. With knowledge now unlocked, you can restart the game and embark on speed runs, or take a moment to imagine all the new possibilities that lie ahead. Your journey through this existential tale is just beginning, and the newfound knowledge will open doors to uncharted realms. Stay tuned, as another big update is just a few days away.");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one
@@ -1384,14 +1384,6 @@ function openLibrary() {
         showMessageModal('Access Denied', 'You are not worthy to enter the Hall of Knowledge. The ancient tomes and secrets within remain beyond your reach. Perhaps it is time to look inwards and seek understanding within yourself first. Only through inner reflection and growth will you gain the wisdom needed to unlock the secrets of this sacred place.');
     }
 }
-
-
-// Show the welcome modal when the DOM content is fully loaded
-document.addEventListener('DOMContentLoaded', () => {
-    showWelcomeModal();
-    // Other existing event listeners and initializations
-});
-
 
 
 // Expose functions to the global scope for use in the HTML

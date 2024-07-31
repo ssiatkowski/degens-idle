@@ -1,5 +1,3 @@
-/* Existing CSS content */
-
 /* Overlay for the Library */
 .library-overlay {
     position: fixed;
@@ -90,6 +88,18 @@
     background-color: #800080; /* Purple */
 }
 
-.libraryskill h3, .libraryskill p {
-    margin: 0;
+.libraryskill .skill-cost {
+    display: block; /* Always show cost */
+}
+
+.libraryskill h3,
+.libraryskill p {
+    display: none; /* Hide by default */
+}
+
+.libraryskill.affordable h3,
+.libraryskill.affordable p,
+.libraryskill.purchased h3,
+.libraryskill.purchased p {
+    display: block; /* Show when affordable or purchased */
 }
