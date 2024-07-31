@@ -169,6 +169,15 @@ function loadGameState() {
         unhideKnowledge();
     }
 
+    // Load unlocked skills
+    // const savedLibrarySkills = JSON.parse(localStorage.getItem('librarySkills')) || [];
+    // savedLibrarySkills.forEach(savedSkill => {
+    //     const skill = librarySkills.find(s => s.name === savedSkill.name);
+    //     if (skill) {
+    //         skill.unlocked = savedSkill.unlocked;
+    //     }
+    // });
+
     // Calculate the elapsed time since the last interaction
     const now = Date.now();
     const elapsedSeconds = (now - lastInteraction) / 1000;
@@ -230,6 +239,9 @@ function saveGameState() {
     
     // Save the state of the Cookie Clicker button
     localStorage.setItem('cookieButtonVisible', document.getElementById('cookieButton').style.display === 'block');
+
+    // // Save unlocked library skills
+    // localStorage.setItem('librarySkills', JSON.stringify(librarySkills));
 
 }
 
@@ -805,9 +817,9 @@ function canAscend() {
     return purchasedUpgrades.some(upgrade => upgrade.name === "Ascension");
 }
 
-function calculateGodModeMultiplier() {
+function calculateGodModeMultiplier(gmLevlel = godModeLevel) {
     let productX = 1; // Initialize the product to 1 for the first element
-    for (let i = 0; i < godModeLevel; i++) {
+    for (let i = 0; i < gmLevlel; i++) {
         let xi = 1 + 0.25 * Math.pow(0.975, i); // Calculate xi
         productX *= xi; // Multiply the current xi to the cumulative product
     }
@@ -820,7 +832,7 @@ async function ascend() {
         'God-Mode Ascension',
         `Are you sure you want to enter God-Mode level ${godModeLevel + 1}?<br><br>
         Raising the level of God-Mode requires temporarily folding three dimensions in the space around you to a single point, which will unfortunately reduce your Prestige multiplier to its cube root. Your Prestige multiplier will shrink from <strong>x${formatNumber(epsMultiplier)}</strong> to <strong>x${formatNumber(epsMultiplier ** (1/3))}</strong><br><br>
-        On the bright side, your God-Mode multiplier will increase from <strong>x${formatNumber(godModeMultiplier)}</strong> to <strong>x${formatNumber(calculateGodModeMultiplier(godModeLevel+1+1))}</strong>!`,
+        On the bright side, your God-Mode multiplier will increase from <strong>x${formatNumber(godModeMultiplier)}</strong> to <strong>x${formatNumber(calculateGodModeMultiplier(godModeLevel+1))}</strong>!`,
         true,
         true
     );
@@ -981,8 +993,9 @@ function buyUpgrade(encodedUpgradeName) {
     updateUpgradeButtons();
 }
 
-function buyAllUpgrades() {
-    availableUpgrades.slice(0,7).forEach(upgrade => {
+// Function to handle the purchase of multiple upgrades
+function buyAllUpgrades(limit) {
+    availableUpgrades.slice(0, limit).forEach(upgrade => {
         if (isAffordable(upgrade.cost)) {
             buyUpgrade(encodeName(upgrade.name));
         }
@@ -1132,9 +1145,11 @@ function updateUpgradeButtons() {
         }
     });
     if (foundAffordableUpgrade) {
-        document.getElementById('buyAllButton').classList.add('affordable');
+        document.getElementById('buySeenButton').classList.add('affordable');
+        document.getElementById('buyMaxButton').classList.add('affordable');
     } else {
-        document.getElementById('buyAllButton').classList.remove('affordable');
+        document.getElementById('buySeenButton').classList.remove('affordable');
+        document.getElementById('buyMaxButton').classList.remove('affordable');
     }
 }
 
@@ -1361,6 +1376,15 @@ function showWelcomeModal() {
     );
 }
 
+function openLibrary() {
+    const libraryUpgrade = purchasedUpgrades.find(upgrade => upgrade.name === "The Library");
+    if (libraryUpgrade) {
+        document.getElementById('libraryOverlay').style.display = 'flex';
+    } else {
+        showMessageModal('Access Denied', 'You are not worthy to enter the Hall of Knowledge. The ancient tomes and secrets within remain beyond your reach. Perhaps it is time to look inwards and seek understanding within yourself first. Only through inner reflection and growth will you gain the wisdom needed to unlock the secrets of this sacred place.');
+    }
+}
+
 
 // Show the welcome modal when the DOM content is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
@@ -1401,6 +1425,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Add event listener for the restart button
     document.getElementById('restartButton').addEventListener('click', () => restartGame(false, false));
 
+    // document.getElementById('libraryButton').addEventListener('click', () => {
+    //     document.getElementById('libraryOverlay').style.display = 'flex';
+    // });
+    // document.getElementById('closeLibraryButton').addEventListener('click', () => {
+    //     document.getElementById('libraryOverlay').style.display = 'none';
+    // });
 
     // Add event listener for the prestige button
     document.getElementById('prestigeButton').addEventListener('click', prestige);
@@ -1409,7 +1439,10 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('ascendButton').addEventListener('click', ascend);
 
     // Add event listener for the buy all upgrades button
-    document.getElementById('buyAllButton').addEventListener('click', buyAllUpgrades);
+    document.getElementById('buySeenButton').addEventListener('click', () => buyAllUpgrades(7));
+    document.getElementById('buyMaxButton').addEventListener('click', () => buyAllUpgrades(25));
+
+    showWelcomeModal();
 
 
     // Load the game state from local storage

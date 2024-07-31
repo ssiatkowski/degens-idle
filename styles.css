@@ -141,8 +141,10 @@ h1, h2 {
 
 #button-container {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: space-between; /* Adjusts spacing between buttons */
     align-items: center;
+    margin-top: 20px;
 }
 
 #restartButton {
@@ -533,3 +535,37 @@ button.disabled {
     transition: all 0.5s ease;
 }
 
+/* Library button specific styles */
+#libraryButton {
+    background-color: #8B4513; /* SaddleBrown */
+    color: #fff;
+    font-family: 'Uncial Antiqua', 'Georgia', serif; /* Updated font */
+    font-size: 18px;
+    padding: 8px 30px;
+    border: 2px solid #291604; /* Darker brown for border */
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4); /* Larger shadow */
+    transition: all 0.4s ease; /* Smoother and slower transition */
+    text-shadow: 2px 2px 4px #000; /* Enhanced text shadow */
+    background-image: url('imgs/textures/rustic_wood.jpg'); /* Add a path to a rustic texture image */
+    background-size: cover;
+    background-blend-mode: multiply;
+}
+
+#libraryButton:hover {
+    background-color: #A0522D; /* Sienna */
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.5); /* Even larger shadow on hover */
+    transform: translateY(-5px) scale(1.05); /* More noticeable lift and slight scaling */
+}
+
+#libraryButton:active {
+    background-color: #8B4513; /* SaddleBrown */
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4); /* Slightly smaller shadow on click */
+    transform: translateY(2px) scale(0.98); /* Slight push down and minor scale down */
+}
+
+/* Text shadow to enhance the rustic feel */
+#libraryButton {
+    text-shadow: 2px 2px 4px #000;
+}

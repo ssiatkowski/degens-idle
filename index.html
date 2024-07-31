@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Degens Idle v0.67</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="library.css">    
+    <link href="https://fonts.googleapis.com/css2?family=Uncial+Antiqua&display=swap" rel="stylesheet"> <!-- Google Font -->
 </head>
 <body>
     <div id="messageModal" class="modal">
@@ -35,6 +37,7 @@
             </div>
             <div id="button-container">
                 <button id="restartButton">Restart Game</button>
+                <button id="libraryButton">Hall of Knowledge</button>
             </div>
         </div>
         <div id="game">
@@ -101,7 +104,8 @@
         </div>
         <div id="upgrades">
             <h2>Upgrades</h2>
-            <button id="buyAllButton">Buy All</button>
+            <button id="buySeenButton">Buy Seen</button>
+            <button id="buyMaxButton">Buy Max</button>
             <div id="upgradeList">
                 <!-- Upgrades will be dynamically added here -->
             </div>
@@ -137,7 +141,18 @@
             </div>
         </div>
     </div>
+    <!-- Include the Library overlay HTML -->
+    <div id="libraryOverlay" class="library-overlay" style="display: none;">
+        <div class="library-overlay-content">
+            <h1>Library</h1>
+            <div id="librarySkills">
+                <!-- Skills will be dynamically added here -->
+            </div>
+            <button id="closeLibraryButton">Close</button>
+        </div>
+    </div>
     <script src="upgrades.js"></script>
     <script src="script.js"></script>
+    <script src="library.js"></script>
 </body>
 </html>
