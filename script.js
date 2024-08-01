@@ -50,6 +50,8 @@ let firstTimeCookieUnlock = true;
 let modalQueue = [];
 let isModalOpen = false;
 
+let cookieClickMultiplier = 10;
+
 // Mini-game timeouts in milliseconds
 const miniGameTimeouts = {
     speed: 10 * 60 * 1000,  // 10 minutes
@@ -72,11 +74,11 @@ function updateEffectiveMultipliers() {
 
 
 // Function to handle cookie click
-function collectAllResources() {
-    copium += 10 * epsMultiplier * godModeMultiplier;
-    delusion += 10 * epsMultiplier * godModeMultiplier;
-    yachtMoney += 10 * epsMultiplier * godModeMultiplier;
-    trollPoints += 10 * epsMultiplier * godModeMultiplier;
+function cookieCollectAllResources() {
+    copium += cookieClickMultiplier * epsMultiplier * godModeMultiplier;
+    delusion += cookieClickMultiplier * epsMultiplier * godModeMultiplier;
+    yachtMoney += cookieClickMultiplier * epsMultiplier * godModeMultiplier;
+    trollPoints += cookieClickMultiplier * epsMultiplier * godModeMultiplier;
     updateDisplay();
 }
 
@@ -162,6 +164,9 @@ function loadGameState() {
     const cookieButtonVisible = JSON.parse(localStorage.getItem('cookieButtonVisible'));
     if (cookieButtonVisible) {
         document.getElementById('cookieButton').style.display = 'block';
+        cookieClickMultiplier = JSON.parse(localStorage.getItem('cookieClickMultiplier')) || 10;
+        const cookieTooltip = document.querySelector('#cookieButton .tooltip');
+        cookieTooltip.textContent = `Each cookie click counts as ${cookieClickMultiplier} clicks on collect buttons for Copium, Delusion, Yacht Money, and Troll Points!`;
     }
 
     // Check if Knowledge is already unlocked
@@ -170,13 +175,27 @@ function loadGameState() {
     }
 
     // Load unlocked skills
-    // const savedLibrarySkills = JSON.parse(localStorage.getItem('librarySkills')) || [];
-    // savedLibrarySkills.forEach(savedSkill => {
-    //     const skill = librarySkills.find(s => s.name === savedSkill.name);
-    //     if (skill) {
-    //         skill.unlocked = savedSkill.unlocked;
-    //     }
-    // });
+    const savedLibrarySkills = JSON.parse(localStorage.getItem('librarySkills')) || [];
+    if (Array.isArray(savedLibrarySkills)) {
+        savedLibrarySkills.forEach(savedSkill => {
+            const skill = librarySkills.find(s => s.name === savedSkill.name);
+            if (skill) {
+                skill.unlocked = savedSkill.unlocked;
+                if (skill.unlocked) {
+                    unlockLibrarySkill(skill, true); // Call with duringLoad set to true
+                    console.log(`unlockLibrarySkill(${skill.name})`);
+                }
+            }
+        });
+    }
+
+    // Check the state of delusion and update the switch position accordingly
+    const toggleDelusion = document.getElementById('toggleDelusion');
+    if (delusionPerSecond >= 0) {
+        toggleDelusion.checked = true;
+    } else {
+        toggleDelusion.checked = false;
+    }
 
     // Calculate the elapsed time since the last interaction
     const now = Date.now();
@@ -239,9 +258,13 @@ function saveGameState() {
     
     // Save the state of the Cookie Clicker button
     localStorage.setItem('cookieButtonVisible', document.getElementById('cookieButton').style.display === 'block');
-
-    // // Save unlocked library skills
-    // localStorage.setItem('librarySkills', JSON.stringify(librarySkills));
+    localStorage.setItem('cookieClickMultiplier', cookieClickMultiplier);
+    
+    // Save unlocked library skills
+    if (Array.isArray(librarySkills)) {
+        const unlockedLibrarySkills = librarySkills.filter(skill => skill.unlocked);
+        localStorage.setItem('librarySkills', JSON.stringify(unlockedLibrarySkills));
+    }
 
 }
 
@@ -332,6 +355,11 @@ function playMiniGame(gameType) {
                 showMessageModal('Memory Game', 'Enter the sequence:', false, false, true).then(userSequence => {
                     let correct = userSequence === sequence;
                     let reward = correct ? Math.max(Math.floor(Math.abs(delusion) * 0.5), 25) : -Math.max(Math.floor(Math.random() * Math.abs(delusion) * 0.1), 10);
+                    // Adjust reward based on the toggleDelusion switch if it's visible
+                    if (!document.getElementById('toggleDelusionLabel').classList.contains('hidden')) {
+                        const toggleDelusion = document.getElementById('toggleDelusion').checked;
+                        reward = Math.abs(reward) * (toggleDelusion ? 1 : -1);
+                    }
                     delusion += reward;
                     showMessageModal('Memory Game Result', `You ${correct ? 'won' : 'lost'} and earned ${formatNumber(reward)} delusion!`);
                     updateDisplay(); // Update the display
@@ -519,6 +547,17 @@ async function restartGame(isPrestige = false, isAscend = false) {
             document.getElementById('knowledge-container').style.display = 'none';
             document.getElementById('power-container').style.display = 'none';
             document.getElementById('serenity-container').style.display = 'none';
+
+            // Reset library skills
+            librarySkills.forEach(skill => {
+                skill.unlocked = false;
+            });
+
+            cookieClickMultiplier = 10;
+            // Hide the delusion toggle switch
+            document.getElementById('toggleDelusionLabel').classList.add('hidden');
+            document.getElementById('buySeenButton').classList.add('hidden');
+            document.getElementById('buyMaxButton').classList.add('hidden');
         }
 
         // Clear purchased upgrades
@@ -546,6 +585,7 @@ async function restartGame(isPrestige = false, isAscend = false) {
         updateUpgradeList();
     }
 }
+
 
 
 // Function to update the displayed trade ratio based on selected resources
@@ -928,13 +968,23 @@ function buyUpgrade(encodedUpgradeName) {
         // Increase the per second earnings for each resource, apply God Mode multiplier if applicable
         const multiplier = upgrade.isGodMode ? 10 : 1;
         copiumPerSecond += (earnings.copiumPerSecond || 0) * multiplier;
-        delusionPerSecond += (earnings.delusionPerSecond || 0) * multiplier;
         yachtMoneyPerSecond += (earnings.yachtMoneyPerSecond || 0) * multiplier;
         trollPointsPerSecond += (earnings.trollPointsPerSecond || 0) * multiplier;
         hopiumPerSecond += (earnings.hopiumPerSecond || 0) * multiplier;
         knowledgePerSecond += (earnings.knowledgePerSecond || 0) * multiplier;
         powerPerSecond += (earnings.powerPerSecond || 0) * multiplier;
         serenityPerSecond += (earnings.serenityPerSecond || 0) * multiplier;
+
+        // Handle delusion per second based on the toggle state
+        if (document.getElementById('toggleDelusionLabel').classList.contains('hidden')) {
+            // If the toggleDelusion is hidden, add delusion per second normally
+            delusionPerSecond += (earnings.delusionPerSecond || 0) * multiplier;
+        } else {
+            // If the toggleDelusion is not hidden, adjust delusion per second based on the toggle state
+            const toggleDelusion = document.getElementById('toggleDelusion').checked;
+            const delusionChange = Math.abs(earnings.delusionPerSecond || 0) * multiplier;
+            delusionPerSecond += toggleDelusion ? delusionChange : -delusionChange;
+        }
 
         // Add the purchased upgrade to the display
         addPurchasedUpgrade(img, name, earnings, upgrade.isGodMode);
@@ -968,7 +1018,7 @@ function buyUpgrade(encodedUpgradeName) {
         }
 
         // Special case for the "Antimatter Dimension" upgrade
-        if (name === "The Library") {
+        if (name === "Yom Kippur") {
             showMessageModal('Sadly', "This marks the end of v0.68. With knowledge now unlocked, you can restart the game and embark on speed runs, or take a moment to imagine all the new possibilities that lie ahead. Your journey through this existential tale is just beginning, and the newfound knowledge will open doors to uncharted realms. Stay tuned, as another big update is just a few days away.");
         }
 
@@ -1169,13 +1219,13 @@ function toggleDevMultiplier(factor) {
 
 // Function to ascend and select a random upgrade to set to godmode
 async function devAscend() {
-    const top20AvailableUpgrades = availableUpgrades
-        .slice(0, 20)
+    const top100AvailableUpgrades = availableUpgrades
+        .slice(0, 100)
         .filter(up => !up.isGodMode);
 
     // Combine purchased upgrades and top 7 available upgrades
     //const possibleUpgrades = purchasedUpgrades.concat(top7AvailableUpgrades);
-    const randomUpgrade = top20AvailableUpgrades[Math.floor(Math.random() * top20AvailableUpgrades.length)];
+    const randomUpgrade = top100AvailableUpgrades[Math.floor(Math.random() * top100AvailableUpgrades.length)];
     if (randomUpgrade) {
         randomUpgrade.isGodMode = true;
         godModeLevel += 1;
@@ -1186,7 +1236,7 @@ async function devAscend() {
         saveGameState();
         updateEffectiveMultipliers();
         updateDisplay();
-        showMessageModal('Dev Mode', `Ascended and set ${randomUpgrade.name} to God Mode.`);
+        // showMessageModal('Dev Mode', `Ascended and set ${randomUpgrade.name} to God Mode.`);
     }
 }
 
@@ -1263,6 +1313,25 @@ function displayNextModal() {
         displayNextModal();
         resolve(result);
     };
+
+    // Add keydown event listener for 'Enter' and 'Escape' keys
+    const keydownHandler = (event) => {
+        if (event.key === 'Escape') {
+            closeModal(null);
+        }
+        if (event.key === 'Enter' && isConfirm) {
+            if (isUpgradeSelection) {
+                const selectedUpgrade = ascendUpgradeList.querySelector('.selected');
+                if (selectedUpgrade) {
+                    closeModal(selectedUpgrade);
+                }
+            } else {
+                closeModal(true);
+            }
+        }
+    };
+
+    document.addEventListener('keydown', keydownHandler);
 
     if (isConfirm && isUpgradeSelection) {
         // Ascend with upgrade selection logic
@@ -1350,8 +1419,12 @@ function displayNextModal() {
             }
         };
     }
-}
 
+    // Remove the event listener when the modal is closed
+    modal.addEventListener('close', () => {
+        document.removeEventListener('keydown', keydownHandler);
+    });
+}
 
 
 
@@ -1398,7 +1471,7 @@ window.buyUpgrade = buyUpgrade;
 // Add event listeners after the DOM content is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
     // Add event listener for the cookie button to collect all resources
-    document.getElementById('cookieButton').addEventListener('click', collectAllResources);
+    document.getElementById('cookieButton').addEventListener('click', cookieCollectAllResources);
 
     // Add event listeners for resource collection buttons
     document.getElementById('collectCopiumButton').addEventListener('click', () => { collectResource('copium'); });
@@ -1417,13 +1490,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Add event listener for the restart button
     document.getElementById('restartButton').addEventListener('click', () => restartGame(false, false));
 
-    // document.getElementById('libraryButton').addEventListener('click', () => {
-    //     document.getElementById('libraryOverlay').style.display = 'flex';
-    // });
-    // document.getElementById('closeLibraryButton').addEventListener('click', () => {
-    //     document.getElementById('libraryOverlay').style.display = 'none';
-    // });
-
     // Add event listener for the prestige button
     document.getElementById('prestigeButton').addEventListener('click', prestige);
 
@@ -1434,10 +1500,26 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('buySeenButton').addEventListener('click', () => buyAllUpgrades(7));
     document.getElementById('buyMaxButton').addEventListener('click', () => buyAllUpgrades(25));
 
+    // Add this function to handle the toggle switch logic
+    document.getElementById('toggleDelusion').addEventListener('change', function() {
+        const isPositive = this.checked;
+        if (isPositive) {
+            delusionPerSecond = Math.abs(delusionPerSecond);
+            console.log("Switch is ON (Positive)");
+        } else {
+            delusionPerSecond = -Math.abs(delusionPerSecond);
+            console.log("Switch is OFF (Negative)");
+        }
+        updateEffectiveMultipliers();
+        updateDisplay(); // Update the display to reflect the change
+    });
+
     showWelcomeModal();
 
+    // Library Skills -- has to happen before loadGameState!
+    initializeSkills();
 
-    // Load the game state from local storage
+    // Load the game state from local storage 
     loadGameState();
     // Initialize effective multipliers
     updateEffectiveMultipliers();
@@ -1445,10 +1527,10 @@ document.addEventListener('DOMContentLoaded', () => {
     unlockMiniGames(); 
     // Set an interval to generate resources every second
     setInterval(generateResources, 1000);
-    // Update the display with the current game state
-    updateDisplay();
     // Update the list of available upgrades
     updateUpgradeList();
+    // Update the display with the current game state
+    updateDisplay();
     // Save the game state when the window is about to be unloaded
     window.addEventListener('beforeunload', saveGameState);
 });

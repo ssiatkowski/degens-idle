@@ -180,7 +180,7 @@ const upgrades = [
         cost: { copium: 50000, delusion: 50000, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 600, delusionPerSecond: 600, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/sex_change.jpg",
-        message: "Congratulations on your bold transformation! It's natural to feel a little weaker—about 5%—after such a significant change. Just like recovering from major surgery, your strength will gradually return.<br><br>This temporary adjustment is a gentle reminder that even extraordinary changes come with their phases of recovery. Embrace this period of healing as a testament to your resilience. With time and patience, your full strength will come back, stronger than ever.",        miniPrestigeMultiplier: 0.95
+        message: "Congratulations on your bold transformation! It's natural to feel a little weaker—about 5% on a prestige multiplier scale—after such a significant change. Just like recovering from major surgery, your strength will gradually return.<br><br>This temporary adjustment is a gentle reminder that even extraordinary changes come with their phases of recovery. Embrace this period of healing as a testament to your resilience. With time and patience, your full strength will come back, stronger than ever.",        miniPrestigeMultiplier: 0.95
     },
     {
         name: "Ultimate Solution",
@@ -381,10 +381,22 @@ const upgrades = [
         img: "imgs/distracted_boyfriend_2.jpg",
     }, 
     {
+        name: "Spring Break",
+        cost: { copium: 0, delusion: 0, yachtMoney: 8e12, trollPoints: 4e13, hopium: 100000, knowledge: 0.5, power: 0, serenity: 0 },
+        earnings: { copiumPerSecond: 10000000, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 10000000, hopiumPerSecond: 0.1, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: "imgs/spring_break.jpg",
+    },
+    {
         name: "Yom Kippur",
-        cost: { copium: 5e14, delusion: 0, yachtMoney: 5e13, trollPoints: 0, hopium: 500000, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 10000000, delusionPerSecond: 2500000, yachtMoneyPerSecond: 5000000, trollPointsPerSecond: 39000000, hopiumPerSecond: 0.4, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        cost: { copium: 5e14, delusion: 0, yachtMoney: 5e13, trollPoints: 0, hopium: 500000, knowledge: 1, power: 0, serenity: 0 },
+        earnings: { copiumPerSecond: 10000000, delusionPerSecond: 2500000, yachtMoneyPerSecond: 5000000, trollPointsPerSecond: 39000000, hopiumPerSecond: 0.04, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/yom_kippur.jpg",
+    },
+    {
+        name: "Oh Deer",
+        cost: { copium: 0, delusion: 100, yachtMoney: 0, trollPoints: 1e14, hopium: 1000000, knowledge: 7.5, power: 0, serenity: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 100000, yachtMoneyPerSecond: 0, trollPointsPerSecond: 10000000, hopiumPerSecond: 0.2, knowledgePerSecond: 0.000001, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: "imgs/oh_deer.jpg",
     },
     // {
     //     name: "Haven't Smoked Foool (not done)",

@@ -194,6 +194,11 @@ h1, h2 {
     margin-bottom: 10px;
 }
 
+/* .resource .per-second {
+    display: flex;
+    align-items: center;
+} */
+
 button {
     padding: 10px 20px;
     margin-top: 10px;
@@ -477,6 +482,7 @@ button.disabled {
     display: block;
     margin: 0 auto; /* Center horizontally */
     touch-action: manipulation;
+    position: relative; /* Add this to position the tooltip */
 }
 
 #cookieButton img {
@@ -487,6 +493,39 @@ button.disabled {
 
 #cookieButton:active img {
     transform: scale(0.9);
+}
+
+.tooltip {
+    visibility: hidden;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 5px 10px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%; /* Position above the cookie button */
+    left: 50%;
+    transform: translateX(-50%); /* Center the tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+    width: 200px; /* Adjust width as needed */
+}
+
+.tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%; /* Bottom of the tooltip */
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent; /* Arrow pointing down */
+}
+
+#cookieButton:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
 }
 
 @keyframes clickAnimation {
@@ -568,4 +607,53 @@ button.disabled {
 /* Text shadow to enhance the rustic feel */
 #libraryButton {
     text-shadow: 2px 2px 4px #000;
+}
+
+/* Switch button styles */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 34px;
+    height: 20px;
+    margin-left: 10px;
+}
+
+.hidden {
+    display:none;
+}
+
+.switch input {
+    display: none;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 14px;
+    width: 14px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:checked + .slider:before {
+    transform: translateX(14px);
 }
