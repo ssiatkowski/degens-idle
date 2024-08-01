@@ -51,6 +51,7 @@ let modalQueue = [];
 let isModalOpen = false;
 
 let cookieClickMultiplier = 10;
+let luckGameDelta = -75;
 
 // Mini-game timeouts in milliseconds
 const miniGameTimeouts = {
@@ -168,6 +169,9 @@ function loadGameState() {
         const cookieTooltip = document.querySelector('#cookieButton .tooltip');
         cookieTooltip.textContent = `Each cookie click counts as ${cookieClickMultiplier} clicks on collect buttons for Copium, Delusion, Yacht Money, and Troll Points!`;
     }
+    
+    luckGameDelta = JSON.parse(localStorage.getItem('luckGameDelta')) || -75;
+    luckGameDelta
 
     // Check if Knowledge is already unlocked
     if (localStorage.getItem('knowledgeUnlocked') === 'true') {
@@ -259,6 +263,8 @@ function saveGameState() {
     // Save the state of the Cookie Clicker button
     localStorage.setItem('cookieButtonVisible', document.getElementById('cookieButton').style.display === 'block');
     localStorage.setItem('cookieClickMultiplier', cookieClickMultiplier);
+
+    localStorage.setItem('luckGameDelta', luckGameDelta);
     
     // Save unlocked library skills
     if (Array.isArray(librarySkills)) {
@@ -388,7 +394,7 @@ function playMiniGame(gameType) {
         });
     } else if (gameType === 'luck') {
         // Luck mini-game logic
-        let result = (Math.random() * 200) - 75; // Generates a random number between -75 and +125%
+        let result = (Math.random() * 200) + luckGameDelta; // Generates a random number (initially between -75 and +125%)
         let message = "";
         let reward = Math.floor(trollPoints * (result / 100)); // Calculate reward based on the result percentage
         let gainLossMessage = reward >= 0 ? "gained" : "lost";
@@ -554,6 +560,7 @@ async function restartGame(isPrestige = false, isAscend = false) {
             });
 
             cookieClickMultiplier = 10;
+            luckGameDelta = -75;
             // Hide the delusion toggle switch
             document.getElementById('toggleDelusionLabel').classList.add('hidden');
             document.getElementById('buySeenButton').classList.add('hidden');

@@ -387,16 +387,16 @@ const upgrades = [
         img: "imgs/spring_break.jpg",
     },
     {
-        name: "Yom Kippur",
-        cost: { copium: 5e14, delusion: 0, yachtMoney: 5e13, trollPoints: 0, hopium: 500000, knowledge: 1, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 10000000, delusionPerSecond: 2500000, yachtMoneyPerSecond: 5000000, trollPointsPerSecond: 39000000, hopiumPerSecond: 0.04, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
-        img: "imgs/yom_kippur.jpg",
-    },
-    {
         name: "Oh Deer",
         cost: { copium: 0, delusion: 100, yachtMoney: 0, trollPoints: 1e14, hopium: 1000000, knowledge: 7.5, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 100000, yachtMoneyPerSecond: 0, trollPointsPerSecond: 10000000, hopiumPerSecond: 0.2, knowledgePerSecond: 0.000001, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/oh_deer.jpg",
+    },
+    {
+        name: "Yom Kippur",
+        cost: { copium: 5e14, delusion: 0, yachtMoney: 5e13, trollPoints: 0, hopium: 500000, knowledge: 10, power: 0, serenity: 0 },
+        earnings: { copiumPerSecond: 10000000, delusionPerSecond: 2500000, yachtMoneyPerSecond: 5000000, trollPointsPerSecond: 39000000, hopiumPerSecond: 0.04, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: "imgs/yom_kippur.jpg",
     },
     // {
     //     name: "Haven't Smoked Foool (not done)",

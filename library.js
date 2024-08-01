@@ -8,7 +8,7 @@ const librarySkills = [
     // { name: '', cost: 1e20, description: '', unlocked: false, level: 'History' }, 
 
     { name: 'Cure for Delusion', cost: 5, description: 'Unlock ability to toggle whether delusion gain is positive or negative.', unlocked: false, level: 'Science' },
-    { name: '', cost: 666, description: '', unlocked: false, level: 'Science' },
+    { name: 'Luck is Rigged', cost: 666, description: 'Luck is now always on your side - can never lose at Luck Game.', unlocked: false, level: 'Science' },
     // { name: '', cost: 15000, description: '', unlocked: false, level: 'Science' },
     // { name: '', cost: 1e9, description: '', unlocked: false, level: 'Science' },
     // { name: '', cost: 1e19, description: '', unlocked: false, level: 'Science' },
@@ -23,7 +23,7 @@ const librarySkills = [
     // { name: 'Big Crunch', cost: 1e9, description: 'Unlock ability to force the universe into a Big Crunch and to be reborn anew.', unlocked: false, level: 'Celestial Bodies' },
     // { name: 'Money is Power, too', cost: 1e15, description: 'Add a multiplier to Power generation based on Yacht Money.', unlocked: false, level: 'Celestial Bodies' },
 
-    { name: '', cost: 1e18, description: '', unlocked: false, level: '???' },
+    { name: 'What is this?', cost: 1e18, description: 'EZ Game', unlocked: false, level: '???' },
     // { name: 'Serenity', cost: 1e25, description: '', unlocked: false, level: '???' },
     // { name: '', cost: 1e29, description: '', unlocked: false, level: '???' },
     // { name: '', cost: 1e33, description: '', unlocked: false, level: '???' },
@@ -64,6 +64,9 @@ function unlockLibrarySkill(skill, duringLoad = false) {
         else if (skill.name === 'Multibuy Upgrades') {
             document.getElementById('buySeenButton').classList.remove('hidden');
             document.getElementById('buyMaxButton').classList.remove('hidden');
+        }
+        else if (skill.name === 'Luck is Rigged') {
+            luckGameDelta = 0.1;
         }
 
         if (!duringLoad) {
