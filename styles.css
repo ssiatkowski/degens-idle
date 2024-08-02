@@ -294,6 +294,35 @@ button.disabled {
     gap: 20px;
 }
 
+/* Tooltip container */
+.upgradeTooltip {
+    position: absolute;
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 1000;
+    display: none; /* Hidden by default */
+    font-size: 14px;
+    max-width: 200px; /* Adjust width as needed */
+}
+
+.upgradeTooltip p {
+    margin: 0 0 5px;
+}
+
+.upgradeTooltip .upgrade-earnings {
+    font-weight: bold;
+}
+
+.upgradeTooltip .godmode-earnings {
+    color: #1e90ff; /* Example style for God Mode earnings */
+}
+
+.upgrade-button-container {
+    position: relative;
+}
+
 .upgrade {
     display: flex;
     align-items: center;
@@ -495,7 +524,7 @@ button.disabled {
     transform: scale(0.9);
 }
 
-.tooltip {
+.cookieTooltip {
     visibility: hidden;
     background-color: #555;
     color: #fff;
@@ -512,7 +541,7 @@ button.disabled {
     width: 200px; /* Adjust width as needed */
 }
 
-.tooltip::after {
+.cookieTooltip::after {
     content: '';
     position: absolute;
     top: 100%; /* Bottom of the tooltip */
@@ -523,7 +552,7 @@ button.disabled {
     border-color: #555 transparent transparent transparent; /* Arrow pointing down */
 }
 
-#cookieButton:hover .tooltip {
+#cookieButton:hover .cookieTooltip {
     visibility: visible;
     opacity: 1;
 }

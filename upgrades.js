@@ -70,6 +70,7 @@ const upgrades = [
         cost: { copium: 500, delusion: 0, yachtMoney: 250, trollPoints: 700, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 3, delusionPerSecond: -24, yachtMoneyPerSecond: 10, trollPointsPerSecond: 26, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/over_9000.jpg",
+        hoverOverwrite: "GOING ON MUTE!",
     },
     {
         name: "Influencer Education",
@@ -82,6 +83,7 @@ const upgrades = [
         cost: { copium: 2000, delusion: 0, yachtMoney: 1400, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 10, delusionPerSecond: -5, yachtMoneyPerSecond: 0.5, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/hard_to_swallow.jpg",
+        hoverOverwrite: "But work hard anyway!",
     },
     {
         name: "Captain Degen",
@@ -108,6 +110,7 @@ const upgrades = [
         cost: { copium: 2000, delusion: 0, yachtMoney: 1000, trollPoints: 2000, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 5, delusionPerSecond: 0, yachtMoneyPerSecond: 25, trollPointsPerSecond: 5, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/nvidia.jpg",
+        hoverOverwrite: "Investments = Good",
     },
     {
         name: "Big Pharma Simp",
@@ -132,6 +135,7 @@ const upgrades = [
         cost: { copium: 0, delusion: 0, yachtMoney: 12000, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: -1, delusionPerSecond: 2, yachtMoneyPerSecond: 2, trollPointsPerSecond: 1.1, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/warren_buffet.jpg",
+        hoverOverwrite: "It's just your soul...",
     },
     {
         name: "New Subreddit Discovery",
@@ -144,6 +148,7 @@ const upgrades = [
         cost: { copium: 0, delusion: 10000, yachtMoney: 3000, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 5, delusionPerSecond: 99, yachtMoneyPerSecond: 5, trollPointsPerSecond: -10, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/king_of_delusion.jpeg",
+        hoverOverwrite: "Probably gives lots of delusion",
     },
     {
         name: "Suss",
@@ -174,13 +179,16 @@ const upgrades = [
         cost: { copium: 30000, delusion: 10000, yachtMoney: 20000, trollPoints: 10000, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 1, delusionPerSecond: 1, yachtMoneyPerSecond: 1, trollPointsPerSecond: 1, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/cookie_clicker.jpg",
+        hoverOverwrite: "It's a cookie. Just eat it.",
     },
     {
         name: "Sex Change",
         cost: { copium: 50000, delusion: 50000, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 600, delusionPerSecond: 600, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/sex_change.jpg",
-        message: "Congratulations on your bold transformation! It's natural to feel a little weaker—about 5% on a prestige multiplier scale—after such a significant change. Just like recovering from major surgery, your strength will gradually return.<br><br>This temporary adjustment is a gentle reminder that even extraordinary changes come with their phases of recovery. Embrace this period of healing as a testament to your resilience. With time and patience, your full strength will come back, stronger than ever.",        miniPrestigeMultiplier: 0.95
+        message: "Congratulations on your bold transformation! It's natural to feel a little weaker—about 5% on a prestige multiplier scale—after such a significant change. Just like recovering from major surgery, your strength will gradually return.<br><br>This temporary adjustment is a gentle reminder that even extraordinary changes come with their phases of recovery. Embrace this period of healing as a testament to your resilience. With time and patience, your full strength will come back, stronger than ever.",
+        miniPrestigeMultiplier: 0.95,
+        hoverOverwrite: "Just a quick snip",
     },
     {
         name: "Ultimate Solution",
@@ -199,6 +207,7 @@ const upgrades = [
         cost: { copium: 100000, delusion: 0, yachtMoney: 25000, trollPoints: 50000, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 75, delusionPerSecond: 0, yachtMoneyPerSecond: 35, trollPointsPerSecond: 35, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/hawk_tuah.jpg",
+        hoverOverwrite: "HAWK TUAH",
     },
     {
         name: "Fully Autonomous Cars",
@@ -247,6 +256,7 @@ const upgrades = [
         cost: { copium: 1000000, delusion: 1000000, yachtMoney: 1000000, trollPoints: 1000000, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 84, delusionPerSecond: 84, yachtMoneyPerSecond: 84, trollPointsPerSecond: 84, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/titanic.jpg",
+        hoverOverwrite: "Thank you for playing and making it this far into the game. The good news is, you have only scratched the surface. Wouldn't even say you have completed the tutorial.",
     },
     {
         name: "Rewriting History",
@@ -373,6 +383,7 @@ const upgrades = [
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0.01, knowledgePerSecond: 0.000001, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/the_library.jpg",
         message: 'By acquiring The Library upgrade, you have proven yourself worthy to enter the esteemed <b>Hall of Knowledge</b>. Your dedication and wisdom have granted you access to this sacred realm of enlightenment.',
+        hoverOverwrite: "You get the sense that buying this will unlock the Hall of Knowledge!"
     },  
     {
         name: "Foreshadowing #2",

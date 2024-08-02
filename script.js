@@ -167,7 +167,7 @@ function loadGameState() {
     if (cookieButtonVisible) {
         document.getElementById('cookieButton').style.display = 'block';
         cookieClickMultiplier = JSON.parse(localStorage.getItem('cookieClickMultiplier')) || 10;
-        const cookieTooltip = document.querySelector('#cookieButton .tooltip');
+        const cookieTooltip = document.querySelector('#cookieButton .cookieTooltip');
         cookieTooltip.textContent = `Each cookie click counts as ${cookieClickMultiplier} clicks on collect buttons for Copium, Delusion, Yacht Money, and Troll Points!`;
     }
     
@@ -214,6 +214,48 @@ function loadGameState() {
     unlockMiniGames();
 }
 
+// Function to show tooltip
+function showTooltip(event, name, earnings, isGodMode, hoverOverwrite) {
+    let tooltip = document.getElementById('upgradeTooltip');
+    if (!tooltip) {
+        tooltip = document.createElement('div');
+        tooltip.id = 'upgradeTooltip';
+        tooltip.className = 'upgradeTooltip';
+        document.body.appendChild(tooltip);
+    }
+
+    const earningsClass = isGodMode ? 'godmode-earnings' : '';
+
+    if (hoverOverwrite){
+        tooltip.innerHTML = `
+        <div>
+            <div class="upgrade-earnings ${earningsClass}">
+                ${hoverOverwrite} <!-- Formatted earnings -->
+            </div>
+        </div>
+    `;
+    }
+    else {
+        tooltip.innerHTML = `
+            <div>
+                <div class="upgrade-earnings ${earningsClass}">
+                    ${formatCostOrEarnings(earnings)} <!-- Formatted earnings -->
+                </div>
+            </div>
+        `;
+    }
+    tooltip.style.display = 'block';
+    tooltip.style.left = `${event.pageX + 10}px`;
+    tooltip.style.top = `${event.pageY + 10}px`;
+}
+
+// Function to hide tooltip
+function hideTooltip() {
+    const tooltip = document.getElementById('upgradeTooltip');
+    if (tooltip) {
+        tooltip.style.display = 'none';
+    }
+}
 
 
 
@@ -1032,7 +1074,7 @@ function buyUpgrade(encodedUpgradeName) {
 
         // Special case for the "Antimatter Dimension" upgrade
         if (name === "Yom Kippur") {
-            showMessageModal('Sadly', "This marks the end of v0.68. With knowledge now unlocked, you can restart the game and embark on speed runs, or take a moment to imagine all the new possibilities that lie ahead. Your journey through this existential tale is just beginning, and the newfound knowledge will open doors to uncharted realms. Stay tuned, as another big update is just a few days away.");
+            showMessageModal('Sadly', "This marks the end of v0.685. With knowledge now unlocked, you can restart the game and embark on speed runs, or take a moment to imagine all the new possibilities that lie ahead. Your journey through this existential tale is just beginning, and the newfound knowledge will open doors to uncharted realms. Stay tuned, as another big update is just a few days away.");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one
@@ -1205,6 +1247,19 @@ function updateUpgradeButtons() {
             } else {
                 button.classList.remove('affordable', 'affordable-godmode');
             }
+
+            // Add hover event listeners to show earnings tooltip
+            button.onmouseover = (event) => {
+                showTooltip(event, upgrade.name, upgrade.earnings, upgrade.isGodMode, upgrade.hoverOverwrite);
+            };
+            button.onmousemove = (event) => {
+                const tooltip = document.getElementById('upgradeTooltip');
+                tooltip.style.left = `${event.pageX + 10}px`;
+                tooltip.style.top = `${event.pageY + 10}px`;
+            };
+            button.onmouseout = () => {
+                hideTooltip();
+            };
         }
     });
     if (foundAffordableUpgrade) {

@@ -48,7 +48,7 @@ function unlockLibrarySkill(skill, duringLoad = false) {
 
         if (skill.name === 'Cookie Recipe') {
             cookieClickMultiplier = 100;
-            const cookieTooltip = document.querySelector('#cookieButton .tooltip');
+            const cookieTooltip = document.querySelector('#cookieButton .cookieTooltip');
             cookieTooltip.textContent = `Each cookie click counts as ${cookieClickMultiplier} clicks on collect buttons for Copium, Delusion, Yacht Money, and Troll Points!`;
         }
         else if (skill.name === 'Cure for Delusion') {
