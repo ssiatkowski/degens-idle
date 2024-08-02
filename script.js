@@ -383,7 +383,7 @@ function playMiniGame(gameType) {
             let clicksPerSecond = points / duration;
             let reward;
             if (clicksPerSecond > 3) { // More than 3 clicks per second
-                reward = Math.max(Math.floor(Math.abs(copium) * ((clicksPerSecond - 3) * 0.03)), 25);
+                reward = Math.max(Math.floor(Math.abs(copium) * ((clicksPerSecond - 3) * 0.04)), 25);
                 showMessageModal('Speed Game Result - Fast', `You tapped ${points} times in ${duration} seconds (${clicksPerSecond.toFixed(1)} taps per second). For being so fast you earned ${formatNumber(reward)} copium!`, false, false);
             } else {
                 reward = -Math.max(Math.floor(Math.random() * Math.abs(copium) * 0.1), 10);
@@ -543,6 +543,26 @@ function unlockMiniGames() {
 }
 
 
+async function restartPrestige(){
+    
+    const confirmTitle = "Are You Sure You Want to Restart this Prestige?"
+    const confirmMessage = `<p>Whoa there, daring player! You're about to reset your prestige. Are you sure you want to go through with this?</p>
+<p>Think of all those valuable prestige multipliers you've accumulated... all reset back to <strong>1</strong>! But hey, who needs progress when you can start over, right?</p>
+<p><strong>Warning:</strong> This action will reset your prestige multiplier back to <strong>1</strong>. Seriously, once you click it, there's no going back. All those gains? Poof! Gone!</p>
+<p>If you're absolutely, positively, without a doubt sure that you need to reset because you messed up your upgrade buying, then go ahead and click that button. Otherwise, maybe just take a deep breath and reconsider. 😅</p>`;
+
+    if (await showMessageModal(confirmTitle, confirmMessage, true, false)) {
+
+        epsMultiplier = 1;
+        prestigeRequirement = 1000;
+        
+        // Call restartGame with isPrestige flag set to true
+        restartGame(true,false);
+
+        updateEffectiveMultipliers();
+        updateDisplay();
+    }
+}
 
 async function restartGame(isPrestige = false, isAscend = false) {
     const confirmTitle1 = "Are You Sure You Want to Restart?"
@@ -940,7 +960,7 @@ async function ascend() {
         showMessageModal('Ascension Successful!', `<strong>You have entered God-Mode Level ${godModeLevel}.</strong><br> Your multiplier God-Mode is now x${formatNumber(godModeMultiplier)}, your prestige multiplier is x${formatNumber(epsMultiplier)}, and your chosen upgrade (${selectedUpgrade.name}) is 10x stronger.`);        
         selectedUpgrade.isGodMode = true;
 
-        epsMultiplier = epsMultiplier ** (1/3)
+        epsMultiplier = Math.max(epsMultiplier ** (1/3), 1)
         prestigeRequirement = calculateMinResource();
         
         restartGame(false,true); // Use the existing restartGame function with prestige mode
@@ -1074,7 +1094,7 @@ function buyUpgrade(encodedUpgradeName) {
 
         // Special case for the "Antimatter Dimension" upgrade
         if (name === "Yom Kippur") {
-            showMessageModal('Sadly', "This marks the end of v0.685. With knowledge now unlocked, you can restart the game and embark on speed runs, or take a moment to imagine all the new possibilities that lie ahead. Your journey through this existential tale is just beginning, and the newfound knowledge will open doors to uncharted realms. Stay tuned, as another big update is just a few days away.");
+            showMessageModal('Sadly', "This marks the end of v0.69. With knowledge now unlocked, you can restart the game and embark on speed runs, or take a moment to imagine all the new possibilities that lie ahead. Your journey through this existential tale is just beginning, and the newfound knowledge will open doors to uncharted realms. Stay tuned, as another big update is just a few days away.");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one
@@ -1219,6 +1239,7 @@ function updateUpgradeList() {
         button.addEventListener('click', () => {
             const encodedName = button.getAttribute('data-upgrade-name');
             buyUpgrade(encodedName); // Handle the upgrade purchase
+            hideTooltip();
         });
     });
 
@@ -1555,8 +1576,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Add event listener for the trade button
     document.getElementById('tradeButton').addEventListener('click', () => { tradeResources(); });
-    // Add event listener for the restart button
+    // Add event listener for the restart buttons
     document.getElementById('restartButton').addEventListener('click', () => restartGame(false, false));
+    document.getElementById('restartPrestige').addEventListener('click', () => restartPrestige());
 
     // Add event listener for the prestige button
     document.getElementById('prestigeButton').addEventListener('click', prestige);

@@ -8,7 +8,7 @@ const librarySkills = [
     // { name: '', cost: 1e20, description: '', unlocked: false, level: 'History' }, 
 
     { name: 'Cure for Delusion', cost: 5, description: 'Unlock ability to toggle whether delusion gain is positive or negative.', unlocked: false, level: 'Science' },
-    { name: 'Luck is Rigged', cost: 666, description: 'Luck is now always on your side - can never lose at Luck Game.', unlocked: false, level: 'Science' },
+    { name: 'Luck is Rigged', cost: 777, description: 'Luck is now always on your side - can never lose at Luck Game.', unlocked: false, level: 'Science' },
     // { name: '', cost: 15000, description: '', unlocked: false, level: 'Science' },
     // { name: '', cost: 1e9, description: '', unlocked: false, level: 'Science' },
     // { name: '', cost: 1e19, description: '', unlocked: false, level: 'Science' },

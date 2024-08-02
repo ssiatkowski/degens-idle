@@ -184,10 +184,10 @@ const upgrades = [
     {
         name: "Sex Change",
         cost: { copium: 50000, delusion: 50000, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 600, delusionPerSecond: 600, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 750, delusionPerSecond: 750, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/sex_change.jpg",
-        message: "Congratulations on your bold transformation! It's natural to feel a little weaker—about 5% on a prestige multiplier scale—after such a significant change. Just like recovering from major surgery, your strength will gradually return.<br><br>This temporary adjustment is a gentle reminder that even extraordinary changes come with their phases of recovery. Embrace this period of healing as a testament to your resilience. With time and patience, your full strength will come back, stronger than ever.",
-        miniPrestigeMultiplier: 0.95,
+        message: "Congratulations on your bold transformation! It's natural to feel a little weaker—about 10% on a prestige multiplier scale—after such a significant change. Just like recovering from major surgery, your strength will gradually return.<br><br>This temporary adjustment is a gentle reminder that even extraordinary changes come with their phases of recovery. Embrace this period of healing as a testament to your resilience. With time and patience, your full strength will come back, stronger than ever.",
+        miniPrestigeMultiplier: 0.9,
         hoverOverwrite: "Just a quick snip",
     },
     {
@@ -287,7 +287,7 @@ const upgrades = [
     {
         name: "Job Application #2",
         cost: { copium: 6e8, delusion: 9.5e8, yachtMoney: 0, trollPoints: 9.9e8, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 30000, delusionPerSecond: 30000, yachtMoneyPerSecond: 0, trollPointsPerSecond: 30000, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 33000, delusionPerSecond: 33000, yachtMoneyPerSecond: 0, trollPointsPerSecond: 33000, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/job_application_2.jpg",
     },
     {
@@ -392,6 +392,13 @@ const upgrades = [
         img: "imgs/distracted_boyfriend_2.jpg",
     }, 
     {
+        name: "Melvor Idle",
+        cost: { copium: 1e14, delusion: 3e13, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 50, power: 0, serenity: 0 },
+        earnings: { copiumPerSecond: 1000000, delusionPerSecond: 0, yachtMoneyPerSecond: 500000, trollPointsPerSecond: 1000000, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: "imgs/melvor.jpg",
+        hoverOverwrite: "I don't know. Never played it. Take some Copium."
+    }, 
+    {
         name: "Spring Break",
         cost: { copium: 0, delusion: 0, yachtMoney: 8e12, trollPoints: 4e13, hopium: 100000, knowledge: 0.5, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 10000000, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 10000000, hopiumPerSecond: 0.1, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
@@ -405,7 +412,7 @@ const upgrades = [
     },
     {
         name: "Yom Kippur",
-        cost: { copium: 5e14, delusion: 0, yachtMoney: 5e13, trollPoints: 0, hopium: 500000, knowledge: 10, power: 0, serenity: 0 },
+        cost: { copium: 5e14, delusion: 0, yachtMoney: 5e13, trollPoints: 0, hopium: 500000, knowledge: 100, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 10000000, delusionPerSecond: 2500000, yachtMoneyPerSecond: 5000000, trollPointsPerSecond: 39000000, hopiumPerSecond: 0.04, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/yom_kippur.jpg",
     },

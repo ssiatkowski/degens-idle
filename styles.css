@@ -161,6 +161,21 @@ h1, h2 {
     background-color: #c0392b; /* Darker red on hover */
 }
 
+#restartPrestige {
+    background-color: #e97467; /* Red background */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#restartPrestige:hover {
+    background-color: #c0392b; /* Darker red on hover */
+}
+
+
 @keyframes flash {
     0% { color: #fff; text-shadow: 0 0 5px #fff, 0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 40px #ff00ff, 0 0 80px #ff00ff; }
     50% { color: #ff0; text-shadow: 0 0 5px #ff0, 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 40px #ff0000, 0 0 80px #ff0000; }
@@ -619,6 +634,7 @@ button.disabled {
     background-image: url('imgs/textures/rustic_wood.jpg'); /* Add a path to a rustic texture image */
     background-size: cover;
     background-blend-mode: multiply;
+    text-shadow: 2px 2px 4px #000;
 }
 
 #libraryButton:hover {
@@ -633,10 +649,6 @@ button.disabled {
     transform: translateY(2px) scale(0.98); /* Slight push down and minor scale down */
 }
 
-/* Text shadow to enhance the rustic feel */
-#libraryButton {
-    text-shadow: 2px 2px 4px #000;
-}
 
 /* Switch button styles */
 .switch {
