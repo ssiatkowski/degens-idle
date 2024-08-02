@@ -52,6 +52,7 @@ let isModalOpen = false;
 
 let cookieClickMultiplier = 10;
 let luckGameDelta = -75;
+let knowledgeUnlocked = false;
 
 // Mini-game timeouts in milliseconds
 const miniGameTimeouts = {
@@ -171,7 +172,6 @@ function loadGameState() {
     }
     
     luckGameDelta = JSON.parse(localStorage.getItem('luckGameDelta')) || -75;
-    luckGameDelta
 
     // Check if Knowledge is already unlocked
     if (localStorage.getItem('knowledgeUnlocked') === 'true') {
@@ -266,6 +266,9 @@ function saveGameState() {
 
     localStorage.setItem('luckGameDelta', luckGameDelta);
     
+    
+    localStorage.setItem('knowledgeUnlocked', knowledgeUnlocked);
+
     // Save unlocked library skills
     if (Array.isArray(librarySkills)) {
         const unlockedLibrarySkills = librarySkills.filter(skill => skill.unlocked);
@@ -542,6 +545,7 @@ async function restartGame(isPrestige = false, isAscend = false) {
             godModeMultiplier = 1;
             // Hide the cookie button
             document.getElementById('cookieButton').style.display = 'none';
+            
             firstTimeCookieUnlock = true;
             // Reset the isGodMode property for all upgrades
             upgrades.forEach(upgrade => {
@@ -551,6 +555,7 @@ async function restartGame(isPrestige = false, isAscend = false) {
             localStorage.clear();
 
             document.getElementById('knowledge-container').style.display = 'none';
+            knowledgeUnlocked = false;
             document.getElementById('power-container').style.display = 'none';
             document.getElementById('serenity-container').style.display = 'none';
 
@@ -786,6 +791,7 @@ function updateDisplay() {
 function unhideKnowledge() {
     document.getElementById('knowledge-container').style.display = 'block';
     localStorage.setItem('knowledgeUnlocked', 'true');
+    knowledgeUnlocked = true;
 }
 
 function unhidePower() {
@@ -1512,10 +1518,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const isPositive = this.checked;
         if (isPositive) {
             delusionPerSecond = Math.abs(delusionPerSecond);
-            console.log("Switch is ON (Positive)");
         } else {
             delusionPerSecond = -Math.abs(delusionPerSecond);
-            console.log("Switch is OFF (Negative)");
         }
         updateEffectiveMultipliers();
         updateDisplay(); // Update the display to reflect the change

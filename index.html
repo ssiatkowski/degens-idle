@@ -6,6 +6,7 @@
     <title>Degens Idle v0.68</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="library.css">    
+    <link rel="stylesheet" type="text/css" href="settings.css">
     <link href="https://fonts.googleapis.com/css2?family=Uncial+Antiqua&display=swap" rel="stylesheet"> <!-- Google Font -->
 </head>
 <body>
@@ -37,6 +38,7 @@
             </div>
             <div id="button-container">
                 <button id="restartButton">Restart Game</button>
+                <button id="settingsButton">Settings</button>
                 <button id="libraryButton">Hall of Knowledge</button>
             </div>
         </div>
@@ -159,8 +161,41 @@
             <button id="closeLibraryButton">Exit</button>
         </div>
     </div>
+    <!-- Settings Overlay -->
+    <div id="settingsOverlay" class="settings-overlay" style="display: none;">
+        <div class="settings-overlay-content">
+            <span class="close-button" id="closeSettingsOverlay">&times;</span>
+            <h1>Settings</h1>
+            <p class="settings-note">Please note, this game is a labor of love and is always evolving. Save files might not work with major updates, but I'll do my best to keep things compatible.</p>
+            <div class="settings-buttons">
+                <button id="exportSaveButton">Export Save</button>
+                <button id="importSaveButton">Import Save</button>
+            </div>
+            <p class="discord-note">I'd love to see you join our Discord! Whether you just want to show you enjoyed the game or share some feedback (good or bad), your support means a lot!</p>
+            <button id="discordButton">
+                <img src="imgs/textures/discord.svg" alt="Discord" id="discordIcon">
+            </button>
+            <button id="donateButton" Donate style="display: none;"></button>
+            <button id="closeSettingsButton">Exit</button>
+        </div>
+    </div>
+    <!-- Donation Overlay -->
+    <div id="donationOverlay" class="donation-overlay" style="display: none;">
+        <div class="donation-overlay-content">
+            <span class="close-button" id="closeDonationOverlay">&times;</span>
+            <h1>Support the Game</h1>
+            <p>Thank you for considering a donation! This game is a passion project from someone who loves idle games. I plan to continue development regardless, and I will never add paid features or ads to the game. While I'm not struggling financially, a donation to show your support is much appreciated.</p>
+            <button id="donateSmallButton">Donate 1</button>
+            <button id="donateMediumButton">Donate 2</button>
+            <button id="donateLargeButton">Donate 3</button>
+            <button id="closeDonationButton">Exit</button>
+        </div>
+    </div>
+    <!-- Hidden file input for importing save file -->
+    <input type="file" id="importFileInput" style="display: none;">
     <script src="upgrades.js"></script>
     <script src="script.js"></script>
     <script src="library.js"></script>
+    <script src="settings.js"></script>
 </body>
 </html>
