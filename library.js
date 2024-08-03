@@ -1,8 +1,7 @@
 const librarySkills = [
     { name: 'Cookie Recipe', cost: 1, description: 'This ancient cookie recipe permanently makes cookie clicks another 10x more powerful.', unlocked: false, level: 'History' },
-    { name: 'God-Mode Prestige', cost: 100, description: 'Learn how to ascend God Mode Levels while only folding the space around you into two dimensions. Results in much lesser decrease to Prestige multiplier (square root instead of cube root).', unlocked: false, level: 'History' },
-    { name: 'Knowledge Generation', cost: 250, description: 'Begin knowledge generation without reaching -1T delusion.', unlocked: false, level: 'History' },
-    // { name: 'Trade Ratios', cost: 500000, description: 'Lower trade ratio to 3:1 for top 4 resources and 1M:1 for Hopium.', unlocked: false, level: 'History' },
+    // { name: 'Knowledge Generation', cost: 250, description: 'Begin knowledge generation without reaching -1T delusion.', unlocked: false, level: 'History' },
+    { name: 'Trade Ratios', cost: 1500, description: 'Lower trade ratio to 4:1 for top 4 resources and 1M:1 for Hopium.', unlocked: false, level: 'History' },
     // { name: '', cost: 1e8, description: '', unlocked: false, level: 'History' }, 
     // { name: '', cost: 1e10, description: '', unlocked: false, level: 'History' }, 
     // { name: '', cost: 1e20, description: '', unlocked: false, level: 'History' }, 
@@ -13,13 +12,17 @@ const librarySkills = [
     // { name: '', cost: 1e9, description: '', unlocked: false, level: 'Science' },
     // { name: '', cost: 1e19, description: '', unlocked: false, level: 'Science' },
 
+    { name: 'Prestige Base', cost: 5000, description: 'Increase Base prestige multiplier from 1.5 to 2.', unlocked: false, level: 'Nonlinear Partial Differential Equations' },
+    { name: '2D Ascension', cost: 230000, description: 'Learn how to ascend God Mode Levels while only folding the space around you into two dimensions. Mathematically, instead of taking prestige chaing to x**(1/3), it changes to x**(2/3).', unlocked: false, level: 'Nonlinear Partial Differential Equations' },
+    
+
     { name: 'Multibuy Upgrades', cost: 2, description: 'Unlock "Buy Seen" and "Buy Max" buttons for Upgrades.', unlocked: false, level: 'Artificial Intelligence' },
-    { name: '', cost: 75, description: '', unlocked: false, level: 'Artificial Intelligence' },
-    // { name: '', cost: 500, description: 'Gain up to 3 God Mode levels per Ascension. Also select up to 3 upgrades to enhance to God Mode.', unlocked: false, level: 'Artificial Intelligence' },
+    { name: 'Cookie Clicker', cost: 75, description: 'After Prestiging or Ascending, automatically click the cookie 10 times per second for 15 seconds.', unlocked: false, level: 'Artificial Intelligence' },
+    // { name: '', cost: 1000000, description: 'Gain up to 3 God Mode levels per Ascension. Also select up to 3 upgrades to enhance to God Mode.', unlocked: false, level: 'Artificial Intelligence' },
     // { name: '', cost: 1e7, description: '', unlocked: false, level: 'Artificial Intelligence' },
     // { name: '', cost: 1e14, description: '', unlocked: false, level: 'Artificial Intelligence' },
 
-    { name: 'Knowledge is Power', cost: 1e6, description: 'Unlock new resource Power. Power is always generated based on your current amount of Knowledge.', unlocked: false, level: 'Celestial Bodies' },
+    { name: 'Knowledge is Power', cost: 1e6, description: '(not implemented yet in v0.69) Unlock new resource Power. Power is always generated based on your current amount of Knowledge.', unlocked: false, level: 'Celestial Bodies' },
     // { name: 'Big Crunch', cost: 1e9, description: 'Unlock ability to force the universe into a Big Crunch and to be reborn anew.', unlocked: false, level: 'Celestial Bodies' },
     // { name: 'Money is Power, too', cost: 1e15, description: 'Add a multiplier to Power generation based on Yacht Money.', unlocked: false, level: 'Celestial Bodies' },
 
@@ -68,6 +71,12 @@ function unlockLibrarySkill(skill, duringLoad = false) {
         else if (skill.name === 'Luck is Rigged') {
             luckGameDelta = 0.1;
         }
+        else if (skill.name === 'Trade Ratios') {
+            improvedTradeRatio = true;
+        }
+        else if (skill.name === 'Cookie Clicker') {
+            cookieAutoClicker = true;
+        }
 
         if (!duringLoad) {
             updateSkillDisplay();
@@ -84,14 +93,13 @@ function updateSkillDisplay() {
             if (!skill.unlocked) {
                 skillDiv.classList.add('locked');
                 skillDiv.classList.remove('purchased');
+                skillDiv.querySelector('.skill-cost').style.display = 'block';
+                skillDiv.querySelector('h3').style.display = 'block';
+                skillDiv.querySelector('p').style.display = 'block';
                 if (knowledge >= skill.cost) {
                     skillDiv.classList.add('affordable');
-                    skillDiv.querySelector('h3').style.display = 'block';
-                    skillDiv.querySelector('p').style.display = 'block';
                 } else {
                     skillDiv.classList.remove('affordable');
-                    skillDiv.querySelector('h3').style.display = 'none';
-                    skillDiv.querySelector('p').style.display = 'none';
                 }
             } else {
                 skillDiv.classList.add('purchased');
@@ -135,6 +143,8 @@ function initializeSkills() {
                 skillDiv.classList.add('locked');
                 if (knowledge >= skill.cost) {
                     skillDiv.classList.add('affordable');
+                } else {
+                    skillDiv.classList.remove('affordable');
                 }
             } else {
                 skillDiv.classList.add('purchased');

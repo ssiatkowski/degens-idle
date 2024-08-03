@@ -51,8 +51,11 @@ let modalQueue = [];
 let isModalOpen = false;
 
 let cookieClickMultiplier = 10;
+let cookieAutoClicker = false;
 let luckGameDelta = -75;
 let knowledgeUnlocked = false;
+
+let improvedTradeRatio = false
 
 // Mini-game timeouts in milliseconds
 const miniGameTimeouts = {
@@ -634,6 +637,18 @@ async function restartGame(isPrestige = false, isAscend = false) {
             document.getElementById('buyMaxButton').classList.add('hidden');
         }
 
+        const cookieButtonVisible = JSON.parse(localStorage.getItem('cookieButtonVisible'));
+        if (cookieButtonVisible && cookieAutoClicker) {
+            const intervalId = setInterval(() => {
+                cookieCollectAllResources();
+            }, 100); // 100 milliseconds = 0.1 seconds
+        
+            // Stop the interval after 10 seconds
+            setTimeout(() => {
+                clearInterval(intervalId);
+            }, 15000); // 10000 milliseconds = 10 seconds
+        }
+
         // Clear purchased upgrades
         purchasedUpgrades = [];
         document.getElementById('purchasedList').innerHTML = '';
@@ -670,11 +685,19 @@ function updateTradeRatio() {
 
     // Special case for trading Copium to Hopium
     if (fromResource === 'copium' && toResource === 'hopium') {
-        tradeRatioDisplay.textContent = 'Trade ratio is 100M:1';
+        if (improvedTradeRatio){
+            tradeRatioDisplay.textContent = 'Trade ratio is 1M:1';
+        } else {
+            tradeRatioDisplay.textContent = 'Trade ratio is 100M:1';
+        }
     } else if (toResource === 'hopium') {
         tradeRatioDisplay.textContent = 'Only Copium can convert to Hopium';
     } else {
-        tradeRatioDisplay.textContent = 'Trade ratio is 10:1';
+        if (improvedTradeRatio){
+            tradeRatioDisplay.textContent = 'Trade ratio is 4:1';
+        } else {
+            tradeRatioDisplay.textContent = 'Trade ratio is 10:1';
+        }
     }
 }
 
@@ -745,10 +768,14 @@ function tradeResources() {
             return;
         }
         resourceAmount[fromResource] -= tradeAmount;
-        resourceAmount[toResource] += tradeAmount / 100000000;
+        if (improvedTradeRatio) {
+            resourceAmount[toResource] += tradeAmount / 1000000;
+            showMessageModal('Trade Successful', `Traded ${formatNumber(tradeAmount)} ${fromResource} for ${formatNumber(tradeAmount / 1000000)} ${toResource}.`);
+        } else {
+            resourceAmount[toResource] += tradeAmount / 100000000;
+            showMessageModal('Trade Successful', `Traded ${formatNumber(tradeAmount)} ${fromResource} for ${formatNumber(tradeAmount / 100000000)} ${toResource}.`);
+        }
         
-        // Show trade success message
-        showMessageModal('Trade Successful', `Traded ${formatNumber(tradeAmount)} ${fromResource} for ${formatNumber(tradeAmount / 100000000)} ${toResource}.`);
     } else if (toResource === 'hopium') {
         showMessageModal('Trade Error', "Only Copium can convert to Hopium.");
         return;
@@ -759,10 +786,13 @@ function tradeResources() {
             return;
         }
         resourceAmount[fromResource] -= tradeAmount;
-        resourceAmount[toResource] += tradeAmount / 10;
-        
-        // Show trade success message
-        showMessageModal('Trade Successful', `Traded ${formatNumber(tradeAmount)} ${fromResource} for ${formatNumber(tradeAmount / 10)} ${toResource}.`);
+        if (improvedTradeRatio) {
+            resourceAmount[toResource] += tradeAmount / 10;
+            showMessageModal('Trade Successful', `Traded ${formatNumber(tradeAmount)} ${fromResource} for ${formatNumber(tradeAmount / 10)} ${toResource}.`);
+        } else {
+            resourceAmount[toResource] += tradeAmount / 10;
+            showMessageModal('Trade Successful', `Traded ${formatNumber(tradeAmount)} ${fromResource} for ${formatNumber(tradeAmount / 10)} ${toResource}.`);
+        }
     }
 
     // Update global resource variables
