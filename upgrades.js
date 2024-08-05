@@ -490,7 +490,7 @@ const upgrades = [
     {
         name: "Time for Careful Planning",
         cost: { copium: 3e19, delusion: 2e19, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 3.3e8, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 3e8, hopiumPerSecond: 5000, knowledgePerSecond: 0.00001, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: -1e7, trollPointsPerSecond: 3e8, hopiumPerSecond: 5000, knowledgePerSecond: 0.00001, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/leeroy_jenkins.jpg",
     },
     {

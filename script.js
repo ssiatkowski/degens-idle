@@ -583,7 +583,7 @@ async function restartPrestige(){
     const confirmMessage = `<p>Whoa there, daring player! You're about to reset your prestige. Are you sure you want to go through with this?</p>
 <p>Think of all those valuable prestige multipliers you've accumulated... all reset back to <strong>1</strong>! But hey, who needs progress when you can start over, right?</p>
 <p><strong>Warning:</strong> This action will reset your prestige multiplier back to <strong>1</strong>. Seriously, once you click it, there's no going back. All those gains? Poof! Gone!</p>
-<p>If you're absolutely, positively, without a doubt sure that you need to reset because you messed up your upgrade buying, then go ahead and click that button. Otherwise, maybe just take a deep breath and reconsider. 😅</p>`;
+<p>If you're absolutely sure that you need to reset because you messed up your upgrade buying, then go ahead and click that button. Otherwise, maybe just take a deep breath and reconsider. 😅</p>`;
 
     if (await showMessageModal(confirmTitle, confirmMessage, true, false)) {
 
@@ -1165,7 +1165,7 @@ function buyUpgrade(encodedUpgradeName) {
 
         // Special case for the "Antimatter Dimension" upgrade
         if (name === "Still very stupid") {
-            showMessageModal('Sadly', "This marks the end of v0.7. With power now unlocked, you can restart the game and embark on speed runs, or take a moment to imagine all the new possibilities that lie ahead. Your journey through this existential tale is just beginning, and the newfound power will open doors to uncharted realms. How will you wield it? Stay tuned, as another big update is just a few days away.");
+            showMessageModal('Sadly', "This marks the end of v0.71. Your journey through this existential tale is just beginning, and the newfound power will open doors to uncharted realms. How will you wield it? Stay tuned, as another big update is just a few days away. If you can't wait, feel free to restart the game and embark on speed runs, or explore alternate strategies.");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one
