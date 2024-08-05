@@ -1,6 +1,6 @@
 const librarySkills = [
     { name: 'Cookie Recipe', cost: 1, description: 'This ancient cookie recipe permanently makes cookie clicks another 10x more powerful.', unlocked: false, level: 'History' },
-    { name: 'Knowledge Generation', cost: 400, description: 'After Prestiging/Ascending, begin knowledge generation immediately without reaching -1T delusion.', unlocked: false, level: 'History' },
+    { name: 'Knowledge Generation', cost: 400, description: 'After Prestiging or Ascending, begin knowledge generation immediately without reaching -1T delusion.', unlocked: false, level: 'History' },
     { name: 'Trade Ratios', cost: 1500, description: 'Lower trade ratio to 4:1 for top 4 resources and 1M:1 for Hopium.', unlocked: false, level: 'History' },
     // { name: '', cost: 1e8, description: '', unlocked: false, level: 'History' }, 
     // { name: '', cost: 1e10, description: '', unlocked: false, level: 'History' }, 

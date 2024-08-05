@@ -136,9 +136,6 @@ function loadGameState() {
     // Load the first time prestige button available flag
     firstTimePrestigeButtonAvailable = JSON.parse(localStorage.getItem('firstTimePrestigeButtonAvailable')) || true;
 
-    // Retrieve the last interaction time, defaulting to the current time if not found
-    const lastInteraction = parseInt(localStorage.getItem('lastInteraction')) || Date.now();
-
     // Retrieve and parse all upgrades with the isGodMode property from local storage
     const savedUpgrades = JSON.parse(localStorage.getItem('upgrades')) || [];
     
@@ -211,10 +208,15 @@ function loadGameState() {
 
     updateTradeRatio();
 
+    // Retrieve the last interaction time, defaulting to the current time if not found
+    const lastInteraction = parseInt(localStorage.getItem('lastInteraction')) || Date.now();
+
     // Calculate the elapsed time since the last interaction
     const now = Date.now();
     const elapsedSeconds = (now - lastInteraction) / 1000;
     
+    updateEffectiveMultipliers();
+
     // Generate idle resources based on the elapsed time
     generateIdleResources(elapsedSeconds);
 
@@ -382,33 +384,35 @@ function playMiniGame(gameType) {
     if (gameType === 'speed') {
         let points = 0;
         let duration = Math.floor(Math.random() * 6) + 2; // Random duration between 2 and 7 seconds
-        showMessageModal('Speed Game', `Tap on the screen as many times as you can in ${duration} seconds!`, false, false);
 
-        // Function to handle clicks
-        function clickHandler() {
-            points++;
-        }
-
-        document.addEventListener('click', clickHandler); // Add click event listener
-        document.addEventListener('touchstart', clickHandler); // Add touch event listener
-
-        // End the game after the duration
-        setTimeout(() => {
-            document.removeEventListener('click', clickHandler); // Remove click event listener
-            document.removeEventListener('touchstart', clickHandler); // Remove touch event listener
-            let clicksPerSecond = points / duration;
-            let reward;
-            if (clicksPerSecond > 3) { // More than 3 clicks per second
-                reward = Math.max(Math.floor(Math.abs(copium) * ((clicksPerSecond - 3) * 0.04)), 25);
-                showMessageModal('Speed Game Result - Fast', `You tapped ${points} times in ${duration} seconds (${clicksPerSecond.toFixed(1)} taps per second). For being so fast you earned ${formatNumber(reward)} copium!`, false, false);
-            } else {
-                reward = -Math.max(Math.floor(Math.random() * Math.abs(copium) * 0.1), 10);
-                showMessageModal('Speed Game Result - Slow', `You tapped ${points} times in ${duration} seconds (${clicksPerSecond.toFixed(1)} taps per second). For being so slow you lost ${formatNumber(reward)} copium!`, false, false);
+        // Show the modal and start the game when the modal is closed
+        showMessageModal('Speed Game', `Tap on the screen as many times as you can in ${duration} seconds!`, false, false).then(() => {
+            // Function to handle clicks
+            function clickHandler() {
+                points++;
             }
-            copium += reward;
-            updateDisplay(); // Update the display
-            startCooldown(gameType); // Start cooldown for the mini-game
-        }, duration * 1000);
+
+            document.addEventListener('click', clickHandler); // Add click event listener
+            document.addEventListener('touchstart', clickHandler); // Add touch event listener
+
+            // End the game after the duration
+            setTimeout(() => {
+                document.removeEventListener('click', clickHandler); // Remove click event listener
+                document.removeEventListener('touchstart', clickHandler); // Remove touch event listener
+                let clicksPerSecond = points / duration;
+                let reward;
+                if (clicksPerSecond > 3) { // More than 3 clicks per second
+                    reward = Math.max(Math.floor(Math.abs(copium) * ((clicksPerSecond - 3) * 0.04)), 25);
+                    showMessageModal('Speed Game Result - Fast', `You tapped ${points} times in ${duration} seconds (${clicksPerSecond.toFixed(1)} taps per second). For being so fast you earned ${formatNumber(reward)} copium!`, false, false);
+                } else {
+                    reward = -Math.max(Math.floor(Math.random() * Math.abs(copium) * 0.1), 10);
+                    showMessageModal('Speed Game Result - Slow', `You tapped ${points} times in ${duration} seconds (${clicksPerSecond.toFixed(1)} taps per second). For being so slow you lost ${formatNumber(reward)} copium!`, false, false);
+                }
+                copium += reward;
+                updateDisplay(); // Update the display
+                startCooldown(gameType); // Start cooldown for the mini-game
+            }, duration * 1000);
+        });
     } else if (gameType === 'memory') {
         // Memory mini-game logic
         let sequenceLength = Math.floor(Math.random() * 6) + 3; // Random length between 3 and 8
@@ -588,9 +592,6 @@ async function restartPrestige(){
         
         // Call restartGame with isPrestige flag set to true
         restartGame(true,false);
-
-        updateEffectiveMultipliers();
-        updateDisplay();
     }
 }
 
@@ -705,8 +706,8 @@ async function restartGame(isPrestige = false, isAscend = false) {
 
         // Update display
         updateEffectiveMultipliers();
-        updateDisplay();
         updateUpgradeList();
+        updateDisplay();
     }
 }
 
@@ -972,8 +973,6 @@ async function prestige() {
             saveGameState();
 
             showMessageModal('Prestige Successful!', `Your multiplier is now x${epsMultiplier.toFixed(2)}. All resources have been reset.`);
-            updateEffectiveMultipliers();
-            updateDisplay();
         }
     }
 }
@@ -1040,8 +1039,6 @@ async function ascend() {
         restartGame(false,true); // Use the existing restartGame function with prestige mode
         // Save game state after ascending
         saveGameState();
-        updateEffectiveMultipliers();
-        updateDisplay();
     }
 }
 
@@ -1057,15 +1054,15 @@ function updateAscendButton() {
 
 // Function to generate idle resources based on the elapsed time
 function generateIdleResources(elapsedSeconds) {
-    // Increase resources based on their per second values, elapsed time, and the multiplier
-    copium += copiumPerSecond * epsMultiplier * godModeMultiplier * elapsedSeconds;
-    delusion += delusionPerSecond * epsMultiplier * godModeMultiplier * elapsedSeconds;
-    yachtMoney += yachtMoneyPerSecond * epsMultiplier * godModeMultiplier * elapsedSeconds;
-    trollPoints += trollPointsPerSecond * epsMultiplier * godModeMultiplier * elapsedSeconds;
-    hopium += hopiumPerSecond * epsMultiplier * godModeMultiplier * elapsedSeconds;
-    knowledge += knowledgePerSecond * epsMultiplier * godModeMultiplier * elapsedSeconds;
-    power += powerPerSecond * epsMultiplier * godModeMultiplier * elapsedSeconds;
-    serenity += serenityPerSecond * epsMultiplier * godModeMultiplier * elapsedSeconds;
+    // Increase resources based on their effective per second values and the elapsed time
+    copium += effectiveCopiumPerSecond * elapsedSeconds;
+    delusion += effectiveDelusionPerSecond * elapsedSeconds;
+    yachtMoney += effectiveYachtMoneyPerSecond * elapsedSeconds;
+    trollPoints += effectiveTrollPointsPerSecond * elapsedSeconds;
+    hopium += effectiveHopiumPerSecond * elapsedSeconds;
+    knowledge += effectiveKnowledgePerSecond * elapsedSeconds;
+    power += effectivePowerPerSecond * elapsedSeconds;
+    serenity += effectiveSerenityPerSecond * elapsedSeconds;
 }
 
 // Function to encode a name for safe usage in URLs or storage
@@ -1152,7 +1149,7 @@ function buyUpgrade(encodedUpgradeName) {
         }
 
         // Special case for unlocking the "Ascension" upgrade
-        if (name === "Ascension" && godModeLevel < 1) {
+        if (name === "Ascension" && godModeLevel < 3) {
             showMessageModal('Ascension', "Congratulations, brave soul! With the purchase of the Ascension upgrade, you have unlocked the extraordinary ability to Ascend Above Mortals and enter the revered God Mode. Prepare yourself for an epic journey where the limits of mortality no longer bind you.\n\nWelcome to the next chapter of your legendary adventure. Ascend and let your godlike journey begin!");
         } 
 
@@ -1167,7 +1164,7 @@ function buyUpgrade(encodedUpgradeName) {
         }
 
         // Special case for the "Antimatter Dimension" upgrade
-        if (name === "Still very stupid at 18") {
+        if (name === "Still very stupid") {
             showMessageModal('Sadly', "This marks the end of v0.7. With power now unlocked, you can restart the game and embark on speed runs, or take a moment to imagine all the new possibilities that lie ahead. Your journey through this existential tale is just beginning, and the newfound power will open doors to uncharted realms. How will you wield it? Stay tuned, as another big update is just a few days away.");
         }
 

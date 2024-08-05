@@ -494,7 +494,7 @@ const upgrades = [
         img: "imgs/leeroy_jenkins.jpg",
     },
     {
-        name: "Still very stupid at 18",
+        name: "Still very stupid",
         cost: { copium: 0, delusion: 1.8e19, yachtMoney: 0, trollPoints: 0, hopium: 1.8e15, knowledge: 1.8e9, power: 1.8e-7, serenity: 0 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 7e7, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0.0025, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/young_stupid.jpg",
