@@ -54,18 +54,23 @@ let cookieClickMultiplier = 10;
 let cookieAutoClicker = false;
 let luckGameDelta = -75;
 let knowledgeUnlocked = false;
+let knowledgeGenerationSkill = false;
+let prestigeBaseSkill = false;
+let twoDimensionalAscensionSkill = false;
+let mathGameSkill = false;
+let powerUnlocked = false;
 
 let improvedTradeRatio = false
 
 // Mini-game timeouts in milliseconds
 const miniGameTimeouts = {
     speed: 10 * 60 * 1000,  // 10 minutes
-    memory: 5 * 60 * 1000,  // 5 minutes
-    math: 7 * 60 * 1000,    // 7 minutes
+    memory: 15 * 60 * 1000,  // 15 minutes
+    math: 8 * 60 * 1000,    // 8 minutes
     luck: 3 * 60 * 1000     // 3 minutes
 };
 
-// Update the effective multipliers function to consider devMultiplier
+
 function updateEffectiveMultipliers() {
     effectiveCopiumPerSecond = copiumPerSecond * epsMultiplier * godModeMultiplier * devMultiplier;
     effectiveDelusionPerSecond = delusionPerSecond * epsMultiplier * godModeMultiplier * devMultiplier;
@@ -73,7 +78,7 @@ function updateEffectiveMultipliers() {
     effectiveTrollPointsPerSecond = trollPointsPerSecond * epsMultiplier * godModeMultiplier * devMultiplier;
     effectiveHopiumPerSecond = hopiumPerSecond * epsMultiplier * godModeMultiplier * devMultiplier;
     effectiveKnowledgePerSecond = knowledgePerSecond * epsMultiplier * godModeMultiplier * devMultiplier;
-    effectivePowerPerSecond = powerPerSecond * epsMultiplier * godModeMultiplier * devMultiplier;
+    // effectivePowerPerSecond = powerPerSecond * epsMultiplier * godModeMultiplier * devMultiplier;
     effectiveSerenityPerSecond = serenityPerSecond * epsMultiplier * godModeMultiplier * devMultiplier;
 }
 
@@ -203,6 +208,8 @@ function loadGameState() {
     } else {
         toggleDelusion.checked = false;
     }
+
+    updateTradeRatio();
 
     // Calculate the elapsed time since the last interaction
     const now = Date.now();
@@ -338,13 +345,19 @@ function generateResources() {
     power += effectivePowerPerSecond;
     serenity += effectiveSerenityPerSecond;
 
+    if (powerUnlocked){
+        effectivePowerPerSecond = knowledge ** (1/3) / 1e12
+    }
+
     // Check if delusion drops below negative 1 trillion to start generating Knowledge
-    if (delusion < -1e12 && localStorage.getItem('knowledgeGenerationStarted') !== 'true') {
+    if ((delusion < -1e12 || knowledgeGenerationSkill) && localStorage.getItem('knowledgeGenerationStarted') !== 'true') {
         knowledgePerSecond = 0.000001
         effectiveKnowledgePerSecond = knowledgePerSecond * epsMultiplier * godModeMultiplier;
         localStorage.setItem('knowledgeGenerationStarted', 'true');
 
-        showMessageModal('The Age of Knowledge', `As you cross the threshold of -1 trillion delusion, the dense fog of confusion and distorted thoughts begins to lift. A sense of clarity pierces through the haze, revealing a world beyond the familiar chaos. The swirling mists part to unveil a luminous realm, shimmering with the light of hidden truths. For the first time, you feel a profound shift within, as the once insurmountable delusion gives way to the dawning of true knowledge. This newfound awareness pulses with a quiet intensity, each revelation a stepping stone towards deeper understanding. Your journey through the labyrinth of the mind has led to this pivotal moment, where the pursuit of enlightenment begins. Your mind expands, absorbing the essence of ancient wisdom and universal secrets, setting the stage for a transformative quest that transcends the ordinary limits of perception.`, false, false);
+        if (!knowledgeGenerationSkill) {
+            showMessageModal('The Age of Knowledge', `As you cross the threshold of -1 trillion delusion, the dense fog of confusion and distorted thoughts begins to lift. A sense of clarity pierces through the haze, revealing a world beyond the familiar chaos. The swirling mists part to unveil a luminous realm, shimmering with the light of hidden truths. For the first time, you feel a profound shift within, as the once insurmountable delusion gives way to the dawning of true knowledge. This newfound awareness pulses with a quiet intensity, each revelation a stepping stone towards deeper understanding. Your journey through the labyrinth of the mind has led to this pivotal moment, where the pursuit of enlightenment begins. Your mind expands, absorbing the essence of ancient wisdom and universal secrets, setting the stage for a transformative quest that transcends the ordinary limits of perception.`, false, false);
+        }
     }
 
     updateDisplay();
@@ -430,13 +443,27 @@ function playMiniGame(gameType) {
         let op1 = operations[Math.floor(Math.random() * operations.length)];
         let op2 = operations[Math.floor(Math.random() * operations.length)];
 
-        let question = `${num1} ${op1} ${num2} ${op2} ${num3}`;
-        let correctAnswer = eval(question.replace('/', '* 1.0 /')); // Ensure floating point division
+        let question, correctAnswer;
+        if (mathGameSkill) {
+            // Only 2 numbers and 1 operation
+            question = `${num1} ${op1} ${num2}`;
+            correctAnswer = eval(question.replace('/', '* 1.0 /')); // Ensure floating point division
+        } else {
+            // Original question with 3 numbers and 2 operations
+            question = `${num1} ${op1} ${num2} ${op2} ${num3}`;
+            correctAnswer = eval(question.replace('/', '* 1.0 /')); // Ensure floating point division
+        }
 
         showMessageModal('Math Game', `What is ${question}?  (answer within 0.5 is acceptable)`, false, false, true).then(answer => {
-            let reward = Math.abs(Number(answer) - correctAnswer) < 0.5 ? Math.max(Math.floor(Math.abs(yachtMoney) * 0.25), 25) : -Math.max(Math.floor(Math.random() * Math.abs(yachtMoney) * 0.1), 10);
+            let isCorrect = Math.abs(Number(answer) - correctAnswer) < 0.5;
+            let reward;
+            if (mathGameSkill) {
+                reward = isCorrect ? Math.max(Math.floor(Math.abs(yachtMoney) * 0.75), 75) : -Math.max(Math.floor(Math.random() * Math.abs(yachtMoney) * 0.3), 30);
+            } else {
+                reward = isCorrect ? Math.max(Math.floor(Math.abs(yachtMoney) * 0.25), 25) : -Math.max(Math.floor(Math.random() * Math.abs(yachtMoney) * 0.1), 10);
+            }
             yachtMoney += reward;
-            showMessageModal('Math Game Result', `You guessed ${answer} and exact answer was ${correctAnswer}. You ${Math.abs(Number(answer) - correctAnswer) < 0.5 ? 'won' : 'lost'} and earned ${formatNumber(reward)} yachtMoney!`);
+            showMessageModal('Math Game Result', `You guessed ${answer} and exact answer was ${correctAnswer}. You ${isCorrect ? 'won' : 'lost'} and earned ${formatNumber(reward)} yachtMoney!`);
             updateDisplay(); // Update the display
             startCooldown(gameType); // Start cooldown for the mini-game
         });
@@ -635,6 +662,14 @@ async function restartGame(isPrestige = false, isAscend = false) {
             document.getElementById('toggleDelusionLabel').classList.add('hidden');
             document.getElementById('buySeenButton').classList.add('hidden');
             document.getElementById('buyMaxButton').classList.add('hidden');
+
+            knowledgeGenerationSkill = false;
+            prestigeBaseSkill = false;
+            twoDimensionalAscensionSkill = false;
+            mathGameSkill = false;
+
+            powerUnlocked = false;
+            document.getElementById('power-container').style.display = 'none';
         }
 
         const cookieButtonVisible = JSON.parse(localStorage.getItem('cookieButtonVisible'));
@@ -643,10 +678,10 @@ async function restartGame(isPrestige = false, isAscend = false) {
                 cookieCollectAllResources();
             }, 100); // 100 milliseconds = 0.1 seconds
         
-            // Stop the interval after 10 seconds
+            // Stop the interval after 15 seconds
             setTimeout(() => {
                 clearInterval(intervalId);
-            }, 15000); // 10000 milliseconds = 10 seconds
+            }, 15000); // 10000 milliseconds = 15 seconds
         }
 
         // Clear purchased upgrades
@@ -686,7 +721,7 @@ function updateTradeRatio() {
     // Special case for trading Copium to Hopium
     if (fromResource === 'copium' && toResource === 'hopium') {
         if (improvedTradeRatio){
-            tradeRatioDisplay.textContent = 'Trade ratio is 1M:1';
+            tradeRatioDisplay.textContent = 'Trade ratio is 4M:1';
         } else {
             tradeRatioDisplay.textContent = 'Trade ratio is 100M:1';
         }
@@ -769,8 +804,8 @@ function tradeResources() {
         }
         resourceAmount[fromResource] -= tradeAmount;
         if (improvedTradeRatio) {
-            resourceAmount[toResource] += tradeAmount / 1000000;
-            showMessageModal('Trade Successful', `Traded ${formatNumber(tradeAmount)} ${fromResource} for ${formatNumber(tradeAmount / 1000000)} ${toResource}.`);
+            resourceAmount[toResource] += tradeAmount / 4000000;
+            showMessageModal('Trade Successful', `Traded ${formatNumber(tradeAmount)} ${fromResource} for ${formatNumber(tradeAmount / 4000000)} ${toResource}.`);
         } else {
             resourceAmount[toResource] += tradeAmount / 100000000;
             showMessageModal('Trade Successful', `Traded ${formatNumber(tradeAmount)} ${fromResource} for ${formatNumber(tradeAmount / 100000000)} ${toResource}.`);
@@ -787,8 +822,8 @@ function tradeResources() {
         }
         resourceAmount[fromResource] -= tradeAmount;
         if (improvedTradeRatio) {
-            resourceAmount[toResource] += tradeAmount / 10;
-            showMessageModal('Trade Successful', `Traded ${formatNumber(tradeAmount)} ${fromResource} for ${formatNumber(tradeAmount / 10)} ${toResource}.`);
+            resourceAmount[toResource] += tradeAmount / 4;
+            showMessageModal('Trade Successful', `Traded ${formatNumber(tradeAmount)} ${fromResource} for ${formatNumber(tradeAmount / 4)} ${toResource}.`);
         } else {
             resourceAmount[toResource] += tradeAmount / 10;
             showMessageModal('Trade Successful', `Traded ${formatNumber(tradeAmount)} ${fromResource} for ${formatNumber(tradeAmount / 10)} ${toResource}.`);
@@ -837,15 +872,16 @@ function formatNumber(num) {
         { value: 1e3, symbol: "K" }       // Thousand
     ];
 
+    if (Math.abs(num) >= 1e36 || (Math.abs(num)  > 0 && Math.abs(num) < 1e-3) ) {
+        return num.toExponential(3);  // Switch to scientific notation for values >= 1e36
+    }
+
     for (let i = 0; i < suffixes.length; i++) {
         if (Math.abs(num) >= suffixes[i].value) {
             return customRound(num / suffixes[i].value, 3) + suffixes[i].symbol;
         }
     }
-    
-    if (Math.abs(num) >= 1e36 || (Math.abs(num)  > 0 && Math.abs(num) < 1e-3) ) {
-        return num.toExponential(3);  // Switch to scientific notation for values >= 1e36
-    }
+
 
     return customRound(num, 3);
 }
@@ -888,22 +924,24 @@ function unhideKnowledge() {
 
 function unhidePower() {
     document.getElementById('power-container').style.display = 'block';
+    powerUnlocked = true;
 }
 
 function unhideSerenity() {
     document.getElementById('serenity-container').style.display = 'block';
 }
 
-
 // Function to calculate the prestige multiplier based on the lowest of the first four resources
 function calculatePrestigeMultiplier() {
+    const base = prestigeBaseSkill ? 1.75 : 1.5;
     const minResource = Math.min(copium, delusion, yachtMoney, trollPoints);
-    return 1.5 ** (Math.log10(minResource / 1000) + 1);
+    return base ** (Math.log10(minResource / 1000) + 1);
 }
 
-//inverse of calculatePrestigeMultiplier
+// Inverse of calculatePrestigeMultiplier
 function calculateMinResource() {
-    return Math.max(1000 * 10 ** ((Math.log10(epsMultiplier) / Math.log10(1.5)) - 1), 1000);
+    const base = prestigeBaseSkill ? 1.75 : 1.5;
+    return Math.max(1000 * 10 ** ((Math.log10(epsMultiplier) / Math.log10(base)) - 1), 1000);
 }
 
 // Check if the player can prestige
@@ -971,12 +1009,18 @@ function calculateGodModeMultiplier(gmLevlel = godModeLevel) {
     return productX;
 }
 
+// Function to calculate the ascension eps multiplier
+function calculateAscensionEpsMult() {
+    const power = twoDimensionalAscensionSkill ? 2 / 3 : 1 / 3;
+    return epsMultiplier ** power;
+}
+
 async function ascend() {
 
     const selectedUpgrade = await showMessageModal(
         'God-Mode Ascension',
         `Are you sure you want to enter God-Mode level ${godModeLevel + 1}?<br><br>
-        Raising the level of God-Mode requires temporarily folding three dimensions in the space around you to a single point, which will unfortunately reduce your Prestige multiplier to its cube root. Your Prestige multiplier will shrink from <strong>x${formatNumber(epsMultiplier)}</strong> to <strong>x${formatNumber(epsMultiplier ** (1/3))}</strong><br><br>
+        Raising the level of God-Mode requires temporarily folding three dimensions in the space around you to a single point, which will unfortunately reduce your Prestige multiplier to its cube root. Your Prestige multiplier will shrink from <strong>x${formatNumber(epsMultiplier)}</strong> to <strong>x${formatNumber(calculateAscensionEpsMult())}</strong><br><br>
         On the bright side, your God-Mode multiplier will increase from <strong>x${formatNumber(godModeMultiplier)}</strong> to <strong>x${formatNumber(calculateGodModeMultiplier(godModeLevel+1))}</strong>!`,
         true,
         true
@@ -990,7 +1034,7 @@ async function ascend() {
         showMessageModal('Ascension Successful!', `<strong>You have entered God-Mode Level ${godModeLevel}.</strong><br> Your multiplier God-Mode is now x${formatNumber(godModeMultiplier)}, your prestige multiplier is x${formatNumber(epsMultiplier)}, and your chosen upgrade (${selectedUpgrade.name}) is 10x stronger.`);        
         selectedUpgrade.isGodMode = true;
 
-        epsMultiplier = Math.max(epsMultiplier ** (1/3), 1)
+        epsMultiplier = Math.max(calculateAscensionEpsMult(), 1)
         prestigeRequirement = calculateMinResource();
         
         restartGame(false,true); // Use the existing restartGame function with prestige mode
@@ -1077,7 +1121,7 @@ function buyUpgrade(encodedUpgradeName) {
         trollPointsPerSecond += (earnings.trollPointsPerSecond || 0) * multiplier;
         hopiumPerSecond += (earnings.hopiumPerSecond || 0) * multiplier;
         knowledgePerSecond += (earnings.knowledgePerSecond || 0) * multiplier;
-        powerPerSecond += (earnings.powerPerSecond || 0) * multiplier;
+        // powerPerSecond += (earnings.powerPerSecond || 0) * multiplier;
         serenityPerSecond += (earnings.serenityPerSecond || 0) * multiplier;
 
         // Handle delusion per second based on the toggle state
@@ -1123,8 +1167,8 @@ function buyUpgrade(encodedUpgradeName) {
         }
 
         // Special case for the "Antimatter Dimension" upgrade
-        if (name === "Yom Kippur") {
-            showMessageModal('Sadly', "This marks the end of v0.69. With knowledge now unlocked, you can restart the game and embark on speed runs, or take a moment to imagine all the new possibilities that lie ahead. Your journey through this existential tale is just beginning, and the newfound knowledge will open doors to uncharted realms. Stay tuned, as another big update is just a few days away.");
+        if (name === "Still very stupid at 18") {
+            showMessageModal('Sadly', "This marks the end of v0.7. With power now unlocked, you can restart the game and embark on speed runs, or take a moment to imagine all the new possibilities that lie ahead. Your journey through this existential tale is just beginning, and the newfound power will open doors to uncharted realms. How will you wield it? Stay tuned, as another big update is just a few days away.");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one
@@ -1225,30 +1269,20 @@ function isAffordable(cost) {
             (cost.serenity === 0 || serenity >= cost.serenity);
 }
 
-// Function to get the total cost of an upgrade
-function getTotalCost(upgrade) {
-    // Sum up the costs of all resources in the upgrade with respective conversion factors
-    return (upgrade.cost.copium || 0) + 
-           (upgrade.cost.delusion || 0) + 
-           (upgrade.cost.yachtMoney || 0) + 
-           (upgrade.cost.trollPoints || 0) + 
-           (upgrade.cost.hopium * 100000000 || 0) +
-           (upgrade.cost.knowledge * 1e13 || 0) + 
-           (upgrade.cost.power * 1e20 || 0) + 
-           (upgrade.cost.serenity * 1e30 || 0);
-}
-
 
 // Function to update the upgrade list display
 function updateUpgradeList() {
     const upgradeList = document.getElementById('upgradeList');
     upgradeList.innerHTML = ''; // Clear the current upgrade list
 
-    // Sort available upgrades by their total cost
-    const sortedUpgrades = availableUpgrades.slice().sort((a, b) => getTotalCost(a) - getTotalCost(b));
-
     // Limit the display to the top 7 upgrades
-    const topUpgrades = sortedUpgrades.slice(0, 7);
+    let topUpgrades = availableUpgrades.slice(0, 7);
+
+    // Check if "The Finale" is in the list and truncate the list if found
+    const finaleIndex = topUpgrades.findIndex(upgrade => upgrade.name === 'The Finale');
+    if (finaleIndex !== -1) {
+        topUpgrades = topUpgrades.slice(0, finaleIndex + 1);
+    }
 
     // Create and append upgrade elements to the upgrade list
     topUpgrades.forEach(upgrade => {
@@ -1349,7 +1383,7 @@ async function devAscend() {
         randomUpgrade.isGodMode = true;
         godModeLevel += 1;
         godModeMultiplier = calculateGodModeMultiplier();
-        epsMultiplier = epsMultiplier ** (1 / 3);
+        epsMultiplier = calculateAscensionEpsMult();
         prestigeRequirement = calculateMinResource();
         restartGame(false, true);
         saveGameState();
@@ -1361,7 +1395,7 @@ async function devAscend() {
 
 // Function to increase prestige multiplier and calculate min resource
 function devIncreasePrestigeMultiplier() {
-    epsMultiplier += 1;
+    epsMultiplier = epsMultiplier * 1.1;
     prestigeRequirement = calculateMinResource();
     updateEffectiveMultipliers();
     updateDisplay();
@@ -1428,7 +1462,8 @@ function displayNextModal() {
     modal.style.display = 'block';
 
     const closeModal = (result) => {
-        modal.style.display = 'none';
+        modal.style.display = 'none';        
+        document.removeEventListener('keydown', keydownHandler); // Remove event listener
         displayNextModal();
         resolve(result);
     };
@@ -1447,6 +1482,9 @@ function displayNextModal() {
             } else {
                 closeModal(true);
             }
+        } 
+        else if (event.key === 'Enter' && (message.includes('Enter the sequence:') || message.includes('What is '))){
+            closeModal(gameInput.value);
         }
     };
 
@@ -1539,10 +1577,6 @@ function displayNextModal() {
         };
     }
 
-    // Remove the event listener when the modal is closed
-    modal.addEventListener('close', () => {
-        document.removeEventListener('keydown', keydownHandler);
-    });
 }
 
 

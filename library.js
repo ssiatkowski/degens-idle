@@ -1,6 +1,6 @@
 const librarySkills = [
     { name: 'Cookie Recipe', cost: 1, description: 'This ancient cookie recipe permanently makes cookie clicks another 10x more powerful.', unlocked: false, level: 'History' },
-    // { name: 'Knowledge Generation', cost: 250, description: 'Begin knowledge generation without reaching -1T delusion.', unlocked: false, level: 'History' },
+    { name: 'Knowledge Generation', cost: 400, description: 'After Prestiging/Ascending, begin knowledge generation immediately without reaching -1T delusion.', unlocked: false, level: 'History' },
     { name: 'Trade Ratios', cost: 1500, description: 'Lower trade ratio to 4:1 for top 4 resources and 1M:1 for Hopium.', unlocked: false, level: 'History' },
     // { name: '', cost: 1e8, description: '', unlocked: false, level: 'History' }, 
     // { name: '', cost: 1e10, description: '', unlocked: false, level: 'History' }, 
@@ -8,11 +8,11 @@ const librarySkills = [
 
     { name: 'Cure for Delusion', cost: 5, description: 'Unlock ability to toggle whether delusion gain is positive or negative.', unlocked: false, level: 'Science' },
     { name: 'Luck is Rigged', cost: 777, description: 'Luck is now always on your side - can never lose at Luck Game.', unlocked: false, level: 'Science' },
-    // { name: '', cost: 15000, description: '', unlocked: false, level: 'Science' },
+    { name: "I Can't Math", cost: 1234, description: 'Math Game now only has 2 terms instead of 3. Reward is tripled.', unlocked: false, level: 'Science' },
     // { name: '', cost: 1e9, description: '', unlocked: false, level: 'Science' },
     // { name: '', cost: 1e19, description: '', unlocked: false, level: 'Science' },
 
-    { name: 'Prestige Base', cost: 5000, description: 'Increase Base prestige multiplier from 1.5 to 2.', unlocked: false, level: 'Nonlinear Partial Differential Equations' },
+    { name: 'Prestige Base', cost: 5000, description: 'Increase Base prestige multiplier from 1.5 to 1.75. Huuge.', unlocked: false, level: 'Nonlinear Partial Differential Equations' },
     { name: '2D Ascension', cost: 230000, description: 'Learn how to ascend God Mode Levels while only folding the space around you into two dimensions. Mathematically, instead of taking prestige chaing to x**(1/3), it changes to x**(2/3).', unlocked: false, level: 'Nonlinear Partial Differential Equations' },
     
 
@@ -22,7 +22,7 @@ const librarySkills = [
     // { name: '', cost: 1e7, description: '', unlocked: false, level: 'Artificial Intelligence' },
     // { name: '', cost: 1e14, description: '', unlocked: false, level: 'Artificial Intelligence' },
 
-    { name: 'Knowledge is Power', cost: 1e6, description: '(not implemented yet in v0.69) Unlock new resource Power. Power is always generated based on your current amount of Knowledge.', unlocked: false, level: 'Celestial Bodies' },
+    { name: 'Knowledge is Power', cost: 1e6, description: 'Unlock new resource Power. Power is always generated based on your current amount of Knowledge.', unlocked: false, level: 'Celestial Bodies' },
     // { name: 'Big Crunch', cost: 1e9, description: 'Unlock ability to force the universe into a Big Crunch and to be reborn anew.', unlocked: false, level: 'Celestial Bodies' },
     // { name: 'Money is Power, too', cost: 1e15, description: 'Add a multiplier to Power generation based on Yacht Money.', unlocked: false, level: 'Celestial Bodies' },
 
@@ -49,33 +49,62 @@ function unlockLibrarySkill(skill, duringLoad = false) {
             <p>${skill.description}</p>
         `;
 
-        if (skill.name === 'Cookie Recipe') {
-            cookieClickMultiplier = 100;
-            const cookieTooltip = document.querySelector('#cookieButton .cookieTooltip');
-            cookieTooltip.textContent = `Each cookie click counts as ${cookieClickMultiplier} clicks on collect buttons for Copium, Delusion, Yacht Money, and Troll Points!`;
-        }
-        else if (skill.name === 'Cure for Delusion') {
-            document.getElementById('toggleDelusionLabel').classList.remove('hidden');
-            // Check the state of delusion and update the switch position accordingly
-            const toggleDelusion = document.getElementById('toggleDelusion');
-            if (delusionPerSecond >= 0) {
-                toggleDelusion.checked = true;
-            } else {
-                toggleDelusion.checked = false;
-            }
-        }
-        else if (skill.name === 'Multibuy Upgrades') {
-            document.getElementById('buySeenButton').classList.remove('hidden');
-            document.getElementById('buyMaxButton').classList.remove('hidden');
-        }
-        else if (skill.name === 'Luck is Rigged') {
-            luckGameDelta = 0.1;
-        }
-        else if (skill.name === 'Trade Ratios') {
-            improvedTradeRatio = true;
-        }
-        else if (skill.name === 'Cookie Clicker') {
-            cookieAutoClicker = true;
+        switch (skill.name) {
+            case 'Cookie Recipe':
+                cookieClickMultiplier = 100;
+                const cookieTooltip = document.querySelector('#cookieButton .cookieTooltip');
+                cookieTooltip.textContent = `Each cookie click counts as ${cookieClickMultiplier} clicks on collect buttons for Copium, Delusion, Yacht Money, and Troll Points!`;
+                break;
+        
+            case 'Knowledge Generation':
+                knowledgeGenerationSkill = true;
+                break;
+        
+            case 'Trade Ratios':
+                improvedTradeRatio = true;
+                break;
+        
+            case 'Cure for Delusion':
+                document.getElementById('toggleDelusionLabel').classList.remove('hidden');
+                // Check the state of delusion and update the switch position accordingly
+                const toggleDelusion = document.getElementById('toggleDelusion');
+                toggleDelusion.checked = delusionPerSecond >= 0;
+                break;
+
+            case 'Luck is Rigged':
+                luckGameDelta = 0.1;
+                break;
+            
+            case "I Can't Math":
+                mathGameSkill = true;
+                break;
+                
+            case 'Prestige Base':
+                prestigeBaseSkill = true;
+                break;
+            
+            case '2D Ascension':
+                twoDimensionalAscensionSkill = true;
+                break;
+                        
+            case 'Multibuy Upgrades':
+                document.getElementById('buySeenButton').classList.remove('hidden');
+                document.getElementById('buyMaxButton').classList.remove('hidden');
+                break;
+        
+            case 'Cookie Clicker':
+                cookieAutoClicker = true;
+                break;
+
+            case 'Knowledge is Power':
+                unhidePower();
+                break;
+        
+            // Add more cases as needed for additional skills
+        
+            default:
+                console.warn(`No handler for skill: ${skill.name}`);
+                break;
         }
 
         if (!duringLoad) {
@@ -165,30 +194,47 @@ function initializeSkills() {
         librarySkillsContainer.appendChild(skillLevelDiv);
     });
 }
+
 function openLibrary() {
     const libraryOverlay = document.getElementById('libraryOverlay');
     const theLibraryUpgrade = purchasedUpgrades.find(up => up.name === 'The Library');
     if (theLibraryUpgrade) {
         libraryOverlay.style.display = 'flex';
         updateSkillDisplay();
+
+        // Add a temporary event listener to close the overlay when clicking outside of it
+        setTimeout(() => {
+            document.addEventListener('click', outsideLibraryClickListener);
+        }, 0);
     } else {
         showMessageModal('Access Denied', 'You are not worthy to enter the Hall of Knowledge. The ancient tomes and secrets within remain beyond your reach. Perhaps it is time to look inwards and seek understanding within yourself first. Only through inner reflection and growth will you gain the wisdom needed to unlock the secrets of this sacred place.');
     }
 }
 
+function closeLibrary() {
+    const libraryOverlay = document.getElementById('libraryOverlay');
+    libraryOverlay.style.display = 'none';
+    document.removeEventListener('click', outsideLibraryClickListener);
+}
 
+function outsideLibraryClickListener(event) {
+    const libraryContent = document.querySelector('.library-overlay-content');
+
+    if (!libraryContent.contains(event.target)) {
+        closeLibrary();
+    }
+}
 
 document.addEventListener('DOMContentLoaded', () => {
-
     document.getElementById('libraryButton').addEventListener('click', () => {
         openLibrary();
     });
 
     document.getElementById('closeLibraryButton').addEventListener('click', () => {
-        document.querySelector('.library-overlay').style.display = 'none';
+        closeLibrary();
     });
-    
+
     document.getElementById('closeLibraryOverlay').addEventListener('click', () => {
-        document.querySelector('.library-overlay').style.display = 'none';
+        closeLibrary();
     });
 });

@@ -28,7 +28,6 @@ function closeDonation() {
 
 // Function to handle clicks outside the overlay
 function outsideClickListener(event) {
-    const settingsOverlay = document.getElementById('settingsOverlay');
     const settingsContent = document.querySelector('.settings-overlay-content');
     
     if (!settingsContent.contains(event.target)) {
@@ -79,7 +78,7 @@ function exportSave() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'game_save.json';
+    a.download = 'degens_idle_save.json';
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);

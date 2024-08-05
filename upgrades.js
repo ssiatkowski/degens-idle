@@ -277,6 +277,7 @@ const upgrades = [
         earnings: { copiumPerSecond: 300000, delusionPerSecond: 100000, yachtMoneyPerSecond: 0, trollPointsPerSecond: 200000, hopiumPerSecond: -0.1, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/obama.jpg",
         message: "Desperate to eliminate the ruthless terrorist Saddam <b>Hussein</b>, you hire a team of elite hitmen. The mission seems straightforward until a devastating mistake changes everything.<br>The hitmen, due to a grave error, confuse their target with Barrack <b>Hussein</b> Obama, a prominent humanitarian and beacon of hope in the war-torn region. When the news breaks that Obama has been assassinated, the world plunges into despair. The humanitarian's death leaves a void, extinguishing the hope he brought to countless lives.<br>As you watch the consequences of this tragic error unfold, you grapple with guilt and the profound realization that sometimes, the lines between good and evil blur. The game takes you on a journey of redemption as you strive to undo the damage and restore hope to a world teetering on the brink of darkness.",
+        hoverOverwrite: "Think about this one",
     },
     {
         name: "Gen B Names",
@@ -413,9 +414,100 @@ const upgrades = [
     {
         name: "Yom Kippur",
         cost: { copium: 5e14, delusion: 0, yachtMoney: 5e13, trollPoints: 0, hopium: 500000, knowledge: 100, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 10000000, delusionPerSecond: 2500000, yachtMoneyPerSecond: 5000000, trollPointsPerSecond: 39000000, hopiumPerSecond: 0.04, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 10000000, delusionPerSecond: 2500000, yachtMoneyPerSecond: 5000000, trollPointsPerSecond: 3900000, hopiumPerSecond: 0.04, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/yom_kippur.jpg",
     },
+    {
+        name: "Hire an Assistant",
+        cost: { copium: 0, delusion: 0, yachtMoney: 5e13, trollPoints: 0, hopium: 1000000, knowledge: 150, power: 0, serenity: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 50, trollPointsPerSecond: 1e6, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: "imgs/hire_employee.jpg",
+        hoverOverwrite: "Should be helpful right?",
+    },
+    {
+        name: "Cybertruck",
+        cost: { copium: 0, delusion: 0, yachtMoney: 3e14, trollPoints: 0, hopium: 10000000, knowledge: 0, power: 0, serenity: 0 },
+        earnings: { copiumPerSecond: 1e7, delusionPerSecond: 1.5e6, yachtMoneyPerSecond: -100000, trollPointsPerSecond: 1.2e6, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: "imgs/cybertruck.jpg",
+    },
+    {
+        name: "The Finale",
+        cost: { copium: 1e15, delusion: 1e15, yachtMoney: 1e15, trollPoints: 1e15, hopium: 1e8, knowledge: 10000, power: 0, serenity: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 6.9e6, hopiumPerSecond: 0, knowledgePerSecond: 0.00002, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: "imgs/rick_roll.jpg",
+        hoverOverwrite: "Thank you for playing...",
+    },
+    {
+        name: "But Wait There's More!",
+        cost: { copium: 1e15, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 1e8, knowledge: 10000, power: 0, serenity: 0 },
+        earnings: { copiumPerSecond: 5e6, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 3, knowledgePerSecond: 0.00001, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: "imgs/surprise_pikachu.jpg",
+    },
+    {
+        name: "Spotify Wrapped",
+        cost: { copium: 1e15, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 1e8, knowledge: 10000, power: 0, serenity: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 1e6, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1.7e6, hopiumPerSecond: 0, knowledgePerSecond: 0.00001, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: "imgs/spotify_wrapped.jpg",
+    },
+    {
+        name: "Free Trial",
+        cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 2e11, knowledge: 25000, power: 0, serenity: 0 },
+        earnings: { copiumPerSecond: 8e6, delusionPerSecond: 0, yachtMoneyPerSecond: 1.75e6, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0.00001, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: "imgs/free_trial.jpg",
+    },
+    {
+        name: "Shooter Dad",
+        cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 5e11, knowledge: 100000, power: 0, serenity: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 1.2e7, trollPointsPerSecond: 0, hopiumPerSecond: 50, knowledgePerSecond: 0.00005, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: "imgs/shooter_swag.jpg",
+    },
+    {
+        name: "Build a Base",
+        cost: { copium: 1e18, delusion: 5e17, yachtMoney: 5e17, trollPoints: 1e18, hopium: 1e12, knowledge: 1, power: 0, serenity: 0 },
+        earnings: { copiumPerSecond: -3e7, delusionPerSecond: 0, yachtMoneyPerSecond: -1.5e7, trollPointsPerSecond: -5e7, hopiumPerSecond: -45, knowledgePerSecond: 0.0008, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: "imgs/all_your_base.jpg",
+        hoverOverwrite: "Xy'løth Q'värk, F'näürg zxÿl-gørh'tha! Z'qúol b'zhåk vi'krêth, nx'tuöl j'dä!,"
+    },
+    {
+        name: "NGU Idle",
+        cost: { copium: 1e18, delusion: 5e17, yachtMoney: 5e17, trollPoints: 1e18, hopium: 1e12, knowledge: 1e8, power: 0, serenity: 0 },
+        earnings: { copiumPerSecond: 5e7, delusionPerSecond: 1e7, yachtMoneyPerSecond: 3e7, trollPointsPerSecond: 7e7, hopiumPerSecond: 1000, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: "imgs/ngu_idle.jpg",
+        message: `Congratulations on unlocking the "NGU Idle" upgrade! This upgrade is a tribute to one of the greatest idle games ever. NGU Idle, known for its deep mechanics and quirky humor, has set a high standard in the idle game genre.<br><br>Here's to celebrating a game that has set a high bar for idle games everywhere. Enjoy the nostalgia and the boost it brings to your Degens Idle journey -- you may now watch all your Numbers Go Up!`,
+    },
+    {
+        name: "Unlimited Power",
+        cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 3.33333e-9, serenity: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1e7, hopiumPerSecond: 0, knowledgePerSecond: 0.00001, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: "imgs/unlimited_power.jpg",
+        message: `<p>As the gears of progress click into place, you feel a surge of energy coursing through your veins. The very essence of the universe seems to hum in harmony with your newfound abilities. "All you know for now is that power is unlocked," echoes a distant voice in your mind, as if whispered by the ancients who have tread this path before you.</p>
+                <p>Gaining power feels good—no, it feels exhilarating. You sense the weight of the world lifting, replaced by a tantalizing promise of untapped potential. This isn't just strength; it's an awakening, a key to doors that were previously hidden in the shadows of your ignorance.</p>
+                <p>Yet, with this surge of power comes a gnawing question: What does it do? The answers lie shrouded in mystery, hidden in the depths of this ever-evolving world. As you stand on the precipice of this new reality, you realize that your journey has only just begun. The true nature of this power remains elusive, but its promise is undeniable.</p>
+                <p><strong>You notice that prestige and god-mode multipliers do not directly affect power generation - this must be something bigger than anything you have encountered so far!</strong></p>
+                <p>Driven by curiosity and a burning desire to uncover the secrets that lie ahead, you must find out soon. Each step forward brings you closer to the answers, each discovery a piece of the grand puzzle. Embrace this newfound power, for it is both a gift and a challenge—a test to see if you can wield it wisely.</p>
+                `,
+    },
+    {
+        name: "Time for Careful Planning",
+        cost: { copium: 3e19, delusion: 2e19, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 3.3e8, power: 0, serenity: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 3e8, hopiumPerSecond: 5000, knowledgePerSecond: 0.00001, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: "imgs/leeroy_jenkins.jpg",
+    },
+    {
+        name: "Still very stupid at 18",
+        cost: { copium: 0, delusion: 1.8e19, yachtMoney: 0, trollPoints: 0, hopium: 1.8e15, knowledge: 1.8e9, power: 1.8e-7, serenity: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 7e7, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0.0025, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: "imgs/young_stupid.jpg",
+    },
+    {
+        name: "Impossible",
+        cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 1, serenity: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 1, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: "imgs/impossible.jpg",
+        message: `Lol, cheater! Instead of cheating why don't you hop in discord and suggest future memes!`,
+
+    },
+
     // {
     //     name: "Haven't Smoked Foool (not done)",
     //     cost: { copium: 1e15, delusion: 1e15, yachtMoney: 1e15, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
