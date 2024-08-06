@@ -56,6 +56,7 @@
 .skill-row {
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
     margin: 20px 0;
 }
 
@@ -102,4 +103,14 @@
 .libraryskill.purchased h3,
 .libraryskill.purchased p {
     display: block; /* Show when affordable or purchased */
+}
+
+/* Media query for mobile devices */
+@media (max-width: 600px) {
+    .skill-row {
+        justify-content: space-around;
+    }
+    .libraryskill {
+        width: calc(50% - 10px); /* Two skills per row with some margin */
+    }
 }

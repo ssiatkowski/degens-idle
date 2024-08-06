@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PigeonPost - The Winged Cash Courier Service</title>
+    <link rel="stylesheet" href="pigeon.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>PigeonPost</h1>
+            <p>The Winged Cash Courier Service</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="intro">
+            <p>Ever wished you could send money in the most unique way possible? Forget banks and digital transfers—try PigeonPost! Just leave your money outside your window, and our highly trained carrier pigeons will swoop down, pick it up, and deliver it to your target address. Fast, reliable, and absolutely hilarious!</p>
+        </section>
+
+        <section class="how-it-works">
+            <h2>How It Works</h2>
+            <ol>
+                <li><strong>Step 1:</strong> Place your cash in an envelope. Make sure it's securely sealed—our pigeons aren't accountants!</li>
+                <li><strong>Step 2:</strong> Attach the recipient's address to the envelope. Legible handwriting helps, but our pigeons are pretty smart.</li>
+                <li><strong>Step 3:</strong> Open your window and place the envelope on the sill. Give a friendly whistle to alert our pigeons.</li>
+                <li><strong>Step 4:</strong> Wait for the magic! A carrier pigeon will collect your envelope and fly it to the destination. (Pigeon treats are appreciated but not required.)</li>
+            </ol>
+        </section>
+
+        <section class="why-pigeonpost">
+            <h2>Why PigeonPost?</h2>
+            <ul>
+                <li><strong>Unique:</strong> Stand out from the crowd with the most unconventional money transfer method.</li>
+                <li><strong>Reliable:</strong> Our pigeons are the best in the business, with a 99.9% delivery rate (the 0.1% are enjoying early retirement).</li>
+                <li><strong>Eco-Friendly:</strong> No carbon emissions—just happy, healthy pigeons getting their daily exercise.</li>
+                <li><strong>Entertaining:</strong> Amaze your friends and family with your creative approach to sending money.</li>
+            </ul>
+        </section>
+
+        <section class="testimonials">
+            <h2>What Our Users Say</h2>
+            <p><em>"I couldn't stop laughing when I saw a pigeon deliver my rent money! PigeonPost is the best!"</em> - Alex R.</p>
+            <p><em>"The pigeons are so professional and well-behaved. I use PigeonPost for all my quirky transactions!"</em> - Jamie L.</p>
+            <p><em>"My grandma loves it when a pigeon shows up with my gift money. It's a hoot!"</em> - Sam K.</p>
+        </section>
+
+        <section class="sign-up">
+            <h2>Ready to Try PigeonPost?</h2>
+            <p>Sign up today and get your first pigeon delivery free! Just enter your details below:</p>
+            <form id="signupForm">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+                
+                <label for="address">Your Address:</label>
+                <input type="text" id="address" name="address" required>
+                
+                <label for="maidenName">Mother's Maiden Name:</label>
+                <input type="text" id="maidenName" name="maidenName" required>
+                
+                <input type="submit" value="Sign Up">
+            </form>
+        </section>
+    </main>
+
+    <div id="overlay">
+        <div class="overlay-content">
+            <h2>Payment Scheduled</h2>
+            <p>Your payment has been scheduled. A pigeon should arrive at <span id="arrivalTime"></span>.</p>
+            <button id="closeOverlay">Close</button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 PigeonPost. All Rights Reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+            <p>Note: PigeonPost is a whimsical service meant as a joke for entertainment purposes. We do not actually use carrier pigeons for money transfer. Please use Venmo or Buy Me A Coffee to support the creator of Degens Idle instead. Thank you for your support and sense of humor!</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('signupForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent form from submitting normally
+            
+            // Calculate arrival time (1 hour and 14 minutes from now)
+            var arrivalTime = new Date();
+            arrivalTime.setMinutes(arrivalTime.getMinutes() + 74);
+            
+            // Format the time
+            var hours = arrivalTime.getHours();
+            var minutes = arrivalTime.getMinutes();
+            var ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12; // the hour '0' should be '12'
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            var strTime = hours + ':' + minutes + ' ' + ampm;
+            
+            // Display the overlay
+            document.getElementById('arrivalTime').innerText = strTime;
+            document.getElementById('overlay').style.display = 'flex';
+        });
+
+        document.getElementById('closeOverlay').addEventListener('click', function() {
+            document.getElementById('overlay').style.display = 'none';
+        });
+    </script>
+</body>
+</html>

@@ -80,7 +80,6 @@
     background-color: rgba(114, 137, 218, 0.2); /* Light background on hover */
 }
 
-
 /* Donate Button */
 #donateButton {
     background-color: #ffcc00; /* Yellow background */
@@ -92,12 +91,40 @@
     display: block;
     text-align: center;
     font-size: 16px;
+    font-weight: bold;
+    color: #ffffff; /* White text */
     border-radius: 5px; /* Rounded corners */
-    transition: background-color 0.2s;
+    transition: background-color 0.2s, box-shadow 0.2s;
+    position: relative;
+    overflow: hidden;
 }
 
 #donateButton:hover {
     background-color: #e6b800; /* Darker yellow on hover */
+    box-shadow: 0 0 10px rgba(255, 204, 0, 0.8), 0 0 20px rgba(255, 204, 0, 0.6);
+}
+
+/* Sparkle Effect */
+#donateButton::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.5) 20%, transparent 20%),
+                      radial-gradient(circle, rgba(255, 255, 255, 0.5) 20%, transparent 20%);
+    background-size: 10px 10px;
+    animation: sparkle 1.5s infinite linear;
+}
+
+@keyframes sparkle {
+    0% {
+        transform: translateX(0) translateY(0);
+    }
+    100% {
+        transform: translateX(100%) translateY(100%);
+    }
 }
 
 /* Donation Overlay */
@@ -128,23 +155,120 @@
     font-family: Arial, sans-serif; /* Consistent font */
 }
 
-#donateSmallButton, #donateMediumButton, #donateLargeButton {
+/* Donate Small Button */
+#donateSmallButton {
     background-color: #ffcc00; /* Yellow background */
     border: none;
     cursor: pointer;
     padding: 10px 20px;
     margin: 10px 0;
-    width: 100%; /* Full width buttons */
+    width: 100%; /* Full width button */
+    display: block;
+    text-align: center;
+    font-size: 16px;
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.2s, transform 0.2s;
+    animation: bounce 2s infinite;
+}
+
+#donateSmallButton:hover {
+    background-color: #e6b800; /* Darker yellow on hover */
+    transform: scale(1.1);
+}
+
+/* Donate Medium Button */
+#donateMediumButton {
+    background-color: #0073e6; /* Blue background */
+    border: none;
+    cursor: pointer;
+    padding: 10px 20px;
+    margin: 10px 0;
+    width: 100%; /* Full width button */
     display: block;
     text-align: center;
     font-size: 16px;
     border-radius: 5px; /* Rounded corners */
     transition: background-color 0.2s;
+    color: white;
+    animation: pulse 2s infinite;
 }
 
-#donateSmallButton:hover, #donateMediumButton:hover, #donateLargeButton:hover {
-    background-color: #e6b800; /* Darker yellow on hover */
+#donateMediumButton:hover {
+    background-color: #005bb5; /* Darker blue on hover */
 }
+
+/* Donate Large Button */
+#donateLargeButton {
+    background-color: #ff00cc; /* Pink background */
+    border: none;
+    cursor: pointer;
+    padding: 10px 20px;
+    margin: 10px 0;
+    width: 100%; /* Full width button */
+    display: block;
+    text-align: center;
+    font-size: 16px;
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.2s;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    animation: sparkle 2s linear infinite;
+}
+
+#donateLargeButton::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, rgba(255, 255, 255, 0.5) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0.5) 75%, transparent 75%, transparent);
+    background-size: 50px 50px;
+    opacity: 0.5;
+    pointer-events: none;
+    z-index: 1;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes sparkle {
+    0% {
+        transform: translateX(0) translateY(0);
+    }
+    100% {
+        transform: translateX(-40px) translateY(-40px);
+    }
+}
+
+#donateLargeButton:hover {
+    background-color: #cc00aa; /* Darker pink on hover */
+}
+
+
+
 
 /* Import File Input */
 #importFileInput {

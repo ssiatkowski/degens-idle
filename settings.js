@@ -188,11 +188,11 @@ document.getElementById('discordButton').addEventListener('click', function() {
 
 // Add event listeners for donation buttons
 document.getElementById('donateSmallButton').addEventListener('click', function() {
-    window.open('https://venmo.com/YourVenmoID?txn=pay&amount=5', '_blank'); // Replace with your Venmo link
+    window.open('https://buymeacoffee.com/ssiatkowski', '_blank'); 
 });
 document.getElementById('donateMediumButton').addEventListener('click', function() {
-    window.open('https://venmo.com/YourVenmoID?txn=pay&amount=10', '_blank'); // Replace with your Venmo link
+    window.open('https://account.venmo.com/payment-link?audience=public&amount=7&note=Keep%20improving%20Degens%20Idle&recipients=%2CSebastian-Siatkowski&txn=pay', '_blank'); // Replace with your Venmo link
 });
 document.getElementById('donateLargeButton').addEventListener('click', function() {
-    window.open('https://venmo.com/YourVenmoID?txn=pay&amount=20', '_blank'); // Replace with your Venmo link
+    window.open('pigeon.html', '_blank'); 
 });
