@@ -111,11 +111,11 @@
         justify-content: space-around;
     }
     .libraryskill {
-        width: calc(50% - 30px); /* Two skills per row with some margin */
+        width: calc(49% - 35px); /* Two skills per row with some margin */
         font-size: 0.8em; /* Smaller font size for mobile */
         padding: 5px; /* Adjust padding for smaller screens */
     }
     .skill-level-label {
-        font-size: 16px; /* Smaller label font size */
+        font-size: 14px; /* Smaller label font size */
     }
 }
