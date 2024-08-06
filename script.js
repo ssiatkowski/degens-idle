@@ -1353,7 +1353,10 @@ function updateUpgradeButtons() {
             // For mobile devices
             button.addEventListener('touchstart', showTooltipEvent);
             button.addEventListener('touchmove', moveTooltipEvent);
-            button.addEventListener('touchend', hideTooltipEvent);
+            button.addEventListener('touchend', (event) => {
+                hideTooltip();
+                button.click(); // Simulate a click event on touchend
+            });
         }
     });
 
@@ -1399,12 +1402,19 @@ function updateUpgradeButtons() {
     // For mobile devices
     buySeenButton.addEventListener('touchstart', showTooltipForBuySeen);
     buySeenButton.addEventListener('touchmove', moveTooltipForBuy);
-    buySeenButton.addEventListener('touchend', hideTooltipForBuy);
+    buySeenButton.addEventListener('touchend', (event) => {
+        hideTooltipForBuy();
+        buySeenButton.click(); // Simulate a click event on touchend
+    });
 
     buyMaxButton.addEventListener('touchstart', showTooltipForBuyMax);
     buyMaxButton.addEventListener('touchmove', moveTooltipForBuy);
-    buyMaxButton.addEventListener('touchend', hideTooltipForBuy);
+    buyMaxButton.addEventListener('touchend', (event) => {
+        hideTooltipForBuy();
+        buyMaxButton.click(); // Simulate a click event on touchend
+    });
 }
+
 
 // Assuming showTooltip and hideTooltip functions are defined elsewhere
 
