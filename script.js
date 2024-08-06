@@ -160,7 +160,7 @@ function loadGameState() {
     // Reapply the purchased upgrades and handle any special cases (e.g., "Cookie Clicker")
     purchasedUpgrades.forEach(upgrade => {
         if (upgrade) {
-            addPurchasedUpgrade(upgrade.img, upgrade.name, upgrade.earnings, upgrade.isGodMode);
+            addPurchasedUpgrade(upgrade.img, upgrade.name, upgrade.earnings, upgrade.isGodMode, upgrade.message);
             if (upgrade.name === "Cookie Clicker") {
                 document.getElementById('cookieButton').style.display = 'block';
                 firstTimeCookieUnlock = false; // Indicate that the cookie button has been previously unlocked
@@ -845,7 +845,30 @@ function tradeResources() {
 
 }
 
+function Commas(Num, Fixed) {
+    return Num.toLocaleString("en-US",{minimumFractionDigits: Fixed, maximumFractionDigits: Fixed});
+  }
+
+function Bound(LOWER_BOUND = -Infinity, UPPER_BOUND = Infinity, DEFAULT_VALUE = 0, DATA = 0) {
+    if (LOWER_BOUND > UPPER_BOUND) {throw new Error(`UPPER_BOUND is ${UPPER_BOUND} which is less than LOWER_BOUND which is ${LOWER_BOUND}`)}
+    if (DEFAULT_VALUE < LOWER_BOUND || DEFAULT_VALUE > UPPER_BOUND) {
+      throw new Error(`Math ain't mathing`)
+    }
+    if (DATA >= LOWER_BOUND && DATA <= UPPER_BOUND) return DATA
+    return DEFAULT_VALUE
+  }
+
+//replace formatNumber / customRound with this
+function NumberScientific(Num, Fixed = 2, EXPONENT_LIMIT = 3) {
+    let FIXED = Fixed, limitTillexpo = Bound(0, 9 , 4, EXPONENT_LIMIT), Exponent = Math.floor(Math.log10(Num))
+    if (Num < 10**limitTillexpo) {
+      return Commas(Num, Fixed)
+    }
+    return `${(Num/(10**(Exponent))).toFixed(Fixed)}e${Math.floor(Math.log10(Num))}`
+}
+
 function customRound(number, digits) {
+
     // Convert the number to a string
     let numStr = number.toString();
     // Find the position of the decimal point
@@ -1084,7 +1107,7 @@ function decodeName(encodedName) {
 }
 
 // Function to handle the purchase of an upgrade
-function buyUpgrade(encodedUpgradeName, suppressDialogs = false) {
+function buyUpgrade(encodedUpgradeName) {
     // Decode the upgrade name
     const upgradeName = decodeName(encodedUpgradeName);
     // Find the upgrade object by its name in the available upgrades list
@@ -1122,6 +1145,7 @@ function buyUpgrade(encodedUpgradeName, suppressDialogs = false) {
         // Increase the per second earnings for each resource, apply God Mode multiplier if applicable
         const multiplier = upgrade.isGodMode ? 10 : 1;
         copiumPerSecond += (earnings.copiumPerSecond || 0) * multiplier;
+        delusionPerSecond += (earnings.delusionPerSecond || 0) * multiplier;
         yachtMoneyPerSecond += (earnings.yachtMoneyPerSecond || 0) * multiplier;
         trollPointsPerSecond += (earnings.trollPointsPerSecond || 0) * multiplier;
         hopiumPerSecond += (earnings.hopiumPerSecond || 0) * multiplier;
@@ -1140,7 +1164,7 @@ function buyUpgrade(encodedUpgradeName, suppressDialogs = false) {
         }
 
         // Add the purchased upgrade to the display
-        addPurchasedUpgrade(img, name, earnings, upgrade.isGodMode);
+        addPurchasedUpgrade(img, name, earnings, upgrade.isGodMode, upgrade.message);
         // Remove the upgrade from the available upgrades list
         availableUpgrades.splice(availableUpgrades.indexOf(upgrade), 1);
         // Add the upgrade to the purchased upgrades list
@@ -1149,20 +1173,20 @@ function buyUpgrade(encodedUpgradeName, suppressDialogs = false) {
         // Special case for unlocking the "Cookie Clicker" upgrade
         if (name === "Cookie Clicker" && firstTimeCookieUnlock) {
             document.getElementById('cookieButton').style.display = 'block';
-            showMessageModal('Cookie Clicker', "In the vast world of idle games, one title stands as the beacon that lit the path for all others: Cookie Clicker. Launched in 2013, Cookie Clicker captivated millions with its simple yet endlessly engaging premise. The thrill of watching numbers grow, the joy of achieving milestones, and the addictiveness of endless clicking and upgrading—all these elements combined to create a phenomenon that transcended the gaming community.\n\nIn homage to this legendary game, you have now unlocked a cookie! Clicking this cookie will count as clicking each collect button 10 times! It will persist across Prestiges! Happy clicking!");
             firstTimeCookieUnlock = false;
         } else if (name === "Cookie Clicker") {
             document.getElementById('cookieButton').style.display = 'block';
         }
 
-        // Special case for unlocking the "Ascension" upgrade
-        if (name === "Ascension" && godModeLevel < 2) {
-            showMessageModal('Ascension', "Congratulations, brave soul! With the purchase of the Ascension upgrade, you have unlocked the extraordinary ability to Ascend Above Mortals and enter the revered God Mode. Prepare yourself for an epic journey where the limits of mortality no longer bind you.\n\nWelcome to the next chapter of your legendary adventure. Ascend and let your godlike journey begin!");
-        } 
+        // Check if the upgrade message has been shown before
+        const messageShownUpgrades = JSON.parse(localStorage.getItem('messageShownUpgrades')) || [];
+        const isFirstPurchase = !messageShownUpgrades.includes(name);
 
-        // Show a message if the upgrade has one
-        if (message && !suppressDialogs) {
+        // Show a message if the upgrade has one and it's the first purchase
+        if (message && isFirstPurchase) {
             showMessageModal(name, message);
+            messageShownUpgrades.push(name);
+            localStorage.setItem('messageShownUpgrades', JSON.stringify(messageShownUpgrades));
         }
 
         // Special case for the "Antimatter Dimension" upgrade
@@ -1172,7 +1196,7 @@ function buyUpgrade(encodedUpgradeName, suppressDialogs = false) {
 
         // Special case for the "Still very stupid" upgrade
         if (name === "Still very stupid") {
-            showMessageModal('Sadly', "This marks the end of v0.72. Your journey through this existential tale is just beginning, and the newfound power will open doors to uncharted realms. How will you wield it? Stay tuned, as another big update is just a few days away. If you can't wait, feel free to restart the game and embark on speed runs, or explore alternate strategies.");
+            showMessageModal('Sadly', "This marks the end of v0.73. Your journey through this existential tale is just beginning, and the newfound power will open doors to uncharted realms. How will you wield it? Stay tuned, as another big update is just a few days away. If you can't wait, feel free to restart the game and embark on speed runs, or explore alternate strategies.");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one
@@ -1194,6 +1218,7 @@ function buyUpgrade(encodedUpgradeName, suppressDialogs = false) {
     // Update the upgrade buttons to reflect the current state
     updateUpgradeButtons();
 }
+
 
 
 // Function to handle the purchase of multiple upgrades
@@ -1239,7 +1264,7 @@ function formatCostOrEarnings(costOrEarnings, isGodMode = false) {
 
 
 // Function to add a purchased upgrade to the display
-function addPurchasedUpgrade(img, name, earnings, isGodMode = false) {
+function addPurchasedUpgrade(img, name, earnings, isGodMode = false, message = null) {
     const purchasedList = document.getElementById('purchasedList'); // Get the purchased list container
     const upgradeElement = document.createElement('div'); // Create a new div element
     upgradeElement.classList.add('purchased-upgrade'); // Add the 'purchased-upgrade' class
@@ -1247,6 +1272,12 @@ function addPurchasedUpgrade(img, name, earnings, isGodMode = false) {
     // Add the God Mode class if applicable
     if (isGodMode) {
         upgradeElement.classList.add('purchased-upgrade-godmode');
+    }
+
+    // If the upgrade has a message, add the 'clickable' class and an onclick event
+    if (message) {
+        upgradeElement.classList.add('clickable');
+        upgradeElement.onclick = () => showMessageModal(name, message, false, false);
     }
 
     // Set the inner HTML of the new div element
@@ -1259,6 +1290,7 @@ function addPurchasedUpgrade(img, name, earnings, isGodMode = false) {
             </div>
         </div>
     `;
+
     purchasedList.prepend(upgradeElement); // Prepend to show the most recent first
 }
 
@@ -1428,7 +1460,7 @@ function updateUpgradeButtons() {
     };
     const showTooltipForBuyMax = (event) => {
         event.preventDefault(); // Prevent default behavior (like text selection)
-        showTooltip(event, "Buy All", null, false, "Purchase all upgrades (including hidden) AND suppress dialogs");
+        showTooltip(event, "Buy All", null, false, "Purchase all upgrades (can be more than 7)");
     };
     const moveTooltipForBuy = (event) => {
         event.preventDefault(); // Prevent default behavior (like text selection)
@@ -1543,7 +1575,6 @@ async function devAscend() {
         saveGameState();
         updateEffectiveMultipliers();
         updateDisplay();
-        // showMessageModal('Dev Mode', `Ascended and set ${randomUpgrade.name} to God Mode.`);
     }
 }
 

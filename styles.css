@@ -136,7 +136,7 @@ h1, h2 {
     transform: rotate(-90deg);
     font-size: 3em;
     font-weight: bold;
-    animation: flash 2s infinite;
+    animation: flash infinite 2s ease-in-out alternate ;
 }
 
 #button-container {
@@ -363,6 +363,17 @@ button.disabled {
     width: 130px; 
     height: 130px; 
     margin-bottom: 2.5px; 
+}
+
+/* Add a hover effect to indicate that the upgrade is clickable */
+.purchased-upgrade.clickable {
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.purchased-upgrade.clickable:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
 .upgrade-img {
