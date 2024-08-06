@@ -10,7 +10,7 @@
     justify-content: center;
     align-items: center;
     z-index: 9999;
-    overflow-y: auto; /* Enable vertical scrolling */
+    overflow: hidden; /* Prevent body scrolling */
 }
 
 .settings-overlay-content {
@@ -141,7 +141,7 @@
     justify-content: center;
     align-items: center;
     z-index: 9999;
-    overflow-y: auto; /* Enable vertical scrolling */
+    overflow: hidden; /* Prevent body scrolling */
 }
 
 .donation-overlay-content {
