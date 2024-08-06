@@ -416,13 +416,13 @@ const upgrades = [
     {
         name: "Yom Kippur",
         cost: { copium: 5e14, delusion: 0, yachtMoney: 5e13, trollPoints: 0, hopium: 500000, knowledge: 100, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 10000000, delusionPerSecond: 250000, yachtMoneyPerSecond: 500000, trollPointsPerSecond: 390000, hopiumPerSecond: 0.04, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 1000000, delusionPerSecond: 250000, yachtMoneyPerSecond: 500000, trollPointsPerSecond: 390000, hopiumPerSecond: 0.04, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/yom_kippur.jpg",
     },
     {
         name: "Hire an Assistant",
         cost: { copium: 0, delusion: 0, yachtMoney: 5e13, trollPoints: 0, hopium: 1000000, knowledge: 150, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: -50000, trollPointsPerSecond: 1e6, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: -5000000, delusionPerSecond: 0, yachtMoneyPerSecond: -500000, trollPointsPerSecond: 1e5, hopiumPerSecond: 0, knowledgePerSecond: 0.000005, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/hire_employee.jpg",
         hoverOverwrite: "Should be helpful right?",
     },
