@@ -1207,7 +1207,7 @@ function buyUpgrade(encodedUpgradeName) {
 
         // Special case for the "Still very stupid" upgrade
         if (name === "Still very stupid") {
-            showMessageModal('Sadly', "This marks the end of v0.73. Your journey through this existential tale is just beginning, and the newfound power will open doors to uncharted realms. How will you wield it? Stay tuned, as another big update is just a few days away. If you can't wait, feel free to restart the game and embark on speed runs, or explore alternate strategies.");
+            showMessageModal('Sadly', "This marks the end of v0.74. Your journey through this existential tale is just beginning, and the newfound power will open doors to uncharted realms. How will you wield it? Stay tuned, as another big update is just a few days away. If you can't wait, feel free to restart the game and embark on speed runs, or explore alternate strategies.");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one
