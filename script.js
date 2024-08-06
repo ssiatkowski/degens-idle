@@ -1076,12 +1076,12 @@ function decodeName(encodedName) {
 }
 
 // Function to handle the purchase of an upgrade
-function buyUpgrade(encodedUpgradeName) {
+function buyUpgrade(encodedUpgradeName, suppressDialogs = false) {
     // Decode the upgrade name
     const upgradeName = decodeName(encodedUpgradeName);
     // Find the upgrade object by its name in the available upgrades list
     const upgrade = availableUpgrades.find(up => up.name === upgradeName);
-    
+
     // If the upgrade is not found, log an error and return
     if (!upgrade) {
         console.error(`Upgrade not found: ${upgradeName}`);
@@ -1118,7 +1118,6 @@ function buyUpgrade(encodedUpgradeName) {
         trollPointsPerSecond += (earnings.trollPointsPerSecond || 0) * multiplier;
         hopiumPerSecond += (earnings.hopiumPerSecond || 0) * multiplier;
         knowledgePerSecond += (earnings.knowledgePerSecond || 0) * multiplier;
-        // powerPerSecond += (earnings.powerPerSecond || 0) * multiplier;
         serenityPerSecond += (earnings.serenityPerSecond || 0) * multiplier;
 
         // Handle delusion per second based on the toggle state
@@ -1149,12 +1148,12 @@ function buyUpgrade(encodedUpgradeName) {
         }
 
         // Special case for unlocking the "Ascension" upgrade
-        if (name === "Ascension" && godModeLevel < 3) {
+        if (name === "Ascension" && godModeLevel < 2) {
             showMessageModal('Ascension', "Congratulations, brave soul! With the purchase of the Ascension upgrade, you have unlocked the extraordinary ability to Ascend Above Mortals and enter the revered God Mode. Prepare yourself for an epic journey where the limits of mortality no longer bind you.\n\nWelcome to the next chapter of your legendary adventure. Ascend and let your godlike journey begin!");
         } 
 
         // Show a message if the upgrade has one
-        if (message) {
+        if (message && !suppressDialogs) {
             showMessageModal(name, message);
         }
 
@@ -1163,7 +1162,7 @@ function buyUpgrade(encodedUpgradeName) {
             unhideKnowledge();
         }
 
-        // Special case for the "Antimatter Dimension" upgrade
+        // Special case for the "Still very stupid" upgrade
         if (name === "Still very stupid") {
             showMessageModal('Sadly', "This marks the end of v0.72. Your journey through this existential tale is just beginning, and the newfound power will open doors to uncharted realms. How will you wield it? Stay tuned, as another big update is just a few days away. If you can't wait, feel free to restart the game and embark on speed runs, or explore alternate strategies.");
         }
@@ -1171,7 +1170,6 @@ function buyUpgrade(encodedUpgradeName) {
         // Apply a mini prestige multiplier if the upgrade has one
         if (miniPrestigeMultiplier) {
             epsMultiplier *= miniPrestigeMultiplier;
-            ///showMessageModal('Multiplier Changed', `Prestige multiplier changed to x${epsMultiplier.toFixed(2)}`);
         }
 
         // Update the upgrade list and display
@@ -1189,14 +1187,16 @@ function buyUpgrade(encodedUpgradeName) {
     updateUpgradeButtons();
 }
 
+
 // Function to handle the purchase of multiple upgrades
 function buyAllUpgrades(limit) {
     availableUpgrades.slice(0, limit).forEach(upgrade => {
         if (isAffordable(upgrade.cost)) {
-            buyUpgrade(encodeName(upgrade.name));
+            buyUpgrade(encodeName(upgrade.name), true);
         }
     });
 }
+
 
 
 
@@ -1342,8 +1342,8 @@ function updateUpgradeButtons() {
             const moveTooltipEvent = (event) => {
                 event.preventDefault(); // Prevent default behavior (like text selection)
                 const tooltip = document.getElementById('upgradeTooltip');
-                tooltip.style.left = `${event.touches[0].pageX + 10}px`;
-                tooltip.style.top = `${event.touches[0].pageY + 10}px`;
+                tooltip.style.left = `${event.pageX + 10}px`;
+                tooltip.style.top = `${event.pageY + 10}px`;
             };
 
             button.onmouseover = showTooltipEvent;
@@ -1356,6 +1356,7 @@ function updateUpgradeButtons() {
             button.addEventListener('touchend', hideTooltipEvent);
         }
     });
+
     if (foundAffordableUpgrade) {
         document.getElementById('buySeenButton').classList.add('affordable');
         document.getElementById('buyMaxButton').classList.add('affordable');
@@ -1363,7 +1364,50 @@ function updateUpgradeButtons() {
         document.getElementById('buySeenButton').classList.remove('affordable');
         document.getElementById('buyMaxButton').classList.remove('affordable');
     }
+
+    // Add hover text for buySeenButton and buyMaxButton
+    const buySeenButton = document.getElementById('buySeenButton');
+    const buyMaxButton = document.getElementById('buyMaxButton');
+
+    const showTooltipForBuySeen = (event) => {
+        event.preventDefault(); // Prevent default behavior (like text selection)
+        showTooltip(event, "Buy Seen", null, false, "Purchase all the affordable visible upgrades");
+    };
+    const showTooltipForBuyMax = (event) => {
+        event.preventDefault(); // Prevent default behavior (like text selection)
+        showTooltip(event, "Buy All", null, false, "Purchase all upgrades (including hidden) AND suppress dialogs");
+    };
+    const moveTooltipForBuy = (event) => {
+        event.preventDefault(); // Prevent default behavior (like text selection)
+        const tooltip = document.getElementById('upgradeTooltip');
+        tooltip.style.left = `${event.pageX + 10}px`;
+        tooltip.style.top = `${event.pageY + 10}px`;
+    };
+    const hideTooltipForBuy = (event) => {
+        event.preventDefault(); // Prevent default behavior (like text selection)
+        hideTooltip();
+    };
+
+    buySeenButton.onmouseover = showTooltipForBuySeen;
+    buySeenButton.onmouseout = hideTooltipForBuy;
+    buySeenButton.onmousemove = moveTooltipForBuy;
+
+    buyMaxButton.onmouseover = showTooltipForBuyMax;
+    buyMaxButton.onmouseout = hideTooltipForBuy;
+    buyMaxButton.onmousemove = moveTooltipForBuy;
+
+    // For mobile devices
+    buySeenButton.addEventListener('touchstart', showTooltipForBuySeen);
+    buySeenButton.addEventListener('touchmove', moveTooltipForBuy);
+    buySeenButton.addEventListener('touchend', hideTooltipForBuy);
+
+    buyMaxButton.addEventListener('touchstart', showTooltipForBuyMax);
+    buyMaxButton.addEventListener('touchmove', moveTooltipForBuy);
+    buyMaxButton.addEventListener('touchend', hideTooltipForBuy);
 }
+
+// Assuming showTooltip and hideTooltip functions are defined elsewhere
+
 
 
 

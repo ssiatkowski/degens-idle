@@ -10,6 +10,7 @@
     justify-content: center;
     align-items: center;
     z-index: 9999;
+    overflow-y: auto; /* Enable vertical scrolling */
 }
 
 .settings-overlay-content {
@@ -24,6 +25,7 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Shadow for depth */
     color: #e0e0e0; /* Light text color */
     font-family: Arial, sans-serif; /* Consistent font */
+    overflow-y: auto; /* Enable scrolling within the content */
 }
 
 /* Close Button */
@@ -139,6 +141,7 @@
     justify-content: center;
     align-items: center;
     z-index: 9999;
+    overflow-y: auto; /* Enable vertical scrolling */
 }
 
 .donation-overlay-content {
@@ -153,6 +156,7 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Shadow for depth */
     color: #e0e0e0; /* Light text color */
     font-family: Arial, sans-serif; /* Consistent font */
+    overflow-y: auto; /* Enable scrolling within the content */
 }
 
 /* Donate Small Button */
