@@ -1692,14 +1692,22 @@ function displayNextModal() {
                     if (upgradeItem.classList.contains('selected')) {
                         upgradeItem.classList.remove('selected');
                         selectedUpgrades = selectedUpgrades.filter(up => up !== upgrade);
-                    } else if (selectedUpgrades.length < 3 || !tripleAscensionSkill) {
-                        upgradeItem.classList.add('selected');
-                        selectedUpgrades.push(upgrade);
+                    } else {
+                        if (tripleAscensionSkill && selectedUpgrades.length < 3) {
+                            upgradeItem.classList.add('selected');
+                            selectedUpgrades.push(upgrade);
+                        } else if (!tripleAscensionSkill && selectedUpgrades.length < 1) {
+                            upgradeItem.classList.add('selected');
+                            selectedUpgrades.push(upgrade);
+                        } else {
+                            alert(`You can only select up to ${tripleAscensionSkill ? 3 : 1} upgrade${tripleAscensionSkill ? 's' : ''}.`);
+                        }
                     }
                 };
                 ascendUpgradeList.appendChild(upgradeItem);
             }
         });
+        
 
         modalConfirmButton.onclick = () => {
             if (selectedUpgrades.length > 0) {
