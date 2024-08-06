@@ -1330,18 +1330,27 @@ function updateUpgradeButtons() {
                 button.classList.remove('affordable', 'affordable-godmode');
             }
 
-            // Add hover event listeners to show earnings tooltip
-            button.onmouseover = (event) => {
+            // Add hover and touch event listeners to show earnings tooltip
+            const showTooltipEvent = (event) => {
                 showTooltip(event, upgrade.name, upgrade.earnings, upgrade.isGodMode, upgrade.hoverOverwrite);
             };
-            button.onmousemove = (event) => {
+            const hideTooltipEvent = () => {
+                hideTooltip();
+            };
+            const moveTooltipEvent = (event) => {
                 const tooltip = document.getElementById('upgradeTooltip');
                 tooltip.style.left = `${event.pageX + 10}px`;
                 tooltip.style.top = `${event.pageY + 10}px`;
             };
-            button.onmouseout = () => {
-                hideTooltip();
-            };
+
+            button.onmouseover = showTooltipEvent;
+            button.onmousemove = moveTooltipEvent;
+            button.onmouseout = hideTooltipEvent;
+
+            // For mobile devices
+            button.addEventListener('touchstart', showTooltipEvent);
+            button.addEventListener('touchmove', moveTooltipEvent);
+            button.addEventListener('touchend', hideTooltipEvent);
         }
     });
     if (foundAffordableUpgrade) {
@@ -1352,6 +1361,7 @@ function updateUpgradeButtons() {
         document.getElementById('buyMaxButton').classList.remove('affordable');
     }
 }
+
 
 // Developer mode multipliers
 let devMultiplier = 1;
