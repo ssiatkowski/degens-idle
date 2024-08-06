@@ -1351,11 +1351,24 @@ function updateUpgradeButtons() {
             button.onmouseout = hideTooltipEvent;
 
             // For mobile devices
-            button.addEventListener('touchstart', showTooltipEvent);
+            let touchStartX, touchStartY;
+
+            button.addEventListener('touchstart', (event) => {
+                showTooltipEvent(event);
+                touchStartX = event.touches[0].clientX;
+                touchStartY = event.touches[0].clientY;
+            });
+
             button.addEventListener('touchmove', moveTooltipEvent);
+
             button.addEventListener('touchend', (event) => {
                 hideTooltip();
-                button.click(); // Simulate a click event on touchend
+                const touchEndX = event.changedTouches[0].clientX;
+                const touchEndY = event.changedTouches[0].clientY;
+                const rect = button.getBoundingClientRect();
+                if (touchEndX >= rect.left && touchEndX <= rect.right && touchEndY >= rect.top && touchEndY <= rect.bottom) {
+                    button.click(); // Simulate a click event if touchend is within the button
+                }
             });
         }
     });
@@ -1400,20 +1413,45 @@ function updateUpgradeButtons() {
     buyMaxButton.onmousemove = moveTooltipForBuy;
 
     // For mobile devices
-    buySeenButton.addEventListener('touchstart', showTooltipForBuySeen);
-    buySeenButton.addEventListener('touchmove', moveTooltipForBuy);
-    buySeenButton.addEventListener('touchend', (event) => {
-        hideTooltipForBuy();
-        buySeenButton.click(); // Simulate a click event on touchend
+    let touchStartX, touchStartY;
+
+    buySeenButton.addEventListener('touchstart', (event) => {
+        showTooltipForBuySeen(event);
+        touchStartX = event.touches[0].clientX;
+        touchStartY = event.touches[0].clientY;
     });
 
-    buyMaxButton.addEventListener('touchstart', showTooltipForBuyMax);
+    buySeenButton.addEventListener('touchmove', moveTooltipForBuy);
+
+    buySeenButton.addEventListener('touchend', (event) => {
+        hideTooltipForBuy();
+        const touchEndX = event.changedTouches[0].clientX;
+        const touchEndY = event.changedTouches[0].clientY;
+        const rect = buySeenButton.getBoundingClientRect();
+        if (touchEndX >= rect.left && touchEndX <= rect.right && touchEndY >= rect.top && touchEndY <= rect.bottom) {
+            buySeenButton.click(); // Simulate a click event if touchend is within the button
+        }
+    });
+
+    buyMaxButton.addEventListener('touchstart', (event) => {
+        showTooltipForBuyMax(event);
+        touchStartX = event.touches[0].clientX;
+        touchStartY = event.touches[0].clientY;
+    });
+
     buyMaxButton.addEventListener('touchmove', moveTooltipForBuy);
+
     buyMaxButton.addEventListener('touchend', (event) => {
         hideTooltipForBuy();
-        buyMaxButton.click(); // Simulate a click event on touchend
+        const touchEndX = event.changedTouches[0].clientX;
+        const touchEndY = event.changedTouches[0].clientY;
+        const rect = buyMaxButton.getBoundingClientRect();
+        if (touchEndX >= rect.left && touchEndX <= rect.right && touchEndY >= rect.top && touchEndY <= rect.bottom) {
+            buyMaxButton.click(); // Simulate a click event if touchend is within the button
+        }
     });
 }
+
 
 
 // Assuming showTooltip and hideTooltip functions are defined elsewhere
