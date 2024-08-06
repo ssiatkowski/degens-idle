@@ -18,15 +18,15 @@ const librarySkills = [
 
     { name: 'Multibuy Upgrades', cost: 2, description: 'Unlock "Buy Seen" and "Buy Max" buttons for Upgrades.', unlocked: false, level: 'Artificial Intelligence' },
     { name: 'Cookie Clicker', cost: 75, description: 'After Prestiging or Ascending, automatically click the cookie 10 times per second for 15 seconds.', unlocked: false, level: 'Artificial Intelligence' },
-    // { name: '', cost: 1000000, description: 'Gain up to 3 God Mode levels per Ascension. Also select up to 3 upgrades to enhance to God Mode.', unlocked: false, level: 'Artificial Intelligence' },
-    // { name: '', cost: 1e7, description: '', unlocked: false, level: 'Artificial Intelligence' },
+    { name: 'Triple Ascension', cost: 3.5e6, description: 'Gain up to 3 God Mode levels per Ascension. Also select up to 3 upgrades to enhance to God Mode.', unlocked: false, level: 'Artificial Intelligence' },
+    // { name: 'Autobuy Upgrades', cost: 5e13, description: 'Each upgrade can be configured to Autobuy - which will make purchase the upgrade as soon as it's affordable.', unlocked: false, level: 'Artificial Intelligence' },
     // { name: '', cost: 1e14, description: '', unlocked: false, level: 'Artificial Intelligence' },
 
     { name: 'Knowledge is Power', cost: 1e6, description: 'Unlock new resource Power. Power is always generated based on your current amount of Knowledge.', unlocked: false, level: 'Celestial Bodies' },
     // { name: 'Big Crunch', cost: 1e9, description: 'Unlock ability to force the universe into a Big Crunch and to be reborn anew.', unlocked: false, level: 'Celestial Bodies' },
     // { name: 'Money is Power, too', cost: 1e15, description: 'Add a multiplier to Power generation based on Yacht Money.', unlocked: false, level: 'Celestial Bodies' },
 
-    { name: 'What is this?', cost: 1e18, description: 'EZ Game', unlocked: false, level: '???' },
+    { name: 'What is this? (not implemented yet)', cost: 1e18, description: 'EZ Game', unlocked: false, level: '???' },
     // { name: 'Serenity', cost: 1e25, description: '', unlocked: false, level: '???' },
     // { name: '', cost: 1e29, description: '', unlocked: false, level: '???' },
     // { name: '', cost: 1e33, description: '', unlocked: false, level: '???' },
@@ -94,6 +94,10 @@ function unlockLibrarySkill(skill, duringLoad = false) {
         
             case 'Cookie Clicker':
                 cookieAutoClicker = true;
+                break;
+
+            case 'Triple Ascension':
+                tripleAscensionSkill = true;
                 break;
 
             case 'Knowledge is Power':

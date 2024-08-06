@@ -62,7 +62,7 @@ const upgrades = [
     {
         name: "Paid Email Service",
         cost: { copium: 1000, delusion: 0, yachtMoney: 0, trollPoints: 150, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 0.2, delusionPerSecond: 8.4, yachtMoneyPerSecond: -1, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0.2, delusionPerSecond: 8.4, yachtMoneyPerSecond: -1.3, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/proton.jpg",
     },
     {
@@ -74,7 +74,7 @@ const upgrades = [
     },
     {
         name: "Influencer Education",
-        cost: { copium: 200, delusion: 400, yachtMoney: 1000, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
+        cost: { copium: 300, delusion: 400, yachtMoney: 1000, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 5, delusionPerSecond: 8, yachtMoneyPerSecond: -8, trollPointsPerSecond: 22, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/pyramid_scheme.jpg",
     },
@@ -199,7 +199,7 @@ const upgrades = [
     {
         name: "Job Application",
         cost: { copium: 3000, delusion: 55000, yachtMoney: 0, trollPoints: 69000, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 300, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 270, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/job_application.jpg",
     },
     {
@@ -414,13 +414,13 @@ const upgrades = [
     {
         name: "Yom Kippur",
         cost: { copium: 5e14, delusion: 0, yachtMoney: 5e13, trollPoints: 0, hopium: 500000, knowledge: 100, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 10000000, delusionPerSecond: 2500000, yachtMoneyPerSecond: 5000000, trollPointsPerSecond: 3900000, hopiumPerSecond: 0.04, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 10000000, delusionPerSecond: 250000, yachtMoneyPerSecond: 500000, trollPointsPerSecond: 390000, hopiumPerSecond: 0.04, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/yom_kippur.jpg",
     },
     {
         name: "Hire an Assistant",
         cost: { copium: 0, delusion: 0, yachtMoney: 5e13, trollPoints: 0, hopium: 1000000, knowledge: 150, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 50, trollPointsPerSecond: 1e6, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: -50000, trollPointsPerSecond: 1e6, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/hire_employee.jpg",
         hoverOverwrite: "Should be helpful right?",
     },

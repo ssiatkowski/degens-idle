@@ -59,6 +59,7 @@ let prestigeBaseSkill = false;
 let twoDimensionalAscensionSkill = false;
 let mathGameSkill = false;
 let powerUnlocked = false;
+let tripleAscensionSkill = false;
 
 let improvedTradeRatio = false
 
@@ -668,6 +669,7 @@ async function restartGame(isPrestige = false, isAscend = false) {
             prestigeBaseSkill = false;
             twoDimensionalAscensionSkill = false;
             mathGameSkill = false;
+            tripleAscensionSkill = false;
 
             powerUnlocked = false;
             document.getElementById('power-container').style.display = 'none';
@@ -1015,28 +1017,34 @@ function calculateAscensionEpsMult() {
 }
 
 async function ascend() {
-
-    const selectedUpgrade = await showMessageModal(
+    const upgradeText = tripleAscensionSkill
+        ? "select up to 3 upgrades to enhance and increase your god mode multiplier accordingly"
+        : "select an upgrade to enhance and increase your god mode multiplier";
+    const selectedUpgrades = await showMessageModal(
         'God-Mode Ascension',
         `Are you sure you want to enter God-Mode level ${godModeLevel + 1}?<br><br>
         Raising the level of God-Mode requires temporarily folding three dimensions in the space around you to a single point, which will unfortunately reduce your Prestige multiplier to its cube root. Your Prestige multiplier will shrink from <strong>x${formatNumber(epsMultiplier)}</strong> to <strong>x${formatNumber(calculateAscensionEpsMult())}</strong><br><br>
-        On the bright side, your God-Mode multiplier will increase from <strong>x${formatNumber(godModeMultiplier)}</strong> to <strong>x${formatNumber(calculateGodModeMultiplier(godModeLevel+1))}</strong>!`,
+        On the bright side, your God-Mode multiplier will increase from <strong>x${formatNumber(godModeMultiplier)}</strong> to <strong>x${formatNumber(calculateGodModeMultiplier(godModeLevel+1))}</strong>!<br><br>
+        Additionally, you can ${upgradeText}.`,
         true,
         true
     );
 
-    if (selectedUpgrade) {
+    if (selectedUpgrades) {
+        const upgradesCount = selectedUpgrades.length;
+        godModeLevel += upgradesCount;
+        godModeMultiplier = calculateGodModeMultiplier(godModeLevel);
 
-        godModeLevel += 1;
-        godModeMultiplier = calculateGodModeMultiplier();
+        selectedUpgrades.forEach(upgrade => {
+            upgrade.isGodMode = true;
+        });
 
-        showMessageModal('Ascension Successful!', `<strong>You have entered God-Mode Level ${godModeLevel}.</strong><br> Your multiplier God-Mode is now x${formatNumber(godModeMultiplier)}, your prestige multiplier is x${formatNumber(epsMultiplier)}, and your chosen upgrade (${selectedUpgrade.name}) is 10x stronger.`);        
-        selectedUpgrade.isGodMode = true;
+        showMessageModal('Ascension Successful!', `<strong>You have entered God-Mode Level ${godModeLevel}.</strong><br> Your multiplier God-Mode is now x${formatNumber(godModeMultiplier)}, your prestige multiplier is x${formatNumber(epsMultiplier)}, and your chosen upgrades are 10x stronger.`);        
 
-        epsMultiplier = Math.max(calculateAscensionEpsMult(), 1)
+        epsMultiplier = Math.max(calculateAscensionEpsMult(), 1);
         prestigeRequirement = calculateMinResource();
-        
-        restartGame(false,true); // Use the existing restartGame function with prestige mode
+
+        restartGame(false, true); // Use the existing restartGame function with prestige mode
         // Save game state after ascending
         saveGameState();
     }
@@ -1614,16 +1622,15 @@ function displayNextModal() {
         resolve(result);
     };
 
-    // Add keydown event listener for 'Enter' and 'Escape' keys
     const keydownHandler = (event) => {
         if (event.key === 'Escape') {
             closeModal(null);
         }
         if (event.key === 'Enter' && isConfirm) {
             if (isUpgradeSelection) {
-                const selectedUpgrade = ascendUpgradeList.querySelector('.selected');
-                if (selectedUpgrade) {
-                    closeModal(selectedUpgrade);
+                const selectedUpgrades = Array.from(ascendUpgradeList.querySelectorAll('.selected'));
+                if (selectedUpgrades.length > 0) {
+                    closeModal(selectedUpgrades.map(item => item.upgrade));
                 }
             } else {
                 closeModal(true);
@@ -1637,32 +1644,35 @@ function displayNextModal() {
     document.addEventListener('keydown', keydownHandler);
 
     if (isConfirm && isUpgradeSelection) {
-        // Ascend with upgrade selection logic
         modalCloseButton.style.display = 'none';
         modalConfirmButtons.style.display = 'flex';
         ascendUpgradeSelection.style.display = 'block';
         ascendUpgradeList.innerHTML = '';
 
-        let selectedUpgrade = null;
+        let selectedUpgrades = [];
 
         purchasedUpgrades.forEach((upgrade, index) => {
             if (!upgrade.isGodMode) {
                 const upgradeItem = document.createElement('div');
                 upgradeItem.className = 'ascend-upgrade-item';
                 upgradeItem.textContent = upgrade.name;
+                upgradeItem.upgrade = upgrade;
                 upgradeItem.onclick = () => {
-                    const selected = ascendUpgradeList.querySelector('.selected');
-                    if (selected) selected.classList.remove('selected');
-                    upgradeItem.classList.add('selected');
-                    selectedUpgrade = upgrade;
+                    if (upgradeItem.classList.contains('selected')) {
+                        upgradeItem.classList.remove('selected');
+                        selectedUpgrades = selectedUpgrades.filter(up => up !== upgrade);
+                    } else if (selectedUpgrades.length < 3 || !tripleAscensionSkill) {
+                        upgradeItem.classList.add('selected');
+                        selectedUpgrades.push(upgrade);
+                    }
                 };
                 ascendUpgradeList.appendChild(upgradeItem);
             }
         });
 
         modalConfirmButton.onclick = () => {
-            if (selectedUpgrade) {
-                closeModal(selectedUpgrade);
+            if (selectedUpgrades.length > 0) {
+                closeModal(selectedUpgrades);
             }
         };
 
@@ -1675,7 +1685,6 @@ function displayNextModal() {
             }
         };
     } else if (isConfirm) {
-        // Confirm modal logic
         modalCloseButton.style.display = 'none';
         modalConfirmButtons.style.display = 'flex';
         ascendUpgradeSelection.style.display = 'none';
@@ -1691,7 +1700,6 @@ function displayNextModal() {
             }
         };
     } else if (message.includes('Enter the sequence:') || message.includes('What is ')) {
-        // Game input modal logic
         modalCloseButton.style.display = 'none';
         modalConfirmButtons.style.display = 'none';
         ascendUpgradeSelection.style.display = 'none';
@@ -1707,7 +1715,6 @@ function displayNextModal() {
             }
         };
     } else {
-        // Simple message modal logic
         modalCloseButton.style.display = 'block';
         modalConfirmButtons.style.display = 'none';
         ascendUpgradeSelection.style.display = 'none';
@@ -1722,7 +1729,6 @@ function displayNextModal() {
             }
         };
     }
-
 }
 
 
