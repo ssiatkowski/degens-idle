@@ -1454,6 +1454,7 @@ function updateUpgradeButtons() {
 
 
 
+
 // Assuming showTooltip and hideTooltip functions are defined elsewhere
 
 
