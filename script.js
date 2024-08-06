@@ -1332,15 +1332,18 @@ function updateUpgradeButtons() {
 
             // Add hover and touch event listeners to show earnings tooltip
             const showTooltipEvent = (event) => {
+                event.preventDefault(); // Prevent default behavior (like text selection)
                 showTooltip(event, upgrade.name, upgrade.earnings, upgrade.isGodMode, upgrade.hoverOverwrite);
             };
-            const hideTooltipEvent = () => {
+            const hideTooltipEvent = (event) => {
+                event.preventDefault(); // Prevent default behavior (like text selection)
                 hideTooltip();
             };
             const moveTooltipEvent = (event) => {
+                event.preventDefault(); // Prevent default behavior (like text selection)
                 const tooltip = document.getElementById('upgradeTooltip');
-                tooltip.style.left = `${event.pageX + 10}px`;
-                tooltip.style.top = `${event.pageY + 10}px`;
+                tooltip.style.left = `${event.touches[0].pageX + 10}px`;
+                tooltip.style.top = `${event.touches[0].pageY + 10}px`;
             };
 
             button.onmouseover = showTooltipEvent;
@@ -1361,6 +1364,7 @@ function updateUpgradeButtons() {
         document.getElementById('buyMaxButton').classList.remove('affordable');
     }
 }
+
 
 
 // Developer mode multipliers
