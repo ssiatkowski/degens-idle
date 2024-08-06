@@ -60,6 +60,7 @@ let twoDimensionalAscensionSkill = false;
 let mathGameSkill = false;
 let powerUnlocked = false;
 let tripleAscensionSkill = false;
+let buyMarkersSkill = false;
 
 let improvedTradeRatio = false
 
@@ -70,7 +71,6 @@ const miniGameTimeouts = {
     math: 8 * 60 * 1000,    // 8 minutes
     luck: 3 * 60 * 1000     // 3 minutes
 };
-
 
 function updateEffectiveMultipliers() {
     effectiveCopiumPerSecond = copiumPerSecond * epsMultiplier * godModeMultiplier * devMultiplier;
@@ -104,6 +104,8 @@ function collectResource(resource) {
     // Update the display to reflect the new resource values
     updateDisplay();
 }
+
+
 
 // Function to load the game state from local storage
 function loadGameState() {
@@ -209,6 +211,8 @@ function loadGameState() {
 
     updateTradeRatio();
 
+    if(buyMarkersSkill){ enableAllBuyMarkers() };
+
     // Retrieve the last interaction time, defaulting to the current time if not found
     const lastInteraction = parseInt(localStorage.getItem('lastInteraction')) || Date.now();
 
@@ -225,49 +229,6 @@ function loadGameState() {
     updateDisplay();
     updateUpgradeList();
     unlockMiniGames();
-}
-
-// Function to show tooltip
-function showTooltip(event, name, earnings, isGodMode, hoverOverwrite) {
-    let tooltip = document.getElementById('upgradeTooltip');
-    if (!tooltip) {
-        tooltip = document.createElement('div');
-        tooltip.id = 'upgradeTooltip';
-        tooltip.className = 'upgradeTooltip';
-        document.body.appendChild(tooltip);
-    }
-
-    const earningsClass = isGodMode ? 'godmode-earnings' : '';
-
-    if (hoverOverwrite){
-        tooltip.innerHTML = `
-        <div>
-            <div class="upgrade-earnings ${earningsClass}">
-                ${hoverOverwrite} <!-- Formatted earnings -->
-            </div>
-        </div>
-    `;
-    }
-    else {
-        tooltip.innerHTML = `
-            <div>
-                <div class="upgrade-earnings ${earningsClass}">
-                    ${formatCostOrEarnings(earnings)} <!-- Formatted earnings -->
-                </div>
-            </div>
-        `;
-    }
-    tooltip.style.display = 'block';
-    tooltip.style.left = `${event.pageX + 10}px`;
-    tooltip.style.top = `${event.pageY + 10}px`;
-}
-
-// Function to hide tooltip
-function hideTooltip() {
-    const tooltip = document.getElementById('upgradeTooltip');
-    if (tooltip) {
-        tooltip.style.display = 'none';
-    }
 }
 
 
@@ -330,10 +291,58 @@ function saveGameState() {
         localStorage.setItem('librarySkills', JSON.stringify(unlockedLibrarySkills));
     }
 
+    // Save the state of each switch
+    purchasedUpgrades.forEach(upgrade => {
+        const switchState = document.getElementById(`toggle-${upgrade.name}`).checked;
+        localStorage.setItem(`switchState-${upgrade.name}`, JSON.stringify(switchState));
+    });
 }
 
 
 
+
+// Function to hide tooltip
+function hideTooltip() {
+    const tooltip = document.getElementById('upgradeTooltip');
+    if (tooltip) {
+        tooltip.style.display = 'none';
+    }
+}
+
+// Function to show tooltip
+function showTooltip(event, name, earnings, isGodMode, hoverOverwrite) {
+    let tooltip = document.getElementById('upgradeTooltip');
+    if (!tooltip) {
+        tooltip = document.createElement('div');
+        tooltip.id = 'upgradeTooltip';
+        tooltip.className = 'upgradeTooltip';
+        document.body.appendChild(tooltip);
+    }
+
+    const earningsClass = isGodMode ? 'godmode-earnings' : '';
+
+    if (hoverOverwrite){
+        tooltip.innerHTML = `
+        <div>
+            <div class="upgrade-earnings ${earningsClass}">
+                ${hoverOverwrite} <!-- Formatted earnings -->
+            </div>
+        </div>
+    `;
+    }
+    else {
+        tooltip.innerHTML = `
+            <div>
+                <div class="upgrade-earnings ${earningsClass}">
+                    ${formatCostOrEarnings(earnings)} <!-- Formatted earnings -->
+                </div>
+            </div>
+        `;
+    }
+    tooltip.style.display = 'block';
+    tooltip.style.left = `${event.pageX + 10}px`;
+    tooltip.style.top = `${event.pageY + 10}px`;
+}
 
 
 
@@ -403,7 +412,7 @@ function playMiniGame(gameType) {
                 let clicksPerSecond = points / duration;
                 let reward;
                 if (clicksPerSecond > 3) { // More than 3 clicks per second
-                    reward = Math.max(Math.floor(Math.abs(copium) * ((clicksPerSecond - 3) * 0.04)), 25);
+                    reward = Math.max(Math.floor(Math.abs(copium) * ((clicksPerSecond - 3) * 0.05)), 25);
                     showMessageModal('Speed Game Result - Fast', `You tapped ${points} times in ${duration} seconds (${clicksPerSecond.toFixed(1)} taps per second). For being so fast you earned ${formatNumber(reward)} copium!`, false, false);
                 } else {
                     reward = -Math.max(Math.floor(Math.random() * Math.abs(copium) * 0.1), 10);
@@ -645,8 +654,6 @@ async function restartGame(isPrestige = false, isAscend = false) {
             upgrades.forEach(upgrade => {
                 upgrade.isGodMode = false;
             });
-            // Clear all local storage
-            localStorage.clear();
 
             document.getElementById('knowledge-container').style.display = 'none';
             knowledgeUnlocked = false;
@@ -670,9 +677,13 @@ async function restartGame(isPrestige = false, isAscend = false) {
             twoDimensionalAscensionSkill = false;
             mathGameSkill = false;
             tripleAscensionSkill = false;
+            buyMarkersSkill = false;
 
             powerUnlocked = false;
             document.getElementById('power-container').style.display = 'none';
+            
+            // Clear all local storage
+            localStorage.clear();
         }
 
         const cookieButtonVisible = JSON.parse(localStorage.getItem('cookieButtonVisible'));
@@ -1224,8 +1235,15 @@ function buyUpgrade(encodedUpgradeName) {
 // Function to handle the purchase of multiple upgrades
 function buyAllUpgrades(limit) {
     availableUpgrades.slice(0, limit).forEach(upgrade => {
-        if (isAffordable(upgrade.cost)) {
-            buyUpgrade(encodeName(upgrade.name), true);
+        if (buyMarkersSkill) {
+            const switchElement = JSON.parse(localStorage.getItem(`switchState-${upgrade.name}`))
+            if (switchElement && isAffordable(upgrade.cost)) {
+                buyUpgrade(encodeName(upgrade.name), true);
+            }
+        } else {
+            if (isAffordable(upgrade.cost)) {
+                buyUpgrade(encodeName(upgrade.name), true);
+            }
         }
     });
 }
@@ -1274,17 +1292,17 @@ function addPurchasedUpgrade(img, name, earnings, isGodMode = false, message = n
         upgradeElement.classList.add('purchased-upgrade-godmode');
     }
 
-    // If the upgrade has a message, add the 'clickable' class and an onclick event
-    if (message) {
-        upgradeElement.classList.add('clickable');
-        upgradeElement.onclick = () => showMessageModal(name, message, false, false);
-    }
-
     // Set the inner HTML of the new div element
     upgradeElement.innerHTML = `
-        <img src="${img}" alt="${name}"> <!-- Upgrade image -->
+        <div class="upgrade-header">
+            <label class="switch">
+                <input type="checkbox" id="toggle-${name}">
+                <span class="slider"></span>
+            </label>
+        </div>
+        <img src="${img}" alt="${name}" class="upgrade-image"> <!-- Upgrade image -->
         <div>
-            <p>${name}</p> <!-- Upgrade name -->
+            <p class="upgrade-name">${name}</p> <!-- Upgrade name -->
             <div class="upgrade-earnings">
                 ${formatCostOrEarnings(earnings, isGodMode)} <!-- Formatted earnings -->
             </div>
@@ -1292,6 +1310,80 @@ function addPurchasedUpgrade(img, name, earnings, isGodMode = false, message = n
     `;
 
     purchasedList.prepend(upgradeElement); // Prepend to show the most recent first
+
+    // Add event listener for the switch to stop propagation
+    const toggleSwitch = document.getElementById(`toggle-${name}`);
+    if (toggleSwitch) {
+        toggleSwitch.addEventListener('click', (event) => {
+            event.stopPropagation();
+        });
+    }
+
+    // If the upgrade has a message, add the 'clickable' class and an onclick event
+    if (message) {
+        upgradeElement.classList.add('clickable');
+        upgradeElement.addEventListener('click', (event) => {
+            if (!toggleSwitch || !toggleSwitch.contains(event.target)) {
+                showMessageModal(name, message, false, false);
+            }
+        });
+    }
+
+    if (buyMarkersSkill) {
+        // Load the switch state from local storage
+        const savedSwitchState = JSON.parse(localStorage.getItem(`switchState-${name}`)) || false;
+        if (toggleSwitch) {
+            toggleSwitch.checked = savedSwitchState;
+            toggleSwitch.parentElement.style.display = 'block'; // Make the switch visible
+
+            // Add event listener for the switch
+            toggleSwitch.addEventListener('change', (event) => {
+                const state = event.target.checked ? 'On' : 'Off';
+                console.log(`Switch for upgrade ${name} set to ${state}`);
+                // Save the switch state to local storage
+                localStorage.setItem(`switchState-${name}`, JSON.stringify(event.target.checked));
+            });
+        }
+    } else {
+        // Ensure switch is hidden if buyMarkersSkill is false
+        const switchElement = document.getElementById(`toggle-${name}`);
+        if (switchElement) {
+            switchElement.parentElement.style.display = 'none';
+        }
+    }
+}
+
+
+
+
+
+function enableAllBuyMarkers(firstUnlock=false) {
+
+    purchasedUpgrades.forEach(upgrade => {
+        const name = upgrade.name;
+
+        // Load the switch state from local storage
+        let savedSwitchState = true;
+        if (!firstUnlock) { savedSwitchState = JSON.parse(localStorage.getItem(`switchState-${name}`)) || false;}
+        const toggleSwitch = document.getElementById(`toggle-${name}`);
+        if (toggleSwitch) {
+            toggleSwitch.checked = savedSwitchState;
+            toggleSwitch.parentElement.style.display = 'block'; // Make the switch visible
+
+            // Add event listener for the switch
+            toggleSwitch.addEventListener('change', (event) => {
+                const state = event.target.checked ? 'On' : 'Off';
+                console.log(`Switch for upgrade ${name} set to ${state}`);
+                // Save the switch state to local storage
+                localStorage.setItem(`switchState-${name}`, JSON.stringify(event.target.checked));
+            });
+
+            toggleSwitch.addEventListener('click', (event) => {
+                event.stopPropagation();
+            });
+        }
+    });
+
 }
 
 function isAffordable(cost) {
@@ -1700,14 +1792,13 @@ function displayNextModal() {
                             upgradeItem.classList.add('selected');
                             selectedUpgrades.push(upgrade);
                         } else {
-                            alert(`You can only select up to ${tripleAscensionSkill ? 3 : 1} upgrade${tripleAscensionSkill ? 's' : ''}.`);
+                            showImmediateMessageModal(`Not so fast!`, `You can only select up to ${tripleAscensionSkill ? 3 : 1} upgrade${tripleAscensionSkill ? 's' : ''}.`);
                         }
                     }
                 };
                 ascendUpgradeList.appendChild(upgradeItem);
             }
         });
-        
 
         modalConfirmButton.onclick = () => {
             if (selectedUpgrades.length > 0) {
@@ -1769,6 +1860,32 @@ function displayNextModal() {
         };
     }
 }
+
+function showImmediateMessageModal(title, message) {
+    const immediateModal = document.getElementById('immediateMessageModal');
+    const immediateModalTitle = document.getElementById('immediateModalTitle');
+    const immediateModalMessage = document.getElementById('immediateModalMessage');
+    const immediateModalCloseButton = document.getElementById('closeImmediateMessageModal');
+    const immediateModalActionCloseButton = document.getElementById('immediateModalCloseButton');
+
+    immediateModalTitle.textContent = title;
+    immediateModalMessage.innerHTML = message;
+    immediateModal.style.display = 'block';
+
+    const closeImmediateModal = () => {
+        immediateModal.style.display = 'none';
+    };
+
+    immediateModalCloseButton.onclick = closeImmediateModal;
+    immediateModalActionCloseButton.onclick = closeImmediateModal;
+    window.onclick = (event) => {
+        if (event.target == immediateModal) {
+            closeImmediateModal();
+        }
+    };
+}
+
+
 
 
 

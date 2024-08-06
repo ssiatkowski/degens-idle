@@ -2,7 +2,7 @@
 .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
+    z-index: 5; /* Sit on top */
     left: 0;
     top: 0;
     width: 100%; /* Full width */
@@ -316,7 +316,7 @@ button.disabled {
     color: #fff;
     padding: 10px;
     border-radius: 5px;
-    z-index: 1000;
+    z-index: 1;
     display: none; /* Hidden by default */
     font-size: 14px;
     max-width: 200px; /* Adjust width as needed */
@@ -352,11 +352,25 @@ button.disabled {
 }
 
 .purchased-upgrade {
+    position: relative;
     display: flex;
     align-items: center;
     margin-top: 10px;
     flex-direction: column;
     text-align: left;
+}
+
+/* Ensure the switch stays on top of the image */
+.upgrade-container {
+    position: relative;
+    display: inline-block;
+}
+
+.upgrade-header {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    z-index: 1;
 }
 
 .purchased-upgrade img {
@@ -387,6 +401,15 @@ button.disabled {
     margin-bottom: 2.5px; 
 }
 
+/* Make the upgrade name font smaller and ensure it wraps */
+.purchased-upgrade .upgrade-name {
+    font-size: 14px; /* Make font size smaller */
+    max-width: 120%; /* Ensure the name doesn't exceed the image width */
+    word-wrap: break-word; /* Wrap text that goes beyond the limit */
+    white-space: normal; /* Allow text to wrap to the next line */
+    margin: 0; /* Remove default margin */
+}
+
 /* Blue glow for God Mode Purchased Upgrades */
 .purchased-upgrade-godmode img {
     box-shadow: 0 0 40px #1e90ff, 0 0 80px #00bfff; /* Blue shadow for glow effect */
@@ -402,7 +425,7 @@ button.disabled {
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr); 
+    grid-template-columns: repeat(7, 1fr); 
     gap: 10px;
 }
 
@@ -691,7 +714,7 @@ button.disabled {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #ccc;
+    background-color: #ffcccc; /* Light red for off state */
     transition: .4s;
     border-radius: 34px;
 }
@@ -709,8 +732,9 @@ button.disabled {
 }
 
 input:checked + .slider {
-    background-color: #2196F3;
+    background-color: #4CAF50; /* Green for on state */
 }
+
 
 input:checked + .slider:before {
     transform: translateX(14px);

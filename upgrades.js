@@ -68,7 +68,7 @@ const upgrades = [
     {
         name: "Joker's Rage Level",
         cost: { copium: 500, delusion: 0, yachtMoney: 250, trollPoints: 700, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 3, delusionPerSecond: -24, yachtMoneyPerSecond: 10, trollPointsPerSecond: 26, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 3, delusionPerSecond: -25, yachtMoneyPerSecond: 10, trollPointsPerSecond: 26, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/over_9000.jpg",
         hoverOverwrite: "GOING ON MUTE!",
     },
@@ -79,7 +79,7 @@ const upgrades = [
         img: "imgs/pyramid_scheme.jpg",
     },
     {
-        name: "Hard Work Don't Mean Success",
+        name: "Hard Work ≠ Success",
         cost: { copium: 2000, delusion: 0, yachtMoney: 1400, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 10, delusionPerSecond: -5, yachtMoneyPerSecond: 0.5, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/hard_to_swallow.jpg",
@@ -421,7 +421,7 @@ const upgrades = [
     },
     {
         name: "Hire an Assistant",
-        cost: { copium: 0, delusion: 0, yachtMoney: 5e13, trollPoints: 0, hopium: 1000000, knowledge: 150, power: 0, serenity: 0 },
+        cost: { copium: 1e14, delusion: 0, yachtMoney: 5e13, trollPoints: 0, hopium: 3000000, knowledge: 150, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: -5000000, delusionPerSecond: 0, yachtMoneyPerSecond: -500000, trollPointsPerSecond: 1e5, hopiumPerSecond: 0, knowledgePerSecond: 0.000009, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/hire_employee.jpg",
         hoverOverwrite: "Should be helpful right?",
@@ -448,7 +448,7 @@ const upgrades = [
     {
         name: "Spotify Wrapped",
         cost: { copium: 1e15, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 1e8, knowledge: 10000, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 1e6, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1.7e6, hopiumPerSecond: 0, knowledgePerSecond: 0.00001, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 1.5e6, delusionPerSecond: 1e6, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1.7e6, hopiumPerSecond: 1, knowledgePerSecond: 0.00001, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/spotify_wrapped.jpg",
     },
     {
@@ -466,9 +466,9 @@ const upgrades = [
     {
         name: "Build a Base",
         cost: { copium: 1e18, delusion: 5e17, yachtMoney: 5e17, trollPoints: 1e18, hopium: 1e12, knowledge: 1, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: -3e7, delusionPerSecond: 0, yachtMoneyPerSecond: -1.5e7, trollPointsPerSecond: -5e7, hopiumPerSecond: -45, knowledgePerSecond: 0.0008, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: -2.5e7, delusionPerSecond: 0, yachtMoneyPerSecond: -1.3e7, trollPointsPerSecond: -4e7, hopiumPerSecond: -45, knowledgePerSecond: 0.0008, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/all_your_base.jpg",
-        hoverOverwrite: "Xy'løth Q'värk, F'näürg zxÿl-gørh'tha! Z'qúol b'zhåk vi'krêth, nx'tuöl j'dä!,"
+        hoverOverwrite: "Xy'løth Q'värk, F'näürg zxÿl-gørh'tha! Z'qúol b'zhåk vi'krêth, nx'tuöl j'dä!",
     },
     {
         name: "NGU Idle",
@@ -480,7 +480,7 @@ const upgrades = [
     {
         name: "Unlimited Power",
         cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 3.33333e-9, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1e7, hopiumPerSecond: 0, knowledgePerSecond: 0.00001, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1e7, hopiumPerSecond: 1, knowledgePerSecond: 0.00001, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/unlimited_power.jpg",
         message: `<p>As the gears of progress click into place, you feel a surge of energy coursing through your veins. The very essence of the universe seems to hum in harmony with your newfound abilities. "All you know for now is that power is unlocked," echoes a distant voice in your mind, as if whispered by the ancients who have tread this path before you.</p>
                 <p>Gaining power feels good—no, it feels exhilarating. You sense the weight of the world lifting, replaced by a tantalizing promise of untapped potential. This isn't just strength; it's an awakening, a key to doors that were previously hidden in the shadows of your ignorance.</p>
@@ -507,6 +507,15 @@ const upgrades = [
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 1, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/impossible.jpg",
         message: `Lol, cheater! Instead of cheating why don't you hop in discord and suggest future memes!`,
+
+    },
+    {
+        name: "Mosquito",
+        cost: { copium: 3e19, delusion: 3e19, yachtMoney: 3e19, trollPoints: 3e19, hopium: 3e14, knowledge: 0, power: 0, serenity: 0 },
+        earnings: { copiumPerSecond: -1e8, delusionPerSecond: -1e8, yachtMoneyPerSecond: -1e8, trollPointsPerSecond: -1e8, hopiumPerSecond: -10000, knowledgePerSecond: 0.01, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: "imgs/mosquito.jpg",
+        hoverOverwrite: "DO NOT BUY THIS UPGRADE, I REPEAT, DO NOT BUY THIS UPGRADE",
+        message: `WHY? Why did you buy this upgrade? I explicitly told you not to. Now, mosquitoes are a part of your universe. Seriously, what were you thinking? These little bloodsuckers are everywhere now, and let me tell you, no good can come from that. Enjoy the endless itching and buzzing in your ears at night. If you ever get a chance for a do-over, hopefully, you’ll have learned your lesson. Until then, welcome to Mosquito Madness!`,
 
     },
 

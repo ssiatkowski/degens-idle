@@ -7,7 +7,7 @@ const librarySkills = [
     // { name: '', cost: 1e20, description: '', unlocked: false, level: 'History' }, 
 
     { name: 'Cure for Delusion', cost: 5, description: 'Unlock ability to toggle whether delusion gain is positive or negative.', unlocked: false, level: 'Science' },
-    { name: 'Luck is Rigged', cost: 777, description: 'Luck is now always on your side - can never lose at Luck Game.', unlocked: false, level: 'Science' },
+    { name: 'Luck is Rigged', cost: 777, description: 'Luck Game roll now picks from (-10% to 190%) instead of (-75% to 125%).', unlocked: false, level: 'Science' },
     { name: "I Can't Math", cost: 1234, description: 'Math Game now only has 2 terms instead of 3. Reward is tripled.', unlocked: false, level: 'Science' },
     // { name: '', cost: 1e9, description: '', unlocked: false, level: 'Science' },
     // { name: '', cost: 1e19, description: '', unlocked: false, level: 'Science' },
@@ -18,6 +18,7 @@ const librarySkills = [
 
     { name: 'Multibuy Upgrades', cost: 2, description: 'Unlock "Buy Seen" and "Buy Max" buttons for Upgrades.', unlocked: false, level: 'Artificial Intelligence' },
     { name: 'Cookie Clicker', cost: 75, description: 'After Prestiging or Ascending, automatically click the cookie 10 times per second for 15 seconds.', unlocked: false, level: 'Artificial Intelligence' },
+    { name: 'Buy Markers', cost: 300000, description: 'Purchased Upgrades will now have a switch indicating whether or not they should be bought using "Buy Seen" and "Buy All" buttons.', unlocked: false, level: 'Artificial Intelligence' },
     { name: 'Triple Ascension', cost: 3.5e6, description: 'Gain up to 3 God-Mode levels per Ascension. Also select up to 3 upgrades to enhance to God Mode.', unlocked: false, level: 'Artificial Intelligence' },
     // { name: 'Autobuy Upgrades', cost: 5e13, description: 'Each upgrade can be configured to Autobuy - which will make purchase the upgrade as soon as it's affordable.', unlocked: false, level: 'Artificial Intelligence' },
     // { name: '', cost: 1e14, description: '', unlocked: false, level: 'Artificial Intelligence' },
@@ -72,7 +73,7 @@ function unlockLibrarySkill(skill, duringLoad = false) {
                 break;
 
             case 'Luck is Rigged':
-                luckGameDelta = 0.1;
+                luckGameDelta = -10;
                 break;
             
             case "I Can't Math":
@@ -98,6 +99,14 @@ function unlockLibrarySkill(skill, duringLoad = false) {
 
             case 'Triple Ascension':
                 tripleAscensionSkill = true;
+                break;
+
+            case 'Buy Markers':
+                buyMarkersSkill = true;
+                if (!duringLoad) {
+                    showMessageModal(`Upgrade Markers', 'You’ve unlocked the highly anticipated Upgrade Markers! This breakthrough represents the pinnacle of artificial intelligence, pushing us a step closer toward true artificial sentience. Imagine the possibilities as your AI not only becomes smarter but also more discerning in its actions. This isn't just an upgrade; it's a revolution in AI capabilities.<br><br>Remember to toggle the setting that lets the AI know which upgrades to focus on. This meticulous control will maximize efficiency and performance. Trust your instincts—this feature will undoubtedly prove invaluable in the future. Embrace the future of AI!`, false, false);
+                }
+                enableAllBuyMarkers(true);
                 break;
 
             case 'Knowledge is Power':
@@ -126,9 +135,12 @@ function updateSkillDisplay() {
             if (!skill.unlocked) {
                 skillDiv.classList.add('locked');
                 skillDiv.classList.remove('purchased');
-                skillDiv.querySelector('.skill-cost').style.display = 'block';
-                skillDiv.querySelector('h3').style.display = 'block';
-                skillDiv.querySelector('p').style.display = 'block';
+                const skillCost = skillDiv.querySelector('.skill-cost');
+                const skillH3 = skillDiv.querySelector('h3');
+                const skillP = skillDiv.querySelector('p');
+                if (skillCost) skillCost.style.display = 'block';
+                if (skillH3) skillH3.style.display = 'block';
+                if (skillP) skillP.style.display = 'block';
                 if (knowledge >= skill.cost) {
                     skillDiv.classList.add('affordable');
                 } else {
@@ -141,6 +153,7 @@ function updateSkillDisplay() {
         }
     });
 }
+
 
 function initializeSkills() {
     const skillLevels = {};
@@ -182,13 +195,23 @@ function initializeSkills() {
             } else {
                 skillDiv.classList.add('purchased');
             }
-            skillDiv.addEventListener('click', () => {
-                if (!skill.unlocked && knowledge >= skill.cost && confirm(`Do you want to unlock ${skill.name} for ${skill.cost} Knowledge?`)) {
-                    knowledge -= skill.cost;
-                    unlockLibrarySkill(skill);
-                    saveGameState();
+            skillDiv.addEventListener('click', async () => {
+                if (!skill.unlocked && knowledge >= skill.cost) {
+                    const result = await showMessageModal(
+                        'Confirm Unlock',
+                        `Do you want to unlock ${skill.name} for ${skill.cost} Knowledge?`,
+                        true,
+                        false
+                    );
+                    if (result) {
+                        knowledge -= skill.cost;
+                        unlockLibrarySkill(skill);
+                        saveGameState();
+                    }
                 } else if (knowledge < skill.cost) {
-                    alert('Not enough Knowledge');
+                    document.removeEventListener('click', outsideLibraryClickListener);
+                    await showMessageModal('Insufficient Knowledge', 'Not enough Knowledge to unlock this skill.', false, false);
+                    document.addEventListener('click', outsideLibraryClickListener);
                 }
             });
             skillRow.appendChild(skillDiv);

@@ -31,6 +31,15 @@
             </div>
         </div>
     </div>    
+    <!-- Immediate Message Modal -->
+    <div id="immediateMessageModal" class="modal">
+        <div class="modal-content">
+            <span id="closeImmediateMessageModal" class="close-button">&times;</span>
+            <h2 id="immediateModalTitle"></h2>
+            <p id="immediateModalMessage"></p>
+            <button id="immediateModalCloseButton" class="modalCancelButton">Close</button>
+        </div>
+    </div>
     <div id="main-container">
         <div id="title-column">
             <div id="title-container">
@@ -98,7 +107,7 @@
                 <p><b>S</b>erenity: <span id="serenity" class="resource-value">0</span></p>
                 <p class="per-second">Serenity per second: <span id="sps">0</span></p>
             </div>
-            <div id="cookieContainer">
+            <div id="cookieButtonContainer">
                 <button id="cookieButton" style="display:none;">
                     <img src="imgs/cookie.jpg" alt="Cookie">
                     <span class="cookieTooltip">Each cookie click counts as 10 clicks on collect buttons for Copium, Delusion, Yacht Money, and Troll Points!</span>
