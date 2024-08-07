@@ -442,7 +442,7 @@ const upgrades = [
     {
         name: "But Wait There's More!",
         cost: { copium: 1e15, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 1e8, knowledge: 10000, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 5e6, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 3, knowledgePerSecond: 0.00001, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 5e6, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 3.5, knowledgePerSecond: 0.00001, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/surprise_pikachu.jpg",
     },
     {
@@ -466,7 +466,7 @@ const upgrades = [
     {
         name: "Build a Base",
         cost: { copium: 1e18, delusion: 5e17, yachtMoney: 5e17, trollPoints: 1e18, hopium: 1e12, knowledge: 1, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: -2.5e7, delusionPerSecond: 0, yachtMoneyPerSecond: -1.3e7, trollPointsPerSecond: -4e7, hopiumPerSecond: -45, knowledgePerSecond: 0.0008, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: -2.5e7, delusionPerSecond: 0, yachtMoneyPerSecond: -1.3e7, trollPointsPerSecond: -4e7, hopiumPerSecond: -45, knowledgePerSecond: 0.0013, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/all_your_base.jpg",
         hoverOverwrite: "Xy'løth Q'värk, F'näürg zxÿl-gørh'tha! Z'qúol b'zhåk vi'krêth, nx'tuöl j'dä!",
     },
@@ -488,6 +488,12 @@ const upgrades = [
                 <p><strong>You notice that prestige and god-mode multipliers do not directly affect power generation - this must be something bigger than anything you have encountered so far!</strong></p>
                 <p>Driven by curiosity and a burning desire to uncover the secrets that lie ahead, you must find out soon. Each step forward brings you closer to the answers, each discovery a piece of the grand puzzle. Embrace this newfound power, for it is both a gift and a challenge—a test to see if you can wield it wisely.</p>
                 `,
+    },
+    {
+        name: "Never Admit Mistakes",
+        cost: { copium: 8e18, delusion: 6e18, yachtMoney: 0, trollPoints: 0, hopium: 2e13, knowledge: 0, power: 0, serenity: 0 },
+        earnings: { copiumPerSecond: 8e7, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 9e7, hopiumPerSecond: 0, knowledgePerSecond: 0.001, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: "imgs/marv.jpg",
     },
     {
         name: "Time for Careful Planning",
@@ -512,11 +518,22 @@ const upgrades = [
     {
         name: "Mosquito",
         cost: { copium: 3e19, delusion: 3e19, yachtMoney: 3e19, trollPoints: 3e19, hopium: 3e14, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: -1e8, delusionPerSecond: -1e8, yachtMoneyPerSecond: -1e8, trollPointsPerSecond: -1e8, hopiumPerSecond: -10000, knowledgePerSecond: 0.01, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: -1e9, delusionPerSecond: -1e9, yachtMoneyPerSecond: -1e9, trollPointsPerSecond: -1e9, hopiumPerSecond: -100000, knowledgePerSecond: 0.01, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/mosquito.jpg",
         hoverOverwrite: "DO NOT BUY THIS UPGRADE, I REPEAT, DO NOT BUY THIS UPGRADE",
         message: `WHY? Why did you buy this upgrade? I explicitly told you not to. Now, mosquitoes are a part of your universe. Seriously, what were you thinking? These little bloodsuckers are everywhere now, and let me tell you, no good can come from that. Enjoy the endless itching and buzzing in your ears at night. If you ever get a chance for a do-over, hopefully, you’ll have learned your lesson. Until then, welcome to Mosquito Madness!`,
-
+    },
+    {
+        name: "Bruh",
+        cost: { copium: 1e20, delusion: 1e20, yachtMoney: 1e20, trollPoints: 1e20, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
+        earnings: { copiumPerSecond: 5e7, delusionPerSecond: 5e7, yachtMoneyPerSecond: 5e7, trollPointsPerSecond: 5e7, hopiumPerSecond: 0, knowledgePerSecond: 0.01, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: "imgs/bruh.jpg",
+    },
+    {
+        name: "BRUHHHH",
+        cost: { copium: 1e21, delusion: 1e21, yachtMoney: 1e21, trollPoints: 1e21, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
+        earnings: { copiumPerSecond: 1e8, delusionPerSecond: 1e8, yachtMoneyPerSecond: 1e8, trollPointsPerSecond: 1e8, hopiumPerSecond: 0, knowledgePerSecond: 0.05, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: "imgs/bruhhh.jpg",
     },
 
     // {

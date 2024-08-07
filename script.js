@@ -750,7 +750,7 @@ function updateTradeRatio() {
     }
 }
 
-function parseFormattedNumber(str) {
+function parseFormattedNumber(str, currentAmount = 0) {
     const suffixes = {
         k: 1e3,
         m: 1e6,
@@ -765,15 +765,21 @@ function parseFormattedNumber(str) {
         dc: 1e33
     };
 
-    // Regular expression to match both suffix-based and scientific notation
-    const regex = /^(\d+(\.\d+)?)([a-zA-Z]+|e[\+\-]?\d+)?$/i;
+    const regex = /^(\d+(\.\d+)?)([a-zA-Z%]+|e[\+\-]?\d+)?$/i;
     const match = str.match(regex);
 
     if (match) {
         const [, num, , suffix] = match;
-        // Check if the suffix is in scientific notation (starts with 'e' or 'E')
-        if (suffix && suffix[0].toLowerCase() === 'e') {
-            return parseFloat(num + suffix);  // Convert directly to a number
+        if (suffix && suffix[0] === '%') {
+            const percentage = parseFloat(num);
+            if (percentage >= 0 && percentage <= 100) {
+                return (percentage / 100) * currentAmount;
+            }
+            else {
+                return NaN;
+            }
+        } else if (suffix && suffix[0].toLowerCase() === 'e') {
+            return parseFloat(num + suffix);
         }
         const factor = suffix ? suffixes[suffix.toLowerCase()] || 1 : 1;
         return parseFloat(num) * factor;
@@ -782,12 +788,23 @@ function parseFormattedNumber(str) {
 }
 
 
-// Function to handle trading resources between different types
+
 function tradeResources() {
     const fromResource = document.getElementById('fromResource').value;
     const toResource = document.getElementById('toResource').value;
     const tradeAmountInput = document.getElementById('tradeAmount').value;
-    const tradeAmount = parseFormattedNumber(tradeAmountInput);
+
+    // Object to store current amounts of each resource
+    const resourceAmount = {
+        copium: copium,
+        delusion: delusion,
+        yachtMoney: yachtMoney,
+        trollPoints: trollPoints,
+        hopium: hopium
+    };
+
+    const currentAmount = resourceAmount[fromResource];
+    const tradeAmount = parseFormattedNumber(tradeAmountInput, currentAmount);
 
     // Check if the same resource is selected for both from and to
     if (fromResource === toResource) {
@@ -800,15 +817,6 @@ function tradeResources() {
         showMessageModal('Trade Error', 'Please enter a valid trade amount.');
         return;
     }
-
-    // Object to store current amounts of each resource
-    const resourceAmount = {
-        copium: copium,
-        delusion: delusion,
-        yachtMoney: yachtMoney,
-        trollPoints: trollPoints,
-        hopium: hopium
-    };
 
     // Special trade case for converting Copium to Hopium
     if (fromResource === 'copium' && toResource === 'hopium') {
@@ -853,8 +861,8 @@ function tradeResources() {
 
     // Update the display to reflect the new resource values
     updateDisplay();
-
 }
+
 
 function Commas(Num, Fixed) {
     return Num.toLocaleString("en-US",{minimumFractionDigits: Fixed, maximumFractionDigits: Fixed});
@@ -1018,7 +1026,7 @@ function updatePrestigeButton() {
     
     const prestigeButton = document.getElementById('prestigeButton');
     if (canPrestige()) {
-        if (firstTimePrestigeButtonAvailable) {
+        if (firstTimePrestigeButtonAvailable && godModeLevel < 3) {
             showMessageModal('Prestige Unlocked: Rise Stronger!', 'Congratulations, mighty player! You have unlocked the legendary path of Prestige. This powerful option allows you to reset your game progress, but with a game-changing twist: you gain a new multiplier that enhances everything you do.<br><br>Prestige represents more than just a reset. It symbolizes the resilience of the human spirit, the relentless pursuit of growth, and the ability to rise stronger after every fall. Just as life sometimes knocks you down, this journey will set you back temporarily. But with each Prestige, you come back more powerful, your abilities amplified, and your potential limitless.<br><br>Embrace the opportunity to start anew with greater strength. Every click, every resource gathered, and every upgrade purchased will now be boosted by your newfound multiplier. It\'s a fresh start, a chance to overcome challenges with enhanced vigor and wisdom.<br><br>Are you ready to embark on this transformative journey? To not only rebuild but to surpass your previous achievements? Prestige now, and let your ascent to greatness begin anew!');
             firstTimePrestigeButtonAvailable = false; // Set the flag to false after showing the message
             saveGameState(); // Save the game state to persist the flag
@@ -1206,8 +1214,8 @@ function buyUpgrade(encodedUpgradeName) {
         }
 
         // Special case for the "Still very stupid" upgrade
-        if (name === "Still very stupid") {
-            showMessageModal('Sadly', "This marks the end of v0.74. Your journey through this existential tale is just beginning, and the newfound power will open doors to uncharted realms. How will you wield it? Stay tuned, as another big update is just a few days away. If you can't wait, feel free to restart the game and embark on speed runs, or explore alternate strategies.");
+        if (name === "BRUHHHH") {
+            showMessageModal('Sadly', "This marks the end of v0.75. Your journey through this existential tale is just beginning, and the newfound power will open doors to uncharted realms. How will you wield it? Stay tuned, as another big update is just a few days away. If you can't wait, feel free to restart the game and embark on speed runs, or explore alternate strategies.");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one
@@ -1892,22 +1900,24 @@ function showImmediateMessageModal(title, message) {
 
 // Function to show the welcome modal
 function showWelcomeModal() {
-    return showMessageModal(
-        'Welcome to Degens Idle',
-        `
-        <p>Step into a world where the dankest memes meet the depths of introspective contemplation. In Degens Idle, you’re not just collecting resources—you’re diving headfirst into a journey of existential discovery.</p>
-        <p>Embrace the grind as you gather Copium, Delusion, Yacht Money, Troll Points, and the elusive Hopium. Each click and upgrade is a step closer to understanding the universe of internet culture and your place within it.</p>
-        <p>Are you ready to transcend the ordinary? To not only witness but harness the power of memes in their truest, most profound form? Every action you take will push you to ponder life’s greatest mysteries and your role in this meme-laden multiverse.</p>
-        <h2>How to Play:</h2>
-        <ul>
-            <li><strong>Click to Gather Resources:</strong> Start by clicking to collect Copium and other essential resources. Each click brings you closer to unlocking new memes and upgrades.</li>
-            <li><strong>Upgrade Your Abilities:</strong> Use your resources to purchase upgrades. These will enhance your clicking power and resource generation, allowing you to progress faster.</li>
-            <li><strong>Unlock New Content:</strong> Venture into the unknown and unveil hidden secrets of the meme-iverse. Each resource collected and upgrade acquired opens portals to mysterious realms, revealing cryptic memes and arcane powers that will enhance your journey.</li>
-            <li><strong>Explore the Meme-iverse:</strong> Dive into various aspects of internet culture. Each upgrade and unlocked meme will reveal more about the meme-iverse and your place within it.</li>
-            <li><strong>Ponder and Reflect:</strong> As you progress, take a moment to ponder the deeper meanings behind the memes. What do they say about life, existence, and your role in this digital realm?</li>
-        </ul>
-        `
-    );
+    if (!knowledgeUnlocked){
+        return showMessageModal(
+            'Welcome to Degens Idle',
+            `
+            <p>Step into a world where the dankest memes meet the depths of introspective contemplation. In Degens Idle, you’re not just collecting resources—you’re diving headfirst into a journey of existential discovery.</p>
+            <p>Embrace the grind as you gather Copium, Delusion, Yacht Money, Troll Points, and the elusive Hopium. Each click and upgrade is a step closer to understanding the universe of internet culture and your place within it.</p>
+            <p>Are you ready to transcend the ordinary? To not only witness but harness the power of memes in their truest, most profound form? Every action you take will push you to ponder life’s greatest mysteries and your role in this meme-laden multiverse.</p>
+            <h2>How to Play:</h2>
+            <ul>
+                <li><strong>Click to Gather Resources:</strong> Start by clicking to collect Copium and other essential resources. Each click brings you closer to unlocking new memes and upgrades.</li>
+                <li><strong>Upgrade Your Abilities:</strong> Use your resources to purchase upgrades. These will enhance your clicking power and resource generation, allowing you to progress faster.</li>
+                <li><strong>Unlock New Content:</strong> Venture into the unknown and unveil hidden secrets of the meme-iverse. Each resource collected and upgrade acquired opens portals to mysterious realms, revealing cryptic memes and arcane powers that will enhance your journey.</li>
+                <li><strong>Explore the Meme-iverse:</strong> Dive into various aspects of internet culture. Each upgrade and unlocked meme will reveal more about the meme-iverse and your place within it.</li>
+                <li><strong>Ponder and Reflect:</strong> As you progress, take a moment to ponder the deeper meanings behind the memes. What do they say about life, existence, and your role in this digital realm?</li>
+            </ul>
+            `
+        );
+    }
 }
 
 function openLibrary() {
@@ -1974,13 +1984,14 @@ document.addEventListener('DOMContentLoaded', () => {
         updateDisplay(); // Update the display to reflect the change
     });
 
-    showWelcomeModal();
-
     // Library Skills -- has to happen before loadGameState!
     initializeSkills();
 
     // Load the game state from local storage 
     loadGameState();
+
+    showWelcomeModal();
+
     // Initialize effective multipliers
     updateEffectiveMultipliers();
     // Unlock mini-games based on the current game state

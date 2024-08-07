@@ -27,7 +27,7 @@ const librarySkills = [
     // { name: 'Big Crunch', cost: 1e9, description: 'Unlock ability to force the universe into a Big Crunch and to be reborn anew.', unlocked: false, level: 'Celestial Bodies' },
     // { name: 'Money is Power, too', cost: 1e15, description: 'Add a multiplier to Power generation based on Yacht Money.', unlocked: false, level: 'Celestial Bodies' },
 
-    { name: 'What is this? (not implemented yet)', cost: 1e18, description: 'EZ Game', unlocked: false, level: '???' },
+    { name: 'What is this? (not implemented yet)', cost: 1e20, description: 'EZ Game', unlocked: false, level: '???' },
     // { name: 'Serenity', cost: 1e25, description: '', unlocked: false, level: '???' },
     // { name: '', cost: 1e29, description: '', unlocked: false, level: '???' },
     // { name: '', cost: 1e33, description: '', unlocked: false, level: '???' },
