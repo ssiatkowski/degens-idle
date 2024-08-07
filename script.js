@@ -1497,23 +1497,53 @@ function updateUpgradeList() {
     updateUpgradeButtons();
 }
 
+// Function to handle touch and mouse events for tooltips
+function attachTooltipEvents(button, upgrade) {
+    const showTooltipEvent = (event) => {
+        event.preventDefault(); // Prevent default behavior (like text selection)
+        showTooltip(event, upgrade.name, upgrade.earnings, upgrade.isGodMode, upgrade.hoverOverwrite);
+    };
+    const hideTooltipEvent = (event) => {
+        event.preventDefault(); // Prevent default behavior (like text selection)
+        hideTooltip();
+    };
+    const moveTooltipEvent = (event) => {
+        event.preventDefault(); // Prevent default behavior (like text selection)
+        const tooltip = document.getElementById('upgradeTooltip');
+        tooltip.style.left = `${event.pageX + 10}px`;
+        tooltip.style.top = `${event.pageY + 10}px`;
+    };
+
+    button.addEventListener('mouseover', showTooltipEvent);
+    button.addEventListener('mousemove', moveTooltipEvent);
+    button.addEventListener('mouseout', hideTooltipEvent);
+    button.addEventListener('touchstart', (event) => {
+        showTooltipEvent(event);
+        button.touchStartX = event.touches[0].clientX;
+        button.touchStartY = event.touches[0].clientY;
+    });
+    button.addEventListener('touchmove', moveTooltipEvent);
+    button.addEventListener('touchend', (event) => {
+        hideTooltip();
+        const touchEndX = event.changedTouches[0].clientX;
+        const touchEndY = event.changedTouches[0].clientY;
+        const rect = button.getBoundingClientRect();
+        if (touchEndX >= rect.left && touchEndX <= rect.right && touchEndY >= rect.top && touchEndY <= rect.bottom) {
+            button.click(); // Simulate a click event if touchend is within the button
+        }
+    });
+}
+
 // Function to update the appearance of upgrade buttons based on affordability
 function updateUpgradeButtons() {
     let foundAffordableUpgrade = false;
+
+    // Update each available upgrade button
     availableUpgrades.forEach(upgrade => {
         const encodedName = encodeName(upgrade.name);
         const button = document.querySelector(`button[data-upgrade-name="${encodedName}"]`);
         if (button) {
-            // Remove existing event listeners to avoid duplicates
-            button.removeEventListener('mouseover', button.onmouseover);
-            button.removeEventListener('mousemove', button.onmousemove);
-            button.removeEventListener('mouseout', button.onmouseout);
-            button.removeEventListener('touchstart', button.ontouchstart);
-            button.removeEventListener('touchmove', button.ontouchmove);
-            button.removeEventListener('touchend', button.ontouchend);
-
             // Check if the upgrade is affordable based on current resources
-            // Add or remove the appropriate class based on affordability and God Mode status
             if (isAffordable(upgrade.cost)) {
                 foundAffordableUpgrade = true;
                 if (upgrade.isGodMode) {
@@ -1527,74 +1557,14 @@ function updateUpgradeButtons() {
                 button.classList.remove('affordable', 'affordable-godmode');
             }
 
-            // Add hover and touch event listeners to show earnings tooltip
-            const showTooltipEvent = (event) => {
-                event.preventDefault(); // Prevent default behavior (like text selection)
-                showTooltip(event, upgrade.name, upgrade.earnings, upgrade.isGodMode, upgrade.hoverOverwrite);
-            };
-            const hideTooltipEvent = (event) => {
-                event.preventDefault(); // Prevent default behavior (like text selection)
-                hideTooltip();
-            };
-            const moveTooltipEvent = (event) => {
-                event.preventDefault(); // Prevent default behavior (like text selection)
-                const tooltip = document.getElementById('upgradeTooltip');
-                tooltip.style.left = `${event.pageX + 10}px`;
-                tooltip.style.top = `${event.pageY + 10}px`;
-            };
-
-            button.onmouseover = showTooltipEvent;
-            button.onmousemove = moveTooltipEvent;
-            button.onmouseout = hideTooltipEvent;
-
-            // For mobile devices
-            let touchStartX, touchStartY;
-
-            button.ontouchstart = (event) => {
-                showTooltipEvent(event);
-                touchStartX = event.touches[0].clientX;
-                touchStartY = event.touches[0].clientY;
-            };
-
-            button.ontouchmove = moveTooltipEvent;
-
-            button.ontouchend = (event) => {
-                hideTooltip();
-                const touchEndX = event.changedTouches[0].clientX;
-                const touchEndY = event.changedTouches[0].clientY;
-                const rect = button.getBoundingClientRect();
-                if (touchEndX >= rect.left && touchEndX <= rect.right && touchEndY >= rect.top && touchEndY <= rect.bottom) {
-                    button.click(); // Simulate a click event if touchend is within the button
-                }
-            };
-
-            button.addEventListener('mouseover', button.onmouseover);
-            button.addEventListener('mousemove', button.onmousemove);
-            button.addEventListener('mouseout', button.onmouseout);
-            button.addEventListener('touchstart', button.ontouchstart);
-            button.addEventListener('touchmove', button.ontouchmove);
-            button.addEventListener('touchend', button.ontouchend);
+            // Attach event listeners for tooltips
+            attachTooltipEvents(button, upgrade);
         }
     });
 
+    // Update buy buttons based on affordable upgrades
     const buySeenButton = document.getElementById('buySeenButton');
     const buyMaxButton = document.getElementById('buyMaxButton');
-
-    // Remove existing event listeners to avoid duplicates
-    buySeenButton.removeEventListener('mouseover', buySeenButton.onmouseover);
-    buySeenButton.removeEventListener('mousemove', buySeenButton.onmousemove);
-    buySeenButton.removeEventListener('mouseout', buySeenButton.onmouseout);
-    buySeenButton.removeEventListener('touchstart', buySeenButton.ontouchstart);
-    buySeenButton.removeEventListener('touchmove', buySeenButton.ontouchmove);
-    buySeenButton.removeEventListener('touchend', buySeenButton.ontouchend);
-
-    buyMaxButton.removeEventListener('mouseover', buyMaxButton.onmouseover);
-    buyMaxButton.removeEventListener('mousemove', buyMaxButton.onmousemove);
-    buyMaxButton.removeEventListener('mouseout', buyMaxButton.onmouseout);
-    buyMaxButton.removeEventListener('touchstart', buyMaxButton.ontouchstart);
-    buyMaxButton.removeEventListener('touchmove', buyMaxButton.ontouchmove);
-    buyMaxButton.removeEventListener('touchend', buyMaxButton.ontouchend);
-
     if (foundAffordableUpgrade) {
         buySeenButton.classList.add('affordable');
         buyMaxButton.classList.add('affordable');
@@ -1603,83 +1573,25 @@ function updateUpgradeButtons() {
         buyMaxButton.classList.remove('affordable');
     }
 
-    const showTooltipForBuySeen = (event) => {
-        event.preventDefault(); // Prevent default behavior (like text selection)
-        showTooltip(event, "Buy Seen", null, false, "Purchase all the affordable visible upgrades");
-    };
-    const showTooltipForBuyMax = (event) => {
-        event.preventDefault(); // Prevent default behavior (like text selection)
-        showTooltip(event, "Buy All", null, false, "Purchase all upgrades (can be more than 7)");
-    };
-    const moveTooltipForBuy = (event) => {
-        event.preventDefault(); // Prevent default behavior (like text selection)
-        const tooltip = document.getElementById('upgradeTooltip');
-        tooltip.style.left = `${event.pageX + 10}px`;
-        tooltip.style.top = `${event.pageY + 10}px`;
-    };
-    const hideTooltipForBuy = (event) => {
-        event.preventDefault(); // Prevent default behavior (like text selection)
-        hideTooltip();
-    };
-
-    buySeenButton.onmouseover = showTooltipForBuySeen;
-    buySeenButton.onmouseout = hideTooltipForBuy;
-    buySeenButton.onmousemove = moveTooltipForBuy;
-
-    buyMaxButton.onmouseover = showTooltipForBuyMax;
-    buyMaxButton.onmouseout = hideTooltipForBuy;
-    buyMaxButton.onmousemove = moveTooltipForBuy;
-
-    // For mobile devices
-    buySeenButton.ontouchstart = (event) => {
-        showTooltipForBuySeen(event);
-        touchStartX = event.touches[0].clientX;
-        touchStartY = event.touches[0].clientY;
-    };
-
-    buySeenButton.ontouchmove = moveTooltipForBuy;
-
-    buySeenButton.ontouchend = (event) => {
-        hideTooltipForBuy();
-        const touchEndX = event.changedTouches[0].clientX;
-        const touchEndY = event.changedTouches[0].clientY;
-        const rect = buySeenButton.getBoundingClientRect();
-        if (touchEndX >= rect.left && touchEndX <= rect.right && touchEndY >= rect.top && touchEndY <= rect.bottom) {
-            buySeenButton.click(); // Simulate a click event if touchend is within the button
-        }
-    };
-
-    buyMaxButton.ontouchstart = (event) => {
-        showTooltipForBuyMax(event);
-        touchStartX = event.touches[0].clientX;
-        touchStartY = event.touches[0].clientY;
-    };
-
-    buyMaxButton.ontouchmove = moveTooltipForBuy;
-
-    buyMaxButton.ontouchend = (event) => {
-        hideTooltipForBuy();
-        const touchEndX = event.changedTouches[0].clientX;
-        const touchEndY = event.changedTouches[0].clientY;
-        const rect = buyMaxButton.getBoundingClientRect();
-        if (touchEndX >= rect.left && touchEndX <= rect.right && touchEndY >= rect.top && touchEndY <= rect.bottom) {
-            buyMaxButton.click(); // Simulate a click event if touchend is within the button
-        }
-    };
-
-    buySeenButton.addEventListener('mouseover', buySeenButton.onmouseover);
-    buySeenButton.addEventListener('mousemove', buySeenButton.onmousemove);
-    buySeenButton.addEventListener('mouseout', buySeenButton.onmouseout);
-    buySeenButton.addEventListener('touchstart', buySeenButton.ontouchstart);
-    buySeenButton.addEventListener('touchmove', buySeenButton.ontouchmove);
-    buySeenButton.addEventListener('touchend', buySeenButton.ontouchend);
-
-    buyMaxButton.addEventListener('mouseover', buyMaxButton.onmouseover);
-    buyMaxButton.addEventListener('mousemove', buyMaxButton.onmousemove);
-    buyMaxButton.addEventListener('mouseout', buyMaxButton.onmouseout);
-    buyMaxButton.addEventListener('touchstart', buyMaxButton.ontouchstart);
-    buyMaxButton.addEventListener('touchmove', buyMaxButton.ontouchmove);
-    buyMaxButton.addEventListener('touchend', buyMaxButton.ontouchend);
+    // Attach event listeners for buy buttons if not already attached
+    if (!buySeenButton.listenersAttached) {
+        attachTooltipEvents(buySeenButton, {
+            name: "Buy Seen",
+            earnings: null,
+            isGodMode: false,
+            hoverOverwrite: "Purchase all the affordable visible upgrades"
+        });
+        buySeenButton.listenersAttached = true;
+    }
+    if (!buyMaxButton.listenersAttached) {
+        attachTooltipEvents(buyMaxButton, {
+            name: "Buy All",
+            earnings: null,
+            isGodMode: false,
+            hoverOverwrite: "Purchase all upgrades (can be more than 7)"
+        });
+        buyMaxButton.listenersAttached = true;
+    }
 }
 
 
