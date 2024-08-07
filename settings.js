@@ -19,11 +19,17 @@ function closeSettings() {
 // Function to open the donation overlay
 function openDonation() {
     document.getElementById('donationOverlay').style.display = 'flex';
+
+    // Add a temporary event listener to close the overlay when clicking outside of it
+    setTimeout(() => {
+        document.addEventListener('click', outsideDonationClickListener);
+    }, 0);
 }
 
 // Function to close the donation overlay
 function closeDonation() {
     document.getElementById('donationOverlay').style.display = 'none';
+    document.removeEventListener('click', outsideDonationClickListener);
 }
 
 // Function to handle clicks outside the overlay
@@ -34,6 +40,16 @@ function outsideClickListener(event) {
         closeSettings();
     }
 }
+
+// Function to handle clicks outside the overlay
+function outsideDonationClickListener(event) {
+    const donationContent = document.querySelector('.donation-overlay-content');
+    
+    if (!donationContent.contains(event.target)) {
+        closeDonation();
+    }
+}
+
 // Function to export game state to a file
 function exportSave() {
     const gameState = JSON.stringify({
