@@ -62,14 +62,15 @@ let powerUnlocked = false;
 let tripleAscensionSkill = false;
 let buyMarkersSkill = false;
 
-let improvedTradeRatio = false
+let improvedTradeRatio = false;
+let cookieBoost = false;
 
 // Mini-game timeouts in milliseconds
 const miniGameTimeouts = {
-    speed: 10 * 60 * 1000,  // 10 minutes
-    memory: 15 * 60 * 1000,  // 15 minutes
-    math: 8 * 60 * 1000,    // 8 minutes
-    luck: 3 * 60 * 1000     // 3 minutes
+    speed: 8 * 60 * 1000,  // 10 minutes
+    memory: 10 * 60 * 1000,  // 15 minutes
+    math: 5 * 60 * 1000,    // 8 minutes
+    luck: 4 * 60 * 1000     // 3 minutes
 };
 
 function updateEffectiveMultipliers() {
@@ -86,10 +87,18 @@ function updateEffectiveMultipliers() {
 
 // Function to handle cookie click
 function cookieCollectAllResources() {
-    copium += cookieClickMultiplier * epsMultiplier * godModeMultiplier;
-    delusion += cookieClickMultiplier * epsMultiplier * godModeMultiplier;
-    yachtMoney += cookieClickMultiplier * epsMultiplier * godModeMultiplier;
-    trollPoints += cookieClickMultiplier * epsMultiplier * godModeMultiplier;
+    if (cookieBoost){
+        copium += Math.max(cookieClickMultiplier * epsMultiplier * godModeMultiplier, effectiveCopiumPerSecond/2);
+        delusion += Math.max(cookieClickMultiplier * epsMultiplier * godModeMultiplier, effectiveDelusionPerSecond/2);
+        yachtMoney += Math.max(cookieClickMultiplier * epsMultiplier * godModeMultiplier, effectiveYachtMoneyPerSecond/2);
+        trollPoints += Math.max(cookieClickMultiplier * epsMultiplier * godModeMultiplier, effectiveTrollPointsPerSecond/2);
+    }
+    else {
+        copium += cookieClickMultiplier * epsMultiplier * godModeMultiplier;
+        delusion += cookieClickMultiplier * epsMultiplier * godModeMultiplier;
+        yachtMoney += cookieClickMultiplier * epsMultiplier * godModeMultiplier;
+        trollPoints += cookieClickMultiplier * epsMultiplier * godModeMultiplier;
+    }
     updateDisplay();
 }
 
@@ -176,7 +185,11 @@ function loadGameState() {
         document.getElementById('cookieButton').style.display = 'block';
         cookieClickMultiplier = JSON.parse(localStorage.getItem('cookieClickMultiplier')) || 10;
         const cookieTooltip = document.querySelector('#cookieButton .cookieTooltip');
-        cookieTooltip.textContent = `Each cookie click counts as ${cookieClickMultiplier} clicks on collect buttons for Copium, Delusion, Yacht Money, and Troll Points!`;
+        if(cookieBoost){
+            cookieTooltip.textContent = `Each cookie click generates the amount of Copium, Delusion, Yacht Money, and Troll Points that you earn in half a second.`;
+        } else {
+            cookieTooltip.textContent = `Each cookie click counts as ${cookieClickMultiplier} clicks on collect buttons for Copium, Delusion, Yacht Money, and Troll Points!`;
+        }
     }
     
     luckGameDelta = JSON.parse(localStorage.getItem('luckGameDelta')) || -75;
@@ -390,6 +403,12 @@ function playMiniGame(gameType) {
     button.classList.remove('affordable'); // Remove the 'affordable' class
     button.classList.add('disabled'); // Add the 'disabled' class to change its appearance
 
+    // Convert mini-game timeouts from milliseconds to minutes for the message
+    const cooldownMinutes = miniGameTimeouts[gameType] / (60 * 1000);
+    const cooldownMessage = (gameType === 'memory' || gameType === 'math') ? 
+        `In ${cooldownMinutes} minutes, you get to test your ${gameType} skills again.` : 
+        `In ${cooldownMinutes} minutes, you get to test your ${gameType} again.`;
+
     // Speed mini-game logic
     if (gameType === 'speed') {
         let points = 0;
@@ -413,10 +432,10 @@ function playMiniGame(gameType) {
                 let reward;
                 if (clicksPerSecond > 3) { // More than 3 clicks per second
                     reward = Math.max(Math.floor(Math.abs(copium) * ((clicksPerSecond - 3) * 0.05)), 25);
-                    showMessageModal('Speed Game Result - Fast', `You tapped ${points} times in ${duration} seconds (${clicksPerSecond.toFixed(1)} taps per second). For being so fast you earned ${formatNumber(reward)} copium!`, false, false);
+                    showMessageModal('Speed Game Result - Fast', `You tapped ${points} times in ${duration} seconds (${clicksPerSecond.toFixed(1)} taps per second). For being so fast you earned ${formatNumber(reward)} copium! ${cooldownMessage}`, false, false);
                 } else {
                     reward = -Math.max(Math.floor(Math.random() * Math.abs(copium) * 0.1), 10);
-                    showMessageModal('Speed Game Result - Slow', `You tapped ${points} times in ${duration} seconds (${clicksPerSecond.toFixed(1)} taps per second). For being so slow you lost ${formatNumber(reward)} copium!`, false, false);
+                    showMessageModal('Speed Game Result - Slow', `You tapped ${points} times in ${duration} seconds (${clicksPerSecond.toFixed(1)} taps per second). For being so slow you lost ${formatNumber(reward)} copium! ${cooldownMessage}`, false, false);
                 }
                 copium += reward;
                 updateDisplay(); // Update the display
@@ -442,7 +461,7 @@ function playMiniGame(gameType) {
                         reward = Math.abs(reward) * (toggleDelusion ? 1 : -1);
                     }
                     delusion += reward;
-                    showMessageModal('Memory Game Result', `You ${correct ? 'won' : 'lost'} and earned ${formatNumber(reward)} delusion!`);
+                    showMessageModal('Memory Game Result', `You ${correct ? 'won' : 'lost'} ${formatNumber(reward)} delusion! ${cooldownMessage}`);
                     updateDisplay(); // Update the display
                     startCooldown(gameType); // Start cooldown for the mini-game
                 });
@@ -477,7 +496,7 @@ function playMiniGame(gameType) {
                 reward = isCorrect ? Math.max(Math.floor(Math.abs(yachtMoney) * 0.25), 25) : -Math.max(Math.floor(Math.random() * Math.abs(yachtMoney) * 0.1), 10);
             }
             yachtMoney += reward;
-            showMessageModal('Math Game Result', `You guessed ${answer} and exact answer was ${correctAnswer}. You ${isCorrect ? 'won' : 'lost'} and earned ${formatNumber(reward)} yachtMoney!`);
+            showMessageModal('Math Game Result', `You guessed ${answer} and exact answer was ${correctAnswer}. You ${isCorrect ? 'won' : 'lost'} ${formatNumber(reward)} yachtMoney! ${cooldownMessage}`);
             updateDisplay(); // Update the display
             startCooldown(gameType); // Start cooldown for the mini-game
         });
@@ -501,12 +520,12 @@ function playMiniGame(gameType) {
         }
     
         trollPoints += reward;
-        showMessageModal('Luck Game Result', `You rolled ${result.toFixed(2)}%. ${message} You ${gainLossMessage} ${formatNumber(Math.abs(reward))} troll points!`);
+        showMessageModal('Luck Game Result', `You rolled ${result.toFixed(2)}%. ${message} You ${gainLossMessage} ${formatNumber(Math.abs(reward))} troll points! ${cooldownMessage}`);
         updateDisplay(); // Update the display
         startCooldown(gameType); // Start cooldown for the mini-game
     }
-    
 }
+
 
 // Function to start the cooldown for a mini-game
 function startCooldown(gameType) {
@@ -678,6 +697,8 @@ async function restartGame(isPrestige = false, isAscend = false) {
             mathGameSkill = false;
             tripleAscensionSkill = false;
             buyMarkersSkill = false;
+            improvedTradeRatio = false;
+            cookieBoost = false;
 
             powerUnlocked = false;
             document.getElementById('power-container').style.display = 'none';
@@ -724,6 +745,35 @@ async function restartGame(isPrestige = false, isAscend = false) {
     }
 }
 
+let tradeStatusTimeout;
+
+function showTradeStatusMessage(message, isSuccess) {
+    const overlay = document.getElementById('tradeStatusOverlay');
+    overlay.textContent = message;
+    overlay.className = 'trade-status-overlay'; // Reset classes
+    if (isSuccess) {
+        overlay.classList.add('success');
+    } else {
+        overlay.classList.add('error');
+    }
+    overlay.style.display = 'block';
+    
+    // Position the overlay relative to the trade button
+    const tradeButton = document.getElementById('tradeButton');
+    const rect = tradeButton.getBoundingClientRect();
+    overlay.style.top = `${rect.top}px`;
+    overlay.style.left = `${rect.right + 10}px`;
+
+    // Clear the previous timer if it exists
+    if (tradeStatusTimeout) {
+        clearTimeout(tradeStatusTimeout);
+    }
+
+    // Set a new timer to hide the overlay after 5 seconds
+    tradeStatusTimeout = setTimeout(() => {
+        overlay.style.display = 'none';
+    }, 5000); // Hide after 5 seconds
+}
 
 
 // Function to update the displayed trade ratio based on selected resources
@@ -788,7 +838,6 @@ function parseFormattedNumber(str, currentAmount = 0) {
 }
 
 
-
 function tradeResources() {
     const fromResource = document.getElementById('fromResource').value;
     const toResource = document.getElementById('toResource').value;
@@ -808,47 +857,47 @@ function tradeResources() {
 
     // Check if the same resource is selected for both from and to
     if (fromResource === toResource) {
-        showMessageModal('Trade Error', "Cannot trade the same resource.");
+        showTradeStatusMessage("Cannot trade the same resource.", false);
         return;
     }
 
     // Check if trade amount is valid
     if (isNaN(tradeAmount) || tradeAmount <= 0) {
-        showMessageModal('Trade Error', 'Please enter a valid trade amount.');
+        showTradeStatusMessage('Please enter a valid trade amount.', false);
         return;
     }
 
     // Special trade case for converting Copium to Hopium
     if (fromResource === 'copium' && toResource === 'hopium') {
         if (resourceAmount[fromResource] < tradeAmount) {
-            showMessageModal('Trade Error', `Not enough ${fromResource} to trade.`);
+            showTradeStatusMessage(`Not enough ${fromResource} to trade.`, false);
             return;
         }
         resourceAmount[fromResource] -= tradeAmount;
         if (improvedTradeRatio) {
             resourceAmount[toResource] += tradeAmount / 4000000;
-            showMessageModal('Trade Successful', `Traded ${formatNumber(tradeAmount)} ${fromResource} for ${formatNumber(tradeAmount / 4000000)} ${toResource}.`);
+            showTradeStatusMessage(`Traded ${formatNumber(tradeAmount)} ${fromResource} for ${formatNumber(tradeAmount / 4000000)} ${toResource}.`, true);
         } else {
             resourceAmount[toResource] += tradeAmount / 100000000;
-            showMessageModal('Trade Successful', `Traded ${formatNumber(tradeAmount)} ${fromResource} for ${formatNumber(tradeAmount / 100000000)} ${toResource}.`);
+            showTradeStatusMessage(`Traded ${formatNumber(tradeAmount)} ${fromResource} for ${formatNumber(tradeAmount / 100000000)} ${toResource}.`, true);
         }
         
     } else if (toResource === 'hopium') {
-        showMessageModal('Trade Error', "Only Copium can convert to Hopium.");
+        showTradeStatusMessage("Only Copium can convert to Hopium.", false);
         return;
     } else {
         // General trade case for other resources
         if (resourceAmount[fromResource] < tradeAmount) {
-            showMessageModal('Trade Error', `Not enough ${fromResource} to trade.`);
+            showTradeStatusMessage(`Not enough ${fromResource} to trade.`, false);
             return;
         }
         resourceAmount[fromResource] -= tradeAmount;
         if (improvedTradeRatio) {
             resourceAmount[toResource] += tradeAmount / 4;
-            showMessageModal('Trade Successful', `Traded ${formatNumber(tradeAmount)} ${fromResource} for ${formatNumber(tradeAmount / 4)} ${toResource}.`);
+            showTradeStatusMessage(`Traded ${formatNumber(tradeAmount)} ${fromResource} for ${formatNumber(tradeAmount / 4)} ${toResource}.`, true);
         } else {
             resourceAmount[toResource] += tradeAmount / 10;
-            showMessageModal('Trade Successful', `Traded ${formatNumber(tradeAmount)} ${fromResource} for ${formatNumber(tradeAmount / 10)} ${toResource}.`);
+            showTradeStatusMessage(`Traded ${formatNumber(tradeAmount)} ${fromResource} for ${formatNumber(tradeAmount / 10)} ${toResource}.`, true);
         }
     }
 
@@ -1215,7 +1264,7 @@ function buyUpgrade(encodedUpgradeName) {
 
         // Special case for the "Still very stupid" upgrade
         if (name === "BRUHHHH") {
-            showMessageModal('Sadly', "This marks the end of v0.75. Your journey through this existential tale is just beginning, and the newfound power will open doors to uncharted realms. How will you wield it? Stay tuned, as another big update is just a few days away. If you can't wait, feel free to restart the game and embark on speed runs, or explore alternate strategies.");
+            showMessageModal('Sadly', "This marks the end of v0.76. Your journey through this existential tale is just beginning, and the newfound power will open doors to uncharted realms. How will you wield it? Stay tuned, as another big update is just a few days away. If you can't wait, feel free to restart the game and embark on speed runs, or explore alternate strategies.");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one

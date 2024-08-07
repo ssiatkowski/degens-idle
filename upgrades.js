@@ -32,7 +32,7 @@ const upgrades = [
     {
         name: "Decisions, decisions...",
         cost: { copium: 100, delusion: 100, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 1.4, delusionPerSecond: 4.2, yachtMoneyPerSecond: -1.2, trollPointsPerSecond: 2.2, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 1.3, delusionPerSecond: 4.2, yachtMoneyPerSecond: -1.2, trollPointsPerSecond: 2.1, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/two_buttons.jpg",
     },
     {
@@ -44,7 +44,7 @@ const upgrades = [
     {
         name: "Music",
         cost: { copium: 100, delusion: 25, yachtMoney: 150, trollPoints: 25, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 8.2, delusionPerSecond: -0.9, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 8.1, delusionPerSecond: -0.9, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/linkin_park.jpg",
     },
     {
@@ -56,7 +56,7 @@ const upgrades = [
     {
         name: "Alt Coins",
         cost: { copium: 0, delusion: 0, yachtMoney: 999, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 25, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 24, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/alt_coins.jpg",
     },
     {
@@ -96,7 +96,7 @@ const upgrades = [
     {
         name: "Swing and a Miss",
         cost: { copium: 2400, delusion: 1600, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 19, delusionPerSecond: 14, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 18.5, delusionPerSecond: 14, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/swing_and_a_miss.jpg",
     },
     {
@@ -127,7 +127,7 @@ const upgrades = [
     {
         name: "VR Porn",
         cost: { copium: 5000, delusion: 0, yachtMoney: 4000, trollPoints: 1500, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 22, delusionPerSecond: 6.9, yachtMoneyPerSecond: 0, trollPointsPerSecond: 3, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 22, delusionPerSecond: 6.9, yachtMoneyPerSecond: 0, trollPointsPerSecond: 2.4, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/vr_porn.jpg",
     },
     {
@@ -153,7 +153,7 @@ const upgrades = [
     {
         name: "Suss",
         cost: { copium: 11000, delusion: 0, yachtMoney: 0, trollPoints: 5000, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 21, delusionPerSecond: -5, yachtMoneyPerSecond: 0, trollPointsPerSecond: 40, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 21, delusionPerSecond: -5, yachtMoneyPerSecond: 0, trollPointsPerSecond: 38, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/morty.PNG",
     },
     {
@@ -262,7 +262,7 @@ const upgrades = [
     },
     {
         name: "Rewriting History",
-        cost: { copium: 5000000, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
+        cost: { copium: 5000000, delusion: 0, yachtMoney: 1000000, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 250, delusionPerSecond: 0, yachtMoneyPerSecond: 1200, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/rewriting_history.jpg",
     },
@@ -442,19 +442,19 @@ const upgrades = [
     {
         name: "But Wait There's More!",
         cost: { copium: 1e15, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 1e8, knowledge: 10000, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 5e6, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 3.5, knowledgePerSecond: 0.00001, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 5e6, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 4, knowledgePerSecond: 0.00001, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/surprise_pikachu.jpg",
     },
     {
         name: "Spotify Wrapped",
         cost: { copium: 1e15, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 1e8, knowledge: 10000, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 1.5e6, delusionPerSecond: 1e6, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1.7e6, hopiumPerSecond: 1, knowledgePerSecond: 0.00001, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 1.5e6, delusionPerSecond: 1e6, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1.7e6, hopiumPerSecond: 2, knowledgePerSecond: 0.00001, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/spotify_wrapped.jpg",
     },
     {
         name: "Free Trial",
         cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 2e11, knowledge: 25000, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 8e6, delusionPerSecond: 0, yachtMoneyPerSecond: 1.75e6, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0.00001, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 9e6, delusionPerSecond: 0, yachtMoneyPerSecond: 1.75e6, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0.00001, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/free_trial.jpg",
     },
     {
@@ -480,7 +480,7 @@ const upgrades = [
     {
         name: "Unlimited Power",
         cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 3.33333e-9, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1e7, hopiumPerSecond: 1, knowledgePerSecond: 0.00001, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1.5e7, hopiumPerSecond: 1.5, knowledgePerSecond: 0.000015, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/unlimited_power.jpg",
         message: `<p>As the gears of progress click into place, you feel a surge of energy coursing through your veins. The very essence of the universe seems to hum in harmony with your newfound abilities. "All you know for now is that power is unlocked," echoes a distant voice in your mind, as if whispered by the ancients who have tread this path before you.</p>
                 <p>Gaining power feels good—no, it feels exhilarating. You sense the weight of the world lifting, replaced by a tantalizing promise of untapped potential. This isn't just strength; it's an awakening, a key to doors that were previously hidden in the shadows of your ignorance.</p>
@@ -488,6 +488,12 @@ const upgrades = [
                 <p><strong>You notice that prestige and god-mode multipliers do not directly affect power generation - this must be something bigger than anything you have encountered so far!</strong></p>
                 <p>Driven by curiosity and a burning desire to uncover the secrets that lie ahead, you must find out soon. Each step forward brings you closer to the answers, each discovery a piece of the grand puzzle. Embrace this newfound power, for it is both a gift and a challenge—a test to see if you can wield it wisely.</p>
                 `,
+    },
+    {
+        name: "Honest Work",
+        cost: { copium: 0, delusion: 0, yachtMoney: 2e18, trollPoints: 0, hopium: 5e13, knowledge: 4e8, power: 0, serenity: 0 },
+        earnings: { copiumPerSecond: 5e6, delusionPerSecond: 1.8e7, yachtMoneyPerSecond: 5e6, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0.0003, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: "imgs/honest_work.jpg",
     },
     {
         name: "Never Admit Mistakes",
@@ -508,9 +514,15 @@ const upgrades = [
         img: "imgs/young_stupid.jpg",
     },
     {
+        name: "Change My Mind",
+        cost: { copium: 0, delusion: 3e19, yachtMoney: 1e19, trollPoints: 8e19, hopium: 0, knowledge: 3e8, power: 0, serenity: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 17500, knowledgePerSecond: 0.0025, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: "imgs/change_my_mind.jpg",
+    },
+    {
         name: "Impossible",
         cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 1, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 1, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: -25000, knowledgePerSecond: 10, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/impossible.jpg",
         message: `Lol, cheater! Instead of cheating why don't you hop in discord and suggest future memes!`,
 
@@ -524,6 +536,13 @@ const upgrades = [
         message: `WHY? Why did you buy this upgrade? I explicitly told you not to. Now, mosquitoes are a part of your universe. Seriously, what were you thinking? These little bloodsuckers are everywhere now, and let me tell you, no good can come from that. Enjoy the endless itching and buzzing in your ears at night. If you ever get a chance for a do-over, hopefully, you’ll have learned your lesson. Until then, welcome to Mosquito Madness!`,
     },
     {
+        name: "Mistakes",
+        cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 1e20, hopium: 2e15, knowledge: 5e8, power: 0, serenity: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 6.7e7, yachtMoneyPerSecond: 6.7e7, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: "imgs/mistakes.jpg",
+        hoverOverwrite: "Don't be hard on yourself, everyone makes mistakes",
+    },
+    {
         name: "Bruh",
         cost: { copium: 1e20, delusion: 1e20, yachtMoney: 1e20, trollPoints: 1e20, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 5e7, delusionPerSecond: 5e7, yachtMoneyPerSecond: 5e7, trollPointsPerSecond: 5e7, hopiumPerSecond: 0, knowledgePerSecond: 0.01, powerPerSecond: 0, serenityPerSecond: 0 },
@@ -535,7 +554,20 @@ const upgrades = [
         earnings: { copiumPerSecond: 1e8, delusionPerSecond: 1e8, yachtMoneyPerSecond: 1e8, trollPointsPerSecond: 1e8, hopiumPerSecond: 0, knowledgePerSecond: 0.05, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/bruhhh.jpg",
     },
-
+    {
+        name: "School of Life",
+        cost: { copium: 0, delusion: 3e20, yachtMoney: 2.5e20, trollPoints: 1.4e21, hopium: 0, knowledge: 5e9, power: 1e-6, serenity: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 5e7, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0.5, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: "imgs/drake_learning.jpg",
+    },
+    {
+        name: "Job Application #3",
+        cost: { copium: 1e25, delusion: 1e25, yachtMoney: 0, trollPoints: 1e24, hopium: 1e19, knowledge: 0, power: 0, serenity: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 1e10, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 2, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: "imgs/job_application_3.jpg",
+        hoverOverwrite: "A few minor surgeries and forged documents later... will 3rd time be the charm?",
+        message: "We are delighted to inform you that you have been selected for the position of Chief Fun Officer at Acme Corporation! Your enthusiasm, creativity, and qualifications have truly impressed us, and we can't wait to see you bring your unique flair to our team.<br><br>We want to emphasize that our decision was based solely on your exceptional skills and experience. It had absolutely nothing to do with your sexual preferences, skin color, or gender. At Acme Corporation, we pride ourselves on our commitment to inclusivity and equality, ensuring that everyone has an equal opportunity to shine.<br><br>We believe that you will be a fantastic addition to our diverse and dynamic team. We look forward to seeing the innovative and fun ideas you will bring to our projects. Get ready to join us in making work a lot more exciting!",
+    },
     // {
     //     name: "Haven't Smoked Foool (not done)",
     //     cost: { copium: 1e15, delusion: 1e15, yachtMoney: 1e15, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },

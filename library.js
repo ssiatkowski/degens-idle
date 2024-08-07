@@ -2,7 +2,7 @@ const librarySkills = [
     { name: 'Cookie Recipe', cost: 1, description: 'This ancient cookie recipe permanently makes cookie clicks another 10x more powerful.', unlocked: false, level: 'History' },
     { name: 'Knowledge Generation', cost: 400, description: 'After Prestiging or Ascending, begin knowledge generation immediately without reaching -1T delusion.', unlocked: false, level: 'History' },
     { name: 'Trade Ratios', cost: 1500, description: 'Lower trade ratio to 4:1 for top 4 resources and 4M:1 for Hopium.', unlocked: false, level: 'History' },
-    // { name: '', cost: 1e8, description: '', unlocked: false, level: 'History' }, 
+    { name: 'Cookie Boost', cost: 3e9, description: 'Cookie clicks now generate resources equal to your earnings per half a second (for the first 4 resources)', unlocked: false, level: 'History' }, 
     // { name: '', cost: 1e10, description: '', unlocked: false, level: 'History' }, 
     // { name: '', cost: 1e20, description: '', unlocked: false, level: 'History' }, 
 
@@ -27,7 +27,7 @@ const librarySkills = [
     // { name: 'Big Crunch', cost: 1e9, description: 'Unlock ability to force the universe into a Big Crunch and to be reborn anew.', unlocked: false, level: 'Celestial Bodies' },
     // { name: 'Money is Power, too', cost: 1e15, description: 'Add a multiplier to Power generation based on Yacht Money.', unlocked: false, level: 'Celestial Bodies' },
 
-    { name: 'What is this? (not implemented yet)', cost: 1e20, description: 'EZ Game', unlocked: false, level: '???' },
+    { name: 'What is this? (not implemented yet)', cost: 1e25, description: 'EZ Game', unlocked: false, level: '???' },
     // { name: 'Serenity', cost: 1e25, description: '', unlocked: false, level: '???' },
     // { name: '', cost: 1e29, description: '', unlocked: false, level: '???' },
     // { name: '', cost: 1e33, description: '', unlocked: false, level: '???' },
@@ -53,8 +53,10 @@ function unlockLibrarySkill(skill, duringLoad = false) {
         switch (skill.name) {
             case 'Cookie Recipe':
                 cookieClickMultiplier = 100;
-                const cookieTooltip = document.querySelector('#cookieButton .cookieTooltip');
-                cookieTooltip.textContent = `Each cookie click counts as ${cookieClickMultiplier} clicks on collect buttons for Copium, Delusion, Yacht Money, and Troll Points!`;
+                if (!cookieBoost){
+                    const cookieTooltip = document.querySelector('#cookieButton .cookieTooltip');
+                    cookieTooltip.textContent = `Each cookie click counts as ${cookieClickMultiplier} clicks on collect buttons for Copium, Delusion, Yacht Money, and Troll Points!`;
+                }
                 break;
         
             case 'Knowledge Generation':
@@ -63,6 +65,12 @@ function unlockLibrarySkill(skill, duringLoad = false) {
         
             case 'Trade Ratios':
                 improvedTradeRatio = true;
+                break;
+
+            case 'Cookie Boost':
+                cookieBoost = true;
+                const cookieTooltip = document.querySelector('#cookieButton .cookieTooltip');
+                cookieTooltip.textContent = `Each cookie click generates the amount of Copium, Delusion, Yacht Money, and Troll Points that you earn in half a second.`;
                 break;
         
             case 'Cure for Delusion':
