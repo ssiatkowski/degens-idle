@@ -97,8 +97,8 @@ function unlockLibrarySkill(skill, duringLoad = false) {
                 break;
                         
             case 'Multibuy Upgrades':
-                document.getElementById('buySeenButton').classList.remove('hidden');
-                document.getElementById('buyMaxButton').classList.remove('hidden');
+                multibuyUpgradesSkill = true;
+                initializeBuyButtons();
                 break;
         
             case 'Cookie Clicker':

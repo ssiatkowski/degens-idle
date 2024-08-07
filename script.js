@@ -57,6 +57,7 @@ let knowledgeUnlocked = false;
 let knowledgeGenerationSkill = false;
 let prestigeBaseSkill = false;
 let twoDimensionalAscensionSkill = false;
+let multibuyUpgradesSkill = false;
 let mathGameSkill = false;
 let powerUnlocked = false;
 let tripleAscensionSkill = false;
@@ -694,6 +695,7 @@ async function restartGame(isPrestige = false, isAscend = false) {
             knowledgeGenerationSkill = false;
             prestigeBaseSkill = false;
             twoDimensionalAscensionSkill = false;
+            multibuyUpgradesSkill = false;
             mathGameSkill = false;
             tripleAscensionSkill = false;
             buyMarkersSkill = false;
@@ -1191,24 +1193,16 @@ function buyUpgrade(encodedUpgradeName) {
     const { cost, earnings, img, name, message, miniPrestigeMultiplier } = upgrade;
 
     // Check if the player has enough resources to purchase the upgrade
-    if ((cost.copium === 0 || copium >= cost.copium) &&
-        (cost.delusion === 0 || delusion >= cost.delusion) &&
-        (cost.yachtMoney === 0 || yachtMoney >= cost.yachtMoney) &&
-        (cost.trollPoints === 0 || trollPoints >= cost.trollPoints) &&
-        (cost.hopium === 0 || hopium >= cost.hopium) &&
-        (cost.knowledge === 0 || knowledge >= cost.knowledge) &&
-        (cost.power === 0 || power >= cost.power) &&
-        (cost.serenity === 0 || serenity >= cost.serenity)) {
-
+    if (isAffordable(cost)) {
         // Deduct the cost from the player's resources
-        copium -= cost.copium;
-        delusion -= cost.delusion;
-        yachtMoney -= cost.yachtMoney;
-        trollPoints -= cost.trollPoints;
-        hopium -= cost.hopium;
-        knowledge -= cost.knowledge;
-        power -= cost.power;
-        serenity -= cost.serenity;
+        copium -= cost.copium || 0;
+        delusion -= cost.delusion || 0;
+        yachtMoney -= cost.yachtMoney || 0;
+        trollPoints -= cost.trollPoints || 0;
+        hopium -= cost.hopium || 0;
+        knowledge -= cost.knowledge || 0;
+        power -= cost.power || 0;
+        serenity -= cost.serenity || 0;
 
         // Increase the per second earnings for each resource, apply God Mode multiplier if applicable
         const multiplier = upgrade.isGodMode ? 10 : 1;
@@ -1572,8 +1566,17 @@ function updateUpgradeButtons() {
         buySeenButton.classList.remove('affordable');
         buyMaxButton.classList.remove('affordable');
     }
+}
 
-    // Attach event listeners for buy buttons if not already attached
+// Attach tooltip and touch events for buy buttons
+function initializeBuyButtons() {
+    
+    document.getElementById('buySeenButton').classList.remove('hidden');
+    document.getElementById('buyMaxButton').classList.remove('hidden');
+
+    const buySeenButton = document.getElementById('buySeenButton');
+    const buyMaxButton = document.getElementById('buyMaxButton');
+
     if (!buySeenButton.listenersAttached) {
         attachTooltipEvents(buySeenButton, {
             name: "Buy Seen",
@@ -1593,8 +1596,6 @@ function updateUpgradeButtons() {
         buyMaxButton.listenersAttached = true;
     }
 }
-
-
 
 
 
