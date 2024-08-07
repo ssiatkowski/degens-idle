@@ -119,6 +119,7 @@ function collectResource(resource) {
 
 // Function to load the game state from local storage
 function loadGameState() {
+
     // Retrieve and parse the resource values from local storage, defaulting to 0 if not found
     copium = parseFloat(localStorage.getItem('copium')) || 0;
     copiumPerSecond = parseFloat(localStorage.getItem('copiumPerSecond')) || 0;
@@ -1275,7 +1276,11 @@ function buyUpgrade(encodedUpgradeName) {
 
     } else {
         // Show an alert if the player does not have enough resources
-        showMessageModal('Purchase Denied', 'Not enough resources to purchase this upgrade.');
+        if (!isModalOpen) {
+            showMessageModal('Purchase Denied', 'Not enough resources to purchase this upgrade.').then(() => {
+                isModalOpen = false;
+            });
+        }
     }
     // Update the upgrade buttons to reflect the current state
     updateUpgradeButtons();
