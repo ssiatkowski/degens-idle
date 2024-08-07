@@ -1208,7 +1208,6 @@ function buyUpgrade(encodedUpgradeName) {
         // Increase the per second earnings for each resource, apply God Mode multiplier if applicable
         const multiplier = upgrade.isGodMode ? 10 : 1;
         copiumPerSecond += (earnings.copiumPerSecond || 0) * multiplier;
-        delusionPerSecond += (earnings.delusionPerSecond || 0) * multiplier;
         yachtMoneyPerSecond += (earnings.yachtMoneyPerSecond || 0) * multiplier;
         trollPointsPerSecond += (earnings.trollPointsPerSecond || 0) * multiplier;
         hopiumPerSecond += (earnings.hopiumPerSecond || 0) * multiplier;
