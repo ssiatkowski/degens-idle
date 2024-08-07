@@ -502,6 +502,12 @@ const upgrades = [
         img: "imgs/marv.jpg",
     },
     {
+        name: "McDonalds Diet",
+        cost: { copium: 9e18, delusion: 1.1e19, yachtMoney: 3e18, trollPoints: 0, hopium: 3e13, knowledge: 0, power: 0, serenity: 0 },
+        earnings: { copiumPerSecond: 5e7, delusionPerSecond: 4e7, yachtMoneyPerSecond: 0, trollPointsPerSecond: 8e7, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: "imgs/mcdonalds.jpg",
+    },
+    {
         name: "Time for Careful Planning",
         cost: { copium: 3e19, delusion: 2e19, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 3.3e8, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: -1e7, trollPointsPerSecond: 3e8, hopiumPerSecond: 5000, knowledgePerSecond: 0.00001, powerPerSecond: 0, serenityPerSecond: 0 },
@@ -543,21 +549,29 @@ const upgrades = [
         hoverOverwrite: "Don't be hard on yourself, everyone makes mistakes",
     },
     {
+        name: "Increlution",
+        cost: { copium: 9e19, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 1e16, knowledge: 1e9, power: 0, serenity: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 2e7, yachtMoneyPerSecond: 4e7, trollPointsPerSecond: 9e7, hopiumPerSecond: -6000, knowledgePerSecond: 0.002, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: "imgs/increlution.jpg",
+        hoverOverwrite: "Purchase Early Access",
+        message: "Increlution is an incremental game that blends survival and strategy. Players gather resources, build structures, and fend off threats in a post-apocalyptic world, unlocking new technologies and abilities as they progress. Tragically, just like this upgrade image, the game was left in an unfinished state after collecting profits from early access sales, leaving fans hoping for future updates that may never come.",
+    },
+    {
         name: "Bruh",
         cost: { copium: 1e20, delusion: 1e20, yachtMoney: 1e20, trollPoints: 1e20, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 5e7, delusionPerSecond: 5e7, yachtMoneyPerSecond: 5e7, trollPointsPerSecond: 5e7, hopiumPerSecond: 0, knowledgePerSecond: 0.01, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 9e7, delusionPerSecond: 9e7, yachtMoneyPerSecond: 9e7, trollPointsPerSecond: 9e7, hopiumPerSecond: 0, knowledgePerSecond: 0.01, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/bruh.jpg",
     },
     {
         name: "BRUHHHH",
         cost: { copium: 1e21, delusion: 1e21, yachtMoney: 1e21, trollPoints: 1e21, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 1e8, delusionPerSecond: 1e8, yachtMoneyPerSecond: 1e8, trollPointsPerSecond: 1e8, hopiumPerSecond: 0, knowledgePerSecond: 0.05, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 4e8, delusionPerSecond: 4e8, yachtMoneyPerSecond: 4e8, trollPointsPerSecond: 4e8, hopiumPerSecond: 0, knowledgePerSecond: 0.05, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/bruhhh.jpg",
     },
     {
         name: "School of Life",
         cost: { copium: 0, delusion: 3e20, yachtMoney: 2.5e20, trollPoints: 1.4e21, hopium: 0, knowledge: 5e9, power: 1e-6, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 5e7, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0.5, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 5e8, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0.5, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/drake_learning.jpg",
     },
     {
@@ -574,12 +588,6 @@ const upgrades = [
     //     earnings: { copiumPerSecond: 1, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
     //     img: "imgs/ez_blunt.jpg",
     // },  
-    // {
-    //     name: "Never Admit Mistakes (not done)",
-    //     cost: { copium: 1e15, delusion: 1e15, yachtMoney: 1e15, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
-    //     earnings: { copiumPerSecond: 1, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
-    //     img: "imgs/marv.jpg",
-    // },
     // {
     //     name: "Party Animals (not done)",
     //     cost: { copium: 1e15, delusion: 1e15, yachtMoney: 1e15, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },

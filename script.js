@@ -969,8 +969,10 @@ function formatNumber(num) {
         { value: 1e3, symbol: "K" }       // Thousand
     ];
 
-    if (Math.abs(num) >= 1e36 || (Math.abs(num)  > 0 && Math.abs(num) < 1e-3) ) {
+    if (Math.abs(num) >= 1e36) {
         return num.toExponential(3);  // Switch to scientific notation for values >= 1e36
+    } else if (Math.abs(num) > 0 && Math.abs(num) < 1e-3) {
+        return parseFloat(num.toPrecision(3)).toString();  // Limit to 3 significant digits and remove trailing zeros
     }
 
     for (let i = 0; i < suffixes.length; i++) {
@@ -1258,7 +1260,7 @@ function buyUpgrade(encodedUpgradeName) {
 
         // Special case for the "Still very stupid" upgrade
         if (name === "BRUHHHH") {
-            showMessageModal('Sadly', "This marks the end of v0.76. Your journey through this existential tale is just beginning, and the newfound power will open doors to uncharted realms. How will you wield it? Stay tuned, as another big update is just a few days away. If you can't wait, feel free to restart the game and embark on speed runs, or explore alternate strategies.");
+            showMessageModal('Sadly', "This marks the end of v0.765. Your journey through this existential tale is just beginning, and the newfound power will open doors to uncharted realms. How will you wield it? Stay tuned, as another big update is just a few days away. If you can't wait, feel free to restart the game and embark on speed runs, or explore alternate strategies.");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one
