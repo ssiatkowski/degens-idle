@@ -90,7 +90,7 @@ const upgrades = [
         cost: { copium: 1000, delusion: 1000, yachtMoney: 1000, trollPoints: 1000, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 10, delusionPerSecond: 10, yachtMoneyPerSecond: 10, trollPointsPerSecond: 10, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/captain_degen.jpg",
-        message: "With Captain Degen, your prestige multiplier is increased by 0.01%. Trust me, you'll feel the bliss of catching an inside joke when you see it in action – even though the display rounds to two digits.",
+        message: "With Captain Degen at the helm, your prestige multiplier gets a whopping 0.01% boost! It’s like waiting for that perfect meme to finally hit your feed and crack you up – you know it's coming, and the anticipation makes it even sweeter. Just like those memes, some boosts will stick, and you’ll feel the impact. Remember, strategy matters – the Captain reminds you that a well-thought-out plan can make all the difference. So get ready to laugh, level up, and watch your prestige soar to new, hilarious heights!",
         miniPrestigeMultiplier: 1.001,
     },
     {
