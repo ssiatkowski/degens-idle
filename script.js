@@ -43,6 +43,12 @@ let availableUpgrades = [];
 
 let godModeLevel = 0;
 let godModeMultiplier = 1;
+let puGodLevel = 0;
+let puGodMultiplier = 1;
+let bigCrunchPower = 1e-7;
+let bigCrunchMultiplier = 1;
+
+let totalMultiplier = 1;
 
 let firstTimePrestigeButtonAvailable = true; // Default to true, will be updated based on saved state
 let firstTimeCookieUnlock = true;
@@ -59,9 +65,14 @@ let prestigeBaseSkill = false;
 let twoDimensionalAscensionSkill = false;
 let multibuyUpgradesSkill = false;
 let mathGameSkill = false;
+let memoryGameSkill = false;
+let speedGameSkill = false;
 let powerUnlocked = false;
-let tripleAscensionSkill = false;
 let buyMarkersSkill = false;
+let bigCrunchUnlocked = false;
+let moneyIsPowerTooSkill = false;
+
+let numAscensionUpgrades = 1;
 
 let improvedTradeRatio = false;
 let cookieBoost = false;
@@ -75,30 +86,30 @@ const miniGameTimeouts = {
 };
 
 function updateEffectiveMultipliers() {
-    effectiveCopiumPerSecond = copiumPerSecond * epsMultiplier * godModeMultiplier * devMultiplier;
-    effectiveDelusionPerSecond = delusionPerSecond * epsMultiplier * godModeMultiplier * devMultiplier;
-    effectiveYachtMoneyPerSecond = yachtMoneyPerSecond * epsMultiplier * godModeMultiplier * devMultiplier;
-    effectiveTrollPointsPerSecond = trollPointsPerSecond * epsMultiplier * godModeMultiplier * devMultiplier;
-    effectiveHopiumPerSecond = hopiumPerSecond * epsMultiplier * godModeMultiplier * devMultiplier;
-    effectiveKnowledgePerSecond = knowledgePerSecond * epsMultiplier * godModeMultiplier * devMultiplier;
-    // effectivePowerPerSecond = powerPerSecond * epsMultiplier * godModeMultiplier * devMultiplier;
-    effectiveSerenityPerSecond = serenityPerSecond * epsMultiplier * godModeMultiplier * devMultiplier;
+    effectiveCopiumPerSecond = copiumPerSecond * totalMultiplier;
+    effectiveDelusionPerSecond = delusionPerSecond * totalMultiplier;
+    effectiveYachtMoneyPerSecond = yachtMoneyPerSecond * totalMultiplier;
+    effectiveTrollPointsPerSecond = trollPointsPerSecond * totalMultiplier;
+    effectiveHopiumPerSecond = hopiumPerSecond * totalMultiplier;
+    effectiveKnowledgePerSecond = knowledgePerSecond * totalMultiplier * (bigCrunchMultiplier**(1/2));
+    // effectivePowerPerSecond = powerPerSecond * totalMultiplier;
+    effectiveSerenityPerSecond = serenityPerSecond * totalMultiplier;
 }
 
 
 // Function to handle cookie click
 function cookieCollectAllResources() {
     if (cookieBoost){
-        copium += Math.max(cookieClickMultiplier * epsMultiplier * godModeMultiplier, effectiveCopiumPerSecond/2);
-        delusion += Math.max(cookieClickMultiplier * epsMultiplier * godModeMultiplier, effectiveDelusionPerSecond/2);
-        yachtMoney += Math.max(cookieClickMultiplier * epsMultiplier * godModeMultiplier, effectiveYachtMoneyPerSecond/2);
-        trollPoints += Math.max(cookieClickMultiplier * epsMultiplier * godModeMultiplier, effectiveTrollPointsPerSecond/2);
+        copium += Math.max(cookieClickMultiplier * totalMultiplier, effectiveCopiumPerSecond/2);
+        delusion += Math.max(cookieClickMultiplier * totalMultiplier, effectiveDelusionPerSecond/2);
+        yachtMoney += Math.max(cookieClickMultiplier * totalMultiplier, effectiveYachtMoneyPerSecond/2);
+        trollPoints += Math.max(cookieClickMultiplier * totalMultiplier, effectiveTrollPointsPerSecond/2);
     }
     else {
-        copium += cookieClickMultiplier * epsMultiplier * godModeMultiplier;
-        delusion += cookieClickMultiplier * epsMultiplier * godModeMultiplier;
-        yachtMoney += cookieClickMultiplier * epsMultiplier * godModeMultiplier;
-        trollPoints += cookieClickMultiplier * epsMultiplier * godModeMultiplier;
+        copium += cookieClickMultiplier * totalMultiplier;
+        delusion += cookieClickMultiplier * totalMultiplier;
+        yachtMoney += cookieClickMultiplier * totalMultiplier;
+        trollPoints += cookieClickMultiplier * totalMultiplier;
     }
     updateDisplay();
 }
@@ -106,10 +117,10 @@ function cookieCollectAllResources() {
 // Function to collect a specific resource and update the game state
 function collectResource(resource) {
     // Increase the appropriate resource by the epsMultiplier
-    if (resource === 'copium') copium += epsMultiplier * godModeMultiplier;
-    if (resource === 'delusion') delusion += epsMultiplier * godModeMultiplier;
-    if (resource === 'yachtMoney') yachtMoney += epsMultiplier * godModeMultiplier;
-    if (resource === 'trollPoints') trollPoints += epsMultiplier * godModeMultiplier;
+    if (resource === 'copium') copium += totalMultiplier;
+    if (resource === 'delusion') delusion += totalMultiplier;
+    if (resource === 'yachtMoney') yachtMoney += totalMultiplier;
+    if (resource === 'trollPoints') trollPoints += totalMultiplier;
     
     // Update the display to reflect the new resource values
     updateDisplay();
@@ -146,6 +157,14 @@ function loadGameState() {
     // Retrieve and parse the god mode values from local storage, defaulting to 0 or 1 if not found
     godModeLevel = parseInt(localStorage.getItem('godModeLevel')) || 0;
     godModeMultiplier = parseFloat(localStorage.getItem('godModeMultiplier')) || 1;
+
+    // Retrieve and parse the pu god values from local storage, defaulting to 0 or 1 if not found
+    puGodLevel = parseInt(localStorage.getItem('puGodLevel')) || 0;
+    puGodMultiplier = parseFloat(localStorage.getItem('puGodMultiplier')) || 1;
+
+    // Retrieve and parse the big crunch values from local storage, defaulting to 1e-7 or 1 if not found
+    bigCrunchPower = parseFloat(localStorage.getItem('bigCrunchPower')) || 1e-7;
+    bigCrunchMultiplier = parseFloat(localStorage.getItem('bigCrunchMultiplier')) || 1;
     
     // Load the first time prestige button available flag
     firstTimePrestigeButtonAvailable = JSON.parse(localStorage.getItem('firstTimePrestigeButtonAvailable')) || true;
@@ -230,11 +249,11 @@ function loadGameState() {
 
     // Retrieve the last interaction time, defaulting to the current time if not found
     const lastInteraction = parseInt(localStorage.getItem('lastInteraction')) || Date.now();
-
     // Calculate the elapsed time since the last interaction
     const now = Date.now();
     const elapsedSeconds = (now - lastInteraction) / 1000;
     
+    updateMultipliersDisplay();
     updateEffectiveMultipliers();
 
     // Generate idle resources based on the elapsed time
@@ -276,6 +295,15 @@ function saveGameState() {
     localStorage.setItem('godModeLevel', godModeLevel);
     localStorage.setItem('godModeMultiplier', godModeMultiplier);
 
+    // Save the god mode values to local storage
+    localStorage.setItem('puGodLevel', puGodLevel);
+    localStorage.setItem('puGodMultiplier', puGodMultiplier);
+
+    // Save the big crunch values to local storage
+    localStorage.setItem('bigCrunchPower', bigCrunchPower);
+    localStorage.setItem('bigCrunchMultiplier', bigCrunchMultiplier);
+
+    
     // Save the current time as the last interaction time
     localStorage.setItem('lastInteraction', Date.now());
     
@@ -363,23 +391,23 @@ function showTooltip(event, name, earnings, isGodMode, hoverOverwrite) {
 
 // Generate resources every interval
 function generateResources() {
-    copium += effectiveCopiumPerSecond;
-    delusion += effectiveDelusionPerSecond;
-    yachtMoney += effectiveYachtMoneyPerSecond;
-    trollPoints += effectiveTrollPointsPerSecond;
-    hopium += effectiveHopiumPerSecond;
-    knowledge += effectiveKnowledgePerSecond;
-    power += effectivePowerPerSecond;
-    serenity += effectiveSerenityPerSecond;
+    copium += effectiveCopiumPerSecond / 2;
+    delusion += effectiveDelusionPerSecond / 2;
+    yachtMoney += effectiveYachtMoneyPerSecond / 2;
+    trollPoints += effectiveTrollPointsPerSecond / 2;
+    hopium += effectiveHopiumPerSecond / 2;
+    knowledge += effectiveKnowledgePerSecond / 2;
+    power += effectivePowerPerSecond / 2;
+    serenity += effectiveSerenityPerSecond / 2;
 
     if (powerUnlocked){
-        effectivePowerPerSecond = knowledge ** (1/3) / 1e12
+        effectivePowerPerSecond = moneyIsPowerTooSkill ? (knowledge ** (2/5) / 1e12) * (1 + (yachtMoney ** (2/5) / 1e12)) : knowledge ** (2/5) / 1e12
     }
 
     // Check if delusion drops below negative 1 trillion to start generating Knowledge
     if ((delusion < -1e12 || knowledgeGenerationSkill) && localStorage.getItem('knowledgeGenerationStarted') !== 'true') {
         knowledgePerSecond = 0.000001
-        effectiveKnowledgePerSecond = knowledgePerSecond * epsMultiplier * godModeMultiplier;
+        effectiveKnowledgePerSecond = knowledgePerSecond * totalMultiplier * (bigCrunchMultiplier**(1/2));
         localStorage.setItem('knowledgeGenerationStarted', 'true');
 
         if (!knowledgeGenerationSkill) {
@@ -430,15 +458,28 @@ function playMiniGame(gameType) {
             setTimeout(() => {
                 document.removeEventListener('click', clickHandler); // Remove click event listener
                 document.removeEventListener('touchstart', clickHandler); // Remove touch event listener
-                let clicksPerSecond = points / duration;
+                
                 let reward;
-                if (clicksPerSecond > 3) { // More than 3 clicks per second
-                    reward = Math.max(Math.floor(Math.abs(copium) * ((clicksPerSecond - 3) * 0.05)), 25);
-                    showMessageModal('Speed Game Result - Fast', `You tapped ${points} times in ${duration} seconds (${clicksPerSecond.toFixed(1)} taps per second). For being so fast you earned ${formatNumber(reward)} copium! ${cooldownMessage}`, false, false);
+                let rewardPerClick;
+                if (speedGameSkill) {
+                    // Reward based on total number of clicks using the provided formula
+                    reward = Math.max(Math.floor(Math.abs(copium) * ((points - 3) * 0.05)), 25);
+                    rewardPerClick = reward / points;
+                    showMessageModal('Speed Game Result', `You tapped ${points} times in ${duration} seconds. Each click was worth ${formatNumber(rewardPerClick)} copium. Your total click reward is ${formatNumber(reward)} copium!`, false, false);
                 } else {
-                    reward = -Math.max(Math.floor(Math.random() * Math.abs(copium) * 0.1), 10);
-                    showMessageModal('Speed Game Result - Slow', `You tapped ${points} times in ${duration} seconds (${clicksPerSecond.toFixed(1)} taps per second). For being so slow you lost ${formatNumber(reward)} copium! ${cooldownMessage}`, false, false);
+                    // Reward based on clicks per second
+                    let clicksPerSecond = points / duration;
+                    if (clicksPerSecond > 3) { // More than 3 clicks per second
+                        reward = Math.max(Math.floor(Math.abs(copium) * ((clicksPerSecond - 3) * 0.05)), 25);
+                        rewardPerClick = reward / points;
+                        showMessageModal('Speed Game Result - Fast', `You tapped ${points} times in ${duration} seconds (${clicksPerSecond.toFixed(1)} taps per second). Each click was worth ${formatNumber(rewardPerClick)} copium. For being so fast you earned ${formatNumber(reward)} copium!`, false, false);
+                    } else {
+                        reward = -Math.max(Math.floor(Math.random() * Math.abs(copium) * 0.1), 10);
+                        rewardPerClick = reward / points;
+                        showMessageModal('Speed Game Result - Slow', `You tapped ${points} times in ${duration} seconds (${clicksPerSecond.toFixed(1)} taps per second). Each click was worth ${formatNumber(rewardPerClick)} copium. For being so slow you lost ${formatNumber(reward)} copium!`, false, false);
+                    }
                 }
+                
                 copium += reward;
                 updateDisplay(); // Update the display
                 startCooldown(gameType); // Start cooldown for the mini-game
@@ -451,19 +492,21 @@ function playMiniGame(gameType) {
         for (let i = 0; i < sequenceLength; i++) {
             sequence += Math.floor(Math.random() * 10); // Random digit between 0 and 9
         }
-        let timeout = Math.floor(Math.random() * 31) + 5; // Random timeout between 5 and 40 seconds
+        let maxTimeout = memoryGameSkill ? 15 : 40; // Set maximum timeout based on memoryGameSkill
+        let timeout = Math.floor(Math.random() * (maxTimeout - 5 + 1)) + 5; // Random timeout between 5 and maxTimeout seconds
         showMessageModal('Memory Game', `Remember this sequence: ${sequence}`).then(() => {
             setTimeout(() => {
                 showMessageModal('Memory Game', 'Enter the sequence:', false, false, true).then(userSequence => {
                     let correct = userSequence === sequence;
-                    let reward = correct ? Math.max(Math.floor(Math.abs(delusion) * 0.5), 25) : -Math.max(Math.floor(Math.random() * Math.abs(delusion) * 0.1), 10);
+                    let baseReward = correct ? Math.max(Math.floor(Math.abs(delusion) * 0.5), 25) : -Math.max(Math.floor(Math.random() * Math.abs(delusion) * 0.1), 10);
+                    let reward = memoryGameSkill ? baseReward * 2 : baseReward; // Double the reward if memoryGameSkill is true
                     // Adjust reward based on the toggleDelusion switch if it's visible
                     if (!document.getElementById('toggleDelusionLabel').classList.contains('hidden')) {
                         const toggleDelusion = document.getElementById('toggleDelusion').checked;
                         reward = Math.abs(reward) * (toggleDelusion ? 1 : -1);
                     }
                     delusion += reward;
-                    showMessageModal('Memory Game Result', `You ${correct ? 'won' : 'lost'} ${formatNumber(reward)} delusion! ${cooldownMessage}`);
+                    showMessageModal('Memory Game Result', `You ${correct ? 'won' : 'lost'} and earned ${formatNumber(reward)} delusion!`);
                     updateDisplay(); // Update the display
                     startCooldown(gameType); // Start cooldown for the mini-game
                 });
@@ -622,11 +665,11 @@ async function restartPrestige(){
         prestigeRequirement = 1000;
         
         // Call restartGame with isPrestige flag set to true
-        restartGame(true,false);
+        restartGame(true);
     }
 }
 
-async function restartGame(isPrestige = false, isAscend = false) {
+async function restartGame(isPrestige = false) {
     const confirmTitle1 = "Are You Sure You Want to Restart?"
     const confirmMessage1 = `<p>Whoa there, brave soul! You're about to hit the big red button and restart your game. Are you sure you want to do this?</p>
                             <p>Think of all those hard-earned upgrades and epic moments... gone in a flash! But hey, who needs progress when you can start over, right?</p>
@@ -638,7 +681,7 @@ async function restartGame(isPrestige = false, isAscend = false) {
                             <p>This is your last chance to turn back! Once you click this button, there’s no going back. Just like trying to un-toast toast.</p>
                             <p>If you’re still certain, then hit the button below. Otherwise, maybe rethink this whole restarting thing. 😅</p>`;
     
-    if (isPrestige || isAscend || (await showMessageModal(confirmTitle1, confirmMessage1, true, false) && await showMessageModal(confirmTitle2, confirmMessage2, true, false)) ) {
+    if (isPrestige || (await showMessageModal(confirmTitle1, confirmMessage1, true, false) && await showMessageModal(confirmTitle2, confirmMessage2, true, false)) ) {
          // Reset all resources and earnings per second
         copium = 0;
         copiumPerSecond = 0;
@@ -660,13 +703,17 @@ async function restartGame(isPrestige = false, isAscend = false) {
         localStorage.setItem('knowledgeGenerationStarted', 'false');
 
         // Reset ascends and multipliers if it's a full restart
-        if (!isAscend && !isPrestige) {
+        if (!isPrestige) {
             prestiges = 0;
             epsMultiplier = 1;
             prestigeRequirement = 1000;
 
             godModeLevel = 0;
             godModeMultiplier = 1;
+            puGodLevel = 0;
+            puGodMultiplier = 1;
+            bigCrunchPower = 1e-7;
+            bigCrunchMultiplier = 1;
             // Hide the cookie button
             document.getElementById('cookieButton').style.display = 'none';
             
@@ -674,6 +721,7 @@ async function restartGame(isPrestige = false, isAscend = false) {
             // Reset the isGodMode property for all upgrades
             upgrades.forEach(upgrade => {
                 upgrade.isGodMode = false;
+                upgrade.isPUGodMode = false;
             });
 
             document.getElementById('knowledge-container').style.display = 'none';
@@ -698,14 +746,20 @@ async function restartGame(isPrestige = false, isAscend = false) {
             twoDimensionalAscensionSkill = false;
             multibuyUpgradesSkill = false;
             mathGameSkill = false;
-            tripleAscensionSkill = false;
+            memoryGameSkill = false;
+            speedGameSkill = false;
+            numAscensionUpgrades = 1;
             buyMarkersSkill = false;
             improvedTradeRatio = false;
             cookieBoost = false;
+            bigCrunchUnlocked = false;
+            moneyIsPowerTooSkill = false;
 
             powerUnlocked = false;
             document.getElementById('power-container').style.display = 'none';
             
+            document.getElementById('big-crunch-display').style.display = 'none';
+
             // Clear all local storage
             localStorage.clear();
         }
@@ -742,6 +796,7 @@ async function restartGame(isPrestige = false, isAscend = false) {
         unlockMiniGames();
 
         // Update display
+        updateMultipliersDisplay();
         updateEffectiveMultipliers();
         updateUpgradeList();
         updateDisplay();
@@ -928,15 +983,36 @@ function Bound(LOWER_BOUND = -Infinity, UPPER_BOUND = Infinity, DEFAULT_VALUE = 
     if (DATA >= LOWER_BOUND && DATA <= UPPER_BOUND) return DATA
     return DEFAULT_VALUE
   }
-
-//replace formatNumber / customRound with this
 function NumberScientific(Num, Fixed = 2, EXPONENT_LIMIT = 3) {
-    let FIXED = Fixed, limitTillexpo = Bound(0, 9 , 4, EXPONENT_LIMIT), Exponent = Math.floor(Math.log10(Num))
-    if (Num < 10**limitTillexpo) {
-      return Commas(Num, Fixed)
+    let FIXED = Fixed, limitTillexpo = Bound(0, 9 , 4, EXPONENT_LIMIT), Exponent = Math.floor(Math.log10(Math.abs(Num)+1))
+    if (Math.abs(Num) < 1 && Math.abs(Num) > 0) {
+      return Num
     }
-    return `${(Num/(10**(Exponent))).toFixed(Fixed)}e${Math.floor(Math.log10(Num))}`
+    if (Math.abs(Num) < 10**limitTillexpo) {
+      return Commas(Num, 2)
+    }
+    return `${(Num/(10**Exponent)).toFixed(Fixed)}e${Exponent}`
 }
+function NumberStandard(Num, Fixed = 2, EXPONENT_LIMIT = 3) {
+  let limitTillexpo = Bound(0, 9, 3, EXPONENT_LIMIT), Exponent = Math.floor(Math.log10(Math.abs(Num))/3)
+  let PREFIXES = ["", "K", "M", "B", "T", "Qa", "Qt", "Sx", "Sp", "Oc", "No", "Dc", "UDc", "DDc",
+    "TDc", "QaDc", "QtDc", "SxDc", "SpDc", "ODc", "NDc", "Vg", "UVg", "DVg", "TVg",
+    "QaVg", "QtVg", "SxVg", "SpVg", "OVg", "NVg", "Tg", "UTg", "DTg", "TTg", "QaTg",
+    "QtTg", "SxTg", "SpTg", "OTg", "NTg", "Qd", "UQd", "DQd", "TQd", "QaQd", "QtQd",
+    "SxQd", "SpQd", "OQd", "NQd", "Qi", "UQi", "DQi", "TQi", "QaQi", "QtQi", "SxQi",
+    "SpQi", "OQi", "NQi", "Se", "USe", "DSe", "TSe", "QaSe", "QtSe", "SxSe", "SpSe",
+    "OSe", "NSe", "St", "USt", "DSt", "TSt", "QaSt", "QtSt", "SxSt", "SpSt", "OSt",
+    "NSt", "Og", "UOg", "DOg", "TOg", "QaOg", "QtOg", "SxOg", "SpOg", "OOg", "NOg",
+    "Nn", "UNn", "DNn", "TNn", "QaNn", "QtNn", "SxNn", "SpNn", "ONn", "NNn", "Ce"]
+  if (Math.abs(Num) < 1 && Math.abs(Num) > 0) {
+      return Num
+  }
+  if (Math.abs(Num) < 10**limitTillexpo) {
+    return Commas(Num, 2)
+  }
+  return `${(Num/(1000**Exponent)).toFixed(Fixed)} ${PREFIXES[Exponent]}`
+}
+
 
 function customRound(number, digits) {
 
@@ -971,8 +1047,8 @@ function formatNumber(num) {
 
     if (Math.abs(num) >= 1e36) {
         return num.toExponential(3);  // Switch to scientific notation for values >= 1e36
-    } else if (Math.abs(num) > 0 && Math.abs(num) < 1e-3) {
-        return parseFloat(num.toPrecision(3)).toString();  // Limit to 3 significant digits and remove trailing zeros
+    } else if (Math.abs(num) > 0 && Math.abs(num) < 1) {
+        return parseFloat(num.toPrecision(4)).toString();  // Limit to 3 significant digits and remove trailing zeros
     }
 
     for (let i = 0; i < suffixes.length; i++) {
@@ -1005,14 +1081,21 @@ function updateDisplay() {
     document.getElementById('serenity').textContent = formatNumber(serenity);
     document.getElementById('sps').textContent = formatNumber(effectiveSerenityPerSecond);
 
-    document.getElementById('prestige-multiplier').textContent = `Prestige: x${epsMultiplier.toFixed(2)} mult`;
-
-    // Update combined God Mode Level and Multiplier display
-    document.getElementById('god-mode-display').textContent = `God-Mode Level ${godModeLevel} (x${godModeMultiplier.toFixed(2)} mult)`;
-
     updatePrestigeButton();
     updateAscendButton();
+    updateTranscendButton();
+    updateBigCrunchButton();
     updateUpgradeButtons();
+}
+
+function updateMultipliersDisplay() {
+
+    totalMultiplier = epsMultiplier * godModeMultiplier * puGodMultiplier * bigCrunchMultiplier * devMultiplier
+
+    document.getElementById('prestige-multiplier').textContent = `Prestige: x${formatNumber(epsMultiplier)} mult`;
+    document.getElementById('god-mode-display').textContent = `God-Mode Level ${godModeLevel} (x${formatNumber(godModeMultiplier)} mult)`;
+    document.getElementById('pu-god-display').textContent = `PU God Level ${puGodLevel} (x${formatNumber(puGodMultiplier)} mult)`;
+    document.getElementById('big-crunch-display').textContent = `Big Crunch Power ${formatNumber(bigCrunchPower)} (x${formatNumber(bigCrunchMultiplier)} mult)`;
 }
 
 function unhideKnowledge() {
@@ -1028,6 +1111,12 @@ function unhidePower() {
 
 function unhideSerenity() {
     document.getElementById('serenity-container').style.display = 'block';
+}
+
+function unlockBigCrunch() {
+    bigCrunchUnlocked = true;
+    document.getElementById('big-crunch-display').style.display = 'block';
+    updateDisplay()
 }
 
 // Function to calculate the prestige multiplier based on the lowest of the first four resources
@@ -1063,7 +1152,7 @@ async function prestige() {
             prestigeRequirement = Math.min(copium, delusion, yachtMoney, trollPoints);
             
             // Call restartGame with isPrestige flag set to true
-            restartGame(true,false);
+            restartGame(true);
 
             prestiges += 1;
 
@@ -1097,13 +1186,25 @@ function canAscend() {
     return purchasedUpgrades.some(upgrade => upgrade.name === "Ascension");
 }
 
+function canTranscend() {
+    return purchasedUpgrades.some(upgrade => upgrade.name === "Transcendence");
+}
+
+function canBigCrunch() {
+    return power > bigCrunchPower;
+}
+
 function calculateGodModeMultiplier(gmLevlel = godModeLevel) {
     let productX = 1; // Initialize the product to 1 for the first element
     for (let i = 0; i < gmLevlel; i++) {
         let xi = 1 + 0.25 * Math.pow(0.975, i); // Calculate xi
         productX *= xi; // Multiply the current xi to the cumulative product
     }
-    return productX;
+    return productX
+}
+
+function calculateBigCrunchMultiplier(bcPower = bigCrunchPower) {
+    return Math.pow(2, Math.log10(bcPower / 1e-7));
 }
 
 // Function to calculate the ascension eps multiplier
@@ -1113,8 +1214,8 @@ function calculateAscensionEpsMult() {
 }
 
 async function ascend() {
-    const upgradeText = tripleAscensionSkill
-        ? "select up to 3 upgrades to enhance and increase your god mode multiplier accordingly"
+    const upgradeText = numAscensionUpgrades > 1
+        ? `select up to ${numAscensionUpgrades} upgrades to enhance and increase your god mode multiplier accordingly`
         : "select an upgrade to enhance and increase your god mode multiplier";
     const selectedUpgrades = await showMessageModal(
         'God-Mode Ascension',
@@ -1140,9 +1241,51 @@ async function ascend() {
         epsMultiplier = Math.max(calculateAscensionEpsMult(), 1);
         prestigeRequirement = calculateMinResource();
 
-        restartGame(false, true); // Use the existing restartGame function with prestige mode
+        restartGame(true); // Use the existing restartGame function with prestige mode
         // Save game state after ascending
         saveGameState();
+    }
+}
+
+
+async function transcend() {}
+
+async function bigCrunch() {
+
+    if (canBigCrunch()) {
+
+        const confirmed = await showMessageModal(
+            'Big Crunch Confirmation',
+            `Are you sure you want to prestige? You will reset all resources, prestiges, and god-mode levels, but your Big Crunch Multiplier will increase <strong>from ${formatNumber(bigCrunchMultiplier)} to ${formatNumber(calculateBigCrunchMultiplier(power))}</strong>.<br> Big crunch multiplier stacks with all your other multipliers, plus additionally affects your Knowledge generation! (Your Big Crunch Power will lock in at the current power level)`,
+            true
+        );
+
+        if (confirmed) {
+            bigCrunchPower = power;
+            bigCrunchMultiplier = calculateBigCrunchMultiplier();
+            
+            // Call restartGame with isPrestige flag set to true
+            restartGame(true);
+
+            epsMultiplier = 1;
+            prestigeRequirement = 1000;
+            godModeLevel = 0;
+            godModeMultiplier = 1;
+            puGodLevel = 0;
+            puGodMultiplier = 1;
+
+            upgrades.forEach(upgrade => {
+                upgrade.isGodMode = false;
+                upgrade.isPUGodMode = false;
+            });
+
+
+            // Save game state after prestige
+            updateMultipliersDisplay();
+            saveGameState();
+
+            showMessageModal('Big Crunch Successful!', `Your multiplier is now x${bigCrunchMultiplier.toFixed(2)}. All resources have been reset.`);
+        }
     }
 }
 
@@ -1152,6 +1295,27 @@ function updateAscendButton() {
         ascendButton.style.display = 'block';
     } else {
         ascendButton.style.display = 'none';
+    }
+}
+
+
+function updateTranscendButton() {
+    const transcendButton = document.getElementById('transcendButton');
+    if (canTranscend()) {
+        transcendButton.style.display = 'block';
+    } else {
+        transcendButton.style.display = 'none';
+    }
+}
+
+function updateBigCrunchButton() {
+    const bigCrunchButton = document.getElementById('bigCrunchButton');
+    if (bigCrunchUnlocked && canBigCrunch()) {
+        const newMultiplier = calculateBigCrunchMultiplier(power);
+        bigCrunchButton.textContent = `Big Crunch (x${(newMultiplier / bigCrunchMultiplier).toFixed(2)} multiplier)`;
+        bigCrunchButton.style.display = 'block';
+    } else {
+        bigCrunchButton.style.display = 'none';
     }
 }
 
@@ -1259,8 +1423,8 @@ function buyUpgrade(encodedUpgradeName) {
         }
 
         // Special case for the "Still very stupid" upgrade
-        if (name === "BRUHHHH") {
-            showMessageModal('Sadly', "This marks the end of v0.765. Your journey through this existential tale is just beginning, and the newfound power will open doors to uncharted realms. How will you wield it? Stay tuned, as another big update is just a few days away. If you can't wait, feel free to restart the game and embark on speed runs, or explore alternate strategies.");
+        if (name === "Transcendence") {
+            showMessageModal('Sadly', "This marks the end of v0.8. Your journey through this existential tale is just beginning. You've been amassing power, but the true meaning of transcendence remains a mystery. How could it relate to ascension? Stay tuned, as another big update is just a few days away. If you can't wait, feel free to restart the game and embark on speed runs, or explore alternate strategies. What will you discover next on your path to enlightenment?");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one
@@ -1270,6 +1434,7 @@ function buyUpgrade(encodedUpgradeName) {
 
         // Update the upgrade list and display
         updateUpgradeList();
+        updateMultipliersDisplay();
         updateEffectiveMultipliers();
         updateDisplay();
         // Save the game state
@@ -1620,6 +1785,7 @@ function toggleDevMultiplier(factor) {
     } else {
         devMultiplier = factor; // Set to the new factor
     }
+    updateMultipliersDisplay();
     updateEffectiveMultipliers();
     updateDisplay(); // Update the display to reflect the changes
 }
@@ -1639,8 +1805,9 @@ async function devAscend() {
         godModeMultiplier = calculateGodModeMultiplier();
         epsMultiplier = calculateAscensionEpsMult();
         prestigeRequirement = calculateMinResource();
-        restartGame(false, true);
+        restartGame(true);
         saveGameState();
+        updateMultipliersDisplay();
         updateEffectiveMultipliers();
         updateDisplay();
     }
@@ -1650,6 +1817,7 @@ async function devAscend() {
 function devIncreasePrestigeMultiplier() {
     epsMultiplier = epsMultiplier * 1.1;
     prestigeRequirement = calculateMinResource();
+    updateMultipliersDisplay();
     updateEffectiveMultipliers();
     updateDisplay();
 }
@@ -1761,14 +1929,11 @@ function displayNextModal() {
                         upgradeItem.classList.remove('selected');
                         selectedUpgrades = selectedUpgrades.filter(up => up !== upgrade);
                     } else {
-                        if (tripleAscensionSkill && selectedUpgrades.length < 3) {
-                            upgradeItem.classList.add('selected');
-                            selectedUpgrades.push(upgrade);
-                        } else if (!tripleAscensionSkill && selectedUpgrades.length < 1) {
+                        if (selectedUpgrades.length < numAscensionUpgrades) {
                             upgradeItem.classList.add('selected');
                             selectedUpgrades.push(upgrade);
                         } else {
-                            showImmediateMessageModal(`Not so fast!`, `You can only select up to ${tripleAscensionSkill ? 3 : 1} upgrade${tripleAscensionSkill ? 's' : ''}.`);
+                            showImmediateMessageModal(`Not so fast!`, `You can only select ${numAscensionUpgrades} upgrade${numAscensionUpgrades > 1 ? 's' : ''}.`);
                         }
                     }
                 };
@@ -1927,7 +2092,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Add event listener for the trade button
     document.getElementById('tradeButton').addEventListener('click', () => { tradeResources(); });
     // Add event listener for the restart buttons
-    document.getElementById('restartButton').addEventListener('click', () => restartGame(false, false));
+    document.getElementById('restartButton').addEventListener('click', () => restartGame(false));
     document.getElementById('restartPrestige').addEventListener('click', () => restartPrestige());
 
     // Add event listener for the prestige button
@@ -1935,6 +2100,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Add event listener for the ascend button
     document.getElementById('ascendButton').addEventListener('click', ascend);
+
+    // Add event listener for the transcend button
+    document.getElementById('transcendButton').addEventListener('click', transcend);
+    
+    // Add event listener for the ascend button
+    document.getElementById('bigCrunchButton').addEventListener('click', bigCrunch);
 
     // Add event listener for the buy all upgrades button
     document.getElementById('buySeenButton').addEventListener('click', () => buyAllUpgrades(7));
@@ -1960,12 +2131,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     showWelcomeModal();
 
+    updateMultipliersDisplay();
     // Initialize effective multipliers
     updateEffectiveMultipliers();
     // Unlock mini-games based on the current game state
     unlockMiniGames(); 
     // Set an interval to generate resources every second
-    setInterval(generateResources, 1000);
+    setInterval(generateResources, 500);
     // Update the list of available upgrades
     updateUpgradeList();
     // Update the display with the current game state

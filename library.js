@@ -9,6 +9,8 @@ const librarySkills = [
     { name: 'Cure for Delusion', cost: 5, description: 'Unlock ability to toggle whether delusion gain is positive or negative.', unlocked: false, level: 'Science' },
     { name: 'Luck is Rigged', cost: 777, description: 'Luck Game roll now picks from (-10% to 190%) instead of (-75% to 125%).', unlocked: false, level: 'Science' },
     { name: "I Can't Math", cost: 1234, description: 'Math Game now only has 2 terms instead of 3. Reward is tripled.', unlocked: false, level: 'Science' },
+    { name: "Short Term Memory", cost: 11000, description: 'Memory Game maximum time is 15s instead of 40s. Reward is doubled.', unlocked: false, level: 'Science' },
+    { name: "Click Accumulation", cost: 23000, description: 'Speed Game reward is now for total number of clicks, instead of per second.', unlocked: false, level: 'Science' },
     // { name: '', cost: 1e9, description: '', unlocked: false, level: 'Science' },
     // { name: '', cost: 1e19, description: '', unlocked: false, level: 'Science' },
 
@@ -17,17 +19,18 @@ const librarySkills = [
     
 
     { name: 'Multibuy Upgrades', cost: 2, description: 'Unlock "Buy Seen" and "Buy Max" buttons for Upgrades.', unlocked: false, level: 'Artificial Intelligence' },
-    { name: 'Cookie Clicker', cost: 75, description: 'After Prestiging or Ascending, automatically click the cookie 10 times per second for 15 seconds.', unlocked: false, level: 'Artificial Intelligence' },
+    { name: 'Cookie Clicker Clicker', cost: 75, description: 'After Prestiging or Ascending, automatically click the cookie 10 times per second for 15 seconds.', unlocked: false, level: 'Artificial Intelligence' },
+    { name: 'Double Ascension', cost: 1250, description: 'Gain up to 2 God-Mode levels per Ascension. Also select up to 2 upgrades to enhance to God Mode.', unlocked: false, level: 'Artificial Intelligence' },
     { name: 'Buy Markers', cost: 300000, description: 'Purchased Upgrades will now have a switch indicating whether or not they should be bought using "Buy Seen" and "Buy All" buttons.', unlocked: false, level: 'Artificial Intelligence' },
     { name: 'Triple Ascension', cost: 3.5e6, description: 'Gain up to 3 God-Mode levels per Ascension. Also select up to 3 upgrades to enhance to God Mode.', unlocked: false, level: 'Artificial Intelligence' },
     // { name: 'Autobuy Upgrades', cost: 5e13, description: 'Each upgrade can be configured to Autobuy - which will make purchase the upgrade as soon as it's affordable.', unlocked: false, level: 'Artificial Intelligence' },
-    // { name: '', cost: 1e14, description: '', unlocked: false, level: 'Artificial Intelligence' },
+    { name: 'Septuple Ascension', cost: 1e24, description: 'Gain up to 7 God-Mode levels per Ascension. Also select up to 7 upgrades to enhance to God Mode.', unlocked: false, level: 'Artificial Intelligence' },
 
     { name: 'Knowledge is Power', cost: 1e6, description: 'Unlock new resource Power. Power is always generated based on your current amount of Knowledge.', unlocked: false, level: 'Celestial Bodies' },
-    { name: 'Big Crunch (not implemented yet)', cost: 1e12, description: 'Unlock ability to force the universe into a Big Crunch and to be reborn anew.', unlocked: false, level: 'Celestial Bodies' },
-    // { name: 'Money is Power, too', cost: 1e15, description: 'Add a multiplier to Power generation based on Yacht Money.', unlocked: false, level: 'Celestial Bodies' },
+    { name: 'Big Crunch', cost: 5e11, description: 'Unlock ability to force the universe into a Big Crunch and to be reborn anew.', unlocked: false, level: 'Celestial Bodies' },
+    { name: 'Money is Power, too', cost: 1e18, description: 'Add a multiplier to Power generation based on Yacht Money.', unlocked: false, level: 'Celestial Bodies' },
 
-    { name: 'What is this? (not implemented yet)', cost: 1e25, description: 'EZ Game', unlocked: false, level: '???' },
+    // { name: 'What is this? (not implemented yet)', cost: 1e25, description: 'EZ Game', unlocked: false, level: '???' },
     // { name: 'Serenity', cost: 1e25, description: '', unlocked: false, level: '???' },
     // { name: '', cost: 1e29, description: '', unlocked: false, level: '???' },
     // { name: '', cost: 1e33, description: '', unlocked: false, level: '???' },
@@ -87,6 +90,14 @@ function unlockLibrarySkill(skill, duringLoad = false) {
             case "I Can't Math":
                 mathGameSkill = true;
                 break;
+            
+            case "Short Term Memory":
+                memoryGameSkill = true;
+                break;
+                
+            case "Click Accumulation":
+                speedGameSkill = true;
+                break;
                 
             case 'Prestige Base':
                 prestigeBaseSkill = true;
@@ -101,26 +112,50 @@ function unlockLibrarySkill(skill, duringLoad = false) {
                 initializeBuyButtons();
                 break;
         
-            case 'Cookie Clicker':
+            case 'Cookie Clicker Clicker':
                 cookieAutoClicker = true;
                 break;
 
-            case 'Triple Ascension':
-                tripleAscensionSkill = true;
+            case 'Double Ascension':
+                numAscensionUpgrades = Math.max(numAscensionUpgrades, 2);
                 break;
 
             case 'Buy Markers':
                 buyMarkersSkill = true;
                 if (!duringLoad) {
-                    showMessageModal(`Upgrade Markers', 'You’ve unlocked the highly anticipated Upgrade Markers! This breakthrough represents the pinnacle of artificial intelligence, pushing us a step closer toward true artificial sentience. Imagine the possibilities as your AI not only becomes smarter but also more discerning in its actions. This isn't just an upgrade; it's a revolution in AI capabilities.<br><br>Remember to toggle the setting that lets the AI know which upgrades to focus on. This meticulous control will maximize efficiency and performance. Trust your instincts—this feature will undoubtedly prove invaluable in the future. Embrace the future of AI!`, false, false);
+                    showMessageModal(`Upgrade Markers`, `You’ve unlocked the highly anticipated Upgrade Markers! This breakthrough represents the pinnacle of artificial intelligence, pushing us a step closer toward true artificial sentience. Imagine the possibilities as your AI not only becomes smarter but also more discerning in its actions. This isn't just an upgrade; it's a revolution in AI capabilities.<br><br>Remember to toggle the setting that lets the AI know which upgrades to focus on. This meticulous control will maximize efficiency and performance. Trust your instincts—this feature will undoubtedly prove invaluable in the future. Embrace the future of AI!`);
                 }
                 enableAllBuyMarkers(true);
+                break;
+
+            case 'Triple Ascension':
+                numAscensionUpgrades = Math.max(numAscensionUpgrades, 3);
+                break;
+
+            case 'Septuple Ascension':
+                numAscensionUpgrades = Math.max(numAscensionUpgrades, 7);
                 break;
 
             case 'Knowledge is Power':
                 unhidePower();
                 break;
         
+            case 'Big Crunch':
+                if (!duringLoad) {
+                    showMessageModal(`Congratulations, Cosmic Architect!`, 
+                        `<p>You've unlocked the ability to force the universe into a Big Crunch and start anew! Imagine speeding up the decline of everything around you, hastening the collapse of the cosmos into an infinitely dense point, only to trigger a spectacular rebirth. It's like hitting the ultimate reset button on reality itself!</p>
+                        <p>As you initiate the Big Crunch, picture galaxies spiraling inward, stars merging, and black holes converging in an epic cosmic finale. And just when it seems all is lost, BOOM! A new universe emerges from the singularity. A fresh start, a blank slate, where all the lessons learned from your previous existence can be leveraged to dominate even harder.</p>
+                        <p>But don't think it's going to be a cakewalk! You'll have to regain your God-Mode levels, but here's the kicker: with all the knowledge and experience you've accumulated, it'll be much easier this time around. No more stumbling in the dark; you're now armed with the wisdom of countless cycles. Your prestige multiplier isn't just a number—it's a testament to your cosmic resilience and cunning.</p>
+                        <p>So, strap in and prepare for the ultimate space-time rollercoaster. You're not just a player; you're a cosmic architect, reshaping the universe with each Big Crunch. Embrace the power, relish the rebirth, and remember: in this grand game of Degens Idle, you hold the keys to the cosmos. Now go forth and crunch the universe with style!</p>
+                        <p>Welcome to the next level of your degenerate adventure. The universe is your playground, and you have the ultimate power to reshape it as you see fit. Time to show the cosmos who’s boss!</p>`);
+                }
+                unlockBigCrunch();
+                break;
+
+            case 'Money is Power, too':
+                moneyIsPowerTooSkill = true;
+                break;
+
             // Add more cases as needed for additional skills
         
             default:

@@ -540,7 +540,7 @@ button.disabled {
 }
 
 .prestige-multiplier-text {
-    font-size: 1.5em;
+    font-size: 1.3em;
     color: #ffa500; /* Orange color */
     font-weight: bold;
     margin-top: 10px;
@@ -549,7 +549,7 @@ button.disabled {
 }
 
 .prestige-multiplier-count {
-    font-size: 1.75em; 
+    font-size: 1.3em; 
     color: #ffd700; /* Gold color */
     font-weight: normal;
     text-shadow: 0 0 4px #ffff99, 0 0 10px #ffa500, 0 0 15px #ff8c00;
@@ -627,7 +627,7 @@ button.disabled {
 #ascendButton {
     display: block;
     margin: 20px auto; /* Center horizontally */
-    background-color: #8e44ad; /* Purple background */
+    background-color: #1e90ff; /* Blue background */
     color: white;
     border: none;
     padding: 15px 30px; /* Larger padding for a bigger button */
@@ -640,7 +640,7 @@ button.disabled {
 }
 
 #ascendButton:hover {
-    background-color: #7d3c98; /* Slightly darker on hover */
+    background-color: #1c86ee; /* Slightly darker on hover */
     transform: scale(1.1); /* Slightly larger on hover */
 }
 
@@ -648,11 +648,90 @@ button.disabled {
     transform: scale(1.05); /* Slightly smaller on click */
 }
 
-.god-mode-text {
-    font-size: 2em;
+#transcendButton {
+    display: block;
+    margin: 20px auto; /* Center horizontally */
+    background-color: #8e44ad; /* Purple background */
     color: white;
+    border: none;
+    padding: 15px 30px; /* Larger padding for a bigger button */
+    font-size: 18px; /* Larger font size */
+    font-weight: bold; /* Bold text */
+    cursor: pointer;
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Add a shadow for depth */
+    transition: transform 0.3s ease, background-color 0.3s ease; /* Smooth transitions */
+}
+
+#transcendButton:hover {
+    background-color: #7d3c98; /* Slightly darker on hover */
+    transform: scale(1.1); /* Slightly larger on hover */
+}
+
+#transcendButton:active {
+    transform: scale(1.05); /* Slightly smaller on click */
+}
+
+#bigCrunchButton {
+    display: block;
+    margin: 20px auto; /* Center horizontally */
+    background-color: #ff6347; /* Cool red background */
+    color: white;
+    border: none;
+    padding: 15px 30px; /* Larger padding for a bigger button */
+    font-size: 18px; /* Larger font size */
+    font-weight: bold; /* Bold text */
+    cursor: pointer;
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Add a shadow for depth */
+    transition: transform 0.3s ease, background-color 0.3s ease; /* Smooth transitions */
+}
+
+#bigCrunchButton:hover {
+    background-color: #ff4500; /* Slightly darker on hover */
+    transform: scale(1.1); /* Slightly larger on hover */
+}
+
+#bigCrunchButton:active {
+    transform: scale(1.05); /* Slightly smaller on click */
+}
+
+.god-mode-text {
+    font-size: 1.5em;
+    color: rgb(247, 247, 247);
     font-weight: bold;
-    text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00bfff, 0 0 40px #00bfff, 0 0 50px #00bfff, 0 0 60px #00bfff, 0 0 70px #00bfff;
+    text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00bfff, 0 0 40px #00bfff;
+    margin-top: 20px;
+    text-align: center;
+    transition: all 0.5s ease;
+}
+
+.pu-god-text {
+    font-size: 1.5em;
+    color: rgb(247, 247, 247);
+    font-weight: bold;
+    text-shadow: 
+        0 0 10px #8a2be2,  /* First layer of purple glow */
+        0 0 20px #8a2be2,  /* Second layer of purple glow */
+        0 0 30px #7b68ee,  /* Third layer with a slightly lighter shade */
+        0 0 40px #7b68ee;  /* Fourth layer with a slightly lighter shade */
+    margin-top: 20px;
+    text-align: center;
+    transition: all 0.5s ease;
+}
+
+
+.big-crunch-text {
+    font-size: 1.5em; /* Slightly bigger font size */
+    color: rgb(247, 247, 247);
+    font-weight: bold;
+    text-shadow: 
+        0 0 10px #ff4500,  /* First layer of orange-red glow */
+        0 0 20px #ff4500,  /* Second layer of orange-red glow */
+        0 0 30px #ff4500,  /* Third layer of orange-red glow */
+        0 0 40px #ff6347,  /* Fourth layer with a slightly lighter shade */
+        0 0 50px #ff6347,  /* Fifth layer with a slightly lighter shade */
+        0 0 60px #ff6347;  /* Sixth layer with a slightly lighter shade */
     margin-top: 20px;
     text-align: center;
     transition: all 0.5s ease;

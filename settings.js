@@ -69,20 +69,48 @@ function exportSave() {
         powerPerSecond,
         serenity,
         serenityPerSecond,
+        effectiveCopiumPerSecond,
+        effectiveDelusionPerSecond,
+        effectiveYachtMoneyPerSecond,
+        effectiveTrollPointsPerSecond,
+        effectiveHopiumPerSecond,
+        effectiveKnowledgePerSecond,
+        effectivePowerPerSecond,
+        effectiveSerenityPerSecond,
         prestiges,
         epsMultiplier,
         prestigeRequirement,
         godModeLevel,
         godModeMultiplier,
+        puGodLevel,
+        puGodMultiplier,
+        bigCrunchPower,
+        bigCrunchMultiplier,
+        totalMultiplier,
         firstTimePrestigeButtonAvailable,
+        firstTimeCookieUnlock,
+        cookieClickMultiplier,
+        cookieAutoClicker,
+        luckGameDelta,
+        knowledgeUnlocked,
+        knowledgeGenerationSkill,
+        prestigeBaseSkill,
+        twoDimensionalAscensionSkill,
+        multibuyUpgradesSkill,
+        mathGameSkill,
+        powerUnlocked,
+        buyMarkersSkill,
+        bigCrunchUnlocked,
+        numAscensionUpgrades,
+        improvedTradeRatio,
+        cookieBoost,
+        cooldowns,
         upgrades: upgrades.map(upgrade => ({
             name: upgrade.name,
             isGodMode: upgrade.isGodMode
         })),
         purchasedUpgrades: purchasedUpgrades.map(upgrade => upgrade.name),
         cookieButtonVisible: document.getElementById('cookieButton').style.display === 'block',
-        cookieClickMultiplier,
-        knowledgeUnlocked: knowledgeUnlocked,
         librarySkills: librarySkills.map(skill => ({
             name: skill.name,
             unlocked: skill.unlocked
@@ -128,13 +156,43 @@ function importSave(event) {
         powerPerSecond = gameState.powerPerSecond;
         serenity = gameState.serenity;
         serenityPerSecond = gameState.serenityPerSecond;
+        effectiveCopiumPerSecond = gameState.effectiveCopiumPerSecond;
+        effectiveDelusionPerSecond = gameState.effectiveDelusionPerSecond;
+        effectiveYachtMoneyPerSecond = gameState.effectiveYachtMoneyPerSecond;
+        effectiveTrollPointsPerSecond = gameState.effectiveTrollPointsPerSecond;
+        effectiveHopiumPerSecond = gameState.effectiveHopiumPerSecond;
+        effectiveKnowledgePerSecond = gameState.effectiveKnowledgePerSecond;
+        effectivePowerPerSecond = gameState.effectivePowerPerSecond;
+        effectiveSerenityPerSecond = gameState.effectiveSerenityPerSecond;
         prestiges = gameState.prestiges;
         epsMultiplier = gameState.epsMultiplier;
         prestigeRequirement = gameState.prestigeRequirement;
         godModeLevel = gameState.godModeLevel;
         godModeMultiplier = gameState.godModeMultiplier;
+        puGodLevel = gameState.puGodLevel;
+        puGodMultiplier = gameState.puGodMultiplier;
+        bigCrunchPower = gameState.bigCrunchPower;
+        bigCrunchMultiplier = gameState.bigCrunchMultiplier;
+        totalMultiplier = gameState.totalMultiplier;
         firstTimePrestigeButtonAvailable = gameState.firstTimePrestigeButtonAvailable;
-        
+        firstTimeCookieUnlock = gameState.firstTimeCookieUnlock;
+        cookieClickMultiplier = gameState.cookieClickMultiplier;
+        cookieAutoClicker = gameState.cookieAutoClicker;
+        luckGameDelta = gameState.luckGameDelta;
+        knowledgeUnlocked = gameState.knowledgeUnlocked;
+        knowledgeGenerationSkill = gameState.knowledgeGenerationSkill;
+        prestigeBaseSkill = gameState.prestigeBaseSkill;
+        twoDimensionalAscensionSkill = gameState.twoDimensionalAscensionSkill;
+        multibuyUpgradesSkill = gameState.multibuyUpgradesSkill;
+        mathGameSkill = gameState.mathGameSkill;
+        powerUnlocked = gameState.powerUnlocked;
+        buyMarkersSkill = gameState.buyMarkersSkill;
+        bigCrunchUnlocked = gameState.bigCrunchUnlocked;
+        numAscensionUpgrades = gameState.numAscensionUpgrades;
+        improvedTradeRatio = gameState.improvedTradeRatio;
+        cookieBoost = gameState.cookieBoost;
+        cooldowns = gameState.cooldowns;
+
         upgrades.forEach(upgrade => {
             const savedUpgrade = gameState.upgrades.find(up => up.name === upgrade.name);
             if (savedUpgrade) {
@@ -173,6 +231,7 @@ function importSave(event) {
 
     reader.readAsText(file);
 }
+
 
 // Add event listeners for opening and closing the settings overlay
 document.getElementById('settingsButton').addEventListener('click', openSettings);
