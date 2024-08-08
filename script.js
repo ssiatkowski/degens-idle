@@ -1235,11 +1235,12 @@ async function ascend() {
         selectedUpgrades.forEach(upgrade => {
             upgrade.isGodMode = true;
         });
-
-        showMessageModal('Ascension Successful!', `<strong>You have entered God-Mode Level ${godModeLevel}.</strong><br> Your multiplier God-Mode is now x${formatNumber(godModeMultiplier)}, your prestige multiplier is x${formatNumber(epsMultiplier)}, and your chosen upgrades are 10x stronger.`);        
-
+        
         epsMultiplier = Math.max(calculateAscensionEpsMult(), 1);
         prestigeRequirement = calculateMinResource();
+        
+        showMessageModal('Ascension Successful!', `<strong>You have entered God-Mode Level ${godModeLevel}.</strong><br> Your multiplier God-Mode is now x${formatNumber(godModeMultiplier)}, your prestige multiplier is x${formatNumber(epsMultiplier)}, and your chosen upgrades are 10x stronger.`);        
+
 
         restartGame(true); // Use the existing restartGame function with prestige mode
         // Save game state after ascending

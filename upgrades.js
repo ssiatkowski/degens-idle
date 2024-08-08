@@ -240,8 +240,9 @@ const upgrades = [
         earnings: { copiumPerSecond: 10, delusionPerSecond: 10, yachtMoneyPerSecond: 10, trollPointsPerSecond: 10, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/ascension.jpg",
         message: `<p>Congratulations, brave soul! With the purchase of the Ascension upgrade, you have unlocked the extraordinary ability to Ascend Above Mortals and enter the revered God Mode. Prepare yourself for an epic journey where the limits of mortality no longer bind you.</p>
-                    <p><span style="color: red;">It is highly recommended for your first few ascensions to be taken as soon as possible.</span></p>
-                    <p>Welcome to the next chapter of your legendary adventure. Ascend and let your godlike journey begin!</p>`,
+                    <p>Your intuition whispers:<span style="color: #40E0D0;"> I think the optimum strategy is for the first few ascensions to be taken as soon as possible.</span></p>
+                    <p>Welcome to the next chapter of your legendary adventure. Ascend and let your godlike journey begin!</p>
+`,
     },
     {
         name: "420",
