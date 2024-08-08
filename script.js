@@ -2038,7 +2038,7 @@ function showWelcomeModal() {
             'Welcome to Degens Idle',
             `
             <p>Step into a world where the dankest memes meet the depths of introspective contemplation. In Degens Idle, you’re not just collecting resources—you’re diving headfirst into a journey of existential discovery.</p>
-            <p>Embrace the grind as you gather Copium, Delusion, Yacht Money, Troll Points, and the elusive Hopium. Each click and upgrade is a step closer to understanding the universe of internet culture and your place within it.</p>
+            <p>Embrace the grind as you gather Copium, Delusion, Yacht Money, Troll Points, and the elusive Hopium. But beware, there might be other knowns and unknowns lurking in the meme-iverse. Each click and upgrade is a step closer to understanding the universe of internet culture and your place within it.</p>
             <p>Are you ready to transcend the ordinary? To not only witness but harness the power of memes in their truest, most profound form? Every action you take will push you to ponder life’s greatest mysteries and your role in this meme-laden multiverse.</p>
             <h2>How to Play:</h2>
             <ul>
@@ -2048,6 +2048,7 @@ function showWelcomeModal() {
                 <li><strong>Explore the Meme-iverse:</strong> Dive into various aspects of internet culture. Each upgrade and unlocked meme will reveal more about the meme-iverse and your place within it.</li>
                 <li><strong>Ponder and Reflect:</strong> As you progress, take a moment to ponder the deeper meanings behind the memes. What do they say about life, existence, and your role in this digital realm?</li>
             </ul>
+
             `
         );
     }
