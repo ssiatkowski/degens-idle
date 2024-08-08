@@ -742,8 +742,8 @@ button.disabled {
     background-color: #8B4513; /* SaddleBrown */
     color: #fff;
     font-family: 'Uncial Antiqua', 'Georgia', serif; /* Updated font */
-    font-size: 18px;
-    padding: 8px 30px;
+    font-size: 23px;
+    padding: 12px 24px;
     border: 2px solid #291604; /* Darker brown for border */
     border-radius: 8px;
     cursor: pointer;
