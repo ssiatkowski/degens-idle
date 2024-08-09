@@ -17,6 +17,7 @@ let powerPerSecond = 0;
 let serenity = 0;
 let serenityPerSecond = 0;
 
+let numberFormatType = 0;
 
 //cooldowns for mini games
 let cooldowns = {
@@ -995,17 +996,19 @@ function Bound(LOWER_BOUND = -Infinity, UPPER_BOUND = Infinity, DEFAULT_VALUE = 
     return DEFAULT_VALUE
   }
 function NumberScientific(Num, Fixed = 2, EXPONENT_LIMIT = 3) {
-    let FIXED = Fixed, limitTillexpo = Bound(0, 9 , 4, EXPONENT_LIMIT), Exponent = Math.floor(Math.log10(Math.abs(Num)+1))
+    let limitTillexpo = Bound(0, 9 , 4, EXPONENT_LIMIT), Exponent = Math.abs(Math.floor(Math.log10(Math.abs(Num))))
     if (Math.abs(Num) < 1 && Math.abs(Num) > 0) {
-      return Num
-    }
+      return Exponent < limitTillexpo ? String(Num) : `${(Num*(10**Exponent)).toFixed(Fixed)}e${-Exponent}`
+  }
     if (Math.abs(Num) < 10**limitTillexpo) {
       return Commas(Num, 2)
     }
     return `${(Num/(10**Exponent)).toFixed(Fixed)}e${Exponent}`
 }
 function NumberStandard(Num, Fixed = 2, EXPONENT_LIMIT = 3) {
-  let limitTillexpo = Bound(0, 9, 3, EXPONENT_LIMIT), Exponent = Math.floor(Math.log10(Math.abs(Num))/3)
+  let limitTillexpo = Bound(0, 9, 3,EXPONENT_LIMIT), 
+      Exponent = Math.floor(Math.log10(Math.abs(Num))/3),
+      True_Exponent = Math.abs(Math.floor(Math.log10(Math.abs(Num))))
   let PREFIXES = ["", "K", "M", "B", "T", "Qa", "Qt", "Sx", "Sp", "Oc", "No", "Dc", "UDc", "DDc",
     "TDc", "QaDc", "QtDc", "SxDc", "SpDc", "ODc", "NDc", "Vg", "UVg", "DVg", "TVg",
     "QaVg", "QtVg", "SxVg", "SpVg", "OVg", "NVg", "Tg", "UTg", "DTg", "TTg", "QaTg",
@@ -1016,18 +1019,39 @@ function NumberStandard(Num, Fixed = 2, EXPONENT_LIMIT = 3) {
     "NSt", "Og", "UOg", "DOg", "TOg", "QaOg", "QtOg", "SxOg", "SpOg", "OOg", "NOg",
     "Nn", "UNn", "DNn", "TNn", "QaNn", "QtNn", "SxNn", "SpNn", "ONn", "NNn", "Ce"]
   if (Math.abs(Num) < 1 && Math.abs(Num) > 0) {
-      return Num
+      return True_Exponent < limitTillexpo ? String(Num) : `${(Num*(10**True_Exponent)).toFixed(Fixed)}e${-True_Exponent}`
   }
   if (Math.abs(Num) < 10**limitTillexpo) {
     return Commas(Num, 2)
   }
   return `${(Num/(1000**Exponent)).toFixed(Fixed)} ${PREFIXES[Exponent]}`
 }
+function NumberMixedScientific(Num,Fixed = 2, EXPONENT_LIMIT = 3) {
+    if (Num < 1e36) {
+      return NumberStandard(Num, Fixed, EXPONENT_LIMIT)
+    } else {
+      return NumberScientific(Num, Fixed, EXPONENT_LIMIT)
+    }
+}
+function NumberFormat(Num = 0, Type = 0, Fixed) {
+    switch(Type) {
+      case 0:
+        return NumberMixedScientific(Num, Fixed)
+      case 1: 
+        return NumberScientific(Num, Fixed)
+      case 2:
+        return NumberStandard(Num, Fixed)
+    }
+}
 
 
 function customRound(number, digits) {
     const factor = Math.pow(10, digits);
     return Math.round(number * factor) / factor;
+}
+
+function formatNumber2(num) {
+    return NumberFormat(num, numberFormatType, 3)
 }
 
 function formatNumber(num) {

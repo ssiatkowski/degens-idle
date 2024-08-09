@@ -482,7 +482,7 @@ const upgrades = [
     {
         name: "NGU Idle",
         cost: { copium: 8e17, delusion: 4e17, yachtMoney: 4e17, trollPoints: 8e17, hopium: 1e12, knowledge: 6e7, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 9e7, delusionPerSecond: 4.7e7, yachtMoneyPerSecond: 7e7, trollPointsPerSecond: 1.8e8, hopiumPerSecond: 800, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 9.6e7, delusionPerSecond: 4.7e7, yachtMoneyPerSecond: 7.5e7, trollPointsPerSecond: 1.8e8, hopiumPerSecond: 800, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/ngu_idle.jpg",
         message: `Congratulations on unlocking the "NGU Idle" upgrade! This upgrade is a tribute to one of the greatest idle games ever. NGU Idle, known for its deep mechanics and quirky humor, has set a high standard in the idle game genre.<br><br>Here's to celebrating a game that has set a high bar for idle games everywhere. Enjoy the nostalgia and the boost it brings to your Degens Idle journey -- you may now watch all your Numbers Go Up!`,
     },

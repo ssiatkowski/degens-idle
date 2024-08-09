@@ -106,7 +106,7 @@ function unlockLibrarySkill(skill, duringLoad = false) {
             case 'Prestige Base':
                 prestigeBaseSkill = true;
                 if (!duringLoad) {
-                    showMessageModal('Prestige Base', 'Graph shows the Prestige Multiplier scaling with 1.5 base vs 1.75 base. This difference become huge later in the game. When your min resource is at 1Qi that is already 10x difference and only increases exponentially form there!', false, false, 'imgs/graphs/prestige_base.png')
+                    showMessageModal('Prestige Base', 'Graph shows the Prestige Multiplier scaling with 1.5 base vs 1.75 base. This difference becomes huge later in the game. When your min resource is at 1Qi that is already 10x difference and only increases exponentially form there!', false, false, 'imgs/graphs/prestige_base.png')
                 }
                 break;
             
