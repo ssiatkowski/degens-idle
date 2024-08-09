@@ -549,7 +549,7 @@ function playMiniGame(gameType) {
         // Luck mini-game logic
         let result = (Math.random() * 200) + luckGameDelta; // Generates a random number (initially between -75 and +125%)
         let message = "";
-        let reward = Math.floor(trollPoints * (result / 100)); // Calculate reward based on the result percentage
+        let reward = Math.floor(Math.abs(trollPoints) * (result / 100)); // Calculate reward based on the result percentage
         let gainLossMessage = reward >= 0 ? "gained" : "lost";
     
         if (result > 100) {

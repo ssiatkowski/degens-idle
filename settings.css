@@ -217,7 +217,7 @@
     color: white;
     position: relative;
     overflow: hidden;
-    animation: flash 1s infinite; /* Continuous flash animation */
+    animation: flutter 1s infinite; /* Continuous flutter animation */
 }
 
 #donateLargeButton:hover {
@@ -252,8 +252,8 @@
     }
 }
 
-/* Flash animation for the large button */
-@keyframes flash {
+/* Flutter animation for the large button */
+@keyframes flutter {
     0%, 100% {
         opacity: 1;
     }
