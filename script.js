@@ -805,10 +805,10 @@ async function restartGame(isPrestige = false) {
 
 let tradeStatusTimeout;
 
-function showTradeStatusMessage(message, isSuccess) {
-    const overlay = document.getElementById('tradeStatusOverlay');
+function showStatusMessage(pressedButton, message, isSuccess) {
+    const overlay = document.getElementById('statusOverlay');
     overlay.textContent = message;
-    overlay.className = 'trade-status-overlay'; // Reset classes
+    overlay.className = 'status-overlay'; // Reset classes
     if (isSuccess) {
         overlay.classList.add('success');
     } else {
@@ -816,18 +816,17 @@ function showTradeStatusMessage(message, isSuccess) {
     }
     overlay.style.display = 'block';
     
-    const tradeButton = document.getElementById('tradeButton');
-    const rect = tradeButton.getBoundingClientRect();
+    const rect = pressedButton.getBoundingClientRect();
 
     // Adjust the positioning based on the device
     if (window.innerWidth <= 768) {  // Mobile devices
         overlay.style.position = 'absolute';
-        overlay.style.top = `${rect.bottom + window.scrollY + 10}px`;  // Position below the trade button
-        overlay.style.left = `${rect.left + window.scrollX}px`;  // Align with the left of the trade button
+        overlay.style.top = `${rect.bottom + window.scrollY + 10}px`;  // Position below the pressed button
+        overlay.style.left = `${rect.left + window.scrollX}px`;  // Align with the left of the pressed button
     } else {  // Desktop devices
         overlay.style.position = 'absolute';
-        overlay.style.top = `${rect.top + window.scrollY}px`;  // Align with the top of the trade button
-        overlay.style.left = `${rect.right + window.scrollX + 10}px`;  // Position to the right of the trade button
+        overlay.style.top = `${rect.top + window.scrollY}px`;  // Align with the top of the pressed button
+        overlay.style.left = `${rect.right + window.scrollX + 10}px`;  // Position to the right of the pressed button
     }
 
     // Clear the previous timer if it exists
@@ -835,10 +834,10 @@ function showTradeStatusMessage(message, isSuccess) {
         clearTimeout(tradeStatusTimeout);
     }
 
-    // Set a new timer to hide the overlay after 4 seconds
+    // Set a new timer to hide the overlay after 3 seconds
     tradeStatusTimeout = setTimeout(() => {
         overlay.style.display = 'none';
-    }, 4000); // Hide after 4 seconds
+    }, 3000); // Hide after 3 seconds
 }
 
 
@@ -921,49 +920,51 @@ function tradeResources() {
     const currentAmount = resourceAmount[fromResource];
     const tradeAmount = parseFormattedNumber(tradeAmountInput, currentAmount);
 
+    const tradeButton = document.getElementById('tradeButton');
+
     // Check if the same resource is selected for both from and to
     if (fromResource === toResource) {
-        showTradeStatusMessage("Cannot trade the same resource.", false);
+        showStatusMessage(tradeButton, "Cannot trade the same resource.", false);
         return;
     }
 
     // Check if trade amount is valid
     if (isNaN(tradeAmount) || tradeAmount <= 0) {
-        showTradeStatusMessage('Please enter a valid trade amount.', false);
+        showStatusMessage(tradeButton, 'Please enter a valid trade amount.', false);
         return;
     }
 
     // Special trade case for converting Copium to Hopium
     if (fromResource === 'copium' && toResource === 'hopium') {
         if (resourceAmount[fromResource] < tradeAmount) {
-            showTradeStatusMessage(`Not enough ${fromResource} to trade.`, false);
+            showStatusMessage(tradeButton, `Not enough ${fromResource} to trade.`, false);
             return;
         }
         resourceAmount[fromResource] -= tradeAmount;
         if (improvedTradeRatio) {
             resourceAmount[toResource] += tradeAmount / 4000000;
-            showTradeStatusMessage(`Traded ${formatNumber(tradeAmount)} ${fromResource} for ${formatNumber(tradeAmount / 4000000)} ${toResource}.`, true);
+            showStatusMessage(tradeButton, `Traded ${formatNumber(tradeAmount)} ${fromResource} for ${formatNumber(tradeAmount / 4000000)} ${toResource}.`, true);
         } else {
             resourceAmount[toResource] += tradeAmount / 100000000;
-            showTradeStatusMessage(`Traded ${formatNumber(tradeAmount)} ${fromResource} for ${formatNumber(tradeAmount / 100000000)} ${toResource}.`, true);
+            showStatusMessage(tradeButton, `Traded ${formatNumber(tradeAmount)} ${fromResource} for ${formatNumber(tradeAmount / 100000000)} ${toResource}.`, true);
         }
         
     } else if (toResource === 'hopium') {
-        showTradeStatusMessage("Only Copium can convert to Hopium.", false);
+        showStatusMessage(tradeButton, "Only Copium can convert to Hopium.", false);
         return;
     } else {
         // General trade case for other resources
         if (resourceAmount[fromResource] < tradeAmount) {
-            showTradeStatusMessage(`Not enough ${fromResource} to trade.`, false);
+            showStatusMessage(tradeButton, `Not enough ${fromResource} to trade.`, false);
             return;
         }
         resourceAmount[fromResource] -= tradeAmount;
         if (improvedTradeRatio) {
             resourceAmount[toResource] += tradeAmount / 4;
-            showTradeStatusMessage(`Traded ${formatNumber(tradeAmount)} ${fromResource} for ${formatNumber(tradeAmount / 4)} ${toResource}.`, true);
+            showStatusMessage(tradeButton, `Traded ${formatNumber(tradeAmount)} ${fromResource} for ${formatNumber(tradeAmount / 4)} ${toResource}.`, true);
         } else {
             resourceAmount[toResource] += tradeAmount / 10;
-            showTradeStatusMessage(`Traded ${formatNumber(tradeAmount)} ${fromResource} for ${formatNumber(tradeAmount / 10)} ${toResource}.`, true);
+            showStatusMessage(tradeButton, `Traded ${formatNumber(tradeAmount)} ${fromResource} for ${formatNumber(tradeAmount / 10)} ${toResource}.`, true);
         }
     }
 
@@ -1434,7 +1435,7 @@ function buyUpgrade(encodedUpgradeName) {
 
         // Special case for the "Still very stupid" upgrade
         if (name === "Transcendence") {
-            showMessageModal('Sadly', "This marks the end of v0.801. Your journey through this existential tale is just beginning. You've been amassing power, but the true meaning of transcendence remains a mystery. How could it relate to ascension? Stay tuned, as another big update is just a few days away. If you can't wait, feel free to restart the game and embark on speed runs, or explore alternate strategies. What will you discover next on your path to enlightenment?");
+            showMessageModal('Sadly', "This marks the end of v0.802. Your journey through this existential tale is just beginning. You've been amassing power, but the true meaning of transcendence remains a mystery. How could it relate to ascension? Stay tuned, as another big update is just a few days away. If you can't wait, feel free to restart the game and embark on speed runs, or explore alternate strategies. What will you discover next on your path to enlightenment?");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one
@@ -1465,19 +1466,29 @@ function buyUpgrade(encodedUpgradeName) {
 
 
 // Function to handle the purchase of multiple upgrades
-function buyAllUpgrades(limit) {
+function buyAllUpgrades(limit, pressedButton) {
+    let purchasedCount = 0; // Initialize a counter for the purchased upgrades
+    
     availableUpgrades.slice(0, limit).forEach(upgrade => {
         if (buyMarkersSkill) {
-            const switchElement = JSON.parse(localStorage.getItem(`switchState-${upgrade.name}`))
+            const switchElement = JSON.parse(localStorage.getItem(`switchState-${upgrade.name}`));
             if (switchElement && isAffordable(upgrade.cost)) {
                 buyUpgrade(encodeName(upgrade.name), true);
+                purchasedCount++; // Increment counter when an upgrade is bought
             }
         } else {
             if (isAffordable(upgrade.cost)) {
                 buyUpgrade(encodeName(upgrade.name), true);
+                purchasedCount++; // Increment counter when an upgrade is bought
             }
         }
     });
+    
+    if (purchasedCount > 0) {
+        showStatusMessage(pressedButton, `Purchased ${purchasedCount} upgrade(s).`, true);
+    } else {
+        showStatusMessage(pressedButton, 'No upgrades were purchased.', false);
+    }
 }
 
 
@@ -2119,8 +2130,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('bigCrunchButton').addEventListener('click', bigCrunch);
 
     // Add event listener for the buy all upgrades button
-    document.getElementById('buySeenButton').addEventListener('click', () => buyAllUpgrades(7));
-    document.getElementById('buyMaxButton').addEventListener('click', () => buyAllUpgrades(25));
+    document.getElementById('buySeenButton').addEventListener('click', function() { buyAllUpgrades(7, this);});
+    document.getElementById('buyMaxButton').addEventListener('click', function() {buyAllUpgrades(100, this);});
 
     // Add this function to handle the toggle switch logic
     document.getElementById('toggleDelusion').addEventListener('change', function() {

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Degens Idle v0.801</title>
+    <title>Degens Idle v0.802</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="library.css">    
     <link rel="stylesheet" type="text/css" href="settings.css">
@@ -43,7 +43,7 @@
     <div id="main-container">
         <div id="title-column">
             <div id="title-container">
-                <h1 id="title">Degens Idle v0.801</h1>
+                <h1 id="title">Degens Idle v0.802</h1>
             </div>
             <div id="button-container">
                 <button id="restartButton">Restart Entire Game</button>
@@ -130,7 +130,7 @@
                 <button id="buySeenButton" class="hidden">Buy Seen</button>
                 <button id="buyMaxButton" class="hidden">Buy Max</button>
             </div>
-            <div id="upgradeList">
+            <div id="upgradeList" class="avail-grid">
                 <!-- Upgrades will be dynamically added here -->
             </div>
         </div>
@@ -148,7 +148,7 @@
                 <label for="fromResource">To:</label>
                 <select id="toResource" onchange="updateTradeRatio()">
                     <option value="copium">Copium</option>
-                    <option value="delusion">Delusion</option>
+                    <option value="delusion" selected>Delusion</option>
                     <option value="yachtMoney">Yacht Money</option>
                     <option value="trollPoints">Troll Points</option>
                     <option value="hopium">Hopium</option> <!-- Add Hopium as a tradeable resource -->
@@ -157,7 +157,6 @@
                 <input type="text" id="tradeAmount" value="" placeholder="Enter (e.g. 1.5M or 50%)">
                 <p id="tradeRatioDisplay">Trade ratio is 10:1</p>
                 <button id="tradeButton">Trade</button>
-                <div id="tradeStatusOverlay" class="status-overlay"></div>
             </div>
             <div id="purchasedUpgrades">
                 <h2>Purchased Upgrades</h2>
@@ -167,6 +166,7 @@
             </div>
         </div>
     </div>
+    <div id="statusOverlay" class="status-overlay"></div>
     <!-- Include the Library overlay HTML -->
     <div id="libraryOverlay" class="library-overlay" style="display: none;">
         <div class="library-overlay-content">
