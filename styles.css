@@ -155,6 +155,8 @@ h1, h2 {
     font-size: 16px;
     cursor: pointer;
     border-radius: 5px;
+    white-space: nowrap; /* Prevent text wrapping */
+    width: 100%; /* Take up the full width of the container */
 }
 
 #restartButton:hover {
@@ -169,10 +171,28 @@ h1, h2 {
     font-size: 16px;
     cursor: pointer;
     border-radius: 5px;
+    white-space: nowrap; /* Prevent text wrapping */
+    width: 100%; /* Take up the full width of the container */
 }
 
 #restartPrestige:hover {
     background-color: #c0392b; /* Darker red on hover */
+}
+
+#settingsButton {
+    background-color: #7f8c8d; /* Gray background */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    white-space: nowrap; /* Prevent text wrapping */
+    width: 100%; /* Take up the full width of the container */
+}
+
+#settingsButton:hover {
+    background-color: #5f6a6a; /* Darker gray on hover */
 }
 
 
@@ -821,8 +841,6 @@ input:checked + .slider:before {
 
 .trade-status-overlay {
     position: absolute;
-    top: 0; /* Align with the top of the trade button */
-    left: calc(100% + 10px); /* Position to the right of the trade button with some margin */
     padding: 10px 20px;
     background-color: #f8d7da;
     color: #721c24;
@@ -831,6 +849,7 @@ input:checked + .slider:before {
     display: none; /* Hidden by default */
     z-index: 1000; /* Ensure it appears above other elements */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 80%; /* Ensure it doesn't overflow on small screens */
 }
 
 .trade-status-overlay.success {
@@ -844,4 +863,5 @@ input:checked + .slider:before {
     color: #721c24;
     border-color: #f5c6cb;
 }
+
 

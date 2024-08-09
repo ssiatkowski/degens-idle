@@ -816,21 +816,29 @@ function showTradeStatusMessage(message, isSuccess) {
     }
     overlay.style.display = 'block';
     
-    // Position the overlay relative to the trade button
     const tradeButton = document.getElementById('tradeButton');
     const rect = tradeButton.getBoundingClientRect();
-    overlay.style.top = `${rect.top}px`;
-    overlay.style.left = `${rect.right + 10}px`;
+
+    // Adjust the positioning based on the device
+    if (window.innerWidth <= 768) {  // Mobile devices
+        overlay.style.position = 'absolute';
+        overlay.style.top = `${rect.bottom + window.scrollY + 10}px`;  // Position below the trade button
+        overlay.style.left = `${rect.left + window.scrollX}px`;  // Align with the left of the trade button
+    } else {  // Desktop devices
+        overlay.style.position = 'absolute';
+        overlay.style.top = `${rect.top + window.scrollY}px`;  // Align with the top of the trade button
+        overlay.style.left = `${rect.right + window.scrollX + 10}px`;  // Position to the right of the trade button
+    }
 
     // Clear the previous timer if it exists
     if (tradeStatusTimeout) {
         clearTimeout(tradeStatusTimeout);
     }
 
-    // Set a new timer to hide the overlay after 5 seconds
+    // Set a new timer to hide the overlay after 4 seconds
     tradeStatusTimeout = setTimeout(() => {
         overlay.style.display = 'none';
-    }, 5000); // Hide after 5 seconds
+    }, 4000); // Hide after 4 seconds
 }
 
 
@@ -1183,7 +1191,8 @@ function updatePrestigeButton() {
 }
 
 function canAscend() {
-    return purchasedUpgrades.some(upgrade => upgrade.name === "Ascension");
+    return purchasedUpgrades.some(upgrade => upgrade.name === "Ascension") &&
+           purchasedUpgrades.some(upgrade => !upgrade.isGodMode);
 }
 
 function canTranscend() {
@@ -1235,7 +1244,7 @@ async function ascend() {
         selectedUpgrades.forEach(upgrade => {
             upgrade.isGodMode = true;
         });
-        
+
         epsMultiplier = Math.max(calculateAscensionEpsMult(), 1);
         prestigeRequirement = calculateMinResource();
         
@@ -2038,16 +2047,16 @@ function showWelcomeModal() {
         return showMessageModal(
             'Welcome to Degens Idle',
             `
+            <p><span style="color: #FFD700;">Pro tip: Reading through these message dialogs could seriously level up your game experience. Just saying!</span></p>
             <p>Step into a world where the dankest memes meet the depths of introspective contemplation. In Degens Idle, you’re not just collecting resources—you’re diving headfirst into a journey of existential discovery.</p>
-            <p>Embrace the grind as you gather Copium, Delusion, Yacht Money, Troll Points, and the elusive Hopium. But beware, there might be other knowns and unknowns lurking in the meme-iverse. Each click and upgrade is a step closer to understanding the universe of internet culture and your place within it.</p>
+            <p>Embrace the grind as you gather Copium, Delusion, Yacht Money, Troll Points, and the elusive Hopium. There will also be other knowns and unknowns lurking in the meme-iverse. Each click and upgrade is a step closer to understanding the universe of internet culture and your place within it.</p>
             <p>Are you ready to transcend the ordinary? To not only witness but harness the power of memes in their truest, most profound form? Every action you take will push you to ponder life’s greatest mysteries and your role in this meme-laden multiverse.</p>
             <h2>How to Play:</h2>
             <ul>
-                <li><strong>Click to Gather Resources:</strong> Start by clicking to collect Copium and other essential resources. Each click brings you closer to unlocking new memes and upgrades.</li>
-                <li><strong>Upgrade Your Abilities:</strong> Use your resources to purchase upgrades. These will enhance your clicking power and resource generation, allowing you to progress faster.</li>
-                <li><strong>Unlock New Content:</strong> Venture into the unknown and unveil hidden secrets of the meme-iverse. Each resource collected and upgrade acquired opens portals to mysterious realms, revealing cryptic memes and arcane powers that will enhance your journey.</li>
-                <li><strong>Explore the Meme-iverse:</strong> Dive into various aspects of internet culture. Each upgrade and unlocked meme will reveal more about the meme-iverse and your place within it.</li>
-                <li><strong>Ponder and Reflect:</strong> As you progress, take a moment to ponder the deeper meanings behind the memes. What do they say about life, existence, and your role in this digital realm?</li>
+                <li><strong>Click & Upgrade:</strong> Start by clicking to gather Copium and other essential resources. Use them to unlock upgrades that boost your clicking power and resource generation, speeding up your progress.</li>
+                <li><strong>Unlock & Explore:</strong> Venture into the meme-iverse to uncover hidden secrets. Every resource and upgrade opens doors to mysterious realms, revealing cryptic memes and powerful boosts that will deepen your journey into internet culture.</li>
+                <li><strong>Ponder and Reflect:</strong> As you progress, consider the deeper meanings behind the memes. What messages do they convey? How do they reflect your role in this digital multiverse? The more you explore, the clearer the connections between memes, culture, and your journey in the game become.</li>
+                <li><strong>Strategy Counts:</strong> With a solid strategy, you can be much more efficient in your progress, but remember, this is a single-player game—it’s not a race. Take your time, explore at your own pace, and savor every moment as you carve your own path to greatness.</li>
             </ul>
 
             `

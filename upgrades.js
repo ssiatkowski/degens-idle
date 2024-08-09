@@ -329,7 +329,7 @@ const upgrades = [
     {
         name: "Pre-AI Idols!",
         cost: { copium: 1e10, delusion: 3e9, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 202000, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0.001, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 204000, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0.001, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/pre-AI-idols.JPG",
     },       
     {
@@ -368,7 +368,7 @@ const upgrades = [
     {
         name: "Don't fuck this up Netflix",
         cost: { copium: 0, delusion: 8e10, yachtMoney: 4e11, trollPoints: 0, hopium: 2000, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 240000, delusionPerSecond: -10000, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0.003, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 250000, delusionPerSecond: -10000, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0.003, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/3_body_problem.jpg",
     },   
     {
@@ -394,7 +394,7 @@ const upgrades = [
     {
         name: "Foreshadowing #2",
         cost: { copium: 8e12, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 350000, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 520000, delusionPerSecond: 100000, yachtMoneyPerSecond: 105000, trollPointsPerSecond: 500000, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 530000, delusionPerSecond: 100000, yachtMoneyPerSecond: 105000, trollPointsPerSecond: 500000, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/distracted_boyfriend_2.jpg",
     }, 
     {
@@ -407,7 +407,7 @@ const upgrades = [
     {
         name: "Spring Break",
         cost: { copium: 0, delusion: 0, yachtMoney: 8e12, trollPoints: 4e13, hopium: 100000, knowledge: 0.5, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 10100000, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 10000000, hopiumPerSecond: 0.1, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 10400000, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 10000000, hopiumPerSecond: 0.1, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/spring_break.jpg",
     },
     {
@@ -419,7 +419,7 @@ const upgrades = [
     {
         name: "Yom Kippur",
         cost: { copium: 5e14, delusion: 0, yachtMoney: 5e13, trollPoints: 0, hopium: 500000, knowledge: 100, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 1600000, delusionPerSecond: 280000, yachtMoneyPerSecond: 500000, trollPointsPerSecond: 390000, hopiumPerSecond: 0.04, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 1700000, delusionPerSecond: 280000, yachtMoneyPerSecond: 500000, trollPointsPerSecond: 390000, hopiumPerSecond: 0.04, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/yom_kippur.jpg",
     },
     {
@@ -432,7 +432,7 @@ const upgrades = [
     {
         name: "Cybertruck",
         cost: { copium: 0, delusion: 0, yachtMoney: 3e14, trollPoints: 0, hopium: 10000000, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 1.03e7, delusionPerSecond: 1.65e6, yachtMoneyPerSecond: -100000, trollPointsPerSecond: 1.2e6, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 1.05e7, delusionPerSecond: 1.65e6, yachtMoneyPerSecond: -100000, trollPointsPerSecond: 1.2e6, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/cybertruck.jpg",
     },
     {
@@ -445,7 +445,7 @@ const upgrades = [
     {
         name: "But Wait There's More!",
         cost: { copium: 1e15, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 1e8, knowledge: 8000, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 5.1e6, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 4, knowledgePerSecond: 0.000012, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 5.5e6, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 4, knowledgePerSecond: 0.000012, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/surprise_pikachu.jpg",
     },
     {
