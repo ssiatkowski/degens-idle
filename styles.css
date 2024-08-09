@@ -340,6 +340,7 @@ button.disabled {
     display: none; /* Hidden by default */
     font-size: 14px;
     max-width: 200px; /* Adjust width as needed */
+    z-index: 1005;
 }
 
 .upgradeTooltip p {

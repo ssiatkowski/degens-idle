@@ -262,6 +262,28 @@
     }
 }
 
+/* Feedback Button */
+#feedbackButton {
+    background-color: #4CAF50; /* Green background */
+    border: none;
+    cursor: pointer;
+    padding: 10px 20px;
+    margin: 10px 0;
+    width: 100%; /* Full width button */
+    display: block;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    color: white; /* White text */
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.2s, box-shadow 0.2s;
+    position: relative;
+    overflow: hidden;
+}
+
+#feedbackButton:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
 
 
 

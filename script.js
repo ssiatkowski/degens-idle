@@ -1283,7 +1283,7 @@ async function bigCrunch() {
 
         const confirmed = await showMessageModal(
             'Big Crunch Confirmation',
-            `Are you sure you want to prestige? You will reset all resources, prestiges, and god-mode levels, but your Big Crunch Multiplier will increase <strong>from ${formatNumber(bigCrunchMultiplier)} to ${formatNumber(calculateBigCrunchMultiplier(power))}</strong>.<br> Big crunch multiplier stacks with all your other multipliers, plus additionally affects your Knowledge generation! (Your Big Crunch Power will lock in at the current power level)`,
+            `Are you sure you want to prestige? You will reset all resources, prestiges, and god-mode levels, but your Big Crunch Multiplier will increase <strong>from ${formatNumber(bigCrunchMultiplier)} to ${formatNumber(calculateBigCrunchMultiplier(power))}</strong>.<br> Big crunch multiplier stacks with all your other multipliers, plus additionally affects your Knowledge generation! (Your Big Crunch Power will lock in at the current Power level)`,
             true
         );
 
@@ -1451,7 +1451,7 @@ function buyUpgrade(encodedUpgradeName) {
 
         // Special case for the "Still very stupid" upgrade
         if (name === "Transcendence") {
-            showMessageModal('Sadly', "This marks the end of v0.81. Your journey through this existential tale is just beginning. You've been amassing power, but the true meaning of transcendence remains a mystery. How could it relate to ascension? Stay tuned, as another big update is just a few days away. If you can't wait, feel free to restart the game and embark on speed runs, or explore alternate strategies. What will you discover next on your path to enlightenment?");
+            showMessageModal('Sadly', "This marks the end of v0.811. Your journey through this existential tale is just beginning. You've been amassing power, but the true meaning of transcendence remains a mystery. How could it relate to ascension? Stay tuned, as another big update is just a few days away. If you can't wait, feel free to restart the game and embark on speed runs, or explore alternate strategies. What will you discover next on your path to enlightenment?");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one
@@ -1985,6 +1985,14 @@ function displayNextModal() {
                         }
                     }
                 };
+
+                // Attach tooltip events to the upgrade items
+                attachTooltipEvents(upgradeItem, {
+                    name: upgrade.name,
+                    earnings: upgrade.earnings,
+                    isGodMode: upgrade.isGodMode
+                });
+
                 ascendUpgradeList.appendChild(upgradeItem);
             }
         });

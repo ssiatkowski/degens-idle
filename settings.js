@@ -271,3 +271,8 @@ document.getElementById('donateMediumButton').addEventListener('click', function
 document.getElementById('donateLargeButton').addEventListener('click', function() {
     window.open('pigeon.html', '_blank'); 
 });
+// Add event listener for Feedback button
+document.getElementById('feedbackButton').addEventListener('click', function() {
+    window.open('https://docs.google.com/forms/d/e/1FAIpQLSfaQdxaBFCdT789rVTSvFuScEEzlu4rDabjFUX0zkCKinyvKA/viewform?usp=sf_link', '_blank');
+});
+

@@ -28,7 +28,7 @@ const librarySkills = [
     { name: 'Septuple Ascension', cost: 1e24, description: 'Gain up to 7 God-Mode levels per Ascension. Also select up to 7 upgrades to enhance to God Mode.', unlocked: false, level: 'Artificial Intelligence' },
 
     { name: 'Knowledge is Power', cost: 1e6, description: 'Unlock new resource Power. Power is always generated based on your current amount of Knowledge.', unlocked: false, level: 'Celestial Bodies' },
-    { name: 'Big Crunch', cost: 8e11, description: 'Unlock ability to force the universe into a Big Crunch and to be reborn anew.', unlocked: false, level: 'Celestial Bodies' },
+    { name: 'Big Crunch', cost: 8e11, description: 'Could this be what Power is for? Unlock ability to force the universe into a Big Crunch and to be reborn anew!', unlocked: false, level: 'Celestial Bodies' },
     { name: 'Money is Power, too', cost: 1e18, description: 'Add a multiplier to Power generation based on Yacht Money.', unlocked: false, level: 'Celestial Bodies' },
 
     { name: 'The Omniverse', cost: 1e50, description: 'Stop cheating. This does not exist yet.', unlocked: false, level: '???' },
@@ -163,7 +163,7 @@ function unlockLibrarySkill(skill, duringLoad = false) {
             case 'Big Crunch':
                 if (!duringLoad) {
                     showMessageModal(`Congratulations, Cosmic Architect!`, 
-                        `<p>You've unlocked the ability to force the universe into a Big Crunch and start anew! Imagine speeding up the decline of everything around you, hastening the collapse of the cosmos into an infinitely dense point, only to trigger a spectacular rebirth. It's like hitting the ultimate reset button on reality itself!</p>
+                        `<p>You have found a use for Power by forcing the universe into a Big Crunch! Imagine speeding up the decline of everything around you, hastening the collapse of the cosmos into an infinitely dense point, only to trigger a spectacular rebirth. It's like hitting the ultimate reset button on reality itself!</p>
                         <p>As you initiate the Big Crunch, picture galaxies spiraling inward, stars merging, and black holes converging in an epic cosmic finale. And just when it seems all is lost, BOOM! A new universe emerges from the singularity. A fresh start, a blank slate, where all the lessons learned from your previous existence can be leveraged to dominate even harder.</p>
                         <p>Don't think it's going to be a cakewalk! You'll have to regain your God-Mode levels, but here's the kicker: with all the knowledge and experience you've accumulated, it'll be much easier this time around. No more stumbling in the dark; you're now armed with the wisdom of countless cycles. Your prestige multiplier isn't just a number—it's a testament to your cosmic resilience and cunning.</p>
                         <p>So, strap in and prepare for the ultimate space-time rollercoaster. You're not just a player; you're a cosmic architect, reshaping the universe with each Big Crunch. Embrace the power, relish the rebirth, and remember: in this grand game of Degens Idle, you hold the keys to the cosmos. Now go forth and crunch the universe with style!</p>
@@ -262,7 +262,7 @@ function initializeSkills() {
                 if (!skill.unlocked && knowledge >= skill.cost) {
                     const result = await showMessageModal(
                         'Confirm Unlock',
-                        `Do you want to unlock ${skill.name} for ${skill.cost} Knowledge?`,
+                        `Do you want to unlock ${skill.name} for ${formatNumber(skill.cost)} Knowledge?`,
                         true,
                         false
                     );
