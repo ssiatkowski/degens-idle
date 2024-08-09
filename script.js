@@ -402,7 +402,7 @@ function generateResources() {
     serenity += effectiveSerenityPerSecond / 2;
 
     if (powerUnlocked){
-        effectivePowerPerSecond = moneyIsPowerTooSkill ? (knowledge ** (2/5) / 1e12) * (1 + (yachtMoney ** (2/5) / 1e12)) : knowledge ** (2/5) / 1e12
+        effectivePowerPerSecond = moneyIsPowerTooSkill ? (knowledge ** (2/5) / 1e12) * (1 + (Math.max(yachtMoney,0) ** (2/5) / 1e12)) : knowledge ** (2/5) / 1e12
     }
 
     // Check if delusion drops below negative 1 trillion to start generating Knowledge
