@@ -614,7 +614,7 @@ const upgrades = [
         img: "imgs/drake_learning.jpg",
     },
     {
-        name: "You get a free pass",
+        name: "Christian Logic",
         cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 1.01e23, hopium: 0, knowledge: 3e13, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 1.01e10, delusionPerSecond: 0, yachtMoneyPerSecond: 3e9, trollPointsPerSecond: 7.5e9, hopiumPerSecond: 0, knowledgePerSecond: 0.3, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/christian_logic.jpg",
