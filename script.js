@@ -71,6 +71,7 @@ let powerUnlocked = false;
 let buyMarkersSkill = false;
 let bigCrunchUnlocked = false;
 let moneyIsPowerTooSkill = false;
+let lessDiminishingGodModeSkill = false;
 
 let numAscensionUpgrades = 1;
 
@@ -496,7 +497,7 @@ function playMiniGame(gameType) {
         let timeout = Math.floor(Math.random() * (maxTimeout - 5 + 1)) + 5; // Random timeout between 5 and maxTimeout seconds
         showMessageModal('Memory Game', `Remember this sequence: ${sequence}`).then(() => {
             setTimeout(() => {
-                showMessageModal('Memory Game', 'Enter the sequence:', false, false, true).then(userSequence => {
+                showMessageModal('Memory Game', 'Enter the sequence:', false, false).then(userSequence => {
                     let correct = userSequence === sequence;
                     let baseReward = correct ? Math.max(Math.floor(Math.abs(delusion) * 0.5), 25) : -Math.max(Math.floor(Math.random() * Math.abs(delusion) * 0.1), 10);
                     let reward = memoryGameSkill ? baseReward * 2 : baseReward; // Double the reward if memoryGameSkill is true
@@ -532,7 +533,7 @@ function playMiniGame(gameType) {
             correctAnswer = eval(question.replace('/', '* 1.0 /')); // Ensure floating point division
         }
 
-        showMessageModal('Math Game', `What is ${question}?  (answer within 0.5 is acceptable)`, false, false, true).then(answer => {
+        showMessageModal('Math Game', `What is ${question}?  (answer within 0.5 is acceptable)`, false, false).then(answer => {
             let isCorrect = Math.abs(Number(answer) - correctAnswer) < 0.5;
             let reward;
             if (mathGameSkill) {
@@ -754,6 +755,7 @@ async function restartGame(isPrestige = false) {
             cookieBoost = false;
             bigCrunchUnlocked = false;
             moneyIsPowerTooSkill = false;
+            lessDiminishingGodModeSkill = false;
 
             powerUnlocked = false;
             document.getElementById('power-container').style.display = 'none';
@@ -1024,19 +1026,8 @@ function NumberStandard(Num, Fixed = 2, EXPONENT_LIMIT = 3) {
 
 
 function customRound(number, digits) {
-
-    // Convert the number to a string
-    let numStr = number.toString();
-    // Find the position of the decimal point
-    let decimalIndex = numStr.indexOf('.');
-    
-    // If there is no decimal point or the number of digits is already less than or equal to the specified digits
-    if (decimalIndex === -1 || numStr.length - decimalIndex - 1 <= digits) {
-        return numStr; // Return the original number as a string
-    }
-    
-    // If the number has more digits than the specified digits, round it
-    return number.toFixed(digits);
+    const factor = Math.pow(10, digits);
+    return Math.round(number * factor) / factor;
 }
 
 function formatNumber(num) {
@@ -1206,8 +1197,9 @@ function canBigCrunch() {
 
 function calculateGodModeMultiplier(gmLevlel = godModeLevel) {
     let productX = 1; // Initialize the product to 1 for the first element
+    const diminishFactor = lessDiminishingGodModeSkill ? 0.985 : 0.975
     for (let i = 0; i < gmLevlel; i++) {
-        let xi = 1 + 0.25 * Math.pow(0.975, i); // Calculate xi
+        let xi = 1 + 0.25 * Math.pow(diminishFactor, i); // Calculate xi
         productX *= xi; // Multiply the current xi to the cumulative product
     }
     return productX
@@ -1867,14 +1859,15 @@ document.addEventListener('keydown', (event) => {
 });
 
 
-function showMessageModal(title, message, isConfirm = false, isUpgradeSelection = false) {
+function showMessageModal(title, message, isConfirm = false, isUpgradeSelection = false, imageName = null) {
     return new Promise((resolve, reject) => {
-        modalQueue.push({ title, message, isConfirm, isUpgradeSelection, resolve, reject });
+        modalQueue.push({ title, message, isConfirm, isUpgradeSelection, imageName, resolve, reject });
         if (!isModalOpen) {
             displayNextModal();
         }
     });
 }
+
 
 function displayNextModal() {
     if (modalQueue.length === 0) {
@@ -1891,16 +1884,26 @@ function displayNextModal() {
     const modalCancelButton = document.getElementById('modalCancelButton');
     const modalTitle = document.getElementById('modalTitle');
     const modalMessage = document.getElementById('modalMessage');
+    const modalImage = document.getElementById('modalImage'); // Add an image element in your HTML
     const ascendUpgradeSelection = document.getElementById('ascendUpgradeSelection');
     const ascendUpgradeList = document.getElementById('ascendUpgradeList');
     const gameInputSection = document.getElementById('gameInputSection');
     const gameInput = document.getElementById('gameInput');
     const submitGameInputButton = document.getElementById('submitGameInputButton');
 
-    const { title, message, isConfirm, isUpgradeSelection, resolve } = modalQueue.shift();
+
+    const { title, message, isConfirm, isUpgradeSelection, imageName, resolve } = modalQueue.shift();
 
     modalTitle.textContent = title || '';
     modalMessage.innerHTML = message || '';
+
+    if (imageName) {
+        modalImage.src = imageName; // Set the image source
+        modalImage.style.display = 'block'; // Ensure the image is visible
+    } else {
+        modalImage.style.display = 'none'; // Hide the image if none is provided
+    }
+
     modal.style.display = 'block';
 
     const closeModal = (result) => {

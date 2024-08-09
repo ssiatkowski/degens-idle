@@ -15,8 +15,9 @@ const librarySkills = [
     // { name: '', cost: 1e19, description: '', unlocked: false, level: 'Science' },
 
     { name: 'Prestige Base', cost: 5000, description: 'Increase Base prestige multiplier from 1.5 to 1.75. Huuge.', unlocked: false, level: 'Nonlinear Partial Differential Equations' },
-    { name: '2D Ascension', cost: 230000, description: 'Learn how to ascend God Mode Levels while only folding the space around you into two dimensions. Mathematically, instead of taking prestige chaing to x**(1/3), it changes to x**(2/3).', unlocked: false, level: 'Nonlinear Partial Differential Equations' },
-    
+    { name: '2D Ascension', cost: 230000, description: 'Learn how to ascend God Mode Levels while only folding the space around you into two dimensions. Mathematically, instead of prestige changing to x**(1/3), it changes to x**(2/3).', unlocked: false, level: 'Nonlinear Partial Differential Equations' },
+    { name: 'Less Diminishing God-Mode', cost: 9.75e13, description: 'Decrease diminishing returns at higher God-Mode levels. Mathematically, instead of diminishing at 97.5%, the multiplier dimninishes at 98.5%. (This is big at high god-mode levels)', unlocked: false, level: 'Nonlinear Partial Differential Equations' },
+   
 
     { name: 'Multibuy Upgrades', cost: 2, description: 'Unlock "Buy Seen" and "Buy Max" buttons for Upgrades.', unlocked: false, level: 'Artificial Intelligence' },
     { name: 'Cookie Clicker Clicker', cost: 75, description: 'After Prestiging or Ascending, automatically click the cookie 10 times per second for 15 seconds.', unlocked: false, level: 'Artificial Intelligence' },
@@ -30,10 +31,13 @@ const librarySkills = [
     { name: 'Big Crunch', cost: 8e11, description: 'Unlock ability to force the universe into a Big Crunch and to be reborn anew.', unlocked: false, level: 'Celestial Bodies' },
     { name: 'Money is Power, too', cost: 1e18, description: 'Add a multiplier to Power generation based on Yacht Money.', unlocked: false, level: 'Celestial Bodies' },
 
-    // { name: 'What is this? (not implemented yet)', cost: 1e25, description: 'EZ Game', unlocked: false, level: '???' },
+    { name: 'The Omniverse', cost: 1e50, description: 'Stop cheating. This does not exist yet.', unlocked: false, level: '???' },
     // { name: 'Serenity', cost: 1e25, description: '', unlocked: false, level: '???' },
-    // { name: '', cost: 1e29, description: '', unlocked: false, level: '???' },
-    // { name: '', cost: 1e33, description: '', unlocked: false, level: '???' },
+    // { name: 'The Kaleidoscope of Consciousness', cost: 1e29, description: '', unlocked: false, level: '???' },
+    // { name: 'The Void of Non-Existence', cost: 1e33, description: '', unlocked: false, level: '???' },
+    // { name: 'The Infinite Fractal', cost: 1e33, description: '', unlocked: false, level: '???' },
+    // { name: 'The Quantum Symphony', cost: 1e33, description: '', unlocked: false, level: '???' },
+
 
     // Add more skills as needed
 ];
@@ -101,12 +105,28 @@ function unlockLibrarySkill(skill, duringLoad = false) {
                 
             case 'Prestige Base':
                 prestigeBaseSkill = true;
+                if (!duringLoad) {
+                    showMessageModal('Prestige Base', 'Graph shows the Prestige Multiplier scaling with 1.5 base vs 1.75 base. This difference become huge later in the game. When your min resource is at 1Qi that is already 10x difference and only increases exponentially form there!', false, false, 'imgs/graphs/prestige_base.png')
+                }
                 break;
             
             case '2D Ascension':
                 twoDimensionalAscensionSkill = true;
+                if (!duringLoad) {
+                    showMessageModal('2D Ascension', 'Cube root was rough! Now you at least get some prestige mult left after ascending.', false, false, 'imgs/graphs/2d_ascension.png')
+                }
                 break;
                         
+            case 'Less Diminishing God-Mode':
+                lessDiminishingGodModeSkill = true;
+                if (!duringLoad) {
+                    showMessageModal('Less Diminishing God-Mode', 'Graph shows the God-Mode Multiplier scaling when diminishing at 97.5% vs 98.5%. As you can see, at higher God-Mode levels this makes a huge difference! The multiplier is already 2 orders of magnitude greater at God-Mode Level 150.', false, false, 'imgs/graphs/gm_diminishing.png')
+                }
+                godModeMultiplier = calculateGodModeMultiplier(godModeLevel);
+                updateMultipliersDisplay();
+                updateEffectiveMultipliers();
+                break;
+                
             case 'Multibuy Upgrades':
                 multibuyUpgradesSkill = true;
                 initializeBuyButtons();
