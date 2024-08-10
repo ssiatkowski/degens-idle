@@ -163,10 +163,10 @@ const upgrades = [
         img: "imgs/luigis_idol.png",
     },
     {
-        name: "Peaceful Round of Golf",
+        name: "What Other Multiplier?",
         cost: { copium: 3500, delusion: 7500, yachtMoney: 8000, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: -30, delusionPerSecond: 20, yachtMoneyPerSecond: 0, trollPointsPerSecond: 65, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
-        img: "imgs/andrew_tate.jpg",
+        img: "imgs/mocking_spongebob.jpg",
     },
     {
         name: "I don't get this game",
@@ -365,6 +365,12 @@ const upgrades = [
                     </p>
                 </div>`
     },  
+    {
+        name: "Degens Idle Dev",
+        cost: { copium: 5e11, delusion: 0, yachtMoney: 0, trollPoints: 3e11, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
+        earnings: { copiumPerSecond: 600000, delusionPerSecond: 0, yachtMoneyPerSecond: 50000, trollPointsPerSecond: 0, hopiumPerSecond: 0.004, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: "imgs/most_interesting_man.jpg",
+    },
     {
         name: "Don't fuck this up Netflix",
         cost: { copium: 0, delusion: 8e10, yachtMoney: 4e11, trollPoints: 0, hopium: 2000, knowledge: 0, power: 0, serenity: 0 },
@@ -647,7 +653,19 @@ const upgrades = [
         hoverOverwrite: "Can you feel the quantum entanglement?",
         message: "Through meticulous exploration and relentless curiosity, you've uncovered a mind-bending revelation: your universe is quantum entangled with another. These parallel universes, though they coexist with minimal interaction, are now within your reach to manipulate. By ascending to god-mode in this parallel universe, you can harness the power of quantum entanglement, effectively amplifying your multiplier and enhancing your upgrades in your own universe—all without the need to Big Crunch your current reality.<br><br>Transcendence isn’t just a step forward; it’s a leap across the very fabric of reality itself. Are you ready to transcend the limits of one universe and unlock the boundless potential of two?",
     },
+    {
+        name: "Degens Idle Dev #2",
+        cost: { copium: 5e27, delusion: 5e27, yachtMoney: 5e27, trollPoints: 5e27, hopium: 5e21, knowledge: 5e18, power: 5e-3, serenity: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 1e14, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 80, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: "imgs/most_interesting_man_2.jpg",
+    },
     
+    // {
+    //     name: "Peaceful Round of Golf",
+    //     cost: { copium: 3500, delusion: 7500, yachtMoney: 8000, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
+    //     earnings: { copiumPerSecond: -30, delusionPerSecond: 20, yachtMoneyPerSecond: 0, trollPointsPerSecond: 65, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+    //     img: "imgs/andrew_tate.jpg",
+    // },
     // {
     //     name: "His Power Level is...",
     //     cost: { copium: 500, delusion: 0, yachtMoney: 250, trollPoints: 700, hopium: 0, knowledge: 0, power: 0, serenity: 0 },

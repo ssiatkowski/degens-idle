@@ -319,8 +319,9 @@ button.affordable-double-godmode:hover {
     }
 }
 
-
-
+#upgrades {
+    text-align: center; /* Centers the h2 text */
+}
 
 button:disabled {
     background-color: #333; /* Darker gray */
@@ -359,13 +360,9 @@ button.collect-button:active, button.game-button:active {
     gap: 10px;
 }
 
-#specialUpgrades, #purchasedUpgrades {
+#purchasedUpgrades {
     margin-top: 20px;
     text-align: center;
-}
-
-#specialUpgrades {
-    width: 300px; /* Adjust as needed for your layout */
 }
 
 button.disabled {
@@ -512,6 +509,7 @@ button.disabled {
 /* Container for the multibuy buttons */
 .multibuy-buttons-container {
     display: flex;
+    justify-content: center; /* Centers the buttons horizontally */
     flex-wrap: nowrap; /* Ensure buttons do not wrap to the next line */
     gap: 10px; /* Optional: add some space between buttons */
 }
@@ -561,7 +559,7 @@ button.disabled {
     }
 
     /* Adjust the width of the upgrade sections */
-    #specialUpgrades, #purchasedUpgrades, #right-section {
+    #purchasedUpgrades, #right-section {
         width: 100%; /* Full width on mobile */
     }
 
