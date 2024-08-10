@@ -271,6 +271,57 @@ button.affordable-godmode:hover {
     box-shadow: 0 0 15px #1e90ff, 0 0 30px #00bfff; /* Brighter blue shadow on hover */
 }
 
+/* Purple God Mode Affordable Button */
+button.affordable-pu-godmode {
+    background-color: #8e44ad; /* Purple */
+    color: white;
+    border: 2px solid #b565c8; /* Light Purple */
+    box-shadow: 0 0 10px #8e44ad, 0 0 20px #b565c8; /* Purple shadow for glow effect */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+button.affordable-pu-godmode:hover {
+    background-color: #7d3c98; /* Slightly darker Purple */
+    box-shadow: 0 0 15px #8e44ad, 0 0 30px #b565c8; /* Brighter purple shadow on hover */
+}
+
+/* Blue and Purple God Mode Affordable Button with Animated Wave Glow */
+button.affordable-double-godmode {
+    background: linear-gradient(45deg, #1e90ff, #8e44ad); /* Gradient from Blue to Purple */
+    color: white;
+    border: 2px solid #4b6cb7; /* A mix between blue and purple for the border */
+    box-shadow: 0 0 20px #1e90ff, 0 0 20px #8e44ad, 0 0 30px #4b6cb7; /* Blue and Purple shadow for glow effect */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    animation: waveGlow 2s infinite linear; /* Wave-like glow animation */
+}
+
+button.affordable-double-godmode:hover {
+    background: linear-gradient(45deg, #1c86ee, #7d3c98); /* Slightly darker gradient on hover */
+    box-shadow: 0 0 25px #1e90ff, 0 0 25px #8e44ad, 0 0 40px #4b6cb7; /* Brighter blue and purple shadow on hover */
+}
+
+/* Keyframes for Wave-Like Glow Animation */
+@keyframes waveGlow {
+    0% {
+        box-shadow: -20px 0 30px #1e90ff, 20px 0 30px #8e44ad, 0 0 40px #4b6cb7;
+    }
+    25% {
+        box-shadow: 0 -20px 30px #1e90ff, 0 20px 30px #8e44ad, 0 0 40px #4b6cb7;
+    }
+    50% {
+        box-shadow: 20px 0 30px #1e90ff, -20px 0 30px #8e44ad, 0 0 40px #4b6cb7;
+    }
+    75% {
+        box-shadow: 0 20px 30px #1e90ff, 0 -20px 30px #8e44ad, 0 0 40px #4b6cb7;
+    }
+    100% {
+        box-shadow: -20px 0 30px #1e90ff, 20px 0 30px #8e44ad, 0 0 40px #4b6cb7;
+    }
+}
+
+
+
+
 button:disabled {
     background-color: #333; /* Darker gray */
     color: #666; /* Darker text */
@@ -355,6 +406,10 @@ button.disabled {
     color: #1e90ff; /* Example style for God Mode earnings */
 }
 
+.upgradeTooltip .pu-godmode-earnings {
+    color: #8E44AD; /* Example style for God Mode earnings */
+}
+
 .upgrade-button-container {
     position: relative;
 }
@@ -433,8 +488,25 @@ button.disabled {
 
 /* Blue glow for God Mode Purchased Upgrades */
 .purchased-upgrade-godmode img {
-    box-shadow: 0 0 40px #1e90ff, 0 0 80px #00bfff; /* Blue shadow for glow effect */
-    border: 5px solid #00bfff; /* DeepSkyBlue */
+    box-shadow: 0 0 20px #1e90ff, 0 0 50px #00bfff; /* Blue shadow for glow effect */
+    border: 3px solid #00bfff; /* DeepSkyBlue */
+}
+/* Purple glow for Parallel Universe God Mode Purchased Upgrades */
+.purchased-upgrade-pu-godmode img {
+    box-shadow: 0 0 20px #8e44ad, 0 0 50px #b565c8; /* Purple shadow for glow effect */
+    border: 3px solid #b565c8; /* Light purple border */
+}
+/* Half Purple, Half Blue Glow for Double God Mode Purchased Upgrades */
+.purchased-upgrade-double-godmode img {
+    box-shadow: 
+        0 0 40px #8e44ad, /* Purple glow */
+        0 0 40px #1e90ff, /* Blue glow */
+        0 0 80px #b565c8, /* Light purple glow */
+        0 0 80px #00bfff; /* Light blue glow */
+    border: 5px solid;
+    border-image: linear-gradient(45deg, #8e44ad, #1e90ff);
+    border-image-slice: 1; /* To apply the gradient to the border */
+    animation: waveGlow 2s infinite linear; /* Wave-like glow animation */
 }
 
 /* Container for the multibuy buttons */
@@ -531,7 +603,7 @@ button.disabled {
 }
 
 .ascend-upgrade-item {
-    background-color: #4CAF50; /* Green */
+    background-color: #4b4d4b; /* Gray */
     color: white;
     border: 2px solid #fff;
     padding: 10px;
@@ -545,33 +617,16 @@ button.disabled {
     transform: scale(1.1);
 }
 
-.ascend-upgrade-item.selected {
-    background-color: #3672f4; /* Red */
+.ascend-upgrade-item.selected, .ascend-upgrade-item.is-godmode.selected, .ascend-upgrade-item.is-pugodmode.selected {
+    background-color: #4CAF50; /* Green */
 }
 
-/* Prestige Button Styling */
-#prestigeButton {
-    display: block;
-    margin: 20px auto; /* Center horizontally */
-    background-color: #f39c12; /* Noticeable background color */
-    color: white;
-    border: none;
-    padding: 15px 30px; /* Larger padding for a bigger button */
-    font-size: 18px; /* Larger font size */
-    font-weight: bold; /* Bold text */
-    cursor: pointer;
-    border-radius: 10px; /* Rounded corners */
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Add a shadow for depth */
-    transition: transform 0.3s ease, background-color 0.3s ease; /* Smooth transitions */
+.ascend-upgrade-item.is-godmode {
+    background-color: #1E90FF; /* Blue for God-Mode */
 }
 
-#prestigeButton:hover {
-    background-color: #e67e22; /* Slightly darker on hover */
-    transform: scale(1.1); /* Slightly larger on hover */
-}
-
-#prestigeButton:active {
-    transform: scale(1.05); /* Slightly smaller on click */
+.ascend-upgrade-item.is-pugodmode {
+    background-color: #8E44AD; /* Purple for Parallel Universe God-Mode */
 }
 
 .prestige-multiplier-text {
@@ -659,77 +714,83 @@ button.disabled {
     }
 }
 
-#ascendButton {
+/* Common Custom Button Styling */
+.custom-button {
     display: block;
-    margin: 20px auto; /* Center horizontally */
-    background-color: #1e90ff; /* Blue background */
-    color: white;
-    border: none;
-    padding: 15px 30px; /* Larger padding for a bigger button */
-    font-size: 18px; /* Larger font size */
-    font-weight: bold; /* Bold text */
+    margin: 10px auto;
+    padding: 12px 0px;
+    width: 100%;
+    font-weight: bold;
     cursor: pointer;
-    border-radius: 10px; /* Rounded corners */
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Add a shadow for depth */
-    transition: transform 0.3s ease, background-color 0.3s ease; /* Smooth transitions */
-}
-
-#ascendButton:hover {
-    background-color: #1c86ee; /* Slightly darker on hover */
-    transform: scale(1.1); /* Slightly larger on hover */
-}
-
-#ascendButton:active {
-    transform: scale(1.05); /* Slightly smaller on click */
-}
-
-#transcendButton {
-    display: block;
-    margin: 20px auto; /* Center horizontally */
-    background-color: #8e44ad; /* Purple background */
-    color: white;
+    border-radius: 12px;
     border: none;
-    padding: 15px 30px; /* Larger padding for a bigger button */
-    font-size: 18px; /* Larger font size */
-    font-weight: bold; /* Bold text */
-    cursor: pointer;
-    border-radius: 10px; /* Rounded corners */
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Add a shadow for depth */
-    transition: transform 0.3s ease, background-color 0.3s ease; /* Smooth transitions */
-}
-
-#transcendButton:hover {
-    background-color: #7d3c98; /* Slightly darker on hover */
-    transform: scale(1.1); /* Slightly larger on hover */
-}
-
-#transcendButton:active {
-    transform: scale(1.05); /* Slightly smaller on click */
-}
-
-#bigCrunchButton {
-    display: block;
-    margin: 20px auto; /* Center horizontally */
-    background-color: #ff6347; /* Cool red background */
     color: white;
-    border: none;
-    padding: 15px 30px; /* Larger padding for a bigger button */
-    font-size: 18px; /* Larger font size */
-    font-weight: bold; /* Bold text */
-    cursor: pointer;
-    border-radius: 10px; /* Rounded corners */
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Add a shadow for depth */
-    transition: transform 0.3s ease, background-color 0.3s ease; /* Smooth transitions */
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(145deg, #fff, #f0f0f0);
+    white-space: nowrap; /* Prevents text from wrapping */
+    overflow: hidden; /* Ensures text does not overflow */
+    text-overflow: ellipsis; /* Adds an ellipsis (...) if the text is too long */
 }
 
-#bigCrunchButton:hover {
-    background-color: #ff4500; /* Slightly darker on hover */
-    transform: scale(1.1); /* Slightly larger on hover */
+.custom-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
-#bigCrunchButton:active {
-    transform: scale(1.05); /* Slightly smaller on click */
+.custom-button:active {
+    transform: translateY(1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+
+/* Prestige Button Styling */
+#prestigeButton.custom-button {
+    background-color: #f39c12;
+    background: linear-gradient(145deg, #f5a623, #f39c12); /* Subtle gradient */
+}
+
+#prestigeButton.custom-button:hover {
+    background-color: #e67e22;
+    background: linear-gradient(145deg, #e68422, #e67e22);
+}
+
+/* Ascend Button Styling */
+#ascendButton.custom-button {
+    background-color: #1e90ff;
+    background: linear-gradient(145deg, #1f9bff, #1e90ff);
+}
+
+#ascendButton.custom-button:hover {
+    background-color: #1c86ee;
+    background: linear-gradient(145deg, #1d92ee, #1c86ee);
+}
+
+/* Transcend Button Styling */
+#transcendButton.custom-button {
+    background-color: #8e44ad;
+    background: linear-gradient(145deg, #9449b3, #8e44ad);
+}
+
+#transcendButton.custom-button:hover {
+    background-color: #7d3c98;
+    background: linear-gradient(145deg, #84419e, #7d3c98);
+}
+
+/* Big Crunch Button Styling */
+#bigCrunchButton.custom-button {
+    background-color: #ff6347;
+    background: linear-gradient(145deg, #ff7155, #ff6347);
+}
+
+#bigCrunchButton.custom-button:hover {
+    background-color: #ff4500;
+    background: linear-gradient(145deg, #ff5222, #ff4500);
+}
+
+
 
 .god-mode-text {
     font-size: 1.5em;

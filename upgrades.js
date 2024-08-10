@@ -279,7 +279,7 @@ const upgrades = [
     {
         name: "Hunt for Hussein",
         cost: { copium: 10000000, delusion: 10000000, yachtMoney: 10000000, trollPoints: 10000000, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 350000, delusionPerSecond: 120000, yachtMoneyPerSecond: 0, trollPointsPerSecond: 240000, hopiumPerSecond: -0.1, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 450000, delusionPerSecond: 220000, yachtMoneyPerSecond: 0, trollPointsPerSecond: 340000, hopiumPerSecond: -0.1, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/obama.jpg",
         message: "Desperate to eliminate the ruthless terrorist Saddam <b>Hussein</b>, you hire a team of elite hitmen. The mission seems straightforward until a devastating mistake changes everything.<br>The hitmen, due to a grave error, confuse their target with Barrack <b>Hussein</b> Obama, a prominent humanitarian and beacon of hope in the war-torn region. When the news breaks that Obama has been assassinated, the world plunges into despair. The humanitarian's death leaves a void, extinguishing the hope he brought to countless lives.<br>As you watch the consequences of this tragic error unfold, you grapple with guilt and the profound realization that sometimes, the lines between good and evil blur. The game takes you on a journey of redemption as you strive to undo the damage and restore hope to a world teetering on the brink of darkness.",
         hoverOverwrite: "Think about this one",
@@ -457,7 +457,7 @@ const upgrades = [
     {
         name: "Free Trial",
         cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 2e11, knowledge: 25000, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 9.7e6, delusionPerSecond: 0, yachtMoneyPerSecond: 1.77e6, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0.000014, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 9.7e6, delusionPerSecond: 0, yachtMoneyPerSecond: 1.77e6, trollPointsPerSecond: 0, hopiumPerSecond: 2, knowledgePerSecond: 0.000014, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/free_trial.jpg",
     },
     {
@@ -481,7 +481,7 @@ const upgrades = [
     },
     {
         name: "NGU Idle",
-        cost: { copium: 8e17, delusion: 4e17, yachtMoney: 4e17, trollPoints: 8e17, hopium: 1e12, knowledge: 6e7, power: 0, serenity: 0 },
+        cost: { copium: 8e17, delusion: 3.5e17, yachtMoney: 3.5e17, trollPoints: 8e17, hopium: 1e12, knowledge: 6e7, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 9.6e7, delusionPerSecond: 4.7e7, yachtMoneyPerSecond: 7.5e7, trollPointsPerSecond: 1.8e8, hopiumPerSecond: 800, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/ngu_idle.jpg",
         message: `Congratulations on unlocking the "NGU Idle" upgrade! This upgrade is a tribute to one of the greatest idle games ever. NGU Idle, known for its deep mechanics and quirky humor, has set a high standard in the idle game genre.<br><br>Here's to celebrating a game that has set a high bar for idle games everywhere. Enjoy the nostalgia and the boost it brings to your Degens Idle journey -- you may now watch all your Numbers Go Up!`,
@@ -500,7 +500,7 @@ const upgrades = [
     },
     {
         name: "Honest Work",
-        cost: { copium: 0, delusion: 0, yachtMoney: 1.6e18, trollPoints: 0, hopium: 4.4e13, knowledge: 2.25e8, power: 0, serenity: 0 },
+        cost: { copium: 0, delusion: 0, yachtMoney: 1.6e18, trollPoints: 0, hopium: 4.3e13, knowledge: 2.25e8, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 5.1e6, delusionPerSecond: 1.95e7, yachtMoneyPerSecond: 5.3e6, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0.00036, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/honest_work.jpg",
     },
@@ -517,7 +517,7 @@ const upgrades = [
         img: "imgs/mcdonalds.jpg",
     },
     {
-        name: "Time for Careful Planning",
+        name: "Careful Planning Time",
         cost: { copium: 3e19, delusion: 1.4e19, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 3.1e8, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: -1e7, trollPointsPerSecond: 3.4e8, hopiumPerSecond: 2500, knowledgePerSecond: 0.00095, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/leeroy_jenkins.jpg",
@@ -545,7 +545,7 @@ const upgrades = [
         cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 1, serenity: 0 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: -25000, knowledgePerSecond: 100, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/impossible.jpg",
-        message: `Lol, cheater! Instead of cheating why don't you hop in discord and suggest future memes!`,
+        // message: `Lol, cheater! Instead of cheating why don't you hop in discord and suggest future memes!`,
 
     },
     {
@@ -559,7 +559,7 @@ const upgrades = [
         cost: { copium: 3e19, delusion: 3e19, yachtMoney: 3e19, trollPoints: 3e19, hopium: 3e14, knowledge: 0, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: -1e12, delusionPerSecond: -1e12, yachtMoneyPerSecond: -1e12, trollPointsPerSecond: -1e12, hopiumPerSecond: -1e7, knowledgePerSecond: 10, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/mosquito.jpg",
-        hoverOverwrite: "DO NOT BUY THIS UPGRADE, I REPEAT, DO NOT BUY THIS UPGRADE",
+        hoverOverwrite: "DO NOT BUY THIS UPGRADE UNLESS YOU ARE ABSOLUTELY CERTAIN YOU CAN HANDLE IT",
         message: `WHY? Why did you buy this upgrade? I explicitly told you not to. Now, mosquitoes are a part of your universe. Seriously, what were you thinking? These little bloodsuckers are everywhere now, and let me tell you, no good can come from that. Enjoy the endless itching and buzzing in your ears at night. If you ever get a chance for a do-over, hopefully, you’ll have learned your lesson. Until then, welcome to Mosquito Madness!`,
     },
     {
@@ -644,8 +644,8 @@ const upgrades = [
         cost: { copium: 2.5e25, delusion: 2.5e25, yachtMoney: 2.5e25, trollPoints: 2.5e25, hopium: 2.5e19, knowledge: 2.5e16, power: 2.5e-4, serenity: 0 },
         earnings: { copiumPerSecond: 1, delusionPerSecond: 1, yachtMoneyPerSecond: 1, trollPointsPerSecond: 1, hopiumPerSecond: 1, knowledgePerSecond: 1, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/transcendence.jpg",
-        hoverOverwrite: "You can feel the quantum entanglement",
-        message: "TBD",
+        hoverOverwrite: "Can you feel the quantum entanglement?",
+        message: "Through meticulous exploration and relentless curiosity, you've uncovered a mind-bending revelation: your universe is quantum entangled with another. These parallel universes, though they coexist with minimal interaction, are now within your reach to manipulate. By ascending to god-mode in this parallel universe, you can harness the power of quantum entanglement, effectively amplifying your multiplier and enhancing your upgrades in your own universe—all without the need to Big Crunch your current reality.<br><br>Transcendence isn’t just a step forward; it’s a leap across the very fabric of reality itself. Are you ready to transcend the limits of one universe and unlock the boundless potential of two?",
     },
     
     // {

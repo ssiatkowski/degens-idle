@@ -19,14 +19,6 @@ let serenityPerSecond = 0;
 
 let numberFormatType = 0;
 
-//cooldowns for mini games
-let cooldowns = {
-    copium: false,
-    delusion: false,
-    yachtMoney: false,
-    trollPoints: false
-};
-
 let effectiveCopiumPerSecond = 0;
 let effectiveDelusionPerSecond = 0;
 let effectiveYachtMoneyPerSecond = 0;
@@ -52,7 +44,6 @@ let bigCrunchMultiplier = 1;
 let totalMultiplier = 1;
 
 let firstTimePrestigeButtonAvailable = true; // Default to true, will be updated based on saved state
-let firstTimeCookieUnlock = true;
 
 let modalQueue = [];
 let isModalOpen = false;
@@ -73,11 +64,23 @@ let buyMarkersSkill = false;
 let bigCrunchUnlocked = false;
 let moneyIsPowerTooSkill = false;
 let lessDiminishingGodModeSkill = false;
+let lessDiminishingPUGodModeSkill = false;
+
+let transcendenceUnlocked = false;
 
 let numAscensionUpgrades = 1;
+let numPUAscensionUpgrades = 2;
 
 let improvedTradeRatio = false;
 let cookieBoost = false;
+
+//cooldowns for mini games
+let cooldowns = {
+    copium: false,
+    delusion: false,
+    yachtMoney: false,
+    trollPoints: false
+};
 
 // Mini-game timeouts in milliseconds
 const miniGameTimeouts = {
@@ -171,6 +174,10 @@ function loadGameState() {
     // Load the first time prestige button available flag
     firstTimePrestigeButtonAvailable = JSON.parse(localStorage.getItem('firstTimePrestigeButtonAvailable')) || true;
 
+    transcendenceUnlocked = JSON.parse(localStorage.getItem('transcendenceUnlocked')) || false;
+    console.log(`After Load, transcendenceUnlocked = ${transcendenceUnlocked}`)
+    if (transcendenceUnlocked) { document.getElementById('pu-god-display').style.display = 'block'; } 
+
     // Retrieve and parse all upgrades with the isGodMode property from local storage
     const savedUpgrades = JSON.parse(localStorage.getItem('upgrades')) || [];
     
@@ -179,6 +186,7 @@ function loadGameState() {
         const savedUpgrade = savedUpgrades.find(up => up.name === upgrade.name);
         if (savedUpgrade) {
             upgrade.isGodMode = savedUpgrade.isGodMode;
+            upgrade.isPUGodMode = savedUpgrade.isPUGodMode;
         }
     });
 
@@ -194,10 +202,9 @@ function loadGameState() {
     // Reapply the purchased upgrades and handle any special cases (e.g., "Cookie Clicker")
     purchasedUpgrades.forEach(upgrade => {
         if (upgrade) {
-            addPurchasedUpgrade(upgrade.img, upgrade.name, upgrade.earnings, upgrade.isGodMode, upgrade.message);
+            addPurchasedUpgrade(upgrade.img, upgrade.name, upgrade.earnings, upgrade.isGodMode, upgrade.isPUGodMode, upgrade.message);
             if (upgrade.name === "Cookie Clicker") {
                 document.getElementById('cookieButton').style.display = 'block';
-                firstTimeCookieUnlock = false; // Indicate that the cookie button has been previously unlocked
             }
         }
     });
@@ -214,8 +221,6 @@ function loadGameState() {
             cookieTooltip.textContent = `Each cookie click counts as ${cookieClickMultiplier} clicks on collect buttons for Copium, Delusion, Yacht Money, and Troll Points!`;
         }
     }
-    
-    luckGameDelta = JSON.parse(localStorage.getItem('luckGameDelta')) || -75;
 
     // Check if Knowledge is already unlocked
     if (localStorage.getItem('knowledgeUnlocked') === 'true') {
@@ -312,7 +317,8 @@ function saveGameState() {
     // Save all upgrades with the isGodMode property
     localStorage.setItem('upgrades', JSON.stringify(upgrades.map(upgrade => ({
         name: upgrade.name,
-        isGodMode: upgrade.isGodMode || false
+        isGodMode: upgrade.isGodMode || false,
+        isPUGodMode: upgrade.isPUGodMode || false
     }))));
     
     // Save the purchased upgrades
@@ -325,8 +331,7 @@ function saveGameState() {
     localStorage.setItem('cookieButtonVisible', document.getElementById('cookieButton').style.display === 'block');
     localStorage.setItem('cookieClickMultiplier', cookieClickMultiplier);
 
-    localStorage.setItem('luckGameDelta', luckGameDelta);
-    
+    localStorage.setItem('transcendenceUnlocked', transcendenceUnlocked);
     
     localStorage.setItem('knowledgeUnlocked', knowledgeUnlocked);
 
@@ -355,7 +360,7 @@ function hideTooltip() {
 }
 
 // Function to show tooltip
-function showTooltip(event, name, earnings, isGodMode, hoverOverwrite) {
+function showTooltip(event, earnings, isGodMode, isPUGodMode, hoverOverwrite) {
     let tooltip = document.getElementById('upgradeTooltip');
     if (!tooltip) {
         tooltip = document.createElement('div');
@@ -364,7 +369,8 @@ function showTooltip(event, name, earnings, isGodMode, hoverOverwrite) {
         document.body.appendChild(tooltip);
     }
 
-    const earningsClass = isGodMode ? 'godmode-earnings' : '';
+    let earningsClass = isGodMode ? 'godmode-earnings' : '';
+    earningsClass = isPUGodMode ? 'pu-godmode-earnings' : earningsClass;
 
     if (hoverOverwrite){
         tooltip.innerHTML = `
@@ -379,7 +385,7 @@ function showTooltip(event, name, earnings, isGodMode, hoverOverwrite) {
         tooltip.innerHTML = `
             <div>
                 <div class="upgrade-earnings ${earningsClass}">
-                    ${formatCostOrEarnings(earnings)} <!-- Formatted earnings -->
+                    ${formatCostOrEarnings(earnings, isGodMode, isPUGodMode)} <!-- Formatted earnings -->
                 </div>
             </div>
         `;
@@ -704,6 +710,7 @@ async function restartGame(isPrestige = false) {
 
         localStorage.setItem('knowledgeGenerationStarted', 'false');
 
+                
         // Reset ascends and multipliers if it's a full restart
         if (!isPrestige) {
             prestiges = 0;
@@ -719,7 +726,6 @@ async function restartGame(isPrestige = false) {
             // Hide the cookie button
             document.getElementById('cookieButton').style.display = 'none';
             
-            firstTimeCookieUnlock = true;
             // Reset the isGodMode property for all upgrades
             upgrades.forEach(upgrade => {
                 upgrade.isGodMode = false;
@@ -751,21 +757,27 @@ async function restartGame(isPrestige = false) {
             memoryGameSkill = false;
             speedGameSkill = false;
             numAscensionUpgrades = 1;
+            numPUAscensionUpgrades = 2;
             buyMarkersSkill = false;
             improvedTradeRatio = false;
             cookieBoost = false;
             bigCrunchUnlocked = false;
             moneyIsPowerTooSkill = false;
             lessDiminishingGodModeSkill = false;
+            lessDiminishingPUGodModeSkill = false;
+
+            transcendenceUnlocked = false;
 
             powerUnlocked = false;
             document.getElementById('power-container').style.display = 'none';
             
+            document.getElementById('pu-god-display').style.display = 'none';
             document.getElementById('big-crunch-display').style.display = 'none';
 
             // Clear all local storage
             localStorage.clear();
         }
+
 
         const cookieButtonVisible = JSON.parse(localStorage.getItem('cookieButtonVisible'));
         if (cookieButtonVisible && cookieAutoClicker) {
@@ -797,6 +809,8 @@ async function restartGame(isPrestige = false) {
 
         // Start unlock timeouts for mini-games
         unlockMiniGames();
+
+
 
         // Update display
         updateMultipliersDisplay();
@@ -1140,8 +1154,16 @@ function unhideSerenity() {
 function unlockBigCrunch() {
     bigCrunchUnlocked = true;
     document.getElementById('big-crunch-display').style.display = 'block';
-    updateDisplay()
+    updateMultipliersDisplay();
+    updateDisplay();
 }
+
+function unlockTranscendence() {
+    transcendenceUnlocked = true;
+    document.getElementById('pu-god-display').style.display = 'block';
+    saveGameState()
+}
+
 
 // Function to calculate the prestige multiplier based on the lowest of the first four resources
 function calculatePrestigeMultiplier() {
@@ -1212,7 +1234,8 @@ function canAscend() {
 }
 
 function canTranscend() {
-    return purchasedUpgrades.some(upgrade => upgrade.name === "Transcendence");
+    return purchasedUpgrades.some(upgrade => upgrade.name === "Transcendence") &&
+            purchasedUpgrades.some(upgrade => !upgrade.isPUGodMode);
 }
 
 function canBigCrunch() {
@@ -1222,6 +1245,16 @@ function canBigCrunch() {
 function calculateGodModeMultiplier(gmLevlel = godModeLevel) {
     let productX = 1; // Initialize the product to 1 for the first element
     const diminishFactor = lessDiminishingGodModeSkill ? 0.985 : 0.975
+    for (let i = 0; i < gmLevlel; i++) {
+        let xi = 1 + 0.25 * Math.pow(diminishFactor, i); // Calculate xi
+        productX *= xi; // Multiply the current xi to the cumulative product
+    }
+    return productX
+}
+
+function calculatePUGodModeMultiplier(gmLevlel = puGodLevel) {
+    let productX = 1; // Initialize the product to 1 for the first element
+    const diminishFactor = lessDiminishingPUGodModeSkill ? 0.995 : 0.975
     for (let i = 0; i < gmLevlel; i++) {
         let xi = 1 + 0.25 * Math.pow(diminishFactor, i); // Calculate xi
         productX *= xi; // Multiply the current xi to the cumulative product
@@ -1247,7 +1280,7 @@ async function ascend() {
         'God-Mode Ascension',
         `Are you sure you want to enter God-Mode level ${godModeLevel + 1}?<br><br>
         Raising the level of God-Mode requires temporarily folding three dimensions in the space around you to a single point, which will unfortunately reduce your Prestige multiplier to its cube root. Your Prestige multiplier will shrink from <strong>x${formatNumber(epsMultiplier)}</strong> to <strong>x${formatNumber(calculateAscensionEpsMult())}</strong><br><br>
-        On the bright side, your God-Mode multiplier will increase from <strong>x${formatNumber(godModeMultiplier)}</strong> to <strong>x${formatNumber(calculateGodModeMultiplier(godModeLevel+1))}</strong>!<br><br>
+        On the bright side, your God-Mode multiplier will increase from <strong>x${formatNumber(godModeMultiplier)}</strong> to at least <strong>x${formatNumber(calculateGodModeMultiplier(godModeLevel+1))}</strong>!<br><br>
         Additionally, you can ${upgradeText}.`,
         true,
         true
@@ -1275,7 +1308,43 @@ async function ascend() {
 }
 
 
-async function transcend() {}
+async function transcend() {
+    const upgradeText = `select up to ${numPUAscensionUpgrades} upgrades to enhance and increase your Parallel Universe God-Mode multiplier accordingly`;
+    const firstTranscendText = puGodLevel < 1 ? `<span style="color: #FFD700;">Hey it's your intuition again. Transcending does not reset Big Crunch. But Big Crunch resets Transcends. It is recommended to get Big Crunch Multiplier above 10 before going down this path.</span><br><br>` : '';
+    const selectedUpgrades = await showMessageModal(
+        'Parallel Universe God-Mode Ascension',
+        `Are you sure you want to enter Parallel Universe God-Mode level ${puGodLevel + 1}?<br><br>${firstTranscendText}
+        Accessing this new dimension requires temporarily aligning your universe with a parallel one, which will unfortunately reduce your Prestige multiplier the same way that Ascending in your Universe would. Your Prestige multiplier will shrink from <strong>x${formatNumber(epsMultiplier)}</strong> to <strong>x${formatNumber(calculateAscensionEpsMult())}</strong><br><br>
+        On the bright side, your Parallel Universe God-Mode multiplier will increase from <strong>x${formatNumber(puGodMultiplier)}</strong> to at least <strong>x${formatNumber(calculatePUGodModeMultiplier(puGodLevel+2))}</strong>!<br><br>
+        Additionally, you can ${upgradeText}.`,
+        true,
+        true,
+        false,
+        true
+    );
+
+    if (selectedUpgrades) {
+        const upgradesCount = selectedUpgrades.length;
+        console.log(`Selected ${upgradesCount} upgrades`)
+        puGodLevel += upgradesCount;
+        puGodMultiplier = calculatePUGodModeMultiplier(puGodLevel);
+
+        selectedUpgrades.forEach(upgrade => {
+            upgrade.isPUGodMode = true;
+        });
+
+        epsMultiplier = Math.max(calculateAscensionEpsMult(), 1);
+        prestigeRequirement = calculateMinResource();
+        
+        showMessageModal('Transcendence Successful!', `<strong>You have entered Parallel Universe God-Mode Level ${puGodLevel}.</strong><br> Your Parallel Universe God-Mode multiplier is now x${formatNumber(puGodMultiplier)}, your prestige multiplier is x${formatNumber(epsMultiplier)}, and your chosen upgrades are 10x stronger.`);        
+
+
+        restartGame(true); // Use the existing restartGame function with prestige mode
+        // Save game state after transcending
+        saveGameState();
+    }
+}
+
 
 async function bigCrunch() {
 
@@ -1399,7 +1468,8 @@ function buyUpgrade(encodedUpgradeName) {
         serenity -= cost.serenity || 0;
 
         // Increase the per second earnings for each resource, apply God Mode multiplier if applicable
-        const multiplier = upgrade.isGodMode ? 10 : 1;
+        const multiplier = (upgrade.isGodMode && upgrade.isPUGodMode) ? 100 : 
+                   (upgrade.isGodMode || upgrade.isPUGodMode) ? 10 : 1;
         copiumPerSecond += (earnings.copiumPerSecond || 0) * multiplier;
         yachtMoneyPerSecond += (earnings.yachtMoneyPerSecond || 0) * multiplier;
         trollPointsPerSecond += (earnings.trollPointsPerSecond || 0) * multiplier;
@@ -1419,19 +1489,21 @@ function buyUpgrade(encodedUpgradeName) {
         }
 
         // Add the purchased upgrade to the display
-        addPurchasedUpgrade(img, name, earnings, upgrade.isGodMode, upgrade.message);
+        addPurchasedUpgrade(img, name, earnings, upgrade.isGodMode, upgrade.isPUGodMode, upgrade.message);
         // Remove the upgrade from the available upgrades list
         availableUpgrades.splice(availableUpgrades.indexOf(upgrade), 1);
         // Add the upgrade to the purchased upgrades list
         purchasedUpgrades.push(upgrade);
 
         // Special case for unlocking the "Cookie Clicker" upgrade
-        if (name === "Cookie Clicker" && firstTimeCookieUnlock) {
+        if (name === "Cookie Clicker") {
             document.getElementById('cookieButton').style.display = 'block';
-            firstTimeCookieUnlock = false;
-        } else if (name === "Cookie Clicker") {
-            document.getElementById('cookieButton').style.display = 'block';
-        }
+        } 
+
+        // Special case for unlocking the "Transendence" upgrade
+        if (name === "Transcendence") {
+            unlockTranscendence();
+        } 
 
         // Check if the upgrade message has been shown before
         const messageShownUpgrades = JSON.parse(localStorage.getItem('messageShownUpgrades')) || [];
@@ -1450,7 +1522,7 @@ function buyUpgrade(encodedUpgradeName) {
         }
 
         // Special case for the "Still very stupid" upgrade
-        if (name === "Transcendence") {
+        if (name === "Impossible") {
             showMessageModal('Sadly', "This marks the end of v0.811. Your journey through this existential tale is just beginning. You've been amassing power, but the true meaning of transcendence remains a mystery. How could it relate to ascension? Stay tuned, as another big update is just a few days away. If you can't wait, feel free to restart the game and embark on speed runs, or explore alternate strategies. What will you discover next on your path to enlightenment?");
         }
 
@@ -1512,7 +1584,7 @@ function buyAllUpgrades(limit, pressedButton) {
 
 
 // Function to format the cost or earnings of an upgrade for display
-function formatCostOrEarnings(costOrEarnings, isGodMode = false) {
+function formatCostOrEarnings(costOrEarnings, isGodMode = false, isPUGodMode = false) {
     // Abbreviations for resource per second values
     const abbreviations = {
         copiumPerSecond: '<b>C</b>PS',
@@ -1532,7 +1604,8 @@ function formatCostOrEarnings(costOrEarnings, isGodMode = false) {
         if (value !== 0) {
             // Get the display name using abbreviations or capitalize the resource name
             const displayName = abbreviations[resource] || resource.charAt(0).toUpperCase() + resource.slice(1);
-            const adjustedValue = isGodMode ? value * 10 : value;
+            const adjustedValue = (isGodMode && isPUGodMode) ? value * 100 : 
+                      (isGodMode || isPUGodMode) ? value * 10 : value;
             result += `<p>${displayName}: ${formatNumber(adjustedValue)}</p>`; // Format as HTML paragraph
         }
     }
@@ -1541,14 +1614,18 @@ function formatCostOrEarnings(costOrEarnings, isGodMode = false) {
 
 
 // Function to add a purchased upgrade to the display
-function addPurchasedUpgrade(img, name, earnings, isGodMode = false, message = null) {
+function addPurchasedUpgrade(img, name, earnings, isGodMode = false, isPUGodMode = false, message = null) {
     const purchasedList = document.getElementById('purchasedList'); // Get the purchased list container
     const upgradeElement = document.createElement('div'); // Create a new div element
     upgradeElement.classList.add('purchased-upgrade'); // Add the 'purchased-upgrade' class
 
     // Add the God Mode class if applicable
-    if (isGodMode) {
+    if (isGodMode && isPUGodMode) {
+        upgradeElement.classList.add('purchased-upgrade-double-godmode');
+    } else if (isGodMode) {
         upgradeElement.classList.add('purchased-upgrade-godmode');
+    } else if (isPUGodMode) {
+        upgradeElement.classList.add('purchased-upgrade-pu-godmode');
     }
 
     // Set the inner HTML of the new div element
@@ -1563,7 +1640,7 @@ function addPurchasedUpgrade(img, name, earnings, isGodMode = false, message = n
         <div>
             <p class="upgrade-name">${name}</p> <!-- Upgrade name -->
             <div class="upgrade-earnings">
-                ${formatCostOrEarnings(earnings, isGodMode)} <!-- Formatted earnings -->
+                ${formatCostOrEarnings(earnings, isGodMode, isPUGodMode)} <!-- Formatted earnings -->
             </div>
         </div>
     `;
@@ -1597,8 +1674,8 @@ function addPurchasedUpgrade(img, name, earnings, isGodMode = false, message = n
 
             // Add event listener for the switch
             toggleSwitch.addEventListener('change', (event) => {
-                const state = event.target.checked ? 'On' : 'Off';
-                console.log(`Switch for upgrade ${name} set to ${state}`);
+                // const state = event.target.checked ? 'On' : 'Off';
+                // console.log(`Switch for upgrade ${name} set to ${state}`);
                 // Save the switch state to local storage
                 localStorage.setItem(`switchState-${name}`, JSON.stringify(event.target.checked));
             });
@@ -1703,7 +1780,7 @@ function updateUpgradeList() {
 function attachTooltipEvents(button, upgrade) {
     const showTooltipEvent = (event) => {
         event.preventDefault(); // Prevent default behavior (like text selection)
-        showTooltip(event, upgrade.name, upgrade.earnings, upgrade.isGodMode, upgrade.hoverOverwrite);
+        showTooltip(event, upgrade.earnings, upgrade.isGodMode, upgrade.isPUGodMode, upgrade.hoverOverwrite);
     };
     const hideTooltipEvent = (event) => {
         event.preventDefault(); // Prevent default behavior (like text selection)
@@ -1748,16 +1825,23 @@ function updateUpgradeButtons() {
             // Check if the upgrade is affordable based on current resources
             if (isAffordable(upgrade.cost)) {
                 foundAffordableUpgrade = true;
-                if (upgrade.isGodMode) {
+                if (upgrade.isPUGodMode && upgrade.isGodMode) {
+                    button.classList.add('affordable-double-godmode');
+                    button.classList.remove('affordable', 'affordable-godmode', 'affordable-pu-godmode');
+                } else if (upgrade.isPUGodMode) {
+                    button.classList.add('affordable-pu-godmode');
+                    button.classList.remove('affordable', 'affordable-godmode', 'affordable-double-godmode');
+                } else if (upgrade.isGodMode) {
                     button.classList.add('affordable-godmode');
-                    button.classList.remove('affordable');
+                    button.classList.remove('affordable', 'affordable-pu-godmode', 'affordable-double-godmode');
                 } else {
                     button.classList.add('affordable');
-                    button.classList.remove('affordable-godmode');
+                    button.classList.remove('affordable-godmode', 'affordable-pu-godmode', 'affordable-double-godmode');
                 }
             } else {
-                button.classList.remove('affordable', 'affordable-godmode');
+                button.classList.remove('affordable', 'affordable-godmode', 'affordable-pu-godmode', 'affordable-double-godmode');
             }
+            
 
             // Attach event listeners for tooltips
             attachTooltipEvents(button, upgrade);
@@ -1790,7 +1874,8 @@ function initializeBuyButtons() {
             name: "Buy Seen",
             earnings: null,
             isGodMode: false,
-            hoverOverwrite: "Purchase all the affordable visible upgrades"
+            isPUGodMode: false,
+            hoverOverwrite: "Purchase all the 7 visible upgrades (S)"
         });
         buySeenButton.listenersAttached = true;
     }
@@ -1799,7 +1884,8 @@ function initializeBuyButtons() {
             name: "Buy All",
             earnings: null,
             isGodMode: false,
-            hoverOverwrite: "Purchase all upgrades (can be more than 7)"
+            isPUGodMode: false,
+            hoverOverwrite: "Purchase as many upgrade as you can afford (M)"
         });
         buyMaxButton.listenersAttached = true;
     }
@@ -1852,7 +1938,7 @@ async function devAscend() {
 
 // Function to increase prestige multiplier and calculate min resource
 function devIncreasePrestigeMultiplier() {
-    epsMultiplier = epsMultiplier * 1.1;
+    epsMultiplier = epsMultiplier * 1.25;
     prestigeRequirement = calculateMinResource();
     updateMultipliersDisplay();
     updateEffectiveMultipliers();
@@ -1880,18 +1966,31 @@ document.addEventListener('keydown', (event) => {
                 break;
         }
     }
+    else {
+        switch (event.key) {
+            case 'm':
+                if (multibuyUpgradesSkill){
+                    buyAllUpgrades(100, document.getElementById('buyMaxButton'));
+                }
+                break;
+            case 's':
+                if (multibuyUpgradesSkill){
+                    buyAllUpgrades(7, document.getElementById('buyMaxButton'));
+                }
+                break;
+        }
+    }
 });
 
 
-function showMessageModal(title, message, isConfirm = false, isUpgradeSelection = false, imageName = null) {
+function showMessageModal(title, message, isConfirm = false, isUpgradeSelection = false, imageName = null, isTranscend = false) {
     return new Promise((resolve, reject) => {
-        modalQueue.push({ title, message, isConfirm, isUpgradeSelection, imageName, resolve, reject });
+        modalQueue.push({ title, message, isConfirm, isUpgradeSelection, imageName, isTranscend, resolve, reject });
         if (!isModalOpen) {
             displayNextModal();
         }
     });
 }
-
 
 function displayNextModal() {
     if (modalQueue.length === 0) {
@@ -1915,8 +2014,7 @@ function displayNextModal() {
     const gameInput = document.getElementById('gameInput');
     const submitGameInputButton = document.getElementById('submitGameInputButton');
 
-
-    const { title, message, isConfirm, isUpgradeSelection, imageName, resolve } = modalQueue.shift();
+    const { title, message, isConfirm, isUpgradeSelection, imageName, isTranscend, resolve } = modalQueue.shift();
 
     modalTitle.textContent = title || '';
     modalMessage.innerHTML = message || '';
@@ -1967,21 +2065,28 @@ function displayNextModal() {
         let selectedUpgrades = [];
 
         purchasedUpgrades.forEach((upgrade, index) => {
-            if (!upgrade.isGodMode) {
+            const condition = isTranscend ? !upgrade.isPUGodMode : !upgrade.isGodMode;
+            const maxSelectableUpgrades = isTranscend ? numPUAscensionUpgrades : numAscensionUpgrades
+            if (condition) {
                 const upgradeItem = document.createElement('div');
                 upgradeItem.className = 'ascend-upgrade-item';
                 upgradeItem.textContent = upgrade.name;
                 upgradeItem.upgrade = upgrade;
+                if (upgrade.isGodMode) {
+                    upgradeItem.classList.add('is-godmode');
+                } else if (upgrade.isPUGodMode) {
+                    upgradeItem.classList.add('is-pugodmode');
+                }
                 upgradeItem.onclick = () => {
                     if (upgradeItem.classList.contains('selected')) {
                         upgradeItem.classList.remove('selected');
                         selectedUpgrades = selectedUpgrades.filter(up => up !== upgrade);
                     } else {
-                        if (selectedUpgrades.length < numAscensionUpgrades) {
+                        if (selectedUpgrades.length < maxSelectableUpgrades) {
                             upgradeItem.classList.add('selected');
                             selectedUpgrades.push(upgrade);
                         } else {
-                            showImmediateMessageModal(`Not so fast!`, `You can only select ${numAscensionUpgrades} upgrade${numAscensionUpgrades > 1 ? 's' : ''}.`);
+                            showImmediateMessageModal(`Not so fast!`, `You can only select ${maxSelectableUpgrades} upgrade${maxSelectableUpgrades > 1 ? 's' : ''}.`);
                         }
                     }
                 };
@@ -1990,7 +2095,8 @@ function displayNextModal() {
                 attachTooltipEvents(upgradeItem, {
                     name: upgrade.name,
                     earnings: upgrade.earnings,
-                    isGodMode: upgrade.isGodMode
+                    isGodMode: upgrade.isGodMode,
+                    isPUGodMode: upgrade.isPUGodMode
                 });
 
                 ascendUpgradeList.appendChild(upgradeItem);
@@ -2057,6 +2163,7 @@ function displayNextModal() {
         };
     }
 }
+
 
 function showImmediateMessageModal(title, message) {
     const immediateModal = document.getElementById('immediateMessageModal');

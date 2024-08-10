@@ -50,7 +50,6 @@ function outsideDonationClickListener(event) {
     }
 }
 
-// Function to export game state to a file
 function exportSave() {
     const gameState = JSON.stringify({
         copium,
@@ -88,10 +87,8 @@ function exportSave() {
         bigCrunchMultiplier,
         totalMultiplier,
         firstTimePrestigeButtonAvailable,
-        firstTimeCookieUnlock,
         cookieClickMultiplier,
         cookieAutoClicker,
-        luckGameDelta,
         knowledgeUnlocked,
         knowledgeGenerationSkill,
         prestigeBaseSkill,
@@ -105,9 +102,14 @@ function exportSave() {
         improvedTradeRatio,
         cookieBoost,
         cooldowns,
+        transcendenceUnlocked,              // Added
+        numPUAscensionUpgrades,             // Added
+        lessDiminishingGodModeSkill,        // Added
+        lessDiminishingPUGodModeSkill,      // Added
         upgrades: upgrades.map(upgrade => ({
             name: upgrade.name,
-            isGodMode: upgrade.isGodMode
+            isGodMode: upgrade.isGodMode,
+            isPUGodMode: upgrade.isPUGodMode // Added to store isPUGodMode
         })),
         purchasedUpgrades: purchasedUpgrades.map(upgrade => upgrade.name),
         cookieButtonVisible: document.getElementById('cookieButton').style.display === 'block',
@@ -129,7 +131,7 @@ function exportSave() {
     URL.revokeObjectURL(url);
 }
 
-// Function to import game state from a file
+
 function importSave(event) {
     const file = event.target.files[0];
     if (!file) {
@@ -175,10 +177,8 @@ function importSave(event) {
         bigCrunchMultiplier = gameState.bigCrunchMultiplier;
         totalMultiplier = gameState.totalMultiplier;
         firstTimePrestigeButtonAvailable = gameState.firstTimePrestigeButtonAvailable;
-        firstTimeCookieUnlock = gameState.firstTimeCookieUnlock;
         cookieClickMultiplier = gameState.cookieClickMultiplier;
         cookieAutoClicker = gameState.cookieAutoClicker;
-        luckGameDelta = gameState.luckGameDelta;
         knowledgeUnlocked = gameState.knowledgeUnlocked;
         knowledgeGenerationSkill = gameState.knowledgeGenerationSkill;
         prestigeBaseSkill = gameState.prestigeBaseSkill;
@@ -192,28 +192,54 @@ function importSave(event) {
         improvedTradeRatio = gameState.improvedTradeRatio;
         cookieBoost = gameState.cookieBoost;
         cooldowns = gameState.cooldowns;
+        transcendenceUnlocked = gameState.transcendenceUnlocked; // Added
+        numPUAscensionUpgrades = gameState.numPUAscensionUpgrades; // Added
+        lessDiminishingGodModeSkill = gameState.lessDiminishingGodModeSkill; // Added
+        lessDiminishingPUGodModeSkill = gameState.lessDiminishingPUGodModeSkill; // Added
 
         upgrades.forEach(upgrade => {
             const savedUpgrade = gameState.upgrades.find(up => up.name === upgrade.name);
             if (savedUpgrade) {
                 upgrade.isGodMode = savedUpgrade.isGodMode;
+                upgrade.isPUGodMode = savedUpgrade.isPUGodMode; // Restore isPUGodMode state
             }
         });
 
         purchasedUpgrades = gameState.purchasedUpgrades.map(name => upgrades.find(up => up.name === name)).filter(Boolean);
         availableUpgrades = upgrades.filter(upgrade => !purchasedUpgrades.includes(upgrade));
 
-        if (gameState.cookieButtonVisible) {
+        // Clear the purchased upgrades list before adding new ones
+        document.getElementById('purchasedList').innerHTML = '';
+
+        // Handle UI elements for upgrades
+        purchasedUpgrades.forEach(upgrade => {
+            if (upgrade) {
+                addPurchasedUpgrade(upgrade.img, upgrade.name, upgrade.earnings, upgrade.isGodMode, upgrade.isPUGodMode, upgrade.message);
+                if (upgrade.name === "Cookie Clicker") {
+                    document.getElementById('cookieButton').style.display = 'block';
+                }
+            }
+        });
+
+        // Handle the Cookie Clicker button visibility
+        const cookieButtonVisible = gameState.cookieButtonVisible;
+        if (cookieButtonVisible) {
             document.getElementById('cookieButton').style.display = 'block';
             cookieClickMultiplier = gameState.cookieClickMultiplier;
-        } else {
-            document.getElementById('cookieButton').style.display = 'none';
+            const cookieTooltip = document.querySelector('#cookieButton .cookieTooltip');
+            if(cookieBoost){
+                cookieTooltip.textContent = `Each cookie click generates the amount of Copium, Delusion, Yacht Money, and Troll Points that you earn in half a second.`;
+            } else {
+                cookieTooltip.textContent = `Each cookie click counts as ${cookieClickMultiplier} clicks on collect buttons for Copium, Delusion, Yacht Money, and Troll Points!`;
+            }
         }
 
+        // Check if Knowledge is unlocked and update UI
         if (gameState.knowledgeUnlocked) {
             unhideKnowledge();
         }
 
+        // Handle library skills
         librarySkills.forEach(skill => {
             const savedSkill = gameState.librarySkills.find(s => s.name === skill.name);
             if (savedSkill) {
@@ -224,6 +250,37 @@ function importSave(event) {
             }
         });
 
+        // Check the state of delusion and update the switch position accordingly
+        const toggleDelusion = document.getElementById('toggleDelusion');
+        if (delusionPerSecond >= 0) {
+            toggleDelusion.checked = true;
+        } else {
+            toggleDelusion.checked = false;
+        }
+
+        // Handle the Transcendence UI
+        if (transcendenceUnlocked) {
+            document.getElementById('pu-god-display').style.display = 'block';
+        }
+
+        // Update various UI elements based on loaded state
+        updateTradeRatio();
+        if(buyMarkersSkill){ 
+            enableAllBuyMarkers(); 
+        }
+
+        updateMultipliersDisplay();
+        updateEffectiveMultipliers();
+
+        // Retrieve the last interaction time, defaulting to the current time if not found
+        const lastInteraction = gameState.lastInteraction || Date.now();
+        const now = Date.now();
+        const elapsedSeconds = (now - lastInteraction) / 1000;
+
+        // Generate idle resources based on the elapsed time
+        generateIdleResources(elapsedSeconds);
+
+        // Update the display and the upgrade list, and unlock any available mini-games
         updateDisplay();
         updateUpgradeList();
         unlockMiniGames();
@@ -231,6 +288,9 @@ function importSave(event) {
 
     reader.readAsText(file);
 }
+
+
+
 
 
 // Add event listeners for opening and closing the settings overlay
