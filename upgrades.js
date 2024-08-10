@@ -655,7 +655,7 @@ const upgrades = [
     },
     {
         name: "Degens Idle Dev #2",
-        cost: { copium: 5e27, delusion: 5e27, yachtMoney: 5e27, trollPoints: 5e27, hopium: 5e21, knowledge: 5e18, power: 5e-3, serenity: 0 },
+        cost: { copium: 13e27, delusion: 5e27, yachtMoney: 75e27, trollPoints: 5e27, hopium: 7e21, knowledge: 8e18, power: 5e-3, serenity: 0 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 1e14, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 80, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/most_interesting_man_2.jpg",
     },
