@@ -557,7 +557,7 @@ const upgrades = [
     {
         name: "Mosquito",
         cost: { copium: 3e19, delusion: 3e19, yachtMoney: 3e19, trollPoints: 3e19, hopium: 3e14, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: -1e12, delusionPerSecond: -1e12, yachtMoneyPerSecond: -1e12, trollPointsPerSecond: -1e12, hopiumPerSecond: -1e7, knowledgePerSecond: 10, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: -1.3e12, delusionPerSecond: -1.3e12, yachtMoneyPerSecond: -1.3e12, trollPointsPerSecond: -1.3e12, hopiumPerSecond: -1.3e7, knowledgePerSecond: 13, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/mosquito.jpg",
         hoverOverwrite: "DO NOT BUY THIS UPGRADE UNLESS YOU ARE ABSOLUTELY CERTAIN YOU CAN HANDLE IT",
         message: `WHY? Why did you buy this upgrade? I explicitly told you not to. Now, mosquitoes are a part of your universe. Seriously, what were you thinking? These little bloodsuckers are everywhere now, and let me tell you, no good can come from that. Enjoy the endless itching and buzzing in your ears at night. If you ever get a chance for a do-over, hopefully, you’ll have learned your lesson. Until then, welcome to Mosquito Madness!`,
@@ -642,7 +642,7 @@ const upgrades = [
     {
         name: "Transcendence",
         cost: { copium: 2.5e25, delusion: 2.5e25, yachtMoney: 2.5e25, trollPoints: 2.5e25, hopium: 2.5e19, knowledge: 2.5e16, power: 2.5e-4, serenity: 0 },
-        earnings: { copiumPerSecond: 1, delusionPerSecond: 1, yachtMoneyPerSecond: 1, trollPointsPerSecond: 1, hopiumPerSecond: 1, knowledgePerSecond: 1, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 10, delusionPerSecond: 10, yachtMoneyPerSecond: 10, trollPointsPerSecond: 10, hopiumPerSecond: 10, knowledgePerSecond: 1, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/transcendence.jpg",
         hoverOverwrite: "Can you feel the quantum entanglement?",
         message: "Through meticulous exploration and relentless curiosity, you've uncovered a mind-bending revelation: your universe is quantum entangled with another. These parallel universes, though they coexist with minimal interaction, are now within your reach to manipulate. By ascending to god-mode in this parallel universe, you can harness the power of quantum entanglement, effectively amplifying your multiplier and enhancing your upgrades in your own universe—all without the need to Big Crunch your current reality.<br><br>Transcendence isn’t just a step forward; it’s a leap across the very fabric of reality itself. Are you ready to transcend the limits of one universe and unlock the boundless potential of two?",
