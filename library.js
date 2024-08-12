@@ -7,7 +7,7 @@ const librarySkills = [
     // { name: '', cost: 1e20, description: '', unlocked: false, level: 'History' }, 
 
     { name: 'Cure for Delusion', cost: 5, description: 'Unlock ability to toggle whether delusion gain is positive or negative.', unlocked: false, level: 'Science' },
-    { name: 'Luck is Rigged', cost: 777, description: 'Luck Game roll now picks from (-10% to 190%) instead of (-75% to 125%).', unlocked: false, level: 'Science' },
+    { name: 'Luck is Rigged', cost: 777, description: 'Luck Game roll now picks from (-25% to 175%) instead of (-75% to 125%).', unlocked: false, level: 'Science' },
     { name: "I Can't Math", cost: 1234, description: 'Math Game now only has 2 terms instead of 3. Reward is tripled.', unlocked: false, level: 'Science' },
     { name: "Short Term Memory", cost: 11000, description: 'Memory Game maximum time is 15s instead of 40s. Reward is doubled.', unlocked: false, level: 'Science' },
     { name: "Click Accumulation", cost: 23000, description: 'Speed Game reward is now for total number of clicks, instead of per second.', unlocked: false, level: 'Science' },
@@ -27,6 +27,7 @@ const librarySkills = [
     { name: 'Buy Markers', cost: 300000, description: 'Purchased Upgrades will now have a switch indicating whether or not they should be bought using "Buy Seen" and "Buy All" buttons.', unlocked: false, level: 'Artificial Intelligence' },
     { name: 'Triple Ascension', cost: 3.5e6, description: 'Gain up to 3 God-Mode levels per Ascension. Also select up to 3 upgrades to enhance to God Mode.', unlocked: false, level: 'Artificial Intelligence' },
     // { name: 'Autobuy Upgrades', cost: 5e13, description: 'Each upgrade can be configured to Autobuy - which will make purchase the upgrade as soon as it's affordable.', unlocked: false, level: 'Artificial Intelligence' },
+    { name: 'Quintuple Transendence', cost: 5e18, description: 'Gain up to 5 Parallel Universe God-Mode levels per Transendence. Also select up to 5 upgrades to enhance to PU God Mode.', unlocked: false, level: 'Artificial Intelligence' },
     { name: 'Septuple Ascension', cost: 1e24, description: 'Gain up to 7 God-Mode levels per Ascension. Also select up to 7 upgrades to enhance to God Mode.', unlocked: false, level: 'Artificial Intelligence' },
 
     { name: 'Knowledge is Power', cost: 1e6, description: 'Unlock new resource Power. Power is always generated based on your current amount of Knowledge.', unlocked: false, level: 'Celestial Bodies' },
@@ -90,7 +91,7 @@ function unlockLibrarySkill(skill, duringLoad = false) {
                 break;
 
             case 'Luck is Rigged':
-                luckGameDelta = -10;
+                luckGameDelta = -25;
                 break;
             
             case "I Can't Math":
@@ -164,6 +165,10 @@ function unlockLibrarySkill(skill, duringLoad = false) {
                 numAscensionUpgrades = Math.max(numAscensionUpgrades, 3);
                 break;
 
+            case 'Quintuple Transendence':
+                numPUAscensionUpgrades = Math.max(numPUAscensionUpgrades, 5);
+                break;
+                
             case 'Septuple Ascension':
                 numAscensionUpgrades = Math.max(numAscensionUpgrades, 7);
                 break;

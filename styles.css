@@ -303,19 +303,19 @@ button.affordable-double-godmode:hover {
 /* Keyframes for Wave-Like Glow Animation */
 @keyframes waveGlow {
     0% {
-        box-shadow: -20px 0 30px #1e90ff, 20px 0 30px #8e44ad, 0 0 40px #4b6cb7;
+        box-shadow: -10px 0 20px #1e90ff, 10px 0 20px #8e44ad, 0 0 30px #4b6cb7;
     }
     25% {
-        box-shadow: 0 -20px 30px #1e90ff, 0 20px 30px #8e44ad, 0 0 40px #4b6cb7;
+        box-shadow: 0 -10px 20px #1e90ff, 0 10px 20px #8e44ad, 0 0 30px #4b6cb7;
     }
     50% {
-        box-shadow: 20px 0 30px #1e90ff, -20px 0 30px #8e44ad, 0 0 40px #4b6cb7;
+        box-shadow: 10px 0 20px #1e90ff, -10px 0 20px #8e44ad, 0 0 30px #4b6cb7;
     }
     75% {
-        box-shadow: 0 20px 30px #1e90ff, 0 -20px 30px #8e44ad, 0 0 40px #4b6cb7;
+        box-shadow: 0 10px 20px #1e90ff, 0 -10px 20px #8e44ad, 0 0 30px #4b6cb7;
     }
     100% {
-        box-shadow: -20px 0 30px #1e90ff, 20px 0 30px #8e44ad, 0 0 40px #4b6cb7;
+        box-shadow: -10px 0 20px #1e90ff, 10px 0 20px #8e44ad, 0 0 30px #4b6cb7;
     }
 }
 

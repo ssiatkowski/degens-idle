@@ -409,7 +409,7 @@ function generateResources() {
     serenity += effectiveSerenityPerSecond / 2;
 
     if (powerUnlocked){
-        effectivePowerPerSecond = moneyIsPowerTooSkill ? (knowledge ** (2/5) / 1e12) * (1 + (Math.max(yachtMoney,0) ** (2/5) / 1e12)) : knowledge ** (2/5) / 1e12
+        effectivePowerPerSecond = moneyIsPowerTooSkill ? (knowledge ** (3/8) / 1e12) * (1 + (Math.max(yachtMoney,0) ** (1/3) / 1e12)) : knowledge ** (3/8) / 1e12
     }
 
     // Check if delusion drops below negative 1 trillion to start generating Knowledge
@@ -450,7 +450,7 @@ function playMiniGame(gameType) {
     // Speed mini-game logic
     if (gameType === 'speed') {
         let points = 0;
-        let duration = Math.floor(Math.random() * 6) + 2; // Random duration between 2 and 7 seconds
+        let duration = Math.floor(Math.random() * 5) + 2; // Random duration between 2 and 6 seconds
 
         // Show the modal and start the game when the modal is closed
         showMessageModal('Speed Game', `Tap on the screen as many times as you can in ${duration} seconds!`, false, false).then(() => {
@@ -471,7 +471,7 @@ function playMiniGame(gameType) {
                 let rewardPerClick;
                 if (speedGameSkill) {
                     // Reward based on total number of clicks using the provided formula
-                    reward = Math.max(Math.floor(Math.abs(copium) * ((points - 3) * 0.05)), 25);
+                    reward = Math.max(Math.floor(Math.abs(copium) * ((points - 3) * 0.03)), 25);
                     rewardPerClick = reward / points;
                     showMessageModal('Speed Game Result', `You tapped ${points} times in ${duration} seconds. Each click was worth ${formatNumber(rewardPerClick)} copium. Your total click reward is ${formatNumber(reward)} copium!`, false, false);
                 } else {
@@ -506,7 +506,7 @@ function playMiniGame(gameType) {
             setTimeout(() => {
                 showMessageModal('Memory Game', 'Enter the sequence:', false, false).then(userSequence => {
                     let correct = userSequence === sequence;
-                    let baseReward = correct ? Math.max(Math.floor(Math.abs(delusion) * 0.5), 25) : -Math.max(Math.floor(Math.random() * Math.abs(delusion) * 0.1), 10);
+                    let baseReward = correct ? Math.max(Math.floor(Math.abs(delusion) * 0.4), 25) : -Math.max(Math.floor(Math.random() * Math.abs(delusion) * 0.1), 10);
                     let reward = memoryGameSkill ? baseReward * 2 : baseReward; // Double the reward if memoryGameSkill is true
                     // Adjust reward based on the toggleDelusion switch if it's visible
                     if (!document.getElementById('toggleDelusionLabel').classList.contains('hidden')) {
@@ -544,7 +544,7 @@ function playMiniGame(gameType) {
             let isCorrect = Math.abs(Number(answer) - correctAnswer) < 0.5;
             let reward;
             if (mathGameSkill) {
-                reward = isCorrect ? Math.max(Math.floor(Math.abs(yachtMoney) * 0.75), 75) : -Math.max(Math.floor(Math.random() * Math.abs(yachtMoney) * 0.3), 30);
+                reward = isCorrect ? Math.max(Math.floor(Math.abs(yachtMoney) * 0.75), 75) : -Math.max(Math.floor(Math.random() * Math.abs(yachtMoney) * 0.1), 30);
             } else {
                 reward = isCorrect ? Math.max(Math.floor(Math.abs(yachtMoney) * 0.25), 25) : -Math.max(Math.floor(Math.random() * Math.abs(yachtMoney) * 0.1), 10);
             }
@@ -997,66 +997,118 @@ function tradeResources() {
 }
 
 
-function Commas(Num, Fixed) {
-    return Num.toLocaleString("en-US",{minimumFractionDigits: Fixed, maximumFractionDigits: Fixed});
-  }
+// function Bound(LOWER_BOUND = -Infinity, UPPER_BOUND = Infinity, DEFAULT_VALUE = 0, DATA = 0) {
+//     if (LOWER_BOUND > UPPER_BOUND) {throw new Error(`UPPER_BOUND is ${UPPER_BOUND} which is less than LOWER_BOUND which is ${LOWER_BOUND}`)}
+//     if (DEFAULT_VALUE < LOWER_BOUND || DEFAULT_VALUE > UPPER_BOUND) {
+//       throw new Error(`Math ain't mathing`)
+//     }
+//     if (DATA >= LOWER_BOUND && DATA <= UPPER_BOUND) return DATA
+//     return DEFAULT_VALUE
+//   }
+//   function Rounding(Num) {
+//     return String(Number(Num))
+//   }
+//   function NumberScientific(Num, Fixed = 2, EXPONENT_LIMIT = 3) {
+//       let limitTillexpo = Bound(0, 9 , 4, EXPONENT_LIMIT), Exponent = Math.abs(Math.floor(Math.log10(Math.abs(Num)))), x = 0
+//       if (Math.abs(Num) < 1 && Math.abs(Num) > 0) {
+//         x = Num
+//         return Exponent <= limitTillexpo ? Rounding(x.toPrecision(Bound(1,4,2,4-Exponent))) : `${Rounding((Num*(10**Exponent)).toPrecision(Fixed+1))}e${-Exponent}`
+//     }
+//     if (Math.abs(Num) < 10**limitTillexpo) {
+//       x = Num
+//       return Rounding(x.toPrecision(Bound(1,4,Fixed,Fixed+Exponent-2)))
+//   }
+//       return `${Rounding((Num/(10**Exponent)).toPrecision(Fixed+1))}e${Exponent}`
+//   }
+//   function NumberStandard(Num, Fixed = 2, EXPONENT_LIMIT = 3) {
+//     let limitTillexpo = Bound(0, 9, 3,EXPONENT_LIMIT), 
+//         x = 0,
+//         Exponent = Math.floor(Math.log10(Math.abs(Num))/3),
+//         True_Exponent = Math.abs(Math.floor(Math.log10(Math.abs(Num))))
+//     let PREFIXES = ["", "K", "M", "B", "T", "Qa", "Qt", "Sx", "Sp", "Oc", "No", "Dc", "UDc", "DDc",
+//       "TDc", "QaDc", "QtDc", "SxDc", "SpDc", "ODc", "NDc", "Vg", "UVg", "DVg", "TVg",
+//       "QaVg", "QtVg", "SxVg", "SpVg", "OVg", "NVg", "Tg", "UTg", "DTg", "TTg", "QaTg",
+//       "QtTg", "SxTg", "SpTg", "OTg", "NTg", "Qd", "UQd", "DQd", "TQd", "QaQd", "QtQd",
+//       "SxQd", "SpQd", "OQd", "NQd", "Qi", "UQi", "DQi", "TQi", "QaQi", "QtQi", "SxQi",
+//       "SpQi", "OQi", "NQi", "Se", "USe", "DSe", "TSe", "QaSe", "QtSe", "SxSe", "SpSe",
+//       "OSe", "NSe", "St", "USt", "DSt", "TSt", "QaSt", "QtSt", "SxSt", "SpSt", "OSt",
+//       "NSt", "Og", "UOg", "DOg", "TOg", "QaOg", "QtOg", "SxOg", "SpOg", "OOg", "NOg",
+//       "Nn", "UNn", "DNn", "TNn", "QaNn", "QtNn", "SxNn", "SpNn", "ONn", "NNn", "Ce"]
+//     if (Math.abs(Num) < 1 && Math.abs(Num) > 0) {
+//         x = Num
+//         return True_Exponent <= limitTillexpo ? Rounding(x.toPrecision(Bound(1,4,2,4-True_Exponent))) : `${Rounding((Num*(10**True_Exponent)).toPrecision(Fixed+1))}e${-True_Exponent}`
+//     }
+//     if (Math.abs(Num) < 10**limitTillexpo) {
+//         x = Num
+//         return Rounding(x.toPrecision(Bound(1,6,Fixed,Fixed+True_Exponent-2)))
+//     }
+//     return `${Rounding((Num/(1000**Exponent)).toPrecision(Fixed+1))}${PREFIXES[Exponent]}`
+//   }
 
-function Bound(LOWER_BOUND = -Infinity, UPPER_BOUND = Infinity, DEFAULT_VALUE = 0, DATA = 0) {
-    if (LOWER_BOUND > UPPER_BOUND) {throw new Error(`UPPER_BOUND is ${UPPER_BOUND} which is less than LOWER_BOUND which is ${LOWER_BOUND}`)}
-    if (DEFAULT_VALUE < LOWER_BOUND || DEFAULT_VALUE > UPPER_BOUND) {
-      throw new Error(`Math ain't mathing`)
-    }
-    if (DATA >= LOWER_BOUND && DATA <= UPPER_BOUND) return DATA
-    return DEFAULT_VALUE
-  }
-function NumberScientific(Num, Fixed = 2, EXPONENT_LIMIT = 3) {
-    let limitTillexpo = Bound(0, 9 , 4, EXPONENT_LIMIT), Exponent = Math.abs(Math.floor(Math.log10(Math.abs(Num))))
-    if (Math.abs(Num) < 1 && Math.abs(Num) > 0) {
-      return Exponent < limitTillexpo ? String(Num) : `${(Num*(10**Exponent)).toFixed(Fixed)}e${-Exponent}`
-  }
-    if (Math.abs(Num) < 10**limitTillexpo) {
-      return Commas(Num, 2)
-    }
-    return `${(Num/(10**Exponent)).toFixed(Fixed)}e${Exponent}`
+const formatSignificant = new Intl.NumberFormat("en-US", { maximumFractionDigits: 3 });
+const formatFraction = new Intl.NumberFormat("en-US", { maximumSignificantDigits: 4 });
+const formatScientific = new Intl.NumberFormat("en-US", { maximumFractionDigits: 3, notation: "scientific" });
+
+const PREFIXES = ["", "K", "M", "B", "T", "Qa", "Qi", "Sx", "Sp", "Oc", "No", "Dc", "UDc", "DDc",
+    "TDc", "QaDc", "QiDc", "SxDc", "SpDc", "ODc", "NDc", "Vg", "UVg", "DVg", "TVg",
+    "QaVg", "QiVg", "SxVg", "SpVg", "OVg", "NVg", "Tg", "UTg", "DTg", "TTg", "QaTg",
+    "QiTg", "SxTg", "SpTg", "OTg", "NTg", "Qd", "UQd", "DQd", "TQd", "QaQd", "QiQd",
+    "SxQd", "SpQd", "OQd", "NQd", "Qt", "UQt", "DQt", "TQt", "QaQt", "QiQt", "SxQt",
+    "SpQt", "OQt", "NQt", "Se", "USe", "DSe", "TSe", "QaSe", "QiSe", "SxSe", "SpSe",
+    "OSe", "NSe", "St", "USt", "DSt", "TSt", "QaSt", "QiSt", "SxSt", "SpSt", "OSt",
+    "NSt", "Og", "UOg", "DOg", "TOg", "QaOg", "QiOg", "SxOg", "SpOg", "OOg", "NOg",
+    "Nn", "UNn", "DNn", "TNn", "QaNn", "QiNn", "SxNn", "SpNn", "ONn", "NNn", "Ce"];
+
+function formatNumIntl(num, isScientific = false) {
+    const absNum = Math.abs(num);
+    if (num === 0) return "0";
+    else if (absNum < 1) return formatFraction.format(num);
+    else if (absNum < 1000) return formatSignificant.format(num);
+    else if (isScientific) return formatScientific.format(num).toLowerCase();
+    
+    const exponent = Math.floor(Math.log10(absNum) / 3);
+    const digits = formatSignificant.format(num / 10 ** (3 * exponent));
+    
+    return digits + PREFIXES[exponent];
 }
-function NumberStandard(Num, Fixed = 2, EXPONENT_LIMIT = 3) {
-  let limitTillexpo = Bound(0, 9, 3,EXPONENT_LIMIT), 
-      Exponent = Math.floor(Math.log10(Math.abs(Num))/3),
-      True_Exponent = Math.abs(Math.floor(Math.log10(Math.abs(Num))))
-  let PREFIXES = ["", "K", "M", "B", "T", "Qa", "Qt", "Sx", "Sp", "Oc", "No", "Dc", "UDc", "DDc",
-    "TDc", "QaDc", "QtDc", "SxDc", "SpDc", "ODc", "NDc", "Vg", "UVg", "DVg", "TVg",
-    "QaVg", "QtVg", "SxVg", "SpVg", "OVg", "NVg", "Tg", "UTg", "DTg", "TTg", "QaTg",
-    "QtTg", "SxTg", "SpTg", "OTg", "NTg", "Qd", "UQd", "DQd", "TQd", "QaQd", "QtQd",
-    "SxQd", "SpQd", "OQd", "NQd", "Qi", "UQi", "DQi", "TQi", "QaQi", "QtQi", "SxQi",
-    "SpQi", "OQi", "NQi", "Se", "USe", "DSe", "TSe", "QaSe", "QtSe", "SxSe", "SpSe",
-    "OSe", "NSe", "St", "USt", "DSt", "TSt", "QaSt", "QtSt", "SxSt", "SpSt", "OSt",
-    "NSt", "Og", "UOg", "DOg", "TOg", "QaOg", "QtOg", "SxOg", "SpOg", "OOg", "NOg",
-    "Nn", "UNn", "DNn", "TNn", "QaNn", "QtNn", "SxNn", "SpNn", "ONn", "NNn", "Ce"]
-  if (Math.abs(Num) < 1 && Math.abs(Num) > 0) {
-      return True_Exponent < limitTillexpo ? String(Num) : `${(Num*(10**True_Exponent)).toFixed(Fixed)}e${-True_Exponent}`
-  }
-  if (Math.abs(Num) < 10**limitTillexpo) {
-    return Commas(Num, 2)
-  }
-  return `${(Num/(1000**Exponent)).toFixed(Fixed)} ${PREFIXES[Exponent]}`
-}
-function NumberMixedScientific(Num,Fixed = 2, EXPONENT_LIMIT = 3) {
-    if (Num < 1e36) {
-      return NumberStandard(Num, Fixed, EXPONENT_LIMIT)
-    } else {
-      return NumberScientific(Num, Fixed, EXPONENT_LIMIT)
-    }
-}
-function NumberFormat(Num = 0, Type = 0, Fixed) {
+
+
+function formatNumber(num) {
+    Type = 0;
     switch(Type) {
-      case 0:
-        return NumberMixedScientific(Num, Fixed)
-      case 1: 
-        return NumberScientific(Num, Fixed)
-      case 2:
-        return NumberStandard(Num, Fixed)
-    }
+        case 0:
+            if(num < 1e36){
+                return formatNumIntl(num,false);
+            }
+            else{
+                return formatNumIntl(num, true);
+            }
+          return format
+        case 1: 
+            return formatNumIntl(num, true);
+        case 2:
+            return formatNumIntl(num,false);
+      }
 }
+
+
+// function NumberMixedScientific(Num,Fixed = 2, EXPONENT_LIMIT = 3) {
+//     if (Num < 1e36) {
+//       return NumberStandard(Num, Fixed, EXPONENT_LIMIT)
+//     } else {
+//       return NumberScientific(Num, Fixed, EXPONENT_LIMIT)
+//     }
+// }
+// function NumberFormat(Num = 0, Type = 0, Fixed) {
+//     switch(Type) {
+//       case 0:
+//         return NumberMixedScientific(Num, Fixed)
+//       case 1: 
+//         return NumberScientific(Num, Fixed)
+//       case 2:
+//         return NumberStandard(Num, Fixed)
+//     }
+// }
 
 
 function customRound(number, digits) {
@@ -1064,14 +1116,14 @@ function customRound(number, digits) {
     return Math.round(number * factor) / factor;
 }
 
-function formatNumber2(num) {
-    return NumberFormat(num, numberFormatType, 3)
-}
+// function formatNumber2(num) {
+//     return NumberFormat(num, numberFormatType, 3)
+// }
 
-function formatNumber(num) {
+function formatNumber3(num) {
     const suffixes = [
         { value: 1e33, symbol: "Dc" },    // Decillion
-        { value: 1e30, symbol: "Nn" },    // Nonillion
+        { value: 1e30, symbol: "No" },    // Nonillion
         { value: 1e27, symbol: "Oc" },    // Octillion
         { value: 1e24, symbol: "Sp" },    // Septillion
         { value: 1e21, symbol: "Sx" },    // Sextillion
@@ -1221,7 +1273,7 @@ function updatePrestigeButton() {
             saveGameState(); // Save the game state to persist the flag
         }
         const newMultiplier = calculatePrestigeMultiplier();
-        prestigeButton.textContent = `Prestige (x${(newMultiplier / epsMultiplier).toFixed(2)} multiplier)`;
+        prestigeButton.textContent = `Prestige (x${formatNumber(newMultiplier / epsMultiplier)} multiplier)`;
         prestigeButton.style.display = 'block';
     } else {
         prestigeButton.style.display = 'none';
@@ -1522,8 +1574,8 @@ function buyUpgrade(encodedUpgradeName) {
         }
 
         // Special case for the "Still very stupid" upgrade
-        if (name === "Degens Idle Dev #2") {
-            showMessageModal('Sadly', "This marks the end of v0.821. Your journey through this existential tale is just getting started. Another big update is just a few days away, but if you’re eager to explore more, why not restart the game? Try speed runs, test out new strategies, and see what secrets you uncover next on your path to enlightenment. Oh, and about Transcendence—how are you finding it? I’d love to hear your thoughts! Whether it’s through the feedback form or on Discord (both can be found in settings), your feedback is super valuable.");
+        if (name === "Impossible") {
+            showMessageModal('Sadly', "This marks the end of v0.822. Your journey through this existential tale is just getting started. Another big update is just a few days away, but if you’re eager to explore more, why not restart the game? Try speed runs, test out new strategies, and see what secrets you uncover next on your path to enlightenment. Oh, and about Transcendence—how are you finding it? I’d love to hear your thoughts! Whether it’s through the feedback form or on Discord (both can be found in settings), your feedback is super valuable.");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one
@@ -2218,9 +2270,12 @@ function showWelcomeModal() {
 }
 
 function openLibrary() {
-    const libraryUpgrade = purchasedUpgrades.find(upgrade => upgrade.name === "The Library");
-    if (libraryUpgrade) {
+    if (purchasedUpgrades.some(upgrade => upgrade.name === "The Library")) {
         document.getElementById('libraryOverlay').style.display = 'flex';
+    } else if (purchasedUpgrades.some(upgrade => upgrade.name === "Antimatter Dimensions")){    
+        showMessageModal('Access Denied', `You are not worthy to enter the Hall of Knowledge. The ancient tomes and secrets within remain beyond your reach. Perhaps it is time to look inwards and seek understanding within yourself first. Only through inner reflection and growth will you gain the wisdom needed to unlock the secrets of this sacred place.<br><br>
+                                            You remember learning that to unlock <strong>Knowledge</strong>, one must first achieve the seemingly impossible feat of reaching 
+                                            <strong>negative one Trillion delusion</strong>.`);
     } else {
         showMessageModal('Access Denied', 'You are not worthy to enter the Hall of Knowledge. The ancient tomes and secrets within remain beyond your reach. Perhaps it is time to look inwards and seek understanding within yourself first. Only through inner reflection and growth will you gain the wisdom needed to unlock the secrets of this sacred place.');
     }
