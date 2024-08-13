@@ -311,9 +311,11 @@ function initializeSkills() {
                         saveGameState();
                     }
                 } else if (knowledge < skill.cost) {
-                    document.removeEventListener('click', outsideLibraryClickListener);
-                    await showMessageModal('Insufficient Knowledge', 'Not enough Knowledge to unlock this skill.', false, false);
-                    document.addEventListener('click', outsideLibraryClickListener);
+                    //document.removeEventListener('click', outsideLibraryClickListener);
+                    // await showMessageModal('Insufficient Knowledge', 'Not enough Knowledge to unlock this skill.', false, false);
+                    
+                    showStatusMessage(skillDiv, 'Insufficient Knowledge to unlock this skill.', false);
+                    //document.addEventListener('click', outsideLibraryClickListener);
                 }
             });
             skillRow.appendChild(skillDiv);

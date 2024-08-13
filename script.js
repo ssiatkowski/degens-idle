@@ -830,9 +830,9 @@ async function restartGame(isPrestige = false) {
     }
 }
 
-let tradeStatusTimeout;
+let statusMessageTimeout;
 
-function showStatusMessage(pressedButton, message, isSuccess) {
+function showStatusMessage(pressedButton, message, isSuccess, timeout=3000) {
     const overlay = document.getElementById('statusOverlay');
     overlay.textContent = message;
     overlay.className = 'status-overlay'; // Reset classes
@@ -848,7 +848,7 @@ function showStatusMessage(pressedButton, message, isSuccess) {
     // Adjust the positioning based on the device
     if (window.innerWidth <= 768) {  // Mobile devices
         overlay.style.position = 'absolute';
-        overlay.style.top = `${rect.bottom + window.scrollY + 10}px`;  // Position below the pressed button
+        overlay.style.top = `${rect.bottom + window.scrollY + 30}px`;  // Position below the pressed button
         overlay.style.left = `${rect.left + window.scrollX}px`;  // Align with the left of the pressed button
     } else {  // Desktop devices
         overlay.style.position = 'absolute';
@@ -857,14 +857,14 @@ function showStatusMessage(pressedButton, message, isSuccess) {
     }
 
     // Clear the previous timer if it exists
-    if (tradeStatusTimeout) {
-        clearTimeout(tradeStatusTimeout);
+    if (statusMessageTimeout) {
+        clearTimeout(statusMessageTimeout);
     }
 
     // Set a new timer to hide the overlay after 3 seconds
-    tradeStatusTimeout = setTimeout(() => {
+    statusMessageTimeout = setTimeout(() => {
         overlay.style.display = 'none';
-    }, 3000); // Hide after 3 seconds
+    }, timeout); // Hide after 3 seconds
 }
 
 
@@ -1583,7 +1583,7 @@ function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying=true) {
 
         // Special case for the "Still very stupid" upgrade
         if (name === "Impossible") {
-            showMessageModal('Sadly', "This marks the end of v0.822. Your journey through this existential tale is just getting started. Another big update is just a few days away, but if you’re eager to explore more, why not restart the game? Try speed runs, test out new strategies, and see what secrets you uncover next on your path to enlightenment. Oh, and about Transcendence—how are you finding it? I’d love to hear your thoughts! Whether it’s through the feedback form or on Discord (both can be found in settings), your feedback is super valuable.");
+            showMessageModal('Sadly', "This marks the end of v0.826. Your journey through this existential tale is just getting started. Another big update is just a few days away, but if you’re eager to explore more, why not restart the game? Try speed runs, test out new strategies, and see what secrets you uncover next on your path to enlightenment. Oh, and about Transcendence—how are you finding it? I’d love to hear your thoughts! Whether it’s through the feedback form or on Discord (both can be found in settings), your feedback is super valuable.");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one
@@ -1602,12 +1602,15 @@ function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying=true) {
         }
 
     } else {
+        
+        const button = document.querySelector(`button[data-upgrade-name="${encodedUpgradeName}"]`);
+        showStatusMessage(button, 'Insufficient resources to purchase this upgrade.', false, 1500);
         // Show an alert if the player does not have enough resources
-        if (!isModalOpen) {
-            showMessageModal('Purchase Denied', 'Not enough resources to purchase this upgrade.').then(() => {
-                isModalOpen = false;
-            });
-        }
+        // if (!isModalOpen) {
+        //     showMessageModal('Purchase Denied', 'Not enough resources to purchase this upgrade.').then(() => {
+        //         isModalOpen = false;
+        //     });
+        // }
     }
 }
 
@@ -1621,21 +1624,26 @@ function buyAllUpgrades(limit, pressedButton) {
         if (buyMarkersSkill) {
             const switchElement = JSON.parse(localStorage.getItem(`switchState-${upgrade.name}`));
             if (switchElement && isAffordable(upgrade.cost)) {
-                buyUpgrade(encodeName(upgrade.name));
+                buyUpgrade(encodeName(upgrade.name), false);
                 purchasedCount++; // Increment counter when an upgrade is bought
             }
         } else {
             if (isAffordable(upgrade.cost)) {
-                buyUpgrade(encodeName(upgrade.name));
+                buyUpgrade(encodeName(upgrade.name), false);
                 purchasedCount++; // Increment counter when an upgrade is bought
             }
         }
     });
     
     if (purchasedCount > 0) {
-        showStatusMessage(pressedButton, `Purchased ${purchasedCount} upgrade(s).`, true);
+        updateUpgradeList();
+        updateMultipliersDisplay();
+        updateEffectiveMultipliers();
+        updateDisplay();
+        saveGameState();
+        showStatusMessage(pressedButton, `Purchased ${purchasedCount} upgrade(s).`, true, timeout=1500);
     } else {
-        showStatusMessage(pressedButton, 'No upgrades were purchased.', false);
+        showStatusMessage(pressedButton, 'No upgrades were purchased.', false, timeout=1500);
     }
 }
 
