@@ -647,7 +647,7 @@ const upgrades = [
     },
     {
         name: "Transcendence",
-        cost: { copium: 2.5e25, delusion: 2.5e25, yachtMoney: 2.5e25, trollPoints: 2.5e25, hopium: 2.5e19, knowledge: 2.5e16, power: 2.5e-4, serenity: 0 },
+        cost: { copium: 2.5e25, delusion: 2.5e25, yachtMoney: 2.5e25, trollPoints: 2.5e25, hopium: 2.5e19, knowledge: 2.5e16, power: 1e-4, serenity: 0 },
         earnings: { copiumPerSecond: 10, delusionPerSecond: 10, yachtMoneyPerSecond: 10, trollPointsPerSecond: 10, hopiumPerSecond: 10, knowledgePerSecond: 1, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/transcendence.jpg",
         hoverOverwrite: "Can you feel the quantum entanglement?",
