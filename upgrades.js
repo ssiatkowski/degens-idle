@@ -519,13 +519,13 @@ const upgrades = [
     {
         name: "McDonalds Diet",
         cost: { copium: 9e18, delusion: 9e18, yachtMoney: 3e18, trollPoints: 0, hopium: 3e13, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 5.8e7, delusionPerSecond: 4.2e7, yachtMoneyPerSecond: 0, trollPointsPerSecond: 8.4e7, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 5.82e7, delusionPerSecond: 4.2e7, yachtMoneyPerSecond: 0, trollPointsPerSecond: 8.5e7, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/mcdonalds.jpg",
     },
     {
         name: "Careful Planning Time",
         cost: { copium: 3e19, delusion: 1.4e19, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 3.1e8, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: -1e7, trollPointsPerSecond: 3.4e8, hopiumPerSecond: 2500, knowledgePerSecond: 0.00095, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: -1e7, trollPointsPerSecond: 3.4e8, hopiumPerSecond: 2500, knowledgePerSecond: 0.00092, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/leeroy_jenkins.jpg",
     },
     {
@@ -543,13 +543,13 @@ const upgrades = [
     {
         name: "Change My Mind",
         cost: { copium: 0, delusion: 2e19, yachtMoney: 1e19, trollPoints: 7e19, hopium: 0, knowledge: 3e8, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 18000, knowledgePerSecond: 0.0025, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 18000, knowledgePerSecond: 0.0023, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/change_my_mind.jpg",
     },
     {
         name: "Impossible",
         cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 1, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: -25000, knowledgePerSecond: 100, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: -25000, knowledgePerSecond: 99, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/impossible.jpg",
         // message: `Lol, cheater! Instead of cheating why don't you hop in discord and suggest future memes!`,
 
@@ -578,7 +578,7 @@ const upgrades = [
     {
         name: "Increlution",
         cost: { copium: 9e19, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 1e16, knowledge: 1e9, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 2e7, yachtMoneyPerSecond: 4e7, trollPointsPerSecond: 9e7, hopiumPerSecond: -6000, knowledgePerSecond: 0.0025, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 2e7, yachtMoneyPerSecond: 4e7, trollPointsPerSecond: 9e7, hopiumPerSecond: -6000, knowledgePerSecond: 0.0024, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/increlution.jpg",
         hoverOverwrite: "Purchase Early Access",
         message: "Increlution is an incremental game that blends survival and strategy. Players gather resources, build structures, and fend off threats in a post-apocalyptic world, unlocking new technologies and abilities as they progress. Tragically, just like this upgrade image, the game was left in an unfinished state after collecting profits from early access sales, leaving fans hoping for future updates that may never come.",
@@ -592,7 +592,7 @@ const upgrades = [
     {
         name: "BRUHHHH",
         cost: { copium: 1e21, delusion: 1e21, yachtMoney: 1e21, trollPoints: 1e21, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 7e8, delusionPerSecond: 7e8, yachtMoneyPerSecond: 7e8, trollPointsPerSecond: 7e8, hopiumPerSecond: 0, knowledgePerSecond: 0.08, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 7e8, delusionPerSecond: 7e8, yachtMoneyPerSecond: 7e8, trollPointsPerSecond: 7e8, hopiumPerSecond: 0, knowledgePerSecond: 0.07, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/bruhhh.jpg",
     },
     {
@@ -622,7 +622,7 @@ const upgrades = [
     {
         name: "Christian Logic",
         cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 1.01e23, hopium: 0, knowledge: 3e13, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 1.01e10, delusionPerSecond: 0, yachtMoneyPerSecond: 3e9, trollPointsPerSecond: 7.5e9, hopiumPerSecond: 0, knowledgePerSecond: 0.3, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 1.01e10, delusionPerSecond: 0, yachtMoneyPerSecond: 3e9, trollPointsPerSecond: 7.5e9, hopiumPerSecond: 0, knowledgePerSecond: 0.285, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/christian_logic.jpg",
     },
     {
@@ -640,7 +640,7 @@ const upgrades = [
     {
         name: "Job Application #3",
         cost: { copium: 9.9e24, delusion: 9.9e24, yachtMoney: 0, trollPoints: 1e24, hopium: 1e19, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 1e11, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 2, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 1e11, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 1.7, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/job_application_3.jpg",
         hoverOverwrite: "A few minor surgeries and forged documents later... will 3rd time be the charm?",
         message: "We are delighted to inform you that you have been selected for the position of Chief Fun Officer at Acme Corporation! Your enthusiasm, creativity, and qualifications have truly impressed us, and we can't wait to see you bring your unique flair to our team.<br><br>We want to emphasize that our decision was based solely on your exceptional skills and experience. It had absolutely nothing to do with your sexual preferences, skin color, or gender. At Acme Corporation, we pride ourselves on our commitment to inclusivity and equality, ensuring that everyone has an equal opportunity to shine.<br><br>We believe that you will be a fantastic addition to our diverse and dynamic team. We look forward to seeing the innovative and fun ideas you will bring to our projects. Get ready to join us in making work a lot more exciting!",
@@ -655,8 +655,8 @@ const upgrades = [
     },
     {
         name: "Degens Idle Dev #2",
-        cost: { copium: 13e27, delusion: 5e27, yachtMoney: 75e27, trollPoints: 5e27, hopium: 7e21, knowledge: 8e18, power: 5e-3, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 1e14, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 80, powerPerSecond: 0, serenityPerSecond: 0 },
+        cost: { copium: 1.3e30, delusion: 5e30, yachtMoney: 3.2e31, trollPoints: 5e30, hopium: 2e24, knowledge: 1.8e21, power: 5e-3, serenity: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 2.5e13, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 20, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/most_interesting_man_2.jpg",
     },
     

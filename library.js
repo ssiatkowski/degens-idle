@@ -3,8 +3,8 @@ const librarySkills = [
     { name: 'Knowledge Generation', cost: 400, description: 'After Prestiging or Ascending, begin knowledge generation immediately without reaching -1T delusion.', unlocked: false, level: 'History' },
     { name: 'Trade Ratios', cost: 1500, description: 'Lower trade ratio to 4:1 for top 4 resources and 4M:1 for Hopium.', unlocked: false, level: 'History' },
     { name: 'Cookie Boost', cost: 3e9, description: 'Cookie clicks now generate resources equal to your earnings per half a second (for the first 4 resources)', unlocked: false, level: 'History' }, 
-    // { name: '', cost: 1e10, description: '', unlocked: false, level: 'History' }, 
-    // { name: '', cost: 1e20, description: '', unlocked: false, level: 'History' }, 
+    { name: 'Hopeful Cookie', cost: 3e26, description: 'Boosted cookie clicks also generate hopium at current earnings rate.', unlocked: false, level: 'History' }, 
+    { name: 'Knowledgeable Cookie', cost: 9e45, description: 'Boosted cookie clicks also generate knowledge at current earnings rate.', unlocked: false, level: 'History' }, 
 
     { name: 'Cure for Delusion', cost: 5, description: 'Unlock ability to toggle whether delusion gain is positive or negative.', unlocked: false, level: 'Science' },
     { name: 'Luck is Rigged', cost: 777, description: 'Luck Game roll now picks from (-25% to 175%) instead of (-75% to 125%).', unlocked: false, level: 'Science' },
@@ -26,13 +26,13 @@ const librarySkills = [
     { name: 'Double Ascension', cost: 1250, description: 'Gain up to 2 God-Mode levels per Ascension. Also select up to 2 upgrades to enhance to God Mode.', unlocked: false, level: 'Artificial Intelligence' },
     { name: 'Buy Markers', cost: 300000, description: 'Purchased Upgrades will now have a switch indicating whether or not they should be bought using "Buy Seen" and "Buy All" buttons.', unlocked: false, level: 'Artificial Intelligence' },
     { name: 'Triple Ascension', cost: 3.5e6, description: 'Gain up to 3 God-Mode levels per Ascension. Also select up to 3 upgrades to enhance to God Mode.', unlocked: false, level: 'Artificial Intelligence' },
-    // { name: 'Autobuy Upgrades', cost: 5e13, description: 'Each upgrade can be configured to Autobuy - which will make purchase the upgrade as soon as it's affordable.', unlocked: false, level: 'Artificial Intelligence' },
-    { name: 'Quintuple Transendence', cost: 5e18, description: 'Gain up to 5 Parallel Universe God-Mode levels per Transendence. Also select up to 5 upgrades to enhance to PU God Mode.', unlocked: false, level: 'Artificial Intelligence' },
-    { name: 'Septuple Ascension', cost: 1e24, description: 'Gain up to 7 God-Mode levels per Ascension. Also select up to 7 upgrades to enhance to God Mode.', unlocked: false, level: 'Artificial Intelligence' },
-
+    { name: 'Quintuple Transendence', cost: 5e19, description: 'Gain up to 5 Parallel Universe God-Mode levels per Transendence. Also select up to 5 upgrades to enhance to PU God Mode.', unlocked: false, level: 'Artificial Intelligence' },
+    { name: 'Septuple Ascension', cost: 7e24, description: 'Gain up to 7 God-Mode levels per Ascension. Also select up to 7 upgrades to enhance to God Mode.', unlocked: false, level: 'Artificial Intelligence' },
+    { name: 'Autobuy Upgrades', cost: 3e31, description: `Buy Markers are repurposed to configure Autobuy - which will purchase afforable visible upgrades every 2 seconds.`, unlocked: false, level: 'Artificial Intelligence' },
+ 
     { name: 'Knowledge is Power', cost: 1e6, description: 'Unlock new resource Power. Power is always generated based on your current amount of Knowledge.', unlocked: false, level: 'Celestial Bodies' },
     { name: 'Big Crunch', cost: 8e11, description: 'Could this be what Power is for? Unlock ability to force the universe into a Big Crunch and to be reborn anew!', unlocked: false, level: 'Celestial Bodies' },
-    { name: 'Money is Power, too', cost: 1e18, description: 'Add a multiplier to Power generation based on Yacht Money.', unlocked: false, level: 'Celestial Bodies' },
+    { name: 'Money is Power, too', cost: 2.5e20, description: 'Add a multiplier to Power generation based on Yacht Money.', unlocked: false, level: 'Celestial Bodies' },
 
     { name: 'The Omniverse', cost: 1e50, description: 'Stop cheating. This does not exist yet.', unlocked: false, level: '???' },
     // { name: 'Serenity', cost: 1e25, description: '', unlocked: false, level: '???' },
@@ -63,7 +63,7 @@ function unlockLibrarySkill(skill, duringLoad = false) {
         switch (skill.name) {
             case 'Cookie Recipe':
                 cookieClickMultiplier = 100;
-                if (!cookieBoost){
+                if (!cookieBoost && !cookieHopeful && !cookieKnowledgeable){
                     const cookieTooltip = document.querySelector('#cookieButton .cookieTooltip');
                     cookieTooltip.textContent = `Each cookie click counts as ${cookieClickMultiplier} clicks on collect buttons for Copium, Delusion, Yacht Money, and Troll Points!`;
                 }
@@ -79,10 +79,28 @@ function unlockLibrarySkill(skill, duringLoad = false) {
 
             case 'Cookie Boost':
                 cookieBoost = true;
-                const cookieTooltip = document.querySelector('#cookieButton .cookieTooltip');
-                cookieTooltip.textContent = `Each cookie click generates the amount of Copium, Delusion, Yacht Money, and Troll Points that you earn in half a second.`;
+                if (!cookieHopeful && !cookieKnowledgeable){
+                    const cookieTooltip = document.querySelector('#cookieButton .cookieTooltip');
+                    cookieTooltip.textContent = `Each cookie click generates half second worth of Copium, Delusion, Yacht Money, and Troll Points.`;
+                }
                 break;
         
+            case 'Hopeful Cookie':
+                cookieHopeful = true;
+                if (!cookieKnowledgeable){
+                    const cookieTooltip = document.querySelector('#cookieButton .cookieTooltip');
+                    cookieTooltip.textContent = `Each cookie click generates half second worth of Copium, Delusion, Yacht Money, Troll Points, and Hopium.`;
+                }
+                break;
+
+            case 'Knowledgeable Cookie':
+                cookieKnowledgeable = true;
+                const cookieTooltip = document.querySelector('#cookieButton .cookieTooltip');
+                cookieTooltip.textContent = `Each cookie click generates half second worth of Copium, Delusion, Yacht Money, Troll Points, Hopium, and Knowledge.`;
+                break;
+
+                
+
             case 'Cure for Delusion':
                 document.getElementById('toggleDelusionLabel').classList.remove('hidden');
                 // Check the state of delusion and update the switch position accordingly
@@ -171,6 +189,10 @@ function unlockLibrarySkill(skill, duringLoad = false) {
                 
             case 'Septuple Ascension':
                 numAscensionUpgrades = Math.max(numAscensionUpgrades, 7);
+                break;
+
+            case 'Autobuy Upgrades':
+                setInterval(autobuyUpgrades, 2000);
                 break;
 
             case 'Knowledge is Power':

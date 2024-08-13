@@ -73,6 +73,8 @@ let numPUAscensionUpgrades = 2;
 
 let improvedTradeRatio = false;
 let cookieBoost = false;
+let cookieHopeful = false;
+let cookieKnowledgeable = false;
 
 //cooldowns for mini games
 let cooldowns = {
@@ -86,7 +88,7 @@ let cooldowns = {
 const miniGameTimeouts = {
     speed: 8 * 60 * 1000,  // 10 minutes
     memory: 10 * 60 * 1000,  // 15 minutes
-    math: 5 * 60 * 1000,    // 8 minutes
+    math: 6 * 60 * 1000,    // 8 minutes
     luck: 4 * 60 * 1000     // 3 minutes
 };
 
@@ -109,6 +111,12 @@ function cookieCollectAllResources() {
         delusion += Math.max(cookieClickMultiplier * totalMultiplier, effectiveDelusionPerSecond/2);
         yachtMoney += Math.max(cookieClickMultiplier * totalMultiplier, effectiveYachtMoneyPerSecond/2);
         trollPoints += Math.max(cookieClickMultiplier * totalMultiplier, effectiveTrollPointsPerSecond/2);
+        if (cookieHopeful){
+            hopium += Math.max(cookieClickMultiplier * totalMultiplier, effectiveHopiumPerSecond/2);
+        }
+        if (cookieKnowledgeable){
+            knowledge += Math.max(cookieClickMultiplier * totalMultiplier, cookieKnowledgeable/2);
+        }
     }
     else {
         copium += cookieClickMultiplier * totalMultiplier;
@@ -409,7 +417,7 @@ function generateResources() {
     serenity += effectiveSerenityPerSecond / 2;
 
     if (powerUnlocked){
-        effectivePowerPerSecond = moneyIsPowerTooSkill ? (knowledge ** (3/8) / 1e12) * (1 + (Math.max(yachtMoney,0) ** (1/3) / 1e12)) : knowledge ** (3/8) / 1e12
+        effectivePowerPerSecond = moneyIsPowerTooSkill ? (knowledge ** (1/3) / 1e12) * (1 + (Math.max(yachtMoney,0) ** (1/3.1) / 1e12)) : knowledge ** (1/3) / 1e12
     }
 
     // Check if delusion drops below negative 1 trillion to start generating Knowledge
@@ -471,20 +479,20 @@ function playMiniGame(gameType) {
                 let rewardPerClick;
                 if (speedGameSkill) {
                     // Reward based on total number of clicks using the provided formula
-                    reward = Math.max(Math.floor(Math.abs(copium) * ((points - 3) * 0.03)), 25);
+                    reward = Math.max(Math.floor(Math.abs(copium) * ((points - 3) * 0.025)), 25);
                     rewardPerClick = reward / points;
                     showMessageModal('Speed Game Result', `You tapped ${points} times in ${duration} seconds. Each click was worth ${formatNumber(rewardPerClick)} copium. Your total click reward is ${formatNumber(reward)} copium!`, false, false);
                 } else {
                     // Reward based on clicks per second
                     let clicksPerSecond = points / duration;
                     if (clicksPerSecond > 3) { // More than 3 clicks per second
-                        reward = Math.max(Math.floor(Math.abs(copium) * ((clicksPerSecond - 3) * 0.05)), 25);
+                        reward = Math.max(Math.floor(Math.abs(copium) * ((clicksPerSecond - 3) * 0.025)), 25);
                         rewardPerClick = reward / points;
                         showMessageModal('Speed Game Result - Fast', `You tapped ${points} times in ${duration} seconds (${clicksPerSecond.toFixed(1)} taps per second). Each click was worth ${formatNumber(rewardPerClick)} copium. For being so fast you earned ${formatNumber(reward)} copium!`, false, false);
                     } else {
                         reward = -Math.max(Math.floor(Math.random() * Math.abs(copium) * 0.1), 10);
                         rewardPerClick = reward / points;
-                        showMessageModal('Speed Game Result - Slow', `You tapped ${points} times in ${duration} seconds (${clicksPerSecond.toFixed(1)} taps per second). Each click was worth ${formatNumber(rewardPerClick)} copium. For being so slow you lost ${formatNumber(reward)} copium!`, false, false);
+                        showMessageModal('Speed Game Result - Slow', `You tapped ${points} times in ${duration} seconds (${clicksPerSecond.toFixed(1)} taps per second). For being so slow you lost ${formatNumber(reward)} copium!`, false, false);
                     }
                 }
                 
@@ -495,7 +503,7 @@ function playMiniGame(gameType) {
         });
     } else if (gameType === 'memory') {
         // Memory mini-game logic
-        let sequenceLength = Math.floor(Math.random() * 6) + 3; // Random length between 3 and 8
+        let sequenceLength = Math.floor(Math.random() * 5) + 3; // Random length between 3 and 7
         let sequence = '';
         for (let i = 0; i < sequenceLength; i++) {
             sequence += Math.floor(Math.random() * 10); // Random digit between 0 and 9
@@ -761,6 +769,8 @@ async function restartGame(isPrestige = false) {
             buyMarkersSkill = false;
             improvedTradeRatio = false;
             cookieBoost = false;
+            cookieHopeful = false;
+            cookieKnowledgeable = false;
             bigCrunchUnlocked = false;
             moneyIsPowerTooSkill = false;
             lessDiminishingGodModeSkill = false;
@@ -1185,12 +1195,11 @@ function updateMultipliersDisplay() {
     document.getElementById('prestige-multiplier').textContent = `Prestige: x${formatNumber(epsMultiplier)} mult`;
     document.getElementById('god-mode-display').textContent = `God-Mode Level ${godModeLevel} (x${formatNumber(godModeMultiplier)} mult)`;
     document.getElementById('pu-god-display').textContent = `PU God Level ${puGodLevel} (x${formatNumber(puGodMultiplier)} mult)`;
-    document.getElementById('big-crunch-display').textContent = `Big Crunch Power ${formatNumber(bigCrunchPower)} (x${formatNumber(bigCrunchMultiplier)} mult)`;
+    document.getElementById('big-crunch-display').textContent = `Big Crunch Power ${formatNumber(bigCrunchPower)} (x${formatNumber(bigCrunchMultiplier)} mult + KPSx${formatNumber(bigCrunchMultiplier**(1/2))})`;
 }
 
 function unhideKnowledge() {
     document.getElementById('knowledge-container').style.display = 'block';
-    localStorage.setItem('knowledgeUnlocked', 'true');
     knowledgeUnlocked = true;
 }
 
@@ -1213,7 +1222,6 @@ function unlockBigCrunch() {
 function unlockTranscendence() {
     transcendenceUnlocked = true;
     document.getElementById('pu-god-display').style.display = 'block';
-    saveGameState()
 }
 
 
@@ -1320,8 +1328,8 @@ function calculateBigCrunchMultiplier(bcPower = bigCrunchPower) {
 
 // Function to calculate the ascension eps multiplier
 function calculateAscensionEpsMult() {
-    const power = twoDimensionalAscensionSkill ? 2 / 3 : 1 / 3;
-    return epsMultiplier ** power;
+    const exponent = twoDimensionalAscensionSkill ? 2 / 3 : 1 / 3;
+    return epsMultiplier ** exponent;
 }
 
 async function ascend() {
@@ -1460,7 +1468,7 @@ function updateBigCrunchButton() {
     const bigCrunchButton = document.getElementById('bigCrunchButton');
     if (bigCrunchUnlocked && canBigCrunch()) {
         const newMultiplier = calculateBigCrunchMultiplier(power);
-        bigCrunchButton.textContent = `Big Crunch (x${(newMultiplier / bigCrunchMultiplier).toFixed(2)} multiplier)`;
+        bigCrunchButton.textContent = `Big Crunch (x${formatNumber((newMultiplier / bigCrunchMultiplier))} multiplier)`;
         bigCrunchButton.style.display = 'block';
     } else {
         bigCrunchButton.style.display = 'none';
@@ -1492,7 +1500,7 @@ function decodeName(encodedName) {
 }
 
 // Function to handle the purchase of an upgrade
-function buyUpgrade(encodedUpgradeName) {
+function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying=true) {
     // Decode the upgrade name
     const upgradeName = decodeName(encodedUpgradeName);
     // Find the upgrade object by its name in the available upgrades list
@@ -1583,13 +1591,15 @@ function buyUpgrade(encodedUpgradeName) {
             epsMultiplier *= miniPrestigeMultiplier;
         }
 
-        // Update the upgrade list and display
-        updateUpgradeList();
-        updateMultipliersDisplay();
-        updateEffectiveMultipliers();
-        updateDisplay();
-        // Save the game state
-        saveGameState();
+        if (callUpdatesAfterBuying){
+            // Update the upgrade list and display
+            updateUpgradeList();
+            updateMultipliersDisplay();
+            updateEffectiveMultipliers();
+            updateDisplay();
+            // Save the game state
+            saveGameState();
+        }
 
     } else {
         // Show an alert if the player does not have enough resources
@@ -1599,8 +1609,6 @@ function buyUpgrade(encodedUpgradeName) {
             });
         }
     }
-    // Update the upgrade buttons to reflect the current state
-    updateUpgradeButtons();
 }
 
 
@@ -1613,12 +1621,12 @@ function buyAllUpgrades(limit, pressedButton) {
         if (buyMarkersSkill) {
             const switchElement = JSON.parse(localStorage.getItem(`switchState-${upgrade.name}`));
             if (switchElement && isAffordable(upgrade.cost)) {
-                buyUpgrade(encodeName(upgrade.name), true);
+                buyUpgrade(encodeName(upgrade.name));
                 purchasedCount++; // Increment counter when an upgrade is bought
             }
         } else {
             if (isAffordable(upgrade.cost)) {
-                buyUpgrade(encodeName(upgrade.name), true);
+                buyUpgrade(encodeName(upgrade.name));
                 purchasedCount++; // Increment counter when an upgrade is bought
             }
         }
@@ -1665,13 +1673,11 @@ function formatCostOrEarnings(costOrEarnings, isGodMode = false, isPUGodMode = f
 }
 
 
-// Function to add a purchased upgrade to the display
 function addPurchasedUpgrade(img, name, earnings, isGodMode = false, isPUGodMode = false, message = null) {
-    const purchasedList = document.getElementById('purchasedList'); // Get the purchased list container
-    const upgradeElement = document.createElement('div'); // Create a new div element
-    upgradeElement.classList.add('purchased-upgrade'); // Add the 'purchased-upgrade' class
+    const purchasedList = document.getElementById('purchasedList');
+    const upgradeElement = document.createElement('div');
+    upgradeElement.classList.add('purchased-upgrade');
 
-    // Add the God Mode class if applicable
     if (isGodMode && isPUGodMode) {
         upgradeElement.classList.add('purchased-upgrade-double-godmode');
     } else if (isGodMode) {
@@ -1680,7 +1686,6 @@ function addPurchasedUpgrade(img, name, earnings, isGodMode = false, isPUGodMode
         upgradeElement.classList.add('purchased-upgrade-pu-godmode');
     }
 
-    // Set the inner HTML of the new div element
     upgradeElement.innerHTML = `
         <div class="upgrade-header">
             <label class="switch">
@@ -1688,58 +1693,59 @@ function addPurchasedUpgrade(img, name, earnings, isGodMode = false, isPUGodMode
                 <span class="slider"></span>
             </label>
         </div>
-        <img src="${img}" alt="${name}" class="upgrade-image"> <!-- Upgrade image -->
+        <img src="${img}" alt="${name}" class="upgrade-image">
         <div>
-            <p class="upgrade-name">${name}</p> <!-- Upgrade name -->
+            <p class="upgrade-name">${name}</p>
             <div class="upgrade-earnings">
-                ${formatCostOrEarnings(earnings, isGodMode, isPUGodMode)} <!-- Formatted earnings -->
+                ${formatCostOrEarnings(earnings, isGodMode, isPUGodMode)}
             </div>
         </div>
     `;
 
-    purchasedList.prepend(upgradeElement); // Prepend to show the most recent first
+    purchasedList.prepend(upgradeElement);
 
-    // Add event listener for the switch to stop propagation
     const toggleSwitch = document.getElementById(`toggle-${name}`);
+
     if (toggleSwitch) {
         toggleSwitch.addEventListener('click', (event) => {
+            console.log("Toggle switch clicked - event stopped");
             event.stopPropagation();
+        });
+
+        toggleSwitch.addEventListener('change', (event) => {
+            console.log(`Switch for upgrade ${name} set to ${event.target.checked ? 'On' : 'Off'}`);
+            localStorage.setItem(`switchState-${name}`, JSON.stringify(event.target.checked));
         });
     }
 
-    // If the upgrade has a message, add the 'clickable' class and an onclick event
     if (message) {
         upgradeElement.classList.add('clickable');
         upgradeElement.addEventListener('click', (event) => {
-            if (!toggleSwitch || !toggleSwitch.contains(event.target)) {
-                showMessageModal(name, message, false, false);
+            if (event.target.closest('.switch')) {
+                console.log("Switch clicked, no modal should be shown");
+                return; // Do nothing if the click originated from the switch
             }
+
+            console.log("Showing modal - toggle switch not the target");
+            showMessageModal(name, message, false, false);
         });
     }
 
     if (buyMarkersSkill) {
-        // Load the switch state from local storage
         const savedSwitchState = JSON.parse(localStorage.getItem(`switchState-${name}`)) || false;
         if (toggleSwitch) {
             toggleSwitch.checked = savedSwitchState;
-            toggleSwitch.parentElement.style.display = 'block'; // Make the switch visible
-
-            // Add event listener for the switch
-            toggleSwitch.addEventListener('change', (event) => {
-                // const state = event.target.checked ? 'On' : 'Off';
-                // console.log(`Switch for upgrade ${name} set to ${state}`);
-                // Save the switch state to local storage
-                localStorage.setItem(`switchState-${name}`, JSON.stringify(event.target.checked));
-            });
+            toggleSwitch.parentElement.style.display = 'block';
         }
     } else {
-        // Ensure switch is hidden if buyMarkersSkill is false
         const switchElement = document.getElementById(`toggle-${name}`);
         if (switchElement) {
             switchElement.parentElement.style.display = 'none';
         }
     }
 }
+
+
 
 
 
@@ -1786,12 +1792,31 @@ function isAffordable(cost) {
             (cost.serenity === 0 || serenity >= cost.serenity);
 }
 
+function autobuyUpgrades(){
+    
+    let topUpgrades = availableUpgrades.slice(0, 7);
+
+    let upgradeBought = false;
+    topUpgrades.forEach(upgrade => {
+        if(isAffordable(upgrade.cost) && JSON.parse(localStorage.getItem(`switchState-${upgrade.name}`))){
+            buyUpgrade(encodeName(upgrade.name), false);
+            upgradeBought = true;
+        }
+    })
+
+    if (upgradeBought){
+        updateUpgradeList();
+        updateMultipliersDisplay();
+        updateEffectiveMultipliers();
+        updateDisplay();
+        saveGameState();
+    }
+
+}
+
 
 // Function to update the upgrade list display
 function updateUpgradeList() {
-    const upgradeList = document.getElementById('upgradeList');
-    upgradeList.innerHTML = ''; // Clear the current upgrade list
-
     // Limit the display to the top 7 upgrades
     let topUpgrades = availableUpgrades.slice(0, 7);
 
@@ -1800,6 +1825,10 @@ function updateUpgradeList() {
     if (finaleIndex !== -1) {
         topUpgrades = topUpgrades.slice(0, finaleIndex + 1);
     }
+
+    const upgradeList = document.getElementById('upgradeList');
+    upgradeList.innerHTML = ''; // Clear the current upgrade list
+
 
     // Create and append upgrade elements to the upgrade list
     topUpgrades.forEach(upgrade => {
@@ -1868,9 +1897,9 @@ function attachTooltipEvents(button, upgrade) {
 // Function to update the appearance of upgrade buttons based on affordability
 function updateUpgradeButtons() {
     let foundAffordableUpgrade = false;
-
+    let topUpgrades = availableUpgrades.slice(0, 7);
     // Update each available upgrade button
-    availableUpgrades.forEach(upgrade => {
+    topUpgrades.forEach(upgrade => {
         const encodedName = encodeName(upgrade.name);
         const button = document.querySelector(`button[data-upgrade-name="${encodedName}"]`);
         if (button) {
@@ -1988,6 +2017,45 @@ async function devAscend() {
     }
 }
 
+// Function to ascend and select a random upgrade to set to godmode
+async function devTranscend() {
+    const top100AvailableUpgrades = availableUpgrades
+        .slice(0, 100)
+        .filter(up => !up.isPUGodMode);
+
+    const randomUpgrade = top100AvailableUpgrades[Math.floor(Math.random() * top100AvailableUpgrades.length)];
+    if (randomUpgrade) {
+        randomUpgrade.isPUGodMode = true;
+        puGodLevel += 1;
+        puGodMultiplier = calculateGodModeMultiplier();
+        epsMultiplier = calculateAscensionEpsMult();
+        prestigeRequirement = calculateMinResource();
+        restartGame(true);
+        saveGameState();
+        updateMultipliersDisplay();
+        updateEffectiveMultipliers();
+        updateDisplay();
+    }
+}
+
+// Function to ascend and select a random upgrade to set to godmode
+async function devCrunch() {
+
+    bigCrunchPower = bigCrunchPower*1.1;
+    bigCrunchMultiplier = calculateBigCrunchMultiplier();
+    
+    // Call restartGame with isPrestige flag set to true
+    restartGame(true);
+
+    // Save game state after prestige
+    updateMultipliersDisplay();
+    updateEffectiveMultipliers();
+    updateDisplay();
+    saveGameState();
+
+}
+
+
 // Function to increase prestige multiplier and calculate min resource
 function devIncreasePrestigeMultiplier() {
     epsMultiplier = epsMultiplier * 1.25;
@@ -2012,6 +2080,12 @@ document.addEventListener('keydown', (event) => {
                 break;
             case 'A':
                 devAscend();
+                break;
+            case 'T':
+                devTranscend();
+                break;
+            case 'C':
+                devCrunch();
                 break;
             case 'P':
                 devIncreasePrestigeMultiplier();
@@ -2194,11 +2268,11 @@ function displayNextModal() {
         submitGameInputButton.onclick = () => closeModal(gameInput.value);
 
         closeButton.onclick = () => closeModal(null);
-        window.onclick = (event) => {
-            if (event.target == modal) {
-                closeModal(null);
-            }
-        };
+        // window.onclick = (event) => {
+        //     if (event.target == modal) {
+        //         closeModal(null);
+        //     }
+        // };
     } else {
         modalCloseButton.style.display = 'block';
         modalConfirmButtons.style.display = 'none';
