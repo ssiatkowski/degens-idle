@@ -1587,7 +1587,7 @@ function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying=true) {
 
         // Special case for the "Still very stupid" upgrade
         if (name === "Impossible") {
-            showMessageModal('Sadly', "This marks the end of v0.826. Your journey through this existential tale is just getting started. Another big update is just a few days away, but if you’re eager to explore more, why not restart the game? Try speed runs, test out new strategies, and see what secrets you uncover next on your path to enlightenment. Oh, and about Transcendence—how are you finding it? I’d love to hear your thoughts! Whether it’s through the feedback form or on Discord (both can be found in settings), your feedback is super valuable.");
+            showMessageModal('Sadly', "This marks the end of v0.827. Your journey through this existential tale is just getting started. Another big update is just a few days away, but if you’re eager to explore more, why not restart the game? Try speed runs, test out new strategies, and see what secrets you uncover next on your path to enlightenment. Oh, and about Transcendence—how are you finding it? I’d love to hear your thoughts! Whether it’s through the feedback form or on Discord (both can be found in settings), your feedback is super valuable.");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one

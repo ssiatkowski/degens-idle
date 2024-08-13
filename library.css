@@ -34,7 +34,7 @@
     margin: 0 auto;
 }
 
-.skill-level {
+.library-skill-level {
     width: 100%;
     border: 1px solid #444;
     padding: 10px;
@@ -42,7 +42,7 @@
     position: relative;
 }
 
-.skill-level-label {
+.library-skill-level-label {
     position: absolute;
     top: -15px;
     left: 10px;
@@ -53,7 +53,7 @@
     font-weight: bold;
 }
 
-.skill-row {
+.library-skill-row {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;

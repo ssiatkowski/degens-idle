@@ -38,7 +38,7 @@
     margin: 0 auto;
 }
 
-.skill-level {
+.powerhall-skill-level {
     width: 100%;
     border: 8px solid #444;
     padding: 10px;
@@ -46,7 +46,7 @@
     position: relative;
 }
 
-.skill-level-label {
+.powerhall-skill-level-label {
     position: absolute;
     top: -15px;
     left: 10px;
@@ -58,7 +58,7 @@
     font-weight: bold;
 }
 
-.skill-row {
+.powerhall-skill-row {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;

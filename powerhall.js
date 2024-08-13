@@ -77,15 +77,15 @@ function initializePowerHallSkills() {
 
     Object.keys(skillLevels).forEach(level => {
         const skillLevelDiv = document.createElement('div');
-        skillLevelDiv.classList.add('skill-level');
+        skillLevelDiv.classList.add('powerhall-skill-level');
 
         const skillLevelLabel = document.createElement('div');
-        skillLevelLabel.classList.add('skill-level-label');
+        skillLevelLabel.classList.add('powerhall-skill-level-label');
         skillLevelLabel.textContent = `${level} Section`;
         skillLevelDiv.appendChild(skillLevelLabel);
 
         const skillRow = document.createElement('div');
-        skillRow.classList.add('skill-row');
+        skillRow.classList.add('powerhall-skill-row');
 
         skillLevels[level].forEach(skill => {
             const skillDiv = document.createElement('div');
