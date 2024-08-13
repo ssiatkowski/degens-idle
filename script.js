@@ -99,7 +99,11 @@ function updateEffectiveMultipliers() {
     effectiveTrollPointsPerSecond = trollPointsPerSecond * totalMultiplier;
     effectiveHopiumPerSecond = hopiumPerSecond * totalMultiplier;
     effectiveKnowledgePerSecond = knowledgePerSecond * totalMultiplier * (bigCrunchMultiplier**(1/2));
-    // effectivePowerPerSecond = powerPerSecond * totalMultiplier;
+
+    if (powerUnlocked){
+        effectivePowerPerSecond = moneyIsPowerTooSkill ? (knowledge ** (1/3) / 1e12) * (1 + (Math.max(yachtMoney,0) ** (1/3.1) / 1e12)) : knowledge ** (1/3) / 1e12
+    }
+
     effectiveSerenityPerSecond = serenityPerSecond * totalMultiplier;
 }
 
@@ -2426,6 +2430,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Library Skills -- has to happen before loadGameState!
     initializeSkills();
+
+    // Power Skills
+    initializePowerHallSkills();
 
     // Load the game state from local storage 
     loadGameState();

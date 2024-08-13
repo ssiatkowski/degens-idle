@@ -14,6 +14,7 @@
     <title>Degens Idle v0.826</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="library.css">    
+    <link rel="stylesheet" href="powerhall.css">    
     <link rel="stylesheet" type="text/css" href="settings.css">
     <link href="https://fonts.googleapis.com/css2?family=Uncial+Antiqua&display=swap" rel="stylesheet"> <!-- Google Font -->
 </head>
@@ -132,6 +133,7 @@
             <button id="bigCrunchButton" style="display:none;" class="custom-button">Big Crunch</button>
             <p class="big-crunch-text" id="big-crunch-display" style="display:none;">Big Crunch Power 1e-7 (x1.00 mult)</p>
             <button id="libraryButton">Hall of Knowledge</button>
+            <button id="powerHallButton" style="display:none;">Hall of Power</button>        
         </div>
         <div id="upgrades">
             <h2>Upgrades</h2>
@@ -188,6 +190,17 @@
             <button id="closeLibraryButton">Exit</button>
         </div>
     </div>
+    <div id="powerHallOverlay" class="powerhall-overlay" style="display: none;">
+        <div class="powerhall-overlay-content">
+            <span class="close-button" id="closePowerHallOverlay">&times;</span>
+            <h1>HALL OF POWER</h1>
+            <h4>Welcome to the formidable Hall of Power. Here you will discover the essence of true strength and dominance, unlocking abilities that channel the raw force of the megaverse itself.<br><br>Each skill you master here enhances your journey, bringing you closer to the ultimate power that persists through every challenge and triumph.</h4>
+            <div id="powerHallSkills">
+                <!-- Power skills will be dynamically added here -->
+            </div>
+            <button id="closePowerHallButton">Exit</button>
+        </div>
+    </div>
     <!-- Settings Overlay -->
     <div id="settingsOverlay" class="settings-overlay" style="display: none;">
         <div class="settings-overlay-content">
@@ -227,6 +240,7 @@
     <script src="upgrades.js"></script>
     <script src="script.js"></script>
     <script src="library.js"></script>
+    <script src="powerhall.js"></script>
     <script src="settings.js"></script>
 </body>
 </html>

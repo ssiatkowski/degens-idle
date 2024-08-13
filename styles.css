@@ -862,6 +862,45 @@ button.disabled {
     transform: translateY(2px) scale(0.98); /* Slight push down and minor scale down */
 }
 
+/* Power Hall button specific styles */
+#powerHallButton {
+    background-color: #1a1a1a; /* Dark gray */
+    color: #ffcc00; /* Bright gold */
+    font-family: 'Impact', 'Arial Black', sans-serif; /* Bold, powerful font */
+    font-size: 32px;
+    padding: 0;
+    border: 3px solid #333300; /* Dark gold for border */
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6); /* Stronger shadow */
+    transition: all 0.4s ease; /* Smooth transition */
+    text-shadow: 3px 3px 6px #000; /* Intense text shadow */
+    background-image: url('imgs/textures/power2.jpg'); /* Use the power texture image */
+    background-size: cover; /* Ensure the texture covers the entire button */
+    background-repeat: no-repeat; /* Prevent the image from repeating */
+    background-position: center; /* Center the image on the button */
+    aspect-ratio: 800 / 200; /* Maintain the aspect ratio of the image */
+    width: 100%; /* Set width to 100% of the container */
+    text-align: center; /* Center the text */
+    display: flex; /* Use flexbox for centering */
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+    text-transform: uppercase; /* Make text uppercase for added impact */
+    background-blend-mode: overlay; /* Blend mode for better visibility */
+}
+
+#powerHallButton:hover {
+    background-color: #333300; /* Dark gold on hover */
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.7); /* Larger shadow on hover */
+    transform: translateY(-7px) scale(1.08); /* More noticeable lift and scaling */
+}
+
+#powerHallButton:active {
+    background-color: #1a1a1a; /* Return to dark gray on click */
+    box-shadow: 0 7px 12px rgba(0, 0, 0, 0.5); /* Slightly smaller shadow on click */
+    transform: translateY(3px) scale(0.96); /* Slight push down and scale down */
+}
+
 
 /* Switch button styles */
 .switch {

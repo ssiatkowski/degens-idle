@@ -1,0 +1,145 @@
+/* Overlay for the Hall of Power */
+.powerhall-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 3;
+    overflow: hidden; /* Prevent body scrolling */
+}
+
+.powerhall-overlay-content {
+    background-image: url('imgs/textures/power_background.jpg'); /* Power texture */
+    background-size: cover; /* Stretch the background image to cover the entire content area */
+    background-repeat: no-repeat; /* Prevent the background image from repeating */
+    background-position: center; /* Center the background image */
+    padding: 20px;
+    border: 1px solid #333;
+    border-radius: 10px;
+    text-align: center; /* Center the text */
+    color: #e0e0e0;
+    width: 80%; /* Adjust width as needed */
+    max-height: 90%; /* Ensure it fits within the screen */
+    overflow-y: auto; /* Enable vertical scrolling */
+}
+
+
+/* Skill Tree Container */
+#powerHallSkills {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.skill-level {
+    width: 100%;
+    border: 8px solid #444;
+    padding: 10px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.skill-level-label {
+    position: absolute;
+    top: -15px;
+    left: 10px;
+    color: #ffcc00;
+    background-color: #1e1e1e;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.skill-row {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 20px 0;
+}
+
+.powerskill {
+    background-color: #333;
+    border: 1px solid #555;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 3px;
+    width: 150px;
+    text-align: center;
+    position: relative;
+    cursor: pointer; /* Make it look like a button */
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.powerskill:hover {
+    transform: translateY(-2px);
+}
+
+.powerskill.locked {
+    background-color: #555;
+}
+
+.powerskill.affordable {
+    background-color: #4caf50; /* Green */
+}
+
+.powerskill.purchased {
+    background-color: #ffcc00; /* Purple */
+    color: #1e1e1e;
+}
+
+.powerskill .skill-cost {
+    display: block; /* Always show cost */
+}
+
+.powerskill h3,
+.powerskill p {
+    display: none; /* Hide by default */
+}
+
+.powerskill.affordable h3,
+.powerskill.affordable p,
+.powerskill.purchased h3,
+.powerskill.purchased p {
+    display: block; /* Show when affordable or purchased */
+}
+
+.powerhall-overlay-content h1,
+.powerhall-overlay-content h4 {
+    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black background */
+    color: #ffcc00;
+    padding: 10px; /* Add some padding around the text */
+    font-size: 18px; /* Adjust the font size for the h4 if needed */
+    border-radius: 5px; /* Optional: Add some border radius to soften the edges */
+    margin: 0 auto 15px auto; /* Center the element and add space below */
+    display: block; /* Ensure the elements are block-level and stack vertically */
+    max-width: fit-content; /* Make the background fit the content */
+}
+
+.powerhall-overlay-content h1 {
+    font-size: 32px; /* Adjust the font size for the h4 if needed */
+    font-family: 'Impact', 'Arial Black', sans-serif; /* Bold, powerful font */
+}
+
+
+/* Media query for mobile devices */
+@media (max-width: 600px) {
+    .skill-row {
+        justify-content: space-around;
+    }
+    .powerskill {
+        width: calc(49% - 35px); /* Two skills per row with some margin */
+        font-size: 0.8em; /* Smaller font size for mobile */
+        padding: 5px; /* Adjust padding for smaller screens */
+    }
+    .skill-level-label {
+        font-size: 14px; /* Smaller label font size */
+    }
+}
