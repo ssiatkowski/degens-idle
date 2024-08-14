@@ -44,7 +44,7 @@ const upgrades = [
     {
         name: "Music",
         cost: { copium: 100, delusion: 25, yachtMoney: 150, trollPoints: 25, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 8.1, delusionPerSecond: -0.8, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 8.4, delusionPerSecond: -0.8, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/linkin_park.jpg",
     },
     {
@@ -62,7 +62,7 @@ const upgrades = [
     {
         name: "Paid Email Service",
         cost: { copium: 1000, delusion: 0, yachtMoney: 0, trollPoints: 150, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 0.4, delusionPerSecond: 8.4, yachtMoneyPerSecond: -1.3, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0.8, delusionPerSecond: 8.4, yachtMoneyPerSecond: -1.3, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/proton.jpg",
     },
     {
@@ -81,7 +81,7 @@ const upgrades = [
     {
         name: "Hard Work ≠ Success",
         cost: { copium: 2000, delusion: 0, yachtMoney: 1400, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 10, delusionPerSecond: -5, yachtMoneyPerSecond: 1.7, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 10, delusionPerSecond: -5, yachtMoneyPerSecond: 1.9, trollPointsPerSecond: 2, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/hard_to_swallow.jpg",
         hoverOverwrite: "But work hard anyway!",
     },
