@@ -39,6 +39,7 @@
 }
 
 .powerhall-skill-level {
+    background-color: rgba(0, 0, 0, 0.5); /* Ensure it matches the original */
     width: 100%;
     border: 8px solid #444;
     padding: 10px;

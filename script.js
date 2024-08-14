@@ -59,6 +59,7 @@ let multibuyUpgradesSkill = false;
 let mathGameSkill = false;
 let memoryGameSkill = false;
 let speedGameSkill = false;
+let miniGamerSkill = false;
 let powerUnlocked = false;
 let buyMarkersSkill = false;
 let bigCrunchUnlocked = false;
@@ -92,6 +93,10 @@ const miniGameTimeouts = {
     luck: 4 * 60 * 1000     // 3 minutes
 };
 
+function calculateEffectivePower(){
+    return (moneyIsPowerTooSkill ? (knowledge ** (1/3) / 1e12) * (1 + (Math.max(yachtMoney,0) ** (2/7) / 1e12)) : knowledge ** (1/3) / 1e12) * devMultiplier;
+}
+
 function updateEffectiveMultipliers() {
     effectiveCopiumPerSecond = copiumPerSecond * totalMultiplier;
     effectiveDelusionPerSecond = delusionPerSecond * totalMultiplier;
@@ -101,7 +106,7 @@ function updateEffectiveMultipliers() {
     effectiveKnowledgePerSecond = knowledgePerSecond * totalMultiplier * (bigCrunchMultiplier**(1/2));
 
     if (powerUnlocked){
-        effectivePowerPerSecond = moneyIsPowerTooSkill ? (knowledge ** (1/3) / 1e12) * (1 + (Math.max(yachtMoney,0) ** (1/3.1) / 1e12)) : knowledge ** (1/3) / 1e12
+        effectivePowerPerSecond = calculateEffectivePower();
     }
 
     effectiveSerenityPerSecond = serenityPerSecond * totalMultiplier;
@@ -187,7 +192,6 @@ function loadGameState() {
     firstTimePrestigeButtonAvailable = JSON.parse(localStorage.getItem('firstTimePrestigeButtonAvailable')) || true;
 
     transcendenceUnlocked = JSON.parse(localStorage.getItem('transcendenceUnlocked')) || false;
-    console.log(`After Load, transcendenceUnlocked = ${transcendenceUnlocked}`)
     if (transcendenceUnlocked) { document.getElementById('pu-god-display').style.display = 'block'; } 
 
     // Retrieve and parse all upgrades with the isGodMode property from local storage
@@ -281,7 +285,6 @@ function loadGameState() {
     // Update the display and the upgrade list, and unlock any available mini-games
     updateDisplay();
     updateUpgradeList();
-    unlockMiniGames();
 }
 
 
@@ -421,7 +424,7 @@ function generateResources() {
     serenity += effectiveSerenityPerSecond / 2;
 
     if (powerUnlocked){
-        effectivePowerPerSecond = moneyIsPowerTooSkill ? (knowledge ** (1/3) / 1e12) * (1 + (Math.max(yachtMoney,0) ** (1/3.1) / 1e12)) : knowledge ** (1/3) / 1e12
+        effectivePowerPerSecond = calculateEffectivePower();
     }
 
     // Check if delusion drops below negative 1 trillion to start generating Knowledge
@@ -454,7 +457,7 @@ function playMiniGame(gameType) {
     button.classList.add('disabled'); // Add the 'disabled' class to change its appearance
 
     // Convert mini-game timeouts from milliseconds to minutes for the message
-    const cooldownMinutes = miniGameTimeouts[gameType] / (60 * 1000);
+    const cooldownMinutes = (miniGamerSkill ? miniGameTimeouts[gameType] * 0.75 : miniGameTimeouts[gameType]) / (60 * 1000);
     const cooldownMessage = (gameType === 'memory' || gameType === 'math') ? 
         `In ${cooldownMinutes} minutes, you get to test your ${gameType} skills again.` : 
         `In ${cooldownMinutes} minutes, you get to test your ${gameType} again.`;
@@ -612,7 +615,7 @@ function startCooldown(gameType) {
             button.classList.remove('disabled');
             button.classList.add('affordable');
         }
-    }, miniGameTimeouts[gameType]);
+    }, miniGamerSkill ? miniGameTimeouts[gameType] * 0.75 : miniGameTimeouts[gameType]);
 }
 
 // Function to unlock mini-games based on cooldown status
@@ -717,6 +720,7 @@ async function restartGame(isPrestige = false) {
         knowledgePerSecond = 0;
         power = 0;
         powerPerSecond = 0;
+        effectivePowerPerSecond = 0;
         serenity = 0;
         serenityPerSecond = 0;
 
@@ -768,6 +772,7 @@ async function restartGame(isPrestige = false) {
             mathGameSkill = false;
             memoryGameSkill = false;
             speedGameSkill = false;
+            miniGamerSkill = false;
             numAscensionUpgrades = 1;
             numPUAscensionUpgrades = 2;
             buyMarkersSkill = false;
@@ -775,7 +780,6 @@ async function restartGame(isPrestige = false) {
             cookieBoost = false;
             cookieHopeful = false;
             cookieKnowledgeable = false;
-            bigCrunchUnlocked = false;
             moneyIsPowerTooSkill = false;
             lessDiminishingGodModeSkill = false;
             lessDiminishingPUGodModeSkill = false;
@@ -787,7 +791,7 @@ async function restartGame(isPrestige = false) {
             
             document.getElementById('pu-god-display').style.display = 'none';
             document.getElementById('big-crunch-display').style.display = 'none';
-
+            document.getElementById('powerHallButton').style.display = 'none';
             // Clear all local storage
             localStorage.clear();
         }
@@ -1228,6 +1232,10 @@ function unlockTranscendence() {
     document.getElementById('pu-god-display').style.display = 'block';
 }
 
+function unlockHallofPower() {
+    document.getElementById('powerHallButton').style.display = 'flex';
+}
+
 
 // Function to calculate the prestige multiplier based on the lowest of the first four resources
 function calculatePrestigeMultiplier() {
@@ -1586,8 +1594,8 @@ function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying=true) {
         }
 
         // Special case for the "Still very stupid" upgrade
-        if (name === "Impossible") {
-            showMessageModal('Sadly', "This marks the end of v0.827. Your journey through this existential tale is just getting started. Another big update is just a few days away, but if you’re eager to explore more, why not restart the game? Try speed runs, test out new strategies, and see what secrets you uncover next on your path to enlightenment. Oh, and about Transcendence—how are you finding it? I’d love to hear your thoughts! Whether it’s through the feedback form or on Discord (both can be found in settings), your feedback is super valuable.");
+        if (name === "Soothing Realization") {
+            showMessageModal('Sadly', "This marks the end of v0.83, but don’t think for a moment that your journey is over! The thrilling Hall of Power is just the beginning, and there’s so much more to uncover. With every new update, the excitement only intensifies, opening up new paths and challenges for you to explore.<br><br>We’re building something truly special, and your involvement can help shape the future of this game. Join our vibrant Discord community, where you can share your experiences, swap strategies, and contribute to the evolution of the game. Your voice is vital in this journey.<br><br>While we gear up for the next big update, just a few days away, why not restart the game? Challenge yourself with speed runs, try out new tactics, and see what hidden secrets you can unearth as you continue on your path to ultimate power.<br><br>I’d love to hear how you’re feeling about the pace of progression so far. Your feedback is incredibly valuable, so don’t hesitate to share your thoughts on Discord or through the feedback form in settings. Let’s continue to make this journey together, and see where the Hall of Power takes us next!");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one
@@ -1806,7 +1814,7 @@ function isAffordable(cost) {
 
 function autobuyUpgrades(){
     
-    let topUpgrades = availableUpgrades.slice(0, 7);
+    let topUpgrades = availableUpgrades.slice(0, 8);
 
     let upgradeBought = false;
     topUpgrades.forEach(upgrade => {
@@ -1829,8 +1837,8 @@ function autobuyUpgrades(){
 
 // Function to update the upgrade list display
 function updateUpgradeList() {
-    // Limit the display to the top 7 upgrades
-    let topUpgrades = availableUpgrades.slice(0, 7);
+    // Limit the display to the top 8 upgrades
+    let topUpgrades = availableUpgrades.slice(0, 8);
 
     // Check if "The Finale" is in the list and truncate the list if found
     const finaleIndex = topUpgrades.findIndex(upgrade => upgrade.name === 'The Finale');
@@ -1909,7 +1917,7 @@ function attachTooltipEvents(button, upgrade) {
 // Function to update the appearance of upgrade buttons based on affordability
 function updateUpgradeButtons() {
     let foundAffordableUpgrade = false;
-    let topUpgrades = availableUpgrades.slice(0, 7);
+    let topUpgrades = availableUpgrades.slice(0, 8);
     // Update each available upgrade button
     topUpgrades.forEach(upgrade => {
         const encodedName = encodeName(upgrade.name);
@@ -1968,7 +1976,7 @@ function initializeBuyButtons() {
             earnings: null,
             isGodMode: false,
             isPUGodMode: false,
-            hoverOverwrite: "Purchase all the 7 visible upgrades (S)"
+            hoverOverwrite: "Purchase all the 8 visible upgrades (S)"
         });
         buySeenButton.listenersAttached = true;
     }
@@ -2012,8 +2020,6 @@ async function devAscend() {
         .slice(0, 100)
         .filter(up => !up.isGodMode);
 
-    // Combine purchased upgrades and top 7 available upgrades
-    //const possibleUpgrades = purchasedUpgrades.concat(top7AvailableUpgrades);
     const randomUpgrade = top100AvailableUpgrades[Math.floor(Math.random() * top100AvailableUpgrades.length)];
     if (randomUpgrade) {
         randomUpgrade.isGodMode = true;
@@ -2113,7 +2119,7 @@ document.addEventListener('keydown', (event) => {
                 break;
             case 's':
                 if (multibuyUpgradesSkill){
-                    buyAllUpgrades(7, document.getElementById('buyMaxButton'));
+                    buyAllUpgrades(8, document.getElementById('buyMaxButton'));
                 }
                 break;
         }
@@ -2413,7 +2419,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('bigCrunchButton').addEventListener('click', bigCrunch);
 
     // Add event listener for the buy all upgrades button
-    document.getElementById('buySeenButton').addEventListener('click', function() { buyAllUpgrades(7, this);});
+    document.getElementById('buySeenButton').addEventListener('click', function() { buyAllUpgrades(8, this);});
     document.getElementById('buyMaxButton').addEventListener('click', function() {buyAllUpgrades(100, this);});
 
     // Add this function to handle the toggle switch logic

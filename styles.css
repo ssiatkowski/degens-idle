@@ -446,6 +446,10 @@ button.disabled {
     z-index: 1;
 }
 
+#upgradeList {
+    font-size: 0.9em; 
+}
+
 .purchased-upgrade img {
     width: 130px; 
     height: 130px; 
@@ -879,7 +883,7 @@ button.disabled {
     background-size: cover; /* Ensure the texture covers the entire button */
     background-repeat: no-repeat; /* Prevent the image from repeating */
     background-position: center; /* Center the image on the button */
-    aspect-ratio: 800 / 200; /* Maintain the aspect ratio of the image */
+    aspect-ratio: 800 / 150; /* Maintain the aspect ratio of the image */
     width: 100%; /* Set width to 100% of the container */
     text-align: center; /* Center the text */
     display: flex; /* Use flexbox for centering */

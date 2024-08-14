@@ -11,8 +11,7 @@ const librarySkills = [
     { name: "I Can't Math", cost: 1234, description: 'Math Game now only has 2 terms instead of 3. Reward is tripled.', unlocked: false, level: 'Science' },
     { name: "Short Term Memory", cost: 11000, description: 'Memory Game maximum time is 15s instead of 40s. Reward is doubled.', unlocked: false, level: 'Science' },
     { name: "Click Accumulation", cost: 23000, description: 'Speed Game reward is now for total number of clicks, instead of per second.', unlocked: false, level: 'Science' },
-    // { name: '', cost: 1e9, description: '', unlocked: false, level: 'Science' },
-    // { name: '', cost: 1e19, description: '', unlocked: false, level: 'Science' },
+    { name: 'Mini Gamer', cost: 7.5e22, description: 'All mini game cooldowns are reduced by 25%.', unlocked: false, level: 'Science' },
 
     { name: 'Prestige Base', cost: 5000, description: 'Increase Base prestige multiplier from 1.5 to 1.75. Huuge.', unlocked: false, level: 'Nonlinear Partial Differential Equations' },
     { name: '2D Ascension', cost: 230000, description: 'Learn how to ascend God Mode Levels while only folding the space around you into two dimensions. Mathematically, instead of prestige changing to x**(1/3), it changes to x**(2/3).', unlocked: false, level: 'Nonlinear Partial Differential Equations' },
@@ -33,8 +32,10 @@ const librarySkills = [
     { name: 'Knowledge is Power', cost: 1e6, description: 'Unlock new resource Power. Power is always generated based on your current amount of Knowledge.', unlocked: false, level: 'Celestial Bodies' },
     { name: 'Big Crunch', cost: 8e11, description: 'Could this be what Power is for? Unlock ability to force the universe into a Big Crunch and to be reborn anew!', unlocked: false, level: 'Celestial Bodies' },
     { name: 'Money is Power, too', cost: 2.5e20, description: 'Add a multiplier to Power generation based on Yacht Money.', unlocked: false, level: 'Celestial Bodies' },
+    { name: 'Map to Hall of Power', cost: 1e24, description: 'You can now look at and admire the Power Hall button.', unlocked: false, level: 'Celestial Bodies' },
 
-    { name: 'The Omniverse', cost: 1e50, description: 'Stop cheating. This does not exist yet.', unlocked: false, level: '???' },
+
+    { name: 'The Omniverse', cost: 1e100, description: 'Stop cheating. This does not exist yet.', unlocked: false, level: '???' },
     // { name: 'Serenity', cost: 1e25, description: '', unlocked: false, level: '???' },
     // { name: 'The Kaleidoscope of Consciousness', cost: 1e29, description: '', unlocked: false, level: '???' },
     // { name: 'The Void of Non-Existence', cost: 1e33, description: '', unlocked: false, level: '???' },
@@ -124,6 +125,10 @@ function unlockLibrarySkill(skill, duringLoad = false) {
                 speedGameSkill = true;
                 break;
                 
+            case "Mini Gamer":
+                miniGamerSkill = true;
+                break;
+
             case 'Prestige Base':
                 prestigeBaseSkill = true;
                 if (!duringLoad) {
@@ -213,6 +218,10 @@ function unlockLibrarySkill(skill, duringLoad = false) {
 
             case 'Money is Power, too':
                 moneyIsPowerTooSkill = true;
+                break;
+
+            case 'Map to Hall of Power':
+                unlockHallofPower();
                 break;
 
             // Add more cases as needed for additional skills

@@ -1,19 +1,20 @@
 const powerHallSkills = [
-    { name: 'Overcharge', cost: 0.000000001, description: 'Temporarily boost your power output by 200%.', unlocked: false, level: 'Electromagnetism' },
-    { name: 'Power Surge', cost: 1500, description: 'Unleash a massive power surge that doubles all production for 60 seconds.', unlocked: false, level: 'Electromagnetism' },
-    { name: 'Energy Overflow', cost: 0.000000001, description: 'Allow excess energy to overflow into additional resource generation.', unlocked: false, level: 'Electromagnetism' },
+    { name: 'Overcharge', cost: 10000, description: 'Unlock ability to spend all your power and multiply production of first 5 resources by square root of spent power.', unlocked: false, level: 'Arcane Magnetism' },
+    { name: 'Fake - Power Surge', cost: 1e30, description: 'Unleash a massive power surge that doubles all production for 60 seconds.', unlocked: false, level: 'Arcane Magnetism' },
+    { name: 'Fake - Energy Overflow', cost: 1e30, description: 'Allow excess energy to overflow into additional resource generation.', unlocked: false, level: 'Arcane Magnetism' },
     
-    { name: 'Hyperconductor', cost: 250, description: 'Increase power efficiency by 50% through advanced materials.', unlocked: false, level: 'Quantum Mechanics' },
-    { name: 'Quantum Charge', cost: 0.000000001, description: 'Harness quantum fluctuations to generate power continuously.', unlocked: false, level: 'Quantum Mechanics' },
-    { name: 'Entangled Energy', cost: 10000, description: 'Connect your power sources through quantum entanglement to share energy.', unlocked: false, level: 'Quantum Mechanics' },
+    { name: 'Auto Prestige', cost: 25000, description: 'Unlock ability to set a Prestige multiplier target - when hit, prestige will happen automatically.', unlocked: false, level: 'Quantum Nexus' },
+    { name: 'Fake - Hyperconductor', cost: 1e30, description: 'Increase power efficiency by 50% through advanced materials.', unlocked: false, level: 'Quantum Nexus' },
+    { name: 'Fake - Quantum Charge', cost: 1e30, description: 'Harness quantum fluctuations to generate power continuously.', unlocked: false, level: 'Quantum Nexus' },
+    { name: 'Fake - Entangled Energy', cost: 1e30, description: 'Connect your power sources through quantum entanglement to share energy.', unlocked: false, level: 'Quantum Nexus' },
     
-    { name: 'Infinite Loop', cost: 750, description: 'Create a feedback loop that recycles energy indefinitely.', unlocked: false, level: 'Theoretical Physics' },
-    { name: 'Dark Matter Fusion', cost: 20000, description: 'Fuse dark matter to unlock unimaginable power levels.', unlocked: false, level: 'Theoretical Physics' },
-    { name: 'Energy Singularity', cost: 0.000000001, description: 'Condense all power into a singularity for a massive burst of energy.', unlocked: false, level: 'Theoretical Physics' },
+    { name: 'Fake - Infinite Loop', cost: 1e30, description: 'Create a feedback loop that recycles energy indefinitely.', unlocked: false, level: 'Cosmic Dynamics' },
+    { name: 'Fake - Dark Matter Fusion', cost: 1e30, description: 'Fuse dark matter to unlock unimaginable power levels.', unlocked: false, level: 'Cosmic Dynamics' },
+    { name: 'Fake - Energy Singularity', cost: 1e30, description: 'Condense all power into a singularity for a massive burst of energy.', unlocked: false, level: 'Cosmic Dynamics' },
     
-    { name: 'Galactic Core', cost: 100000, description: 'Tap into the energy of a galactic core to power your operations.', unlocked: false, level: 'Astrophysics' },
-    { name: 'Stellar Harvesting', cost: 300000, description: 'Harvest energy directly from stars to fuel your needs.', unlocked: false, level: 'Astrophysics' },
-    { name: 'Cosmic Battery', cost: 750000, description: 'Store cosmic energy in a battery with nearly unlimited capacity.', unlocked: false, level: 'Astrophysics' }
+    // { name: 'Galactic Core', cost: 100000, description: 'Tap into the energy of a galactic core to power your operations.', unlocked: false, level: 'Celestial Manipulation' },
+    // { name: 'Stellar Harvesting', cost: 300000, description: 'Harvest energy directly from stars to fuel your needs.', unlocked: false, level: 'Celestial Manipulation' },
+    // { name: 'Cosmic Battery', cost: 750000, description: 'Store cosmic energy in a battery with nearly unlimited capacity.', unlocked: false, level: 'Celestial Manipulation' }
 ];
 
 
@@ -31,6 +32,24 @@ function unlockPowerHallSkill(skill, duringLoad = false) {
             <p>${skill.description}</p>
         `;
         
+        switch (skill.name) {
+            case 'Overcharge':
+                if (!duringLoad) {
+                    showMessageModal('Not Yet Implemented', 'Sorry Power Hall skills functionality is not live yet.')
+                }
+                break;
+        
+            case 'Auto Prestige':
+                if (!duringLoad) {
+                    showMessageModal('Not Yet Implemented', 'Sorry Power Hall skills functionality is not live yet.')
+                }
+                break;
+
+            default:
+                console.warn(`No handler for skill: ${skill.name}`);
+                break;
+        }
+
         // Add additional functionality for unlocked power skills here
 
         if (!duringLoad) {
@@ -132,10 +151,8 @@ function initializePowerHallSkills() {
 }
 
 function openPowerHall() {
-    const powerHallOverlay = document.getElementById('powerHallOverlay');
-    //const thePowerHallUpgrade = purchasedUpgrades.find(up => up.name === 'The Power Hall');
-    const thePowerHallUpgrade = true;
-    if (thePowerHallUpgrade) {
+    if (power > 9000) {
+        const powerHallOverlay = document.getElementById('powerHallOverlay');
         powerHallOverlay.style.display = 'flex';
         updatePowerHallSkillDisplay();
 
@@ -144,7 +161,7 @@ function openPowerHall() {
             document.addEventListener('click', outsidePowerHallClickListener);
         }, 0);
     } else {
-        showMessageModal('Access Denied', 'You are not worthy to enter the Hall of Power. The secrets within remain beyond your reach.');
+        showMessageModal('Not Powerful Enough', `You carefully follow the map you purchased for knowledge, its lines glowing faintly as they guide you through the twisting corridors. After what feels like an eternity, you finally stand before the towering gates of the Hall of Power. Guarding the entrance is a bouncer unlike any you've seen—a multidimensional being whose presence alone makes the air around you hum with energy. His eyes, if you can call them that, flicker with the light of a thousand stars as he takes a quick look at you.<br><br>He scoffs, a sound that reverberates through your very soul. "Come back when you’ve got more power," he growls, his voice echoing from dimensions you can barely comprehend.<br><br>Your heart sinks. How are you supposed to know how much power you need? You think to yourself as you take a step back, the weight of his judgment pressing heavily on your shoulders. For now, the secrets of the Hall of Power remain just out of reach, taunting you from beyond those impenetrable gates.`);
     }
 }
 
