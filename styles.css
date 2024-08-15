@@ -251,7 +251,7 @@ button:hover {
     background-color: #616161; /* Lighter on hover */
 }
 
-button.affordable, .game-button.affordable {
+button.affordable {
     background-color: #4caf50; /* Green */
     color: white;
     touch-action: manipulation;
@@ -330,7 +330,7 @@ button:disabled {
 }
 
 /* Styles for the collect buttons */
-button.collect-button, button.game-button {
+button.collect-button {
     background-color: #28a745; /* Green background */
     color: white;
     border: none;
@@ -344,15 +344,58 @@ button.collect-button, button.game-button {
     touch-action: manipulation;
 }
 
-button.collect-button:not(.disabled):hover, button.game-button:not(.disabled):hover, button.affordable:hover, .game-button.affordable:hover {
+button.collect-button:not(.disabled):hover {
     background-color: #218838; /* Darker green on hover */
     transform: scale(1.1); /* Slightly larger on hover */
 }
 
-button.collect-button:active, button.game-button:active {
+button.collect-button:active {
     background-color: #1e7e34; /* Even darker green on click */
     transform: scale(1.05); /* Slightly smaller on click */
 }
+
+button.game-button {
+    background-color: #4caf50; /* Initial background */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 5px;
+    position: relative; /* Needed for progress bar */
+    overflow: hidden; /* Hide overflow for progress bar */
+    display: inline-block; /* Ensure buttons are inline */
+    transition: background-color 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
+}
+
+button.game-button .progress {
+    background-color: rgba(40, 167, 69, 0.7); /* Semi-transparent green */
+    height: 100%; /* Make sure the progress bar fills the button height */
+    position: absolute; /* Position it over the button */
+    top: 0;
+    left: 0;
+    z-index: 1; /* Ensure it's above the button content */
+    transition: width 0.1s linear; /* Smooth progress bar increase */
+}
+
+button.game-button .button-content {
+    position: relative; /* Ensure the button content is above the progress bar */
+    z-index: 2;
+}
+
+button.game-button:not(.disabled):hover {
+    background-color: #218838; /* Darker green on hover */
+    transform: scale(1.1); /* Slightly larger on hover */
+}
+
+button.game-button:active {
+    background-color: #1e7e34; /* Even darker green on click */
+    transform: scale(1.05); /* Slightly smaller on click */
+}
+
+
+
 
 /* Ensure buttons are aligned next to each other */
 .resource .buttons {
@@ -632,7 +675,7 @@ button.disabled {
 }
 
 .prestige-multiplier-text {
-    font-size: 1.3em;
+    font-size: 1.2em;
     color: #ffa500; /* Orange color */
     font-weight: bold;
     margin-top: 10px;
@@ -641,7 +684,7 @@ button.disabled {
 }
 
 .prestige-multiplier-count {
-    font-size: 1.3em; 
+    font-size: 1.2em; 
     color: #ffd700; /* Gold color */
     font-weight: normal;
     text-shadow: 0 0 4px #ffff99, 0 0 10px #ffa500, 0 0 15px #ff8c00;
