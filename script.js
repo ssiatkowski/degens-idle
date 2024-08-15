@@ -710,7 +710,7 @@ function unlockMiniGames() {
                             progressBar.style.width = `${newProgressPercent}%`;
                         }
                     }
-                }, 100);
+                }, 200);
 
                 setTimeout(() => {
                     cooldowns[gameType] = false;
