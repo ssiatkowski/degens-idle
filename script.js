@@ -493,18 +493,18 @@ function playMiniGame(gameType) {
                     // Reward based on total number of clicks using the provided formula
                     reward = Math.max(Math.floor(Math.abs(copium) * ((points - 3) * 0.025)), 25);
                     rewardPerClick = reward / points;
-                    showMessageModal('Speed Game Result', `You tapped ${points} times in ${duration} seconds. Each click was worth ${formatNumber(rewardPerClick)} copium. Your total click reward is ${formatNumber(reward)} copium!`, false, false);
+                    showMessageModal('Speed Game Result', `You tapped ${points} times in ${duration} seconds. Each click was worth ${formatNumber(rewardPerClick)} copium. Your total click reward is ${formatNumber(reward)} copium!`, false, false, null, false, true);
                 } else {
                     // Reward based on clicks per second
                     let clicksPerSecond = points / duration;
                     if (clicksPerSecond > 3) { // More than 3 clicks per second
                         reward = Math.max(Math.floor(Math.abs(copium) * ((clicksPerSecond - 3) * 0.025)), 25);
                         rewardPerClick = reward / points;
-                        showMessageModal('Speed Game Result - Fast', `You tapped ${points} times in ${duration} seconds (${clicksPerSecond.toFixed(1)} taps per second). Each click was worth ${formatNumber(rewardPerClick)} copium. For being so fast you earned ${formatNumber(reward)} copium!`, false, false);
+                        showMessageModal('Speed Game Result - Fast', `You tapped ${points} times in ${duration} seconds (${clicksPerSecond.toFixed(1)} taps per second). Each click was worth ${formatNumber(rewardPerClick)} copium. For being so fast you earned ${formatNumber(reward)} copium!`, false, false, null, false, true);
                     } else {
                         reward = -Math.max(Math.floor(Math.random() * Math.abs(copium) * 0.1), 10);
                         rewardPerClick = reward / points;
-                        showMessageModal('Speed Game Result - Slow', `You tapped ${points} times in ${duration} seconds (${clicksPerSecond.toFixed(1)} taps per second). For being so slow you lost ${formatNumber(reward)} copium!`, false, false);
+                        showMessageModal('Speed Game Result - Slow', `You tapped ${points} times in ${duration} seconds (${clicksPerSecond.toFixed(1)} taps per second). For being so slow you lost ${formatNumber(reward)} copium!`, false, false, null, false, true);
                     }
                 }
                 
@@ -524,7 +524,7 @@ function playMiniGame(gameType) {
         let timeout = Math.floor(Math.random() * (maxTimeout - 5 + 1)) + 5; // Random timeout between 5 and maxTimeout seconds
         showMessageModal('Memory Game', `Remember this sequence: ${sequence}`).then(() => {
             setTimeout(() => {
-                showMessageModal('Memory Game', 'Enter the sequence:', false, false).then(userSequence => {
+                showMessageModal('Memory Game', 'Enter the sequence:', false, false, null, false, true).then(userSequence => {
                     let correct = userSequence === sequence;
                     let baseReward = correct ? Math.max(Math.floor(Math.abs(delusion) * 0.4), 25) : -Math.max(Math.floor(Math.random() * Math.abs(delusion) * 0.1), 10);
                     let reward = memoryGameSkill ? baseReward * 2 : baseReward; // Double the reward if memoryGameSkill is true
@@ -560,7 +560,7 @@ function playMiniGame(gameType) {
             correctAnswer = eval(question.replace('/', '* 1.0 /')); // Ensure floating point division
         }
 
-        showMessageModal('Math Game', `What is ${question}?  (answer within 0.5 is acceptable)`, false, false).then(answer => {
+        showMessageModal('Math Game', `What is ${question}?  (answer within 0.5 is acceptable)`, false, false, null, false, true).then(answer => {
             let isCorrect = Math.abs(Number(answer) - correctAnswer) < 0.5;
             let reward;
             if (mathGameSkill) {
@@ -1674,7 +1674,7 @@ function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying=true) {
 
         // Special case for the "Still very stupid" upgrade
         if (name === "Soothing Realization") {
-            showMessageModal('Sadly', "This marks the end of v0.834, but don’t think for a moment that your journey is over! The thrilling Hall of Power is just the beginning, and there’s so much more to uncover. With every new update, the excitement only intensifies, opening up new paths and challenges for you to explore.<br><br>We’re building something truly special, and your involvement can help shape the future of this game. Join our vibrant Discord community, where you can share your experiences, swap strategies, and contribute to the evolution of the game. Your voice is vital in this journey.<br><br>While we gear up for the next big update, just a few days away, why not restart the game? Challenge yourself with speed runs, try out new tactics, and see what hidden secrets you can unearth as you continue on your path to ultimate power.<br><br>I’d love to hear how you’re feeling about the pace of progression so far. Your feedback is incredibly valuable, so don’t hesitate to share your thoughts on Discord or through the feedback form in settings. Let’s continue to make this journey together, and see where the Hall of Power takes us next!");
+            showMessageModal('Sadly', "This marks the end of v0.835, but don’t think for a moment that your journey is over! The thrilling Hall of Power is just the beginning, and there’s so much more to uncover. With every new update, the excitement only intensifies, opening up new paths and challenges for you to explore.<br><br>We’re building something truly special, and your involvement can help shape the future of this game. Join our vibrant Discord community, where you can share your experiences, swap strategies, and contribute to the evolution of the game. Your voice is vital in this journey.<br><br>While we gear up for the next big update, just a few days away, why not restart the game? Challenge yourself with speed runs, try out new tactics, and see what hidden secrets you can unearth as you continue on your path to ultimate power.<br><br>I’d love to hear how you’re feeling about the pace of progression so far. Your feedback is incredibly valuable, so don’t hesitate to share your thoughts on Discord or through the feedback form in settings. Let’s continue to make this journey together, and see where the Hall of Power takes us next!");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one
@@ -2206,14 +2206,15 @@ document.addEventListener('keydown', (event) => {
 });
 
 
-function showMessageModal(title, message, isConfirm = false, isUpgradeSelection = false, imageName = null, isTranscend = false) {
+function showMessageModal(title, message, isConfirm = false, isUpgradeSelection = false, imageName = null, isTranscend = false, preventOutsideClose = false) {
     return new Promise((resolve, reject) => {
-        modalQueue.push({ title, message, isConfirm, isUpgradeSelection, imageName, isTranscend, resolve, reject });
+        modalQueue.push({ title, message, isConfirm, isUpgradeSelection, imageName, isTranscend, preventOutsideClose, resolve, reject });
         if (!isModalOpen) {
             displayNextModal();
         }
     });
 }
+
 
 function displayNextModal() {
     if (modalQueue.length === 0) {
@@ -2230,30 +2231,31 @@ function displayNextModal() {
     const modalCancelButton = document.getElementById('modalCancelButton');
     const modalTitle = document.getElementById('modalTitle');
     const modalMessage = document.getElementById('modalMessage');
-    const modalImage = document.getElementById('modalImage'); // Add an image element in your HTML
+    const modalImage = document.getElementById('modalImage');
     const ascendUpgradeSelection = document.getElementById('ascendUpgradeSelection');
     const ascendUpgradeList = document.getElementById('ascendUpgradeList');
     const gameInputSection = document.getElementById('gameInputSection');
     const gameInput = document.getElementById('gameInput');
     const submitGameInputButton = document.getElementById('submitGameInputButton');
 
-    const { title, message, isConfirm, isUpgradeSelection, imageName, isTranscend, resolve } = modalQueue.shift();
+    const { title, message, isConfirm, isUpgradeSelection, imageName, isTranscend, preventOutsideClose, resolve } = modalQueue.shift();
 
     modalTitle.textContent = title || '';
     modalMessage.innerHTML = message || '';
 
     if (imageName) {
-        modalImage.src = imageName; // Set the image source
-        modalImage.style.display = 'block'; // Ensure the image is visible
+        modalImage.src = imageName;
+        modalImage.style.display = 'block';
     } else {
-        modalImage.style.display = 'none'; // Hide the image if none is provided
+        modalImage.style.display = 'none';
     }
 
     modal.style.display = 'block';
 
     const closeModal = (result) => {
-        modal.style.display = 'none';        
-        document.removeEventListener('keydown', keydownHandler); // Remove event listener
+        modal.style.display = 'none';
+        document.removeEventListener('keydown', keydownHandler);
+        window.removeEventListener('click', outsideClickHandler);
         displayNextModal();
         resolve(result);
     };
@@ -2271,14 +2273,24 @@ function displayNextModal() {
             } else {
                 closeModal(true);
             }
-        } 
-        else if (event.key === 'Enter' && (message.includes('Enter the sequence:') || message.includes('What is '))){
+        } else if (event.key === 'Enter' && (message.includes('Enter the sequence:') || message.includes('What is '))) {
             closeModal(gameInput.value);
         }
     };
 
     document.addEventListener('keydown', keydownHandler);
 
+    const outsideClickHandler = (event) => {
+        if (!preventOutsideClose && event.target === modal) {
+            closeModal(null);
+        }
+    };
+
+    if (!preventOutsideClose) {
+        window.addEventListener('click', outsideClickHandler);
+    }
+
+    // Handle the rest of the modal types without adding additional `window.onclick` listeners
     if (isConfirm && isUpgradeSelection) {
         modalCloseButton.style.display = 'none';
         modalConfirmButtons.style.display = 'flex';
@@ -2287,9 +2299,9 @@ function displayNextModal() {
 
         let selectedUpgrades = [];
 
-        purchasedUpgrades.forEach((upgrade, index) => {
+        purchasedUpgrades.forEach((upgrade) => {
             const condition = isTranscend ? !upgrade.isPUGodMode : !upgrade.isGodMode;
-            const maxSelectableUpgrades = isTranscend ? numPUAscensionUpgrades : numAscensionUpgrades
+            const maxSelectableUpgrades = isTranscend ? numPUAscensionUpgrades : numAscensionUpgrades;
             if (condition) {
                 const upgradeItem = document.createElement('div');
                 upgradeItem.className = 'ascend-upgrade-item';
@@ -2314,7 +2326,6 @@ function displayNextModal() {
                     }
                 };
 
-                // Attach tooltip events to the upgrade items
                 attachTooltipEvents(upgradeItem, {
                     name: upgrade.name,
                     earnings: upgrade.earnings,
@@ -2333,13 +2344,7 @@ function displayNextModal() {
         };
 
         modalCancelButton.onclick = () => closeModal(null);
-
         closeButton.onclick = () => closeModal(null);
-        window.onclick = (event) => {
-            if (event.target == modal) {
-                closeModal(null);
-            }
-        };
     } else if (isConfirm) {
         modalCloseButton.style.display = 'none';
         modalConfirmButtons.style.display = 'flex';
@@ -2350,11 +2355,6 @@ function displayNextModal() {
         modalCancelButton.onclick = () => closeModal(false);
 
         closeButton.onclick = () => closeModal(false);
-        window.onclick = (event) => {
-            if (event.target == modal) {
-                closeModal(false);
-            }
-        };
     } else if (message.includes('Enter the sequence:') || message.includes('What is ')) {
         modalCloseButton.style.display = 'none';
         modalConfirmButtons.style.display = 'none';
@@ -2365,11 +2365,6 @@ function displayNextModal() {
         submitGameInputButton.onclick = () => closeModal(gameInput.value);
 
         closeButton.onclick = () => closeModal(null);
-        window.onclick = (event) => {
-            if (event.target == modal) {
-                closeModal(null);
-            }
-        };
     } else {
         modalCloseButton.style.display = 'block';
         modalConfirmButtons.style.display = 'none';
@@ -2378,14 +2373,9 @@ function displayNextModal() {
 
         modalCloseButton.onclick = () => closeModal();
         closeButton.onclick = () => closeModal();
-
-        window.onclick = (event) => {
-            if (event.target == modal) {
-                closeModal();
-            }
-        };
     }
 }
+
 
 
 function showImmediateMessageModal(title, message) {
