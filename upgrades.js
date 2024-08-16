@@ -6,10 +6,13 @@ const upgrades = [
         img: "imgs/john_travolta.jpg",
     },
     {
-        name: "Dating a 25 year old",
+        name: "You made it",
         cost: { copium: 0, delusion: 5, yachtMoney: 7, trollPoints: 7, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 0.8, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1.9, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/leo.jpg",
+        message: `<p>Welcome to the start of your epic journey. Whether you’re here for the memes, the deep existential pondering, or just to click things—cheers to you! 🍷 </p>
+                    <p>But don’t get too comfortable! Ahead lie challenges that will test your wit, patience, and strategic thinking. There will be walls to break through, and the path forward isn’t always a straight line. But hey, if Leo can win an Oscar, you can solve a few strategic puzzles, right?</p>
+                    <p>Let the games begin—click, explore, and outsmart every obstacle in your way!</p>`,
     },
     {
         name: "Foreshadowing",
@@ -18,10 +21,13 @@ const upgrades = [
         img: "imgs/distracted_boyfriend.jpg",
     },
     {
-        name: "Standard Dropout",
+        name: "Why Memes Though?",
         cost: { copium: 0, delusion: 25, yachtMoney: 25, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 1.4, delusionPerSecond: 1.4, yachtMoneyPerSecond: 1.6, trollPointsPerSecond: -1.6, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
-        img: "imgs/standard_dropout.jpg",
+        img: "imgs/why_memes.jpg",
+        message: `<p>The internet is more than just a tool—it’s a pivotal stepping stone in our evolution and technological advancement. It’s where ideas are born, shared, and transformed, connecting minds across the globe. At the very core of this vast network lies the humble meme.</p>
+                <p>Memes are the language of the internet, capturing complex ideas, emotions, and cultural moments in bite-sized, shareable formats. They spread faster than any traditional medium, influencing thoughts, trends, and even shaping societal narratives. In many ways, memes are the digital reflection of our collective consciousness.</p>
+                <p>So, when embarking on a journey of existential discovery, how could we ignore something so integral to our shared online experience? Memes might seem simple, but they encapsulate the essence of what it means to be part of this interconnected, ever-evolving world. Without them, the journey would be missing a vital piece of the puzzle.</p>`,
     },
     {
         name: "GameStop",
@@ -36,10 +42,11 @@ const upgrades = [
         img: "imgs/two_buttons.jpg",
     },
     {
-        name: "Keyboard Warrior",
+        name: "Clickable",
         cost: { copium: 50, delusion: 100, yachtMoney: 50, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 1.7, delusionPerSecond: 3.5, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
-        img: "imgs/keyboard_warrior.jpg",
+        img: "imgs/click.jpg",
+        message: `Some upgrades come with special messages that enhance your experience. These messages might reveal lore, explain new game features, or provide valuable insights—just like this one. You’ll see these messages the first time you purchase an upgrade, but don’t worry if you miss something! You can always click the upgrade in the purchased section to view the messages again.`,
     },
     {
         name: "Music",
@@ -71,6 +78,7 @@ const upgrades = [
         earnings: { copiumPerSecond: 4, delusionPerSecond: -24, yachtMoneyPerSecond: 12, trollPointsPerSecond: 29, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/this_is_fine.jpg",
         hoverOverwrite: "How am I supposed to progress in this game?",
+        message: `Be cautious—some upgrades may come with negative gains, including this one. While you can hover over most upgrades to preview their earnings, the hover information for some, like this one, is intentionally obfuscated. Keep those in mind as you progress. However, rest assured that <strong>ALL</strong> upgrades are a net positive at some point in the game—there isn’t a single one that is always bad. Also, while it’s possible to make vital mistakes, the game remains mostly forgiving, and there are many paths to victory.`,
     },
     {
         name: "Influencer Education",
@@ -90,8 +98,6 @@ const upgrades = [
         cost: { copium: 1000, delusion: 1000, yachtMoney: 1000, trollPoints: 1000, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 10, delusionPerSecond: 10, yachtMoneyPerSecond: 10, trollPointsPerSecond: 10, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/captain_degen.jpg",
-        message: "With Captain Degen at the helm, your prestige multiplier gets a whopping 0.01% boost! It’s like waiting for that perfect meme to finally hit your feed and crack you up – you know it's coming, and the anticipation makes it even sweeter. Just like those memes, some boosts will stick, and you’ll feel the impact. Remember, strategy matters – the Captain reminds you that a well-thought-out plan can make all the difference. So get ready to laugh, level up, and watch your prestige soar to new, hilarious heights!",
-        miniPrestigeMultiplier: 1.001,
     },
     {
         name: "Swing and a Miss",
@@ -285,21 +291,22 @@ const upgrades = [
         hoverOverwrite: "Think about this one",
     },
     {
-        name: "Gen B Names",
+        name: "Trading Resources",
         cost: { copium: 2.5e8, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 60000, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 50000, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
-        img: "imgs/gen_b_names.jpg"
+        earnings: { copiumPerSecond: 62000, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 50000, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: "imgs/trade_offer.jpg",
+        message: `Don’t forget about the trade functionality—at certain points in the game, it can be a highly efficient way to boost your progress. You’ll have the ability to choose which resources to trade from and to, allowing you to balance your reserves and optimize your strategy. Keep an eye on your resources, and use trade when the time is right to gain the upper hand!`,
     },
     {
         name: "Job Application #2",
         cost: { copium: 6e8, delusion: 9.5e8, yachtMoney: 0, trollPoints: 9.9e8, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 33000, delusionPerSecond: 33000, yachtMoneyPerSecond: 0, trollPointsPerSecond: 33000, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 35000, delusionPerSecond: 35000, yachtMoneyPerSecond: 0, trollPointsPerSecond: 35000, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/job_application_2.jpg",
     },
     {
         name: "Internet = Cats",
         cost: { copium: 0, delusion: 0, yachtMoney: 1.1e9, trollPoints: 6e9, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 100000, delusionPerSecond: -5000, yachtMoneyPerSecond: 0, trollPointsPerSecond: 44400, hopiumPerSecond: 0.001, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 100000, delusionPerSecond: -4000, yachtMoneyPerSecond: 0, trollPointsPerSecond: 45600, hopiumPerSecond: 0.001, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/cats_mice.jpg",
     },
     {
@@ -309,7 +316,7 @@ const upgrades = [
         img: "imgs/good_guy_sasuke.jpg",
     },
     {
-        name: "Is he alive?",
+        name: "Where has he been?",
         cost: { copium: 5e9, delusion: 1e9, yachtMoney: 1e9, trollPoints: 5e9, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: -2000, trollPointsPerSecond: 100000, hopiumPerSecond: 0.001, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/is_he_alive.jpg",
@@ -317,7 +324,7 @@ const upgrades = [
     {
         name: "It's group time!",
         cost: { copium: 1e9, delusion: 5e8, yachtMoney: 5e8, trollPoints: 0, hopium: 3, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 18000, delusionPerSecond: 0, yachtMoneyPerSecond: 5000, trollPointsPerSecond: 15000, hopiumPerSecond: 0.002, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 18000, delusionPerSecond: 0, yachtMoneyPerSecond: 8000, trollPointsPerSecond: 18000, hopiumPerSecond: 0.002, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/joker.jpg",
     },    
     {
@@ -329,13 +336,13 @@ const upgrades = [
     {
         name: "Pre-AI Idols!",
         cost: { copium: 1e10, delusion: 3e9, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 204000, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0.001, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 208000, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0.001, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/pre-AI-idols.JPG",
     },       
     {
         name: "Antimatter Dimensions",
         cost: { copium: 1e10, delusion: 8e9, yachtMoney: 4e9, trollPoints: 1e10, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 500000, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0.0015, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 550000, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0.0015, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/antimatter_dimensions.jpg",
         message: 
                 `<div>

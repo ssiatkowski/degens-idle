@@ -658,21 +658,14 @@ button.disabled {
 }
 
 .prestige-multiplier-text {
-    font-size: 1.2em;
-    color: #ffa500; /* Orange color */
-    font-weight: bold;
+    font-size: 1.25em;
+    color: #ffd700; /* Gold color */
+    font-weight: normal;
     margin-top: 10px;
     text-align: center;
     transition: all 0.5s ease;
+    text-shadow: 0 0 2px #ffff99, 0 0 5px #ffa500, 0 0 8px #ff8c00;
 }
-
-.prestige-multiplier-count {
-    font-size: 1.2em; 
-    color: #ffd700; /* Gold color */
-    font-weight: normal;
-    text-shadow: 0 0 4px #ffff99, 0 0 10px #ffa500, 0 0 15px #ff8c00;
-}
-
 
 
 
@@ -821,42 +814,42 @@ button.disabled {
 
 
 .god-mode-text {
-    font-size: 1.5em;
+    font-size: 1.3em;
     color: rgb(247, 247, 247);
     font-weight: bold;
-    text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00bfff, 0 0 40px #00bfff;
-    margin-top: 20px;
+    text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff, 0 0 12px #00bfff, 0 0 15px #00bfff;
+    margin-top: 10px;
     text-align: center;
     transition: all 0.5s ease;
 }
 
 .pu-god-text {
-    font-size: 1.5em;
+    font-size: 1.3em;
     color: rgb(247, 247, 247);
     font-weight: bold;
     text-shadow: 
-        0 0 10px #8a2be2,  /* First layer of purple glow */
-        0 0 20px #8a2be2,  /* Second layer of purple glow */
-        0 0 30px #7b68ee,  /* Third layer with a slightly lighter shade */
-        0 0 40px #7b68ee;  /* Fourth layer with a slightly lighter shade */
-    margin-top: 20px;
+        0 0 5px #8a2be2,  /* First layer of purple glow */
+        0 0 10px #8a2be2,  /* Second layer of purple glow */
+        0 0 12px #7b68ee,  /* Third layer with a slightly lighter shade */
+        0 0 15px #7b68ee;  /* Fourth layer with a slightly lighter shade */
+    margin-top: 10px;
     text-align: center;
     transition: all 0.5s ease;
 }
 
 
 .big-crunch-text {
-    font-size: 1.5em; /* Slightly bigger font size */
+    font-size: 1.4em; /* Slightly bigger font size */
     color: rgb(247, 247, 247);
     font-weight: bold;
     text-shadow: 
-        0 0 10px #ff4500,  /* First layer of orange-red glow */
-        0 0 20px #ff4500,  /* Second layer of orange-red glow */
-        0 0 30px #ff4500,  /* Third layer of orange-red glow */
-        0 0 40px #ff6347,  /* Fourth layer with a slightly lighter shade */
-        0 0 50px #ff6347,  /* Fifth layer with a slightly lighter shade */
-        0 0 60px #ff6347;  /* Sixth layer with a slightly lighter shade */
-    margin-top: 20px;
+        0 0 5px #ff4500,  /* First layer of orange-red glow */
+        0 0 10px #ff4500,  /* Second layer of orange-red glow */
+        0 0 12px #ff4500,  /* Third layer of orange-red glow */
+        0 0 15px #ff6347,  /* Fourth layer with a slightly lighter shade */
+        0 0 20px #ff6347,  /* Fifth layer with a slightly lighter shade */
+        0 0 25px #ff6347;  /* Sixth layer with a slightly lighter shade */
+    margin-top: 10px;
     text-align: center;
     transition: all 0.5s ease;
 }

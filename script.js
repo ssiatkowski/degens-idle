@@ -97,7 +97,7 @@ const miniGameTimeouts = {
 const miniGameIntervals = {};
 
 function calculateEffectivePower(){
-    return (moneyIsPowerTooSkill ? (knowledge ** (1/3) / 1e12) * (1 + (Math.max(yachtMoney,0) ** (2/7) / 1e12)) : knowledge ** (1/3) / 1e12) * devMultiplier;
+    return (moneyIsPowerTooSkill ? (knowledge ** (1/3) / 1e12) * (1 + (Math.max(yachtMoney,0) ** (1/4) / 1e12)) : knowledge ** (1/3) / 1e12) * devMultiplier;
 }
 
 function updateEffectiveMultipliers() {
@@ -1683,7 +1683,7 @@ function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying=true) {
 
         // Special case for the "Still very stupid" upgrade
         if (name === "Soothing Realization") {
-            showMessageModal('Sadly', "This marks the end of v0.832, but don’t think for a moment that your journey is over! The thrilling Hall of Power is just the beginning, and there’s so much more to uncover. With every new update, the excitement only intensifies, opening up new paths and challenges for you to explore.<br><br>We’re building something truly special, and your involvement can help shape the future of this game. Join our vibrant Discord community, where you can share your experiences, swap strategies, and contribute to the evolution of the game. Your voice is vital in this journey.<br><br>While we gear up for the next big update, just a few days away, why not restart the game? Challenge yourself with speed runs, try out new tactics, and see what hidden secrets you can unearth as you continue on your path to ultimate power.<br><br>I’d love to hear how you’re feeling about the pace of progression so far. Your feedback is incredibly valuable, so don’t hesitate to share your thoughts on Discord or through the feedback form in settings. Let’s continue to make this journey together, and see where the Hall of Power takes us next!");
+            showMessageModal('Sadly', "This marks the end of v0.833, but don’t think for a moment that your journey is over! The thrilling Hall of Power is just the beginning, and there’s so much more to uncover. With every new update, the excitement only intensifies, opening up new paths and challenges for you to explore.<br><br>We’re building something truly special, and your involvement can help shape the future of this game. Join our vibrant Discord community, where you can share your experiences, swap strategies, and contribute to the evolution of the game. Your voice is vital in this journey.<br><br>While we gear up for the next big update, just a few days away, why not restart the game? Challenge yourself with speed runs, try out new tactics, and see what hidden secrets you can unearth as you continue on your path to ultimate power.<br><br>I’d love to hear how you’re feeling about the pace of progression so far. Your feedback is incredibly valuable, so don’t hesitate to share your thoughts on Discord or through the feedback form in settings. Let’s continue to make this journey together, and see where the Hall of Power takes us next!");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one
