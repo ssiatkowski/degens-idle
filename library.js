@@ -16,7 +16,7 @@ const librarySkills = [
     { name: 'Prestige Base', cost: 5000, description: 'Increase Base prestige multiplier from 1.5 to 1.75. Huuge.', unlocked: false, level: 'Nonlinear Partial Differential Equations' },
     { name: '2D Ascension', cost: 230000, description: 'Learn how to ascend God Mode Levels while only folding the space around you into two dimensions. Mathematically, instead of prestige changing to x**(1/3), it changes to x**(2/3).', unlocked: false, level: 'Nonlinear Partial Differential Equations' },
     { name: 'Less Diminishing God-Mode', cost: 1e14, description: 'Decrease diminishing returns at higher God-Mode levels. Mathematically, instead of diminishing at 97.5%, the multiplier dimninishes at 98.5%. (This is big at high god-mode levels)', unlocked: false, level: 'Nonlinear Partial Differential Equations' },
-    { name: 'Much Less Diminishing Parallel God-Mode', cost: 2e35, description: 'Greatly decrease diminishing returns at higher Parallel Universe God-Mode levels. Mathematically, instead of diminishing at 97.5%, the multiplier dimninishes at 99.5%. (This is incredibly OP at higher PU God Mode levels)', unlocked: false, level: 'Nonlinear Partial Differential Equations' },
+    { name: 'Much Less Diminishing Parallel God-Mode', cost: 2e35, description: 'Greatly decrease diminishing returns at higher Parallel Universe God-Mode levels. Mathematically, instead of diminishing at 97.5%, the multiplier dimninishes at 99.0%. (This is incredibly OP at higher PU God Mode levels)', unlocked: false, level: 'Nonlinear Partial Differential Equations' },
    
 
 
@@ -156,9 +156,9 @@ function unlockLibrarySkill(skill, duringLoad = false) {
             case 'Much Less Diminishing Parallel God-Mode':
                 lessDiminishingPUGodModeSkill = true;
                 if (!duringLoad) {
-                    showMessageModal('Much Less Diminishing Parallel God-Mode', 'In the quantum entangled universe, you discover that there is less interference, allowing you to scale the diminishing returns much more effectively. Graph shows the Parallel Universe God-Mode Multiplier scaling when diminishing at 97.5% (original) vs 98.5% (Optimized God-Mode) vs 99.5% (Optimized Parallel God-Mode). As you can see, at higher Parallel Universe God-Mode levels this is quite insane! The multiplier is over 5 orders of magnitude greater at PU God-Mode Level 250.', false, false, 'imgs/graphs/pugm_diminishing.png')
+                    showMessageModal('Much Less Diminishing Parallel God-Mode', 'In the quantum entangled universe, you discover that there is less interference, allowing you to scale the diminishing returns much more effectively. Graph shows the Parallel Universe God-Mode Multiplier scaling when diminishing at 97.5% (original) vs 98.5% (Optimized God-Mode) vs 99.0% (Optimized Parallel God-Mode). As you can see, at higher Parallel Universe God-Mode levels this is quite insane! The multiplier is almost 6 orders of magnitude greater at PU God-Mode Level 250.', false, false, 'imgs/graphs/pugm_diminishing.png')
                 }
-                puGodMultiplier = calculateGodModeMultiplier(puGodLevel);
+                puGodMultiplier = calculatePUGodModeMultiplier(puGodLevel);
                 updateMultipliersDisplay();
                 updateEffectiveMultipliers();
                 break;

@@ -160,7 +160,7 @@ const upgrades = [
         name: "Suss",
         cost: { copium: 11000, delusion: 0, yachtMoney: 0, trollPoints: 5000, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 21.5, delusionPerSecond: -6, yachtMoneyPerSecond: 0, trollPointsPerSecond: 38, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
-        img: "imgs/morty.PNG",
+        img: "imgs/morty.jpg",
     },
     {
         name: "Can't Unsee This",
@@ -686,41 +686,5 @@ const upgrades = [
         earnings: { copiumPerSecond: 1.5e12, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 1.5e7, knowledgePerSecond: 40, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/how_i_sleep_knowing.jpg",
     },
-    // {
-    //     name: "Peaceful Round of Golf",
-    //     cost: { copium: 3500, delusion: 7500, yachtMoney: 8000, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
-    //     earnings: { copiumPerSecond: -30, delusionPerSecond: 20, yachtMoneyPerSecond: 0, trollPointsPerSecond: 65, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
-    //     img: "imgs/andrew_tate.jpg",
-    // },
-    // {
-    //     name: "His Power Level is...",
-    //     cost: { copium: 500, delusion: 0, yachtMoney: 250, trollPoints: 700, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
-    //     earnings: { copiumPerSecond: 3, delusionPerSecond: -25, yachtMoneyPerSecond: 10, trollPointsPerSecond: 26, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
-    //     img: "imgs/over_9000.jpg",
-    //     hoverOverwrite: "GOING ON MUTE!",
-    // },
-    // {
-    //     name: "Haven't Smoked Foool (not done)",
-    //     cost: { copium: 1e15, delusion: 1e15, yachtMoney: 1e15, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
-    //     earnings: { copiumPerSecond: 1, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
-    //     img: "imgs/ez_blunt.jpg",
-    // },  
-    // {
-    //     name: "Party Animals (not done)",
-    //     cost: { copium: 1e15, delusion: 1e15, yachtMoney: 1e15, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
-    //     earnings: { copiumPerSecond: 1, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
-    //     img: "imgs/party_animals.jpg",
-    // },
-    // {
-    //     name: "Wife's AirBnb Business (not done)",
-    //     cost: { copium: 1e15, delusion: 1e15, yachtMoney: 1e15, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenityPerSecond: 0 },
-    //     earnings: { copiumPerSecond: 1, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
-    //     img: "imgs/airbnb.jpg",
-    // },
-    // {
-    //     name: "Face of Defeat (not done)",
-    //     cost: { copium: 1e15, delusion: 1e15, yachtMoney: 1e15, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
-    //     earnings: { copiumPerSecond: 1, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
-    //     img: "imgs/face_of_defeat.jpg",
-    // },
+
 ];

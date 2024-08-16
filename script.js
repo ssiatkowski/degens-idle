@@ -1405,7 +1405,7 @@ function calculateGodModeMultiplier(gmLevlel = godModeLevel) {
 
 function calculatePUGodModeMultiplier(gmLevlel = puGodLevel) {
     let productX = 1; // Initialize the product to 1 for the first element
-    const diminishFactor = lessDiminishingPUGodModeSkill ? 0.995 : 0.975
+    const diminishFactor = lessDiminishingPUGodModeSkill ? 0.990 : 0.975
     for (let i = 0; i < gmLevlel; i++) {
         let xi = 1 + 0.25 * Math.pow(diminishFactor, i); // Calculate xi
         productX *= xi; // Multiply the current xi to the cumulative product
