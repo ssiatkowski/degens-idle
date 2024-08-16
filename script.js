@@ -79,10 +79,10 @@ let cookieKnowledgeable = false;
 
 //cooldowns for mini games
 let cooldowns = {
-    copium: false,
-    delusion: false,
-    yachtMoney: false,
-    trollPoints: false
+    speed: false,
+    memory: false,
+    math: false,
+    luck: false
 };
 
 // Mini-game timeouts in milliseconds
@@ -658,7 +658,6 @@ function startCooldown(gameType) {
 
 
 
-// Function to unlock mini-games based on cooldown status
 function unlockMiniGames() {
     const now = Date.now();
 
@@ -667,31 +666,37 @@ function unlockMiniGames() {
         const button = document.getElementById(`${gameType}Game`);
         const progressBar = button.querySelector('.progress');
 
-        button.style.display = 'block';
+        button.style.display = 'block';  // Ensure the button is always visible
 
         if (startTime) {
             const elapsed = now - parseInt(startTime, 10);
             const cooldownDuration = miniGamerSkill ? miniGameTimeouts[gameType] * 0.75 : miniGameTimeouts[gameType];
 
             if (elapsed >= cooldownDuration) {
+                // Cooldown has already passed
                 cooldowns[gameType] = false;
                 button.disabled = false;
                 button.classList.remove('disabled');
                 button.classList.add('affordable');
+                button.style.color = 'white';
                 if (progressBar) {
-                    progressBar.style.width = '100%';
+                    progressBar.style.width = '100%';  // Set to fully filled if cooldown is over
                 }
             } else {
+                // Cooldown is still in progress
                 const remainingCooldown = cooldownDuration - elapsed;
                 const progressPercent = (elapsed / cooldownDuration) * 100;
 
                 button.disabled = true;
                 button.classList.add('disabled');
                 button.classList.remove('affordable');
+                button.style.color = 'gray';
+
                 if (progressBar) {
                     progressBar.style.width = `${progressPercent}%`;
                 }
 
+                // Continue updating the progress bar until cooldown ends
                 miniGameIntervals[gameType] = setInterval(() => {
                     const newElapsed = Date.now() - parseInt(startTime, 10);
                     const newProgressPercent = (newElapsed / cooldownDuration) * 100;
@@ -702,6 +707,7 @@ function unlockMiniGames() {
                         button.disabled = false;
                         button.classList.remove('disabled');
                         button.classList.add('affordable');
+                        button.style.color = 'white';
                         if (progressBar) {
                             progressBar.style.width = '100%';
                         }
@@ -711,25 +717,13 @@ function unlockMiniGames() {
                         }
                     }
                 }, 200);
-
-                setTimeout(() => {
-                    cooldowns[gameType] = false;
-                    button.disabled = false;
-                    button.classList.remove('disabled');
-                    button.classList.add('affordable');
-                }, remainingCooldown);
             }
         } else {
-            cooldowns[gameType] = false;
-            button.disabled = false;
-            button.classList.remove('disabled');
-            button.classList.add('affordable');
-            if (progressBar) {
-                progressBar.style.width = '0%';
-            }
+            startCooldown(gameType);
         }
     });
 }
+
 
 
 async function restartPrestige(){
@@ -757,16 +751,16 @@ function resetButtonAndProgress(gameType) {
     const progressBar = button.querySelector('.progress');
 
     // Reset button appearance
-    button.disabled = false;
-    button.classList.remove('disabled');
-    button.classList.add('affordable');
+    button.disabled = true;
+    button.classList.add('disabled');
+    button.classList.remove('affordable');
 
-    // Ensure the text color is reset to white
-    button.style.color = 'white';
+    // Ensure the text color is reset to gray
+    button.style.color = 'gray';
 
     // Set progress bar to zero width
     if (progressBar) {
-        progressBar.style.width = '0%';
+        progressBar.style.width = '0%'; // Start the progress at 0
     }
 }
 
@@ -890,7 +884,7 @@ async function restartGame(isPrestige = false) {
 
                 // Reset cooldown state and appearance
                 cooldowns[gameType] = false;
-                resetButtonAndProgress(gameType);
+                resetButtonAndProgress(gameType,);
             });
 
             // Clear all local storage
@@ -1382,7 +1376,7 @@ function updatePrestigeButton() {
     const prestigeButton = document.getElementById('prestigeButton');
     if (canPrestige()) {
         if (firstTimePrestigeButtonAvailable && godModeLevel < 3) {
-            showMessageModal('Prestige Unlocked: Rise Stronger!', 'Congratulations, mighty player! You have unlocked the legendary path of Prestige. This powerful option allows you to reset your game progress, but with a game-changing twist: you gain a new multiplier that enhances everything you do.<br><br>Prestige represents more than just a reset. It symbolizes the resilience of the human spirit, the relentless pursuit of growth, and the ability to rise stronger after every fall. Just as life sometimes knocks you down, this journey will set you back temporarily. But with each Prestige, you come back more powerful, your abilities amplified, and your potential limitless.<br><br>Embrace the opportunity to start anew with greater strength. Every click, every resource gathered, and every upgrade purchased will now be boosted by your newfound multiplier. It\'s a fresh start, a chance to overcome challenges with enhanced vigor and wisdom.<br><br>Are you ready to embark on this transformative journey? To not only rebuild but to surpass your previous achievements? Prestige now, and let your ascent to greatness begin anew!');
+            showMessageModal('Prestige Unlocked: Rise Stronger!', 'Congratulations! You have unlocked the first of many prestige layers. This one is straightforward, but it represents something much greater: the beginning of a journey filled with deeper challenges and complexity.<br><br>Prestige isn’t just a reset—it’s a testament to your resilience, symbolizing the strength to rise again, stronger and wiser. While this first step may seem simple, future layers will add layers of strategy and depth that will truly test your skills.<br><br>By choosing Prestige, you’re not just starting over; you’re gaining a powerful multiplier that will enhance everything you do. Each click, each resource, and every upgrade will be boosted, setting the stage for even greater achievements.<br><br>Are you ready to embrace this opportunity? To rebuild with newfound strength and surpass your past progress? Prestige now, and begin your ascent to greatness once more!');
             firstTimePrestigeButtonAvailable = false; // Set the flag to false after showing the message
             saveGameState(); // Save the game state to persist the flag
         }
@@ -1689,7 +1683,7 @@ function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying=true) {
 
         // Special case for the "Still very stupid" upgrade
         if (name === "Soothing Realization") {
-            showMessageModal('Sadly', "This marks the end of v0.831, but don’t think for a moment that your journey is over! The thrilling Hall of Power is just the beginning, and there’s so much more to uncover. With every new update, the excitement only intensifies, opening up new paths and challenges for you to explore.<br><br>We’re building something truly special, and your involvement can help shape the future of this game. Join our vibrant Discord community, where you can share your experiences, swap strategies, and contribute to the evolution of the game. Your voice is vital in this journey.<br><br>While we gear up for the next big update, just a few days away, why not restart the game? Challenge yourself with speed runs, try out new tactics, and see what hidden secrets you can unearth as you continue on your path to ultimate power.<br><br>I’d love to hear how you’re feeling about the pace of progression so far. Your feedback is incredibly valuable, so don’t hesitate to share your thoughts on Discord or through the feedback form in settings. Let’s continue to make this journey together, and see where the Hall of Power takes us next!");
+            showMessageModal('Sadly', "This marks the end of v0.832, but don’t think for a moment that your journey is over! The thrilling Hall of Power is just the beginning, and there’s so much more to uncover. With every new update, the excitement only intensifies, opening up new paths and challenges for you to explore.<br><br>We’re building something truly special, and your involvement can help shape the future of this game. Join our vibrant Discord community, where you can share your experiences, swap strategies, and contribute to the evolution of the game. Your voice is vital in this journey.<br><br>While we gear up for the next big update, just a few days away, why not restart the game? Challenge yourself with speed runs, try out new tactics, and see what hidden secrets you can unearth as you continue on your path to ultimate power.<br><br>I’d love to hear how you’re feeling about the pace of progression so far. Your feedback is incredibly valuable, so don’t hesitate to share your thoughts on Discord or through the feedback form in settings. Let’s continue to make this journey together, and see where the Hall of Power takes us next!");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one
@@ -2139,7 +2133,7 @@ async function devTranscend() {
     if (randomUpgrade) {
         randomUpgrade.isPUGodMode = true;
         puGodLevel += 1;
-        puGodMultiplier = calculateGodModeMultiplier();
+        puGodMultiplier = calculatePUGodModeMultiplier();
         epsMultiplier = calculateAscensionEpsMult();
         prestigeRequirement = calculateMinResource();
         restartGame(true);
@@ -2380,11 +2374,11 @@ function displayNextModal() {
         submitGameInputButton.onclick = () => closeModal(gameInput.value);
 
         closeButton.onclick = () => closeModal(null);
-        // window.onclick = (event) => {
-        //     if (event.target == modal) {
-        //         closeModal(null);
-        //     }
-        // };
+        window.onclick = (event) => {
+            if (event.target == modal) {
+                closeModal(null);
+            }
+        };
     } else {
         modalCloseButton.style.display = 'block';
         modalConfirmButtons.style.display = 'none';
@@ -2433,40 +2427,12 @@ function showImmediateMessageModal(title, message) {
 
 
 // Function to show the welcome modal
-function showWelcomeModal() {
-    if (!knowledgeUnlocked){
-        return showMessageModal(
-            'Welcome to Degens Idle',
-            `
-            <p><span style="color: #FFD700;">Pro tip: Reading through these message dialogs could seriously level up your game experience. Just saying!</span></p>
-            <p>Step into a world where the dankest memes meet the depths of introspective contemplation. In Degens Idle, you’re not just collecting resources—you’re diving headfirst into a journey of existential discovery.</p>
-            <p>Embrace the grind as you gather Copium, Delusion, Yacht Money, Troll Points, and the elusive Hopium. There will also be other knowns and unknowns lurking in the meme-iverse. Each click and upgrade is a step closer to understanding the universe of internet culture and your place within it.</p>
-            <p>Are you ready to transcend the ordinary? To not only witness but harness the power of memes in their truest, most profound form? Every action you take will push you to ponder life’s greatest mysteries and your role in this meme-laden multiverse.</p>
-            <h2>How to Play:</h2>
-            <ul>
-                <li><strong>Click & Upgrade:</strong> Start by clicking to gather Copium and other essential resources. Use them to unlock upgrades that boost your clicking power and resource generation, speeding up your progress.</li>
-                <li><strong>Unlock & Explore:</strong> Venture into the meme-iverse to uncover hidden secrets. Every resource and upgrade opens doors to mysterious realms, revealing cryptic memes and powerful boosts that will deepen your journey into internet culture.</li>
-                <li><strong>Ponder and Reflect:</strong> As you progress, consider the deeper meanings behind the memes. What messages do they convey? How do they reflect your role in this digital multiverse? The more you explore, the clearer the connections between memes, culture, and your journey in the game become.</li>
-                <li><strong>Strategy Counts:</strong> With a solid strategy, you can be much more efficient in your progress, but remember, this is a single-player game—it’s not a race. Take your time, explore at your own pace, and savor every moment as you carve your own path to greatness.</li>
-            </ul>
-
-            `
-        );
+function showWelcomeModal(showIt) {
+    if (showIt){
+        showMessageModal('', '', false, false, 'imgs/textures/welcome.png')
+        showMessageModal('', '', false, false, 'imgs/textures/howtoplay.png')
     }
 }
-
-function openLibrary() {
-    if (purchasedUpgrades.some(upgrade => upgrade.name === "The Library")) {
-        document.getElementById('libraryOverlay').style.display = 'flex';
-    } else if (purchasedUpgrades.some(upgrade => upgrade.name === "Antimatter Dimensions")){    
-        showMessageModal('Access Denied', `You are not worthy to enter the Hall of Knowledge. The ancient tomes and secrets within remain beyond your reach. Perhaps it is time to look inwards and seek understanding within yourself first. Only through inner reflection and growth will you gain the wisdom needed to unlock the secrets of this sacred place.<br><br>
-                                            You remember learning that to unlock <strong>Knowledge</strong>, one must first achieve the seemingly impossible feat of reaching 
-                                            <strong>negative one Trillion delusion</strong>.`);
-    } else {
-        showMessageModal('Access Denied', 'You are not worthy to enter the Hall of Knowledge. The ancient tomes and secrets within remain beyond your reach. Perhaps it is time to look inwards and seek understanding within yourself first. Only through inner reflection and growth will you gain the wisdom needed to unlock the secrets of this sacred place.');
-    }
-}
-
 
 // Expose functions to the global scope for use in the HTML
 window.prestige = prestige;
@@ -2537,7 +2503,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Load the game state from local storage 
     loadGameState();
 
-    showWelcomeModal();
+    showWelcomeModal(!knowledgeUnlocked);
 
     updateMultipliersDisplay();
     // Initialize effective multipliers

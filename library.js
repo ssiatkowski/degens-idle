@@ -336,9 +336,8 @@ function initializeSkills() {
 }
 
 function openLibrary() {
-    const libraryOverlay = document.getElementById('libraryOverlay');
-    const theLibraryUpgrade = purchasedUpgrades.find(up => up.name === 'The Library');
-    if (theLibraryUpgrade) {
+    if (purchasedUpgrades.find(up => up.name === 'The Library')) {
+        const libraryOverlay = document.getElementById('libraryOverlay');
         libraryOverlay.style.display = 'flex';
         updateSkillDisplay();
 
@@ -346,6 +345,10 @@ function openLibrary() {
         setTimeout(() => {
             document.addEventListener('click', outsideLibraryClickListener);
         }, 0);
+    } else if (purchasedUpgrades.some(upgrade => upgrade.name === "Antimatter Dimensions")){    
+        showMessageModal('Access Denied', `You are not worthy to enter the Hall of Knowledge. The ancient tomes and secrets within remain beyond your reach. Perhaps it is time to look inwards and seek understanding within yourself first. Only through inner reflection and growth will you gain the wisdom needed to unlock the secrets of this sacred place.<br><br>
+                                            <span style="color: #40E0D0;">You remember learning that to unlock <strong>Knowledge</strong>, one must first achieve the seemingly impossible feat of reaching 
+                                            <strong>negative one Trillion delusion</strong></span>.`);
     } else {
         showMessageModal('Access Denied', 'You are not worthy to enter the Hall of Knowledge. The ancient tomes and secrets within remain beyond your reach. Perhaps it is time to look inwards and seek understanding within yourself first. Only through inner reflection and growth will you gain the wisdom needed to unlock the secrets of this sacred place.');
     }

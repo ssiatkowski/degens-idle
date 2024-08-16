@@ -123,20 +123,15 @@ h1, h2 {
 }
 
 #title-container {
-    text-align: center;
-    background-color: #333;
-    color: #fff;
-    padding: 150px 0px;
-    border-radius: 80px;
+    border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin-bottom: 10px; /* Add margin to space out from the button */
-}
-
-#title {
-    transform: rotate(-90deg);
-    font-size: 3em;
-    font-weight: bold;
-    animation: flash infinite 2s ease-in-out alternate ;
+    background-image: url('imgs/textures/banner_side.png'); /* Set desktop background image */
+    background-size: contain; /* Ensure the image covers the entire container */
+    background-position: center; /* Center the image within the container */
+    background-repeat: no-repeat; /* Prevent repeating */
+    width: 100%; /* Ensure it fills the column width */
+    height: 80vh; /* Set height to full viewport height */
 }
 
 #button-container {
@@ -193,13 +188,6 @@ h1, h2 {
 
 #settingsButton:hover {
     background-color: #5f6a6a; /* Darker gray on hover */
-}
-
-
-@keyframes flash {
-    0% { color: #fff; text-shadow: 0 0 5px #fff, 0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 40px #ff00ff, 0 0 80px #ff00ff; }
-    50% { color: #ff0; text-shadow: 0 0 5px #ff0, 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 40px #ff0000, 0 0 80px #ff0000; }
-    100% { color: #fff; text-shadow: 0 0 5px #fff, 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 40px #00ffff, 0 0 80px #00ffff; }
 }
 
 #game {
@@ -575,21 +563,16 @@ button.disabled {
 /* Media Queries for Mobile Devices */
 @media (max-width: 768px) {
     #title-container {
-        position: relative;
-        transform: none !important; /* Ensure no rotation */
-        margin-bottom: 20px;
-        text-align: center; /* Center the text */
-        height: auto; /* Adjust the height for mobile */
-        padding: 10px 0; /* Add padding to reduce height */
+        margin-bottom: 10px;
+        padding-bottom: 0; /* Remove bottom padding */
+        background-image: url('imgs/textures/banner_thin.png'); /* Set mobile background image */    
+        background-size: contain; /* Cover the full width */
+        background-position: center; /* Center the image within the container */
+        background-repeat: no-repeat; /* Prevent repeating */
+        width: 100vw; /* Make sure it spans the full viewport width */
+        max-height: 100px; /* Allow height to adjust based on the content */
     }
 
-    #title {
-        transform: none !important; /* Ensure no rotation */
-        font-size: 1.5em !important; /* Smaller font size */
-        display: inline-block; /* Inline to allow centering */
-        white-space: nowrap; /* Prevent wrapping */
-        padding: 10px 20px; /* Padding for spacing */
-    }
 
     /* Adjust the game container for mobile layout */
     #main-container {

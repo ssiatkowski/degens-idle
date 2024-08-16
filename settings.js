@@ -316,6 +316,13 @@ document.getElementById('importSaveButton').addEventListener('click', function()
 // Add event listener for file input change
 document.getElementById('importFileInput').addEventListener('change', importSave);
 
+// Add event listener for Import Save button
+document.getElementById('howToPlayButton').addEventListener('click', function() {
+    closeSettings();
+    showWelcomeModal(true);
+});
+
+
 // Add event listener for Discord button
 document.getElementById('discordButton').addEventListener('click', function() {
     window.open('https://discord.gg/7pejTdhY99', '_blank');
