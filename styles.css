@@ -848,7 +848,7 @@ button.disabled {
         0 0 12px #ff4500,  /* Third layer of orange-red glow */
         0 0 15px #ff6347,  /* Fourth layer with a slightly lighter shade */
         0 0 20px #ff6347,  /* Fifth layer with a slightly lighter shade */
-        0 0 25px #ff6347;  /* Sixth layer with a slightly lighter shade */
+        0 0 30px #ff6347;  /* Sixth layer with a slightly lighter shade */
     margin-top: 10px;
     text-align: center;
     transition: all 0.5s ease;

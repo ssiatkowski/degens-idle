@@ -598,61 +598,52 @@ function playMiniGame(gameType) {
 }
 
 
-// Function to start the cooldown for a mini-game
 function startCooldown(gameType) {
     const button = document.getElementById(`${gameType}Game`);
     const startTime = Date.now();
     const cooldownDuration = miniGamerSkill ? miniGameTimeouts[gameType] * 0.75 : miniGameTimeouts[gameType];
 
     localStorage.setItem(`${gameType}CooldownStart`, startTime);
+
     cooldowns[gameType] = true;
+    if (button) {
+        button.classList.remove('affordable');
+        button.classList.add('disabled');
+        button.disabled = true;
 
-    button.classList.remove('affordable');
-    button.classList.add('disabled');
-    button.disabled = true;
-    button.style.color = 'gray';
-
-    let progressBar = button.querySelector('.progress');
-    if (!progressBar) {
-        progressBar = document.createElement('div');
-        progressBar.className = 'progress';
-        button.appendChild(progressBar);
-    }
-    progressBar.style.width = '0%';
-    progressBar.style.height = '100%';
-    progressBar.style.backgroundColor = 'rgba(40, 167, 69, 0.7)';
-    progressBar.style.position = 'absolute';
-    progressBar.style.top = 0;
-    progressBar.style.left = 0;
-    progressBar.style.zIndex = 1;
-
-    // Update the progress bar over time
-    miniGameIntervals[gameType] = setInterval(() => {
-        const elapsedTime = Date.now() - startTime;
-        const progressPercent = (elapsedTime / cooldownDuration) * 100;
-        progressBar.style.width = `${progressPercent}%`;
-
-        if (elapsedTime >= cooldownDuration) {
-            clearInterval(miniGameIntervals[gameType]);
-            delete miniGameIntervals[gameType];
-            cooldowns[gameType] = false;
-            button.disabled = false;
-            button.classList.remove('disabled');
-            progressBar.style.width = '100%';
-            button.style.color = 'white';
-            button.style.setProperty('color', 'white', 'important');
+        let progressBar = button.querySelector('.progress');
+        if (!progressBar) {
+            progressBar = document.createElement('div');
+            progressBar.className = 'progress';
+            button.appendChild(progressBar);
         }
-    }, 200);
+        progressBar.style.width = '0%';
 
-    // Reset the cooldown after the duration
-    setTimeout(() => {
-        cooldowns[gameType] = false;
-        button.disabled = false;
-        button.classList.remove('disabled');
-        button.classList.add('affordable');
-        button.style.color = 'white';
-        button.style.setProperty('color', 'white', 'important');
-    }, cooldownDuration);
+        const interval = setInterval(() => {
+            const elapsedTime = Date.now() - startTime;
+            const progressPercent = (elapsedTime / cooldownDuration) * 100;
+            progressBar.style.width = `${progressPercent}%`;
+
+            if (elapsedTime >= cooldownDuration) {
+                clearInterval(interval);
+                cooldowns[gameType] = false;
+                button.disabled = false;
+                button.classList.remove('disabled');
+                button.classList.add('affordable');
+                progressBar.style.width = '100%';
+            }
+        }, 200);
+
+        // Set timeout to reset button state after cooldown ends
+        setTimeout(() => {
+            cooldowns[gameType] = false;
+            if (button) {
+                button.disabled = false;
+                button.classList.remove('disabled');
+                button.classList.add('affordable');
+            }
+        }, cooldownDuration);
+    }
 }
 
 
@@ -666,48 +657,40 @@ function unlockMiniGames() {
         const button = document.getElementById(`${gameType}Game`);
         const progressBar = button.querySelector('.progress');
 
-        button.style.display = 'block';  // Ensure the button is always visible
+        button.style.display = 'block';
 
         if (startTime) {
             const elapsed = now - parseInt(startTime, 10);
             const cooldownDuration = miniGamerSkill ? miniGameTimeouts[gameType] * 0.75 : miniGameTimeouts[gameType];
 
             if (elapsed >= cooldownDuration) {
-                // Cooldown has already passed
                 cooldowns[gameType] = false;
                 button.disabled = false;
                 button.classList.remove('disabled');
                 button.classList.add('affordable');
-                button.style.color = 'white';
                 if (progressBar) {
-                    progressBar.style.width = '100%';  // Set to fully filled if cooldown is over
+                    progressBar.style.width = '100%';
                 }
             } else {
-                // Cooldown is still in progress
                 const remainingCooldown = cooldownDuration - elapsed;
                 const progressPercent = (elapsed / cooldownDuration) * 100;
 
                 button.disabled = true;
                 button.classList.add('disabled');
                 button.classList.remove('affordable');
-                button.style.color = 'gray';
-
                 if (progressBar) {
                     progressBar.style.width = `${progressPercent}%`;
                 }
 
-                // Continue updating the progress bar until cooldown ends
-                miniGameIntervals[gameType] = setInterval(() => {
+                const interval = setInterval(() => {
                     const newElapsed = Date.now() - parseInt(startTime, 10);
                     const newProgressPercent = (newElapsed / cooldownDuration) * 100;
 
                     if (newElapsed >= cooldownDuration) {
-                        clearInterval(miniGameIntervals[gameType]);
-                        delete miniGameIntervals[gameType];
+                        clearInterval(interval);
                         button.disabled = false;
                         button.classList.remove('disabled');
                         button.classList.add('affordable');
-                        button.style.color = 'white';
                         if (progressBar) {
                             progressBar.style.width = '100%';
                         }
@@ -716,13 +699,14 @@ function unlockMiniGames() {
                             progressBar.style.width = `${newProgressPercent}%`;
                         }
                     }
-                }, 200);
+                }, 100);
             }
         } else {
             startCooldown(gameType);
         }
     });
 }
+
 
 
 
