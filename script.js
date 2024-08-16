@@ -1349,7 +1349,8 @@ async function prestige() {
 
         const confirmed = await showMessageModal(
             'Prestige Confirmation',
-            `Are you sure you want to prestige? You will reset your progress and all resources, but your Prestige Multiplier will increase <strong>from ${formatNumber(epsMultiplier)} to ${formatNumber(calculatePrestigeMultiplier())}</strong>.<br>(Prestige multiplier is based on the lowest among your first four resources (Copium, Delusion, Yacht Money, and Troll Points). The higher the amount of your smallest resource, the greater your prestige multiplier!)`,
+            `<p>Are you sure you want to prestige? You will reset your progress and all resources, but your Prestige Multiplier will increase <strong>from ${formatNumber(epsMultiplier)} to ${formatNumber(calculatePrestigeMultiplier())}</strong>.</p>
+<p><span style="font-size: smaller;">(Prestige multiplier is based on the lowest among your first four resources (Copium, Delusion, Yacht Money, and Troll Points). The higher the amount of your smallest resource, the greater your prestige multiplier!)</span></p>`,
             true
         );
 

@@ -139,7 +139,7 @@ const upgrades = [
     {
         name: "Deal with the devil",
         cost: { copium: 0, delusion: 0, yachtMoney: 12000, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: -1, delusionPerSecond: 2, yachtMoneyPerSecond: 2, trollPointsPerSecond: 1.2, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: -1, delusionPerSecond: 2, yachtMoneyPerSecond: 2, trollPointsPerSecond: 1.5, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/warren_buffet.jpg",
         hoverOverwrite: "It's just your soul...",
     },
@@ -152,7 +152,7 @@ const upgrades = [
     {
         name: "King of Delusion",
         cost: { copium: 0, delusion: 10000, yachtMoney: 3000, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 3, delusionPerSecond: 99, yachtMoneyPerSecond: 3, trollPointsPerSecond: -10, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 3, delusionPerSecond: 99, yachtMoneyPerSecond: 3, trollPointsPerSecond: -9, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/king_of_delusion.jpeg",
         hoverOverwrite: "Probably gives lots of delusion",
     },
@@ -171,7 +171,7 @@ const upgrades = [
     {
         name: "What Other Multiplier?",
         cost: { copium: 3500, delusion: 7500, yachtMoney: 8000, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: -30, delusionPerSecond: 20, yachtMoneyPerSecond: 0, trollPointsPerSecond: 65, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: -30, delusionPerSecond: 20, yachtMoneyPerSecond: 0, trollPointsPerSecond: 69, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/mocking_spongebob.jpg",
     },
     {
