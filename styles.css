@@ -747,7 +747,6 @@ button.disabled {
     border: none;
     color: white;
     text-align: center;
-    text-transform: uppercase;
     letter-spacing: 0.5px;
     transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);

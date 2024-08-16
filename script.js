@@ -43,6 +43,8 @@ let bigCrunchMultiplier = 1;
 
 let totalMultiplier = 1;
 
+let currentNumberFormat = 'Mixed';
+
 let firstTimePrestigeButtonAvailable = true; // Default to true, will be updated based on saved state
 
 let modalQueue = [];
@@ -1152,9 +1154,9 @@ const PREFIXES = ["", "K", "M", "B", "T", "Qa", "Qi", "Sx", "Sp", "Oc", "No", "D
 function formatNumIntl(num, isScientific = false) {
     const absNum = Math.abs(num);
     if (num === 0) return "0";
+    else if (isScientific) return formatScientific.format(num).toLowerCase();
     else if (absNum < 1) return formatFraction.format(num);
     else if (absNum < 1000) return formatSignificant.format(num);
-    else if (isScientific) return formatScientific.format(num).toLowerCase();
     
     const exponent = Math.floor(Math.log10(absNum) / 3);
     const digits = formatSignificant.format(num / 10 ** (3 * exponent));
@@ -1164,19 +1166,18 @@ function formatNumIntl(num, isScientific = false) {
 
 
 function formatNumber(num) {
-    Type = 0;
-    switch(Type) {
-        case 0:
-            if(num < 1e36){
+    switch(currentNumberFormat) {
+        case 'Mixed':
+            if(num < 1e36 || num < -1e36){
                 return formatNumIntl(num,false);
             }
             else{
                 return formatNumIntl(num, true);
             }
           return format
-        case 1: 
+        case 'Scientific': 
             return formatNumIntl(num, true);
-        case 2:
+        case 'Suffixes':
             return formatNumIntl(num,false);
       }
 }
@@ -1331,16 +1332,19 @@ function canPrestige() {
 async function prestige() {
     if (canPrestige()) {
 
+        const newPrestigeMult = calculatePrestigeMultiplier();
+        const newPrestigeReq = Math.min(copium, delusion, yachtMoney, trollPoints);
+
         const confirmed = await showMessageModal(
             'Prestige Confirmation',
-            `<p>Are you sure you want to prestige? You will reset your progress and all resources, but your Prestige Multiplier will increase <strong>from ${formatNumber(epsMultiplier)} to ${formatNumber(calculatePrestigeMultiplier())}</strong>.</p>
+            `<p>Are you sure you want to prestige? You will reset your progress and all resources, but your Prestige Multiplier will increase <strong>from ${formatNumber(epsMultiplier)} to ${formatNumber(newPrestigeMult)}</strong>.</p>
 <p><span style="font-size: smaller;">(Prestige multiplier is based on the lowest among your first four resources (Copium, Delusion, Yacht Money, and Troll Points). The higher the amount of your smallest resource, the greater your prestige multiplier!)</span></p>`,
             true
         );
 
         if (confirmed) {
-            epsMultiplier = calculatePrestigeMultiplier();
-            prestigeRequirement = Math.min(copium, delusion, yachtMoney, trollPoints);
+            epsMultiplier = newPrestigeMult;
+            prestigeRequirement = newPrestigeReq;
             
             // Call restartGame with isPrestige flag set to true
             restartGame(true);
@@ -1350,7 +1354,9 @@ async function prestige() {
             // Save game state after prestige
             saveGameState();
 
-            showMessageModal('Prestige Successful!', `Your multiplier is now x${epsMultiplier.toFixed(2)}. All resources have been reset.`);
+            if (epsMultiplier<5){
+                showMessageModal('Prestige Successful!', `Your multiplier is now x${formatNumber(epsMultiplier)}. All resources have been reset.`);
+            }
         }
     }
 }
@@ -1366,7 +1372,7 @@ function updatePrestigeButton() {
             saveGameState(); // Save the game state to persist the flag
         }
         const newMultiplier = calculatePrestigeMultiplier();
-        prestigeButton.textContent = `Prestige (x${formatNumber(newMultiplier / epsMultiplier)} multiplier)`;
+        prestigeButton.textContent = `PRESTIGE (x${formatNumber(newMultiplier / epsMultiplier)} MULT)`;
         prestigeButton.style.display = 'block';
     } else {
         prestigeButton.style.display = 'none';
@@ -1668,7 +1674,7 @@ function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying=true) {
 
         // Special case for the "Still very stupid" upgrade
         if (name === "Soothing Realization") {
-            showMessageModal('Sadly', "This marks the end of v0.833, but don’t think for a moment that your journey is over! The thrilling Hall of Power is just the beginning, and there’s so much more to uncover. With every new update, the excitement only intensifies, opening up new paths and challenges for you to explore.<br><br>We’re building something truly special, and your involvement can help shape the future of this game. Join our vibrant Discord community, where you can share your experiences, swap strategies, and contribute to the evolution of the game. Your voice is vital in this journey.<br><br>While we gear up for the next big update, just a few days away, why not restart the game? Challenge yourself with speed runs, try out new tactics, and see what hidden secrets you can unearth as you continue on your path to ultimate power.<br><br>I’d love to hear how you’re feeling about the pace of progression so far. Your feedback is incredibly valuable, so don’t hesitate to share your thoughts on Discord or through the feedback form in settings. Let’s continue to make this journey together, and see where the Hall of Power takes us next!");
+            showMessageModal('Sadly', "This marks the end of v0.834, but don’t think for a moment that your journey is over! The thrilling Hall of Power is just the beginning, and there’s so much more to uncover. With every new update, the excitement only intensifies, opening up new paths and challenges for you to explore.<br><br>We’re building something truly special, and your involvement can help shape the future of this game. Join our vibrant Discord community, where you can share your experiences, swap strategies, and contribute to the evolution of the game. Your voice is vital in this journey.<br><br>While we gear up for the next big update, just a few days away, why not restart the game? Challenge yourself with speed runs, try out new tactics, and see what hidden secrets you can unearth as you continue on your path to ultimate power.<br><br>I’d love to hear how you’re feeling about the pace of progression so far. Your feedback is incredibly valuable, so don’t hesitate to share your thoughts on Discord or through the feedback form in settings. Let’s continue to make this journey together, and see where the Hall of Power takes us next!");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one

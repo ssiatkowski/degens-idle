@@ -1,13 +1,13 @@
 const upgrades = [
     {
         name: "So what do I do here?",
-        cost: { copium: 3, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
+        cost: { copium: 2, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 1.4, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0.7, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/john_travolta.jpg",
     },
     {
         name: "You made it",
-        cost: { copium: 0, delusion: 5, yachtMoney: 7, trollPoints: 7, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
+        cost: { copium: 0, delusion: 4, yachtMoney: 6, trollPoints: 6, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 0.8, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1.9, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/leo.jpg",
         message: `<p>Welcome to the start of your epic journey. Whether you’re here for the memes, the deep existential pondering, or just to click things—cheers to you! 🍷 </p>

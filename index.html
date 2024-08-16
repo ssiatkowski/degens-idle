@@ -11,7 +11,7 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Degens Idle v0.833</title>
+    <title>Degens Idle v0.834</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="library.css">    
     <link rel="stylesheet" href="powerhall.css">    
@@ -216,22 +216,40 @@
         <div class="settings-overlay-content">
             <span class="close-button" id="closeSettingsOverlay">&times;</span>
             <h1>Settings</h1>
-            <h4>Degens Idle v0.833</h4>
-            <p class="settings-note">Please note, this game is a labor of love and is always evolving. Save files might not work with major updates, but I'll do my best to keep things compatible.</p>
-            <div class="settings-buttons">
-                <button id="exportSaveButton">Export Save</button>
-                <button id="importSaveButton">Import Save</button>
-                <button id="howToPlayButton">How to Play?</button>
+            <h4>Degens Idle v0.834</h4>
+            
+            <div class="settings-section">
+                <h3>Save Management</h3>
+                <div class="settings-buttons">
+                    <button id="exportSaveButton">
+                        <img src="imgs/textures/download.png" alt="Download Icon"> Export Save
+                    </button>
+                    <button id="importSaveButton">
+                        <img src="imgs/textures/upload.png" alt="Upload Icon"> Import Save
+                    </button>
+                </div>
             </div>
-            <div class="settings-note">
-                Your feedback is crucial as the game grows. I genuinely value every suggestion and insight you share. Thank you for helping shape the future of Degens Idle!
+            
+            <div class="settings-section">
+                <h3>Gameplay Options</h3>
+                <div class="settings-buttons">
+                    <button id="howToPlayButton"><i class="icon-info"></i> How to Play?</button>
+                    <button id="numberFormatButton" class="full-width-button">Number Format: Mixed</button>
+                </div>
             </div>
-            <button id="feedbackButton">Give Feedback</button>
-            <p class="discord-note">I'd love to see you join our Discord! Whether you just want to show you enjoyed the game or share some feedback (good or bad), your support means a lot!</p>
-            <button id="discordButton">
-                <img src="imgs/textures/discord.svg" alt="Discord" id="discordIcon">
-            </button>
-            <button id="donateButton">Donate</button>
+            
+            <div class="settings-section">
+                <h3>Community & Support</h3>
+                <div class="settings-note">
+                    Your feedback is crucial as the game grows. Every suggestion, insight, and idea you share directly influences the development of Degens Idle. The players and community are at the heart of this game's evolution, shaping its future with every piece of feedback. Whether it's refining gameplay mechanics, introducing new features, or just sharing your experiences, your contributions help make this game better for everyone. Together, we’re building something special, and I genuinely value and appreciate your involvement in this journey.
+                </div>
+                <button id="feedbackButton"><i class="icon-feedback"></i> Give Feedback</button>
+                <button id="discordButton">
+                    <img src="imgs/textures/discord.svg" alt="Discord" id="discordIcon">
+                </button>
+                <button id="donateButton"><i class="icon-donate"></i> Donate</button>
+            </div>
+            
             <button id="closeSettingsButton">Exit</button>
         </div>
     </div>

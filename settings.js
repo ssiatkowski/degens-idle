@@ -343,3 +343,14 @@ document.getElementById('feedbackButton').addEventListener('click', function() {
     window.open('https://docs.google.com/forms/d/e/1FAIpQLSfaQdxaBFCdT789rVTSvFuScEEzlu4rDabjFUX0zkCKinyvKA/viewform?usp=sf_link', '_blank');
 });
 
+
+document.getElementById('numberFormatButton').addEventListener('click', function() {
+    if (currentNumberFormat === "Mixed") {
+        currentNumberFormat = "Scientific";
+    } else if (currentNumberFormat === "Scientific") {
+        currentNumberFormat = "Suffixes";
+    } else {
+        currentNumberFormat = "Mixed";
+    }
+    this.textContent = `Number Format: ${currentNumberFormat}`;
+});

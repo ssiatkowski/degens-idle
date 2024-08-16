@@ -58,6 +58,26 @@
     margin-bottom: 20px;
 }
 
+.settings-section {
+    margin-bottom: 30px;
+}
+
+.settings-buttons button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px; /* Space between icon and text */
+    padding: 8px 12px;  /* Adjust padding for a tighter fit */
+}
+
+.settings-buttons button img {
+    width: 20px;  /* Adjust width to fit the button */
+    height: 20px; /* Adjust height to fit the button */
+    margin-right: 10px; /* Add some space between the icon and text */
+    vertical-align: middle; /* Align the icon with the text */
+}
+
+
 /* Discord Button */
 #discordButton {
     background: none;
