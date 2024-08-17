@@ -683,7 +683,6 @@ button.disabled {
 #cookieButton img {
     width: 150px; /* Adjust size as needed */
     height: auto;
-    transition: transform 0.1s;
 }
 
 #cookieButton:active img {

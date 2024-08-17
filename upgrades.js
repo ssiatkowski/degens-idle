@@ -24,7 +24,7 @@ const upgrades = [
     {
         name: "Decisions, decisions...",
         cost: { copium: 0, delusion: 25, yachtMoney: 25, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 1.4, delusionPerSecond: 1.4, yachtMoneyPerSecond: 1.6, trollPointsPerSecond: -1.6, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 1.3, delusionPerSecond: 1.3, yachtMoneyPerSecond: 1.5, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/two_buttons.jpg",     
     },
     {
@@ -49,7 +49,7 @@ const upgrades = [
     {
         name: "Music",
         cost: { copium: 100, delusion: 25, yachtMoney: 150, trollPoints: 25, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 8.5, delusionPerSecond: -0.8, yachtMoneyPerSecond: -0.4, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 7.4, delusionPerSecond: 0, yachtMoneyPerSecond: 0.2, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/linkin_park.jpg",
     },
     {
@@ -57,7 +57,7 @@ const upgrades = [
         cost: { copium: 250, delusion: 150, yachtMoney: 150, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 2.8, delusionPerSecond: 3.7, yachtMoneyPerSecond: 4.5, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/click.jpg",
-        message: `Some upgrades come with special messages that enhance your experience. These messages might reveal lore, explain new game features, or provide valuable insights—just like this one. You’ll see these messages the first time you purchase an upgrade, but don’t worry if you miss something! You can always click the upgrade in the purchased section to view the messages again.`,
+        message: `Some upgrades come with special messages that enhance your experience. These messages might reveal lore, explain new game features, or provide valuable insights—just like this one. You’ll only see these messages the first time you purchase an upgrade, but don’t worry if you miss something! You can always click the upgrade in the purchased section to view the messages again.`,
     },
     {
         name: "Alt Coins",
@@ -68,7 +68,7 @@ const upgrades = [
     {
         name: "Paid Email Service",
         cost: { copium: 1000, delusion: 0, yachtMoney: 0, trollPoints: 150, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 0.8, delusionPerSecond: 8.4, yachtMoneyPerSecond: -1.3, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0.8, delusionPerSecond: 8.4, yachtMoneyPerSecond: -2.5, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/proton.jpg",
     },
     {
@@ -294,7 +294,7 @@ const upgrades = [
         cost: { copium: 3.5e8, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 72000, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 53000, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/trade_offer.jpg",
-        message: `Don’t forget about the trade functionality—at certain points in the game, it can be a highly efficient way to boost your progress. You’ll have the ability to choose which resources to trade from and to, allowing you to balance your reserves and optimize your strategy. Keep an eye on your resources, and use trade when the time is right to gain the upper hand!`,
+        message: `Trading is essential to your success—at key moments in the game, it becomes a powerful tool to significantly boost your progress. By carefully selecting which resources to trade, you can strategically balance your reserves and enhance your overall strategy. Stay vigilant with your resource management, and make the most of trading opportunities to gain the upper hand when it matters most!`,
     },
     {
         name: "Job Application #2",
@@ -484,7 +484,7 @@ const upgrades = [
     {
         name: "Shooter Dad",
         cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 5e11, knowledge: 100000, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 1.44e7, trollPointsPerSecond: 0, hopiumPerSecond: 99.9, knowledgePerSecond: 0.000078, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 1.46e7, trollPointsPerSecond: 0, hopiumPerSecond: 99.9, knowledgePerSecond: 0.000079, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/shooter_swag.jpg",
     },
     {
@@ -496,7 +496,7 @@ const upgrades = [
     {
         name: "Build a Base",
         cost: { copium: 8e17, delusion: 4e17, yachtMoney: 4e17, trollPoints: 8e17, hopium: 1e12, knowledge: 1, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: -2.5e7, delusionPerSecond: 0, yachtMoneyPerSecond: -1.3e7, trollPointsPerSecond: -4e7, hopiumPerSecond: -75, knowledgePerSecond: 0.0019, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: -2.5e7, delusionPerSecond: 0, yachtMoneyPerSecond: -1.3e7, trollPointsPerSecond: -4e7, hopiumPerSecond: -75, knowledgePerSecond: 0.002, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/all_your_base.jpg",
         hoverOverwrite: "Xy'løth Q'värk, F'näürg zxÿl-gørh'tha! Z'qúol b'zhåk vi'krêth, nx'tuöl j'dä!",
     },

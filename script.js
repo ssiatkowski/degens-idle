@@ -102,7 +102,7 @@ const miniGameTimeouts = {
 const miniGameIntervals = {};
 
 function calculateEffectivePower(){
-    return (moneyIsPowerTooSkill ? (knowledge ** (1/3) / 1e12) * (1 + (Math.max(yachtMoney,0) ** (1/4) / 1e12)) : knowledge ** (1/3) / 1e12) * devMultiplier;
+    return (moneyIsPowerTooSkill ? (knowledge ** (1/3) / 1e12) * (1 + (Math.max(yachtMoney,0) ** (1/30) / 100)) : knowledge ** (1/3) / 1e12) * devMultiplier;
 }
 
 function updateEffectiveMultipliers() {
@@ -275,6 +275,7 @@ function loadGameState() {
     }
 
     updateTradeRatio();
+    updateTradeButtonText();
 
     if(buyMarkersSkill){ enableAllBuyMarkers() };
 
@@ -415,9 +416,19 @@ function showTooltip(event, earnings, isGodMode, isPUGodMode, hoverOverwrite) {
             </div>
         `;
     }
-    tooltip.style.display = 'block';
-    tooltip.style.left = `${event.pageX + 10}px`;
-    tooltip.style.top = `${event.pageY + 10}px`;
+
+    if (window.innerWidth <= 768) {  // Mobile devices
+        tooltip.style.display = 'block';
+        tooltip.style.position = 'absolute';
+        tooltip.style.left = `${event.pageX + 40}px`;
+        tooltip.style.top = `${event.pageY + 40}px`;
+    } else {  // Desktop devices
+        tooltip.style.display = 'block';
+        tooltip.style.position = 'absolute';
+        tooltip.style.left = `${event.pageX + 10}px`;
+        tooltip.style.top = `${event.pageY + 10}px`;
+    }
+
 }
 
 
@@ -933,15 +944,15 @@ function showStatusMessage(pressedButton, message, isSuccess, timeout=3000) {
     const rect = pressedButton.getBoundingClientRect();
 
     // Adjust the positioning based on the device
-    if (window.innerWidth <= 768) {  // Mobile devices
-        overlay.style.position = 'absolute';
-        overlay.style.top = `${rect.bottom + window.scrollY + 30}px`;  // Position below the pressed button
-        overlay.style.left = `${rect.left + window.scrollX}px`;  // Align with the left of the pressed button
-    } else {  // Desktop devices
-        overlay.style.position = 'absolute';
-        overlay.style.top = `${rect.top + window.scrollY}px`;  // Align with the top of the pressed button
-        overlay.style.left = `${rect.right + window.scrollX + 10}px`;  // Position to the right of the pressed button
-    }
+    // if (window.innerWidth <= 768) {  // Mobile devices
+    overlay.style.position = 'absolute';
+    overlay.style.top = `${rect.bottom + window.scrollY + 5}px`;  // Position below the pressed button
+    overlay.style.left = `${rect.left + window.scrollX}px`;  // Align with the left of the pressed button
+    // } else {  // Desktop devices
+    //     overlay.style.position = 'absolute';
+    //     overlay.style.top = `${rect.top + window.scrollY}px`;  // Align with the top of the pressed button
+    //     overlay.style.left = `${rect.right + window.scrollX + 10}px`;  // Position to the right of the pressed button
+    // }
 
     // Clear the previous timer if it exists
     if (statusMessageTimeout) {
@@ -1016,11 +1027,21 @@ function parseFormattedNumber(str, currentAmount = 0) {
     return NaN;
 }
 
+// Function to update the trade button text based on entered trade amount
+function updateTradeButtonText() {
+    const tradeAmountInput = document.getElementById('tradeAmount').value;
+    const tradeButton = document.getElementById('tradeButton');
+    
+    if (tradeAmountInput) {
+        tradeButton.textContent = `Trade ${tradeAmountInput}`;
+    } else {
+        tradeButton.textContent = 'Trade';
+    }
+}
 
-function tradeResources() {
+function tradeResources(tradeAmountInput = null) {
     const fromResource = document.getElementById('fromResource').value;
     const toResource = document.getElementById('toResource').value;
-    const tradeAmountInput = document.getElementById('tradeAmount').value;
 
     // Object to store current amounts of each resource
     const resourceAmount = {
@@ -1032,6 +1053,13 @@ function tradeResources() {
     };
 
     const currentAmount = resourceAmount[fromResource];
+
+    // If tradeAmountInput is null, use the value from the input field
+    if (!tradeAmountInput) {
+        tradeAmountInput = document.getElementById('tradeAmount').value;
+    }
+
+    // Calculate the trade amount using the parseFormattedNumber function
     const tradeAmount = parseFormattedNumber(tradeAmountInput, currentAmount);
 
     const tradeButton = document.getElementById('tradeButton');
@@ -1062,7 +1090,6 @@ function tradeResources() {
             resourceAmount[toResource] += tradeAmount / 100000000;
             showStatusMessage(tradeButton, `Traded ${formatNumber(tradeAmount)} ${fromResource} for ${formatNumber(tradeAmount / 100000000)} ${toResource}.`, true);
         }
-        
     } else if (toResource === 'hopium') {
         showStatusMessage(tradeButton, "Only Copium can convert to Hopium.", false);
         return;
@@ -1092,6 +1119,12 @@ function tradeResources() {
     // Update the display to reflect the new resource values
     updateDisplay();
 }
+
+// Function to trade 10% of the available resource
+function tradeTenPercent() {
+    tradeResources("10%"); // Pass "10%" to the tradeResources function
+}
+
 
 
 // function Bound(LOWER_BOUND = -Infinity, UPPER_BOUND = Infinity, DEFAULT_VALUE = 0, DATA = 0) {
@@ -1169,22 +1202,31 @@ function formatNumIntl(num, isScientific = false) {
     return digits + PREFIXES[exponent];
 }
 
-
 function formatNumber(num) {
+    let formattedNum;
+
     switch(currentNumberFormat) {
         case 'Mixed':
             if(num < 1e36 || num < -1e36){
-                return formatNumIntl(num,false);
+                formattedNum = formatNumIntl(num,false);
+            } else {
+                formattedNum = formatNumIntl(num, true);
             }
-            else{
-                return formatNumIntl(num, true);
-            }
-          return format
+            break;
         case 'Scientific': 
-            return formatNumIntl(num, true);
+            formattedNum = formatNumIntl(num, true);
+            break;
         case 'Suffixes':
-            return formatNumIntl(num,false);
-      }
+            formattedNum = formatNumIntl(num, false);
+            break;
+    }
+
+    // Return the formatted number, wrapped in a span tag with red color if the number is negative
+    if (num < 0) {
+        return `<span style="color: red;">${formattedNum}</span>`;
+    } else {
+        return formattedNum;
+    }
 }
 
 
@@ -1250,22 +1292,22 @@ function formatNumber3(num) {
 
 // Function to update the display with the current game state
 function updateDisplay() {
-    document.getElementById('copium').textContent = formatNumber(copium);
-    document.getElementById('cps').textContent = formatNumber(effectiveCopiumPerSecond);
-    document.getElementById('delusion').textContent = formatNumber(delusion);
-    document.getElementById('dps').textContent = formatNumber(effectiveDelusionPerSecond);
-    document.getElementById('yachtMoney').textContent = formatNumber(yachtMoney);
-    document.getElementById('ymps').textContent = formatNumber(effectiveYachtMoneyPerSecond);
-    document.getElementById('trollPoints').textContent = formatNumber(trollPoints);
-    document.getElementById('tpps').textContent = formatNumber(effectiveTrollPointsPerSecond);
-    document.getElementById('hopium').textContent = formatNumber(hopium);
-    document.getElementById('hps').textContent = formatNumber(effectiveHopiumPerSecond);
-    document.getElementById('knowledge').textContent = formatNumber(knowledge);
-    document.getElementById('kps').textContent = formatNumber(effectiveKnowledgePerSecond);
-    document.getElementById('power').textContent = formatNumber(power);
-    document.getElementById('pps').textContent = formatNumber(effectivePowerPerSecond);
-    document.getElementById('serenity').textContent = formatNumber(serenity);
-    document.getElementById('sps').textContent = formatNumber(effectiveSerenityPerSecond);
+    document.getElementById('copium').innerHTML = formatNumber(copium);
+    document.getElementById('cps').innerHTML = formatNumber(effectiveCopiumPerSecond);
+    document.getElementById('delusion').innerHTML = formatNumber(delusion);
+    document.getElementById('dps').innerHTML = formatNumber(effectiveDelusionPerSecond);
+    document.getElementById('yachtMoney').innerHTML = formatNumber(yachtMoney);
+    document.getElementById('ymps').innerHTML = formatNumber(effectiveYachtMoneyPerSecond);
+    document.getElementById('trollPoints').innerHTML = formatNumber(trollPoints);
+    document.getElementById('tpps').innerHTML = formatNumber(effectiveTrollPointsPerSecond);
+    document.getElementById('hopium').innerHTML = formatNumber(hopium);
+    document.getElementById('hps').innerHTML = formatNumber(effectiveHopiumPerSecond);
+    document.getElementById('knowledge').innerHTML = formatNumber(knowledge);
+    document.getElementById('kps').innerHTML = formatNumber(effectiveKnowledgePerSecond);
+    document.getElementById('power').innerHTML = formatNumber(power);
+    document.getElementById('pps').innerHTML = formatNumber(effectivePowerPerSecond);
+    document.getElementById('serenity').innerHTML = formatNumber(serenity);
+    document.getElementById('sps').innerHTML = formatNumber(effectiveSerenityPerSecond);
 
     updatePrestigeButton();
     updateAscendButton();
@@ -1683,7 +1725,7 @@ function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying=true) {
 
         // Special case for the "Still very stupid" upgrade
         if (name === "Soothing Realization") {
-            showMessageModal('Sadly', "This marks the end of v0.836, but don’t think for a moment that your journey is over! The thrilling Hall of Power is just the beginning, and there’s so much more to uncover. With every new update, the excitement only intensifies, opening up new paths and challenges for you to explore.<br><br>We’re building something truly special, and your involvement can help shape the future of this game. Join our vibrant Discord community, where you can share your experiences, swap strategies, and contribute to the evolution of the game. Your voice is vital in this journey.<br><br>While we gear up for the next big update, just a few days away, why not restart the game? Challenge yourself with speed runs, try out new tactics, and see what hidden secrets you can unearth as you continue on your path to ultimate power.<br><br>I’d love to hear how you’re feeling about the pace of progression so far. Your feedback is incredibly valuable, so don’t hesitate to share your thoughts on Discord or through the feedback form in settings. Let’s continue to make this journey together, and see where the Hall of Power takes us next!");
+            showMessageModal('Sadly', "This marks the end of v0.837, but don’t think for a moment that your journey is over! The thrilling Hall of Power is just the beginning, and there’s so much more to uncover. With every new update, the excitement only intensifies, opening up new paths and challenges for you to explore.<br><br>We’re building something truly special, and your involvement can help shape the future of this game. Join our vibrant Discord community, where you can share your experiences, swap strategies, and contribute to the evolution of the game. Your voice is vital in this journey.<br><br>While we gear up for the next big update, just a few days away, why not restart the game? Challenge yourself with speed runs, try out new tactics, and see what hidden secrets you can unearth as you continue on your path to ultimate power.<br><br>I’d love to hear how you’re feeling about the pace of progression so far. Your feedback is incredibly valuable, so don’t hesitate to share your thoughts on Discord or through the feedback form in settings. Let’s continue to make this journey together, and see where the Hall of Power takes us next!");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one
@@ -2444,6 +2486,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Add event listener for the trade button
     document.getElementById('tradeButton').addEventListener('click', () => { tradeResources(); });
+    document.getElementById('tradeTenPercentButton').addEventListener('click', () => { tradeTenPercent(); });
+    // Event listener to update the trade button text whenever the trade amount input changes
+    document.getElementById('tradeAmount').addEventListener('input', updateTradeButtonText);
+    
     // Add event listener for the restart buttons
     document.getElementById('restartButton').addEventListener('click', () => restartGame(false));
     document.getElementById('restartPrestige').addEventListener('click', () => restartPrestige());
