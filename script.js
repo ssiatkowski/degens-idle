@@ -79,6 +79,9 @@ let cookieBoost = false;
 let cookieHopeful = false;
 let cookieKnowledgeable = false;
 
+// don't need to save - this gets called and set at load, then prevents to be reset on skill click
+let autobuyIntervalId = null; // Store the interval ID here
+
 //cooldowns for mini games
 let cooldowns = {
     speed: false,
@@ -354,6 +357,8 @@ function saveGameState() {
     localStorage.setItem('transcendenceUnlocked', transcendenceUnlocked);
     
     localStorage.setItem('knowledgeUnlocked', knowledgeUnlocked);
+    
+    localStorage.setItem('currentNumberFormat', JSON.stringify(currentNumberFormat));
 
     // Save unlocked library skills
     if (Array.isArray(librarySkills)) {
@@ -1154,9 +1159,9 @@ const PREFIXES = ["", "K", "M", "B", "T", "Qa", "Qi", "Sx", "Sp", "Oc", "No", "D
 function formatNumIntl(num, isScientific = false) {
     const absNum = Math.abs(num);
     if (num === 0) return "0";
+    else if (absNum >= 1 && absNum < 1000) return formatSignificant.format(num);
     else if (isScientific) return formatScientific.format(num).toLowerCase();
     else if (absNum < 1) return formatFraction.format(num);
-    else if (absNum < 1000) return formatSignificant.format(num);
     
     const exponent = Math.floor(Math.log10(absNum) / 3);
     const digits = formatSignificant.format(num / 10 ** (3 * exponent));
@@ -1366,7 +1371,7 @@ function updatePrestigeButton() {
     
     const prestigeButton = document.getElementById('prestigeButton');
     if (canPrestige()) {
-        if (firstTimePrestigeButtonAvailable && godModeLevel < 3) {
+        if (firstTimePrestigeButtonAvailable && godModeLevel < 3 && bigCrunchMultiplier < 2) {
             showMessageModal('Prestige Unlocked: Rise Stronger!', 'Congratulations! You have unlocked the first of many prestige layers. This one is straightforward, but it represents something much greater: the beginning of a journey filled with deeper challenges and complexity.<br><br>Prestige isn’t just a reset—it’s a testament to your resilience, symbolizing the strength to rise again, stronger and wiser. While this first step may seem simple, future layers will add layers of strategy and depth that will truly test your skills.<br><br>By choosing Prestige, you’re not just starting over; you’re gaining a powerful multiplier that will enhance everything you do. Each click, each resource, and every upgrade will be boosted, setting the stage for even greater achievements.<br><br>Are you ready to embrace this opportunity? To rebuild with newfound strength and surpass your past progress? Prestige now, and begin your ascent to greatness once more!');
             firstTimePrestigeButtonAvailable = false; // Set the flag to false after showing the message
             saveGameState(); // Save the game state to persist the flag
@@ -1604,7 +1609,7 @@ function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying=true) {
     }
 
     // Destructure the upgrade object to get its properties
-    const { cost, earnings, img, name, message, miniPrestigeMultiplier } = upgrade;
+    const { cost, earnings, img, name, message, miniPrestigeMultiplier, modalImg } = upgrade;
 
     // Check if the player has enough resources to purchase the upgrade
     if (isAffordable(cost)) {
@@ -1662,7 +1667,11 @@ function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying=true) {
 
         // Show a message if the upgrade has one and it's the first purchase
         if (message && isFirstPurchase) {
-            showMessageModal(name, message);
+            if (message.startsWith('imgs/modal_imgs/')){
+                showMessageModal(name, '', false, false, message)
+            } else {
+                showMessageModal(name, message);
+            }
             messageShownUpgrades.push(name);
             localStorage.setItem('messageShownUpgrades', JSON.stringify(messageShownUpgrades));
         }
@@ -1674,7 +1683,7 @@ function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying=true) {
 
         // Special case for the "Still very stupid" upgrade
         if (name === "Soothing Realization") {
-            showMessageModal('Sadly', "This marks the end of v0.835, but don’t think for a moment that your journey is over! The thrilling Hall of Power is just the beginning, and there’s so much more to uncover. With every new update, the excitement only intensifies, opening up new paths and challenges for you to explore.<br><br>We’re building something truly special, and your involvement can help shape the future of this game. Join our vibrant Discord community, where you can share your experiences, swap strategies, and contribute to the evolution of the game. Your voice is vital in this journey.<br><br>While we gear up for the next big update, just a few days away, why not restart the game? Challenge yourself with speed runs, try out new tactics, and see what hidden secrets you can unearth as you continue on your path to ultimate power.<br><br>I’d love to hear how you’re feeling about the pace of progression so far. Your feedback is incredibly valuable, so don’t hesitate to share your thoughts on Discord or through the feedback form in settings. Let’s continue to make this journey together, and see where the Hall of Power takes us next!");
+            showMessageModal('Sadly', "This marks the end of v0.836, but don’t think for a moment that your journey is over! The thrilling Hall of Power is just the beginning, and there’s so much more to uncover. With every new update, the excitement only intensifies, opening up new paths and challenges for you to explore.<br><br>We’re building something truly special, and your involvement can help shape the future of this game. Join our vibrant Discord community, where you can share your experiences, swap strategies, and contribute to the evolution of the game. Your voice is vital in this journey.<br><br>While we gear up for the next big update, just a few days away, why not restart the game? Challenge yourself with speed runs, try out new tactics, and see what hidden secrets you can unearth as you continue on your path to ultimate power.<br><br>I’d love to hear how you’re feeling about the pace of progression so far. Your feedback is incredibly valuable, so don’t hesitate to share your thoughts on Discord or through the feedback form in settings. Let’s continue to make this journey together, and see where the Hall of Power takes us next!");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one
@@ -1807,12 +1816,12 @@ function addPurchasedUpgrade(img, name, earnings, isGodMode = false, isPUGodMode
 
     if (toggleSwitch) {
         toggleSwitch.addEventListener('click', (event) => {
-            console.log("Toggle switch clicked - event stopped");
+            //console.log("Toggle switch clicked - event stopped");
             event.stopPropagation();
         });
 
         toggleSwitch.addEventListener('change', (event) => {
-            console.log(`Switch for upgrade ${name} set to ${event.target.checked ? 'On' : 'Off'}`);
+            //console.log(`Switch for upgrade ${name} set to ${event.target.checked ? 'On' : 'Off'}`);
             localStorage.setItem(`switchState-${name}`, JSON.stringify(event.target.checked));
         });
     }
@@ -1821,12 +1830,16 @@ function addPurchasedUpgrade(img, name, earnings, isGodMode = false, isPUGodMode
         upgradeElement.classList.add('clickable');
         upgradeElement.addEventListener('click', (event) => {
             if (event.target.closest('.switch')) {
-                console.log("Switch clicked, no modal should be shown");
+                //console.log("Switch clicked, no modal should be shown");
                 return; // Do nothing if the click originated from the switch
             }
 
-            console.log("Showing modal - toggle switch not the target");
-            showMessageModal(name, message, false, false);
+            //console.log("Showing modal - toggle switch not the target");            
+            if (message.startsWith('imgs/modal_imgs/')){
+                showMessageModal(name, '', false, false, message)
+            } else {
+                showMessageModal(name, message);
+            }
         });
     }
 
@@ -2096,12 +2109,12 @@ function toggleDevMultiplier(factor) {
 // Function to ascend and select a random upgrade to set to godmode
 async function devAscend() {
     const top100AvailableUpgrades = availableUpgrades
-        .slice(0, 100)
+        .slice(0, 200)
         .filter(up => !up.isGodMode);
 
-    const randomUpgrade = top100AvailableUpgrades[Math.floor(Math.random() * top100AvailableUpgrades.length)];
-    if (randomUpgrade) {
-        randomUpgrade.isGodMode = true;
+        const nextUpgrade = top100AvailableUpgrades[0];
+        if (nextUpgrade) {
+            nextUpgrade.isGodMode = true;
         godModeLevel += 1;
         godModeMultiplier = calculateGodModeMultiplier();
         epsMultiplier = calculateAscensionEpsMult();
@@ -2117,12 +2130,12 @@ async function devAscend() {
 // Function to ascend and select a random upgrade to set to godmode
 async function devTranscend() {
     const top100AvailableUpgrades = availableUpgrades
-        .slice(0, 100)
+        .slice(0, 200)
         .filter(up => !up.isPUGodMode);
 
-    const randomUpgrade = top100AvailableUpgrades[Math.floor(Math.random() * top100AvailableUpgrades.length)];
-    if (randomUpgrade) {
-        randomUpgrade.isPUGodMode = true;
+    const nextUpgrade = top100AvailableUpgrades[0];
+    if (nextUpgrade) {
+        nextUpgrade.isPUGodMode = true;
         puGodLevel += 1;
         puGodMultiplier = calculatePUGodModeMultiplier();
         epsMultiplier = calculateAscensionEpsMult();
@@ -2403,18 +2416,6 @@ function showImmediateMessageModal(title, message) {
 }
 
 
-
-
-
-
-// Function to show the welcome modal
-function showWelcomeModal(showIt) {
-    if (showIt){
-        showMessageModal('', '', false, false, 'imgs/textures/welcome.png')
-        showMessageModal('', '', false, false, 'imgs/textures/howtoplay.png')
-    }
-}
-
 // Expose functions to the global scope for use in the HTML
 window.prestige = prestige;
 window.updateDisplay = updateDisplay;
@@ -2475,6 +2476,11 @@ document.addEventListener('DOMContentLoaded', () => {
         updateDisplay(); // Update the display to reflect the change
     });
 
+    // workaround because this needs to be called before initializing skills (to set correct format for skill costs), 
+    // but loadGameState has to be called after (to enable previously bought skills)
+    currentNumberFormat = JSON.parse(localStorage.getItem('currentNumberFormat')) || 'Mixed';
+    document.getElementById('numberFormatButton').textContent = `Number Format: ${currentNumberFormat}`;
+
     // Library Skills -- has to happen before loadGameState!
     initializeSkills();
 
@@ -2483,8 +2489,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Load the game state from local storage 
     loadGameState();
-
-    showWelcomeModal(!knowledgeUnlocked);
 
     updateMultipliersDisplay();
     // Initialize effective multipliers

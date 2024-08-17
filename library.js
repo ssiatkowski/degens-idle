@@ -27,7 +27,7 @@ const librarySkills = [
     { name: 'Triple Ascension', cost: 3.5e6, description: 'Gain up to 3 God-Mode levels per Ascension. Also select up to 3 upgrades to enhance to God Mode.', unlocked: false, level: 'Artificial Intelligence' },
     { name: 'Quintuple Transendence', cost: 5e19, description: 'Gain up to 5 Parallel Universe God-Mode levels per Transendence. Also select up to 5 upgrades to enhance to PU God Mode.', unlocked: false, level: 'Artificial Intelligence' },
     { name: 'Septuple Ascension', cost: 7e24, description: 'Gain up to 7 God-Mode levels per Ascension. Also select up to 7 upgrades to enhance to God Mode.', unlocked: false, level: 'Artificial Intelligence' },
-    { name: 'Autobuy Upgrades', cost: 3e31, description: `Buy Markers are repurposed to configure Autobuy - which will purchase afforable visible upgrades every 2 seconds.`, unlocked: false, level: 'Artificial Intelligence' },
+    { name: 'Autobuy Upgrades', cost: 3e30, description: `Buy Markers are repurposed to configure Autobuy - which will purchase afforable visible upgrades every 2 seconds.`, unlocked: false, level: 'Artificial Intelligence' },
  
     { name: 'Knowledge is Power', cost: 1e6, description: 'Unlock new resource Power. Power is always generated based on your current amount of Knowledge.', unlocked: false, level: 'Celestial Bodies' },
     { name: 'Big Crunch', cost: 8e11, description: 'Could this be what Power is for? Unlock ability to force the universe into a Big Crunch and to be reborn anew!', unlocked: false, level: 'Celestial Bodies' },
@@ -132,7 +132,7 @@ function unlockLibrarySkill(skill, duringLoad = false) {
             case 'Prestige Base':
                 prestigeBaseSkill = true;
                 if (!duringLoad) {
-                    showMessageModal('Prestige Base', 'Graph shows the Prestige Multiplier scaling with 1.5 base vs 1.75 base. This difference becomes huge later in the game. When your min resource is at 1Qi that is already 10x difference and only increases exponentially form there!', false, false, 'imgs/graphs/prestige_base.png')
+                    showMessageModal('Prestige Base', 'For you math nerds out there, the formula for prestige multiplier is <strong>base^(log10(minResource/1000)+1)</strong>.<br><br>Graph shows the Prestige Multiplier scaling with 1.5 base vs 1.75 base. This difference becomes huge later in the game. When your min resource is at 1Qi that is already 10x difference and only increases exponentially form there!', false, false, 'imgs/graphs/prestige_base.png')
                 }
                 break;
             
@@ -146,7 +146,7 @@ function unlockLibrarySkill(skill, duringLoad = false) {
             case 'Less Diminishing God-Mode':
                 lessDiminishingGodModeSkill = true;
                 if (!duringLoad) {
-                    showMessageModal('Less Diminishing God-Mode', 'Graph shows the God-Mode Multiplier scaling when diminishing at 97.5% vs 98.5%. As you can see, at higher God-Mode levels this makes a huge difference! The multiplier is already 2 orders of magnitude greater at God-Mode Level 150.', false, false, 'imgs/graphs/gm_diminishing.png')
+                    showMessageModal('Less Diminishing God-Mode', `Here's another nerdy equation: <strong>GodModeMultiplier = &prod;<sub>i=0</sub><sup>gmLevel - 1</sup> &#40;1 + 0.25 &times; diminishFactor<sup>i</sup>&#41</strong><br><br>Graph shows the God-Mode Multiplier scaling when diminishing at 97.5% vs 98.5%. As you can see, at higher God-Mode levels this makes a huge difference! The multiplier is already 2 orders of magnitude greater at God-Mode Level 150.`, false, false, 'imgs/graphs/gm_diminishing.png')
                 }
                 godModeMultiplier = calculateGodModeMultiplier(godModeLevel);
                 updateMultipliersDisplay();
@@ -156,7 +156,7 @@ function unlockLibrarySkill(skill, duringLoad = false) {
             case 'Much Less Diminishing Parallel God-Mode':
                 lessDiminishingPUGodModeSkill = true;
                 if (!duringLoad) {
-                    showMessageModal('Much Less Diminishing Parallel God-Mode', 'In the quantum entangled universe, you discover that there is less interference, allowing you to scale the diminishing returns much more effectively. Graph shows the Parallel Universe God-Mode Multiplier scaling when diminishing at 97.5% (original) vs 98.5% (Optimized God-Mode) vs 99.0% (Optimized Parallel God-Mode). As you can see, at higher Parallel Universe God-Mode levels this is quite insane! The multiplier is almost 6 orders of magnitude greater at PU God-Mode Level 250.', false, false, 'imgs/graphs/pugm_diminishing.png')
+                    showMessageModal('Much Less Diminishing Parallel God-Mode', 'Parallel God-Mode uses the same equation: <strong>GodModeMultiplier = &prod;<sub>i=0</sub><sup>gmLevel - 1</sup> &#40;1 + 0.25 &times; diminishFactor<sup>i</sup>&#41</strong><br><br>In the quantum entangled universe, you discover that there is less interference, allowing you to scale the diminishing returns much more effectively. Graph shows the Parallel Universe God-Mode Multiplier scaling when diminishing at 97.5% (original) vs 98.5% (Optimized God-Mode) vs 99.0% (Optimized Parallel God-Mode). As you can see, at higher Parallel Universe God-Mode levels this is quite insane! The multiplier is almost 6 orders of magnitude greater at PU God-Mode Level 250.', false, false, 'imgs/graphs/pugm_diminishing.png')
                 }
                 puGodMultiplier = calculatePUGodModeMultiplier(puGodLevel);
                 updateMultipliersDisplay();
@@ -196,8 +196,10 @@ function unlockLibrarySkill(skill, duringLoad = false) {
                 numAscensionUpgrades = Math.max(numAscensionUpgrades, 7);
                 break;
 
-            case 'Autobuy Upgrades':
-                setInterval(autobuyUpgrades, 2000);
+            case 'Autobuy Upgrades':    
+                if (autobuyIntervalId === null) { // Check if the interval is not already running
+                    autobuyIntervalId = setInterval(autobuyUpgrades, 2000);
+                }
                 break;
 
             case 'Knowledge is Power':
@@ -319,12 +321,14 @@ function initializeSkills() {
                         unlockLibrarySkill(skill);
                         saveGameState();
                     }
-                } else if (knowledge < skill.cost) {
+                } else if (!skill.unlocked && knowledge < skill.cost) {
                     //document.removeEventListener('click', outsideLibraryClickListener);
                     // await showMessageModal('Insufficient Knowledge', 'Not enough Knowledge to unlock this skill.', false, false);
                     
                     showStatusMessage(skillDiv, 'Insufficient Knowledge to unlock this skill.', false);
                     //document.addEventListener('click', outsideLibraryClickListener);
+                } else if (skill.unlocked) {
+                    unlockLibrarySkill(skill);  //only to show message again
                 }
             });
             skillRow.appendChild(skillDiv);
