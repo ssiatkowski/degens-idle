@@ -8,7 +8,7 @@ const librarySkills = [
 
     { name: 'Cure for Delusion', cost: 5, description: 'Unlock ability to toggle whether delusion gain is positive or negative.', unlocked: false, level: 'Science' },
     { name: 'Luck is Rigged', cost: 777, description: 'Luck Game roll now picks from (-25% to 175%) instead of (-75% to 125%).', unlocked: false, level: 'Science' },
-    { name: "I Can't Math", cost: 1234, description: 'Math Game now only has 2 terms instead of 3. Reward is tripled.', unlocked: false, level: 'Science' },
+    { name: "I Can't Math", cost: 1234, description: 'Math Game now only has 2 terms instead of 3. Reward is doubled.', unlocked: false, level: 'Science' },
     { name: "Short Term Memory", cost: 11000, description: 'Memory Game maximum time is 15s instead of 40s. Reward is doubled.', unlocked: false, level: 'Science' },
     { name: "Click Accumulation", cost: 23000, description: 'Speed Game reward is now for total number of clicks, instead of per second.', unlocked: false, level: 'Science' },
     { name: 'Mini Gamer', cost: 7.5e22, description: 'All mini game cooldowns are reduced by 25%.', unlocked: false, level: 'Science' },
@@ -27,7 +27,7 @@ const librarySkills = [
     { name: 'Triple Ascension', cost: 3.5e6, description: 'Gain up to 3 God-Mode levels per Ascension. Also select up to 3 upgrades to enhance to God Mode.', unlocked: false, level: 'Artificial Intelligence' },
     { name: 'Quintuple Transendence', cost: 5e19, description: 'Gain up to 5 Parallel Universe God-Mode levels per Transendence. Also select up to 5 upgrades to enhance to PU God Mode.', unlocked: false, level: 'Artificial Intelligence' },
     { name: 'Septuple Ascension', cost: 7e24, description: 'Gain up to 7 God-Mode levels per Ascension. Also select up to 7 upgrades to enhance to God Mode.', unlocked: false, level: 'Artificial Intelligence' },
-    { name: 'Autobuy Upgrades', cost: 3e30, description: `Buy Markers are repurposed to configure Autobuy - which will purchase afforable visible upgrades every 2 seconds.`, unlocked: false, level: 'Artificial Intelligence' },
+    { name: 'Autobuy Upgrades', cost: 3e27, description: `Buy Markers are repurposed to configure Autobuy - which will purchase afforable visible upgrades every 2 seconds.`, unlocked: false, level: 'Artificial Intelligence' },
  
     { name: 'Knowledge is Power', cost: 1e6, description: 'Unlock new resource Power. Power is always generated based on your current amount of Knowledge.', unlocked: false, level: 'Celestial Bodies' },
     { name: 'Big Crunch', cost: 8e11, description: 'Could this be what Power is for? Unlock ability to force the universe into a Big Crunch and to be reborn anew!', unlocked: false, level: 'Celestial Bodies' },
@@ -35,12 +35,13 @@ const librarySkills = [
     { name: 'Map to Hall of Power', cost: 1e24, description: 'You can now look at and admire the Power Hall button.', unlocked: false, level: 'Celestial Bodies' },
 
 
-    { name: 'The Omniverse', cost: 1e100, description: 'Stop cheating. This does not exist yet.', unlocked: false, level: '???' },
-    // { name: 'Serenity', cost: 1e25, description: '', unlocked: false, level: '???' },
-    // { name: 'The Kaleidoscope of Consciousness', cost: 1e29, description: '', unlocked: false, level: '???' },
+    { name: 'The Perpetual Prestige', cost: 1e29, description: 'Set a prestige multiplier to Auto-Prestige at.', unlocked: false, level: '???' },
+    // { name: 'The Eternal Ascension', cost: 1e29, description: '', unlocked: false, level: '???' },
+    // { name: 'The Quantum Symphony', cost: 1e33, description: 'Auto Trasncend', unlocked: false, level: '???' },
     // { name: 'The Void of Non-Existence', cost: 1e33, description: '', unlocked: false, level: '???' },
     // { name: 'The Infinite Fractal', cost: 1e33, description: '', unlocked: false, level: '???' },
-    // { name: 'The Quantum Symphony', cost: 1e33, description: '', unlocked: false, level: '???' },
+
+    // { name: 'Serenity', cost: 1e25, description: '', unlocked: false, level: '???' },
 
 
     // Add more skills as needed
@@ -225,6 +226,14 @@ function unlockLibrarySkill(skill, duringLoad = false) {
             case 'Map to Hall of Power':
                 unlockHallofPower();
                 break;
+
+            case 'The Perpetual Prestige':
+                if(autoPrestigeThreshold == null){
+                    autoPrestigeThreshold = 1.5;
+                }
+                break;
+    
+                
 
             // Add more cases as needed for additional skills
         

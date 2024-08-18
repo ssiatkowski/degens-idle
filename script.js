@@ -71,6 +71,8 @@ let lessDiminishingPUGodModeSkill = false;
 
 let transcendenceUnlocked = false;
 
+let autoPrestigeThreshold = null;
+
 let numAscensionUpgrades = 1;
 let numPUAscensionUpgrades = 2;
 
@@ -202,6 +204,8 @@ function loadGameState() {
     transcendenceUnlocked = JSON.parse(localStorage.getItem('transcendenceUnlocked')) || false;
     if (transcendenceUnlocked) { document.getElementById('pu-god-display').style.display = 'block'; } 
 
+    autoPrestigeThreshold = parseFloat(localStorage.getItem('autoPrestigeThreshold')) || null;
+    
     // Retrieve and parse all upgrades with the isGodMode property from local storage
     const savedUpgrades = JSON.parse(localStorage.getItem('upgrades')) || [];
     
@@ -358,7 +362,9 @@ function saveGameState() {
     localStorage.setItem('transcendenceUnlocked', transcendenceUnlocked);
     
     localStorage.setItem('knowledgeUnlocked', knowledgeUnlocked);
-    
+
+    localStorage.setItem('autoPrestigeThreshold', autoPrestigeThreshold);
+
     localStorage.setItem('currentNumberFormat', JSON.stringify(currentNumberFormat));
 
     // Save unlocked library skills
@@ -564,7 +570,7 @@ function playMiniGame(gameType) {
         let operations = ['+', '-', '*', '/'];
         let op1 = operations[Math.floor(Math.random() * operations.length)];
         let op2 = operations[Math.floor(Math.random() * operations.length)];
-
+    
         let question, correctAnswer;
         if (mathGameSkill) {
             // Only 2 numbers and 1 operation
@@ -575,17 +581,32 @@ function playMiniGame(gameType) {
             question = `${num1} ${op1} ${num2} ${op2} ${num3}`;
             correctAnswer = eval(question.replace('/', '* 1.0 /')); // Ensure floating point division
         }
-
-        showMessageModal('Math Game', `What is ${question}?  (answer within 0.5 is acceptable)`, false, false, null, false, true).then(answer => {
+    
+        // Record the start time
+        const startTime = Date.now();
+    
+        showMessageModal('Math Game', `What is ${question}? (answer within 0.5 is acceptable; submit answer in 3 seconds or less to get triple reward)`, false, false, null, false, true).then(answer => {
+            // Calculate the time difference in seconds
+            const timeTaken = (Date.now() - startTime) / 1000;
+            
             let isCorrect = Math.abs(Number(answer) - correctAnswer) < 0.5;
             let reward;
+            let bonusMessage = '';
+    
             if (mathGameSkill) {
-                reward = isCorrect ? Math.max(Math.floor(Math.abs(yachtMoney) * 0.75), 75) : -Math.max(Math.floor(Math.random() * Math.abs(yachtMoney) * 0.1), 30);
+                reward = isCorrect ? Math.max(Math.floor(Math.abs(yachtMoney) * 0.4), 50) : -Math.max(Math.floor(Math.random() * Math.abs(yachtMoney) * 0.2), 20);
             } else {
-                reward = isCorrect ? Math.max(Math.floor(Math.abs(yachtMoney) * 0.25), 25) : -Math.max(Math.floor(Math.random() * Math.abs(yachtMoney) * 0.1), 10);
+                reward = isCorrect ? Math.max(Math.floor(Math.abs(yachtMoney) * 0.2), 25) : -Math.max(Math.floor(Math.random() * Math.abs(yachtMoney) * 0.1), 10);
             }
+    
+            // If the answer was given within 3 seconds, apply 3x reward multiplier and set bonus message
+            if (isCorrect && timeTaken <= 3) {
+                reward *= 3;
+                bonusMessage = `<br><br><span style="color: #66FF00;">You answered within 3 seconds and earned triple the reward!</span>`;
+            }
+    
             yachtMoney += reward;
-            showMessageModal('Math Game Result', `You guessed ${answer} and exact answer was ${correctAnswer}. You ${isCorrect ? 'won' : 'lost'} ${formatNumber(reward)} yachtMoney! ${cooldownMessage}`);
+            showMessageModal('Math Game Result', `You guessed ${answer} and the exact answer was ${correctAnswer}. You ${isCorrect ? 'won' : 'lost'} ${formatNumber(reward)} yachtMoney! ${cooldownMessage}  ${bonusMessage}`);
             updateDisplay(); // Update the display
             startCooldown(gameType); // Start cooldown for the mini-game
         });
@@ -867,6 +888,7 @@ async function restartGame(isPrestige = false) {
             moneyIsPowerTooSkill = false;
             lessDiminishingGodModeSkill = false;
             lessDiminishingPUGodModeSkill = false;
+            autoPrestigeThreshold = null;
 
             transcendenceUnlocked = false;
 
@@ -1207,8 +1229,8 @@ function formatNumber(num) {
 
     switch(currentNumberFormat) {
         case 'Mixed':
-            if(num < 1e36 || num < -1e36){
-                formattedNum = formatNumIntl(num,false);
+            if(Math.abs(num) < 1e36){
+                formattedNum = formatNumIntl(num, false);
             } else {
                 formattedNum = formatNumIntl(num, true);
             }
@@ -1376,19 +1398,24 @@ function canPrestige() {
     return minResource >= prestigeRequirement;
 }
 
-async function prestige() {
+async function prestige(skipConfirms = false) {
     if (canPrestige()) {
-
         const newPrestigeMult = calculatePrestigeMultiplier();
         const newPrestigeReq = Math.min(copium, delusion, yachtMoney, trollPoints);
 
-        const confirmed = await showMessageModal(
-            'Prestige Confirmation',
-            `<p>Are you sure you want to prestige? You will reset your progress and all resources, but your Prestige Multiplier will increase <strong>from ${formatNumber(epsMultiplier)} to ${formatNumber(newPrestigeMult)}</strong>.</p>
-<p><span style="font-size: smaller;">(Prestige multiplier is based on the lowest among your first four resources (Copium, Delusion, Yacht Money, and Troll Points). The higher the amount of your smallest resource, the greater your prestige multiplier!)</span></p>`,
-            true
-        );
+        let confirmed = true; // Assume confirmation is true by default
 
+        // If skipConfirms is false, show the confirmation modal
+        if (!skipConfirms) {
+            confirmed = await showMessageModal(
+                'Prestige Confirmation',
+                `<p>Are you sure you want to prestige? You will reset your progress and all resources, but your Prestige Multiplier will increase <strong>from ${formatNumber(epsMultiplier)} to ${formatNumber(newPrestigeMult)}</strong>.</p>
+<p><span style="font-size: smaller;">(Prestige multiplier is based on the lowest among your first four resources (Copium, Delusion, Yacht Money, and Troll Points). The higher the amount of your smallest resource, the greater your prestige multiplier!)</span></p>`,
+                true
+            );
+        }
+
+        // If confirmed or skipConfirms is true, proceed with the prestige
         if (confirmed) {
             epsMultiplier = newPrestigeMult;
             prestigeRequirement = newPrestigeReq;
@@ -1401,12 +1428,14 @@ async function prestige() {
             // Save game state after prestige
             saveGameState();
 
-            if (epsMultiplier<5){
+            // If skipConfirms is false and epsMultiplier is less than 5, show the success modal
+            if (!skipConfirms && epsMultiplier < 5) {
                 showMessageModal('Prestige Successful!', `Your multiplier is now x${formatNumber(epsMultiplier)}. All resources have been reset.`);
             }
         }
     }
 }
+
 
 // Update the display of the prestige button
 function updatePrestigeButton() {
@@ -1421,6 +1450,10 @@ function updatePrestigeButton() {
         const newMultiplier = calculatePrestigeMultiplier();
         prestigeButton.textContent = `PRESTIGE (x${formatNumber(newMultiplier / epsMultiplier)} MULT)`;
         prestigeButton.style.display = 'block';
+        // Check if auto-prestige should be triggered
+        if (autoPrestigeThreshold !== null && (newMultiplier / epsMultiplier) > autoPrestigeThreshold) {
+            prestige(true); // Trigger auto-prestige
+        }
     } else {
         prestigeButton.style.display = 'none';
     }
@@ -1508,7 +1541,7 @@ async function ascend() {
 
 async function transcend() {
     const upgradeText = `select up to ${numPUAscensionUpgrades} upgrades to enhance and increase your Parallel Universe God-Mode multiplier accordingly`;
-    const firstTranscendText = puGodLevel < 1 ? `<span style="color: #FFD700;">Hey it's your intuition again. Transcending does not reset Big Crunch. But Big Crunch resets Transcends. It is recommended to get Big Crunch Multiplier above 10 before going down this path.</span><br><br>` : '';
+    const firstTranscendText = puGodLevel < 1 ? `<span style="color: #FFD700;">Hey it's your intuition again. Transcending does not reset Big Crunch. But Big Crunch resets Transcends. It is recommended to get Big Crunch Multiplier at minimum above 10 (~0.00021 Big Crunch Power) before going down this path.</span><br><br>` : '';
     const selectedUpgrades = await showMessageModal(
         'Parallel Universe God-Mode Ascension',
         `Are you sure you want to enter Parallel Universe God-Mode level ${puGodLevel + 1}?<br><br>${firstTranscendText}
@@ -1724,8 +1757,8 @@ function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying=true) {
         }
 
         // Special case for the "Still very stupid" upgrade
-        if (name === "Soothing Realization") {
-            showMessageModal('Sadly', "This marks the end of v0.837, but don’t think for a moment that your journey is over! The thrilling Hall of Power is just the beginning, and there’s so much more to uncover. With every new update, the excitement only intensifies, opening up new paths and challenges for you to explore.<br><br>We’re building something truly special, and your involvement can help shape the future of this game. Join our vibrant Discord community, where you can share your experiences, swap strategies, and contribute to the evolution of the game. Your voice is vital in this journey.<br><br>While we gear up for the next big update, just a few days away, why not restart the game? Challenge yourself with speed runs, try out new tactics, and see what hidden secrets you can unearth as you continue on your path to ultimate power.<br><br>I’d love to hear how you’re feeling about the pace of progression so far. Your feedback is incredibly valuable, so don’t hesitate to share your thoughts on Discord or through the feedback form in settings. Let’s continue to make this journey together, and see where the Hall of Power takes us next!");
+        if (name === "Silence is Golden") {
+            showMessageModal('Sadly', "This marks the end of v0.838, but don’t think for a moment that your journey is over! The thrilling Hall of Power is just the beginning, and there’s so much more to uncover. With every new update, the excitement only intensifies, opening up new paths and challenges for you to explore.<br><br>We’re building something truly special, and your involvement can help shape the future of this game. Join our vibrant Discord community, where you can share your experiences, swap strategies, and contribute to the evolution of the game. Your voice is vital in this journey.<br><br>While we gear up for the next big update, just a few days away, why not restart the game? Challenge yourself with speed runs, try out new tactics, and see what hidden secrets you can unearth as you continue on your path to ultimate power.<br><br>I’d love to hear how you’re feeling about the pace of progression so far. Your feedback is incredibly valuable, so don’t hesitate to share your thoughts on Discord or through the feedback form in settings. Let’s continue to make this journey together, and see where the Hall of Power takes us next!");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one

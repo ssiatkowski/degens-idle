@@ -11,7 +11,7 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Degens Idle v0.837</title>
+    <title>Degens Idle v0.838</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="library.css">    
     <link rel="stylesheet" href="powerhall.css">    
@@ -212,12 +212,12 @@
             <button id="closePowerHallButton">Exit</button>
         </div>
     </div>
-    <!-- Settings Overlay -->
+        <!-- Settings Overlay -->
     <div id="settingsOverlay" class="settings-overlay" style="display: none;">
         <div class="settings-overlay-content">
             <span class="close-button" id="closeSettingsOverlay">&times;</span>
             <h1>Settings</h1>
-            <h4>Degens Idle v0.837</h4>
+            <h4>Degens Idle v0.838</h4>
             
             <div class="settings-section">
                 <h3>Save Management</h3>
@@ -236,6 +236,7 @@
                 <div class="settings-buttons">
                     <button id="howToPlayButton"><i class="icon-info"></i> How to Play?</button>
                     <button id="numberFormatButton" class="full-width-button">Number Format: Mixed</button>
+                    <button id="automationButton" class="full-width-button">Automation</button> <!-- New Automation Button -->
                 </div>
             </div>
             
@@ -254,6 +255,25 @@
             <button id="closeSettingsButton">Exit</button>
         </div>
     </div>
+
+    <!-- Automation Overlay -->
+    <div id="automationOverlay" class="automation-overlay" style="display: none;">
+        <div class="automation-overlay-content">
+            <span class="close-button" id="closeAutomationOverlay">&times;</span>
+            <h1>Automation Settings</h1>
+            
+            <!-- Content will be dynamically updated by JavaScript -->
+            <div id="automationContent" class="settings-section">
+                <!-- Placeholder content, will be replaced by JS -->
+            </div>
+            
+            <button id="saveAutomationSettingsButton" style="display: none;">Save Settings</button>
+            <button id="exitAutomationOverlayButton">Exit</button>
+        </div>
+    </div>
+
+
+
     <!-- Donation Overlay -->
     <div id="donationOverlay" class="donation-overlay" style="display: none;">
         <div class="donation-overlay-content">

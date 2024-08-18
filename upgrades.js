@@ -713,8 +713,20 @@ const upgrades = [
     {
         name: "Soothing Realization",
         cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 5e31, knowledge: 2.5e25, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 4.5e12, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 1.5e7, knowledgePerSecond: 80, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 4.5e12, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 2.5e7, knowledgePerSecond: 80, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/how_i_sleep_knowing.jpg",
+    },
+    {
+        name: "Silence is Golden",
+        cost: { copium: 1e37, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 8e31, knowledge: 2e25, power: 0, serenity: 0 },
+        earnings: { copiumPerSecond: 3e14, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 3e14, hopiumPerSecond: 9e7, knowledgePerSecond: -20, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: "imgs/silence_is_golden.jpg",
+    },
+    {
+        name: "You Never Really Know",
+        cost: { copium: 1e38, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 8e32, knowledge: 2e25, power: 0, serenity: 0 },
+        earnings: { copiumPerSecond: 3e15, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 3e15, hopiumPerSecond: 0, knowledgePerSecond: -25, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: "imgs/read_between_lines.jpg",
     },
 
 ];

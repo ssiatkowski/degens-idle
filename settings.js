@@ -343,6 +343,52 @@ document.getElementById('feedbackButton').addEventListener('click', function() {
     window.open('https://docs.google.com/forms/d/e/1FAIpQLSfaQdxaBFCdT789rVTSvFuScEEzlu4rDabjFUX0zkCKinyvKA/viewform?usp=sf_link', '_blank');
 });
 
+// Open the automation overlay
+document.getElementById('automationButton').addEventListener('click', function() {
+    const automationContent = document.getElementById('automationContent');
+    const saveButton = document.getElementById('saveAutomationSettingsButton');
+
+    // Check if autoPrestigeThreshold is null
+    if (autoPrestigeThreshold === null) {
+        // Display the "unlock automation" message
+        automationContent.innerHTML = "<p>You must unlock automation features first.</p>";
+        saveButton.style.display = 'none'; // Hide the save button
+    } else {
+        // Display the auto prestige threshold setting
+        automationContent.innerHTML = `
+            <label for="autoPrestigeThresholdInput">Auto Prestige Threshold:</label>
+            <input type="number" id="autoPrestigeThresholdInput" value="${autoPrestigeThreshold}" step="0.1">
+            <p>Set the multiplier threshold for auto-prestige. Prestige will automatically trigger when the threshold is exceeded.</p>
+        `;
+        saveButton.style.display = 'inline-block'; // Show the save button
+    }
+
+    document.getElementById('automationOverlay').style.display = 'block';
+});
+
+// Close the automation overlay (without closing the settings overlay)
+document.getElementById('closeAutomationOverlay').addEventListener('click', function() {
+    document.getElementById('automationOverlay').style.display = 'none';
+});
+
+// Handle the exit button to close the automation overlay
+document.getElementById('exitAutomationOverlayButton').addEventListener('click', function() {
+    document.getElementById('automationOverlay').style.display = 'none';
+});
+
+// Save the automation settings and close the overlay
+document.getElementById('saveAutomationSettingsButton').addEventListener('click', function() {
+    const thresholdInput = document.getElementById('autoPrestigeThresholdInput').value;
+    autoPrestigeThreshold = parseFloat(thresholdInput);
+    
+    if (isNaN(autoPrestigeThreshold) || autoPrestigeThreshold <= 0) {
+        showImmediateMessageModal('Invalid Number', 'Please enter a valid positive number for the Auto Prestige Threshold.')
+    } else {
+        document.getElementById('automationOverlay').style.display = 'none';
+        showImmediateMessageModal('Auto Prestige Value Changed', `Auto Prestige Threshold set to ${autoPrestigeThreshold}`);
+    }
+});
+
 
 document.getElementById('numberFormatButton').addEventListener('click', function() {
     if (currentNumberFormat === "Mixed") {
