@@ -2544,7 +2544,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('restartPrestige').addEventListener('click', () => restartPrestige());
 
     // Add event listener for the prestige button
-    document.getElementById('prestigeButton').addEventListener('click', prestige);
+    document.getElementById('prestigeButton').addEventListener('click', () => prestige());
 
     // Add event listener for the ascend button
     document.getElementById('ascendButton').addEventListener('click', ascend);
