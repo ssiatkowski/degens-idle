@@ -346,13 +346,14 @@ document.getElementById('feedbackButton').addEventListener('click', function() {
 function toggleAllBuyMarkers(targetState) {
 
     purchasedUpgrades.forEach(upgrade => {
-        const name = upgrade.name;
-
-        // Load the switch state from local storage
-        const toggleSwitch = document.getElementById(`toggle-${name}`);
-        if (toggleSwitch) {
-            toggleSwitch.checked = targetState;
-            toggleSwitch.parentElement.style.display = 'block'; // Make the switch visible
+        if (!upgrade.isFight) {
+            const name = upgrade.name;
+            // Load the switch state from local storage
+            const toggleSwitch = document.getElementById(`toggle-${name}`);
+            if (toggleSwitch) {
+                toggleSwitch.checked = targetState;
+                toggleSwitch.parentElement.style.display = 'block'; // Make the switch visible
+            }
         }
     });
 
@@ -377,6 +378,51 @@ document.getElementById('automationButton').addEventListener('click', function()
     } else {
         saveButton.style.display = 'inline-block';
 
+        // Dynamically add the three-way toggle for Buy Markers if unlocked
+        if (buyMarkersSkill) {
+            const toggleHtml = `
+                <div class="three-way-toggle-container" style="margin-bottom: 15px;">
+                    <label for="toggleBuyMarkersSwitch" class="three-way-toggle-label">Toggle All Purchased Upgrades Buy Markers</label>
+                    <div class="three-way-toggle">
+                        <input type="radio" name="toggleBuyMarkers" id="toggleBuyMarkersNeutral" value="neutral" checked style="display: none;">
+                        <input type="radio" name="toggleBuyMarkers" id="toggleBuyMarkersOff" value="off" style="display: none;">
+                        <input type="radio" name="toggleBuyMarkers" id="toggleBuyMarkersOn" value="on" style="display: none;">
+                        <div class="slider"></div>
+                    </div>
+                </div>
+            `;
+            automationContent.innerHTML += toggleHtml;
+
+            // Delay the event listener attachment to ensure the elements are fully rendered
+            setTimeout(() => {
+                const toggleContainer = document.querySelector('.three-way-toggle-container .three-way-toggle');
+                const slider = toggleContainer.querySelector('.slider');
+                const toggleNeutral = document.getElementById('toggleBuyMarkersNeutral');
+                const toggleOff = document.getElementById('toggleBuyMarkersOff');
+                const toggleOn = document.getElementById('toggleBuyMarkersOn');
+
+                // Add click listener to the entire toggle container
+                toggleContainer.addEventListener('click', function() {
+                    if (toggleNeutral.checked) {
+                        toggleOff.checked = true;
+                        slider.style.transform = 'translateX(0%)';
+                        slider.style.backgroundColor = '#dc3545'; // Red color for off
+                    } else if (toggleOff.checked) {
+                        toggleOn.checked = true;
+                        slider.style.transform = 'translateX(100%)';
+                        slider.style.backgroundColor = '#28a745'; // Green color for on
+                    } else if (toggleOn.checked) {
+                        toggleNeutral.checked = true;
+                        slider.style.transform = 'translateX(50%)';
+                        slider.style.backgroundColor = 'white'; // Neutral color
+                    }
+                });
+
+                // Debug: Log to confirm event listener is attached
+                console.log("Three-way toggle event listener attached");
+            }, 0); // You can adjust the timeout duration if needed
+        }
+
         // Dynamically add Auto-Buy Upgrades setting if unlocked, with space and switch
         if (autobuyUpgradesSkill) {
             const autoBuyHtml = `
@@ -390,8 +436,14 @@ document.getElementById('automationButton').addEventListener('click', function()
             `;
             automationContent.innerHTML += autoBuyHtml;
 
-            // Initialize the switch state based on whether auto-buy is running
-            document.getElementById('autoBuyUpgradesSwitch').checked = (autobuyIntervalId !== null);
+            // Use a timeout to ensure the checkbox is fully rendered before setting its state
+            setTimeout(() => {
+                const autoBuyUpgradesSwitch = document.getElementById('autoBuyUpgradesSwitch');
+                autoBuyUpgradesSwitch.checked = (autobuyIntervalId !== null);
+
+                // Debug: Log the current checked state
+                console.log("Checkbox checked state after timeout:", autoBuyUpgradesSwitch.checked);
+            }, 0); // You can adjust the timeout duration if needed
         }
 
         // Dynamically add Auto-Prestige Threshold setting if available
@@ -400,30 +452,9 @@ document.getElementById('automationButton').addEventListener('click', function()
                 <div style="margin-bottom: 15px;">
                     <label for="autoPrestigeThresholdInput">Auto Prestige Threshold:</label>
                     <input type="number" id="autoPrestigeThresholdInput" value="${autoPrestigeThreshold}" step="0.1">
-                    <p>Set the multiplier threshold for auto-prestige. Prestige will automatically trigger when the threshold is exceeded.</p>
                 </div>
             `;
             automationContent.innerHTML += autoPrestigeHtml;
-        }
-
-        // Dynamically add the three-way toggle for Buy Markers if unlocked
-        if (buyMarkersSkill) {
-            const toggleHtml = `
-                <div style="margin-bottom: 15px;">
-                    <label for="toggleBuyMarkersSwitch" class="three-way-toggle-label">Toggle All Purchased Upgrades Buy Markers</label>
-                    <div class="three-way-toggle">
-                        <input type="radio" name="toggleBuyMarkers" id="toggleBuyMarkersNeutral" value="neutral" checked>
-                        <label for="toggleBuyMarkersNeutral" class="toggle-neutral">Unchanged</label>
-
-                        <input type="radio" name="toggleBuyMarkers" id="toggleBuyMarkersOff" value="off">
-                        <label for="toggleBuyMarkersOff" class="toggle-off">Off</label>
-
-                        <input type="radio" name="toggleBuyMarkers" id="toggleBuyMarkersOn" value="on">
-                        <label for="toggleBuyMarkersOn" class="toggle-on">On</label>
-                    </div>
-                </div>
-            `;
-            automationContent.innerHTML += toggleHtml;
         }
 
         // Check if any feature is missing and at least one is unlocked
@@ -457,23 +488,26 @@ document.getElementById('saveAutomationSettingsButton').addEventListener('click'
     // Handle auto-buy upgrades only if the skill is unlocked
     if (autobuyUpgradesSkill) {
         const autoBuyUpgradesSwitch = document.getElementById('autoBuyUpgradesSwitch');
+        console.log("Auto-buy switch state at save:", autoBuyUpgradesSwitch.checked); // Debug log
+
         if (autoBuyUpgradesSwitch.checked) {
             // Enable auto-buy if it’s not already running
             if (autobuyIntervalId === null) {
-                autobuyIntervalId = setInterval(autobuyUpgrades, 2000);
+                autobuyIntervalId = setInterval(autobuyUpgrades, 1500);
+                console.log("Auto-buy started"); // Debug log
             }
         } else {
             // Disable auto-buy if the switch is unchecked
             if (autobuyIntervalId !== null) {
                 clearInterval(autobuyIntervalId);
                 autobuyIntervalId = null;
+                console.log("Auto-buy stopped"); // Debug log
             }
         }
     }
 
     // Handle the three-way toggle for buy markers only if the skill is unlocked
     if (buyMarkersSkill) {
-        const toggleBuyMarkersNeutral = document.getElementById('toggleBuyMarkersNeutral').checked;
         const toggleBuyMarkersOff = document.getElementById('toggleBuyMarkersOff').checked;
         const toggleBuyMarkersOn = document.getElementById('toggleBuyMarkersOn').checked;
 

@@ -648,7 +648,7 @@ const upgrades = [
     {
         name: "Price of Freedom",
         cost: { copium: 0, delusion: 0, yachtMoney: 6.66e23, trollPoints: 0, hopium: 0, knowledge: 1.3e14, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 2e10, delusionPerSecond: 1e10, yachtMoneyPerSecond: -5e9, trollPointsPerSecond: 1e9, hopiumPerSecond: 0, knowledgePerSecond: 0.18, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 2e10, delusionPerSecond: 1e10, yachtMoneyPerSecond: -5e9, trollPointsPerSecond: 1e9, hopiumPerSecond: 0, knowledgePerSecond: 0.28, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/pope_vs_got.jpg",
     },
     {
@@ -718,15 +718,37 @@ const upgrades = [
     },
     {
         name: "Silence is Golden",
-        cost: { copium: 1e37, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 8e31, knowledge: 2e25, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 3e14, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 3e14, hopiumPerSecond: 9e7, knowledgePerSecond: -20, powerPerSecond: 0, serenityPerSecond: 0 },
+        cost: { copium: 1e37, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 8e31, knowledge: 2e26, power: 0, serenity: 0 },
+        earnings: { copiumPerSecond: 3e14, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 3e14, hopiumPerSecond: 9e7, knowledgePerSecond: -25, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/silence_is_golden.jpg",
     },
     {
-        name: "You Never Really Know",
-        cost: { copium: 1e38, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 8e32, knowledge: 2e25, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 3e15, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 3e15, hopiumPerSecond: 0, knowledgePerSecond: -25, powerPerSecond: 0, serenityPerSecond: 0 },
+        name: "You Can Never Tell",
+        cost: { copium: 1e38, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 8e32, knowledge: 2e27, power: 0, serenity: 0 },
+        earnings: { copiumPerSecond: 3e15, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 3e15, hopiumPerSecond: 0, knowledgePerSecond: -50, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/read_between_lines.jpg",
+    },
+    {
+        name: "When it hits you",
+        cost: { copium: 4.2e40, delusion: 0, yachtMoney: 0, trollPoints: 4.2e40, hopium: 3e32, knowledge: 0, power: 1, serenity: 0 },
+        earnings: { copiumPerSecond: 3e15, delusionPerSecond: 0, yachtMoneyPerSecond: 5e15, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 4200, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: "imgs/musk_realization.jpg",
+        message: `In a moment of clarity, you realize that reaching a power level of 9000 won’t come easily—you'll need to train harder than ever before. But as this truth sinks in, another thought surfaces: Why stop at 9000? If you're going to push yourself, why not aim for power levels that have never existed in the multiverse? <br><br>With renewed determination, you commit yourself to relentless training. You’ll seek out the strongest opponents, not just to test your might, but to shatter every limit. Because why settle for ordinary power when the extraordinary is within reach?`
+    },
+    {
+        name: "Training Dummy",
+        cost: { copium: 0, delusion: 0, yachtMoney: 2e41, trollPoints: 0, hopium: 0, knowledge: 1e29, power: 5, serenity: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1e15, hopiumPerSecond: 0, knowledgePerSecond: 1000, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: "imgs/training_dummy.jpg",
+        message: `As you prepare to seek out strong opponents to test your might, you realize that each battle requires more than just courage—it demands resources. Every fight will cost you valuable supplies, and if you lose, those resources will be lost forever. Victory isn't just about strength; it's about preparation.<br><br>Your fighting skills will be determined by four key factors: Power, Copium, Delusion, and Troll Points. Power reflects your raw strength, Copium fuels your health and resilience in tough battles, Delusion represents your defense, and Troll Points signify your strategic edge. Before challenging an opponent, make sure you have enough of each to ensure you’re ready for the fight ahead.<br><br>This advanced training dummy is your gateway to mastering combat. Use it to sharpen your skills, understand how fights work, and ensure you're always prepared. After all, every resource spent and every point earned could be the difference between victory and defeat.`,
+        isFight: true,
+    },
+    {
+        name: "Agent Smith",
+        cost: { copium: 0, delusion: 1e41, yachtMoney: 0, trollPoints: 1e41, hopium: 0, knowledge: 1e29, power: 20, serenity: 0 },
+        earnings: { copiumPerSecond: 6e15, delusionPerSecond: 0, yachtMoneyPerSecond: 6e15, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 10000, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: "imgs/agent_smith.jpg",
+        isFight: true,
     },
 
 ];

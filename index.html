@@ -11,11 +11,12 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Degens Idle v0.838</title>
+    <title>Degens Idle v0.84</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="library.css">    
     <link rel="stylesheet" href="powerhall.css">    
-    <link rel="stylesheet" type="text/css" href="settings.css">
+    <link rel="stylesheet" href="settings.css">
+    <link rel="stylesheet" href="fighting.css">
     <link href="https://fonts.googleapis.com/css2?family=Uncial+Antiqua&display=swap" rel="stylesheet"> <!-- Google Font -->
 </head>
 <body>
@@ -189,6 +190,48 @@
         </div>
     </div>
     <div id="statusOverlay" class="status-overlay"></div>
+    <!-- Fighting Mini-Game Overlay -->
+    <div id="fightingOverlay" class="fighting-overlay" style="display: none;">
+        <div class="fighting-overlay-content">
+            <!-- Player Stats and Image -->
+            <div class="player-section">
+                <div class="stats">
+                    <p>Health: <span id="playerHealthStat"></span></p>
+                    <p>Power: <span id="playerPowerStat"></span></p>
+                    <p>Defense: <span id="playerDefenseStat"></span></p>
+                    <p>Crit Chance: <span id="playerCritChanceStat"></span></p>
+                    <p>Crit Damage: <span id="playerCritDamageStat"></span></p>
+                </div>
+                <div id="playerImageContainer"></div>
+                <div class="health-bar">
+                    <div id="playerHealthBar" class="health-fill"></div>
+                </div>
+            </div>
+
+            <!-- VS Text -->
+            <div class="vs-text">
+                <h1>VS</h1>
+            </div>
+
+            <!-- Enemy Stats and Image -->
+            <div class="enemy-section">
+                <div class="stats">
+                    <p>Health: <span id="enemyHealthStat"></span></p>
+                    <p>Power: <span id="enemyPowerStat"></span></p>
+                    <p>Defense: <span id="enemyDefenseStat"></span></p>
+                    <p>Crit Chance: <span id="enemyCritChanceStat"></span></p>
+                    <p>Crit Damage: <span id="enemyCritDamageStat"></span></p>
+                </div>
+                <div id="enemyImageContainer"></div>
+                <div class="health-bar">
+                    <div id="enemyHealthBar" class="health-fill"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fight Log -->
+        <div id="fightLog" class="fight-log"></div>
+    </div>
     <!-- Include the Library overlay HTML -->
     <div id="libraryOverlay" class="library-overlay" style="display: none;">
         <div class="library-overlay-content">
@@ -217,7 +260,7 @@
         <div class="settings-overlay-content">
             <span class="close-button" id="closeSettingsOverlay">&times;</span>
             <h1>Settings</h1>
-            <h4>Degens Idle v0.838</h4>
+            <h4>Degens Idle v0.84</h4>
             
             <div class="settings-section">
                 <h3>Save Management</h3>
@@ -295,5 +338,6 @@
     <script src="library.js"></script>
     <script src="powerhall.js"></script>
     <script src="settings.js"></script>
+    <script src="fighting.js"></script>
 </body>
 </html>

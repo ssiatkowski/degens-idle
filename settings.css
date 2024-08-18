@@ -365,44 +365,61 @@
     background-color: #c82333; /* Darker red on hover */
 }
 
+/* Container for the three-way toggle and label */
+.three-way-toggle-container {
+    display: flex;
+    align-items: center; /* Align vertically in the center */
+    justify-content: center; /* Add space between the label and the toggle */
+    margin-bottom: 15px;
+}
+
+/* Label for the toggle */
+.three-way-toggle-label {
+    margin-right: 10px; /* Add some space between the label and the toggle */
+    font-size: 14px; /* Adjust font size if needed */
+}
+
+/* Container for the three-way toggle */
+.three-way-toggle {
+    display: inline-flex;
+    position: relative;
+    width: 40px;
+    height: 20px;
+    background-color: #ccc; /* Neutral state background color */
+    border-radius: 20px;
+    cursor: pointer; /* Make the cursor a pointer to indicate it's clickable */
+}
+
 /* Hide the radio buttons */
 .three-way-toggle input[type="radio"] {
     display: none;
 }
 
-/* Default styles for labels */
-.three-way-toggle label {
-    display: inline-block;
-    padding: 5px 15px;
-    border-radius: 5px;
-    margin-right: 20px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    cursor: pointer;
+/* Slider */
+.three-way-toggle .slider {
+    position: relative;
+    width: 19px;
+    height: 19px;
+    background-color: white;
+    border-radius: 50%;
+    transition: transform 0.3s ease, background-color 0.3s ease;
 }
+
 
 /* Neutral state */
-.toggle-neutral {
-    background-color: #ccc;
-    color: #fff;
+input[type="radio"]#toggleBuyMarkersNeutral:checked ~ .slider {
+    transform: translateX(50%); /* Centered */
+    background-color: white; /* Gray for neutral */
 }
 
-/* Off state */
-.toggle-off {
-    background-color: #dc3545; /* Red background */
-    color: #fff;
-}
-
-/* On state */
-.toggle-on {
-    background-color: #28a745; /* Green background */
-    color: #fff;
-}
-
-/* Highlight selected label */
-input[type="radio"]:checked + label {
-    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
-    transform: scale(1.2); /* Slightly enlarge the selected option */
+/* Remove the inner white dot */
+.three-way-toggle .slider::before {
+    content: '';
+    position: absolute;
+    width: 0; /* Set to 0 to remove the white dot */
+    height: 0;
+    background-color: transparent; /* Make it invisible */
+    border-radius: 50%;
 }
 
 

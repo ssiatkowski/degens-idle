@@ -1673,7 +1673,7 @@ function decodeName(encodedName) {
 }
 
 // Function to handle the purchase of an upgrade
-function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying=true) {
+async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying=true) {
     // Decode the upgrade name
     const upgradeName = decodeName(encodedUpgradeName);
     // Find the upgrade object by its name in the available upgrades list
@@ -1686,7 +1686,7 @@ function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying=true) {
     }
 
     // Destructure the upgrade object to get its properties
-    const { cost, earnings, img, name, message, miniPrestigeMultiplier, modalImg } = upgrade;
+    const { cost, earnings, img, name, message, miniPrestigeMultiplier, modalImg, isFight } = upgrade;
 
     // Check if the player has enough resources to purchase the upgrade
     if (isAffordable(cost)) {
@@ -1699,6 +1699,18 @@ function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying=true) {
         knowledge -= cost.knowledge || 0;
         power -= cost.power || 0;
         serenity -= cost.serenity || 0;
+
+        
+        // Special case for the "Antimatter Dimension" upgrade
+        if (isFight) {
+
+            const fightResult = await startFightGame(name, img);
+            if (!fightResult){
+                showMessageModal('You Lost', `Defeat isn’t the end, ${name} just tested your limits. Get back up and come back stronger!`);
+                return;
+            }
+        }
+
 
         // Increase the per second earnings for each resource, apply God Mode multiplier if applicable
         const multiplier = (upgrade.isGodMode && upgrade.isPUGodMode) ? 100 : 
@@ -1759,8 +1771,8 @@ function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying=true) {
         }
 
         // Special case for the "Still very stupid" upgrade
-        if (name === "Silence is Golden") {
-            showMessageModal('Sadly', "This marks the end of v0.838, but don’t think for a moment that your journey is over! The thrilling Hall of Power is just the beginning, and there’s so much more to uncover. With every new update, the excitement only intensifies, opening up new paths and challenges for you to explore.<br><br>We’re building something truly special, and your involvement can help shape the future of this game. Join our vibrant Discord community, where you can share your experiences, swap strategies, and contribute to the evolution of the game. Your voice is vital in this journey.<br><br>While we gear up for the next big update, just a few days away, why not restart the game? Challenge yourself with speed runs, try out new tactics, and see what hidden secrets you can unearth as you continue on your path to ultimate power.<br><br>I’d love to hear how you’re feeling about the pace of progression so far. Your feedback is incredibly valuable, so don’t hesitate to share your thoughts on Discord or through the feedback form in settings. Let’s continue to make this journey together, and see where the Hall of Power takes us next!");
+        if (name === "Agent Smith") {
+            showMessageModal('Sadly', "This marks the end of v0.84, but don’t think for a moment that your journey is over! The thrilling Hall of Power is just the beginning, and there’s so much more to uncover. With every new update, the excitement only intensifies, opening up new paths and challenges for you to explore.<br><br>We’re building something truly special, and your involvement can help shape the future of this game. Join our vibrant Discord community, where you can share your experiences, swap strategies, and contribute to the evolution of the game. Your voice is vital in this journey.<br><br>While we gear up for the next big update, just a few days away, why not restart the game? Challenge yourself with speed runs, try out new tactics, and see what hidden secrets you can unearth as you continue on your path to ultimate power.<br><br>I’d love to hear how you’re feeling about the pace of progression so far. Your feedback is incredibly valuable, so don’t hesitate to share your thoughts on Discord or through the feedback form in settings. Let’s continue to make this journey together, and see where the Hall of Power takes us next!");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one
@@ -1858,7 +1870,7 @@ function formatCostOrEarnings(costOrEarnings, isGodMode = false, isPUGodMode = f
 }
 
 
-function addPurchasedUpgrade(img, name, earnings, isGodMode = false, isPUGodMode = false, message = null) {
+function addPurchasedUpgrade(img, name, earnings, isGodMode = false, isPUGodMode = false, message = null, isFight = false) {
     const purchasedList = document.getElementById('purchasedList');
     const upgradeElement = document.createElement('div');
     upgradeElement.classList.add('purchased-upgrade');
@@ -1874,7 +1886,7 @@ function addPurchasedUpgrade(img, name, earnings, isGodMode = false, isPUGodMode
     upgradeElement.innerHTML = `
         <div class="upgrade-header">
             <label class="switch">
-                <input type="checkbox" id="toggle-${name}">
+                <input type="checkbox" id="toggle-${name}" ${isFight ? 'disabled' : ''}>
                 <span class="slider"></span>
             </label>
         </div>
@@ -1891,14 +1903,12 @@ function addPurchasedUpgrade(img, name, earnings, isGodMode = false, isPUGodMode
 
     const toggleSwitch = document.getElementById(`toggle-${name}`);
 
-    if (toggleSwitch) {
+    if (toggleSwitch && !isFight) { // Only add event listeners if it's not a fight upgrade
         toggleSwitch.addEventListener('click', (event) => {
-            //console.log("Toggle switch clicked - event stopped");
             event.stopPropagation();
         });
 
         toggleSwitch.addEventListener('change', (event) => {
-            //console.log(`Switch for upgrade ${name} set to ${event.target.checked ? 'On' : 'Off'}`);
             localStorage.setItem(`switchState-${name}`, JSON.stringify(event.target.checked));
         });
     }
@@ -1907,13 +1917,11 @@ function addPurchasedUpgrade(img, name, earnings, isGodMode = false, isPUGodMode
         upgradeElement.classList.add('clickable');
         upgradeElement.addEventListener('click', (event) => {
             if (event.target.closest('.switch')) {
-                //console.log("Switch clicked, no modal should be shown");
                 return; // Do nothing if the click originated from the switch
             }
 
-            //console.log("Showing modal - toggle switch not the target");            
-            if (message.startsWith('imgs/modal_imgs/')){
-                showMessageModal(name, '', false, false, message)
+            if (message.startsWith('imgs/modal_imgs/')) {
+                showMessageModal(name, '', false, false, message);
             } else {
                 showMessageModal(name, message);
             }
@@ -1933,6 +1941,7 @@ function addPurchasedUpgrade(img, name, earnings, isGodMode = false, isPUGodMode
         }
     }
 }
+
 
 
 
@@ -2009,10 +2018,15 @@ function updateUpgradeList() {
     // Limit the display to the top 8 upgrades
     let topUpgrades = availableUpgrades.slice(0, 8);
 
-    // Check if "The Finale" is in the list and truncate the list if found
-    const finaleIndex = topUpgrades.findIndex(upgrade => upgrade.name === 'The Finale');
-    if (finaleIndex !== -1) {
-        topUpgrades = topUpgrades.slice(0, finaleIndex + 1);
+    // List of upgrades that should trigger truncation
+    const keyUpgrades = ['The Finale', 'Agent Smith'];
+
+    // Find the first occurrence of any key upgrade in the list
+    const truncateIndex = topUpgrades.findIndex(upgrade => keyUpgrades.includes(upgrade.name));
+
+    // Truncate the list if any key upgrade is found
+    if (truncateIndex !== -1) {
+        topUpgrades = topUpgrades.slice(0, truncateIndex + 1);
     }
 
     const upgradeList = document.getElementById('upgradeList');
