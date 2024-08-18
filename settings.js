@@ -343,28 +343,154 @@ document.getElementById('feedbackButton').addEventListener('click', function() {
     window.open('https://docs.google.com/forms/d/e/1FAIpQLSfaQdxaBFCdT789rVTSvFuScEEzlu4rDabjFUX0zkCKinyvKA/viewform?usp=sf_link', '_blank');
 });
 
+function toggleAllBuyMarkers(targetState) {
+
+    purchasedUpgrades.forEach(upgrade => {
+        const name = upgrade.name;
+
+        // Load the switch state from local storage
+        const toggleSwitch = document.getElementById(`toggle-${name}`);
+        if (toggleSwitch) {
+            toggleSwitch.checked = targetState;
+            toggleSwitch.parentElement.style.display = 'block'; // Make the switch visible
+        }
+    });
+
+}
+
+
 // Open the automation overlay
 document.getElementById('automationButton').addEventListener('click', function() {
     const automationContent = document.getElementById('automationContent');
     const saveButton = document.getElementById('saveAutomationSettingsButton');
 
-    // Check if autoPrestigeThreshold is null
-    if (autoPrestigeThreshold === null) {
-        // Display the "unlock automation" message
+    // Clear any existing content in the automationContent section
+    automationContent.innerHTML = '';
+
+    // Check if all features are locked (none are unlocked)
+    const allFeaturesLocked = !autobuyUpgradesSkill && autoPrestigeThreshold === null && !buyMarkersSkill;
+
+    // If all features are locked, show the "unlock automation" message
+    if (allFeaturesLocked) {
         automationContent.innerHTML = "<p>You must unlock automation features first.</p>";
         saveButton.style.display = 'none'; // Hide the save button
     } else {
-        // Display the auto prestige threshold setting
-        automationContent.innerHTML = `
-            <label for="autoPrestigeThresholdInput">Auto Prestige Threshold:</label>
-            <input type="number" id="autoPrestigeThresholdInput" value="${autoPrestigeThreshold}" step="0.1">
-            <p>Set the multiplier threshold for auto-prestige. Prestige will automatically trigger when the threshold is exceeded.</p>
-        `;
-        saveButton.style.display = 'inline-block'; // Show the save button
+        saveButton.style.display = 'inline-block';
+
+        // Dynamically add Auto-Buy Upgrades setting if unlocked, with space and switch
+        if (autobuyUpgradesSkill) {
+            const autoBuyHtml = `
+                <div style="margin-bottom: 15px;">
+                    <label for="autoBuyUpgradesSwitch" style="margin-right: 10px;">Enable Auto-Buy Upgrades</label>
+                    <label class="switch">
+                        <input type="checkbox" id="autoBuyUpgradesSwitch">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            `;
+            automationContent.innerHTML += autoBuyHtml;
+
+            // Initialize the switch state based on whether auto-buy is running
+            document.getElementById('autoBuyUpgradesSwitch').checked = (autobuyIntervalId !== null);
+        }
+
+        // Dynamically add Auto-Prestige Threshold setting if available
+        if (autoPrestigeThreshold !== null) {
+            const autoPrestigeHtml = `
+                <div style="margin-bottom: 15px;">
+                    <label for="autoPrestigeThresholdInput">Auto Prestige Threshold:</label>
+                    <input type="number" id="autoPrestigeThresholdInput" value="${autoPrestigeThreshold}" step="0.1">
+                    <p>Set the multiplier threshold for auto-prestige. Prestige will automatically trigger when the threshold is exceeded.</p>
+                </div>
+            `;
+            automationContent.innerHTML += autoPrestigeHtml;
+        }
+
+        // Dynamically add the three-way toggle for Buy Markers if unlocked
+        if (buyMarkersSkill) {
+            const toggleHtml = `
+                <div style="margin-bottom: 15px;">
+                    <label for="toggleBuyMarkersSwitch" class="three-way-toggle-label">Toggle All Purchased Upgrades Buy Markers</label>
+                    <div class="three-way-toggle">
+                        <input type="radio" name="toggleBuyMarkers" id="toggleBuyMarkersNeutral" value="neutral" checked>
+                        <label for="toggleBuyMarkersNeutral" class="toggle-neutral">Unchanged</label>
+
+                        <input type="radio" name="toggleBuyMarkers" id="toggleBuyMarkersOff" value="off">
+                        <label for="toggleBuyMarkersOff" class="toggle-off">Off</label>
+
+                        <input type="radio" name="toggleBuyMarkers" id="toggleBuyMarkersOn" value="on">
+                        <label for="toggleBuyMarkersOn" class="toggle-on">On</label>
+                    </div>
+                </div>
+            `;
+            automationContent.innerHTML += toggleHtml;
+        }
+
+        // Check if any feature is missing and at least one is unlocked
+        const someFeaturesMissing = !autobuyUpgradesSkill || autoPrestigeThreshold === null || !buyMarkersSkill;
+        const atLeastOneFeatureUnlocked = autobuyUpgradesSkill || autoPrestigeThreshold !== null || buyMarkersSkill;
+
+        if (someFeaturesMissing && atLeastOneFeatureUnlocked) {
+            automationContent.innerHTML += `
+                <p style="margin-top: 20px; color: #ccc;">
+                    You are still missing some automation features. Once unlocked, their settings will appear here.
+                </p>`;
+        }
     }
 
-    document.getElementById('automationOverlay').style.display = 'block';
+    document.getElementById('automationOverlay').style.display = 'flex';
 });
+
+// Save the automation settings and close the overlay
+document.getElementById('saveAutomationSettingsButton').addEventListener('click', function() {
+    // Auto Prestige Threshold
+    if (autoPrestigeThreshold !== null) {
+        const thresholdInput = document.getElementById('autoPrestigeThresholdInput').value;
+        autoPrestigeThreshold = parseFloat(thresholdInput);
+
+        if (isNaN(autoPrestigeThreshold) || autoPrestigeThreshold <= 0) {
+            showImmediateMessageModal('Invalid Number', 'Please enter a valid positive number for the Auto Prestige Threshold.');
+            return; // Prevent closing if there's an error
+        }
+    }
+
+    // Handle auto-buy upgrades only if the skill is unlocked
+    if (autobuyUpgradesSkill) {
+        const autoBuyUpgradesSwitch = document.getElementById('autoBuyUpgradesSwitch');
+        if (autoBuyUpgradesSwitch.checked) {
+            // Enable auto-buy if it’s not already running
+            if (autobuyIntervalId === null) {
+                autobuyIntervalId = setInterval(autobuyUpgrades, 2000);
+            }
+        } else {
+            // Disable auto-buy if the switch is unchecked
+            if (autobuyIntervalId !== null) {
+                clearInterval(autobuyIntervalId);
+                autobuyIntervalId = null;
+            }
+        }
+    }
+
+    // Handle the three-way toggle for buy markers only if the skill is unlocked
+    if (buyMarkersSkill) {
+        const toggleBuyMarkersNeutral = document.getElementById('toggleBuyMarkersNeutral').checked;
+        const toggleBuyMarkersOff = document.getElementById('toggleBuyMarkersOff').checked;
+        const toggleBuyMarkersOn = document.getElementById('toggleBuyMarkersOn').checked;
+
+        // Call the appropriate function based on the toggle position
+        if (toggleBuyMarkersOff) {
+            toggleAllBuyMarkers(false);
+        } else if (toggleBuyMarkersOn) {
+            toggleAllBuyMarkers(true);
+        } // Neutral does nothing, so no action needed
+    }
+
+    // Close the overlay
+    document.getElementById('automationOverlay').style.display = 'none';
+    showImmediateMessageModal('Automation Settings Saved', 'Your automation settings have been saved successfully.');
+});
+
+
 
 // Close the automation overlay (without closing the settings overlay)
 document.getElementById('closeAutomationOverlay').addEventListener('click', function() {
@@ -374,19 +500,6 @@ document.getElementById('closeAutomationOverlay').addEventListener('click', func
 // Handle the exit button to close the automation overlay
 document.getElementById('exitAutomationOverlayButton').addEventListener('click', function() {
     document.getElementById('automationOverlay').style.display = 'none';
-});
-
-// Save the automation settings and close the overlay
-document.getElementById('saveAutomationSettingsButton').addEventListener('click', function() {
-    const thresholdInput = document.getElementById('autoPrestigeThresholdInput').value;
-    autoPrestigeThreshold = parseFloat(thresholdInput);
-    
-    if (isNaN(autoPrestigeThreshold) || autoPrestigeThreshold <= 0) {
-        showImmediateMessageModal('Invalid Number', 'Please enter a valid positive number for the Auto Prestige Threshold.')
-    } else {
-        document.getElementById('automationOverlay').style.display = 'none';
-        showImmediateMessageModal('Auto Prestige Value Changed', `Auto Prestige Threshold set to ${autoPrestigeThreshold}`);
-    }
 });
 
 

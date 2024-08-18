@@ -83,6 +83,7 @@ let cookieKnowledgeable = false;
 
 // don't need to save - this gets called and set at load, then prevents to be reset on skill click
 let autobuyIntervalId = null; // Store the interval ID here
+let autobuyUpgradesSkill = false;
 
 //cooldowns for mini games
 let cooldowns = {
@@ -889,6 +890,7 @@ async function restartGame(isPrestige = false) {
             lessDiminishingGodModeSkill = false;
             lessDiminishingPUGodModeSkill = false;
             autoPrestigeThreshold = null;
+            autobuyUpgradesSkill = false;
 
             transcendenceUnlocked = false;
 

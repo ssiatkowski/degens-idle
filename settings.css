@@ -332,6 +332,79 @@
 }
 
 
+/* Green Save Button */
+.green-button {
+    background-color: #28a745; /* Green background */
+    color: white; /* White text */
+    padding: 10px 20px; /* Padding for the button */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor */
+    font-size: 16px; /* Font size */
+    margin-right: 10px; /* Space between buttons */
+    transition: background-color 0.2s ease; /* Smooth transition */
+}
+
+.green-button:hover {
+    background-color: #218838; /* Darker green on hover */
+}
+
+/* Red Cancel Button */
+.red-button {
+    background-color: #dc3545; /* Red background */
+    color: white; /* White text */
+    padding: 10px 20px; /* Padding for the button */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor */
+    font-size: 16px; /* Font size */
+    transition: background-color 0.2s ease; /* Smooth transition */
+}
+
+.red-button:hover {
+    background-color: #c82333; /* Darker red on hover */
+}
+
+/* Hide the radio buttons */
+.three-way-toggle input[type="radio"] {
+    display: none;
+}
+
+/* Default styles for labels */
+.three-way-toggle label {
+    display: inline-block;
+    padding: 5px 15px;
+    border-radius: 5px;
+    margin-right: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+/* Neutral state */
+.toggle-neutral {
+    background-color: #ccc;
+    color: #fff;
+}
+
+/* Off state */
+.toggle-off {
+    background-color: #dc3545; /* Red background */
+    color: #fff;
+}
+
+/* On state */
+.toggle-on {
+    background-color: #28a745; /* Green background */
+    color: #fff;
+}
+
+/* Highlight selected label */
+input[type="radio"]:checked + label {
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+    transform: scale(1.2); /* Slightly enlarge the selected option */
+}
+
 
 
 /* Import File Input */
