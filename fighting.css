@@ -9,15 +9,16 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column; /* Arrange content vertically */
     z-index: 100;
 }
 
 /* Center the content and space between player and enemy */
 .fighting-overlay-content {
     display: flex;
-    justify-content: center;
+    justify-content: space-between; /* Space between player and enemy */
     align-items: center;
-    width: 100%;
+    width: 80%; /* Adjust width as needed */
     max-width: 1000px;
     margin: 0 auto;
     padding: 20px 0;
@@ -26,22 +27,38 @@
 /* Health Bars */
 .health-bar {
     width: 100%;
-    height: 20px;
+    height: 30px; /* Make the health bar thicker */
     background-color: #555;
     border-radius: 10px;
     margin-top: 10px;
     overflow: hidden;
+    position: relative; /* For positioning the health number */
 }
 
 .health-fill {
     height: 100%;
     background-color: #f00;
     transition: width 0.3s;
+    position: relative;
+    z-index: 1; /* Ensure it stays behind the health number */
+}
+
+/* Health Number */
+.health-number {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2; /* Ensure it stays above the health fill */
+    color: white;
+    font-weight: bold;
+    line-height: 30px; /* Align the text vertically within the health bar */
+    text-shadow: 1px 1px 2px black; /* Add some contrast to the text */
 }
 
 /* Fight Log adjustments */
 .fight-log {
-    width: 80%;
+    width: 80%; /* Make it span the entire width of the overlay content */
     max-width: 800px;
     max-height: 200px;
     overflow-y: auto;
@@ -87,4 +104,36 @@
     margin: 0 20px;
     font-size: 36px;
     color: white;
+}
+
+/* Forfeit Button */
+.forfeit-button {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: #ff4444;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.forfeit-button:hover {
+    background-color: #ffffff;
+}
+
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    /* Hide the VS sign on small screens */
+    .vs-text {
+        display: none;
+    }
+
+    /* Increase image size on small screens */
+    .enemy-section, .player-section {
+        width: 45%; /* Set the width to 45% of the screen width */
+    }
 }

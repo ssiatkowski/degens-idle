@@ -737,7 +737,7 @@ const upgrades = [
     },
     {
         name: "Training Dummy",
-        cost: { copium: 0, delusion: 0, yachtMoney: 2e41, trollPoints: 0, hopium: 0, knowledge: 1e29, power: 5, serenity: 0 },
+        cost: { copium: 0, delusion: 0, yachtMoney: 1.5e41, trollPoints: 0, hopium: 0, knowledge: 1e29, power: 5, serenity: 0 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1e15, hopiumPerSecond: 0, knowledgePerSecond: 1000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/training_dummy.jpg",
         message: `As you prepare to seek out strong opponents to test your might, you realize that each battle requires more than just courage—it demands resources. Every fight will cost you valuable supplies, and if you lose, those resources will be lost forever. Victory isn't just about strength; it's about preparation.<br><br>Your fighting skills will be determined by four key factors: Power, Copium, Delusion, and Troll Points. Power reflects your raw strength, Copium fuels your health and resilience in tough battles, Delusion represents your defense, and Troll Points signify your strategic edge. Before challenging an opponent, make sure you have enough of each to ensure you’re ready for the fight ahead.<br><br>This advanced training dummy is your gateway to mastering combat. Use it to sharpen your skills, understand how fights work, and ensure you're always prepared. After all, every resource spent and every point earned could be the difference between victory and defeat.`,

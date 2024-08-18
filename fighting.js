@@ -64,35 +64,50 @@ function startFightGame(enemyName, enemyImg) {
         enemyCritDamage = enemy.critDamage;
 
         // Populate player and enemy stats in the UI
-        document.getElementById('playerHealthStat').innerText = playerHealth.toFixed(2);
-        document.getElementById('playerPowerStat').innerText = playerPower.toFixed(2);
-        document.getElementById('playerDefenseStat').innerText = playerDefense.toFixed(2);
+        document.getElementById('playerHealthStat').innerText = playerHealth.toFixed(1);
+        document.getElementById('playerPowerStat').innerText = playerPower.toFixed(1);
+        document.getElementById('playerDefenseStat').innerText = playerDefense.toFixed(1);
         document.getElementById('playerCritChanceStat').innerText = (playerCritChance * 100).toFixed(2) + '%';
         document.getElementById('playerCritDamageStat').innerText = (playerCritDamage * 100).toFixed(2) + '%';
 
-        document.getElementById('enemyHealthStat').innerText = enemyHealth.toFixed(2);
-        document.getElementById('enemyPowerStat').innerText = enemyPower.toFixed(2);
-        document.getElementById('enemyDefenseStat').innerText = enemyDefense.toFixed(2);
+        document.getElementById('enemyHealthStat').innerText = enemyHealth.toFixed(1);
+        document.getElementById('enemyPowerStat').innerText = enemyPower.toFixed(1);
+        document.getElementById('enemyDefenseStat').innerText = enemyDefense.toFixed(1);
         document.getElementById('enemyCritChanceStat').innerText = (enemyCritChance * 100).toFixed(2) + '%';
         document.getElementById('enemyCritDamageStat').innerText = (enemyCritDamage * 100).toFixed(2) + '%';
 
         // Update health bars
         updateHealthBars();
 
+        fightEnded = false; // Reset the flag when the fight starts
+
         // Show the fighting overlay
         document.getElementById('fightingOverlay').style.display = 'flex';
+
+        // Add event listener for the forfeit button
+        const forfeitButton = document.getElementById('forfeitButton');
+        forfeitButton.onclick = () => {
+            logFight("<span style='color: red;'>You forfeited the fight!</span>");
+            fightEnded = true; // Set the flag to true when forfeiting
+            resolve(false); // Resolve the promise with a loss
+            endFight();
+        };
 
         // Start the fight loop
         fightLoop(resolve);
     });
 }
 
-
 // Function to handle the fight loop
 function fightLoop(resolve) {
     let isPlayerTurn = false;
 
     const interval = setInterval(() => {
+        if (fightEnded) {
+            clearInterval(interval); // Stop the loop if the fight has ended
+            return;
+        }
+
         if (isPlayerTurn) {
             attackEnemy();
         } else {
@@ -123,7 +138,12 @@ function updateHealthBars() {
     // Update the enemy's health bar
     const enemyHealthBar = document.getElementById('enemyHealthBar');
     enemyHealthBar.style.width = enemyHealthPercent + '%';
+
+    // Display the current health number (one decimal place) on the health bar
+    document.querySelector('#playerHealthBar').innerHTML = `<div class="health-number">${playerHealth.toFixed(2)}</div>`;
+    document.querySelector('#enemyHealthBar').innerHTML = `<div class="health-number">${enemyHealth.toFixed(2)}</div>`;
 }
+
 
 
 // Function to handle player attacking the enemy
@@ -132,18 +152,18 @@ function attackEnemy() {
     const isCritical = Math.random() < playerCritChance;
     if (isCritical) {
         damage = playerPower * (1+playerCritDamage) - enemyDefense;
-        logFight("You land a critical hit!");
+        logFight("<span style='color: purple;'>You land a critical hit!</span>");
     }
 
     enemyHealth -= Math.max(damage, 0);
-    logFight(`You attack the ${currEnemyName} for ${formatNumber(Math.max(damage, 0))} damage!`);
+    logFight(`You attack the ${currEnemyName} for ${Math.max(damage, 0).toFixed(2)} damage!`);
 
     updateHealthBars();
 }
 
 // Function to handle enemy attacking the player
 function attackPlayer() {
-    let damage = Math.max(enemyPower - playerDefense, playerMaxHealth/50);
+    let damage = Math.max(enemyPower - playerDefense, playerMaxHealth/100);
     const isCritical = Math.random() < enemyCritChance;
     if (isCritical) {
         damage *= 1 + enemyCritDamage;
@@ -151,13 +171,15 @@ function attackPlayer() {
     }
 
     playerHealth -= Math.max(damage, 0);
-    logFight(`${currEnemyName} attacks you for ${formatNumber(Math.max(damage, 0))} damage!`);
+    logFight(`${currEnemyName} attacks you for ${Math.max(damage, 0).toFixed(2)} damage!`);
 
     updateHealthBars();
 }
 
 // Function to log fight actions
 function logFight(message) {
+    if (fightEnded) return; // Do not log any more messages if the fight has ended
+
     const fightLog = document.getElementById('fightLog');
     fightLog.innerHTML += `<p>${message}</p>`;
     fightLog.scrollTop = fightLog.scrollHeight; // Scroll to bottom
@@ -166,6 +188,7 @@ function logFight(message) {
 
 // Function to handle the end of the fight
 function endFight() {
+    fightEnded = true; // Set the flag to true when the fight ends
 
     // Hide the fighting overlay after a delay
     setTimeout(() => {
@@ -174,11 +197,9 @@ function endFight() {
 
     if (playerHealth <= 0) {
         logFight("<span style='color: red;'>You have been defeated!</span>");
-        // Return false for a loss
-        return false;
-    } else {
+        return false; // Return false for a loss
+    } else if (enemyHealth <= 0) {
         logFight(`<span style='color: green;'>${currEnemyName} has been defeated!</span>`);
-        // Return true for a win
-        return true;
+        return true; // Return true for a win
     }
 }
