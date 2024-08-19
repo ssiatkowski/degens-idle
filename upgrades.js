@@ -130,7 +130,7 @@ const upgrades = [
         img: "imgs/90_day_fiance.jpg",
     },
     {
-        name: "VR Porn",
+        name: "VR Life",
         cost: { copium: 5000, delusion: 0, yachtMoney: 4000, trollPoints: 1500, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 22, delusionPerSecond: 6.9, yachtMoneyPerSecond: 0, trollPointsPerSecond: 2.4, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/vr_porn.jpg",
@@ -188,11 +188,11 @@ const upgrades = [
         hoverOverwrite: "It's a cookie. Just eat it.",
     },
     {
-        name: "Sex Change",
+        name: "Cosmetic Surgery",
         cost: { copium: 48000, delusion: 48000, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 850, delusionPerSecond: 850, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
-        img: "imgs/sex_change.jpg",
-        message: "Congratulations on your bold transformation! It's natural to feel a little weaker—about 10% on a prestige multiplier scale—after such a significant change. Just like recovering from major surgery, your strength will gradually return.<br><br>This temporary adjustment is a gentle reminder that even extraordinary changes come with their phases of recovery. Embrace this period of healing as a testament to your resilience. With time and patience, your full strength will come back, stronger than ever.",
+        img: "imgs/cosmetic_surgery.jpg",
+        message: "Congratulations on your bold transformation! It's natural to feel a little weaker—about 10% on a prestige multiplier scale—after undergoing significant cosmetic surgery. Just like recovering from any major procedure, your strength and confidence will gradually return.<br><br>This temporary adjustment is a gentle reminder that even extraordinary changes come with phases of recovery. Embrace this period of healing as a testament to your resilience. With time and patience, your full strength and beauty will shine through, stronger than ever.",
         miniPrestigeMultiplier: 0.9,
         hoverOverwrite: "Just a quick snip",
     },
@@ -740,7 +740,17 @@ const upgrades = [
         cost: { copium: 0, delusion: 0, yachtMoney: 1.5e41, trollPoints: 0, hopium: 0, knowledge: 1e29, power: 5, serenity: 0 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1e15, hopiumPerSecond: 0, knowledgePerSecond: 1000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/training_dummy.jpg",
-        message: `As you prepare to seek out strong opponents to test your might, you realize that each battle requires more than just courage—it demands resources. Every fight will cost you valuable supplies, and if you lose, those resources will be lost forever. Victory isn't just about strength; it's about preparation.<br><br>Your fighting skills will be determined by four key factors: Power, Copium, Delusion, and Troll Points. Power reflects your raw strength, Copium fuels your health and resilience in tough battles, Delusion represents your defense, and Troll Points signify your strategic edge. Before challenging an opponent, make sure you have enough of each to ensure you’re ready for the fight ahead.<br><br>This advanced training dummy is your gateway to mastering combat. Use it to sharpen your skills, understand how fights work, and ensure you're always prepared. After all, every resource spent and every point earned could be the difference between victory and defeat.`,
+        message: `<p>After defeating the training dummy, you realize that the real challenges lie ahead. Each battle with stronger opponents will demand more than just courage—it will require careful planning and resources. Every fight will cost you valuable supplies, and if you lose, those resources will be gone forever. Victory isn’t just about raw power; it’s about being fully prepared.</p>
+                    <p>Your fighting skills will be shaped by four key factors:</p>
+                    <ul>
+                        <li><strong>Power:</strong> Reflects your raw strength and determines the damage you deal to the enemy.</li>
+                        <li><strong>Copium:</strong> Fuels your health and resilience, allowing you to withstand enemy attacks.</li>
+                        <li><strong>Delusion:</strong> Represents your defense, reducing the damage you take from enemies.</li>
+                        <li><strong>Troll Points:</strong> Signify your strategic edge, influencing your critical hit chance and the damage dealt on critical hits.</li>
+                    </ul>
+                    <p>Before facing your next opponent, ensure you have enough of each to give yourself the best chance of success.</p>
+                    <p>With the training dummy conquered, you now have a deeper understanding of combat. Continue to refine your skills, plan your battles wisely, and always stay prepared. Every decision you make and every resource you spend could be the key to your next victory.</p>
+                    `,
         isFight: true,
     },
     {
@@ -748,6 +758,21 @@ const upgrades = [
         cost: { copium: 0, delusion: 1e41, yachtMoney: 0, trollPoints: 1e41, hopium: 0, knowledge: 1e29, power: 20, serenity: 0 },
         earnings: { copiumPerSecond: 6e15, delusionPerSecond: 0, yachtMoneyPerSecond: 6e15, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 10000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/agent_smith.jpg",
+        isFight: true,
+    },
+    {
+        name: "Feel the Pump",
+        cost: { copium: 1e41, delusion: 1e41, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 2e29, power: 0, serenity: 0 },
+        earnings: { copiumPerSecond: 1e15, delusionPerSecond: 1e15, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 2000, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: "imgs/feel_the_pump.jpg",        
+        message: `The thrill of victory surges through you as your first opponent falls at your feet. The rush of adrenaline, the satisfaction of your hard-earned triumph—it's like nothing you've felt before. You feel your strength growing, your confidence soaring. This is what you've trained for, and it feels incredible!<br><br>But as the excitement pulses through your veins, a voice in the back of your mind whispers a reminder: Don't let it get to your head. This is just the beginning. The opponents ahead are far stronger, more dangerous, and they'll push you to your limits in ways you can't yet imagine. Stay sharp, stay focused, and keep preparing—because the real challenges are still to come.`,
+
+    },
+    {
+        name: "Shao Kahn",
+        cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 5e41, hopium: 0, knowledge: 1e30, power: 30, serenity: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 9e15, trollPointsPerSecond: 0, hopiumPerSecond: -1e7, knowledgePerSecond: 25000, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: "imgs/shao_kahn.jpg",
         isFight: true,
     },
 
