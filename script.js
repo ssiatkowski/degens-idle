@@ -456,10 +456,9 @@ function generateResources() {
     }
 
     // Check if delusion drops below negative 1 trillion to start generating Knowledge
-    if ((delusion < -1e12 || knowledgeGenerationSkill) && localStorage.getItem('knowledgeGenerationStarted') !== 'true') {
+    if ((delusion < -1e12 || knowledgeGenerationSkill) && knowledgePerSecond === 0) {
         knowledgePerSecond = 0.000001
         effectiveKnowledgePerSecond = knowledgePerSecond * totalMultiplier * (bigCrunchMultiplier**(1/2));
-        localStorage.setItem('knowledgeGenerationStarted', 'true');
 
         if (!knowledgeGenerationSkill) {
             showMessageModal('The Age of Knowledge', `As you cross the threshold of -1 trillion delusion, the dense fog of confusion and distorted thoughts begins to lift. A sense of clarity pierces through the haze, revealing a world beyond the familiar chaos. The swirling mists part to unveil a luminous realm, shimmering with the light of hidden truths. For the first time, you feel a profound shift within, as the once insurmountable delusion gives way to the dawning of true knowledge. This newfound awareness pulses with a quiet intensity, each revelation a stepping stone towards deeper understanding. Your journey through the labyrinth of the mind has led to this pivotal moment, where the pursuit of enlightenment begins. Your mind expands, absorbing the essence of ancient wisdom and universal secrets, setting the stage for a transformative quest that transcends the ordinary limits of perception.`, false, false);
@@ -830,9 +829,6 @@ async function restartGame(isPrestige = false) {
         serenity = 0;
         serenityPerSecond = 0;
 
-        localStorage.setItem('knowledgeGenerationStarted', 'false');
-
-                
         // Reset ascends and multipliers if it's a full restart
         if (!isPrestige) {
             prestiges = 0;
