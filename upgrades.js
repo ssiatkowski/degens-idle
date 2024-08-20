@@ -805,7 +805,7 @@ const upgrades = [
         cost: { copium: 8e43, delusion: 0, yachtMoney: 0, trollPoints: 2e43, hopium: 0, knowledge: 1e32, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 4e16, delusionPerSecond: 7e16, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 25000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/cheers_to_memes.jpg",     
-        message: `Hey there! Just wanted to take a moment to break the 3rd wall and give a huge shoutout to all of you for playing and making it this far in the game. Seriously, I appreciate each and every one of you. Hope you're having a blast—because I sure had fun creating it! Cheers, and keep on gaming!`,   
+        message: `Hey there! Just wanted to take a moment to break the 4th wall and give a huge shoutout to all of you for playing and making it this far in the game. Seriously, I appreciate each and every one of you. Hope you're having a blast—because I sure had fun creating it! Cheers, and keep on gaming!`,   
     },
     {
         name: "Isshin",
