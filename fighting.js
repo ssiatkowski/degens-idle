@@ -40,18 +40,18 @@ const enemyStats = {
         critDamage: 10
     },
     "Sauron": {
-        health: 250000,
+        health: 350000,
         power: 40,
-        attackSpeed: 6,
+        attackSpeed: 7,
         defense: 15000,
         critChance: 0.03,
         critDamage: 100,
     },
     "Kratos": {
-        health: 10000000,
+        health: 5e8,
         power: 1,
-        attackSpeed: 15,
-        defense: 500000,
+        attackSpeed: 18,
+        defense: 3e6,
         critChance: 0,
         critDamage: 1,
     }

@@ -809,7 +809,7 @@ const upgrades = [
     },
     {
         name: "Isshin",
-        cost: { copium: 1e43, delusion: 9e42, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 1e32, power: 45, serenity: 0 },
+        cost: { copium: 1e43, delusion: 9e42, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 1e32, power: 200, serenity: 0 },
         earnings: { copiumPerSecond: 1e17, delusionPerSecond: 1e17, yachtMoneyPerSecond: 1e17, trollPointsPerSecond: 0, hopiumPerSecond: -1.2e10, knowledgePerSecond: 155000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/isshin.jpg",
         isFight: true,
@@ -828,14 +828,14 @@ const upgrades = [
     },
     {
         name: "Sauron",
-        cost: { copium: 5e43, delusion: 5e43, yachtMoney: 5e43, trollPoints: 5e43, hopium: 0, knowledge: 5e34, power: 5000, serenity: 0 },
+        cost: { copium: 5e43, delusion: 5e43, yachtMoney: 5e43, trollPoints: 5e43, hopium: 0, knowledge: 5e34, power: 10000, serenity: 0 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 8e18, trollPointsPerSecond: 0, hopiumPerSecond: -9e12, knowledgePerSecond: 885000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/sauron.jpg",
         isFight: true,
     },
     {
         name: "Kratos",
-        cost: { copium: 5e44, delusion: 5e44, yachtMoney: 5e44, trollPoints: 5e44, hopium: 0, knowledge: 5e40, power: 100000, serenity: 0 },
+        cost: { copium: 5e44, delusion: 5e44, yachtMoney: 5e44, trollPoints: 5e44, hopium: 0, knowledge: 5e40, power: 500000, serenity: 0 },
         earnings: { copiumPerSecond: 1e19, delusionPerSecond: 1e19, yachtMoneyPerSecond: 1e19, trollPointsPerSecond: 1e19, hopiumPerSecond: -1e14, knowledgePerSecond: 5e6, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/kratos.jpg",
         message: 'You are not supposed to be able to beat Kratos yet. Please post in discord if you did this without cheating.',
