@@ -142,11 +142,41 @@
         display: none;
     }
 
-    /* Increase image size on small screens */
+    /* Increase image size and section width on small screens */
     .enemy-section, .player-section {
-        width: 45%; /* Set the width to 45% of the screen width */
+        width: 39%; /* Set the width to 48% of the screen width */
+        max-width: none; /* Allow the sections to be as wide as needed */
+        flex-shrink: 0; /* Prevent the sections from shrinking */
+    }
+
+    .enemy-section img, .player-section img {
+        width: 100%; /* Ensure the image takes up the full width of the section */
+        height: auto; /* Maintain aspect ratio */
+    }
+
+    /* Ensure that the text does not wrap and uses the full width */
+    .stats p {
+        white-space: nowrap; /* Prevent text wrapping */
+        overflow: hidden; /* Hide any overflow text */
+        text-overflow: ellipsis; /* Add ellipsis (...) to overflow text */
+    }
+
+    /* Adjust the flex layout to avoid wrapping */
+    .fighting-overlay-content {
+        flex-wrap: nowrap; /* Prevent sections from wrapping to the next line */
+        justify-content: space-between; /* Distribute space evenly */
+        padding: 0; /* Remove padding */
+        margin: 0 auto; /* Center the content */
+        width: 100%; /* Ensure the content takes up the full screen width */
+    }
+
+    /* Reduce the padding to make better use of space */
+    .enemy-section, .player-section {
+        padding: 2px; /* Reduce padding to make more space for the content */
     }
 }
+
+
 
 /* Winner/Loser/Dead/Taunting Text */
 .result-text {

@@ -1692,13 +1692,19 @@ function decodeName(encodedName) {
     return decodeURIComponent(encodedName);
 }
 
+let isFightInProgress = false; // Flag to prevent multiple fight triggers
+
 // Function to handle the purchase of an upgrade
-async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying=true) {
+async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
+    // If a fight is in progress, don't allow buying another upgrade
+    if (isFightInProgress) return;
+
     // Decode the upgrade name
     const upgradeName = decodeName(encodedUpgradeName);
     // Find the upgrade object by its name in the available upgrades list
     const upgrade = availableUpgrades.find(up => up.name === upgradeName);
 
+    console.log(`buyUpgrade(${upgradeName})`);
     // If the upgrade is not found, log an error and return
     if (!upgrade) {
         console.error(`Upgrade not found: ${upgradeName}`);
@@ -1720,21 +1726,22 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying=true) {
         power -= cost.power || 0;
         serenity -= cost.serenity || 0;
 
-        
         // Special case for the "Antimatter Dimension" upgrade
         if (isFight) {
+            isFightInProgress = true; // Set the flag to prevent multiple fight triggers
 
             const fightResult = await startFightGame(name, img);
-            if (!fightResult){
+            isFightInProgress = false; // Reset the flag after the fight ends
+
+            if (!fightResult) {
                 showMessageModal('You Lost', `Defeat isn’t the end, ${name} just tested your limits. Get back up and come back stronger!`);
                 return;
             }
         }
 
-
         // Increase the per second earnings for each resource, apply God Mode multiplier if applicable
-        const multiplier = (upgrade.isGodMode && upgrade.isPUGodMode) ? 100 : 
-                   (upgrade.isGodMode || upgrade.isPUGodMode) ? 10 : 1;
+        const multiplier = (upgrade.isGodMode && upgrade.isPUGodMode) ? 100 :
+            (upgrade.isGodMode || upgrade.isPUGodMode) ? 10 : 1;
         copiumPerSecond += (earnings.copiumPerSecond || 0) * multiplier;
         yachtMoneyPerSecond += (earnings.yachtMoneyPerSecond || 0) * multiplier;
         trollPointsPerSecond += (earnings.trollPointsPerSecond || 0) * multiplier;
@@ -1753,7 +1760,6 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying=true) {
             delusionPerSecond += toggleDelusion ? delusionChange : -delusionChange;
         }
 
-        
         // Add the purchased upgrade to the display
         addPurchasedUpgrade(img, name, earnings, upgrade.isGodMode, upgrade.isPUGodMode, upgrade.message, upgrade.isFight);
         // Remove the upgrade from the available upgrades list
@@ -1764,12 +1770,12 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying=true) {
         // Special case for unlocking the "Cookie Clicker" upgrade
         if (name === "Cookie Clicker") {
             document.getElementById('cookieButton').style.display = 'block';
-        } 
+        }
 
-        // Special case for unlocking the "Transendence" upgrade
+        // Special case for unlocking the "Transcendence" upgrade
         if (name === "Transcendence") {
             unlockTranscendence();
-        } 
+        }
 
         // Check if the upgrade message has been shown before
         const messageShownUpgrades = JSON.parse(localStorage.getItem('messageShownUpgrades')) || [];
@@ -1777,8 +1783,8 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying=true) {
 
         // Show a message if the upgrade has one and it's the first purchase
         if (message && isFirstPurchase) {
-            if (message.startsWith('imgs/modal_imgs/')){
-                showMessageModal(name, '', false, false, message)
+            if (message.startsWith('imgs/modal_imgs/')) {
+                showMessageModal(name, '', false, false, message);
             } else {
                 showMessageModal(name, message);
             }
@@ -1793,7 +1799,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying=true) {
 
         // Special case for the "Still very stupid" upgrade
         if (name === "Sauron") {
-            showMessageModal('Sadly', "This marks the end of v0.85, but your adventure is far from over! The Hall of Power is just the beginning, and there’s so much more to uncover. Each update brings new challenges and excitement, so stay tuned for what's coming next.<br><br>As you explore the Hall of Power and take on epic battles, I'd love to hear how you're enjoying them. How's the action? Are the battles keeping you on your toes? Your feedback is crucial in shaping the future of the game.<br><br>Join our vibrant Discord community to share your experiences, swap strategies, and help evolve the game. The next big update is just days away, but in the meantime, why not restart the game? Try new tactics, speed runs, and uncover hidden secrets on your path to ultimate power.<br><br>Your thoughts on the battles and the Hall of Power would be invaluable, so feel free to share on Discord or through the feedback form in settings. Let's continue this journey together and see where the Hall of Power leads us next!");
+            showMessageModal('Sadly', "This marks the end of v0.851, but your adventure is far from over! The Hall of Power is just the beginning, and there’s so much more to uncover. Each update brings new challenges and excitement, so stay tuned for what's coming next.<br><br>As you explore the Hall of Power and take on epic battles, I'd love to hear how you're enjoying them. How's the action? Are the battles keeping you on your toes? Your feedback is crucial in shaping the future of the game.<br><br>Join our vibrant Discord community to share your experiences, swap strategies, and help evolve the game. The next big update is just days away, but in the meantime, why not restart the game? Try new tactics, speed runs, and uncover hidden secrets on your path to ultimate power.<br><br>Your thoughts on the battles and the Hall of Power would be invaluable, so feel free to share on Discord or through the feedback form in settings. Let's continue this journey together and see where the Hall of Power leads us next!");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one
@@ -1801,7 +1807,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying=true) {
             epsMultiplier *= miniPrestigeMultiplier;
         }
 
-        if (callUpdatesAfterBuying){
+        if (callUpdatesAfterBuying) {
             // Update the upgrade list and display
             updateUpgradeList();
             updateMultipliersDisplay();
@@ -1812,17 +1818,11 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying=true) {
         }
 
     } else {
-        
         const button = document.querySelector(`button[data-upgrade-name="${encodedUpgradeName}"]`);
         showStatusMessage(button, 'Insufficient resources to purchase this upgrade.', false, 1500);
-        // Show an alert if the player does not have enough resources
-        // if (!isModalOpen) {
-        //     showMessageModal('Purchase Denied', 'Not enough resources to purchase this upgrade.').then(() => {
-        //         isModalOpen = false;
-        //     });
-        // }
     }
 }
+
 
 
 

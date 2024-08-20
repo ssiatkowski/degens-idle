@@ -55,6 +55,139 @@ powerSurgeMultiplier = 1; //also define variable at top
 
 
 
+//  BUG FIX FOR FIGHTING ON MOBILE:
+
+let isFightInProgress = false; // Flag to prevent multiple fight triggers
+
+// Function to handle the purchase of an upgrade
+async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
+    // If a fight is in progress, don't allow buying another upgrade
+    if (isFightInProgress) return;
+
+    // Decode the upgrade name
+    const upgradeName = decodeName(encodedUpgradeName);
+    // Find the upgrade object by its name in the available upgrades list
+    const upgrade = availableUpgrades.find(up => up.name === upgradeName);
+
+    console.log(`buyUpgrade(${upgradeName})`);
+    // If the upgrade is not found, log an error and return
+    if (!upgrade) {
+        console.error(`Upgrade not found: ${upgradeName}`);
+        return;
+    }
+
+    // Destructure the upgrade object to get its properties
+    const { cost, earnings, img, name, message, miniPrestigeMultiplier, modalImg, isFight } = upgrade;
+
+    // Check if the player has enough resources to purchase the upgrade
+    if (isAffordable(cost)) {
+        // Deduct the cost from the player's resources
+        copium -= cost.copium || 0;
+        delusion -= cost.delusion || 0;
+        yachtMoney -= cost.yachtMoney || 0;
+        trollPoints -= cost.trollPoints || 0;
+        hopium -= cost.hopium || 0;
+        knowledge -= cost.knowledge || 0;
+        power -= cost.power || 0;
+        serenity -= cost.serenity || 0;
+
+        // Special case for the "Antimatter Dimension" upgrade
+        if (isFight) {
+            isFightInProgress = true; // Set the flag to prevent multiple fight triggers
+
+            const fightResult = await startFightGame(name, img);
+            isFightInProgress = false; // Reset the flag after the fight ends
+
+            if (!fightResult) {
+                showMessageModal('You Lost', `Defeat isn’t the end, ${name} just tested your limits. Get back up and come back stronger!`);
+                return;
+            }
+        }
+
+        // Increase the per second earnings for each resource, apply God Mode multiplier if applicable
+        const multiplier = (upgrade.isGodMode && upgrade.isPUGodMode) ? 100 :
+            (upgrade.isGodMode || upgrade.isPUGodMode) ? 10 : 1;
+        copiumPerSecond += (earnings.copiumPerSecond || 0) * multiplier;
+        yachtMoneyPerSecond += (earnings.yachtMoneyPerSecond || 0) * multiplier;
+        trollPointsPerSecond += (earnings.trollPointsPerSecond || 0) * multiplier;
+        hopiumPerSecond += (earnings.hopiumPerSecond || 0) * multiplier;
+        knowledgePerSecond += (earnings.knowledgePerSecond || 0) * multiplier;
+        serenityPerSecond += (earnings.serenityPerSecond || 0) * multiplier;
+
+        // Handle delusion per second based on the toggle state
+        if (document.getElementById('toggleDelusionLabel').classList.contains('hidden')) {
+            // If the toggleDelusion is hidden, add delusion per second normally
+            delusionPerSecond += (earnings.delusionPerSecond || 0) * multiplier;
+        } else {
+            // If the toggleDelusion is not hidden, adjust delusion per second based on the toggle state
+            const toggleDelusion = document.getElementById('toggleDelusion').checked;
+            const delusionChange = Math.abs(earnings.delusionPerSecond || 0) * multiplier;
+            delusionPerSecond += toggleDelusion ? delusionChange : -delusionChange;
+        }
+
+        // Add the purchased upgrade to the display
+        addPurchasedUpgrade(img, name, earnings, upgrade.isGodMode, upgrade.isPUGodMode, upgrade.message, upgrade.isFight);
+        // Remove the upgrade from the available upgrades list
+        availableUpgrades.splice(availableUpgrades.indexOf(upgrade), 1);
+        // Add the upgrade to the purchased upgrades list
+        purchasedUpgrades.push(upgrade);
+
+        // Special case for unlocking the "Cookie Clicker" upgrade
+        if (name === "Cookie Clicker") {
+            document.getElementById('cookieButton').style.display = 'block';
+        }
+
+        // Special case for unlocking the "Transcendence" upgrade
+        if (name === "Transcendence") {
+            unlockTranscendence();
+        }
+
+        // Check if the upgrade message has been shown before
+        const messageShownUpgrades = JSON.parse(localStorage.getItem('messageShownUpgrades')) || [];
+        const isFirstPurchase = !messageShownUpgrades.includes(name);
+
+        // Show a message if the upgrade has one and it's the first purchase
+        if (message && isFirstPurchase) {
+            if (message.startsWith('imgs/modal_imgs/')) {
+                showMessageModal(name, '', false, false, message);
+            } else {
+                showMessageModal(name, message);
+            }
+            messageShownUpgrades.push(name);
+            localStorage.setItem('messageShownUpgrades', JSON.stringify(messageShownUpgrades));
+        }
+
+        // Special case for the "Antimatter Dimension" upgrade
+        if (name === "Antimatter Dimensions") {
+            unhideKnowledge();
+        }
+
+        // Special case for the "Still very stupid" upgrade
+        if (name === "Sauron") {
+            showMessageModal('Sadly', "This marks the end of v0.85, but your adventure is far from over! The Hall of Power is just the beginning, and there’s so much more to uncover. Each update brings new challenges and excitement, so stay tuned for what's coming next.<br><br>As you explore the Hall of Power and take on epic battles, I'd love to hear how you're enjoying them. How's the action? Are the battles keeping you on your toes? Your feedback is crucial in shaping the future of the game.<br><br>Join our vibrant Discord community to share your experiences, swap strategies, and help evolve the game. The next big update is just days away, but in the meantime, why not restart the game? Try new tactics, speed runs, and uncover hidden secrets on your path to ultimate power.<br><br>Your thoughts on the battles and the Hall of Power would be invaluable, so feel free to share on Discord or through the feedback form in settings. Let's continue this journey together and see where the Hall of Power leads us next!");
+        }
+
+        // Apply a mini prestige multiplier if the upgrade has one
+        if (miniPrestigeMultiplier) {
+            epsMultiplier *= miniPrestigeMultiplier;
+        }
+
+        if (callUpdatesAfterBuying) {
+            // Update the upgrade list and display
+            updateUpgradeList();
+            updateMultipliersDisplay();
+            updateEffectiveMultipliers();
+            updateDisplay();
+            // Save the game state
+            saveGameState();
+        }
+
+    } else {
+        const button = document.querySelector(`button[data-upgrade-name="${encodedUpgradeName}"]`);
+        showStatusMessage(button, 'Insufficient resources to purchase this upgrade.', false, 1500);
+    }
+}
+
 
 
 styles.css:
