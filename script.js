@@ -43,6 +43,8 @@ let bigCrunchMultiplier = 1;
 
 let totalMultiplier = 1;
 
+let powerSurgeMultiplier = 1;
+
 let currentNumberFormat = 'Mixed';
 
 let firstTimePrestigeButtonAvailable = true; // Default to true, will be updated based on saved state
@@ -105,7 +107,7 @@ const miniGameTimeouts = {
 const miniGameIntervals = {};
 
 function calculateEffectivePower(){
-    return (moneyIsPowerTooSkill ? (knowledge ** (1/3) / 1e12) * (1 + (Math.max(yachtMoney,0) ** (1/30) / 100)) : knowledge ** (1/3) / 1e12) * devMultiplier;
+    return (moneyIsPowerTooSkill ? (knowledge ** (1/3) / 1e12) * (1 + (Math.max(yachtMoney,0) ** (1/30) / 100)) : knowledge ** (1/3) / 1e12) * powerSurgeMultiplier * devMultiplier;
 }
 
 function updateEffectiveMultipliers() {
@@ -231,7 +233,7 @@ function loadGameState() {
     // Reapply the purchased upgrades and handle any special cases (e.g., "Cookie Clicker")
     purchasedUpgrades.forEach(upgrade => {
         if (upgrade) {
-            addPurchasedUpgrade(upgrade.img, upgrade.name, upgrade.earnings, upgrade.isGodMode, upgrade.isPUGodMode, upgrade.message);
+            addPurchasedUpgrade(upgrade.img, upgrade.name, upgrade.earnings, upgrade.isGodMode, upgrade.isPUGodMode, upgrade.message, upgrade.isFight);
             if (upgrade.name === "Cookie Clicker") {
                 document.getElementById('cookieButton').style.display = 'block';
             }
@@ -266,6 +268,19 @@ function loadGameState() {
                 if (skill.unlocked) {
                     unlockLibrarySkill(skill, true); // Call with duringLoad set to true
                     console.log(`unlockLibrarySkill(${skill.name})`);
+                }
+            }
+        });
+    }
+    const savedPowerHallSkills = JSON.parse(localStorage.getItem('powerHallSkills')) || [];
+    if (Array.isArray(savedPowerHallSkills)) {
+        savedPowerHallSkills.forEach(savedSkill => {
+            const skill = powerHallSkills.find(s => s.name === savedSkill.name);
+            if (skill) {
+                skill.unlocked = savedSkill.unlocked;
+                if (skill.unlocked) {
+                    unlockPowerHallSkill(skill, true); // Call with duringLoad set to true
+                    console.log(`unlockPowerHallSkill(${skill.name})`);
                 }
             }
         });
@@ -372,6 +387,12 @@ function saveGameState() {
     if (Array.isArray(librarySkills)) {
         const unlockedLibrarySkills = librarySkills.filter(skill => skill.unlocked);
         localStorage.setItem('librarySkills', JSON.stringify(unlockedLibrarySkills));
+    }
+
+    // Save unlocked power hall skills
+    if (Array.isArray(powerHallSkills)) {
+        const unlockedpowerHallSkills = powerHallSkills.filter(skill => skill.unlocked);
+        localStorage.setItem('powerHallSkills', JSON.stringify(unlockedpowerHallSkills));
     }
 
     // Save the state of each switch
@@ -889,6 +910,9 @@ async function restartGame(isPrestige = false) {
             autobuyUpgradesSkill = false;
 
             transcendenceUnlocked = false;
+
+            playerAttackSpeed = 2;
+            powerSurgeMultiplier = 1;
 
             powerUnlocked = false;
             document.getElementById('power-container').style.display = 'none';
@@ -1729,8 +1753,9 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying=true) {
             delusionPerSecond += toggleDelusion ? delusionChange : -delusionChange;
         }
 
+        
         // Add the purchased upgrade to the display
-        addPurchasedUpgrade(img, name, earnings, upgrade.isGodMode, upgrade.isPUGodMode, upgrade.message);
+        addPurchasedUpgrade(img, name, earnings, upgrade.isGodMode, upgrade.isPUGodMode, upgrade.message, upgrade.isFight);
         // Remove the upgrade from the available upgrades list
         availableUpgrades.splice(availableUpgrades.indexOf(upgrade), 1);
         // Add the upgrade to the purchased upgrades list
@@ -1767,8 +1792,8 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying=true) {
         }
 
         // Special case for the "Still very stupid" upgrade
-        if (name === "Shao Kahn") {
-            showMessageModal('Sadly', "This marks the end of v0.842, but don’t think for a moment that your journey is over! The thrilling Hall of Power is just the beginning, and there’s so much more to uncover. With every new update, the excitement only intensifies, opening up new paths and challenges for you to explore.<br><br>We’re building something truly special, and your involvement can help shape the future of this game. Join our vibrant Discord community, where you can share your experiences, swap strategies, and contribute to the evolution of the game. Your voice is vital in this journey.<br><br>While we gear up for the next big update, just a few days away, why not restart the game? Challenge yourself with speed runs, try out new tactics, and see what hidden secrets you can unearth as you continue on your path to ultimate power.<br><br>I’d love to hear how you’re feeling about the pace of progression so far. Your feedback is incredibly valuable, so don’t hesitate to share your thoughts on Discord or through the feedback form in settings. Let’s continue to make this journey together, and see where the Hall of Power takes us next!");
+        if (name === "Sauron") {
+            showMessageModal('Sadly', "This marks the end of v0.85, but your adventure is far from over! The Hall of Power is just the beginning, and there’s so much more to uncover. Each update brings new challenges and excitement, so stay tuned for what's coming next.<br><br>As you explore the Hall of Power and take on epic battles, I'd love to hear how you're enjoying them. How's the action? Are the battles keeping you on your toes? Your feedback is crucial in shaping the future of the game.<br><br>Join our vibrant Discord community to share your experiences, swap strategies, and help evolve the game. The next big update is just days away, but in the meantime, why not restart the game? Try new tactics, speed runs, and uncover hidden secrets on your path to ultimate power.<br><br>Your thoughts on the battles and the Hall of Power would be invaluable, so feel free to share on Discord or through the feedback form in settings. Let's continue this journey together and see where the Hall of Power leads us next!");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one
@@ -1906,6 +1931,7 @@ function addPurchasedUpgrade(img, name, earnings, isGodMode = false, isPUGodMode
 
         toggleSwitch.addEventListener('change', (event) => {
             localStorage.setItem(`switchState-${name}`, JSON.stringify(event.target.checked));
+            console.log('Switch clicked')
         });
     }
 
@@ -1958,13 +1984,17 @@ function enableAllBuyMarkers(firstUnlock=false) {
             toggleSwitch.checked = savedSwitchState;
             toggleSwitch.parentElement.style.display = 'block'; // Make the switch visible
 
-            // Add event listener for the switch
-            toggleSwitch.addEventListener('change', (event) => {
-                const state = event.target.checked ? 'On' : 'Off';
-                console.log(`Switch for upgrade ${name} set to ${state}`);
-                // Save the switch state to local storage
-                localStorage.setItem(`switchState-${name}`, JSON.stringify(event.target.checked));
-            });
+
+            if(!upgrade.isFight){
+                // Add event listener for the switch
+                toggleSwitch.addEventListener('change', (event) => {
+                    const state = event.target.checked ? 'On' : 'Off';
+                    console.log(`Switch for upgrade ${name} set to ${state}`);
+                    // Save the switch state to local storage
+                    localStorage.setItem(`switchState-${name}`, JSON.stringify(event.target.checked));
+                });
+            }
+
 
             toggleSwitch.addEventListener('click', (event) => {
                 event.stopPropagation();
@@ -2010,7 +2040,7 @@ function autobuyUpgrades(){
 
 
 // List of upgrades that should trigger truncation
-const keyUpgrades = ['The Finale', 'Agent Smith', 'Shao Kahn'];
+const keyUpgrades = ['The Finale', 'Agent Smith', 'Shao Kahn', 'Darth Vader', 'Isshin', 'Sauron','Kratos'];
 
 // Function to update the upgrade list display
 function updateUpgradeList() {

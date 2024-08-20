@@ -1,0 +1,61 @@
+script.js:
+
+// Special case for the "Still very stupid" upgrade
+if (name === "Shao Kahn") {
+    showMessageModal('Sadly', "This marks the end of v0.842, but don’t think for a moment that your journey is over! The thrilling Hall of Power is just the beginning, and there’s so much more to uncover. With every new update, the excitement only intensifies, opening up new paths and challenges for you to explore.<br><br>We’re building something truly special, and your involvement can help shape the future of this game. Join our vibrant Discord community, where you can share your experiences, swap strategies, and contribute to the evolution of the game. Your voice is vital in this journey.<br><br>While we gear up for the next big update, just a few days away, why not restart the game? Challenge yourself with speed runs, try out new tactics, and see what hidden secrets you can unearth as you continue on your path to ultimate power.<br><br>I’d love to hear how you’re feeling about the pace of progression so far. Your feedback is incredibly valuable, so don’t hesitate to share your thoughts on Discord or through the feedback form in settings. Let’s continue to make this journey together, and see where the Hall of Power takes us next!");
+}
+
+// List of upgrades that should trigger truncation
+const keyUpgrades = ['The Finale', 'Agent Smith', 'Shao Kahn', 'Darth Vader', 'Isshin', 'Sauron','Kratos'];
+
+// Function to update the upgrade list display
+function updateUpgradeList() {
+    // Limit the display to the top 8 upgrades
+    let topUpgrades = availableUpgrades.slice(0, 8);
+
+    // Find the first occurrence of any key upgrade in the list
+    const truncateIndex = topUpgrades.findIndex(upgrade => keyUpgrades.includes(upgrade.name));
+
+    // Truncate the list if any key upgrade is found
+    if (truncateIndex !== -1) {
+        topUpgrades = topUpgrades.slice(0, truncateIndex + 1);
+    }
+
+    const upgradeList = document.getElementById('upgradeList');
+    upgradeList.innerHTML = ''; // Clear the current upgrade list
+
+
+
+// REMOVE ALL MENTIONS OF knowledgeGenerationStarted, and change the below to this:
+
+    // Check if delusion drops below negative 1 trillion to start generating Knowledge
+    if ((delusion < -1e12 || knowledgeGenerationSkill) && knowledgePerSecond === 0) {
+        knowledgePerSecond = 0.000001
+        effectiveKnowledgePerSecond = knowledgePerSecond * totalMultiplier * (bigCrunchMultiplier**(1/2));
+
+        if (!knowledgeGenerationSkill) {
+            showMessageModal('The Age of Knowledge', `As you cross the threshold of -1 trillion delusion, the dense fog of confusion and distorted thoughts begins to lift. A sense of clarity pierces through the haze, revealing a world beyond the familiar chaos. The swirling mists part to unveil a luminous realm, shimmering with the light of hidden truths. For the first time, you feel a profound shift within, as the once insurmountable delusion gives way to the dawning of true knowledge. This newfound awareness pulses with a quiet intensity, each revelation a stepping stone towards deeper understanding. Your journey through the labyrinth of the mind has led to this pivotal moment, where the pursuit of enlightenment begins. Your mind expands, absorbing the essence of ancient wisdom and universal secrets, setting the stage for a transformative quest that transcends the ordinary limits of perception.`, false, false);
+        }
+    }
+
+
+
+// ADD isFight to every time addPurchasedUpgrade is called
+
+addPurchasedUpgrade(upgrade.img, upgrade.name, upgrade.earnings, upgrade.isGodMode, upgrade.isPUGodMode, upgrade.message, upgrade.isFight);
+
+
+
+// reset variables in RestartGame (full restart)
+
+playerAttackSpeed = 2;
+powerSurgeMultiplier = 1; //also define variable at top
+
+
+
+
+
+
+
+styles.css:
+

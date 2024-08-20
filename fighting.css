@@ -35,11 +35,11 @@
     position: relative; /* For positioning the health number */
 }
 
+/* The fill inside the health bar */
 .health-fill {
     height: 100%;
     background-color: #f00;
     transition: width 0.3s;
-    position: relative;
     z-index: 1; /* Ensure it stays behind the health number */
 }
 
@@ -54,7 +54,9 @@
     font-weight: bold;
     line-height: 30px; /* Align the text vertically within the health bar */
     text-shadow: 1px 1px 2px black; /* Add some contrast to the text */
+    pointer-events: none; /* Ensure it doesn't interfere with clicks */
 }
+
 
 /* Fight Log adjustments */
 .fight-log {
@@ -80,8 +82,10 @@
     flex-direction: column;
     align-items: center;
     margin: 0 20px; /* Add space between player and enemy sections */
+    background-color: rgba(0, 0, 0, 0.6); /* Darker transparent background */
+    padding: 10px; /* Add some padding around the content */
+    border-radius: 10px; /* Round the corners for a smoother look */
 }
-
 .enemy-section img, .player-section img {
     width: 100%;
     height: auto; /* Maintain aspect ratio */
@@ -94,6 +98,13 @@
     margin-top: 10px;
     font-size: 14px;
     color: white; /* Ensure text is visible */
+}
+
+/* Stats styling */
+.stats p {
+    margin: 2px 0; /* Reduce the top and bottom margin */
+    padding: 0; /* Remove padding */
+    line-height: 1.2; /* Adjust line-height for more compact text */
 }
 
 /* VS Text */
@@ -124,7 +135,6 @@
     background-color: #ffffff;
 }
 
-
 /* Mobile adjustments */
 @media (max-width: 768px) {
     /* Hide the VS sign on small screens */
@@ -136,4 +146,41 @@
     .enemy-section, .player-section {
         width: 45%; /* Set the width to 45% of the screen width */
     }
+}
+
+/* Winner/Loser/Dead/Taunting Text */
+.result-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg);
+    font-size: 48px;
+    font-weight: bold;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.4);
+    padding: 10px 20px;
+    border-radius: 10px;
+    z-index: 1;
+    text-align: center;
+    pointer-events: none; /* Prevent interaction with the text */
+}
+
+.winner-text {
+    color: green;
+}
+
+.loser-text {
+    color: red;
+}
+
+.taunting-text {
+    color: red;
+}
+
+.dead-text {
+    color: green;
+}
+
+#playerImageContainer, #enemyImageContainer {
+    position: relative;
 }
