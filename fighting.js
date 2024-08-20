@@ -11,7 +11,7 @@ const enemyStats = {
         health: 300,
         power: 10,
         attackSpeed: 3,
-        defense: 4,
+        defense: 5,
         critChance: 0,
         critDamage: 1
     },
@@ -19,7 +19,7 @@ const enemyStats = {
         health: 600,
         power: 13,
         attackSpeed: 3,
-        defense: 10,
+        defense: 13,
         critChance: 0.2,
         critDamage: 2
     },
@@ -27,7 +27,7 @@ const enemyStats = {
         health: 2800,
         power: 28,
         attackSpeed: 4,
-        defense: 25,
+        defense: 28,
         critChance: 0,
         critDamage: 1
     },

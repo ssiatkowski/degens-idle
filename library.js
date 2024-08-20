@@ -206,6 +206,9 @@ function unlockLibrarySkill(skill, duringLoad = false) {
 
             case 'Knowledge is Power':
                 unhidePower();
+                if (!duringLoad) {
+                    showMessageModal('Knowledge is Power', 'The Power equation is <strong>Power per Second = (knowledge)<sup>1/3</sup> / 10<sup>12</sup></strong>.', false, false, 'imgs/graphs/power_per_second_eq.png')
+                }
                 break;
         
             case 'Big Crunch':
@@ -222,6 +225,9 @@ function unlockLibrarySkill(skill, duringLoad = false) {
 
             case 'Money is Power, too':
                 moneyIsPowerTooSkill = true;
+                if (!duringLoad) {
+                    showMessageModal('Money is Power, too', 'The Power equation becomes <strong>Power per Second = (Knowledge<sup>1/3</sup> / 10<sup>12</sup>) * (1 + (YachtMoney<sup>1/30</sup> / 100))</strong>. Any increase to power generation is valuable!', false, false, 'imgs/graphs/power_per_second_eq2.png')
+                }
                 break;
 
             case 'Map to Hall of Power':

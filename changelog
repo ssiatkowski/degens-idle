@@ -190,5 +190,23 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
 
 
 
+
+// knowledgeable cookie bug:
+
+
+if (cookieKnowledgeable){
+    knowledge += Math.max(cookieClickMultiplier * totalMultiplier, effectiveKnowledgePerSecond/2);
+}
+
+
+
+// no negative knowledge:
+
+function calculateEffectivePower(){
+    return (moneyIsPowerTooSkill ? (Math.max(knowledge,0) ** (1/3) / 1e12) * (1 + (Math.max(yachtMoney,0) ** (1/30) / 100)) : Math.max(knowledge,0) ** (1/3) / 1e12) * powerSurgeMultiplier * devMultiplier;
+}
+
+
+
 styles.css:
 

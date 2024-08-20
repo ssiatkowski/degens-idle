@@ -833,6 +833,12 @@ const upgrades = [
         img: "imgs/what_year_is_it.jpg",        
     },
     {
+        name: "Channel inner Tyson",
+        cost: { copium: 1e48, delusion: 1e48, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 1e38, power: 10000, serenity: 0 },
+        earnings: { copiumPerSecond: 9e17, delusionPerSecond: 9e17, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 50000, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: "imgs/beeth_mode.jpg",        
+    },
+    {
         name: "Sauron",
         cost: { copium: 5e48, delusion: 5e48, yachtMoney: 5e48, trollPoints: 5e48, hopium: 0, knowledge: 5e38, power: 10000, serenity: 0 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 8e18, trollPointsPerSecond: 0, hopiumPerSecond: -9e12, knowledgePerSecond: 885000, powerPerSecond: 0, serenityPerSecond: 0 },
