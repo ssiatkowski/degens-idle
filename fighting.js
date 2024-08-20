@@ -37,7 +37,7 @@ const enemyStats = {
         attackSpeed: 45,
         defense: 300,
         critChance: 0.07,
-        critDamage: 10
+        critDamage: 15
     },
     "Sauron": {
         health: 350000,
