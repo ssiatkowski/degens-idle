@@ -33,10 +33,10 @@ const enemyStats = {
     },
     "Isshin": {
         health: 4000,
-        power: 9,
+        power: 8,
         attackSpeed: 45,
         defense: 300,
-        critChance: 0.09,
+        critChance: 0.08,
         critDamage: 15
     },
     "Sauron": {

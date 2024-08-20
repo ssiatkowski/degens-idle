@@ -840,6 +840,12 @@ const upgrades = [
         isFight: true,
     },
     {
+        name: "Avoid Temptations",
+        cost: { copium: 2e52, delusion: 0, yachtMoney: 2e52, trollPoints: 0, hopium: 0, knowledge: 1e40, power: 1000, serenity: 0 },
+        earnings: { copiumPerSecond: 2e18, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 5e18, hopiumPerSecond: 0, knowledgePerSecond: 30000, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: "imgs/the_temptations.jpg",        
+    },
+    {
         name: "Kratos",
         cost: { copium: 5e51, delusion: 5e51, yachtMoney: 5e51, trollPoints: 5e51, hopium: 0, knowledge: 5e40, power: 500000, serenity: 0 },
         earnings: { copiumPerSecond: 1e19, delusionPerSecond: 1e19, yachtMoneyPerSecond: 1e19, trollPointsPerSecond: 1e19, hopiumPerSecond: -1e14, knowledgePerSecond: 5e6, powerPerSecond: 0, serenityPerSecond: 0 },

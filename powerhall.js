@@ -4,16 +4,13 @@ const powerHallSkills = [
     // { name: 'Fake - Overcharge', cost: 10000, description: 'Unlock ability to spend all your power and multiply production of first 5 resources by square root of spent power.', unlocked: false, level: 'Arcane Magnetism' },
     // { name: 'Fake - Energy Overflow', cost: 1e30, description: 'Allow excess energy to overflow into additional resource generation.', unlocked: false, level: 'Arcane Magnetism' },
     
-    // { name: 'Fake - Auto Prestige', cost: 25000, description: 'Unlock ability to set a Prestige multiplier target - when hit, prestige will happen automatically.', unlocked: false, level: 'Quantum Nexus' },
-    // { name: 'Fake - Hyperconductor', cost: 1e30, description: 'Increase power efficiency by 50% through advanced materials.', unlocked: false, level: 'Quantum Nexus' },
-    // { name: 'Fake - Quantum Charge', cost: 1e30, description: 'Harness quantum fluctuations to generate power continuously.', unlocked: false, level: 'Quantum Nexus' },
-    // { name: 'Fake - Entangled Energy', cost: 1e30, description: 'Connect your power sources through quantum entanglement to share energy.', unlocked: false, level: 'Quantum Nexus' },
-    
+    // { name: 'Hyperconductor', cost: 1e30, description: `Add multiplier stacking with prestige/god-mode/etc. based on your number of purchased upgrades. (x${#purchasedupgrades})`, unlocked: false, level: 'Quantum Nexus' },
+   
     { name: 'Lightning Reflexes', cost: 12000, description: 'Your attacks become 2.5x faster!', unlocked: false, level: 'Cosmic Dynamics' },
-    // { name: 'Fake - Infinite Loop', cost: 1e30, description: 'Create a feedback loop that recycles energy indefinitely.', unlocked: false, level: 'Cosmic Dynamics' },
-    // { name: 'Fake - Dark Matter Fusion', cost: 1e30, description: 'Fuse dark matter to unlock unimaginable power levels.', unlocked: false, level: 'Cosmic Dynamics' },
-    // { name: 'Fake - Energy Singularity', cost: 1e30, description: 'Condense all power into a singularity for a massive burst of energy.', unlocked: false, level: 'Cosmic Dynamics' },
-    
+    { name: 'Supersonic Fury', cost: 1.2e8, description: 'Your attacks become even 2x faster!', unlocked: false, level: 'Cosmic Dynamics' },
+    // { name: 'Astral Disruption', cost: 1e30, description: 'Your attacks have a 5% chance to stun the enemy for 1 second.', unlocked: false, level: 'Cosmic Dynamics' },
+    { name: 'Graviton Burst', cost: 1.2e50, description: 'Your attacks are imperceptible to average beings. You now attack 5x faster!', unlocked: false, level: 'Cosmic Dynamics' },
+
     // { name: 'Galactic Core', cost: 100000, description: 'Tap into the energy of a galactic core to power your operations.', unlocked: false, level: 'Celestial Manipulation' },
     // { name: 'Stellar Harvesting', cost: 300000, description: 'Harvest energy directly from stars to fuel your needs.', unlocked: false, level: 'Celestial Manipulation' },
     // { name: 'Cosmic Battery', cost: 750000, description: 'Store cosmic energy in a battery with nearly unlimited capacity.', unlocked: false, level: 'Celestial Manipulation' }
@@ -54,6 +51,14 @@ function unlockPowerHallSkill(skill, duringLoad = false) {
 
             case 'Lightning Reflexes':
                 playerAttackSpeed = Math.max(playerAttackSpeed, 5);
+                break;
+
+            case 'Supersonic Fury':
+                playerAttackSpeed = Math.max(playerAttackSpeed, 10);
+                break;
+
+            case 'Graviton Burst':
+                playerAttackSpeed = Math.max(playerAttackSpeed, 50);
                 break;
 
             default:
