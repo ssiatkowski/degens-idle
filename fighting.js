@@ -50,7 +50,7 @@ const enemyStats = {
     "Kratos": {
         health: 5e8,
         power: 1,
-        attackSpeed: 18,
+        attackSpeed: 30,
         defense: 3e6,
         critChance: 0,
         critDamage: 1,
@@ -244,7 +244,7 @@ function attackPlayer() {
     let damage = 0;
     if (currEnemyName == "Kratos"){
         damage = enemyPower - playerDefense;
-        enemyPower = enemyPower * 1.25;
+        enemyPower = enemyPower * 1.1;
         logFight(`${currEnemyName} attacks you for ${formatNumber(Math.max(damage, 0))} damage. Kratos continues his combo and his damage grows to ${formatNumber(enemyPower)}!`);
     } else {
         if (!isCritical) {
