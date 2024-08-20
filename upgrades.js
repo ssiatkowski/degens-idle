@@ -827,8 +827,14 @@ const upgrades = [
         img: "imgs/not_funny_kanye.jpg",        
     },
     {
+        name: "What year is it?",
+        cost: { copium: 1e45, delusion: 1e45, yachtMoney: 1e45, trollPoints: 1e45, hopium: 0, knowledge: 1e38, power: 1000, serenity: 0 },
+        earnings: { copiumPerSecond: 8e17, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 8e17, hopiumPerSecond: 0, knowledgePerSecond: 25000, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: "imgs/what_year_is_it.jpg",        
+    },
+    {
         name: "Sauron",
-        cost: { copium: 5e48, delusion: 5e48, yachtMoney: 5e48, trollPoints: 5e48, hopium: 0, knowledge: 5e37, power: 10000, serenity: 0 },
+        cost: { copium: 5e48, delusion: 5e48, yachtMoney: 5e48, trollPoints: 5e48, hopium: 0, knowledge: 5e38, power: 10000, serenity: 0 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 8e18, trollPointsPerSecond: 0, hopiumPerSecond: -9e12, knowledgePerSecond: 885000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/sauron.jpg",
         isFight: true,
