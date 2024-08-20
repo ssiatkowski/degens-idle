@@ -24,8 +24,8 @@ const enemyStats = {
         critDamage: 2
     },
     "Darth Vader": {
-        health: 1800,
-        power: 23,
+        health: 2800,
+        power: 28,
         attackSpeed: 4,
         defense: 25,
         critChance: 0,
@@ -33,10 +33,10 @@ const enemyStats = {
     },
     "Isshin": {
         health: 4000,
-        power: 6,
+        power: 9,
         attackSpeed: 45,
         defense: 300,
-        critChance: 0.07,
+        critChance: 0.09,
         critDamage: 15
     },
     "Sauron": {
