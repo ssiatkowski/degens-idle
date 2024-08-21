@@ -319,7 +319,7 @@ document.getElementById('importFileInput').addEventListener('change', importSave
 // Add event listener for Import Save button
 document.getElementById('howToPlayButton').addEventListener('click', function() {
     closeSettings();
-    showWelcomeModal(true);
+    showMessageModal('How to Play', '', false, false, 'imgs/modal_imgs/howtoplay.png');
 });
 
 

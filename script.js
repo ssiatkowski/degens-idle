@@ -1818,7 +1818,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
     }
 
     // Destructure the upgrade object to get its properties
-    const { cost, earnings, img, name, message, miniPrestigeMultiplier, modalImg, isFight } = upgrade;
+    const { cost, earnings, img, name, message, miniPrestigeMultiplier, isFight } = upgrade;
 
     // Check if the player has enough resources to purchase the upgrade
     if (isAffordable(cost)) {
