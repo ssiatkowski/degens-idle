@@ -266,7 +266,7 @@ const upgrades = [
         cost: { copium: 1000000, delusion: 1000000, yachtMoney: 1000000, trollPoints: 1000000, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 84, delusionPerSecond: 84, yachtMoneyPerSecond: 84, trollPointsPerSecond: 84, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/titanic.jpg",
-        hoverOverwrite: "Thank you for playing and making it this far into the game. The good news is, you have only scratched the surface. Wouldn't even say you have completed the tutorial.",
+        hoverOverwrite: "Thank you for playing. The good news is, you have only scratched the surface. Wouldn't even say you have completed the tutorial.",
     },
     {
         name: "Rewriting History",
