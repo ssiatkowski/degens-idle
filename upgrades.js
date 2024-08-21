@@ -36,7 +36,7 @@ const upgrades = [
     {
         name: "What is DEGENS?",
         cost: { copium: 100, delusion: 90, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 1.5, delusionPerSecond: 4.3, yachtMoneyPerSecond: 1.2, trollPointsPerSecond: 2.2, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },   
+        earnings: { copiumPerSecond: 2.5, delusionPerSecond: 5.3, yachtMoneyPerSecond: 2.2, trollPointsPerSecond: 3.2, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },   
         img: "imgs/modal_imgs/DEGENS_IDLE.png",
         message: "imgs/modal_imgs/DEGENS_IDLE.png",
     },
