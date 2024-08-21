@@ -106,9 +106,34 @@ const miniGameTimeouts = {
 // Object to store interval references for each mini-game
 const miniGameIntervals = {};
 
-function calculateEffectivePower(){
-    return (moneyIsPowerTooSkill ? (Math.max(knowledge,0) ** (1/3) / 1e12) * (1 + (Math.max(yachtMoney,0) ** (1/30) / 100)) : Math.max(knowledge,0) ** (1/3) / 1e12) * powerSurgeMultiplier * devMultiplier;
+function calculateBasePower() {
+    return (moneyIsPowerTooSkill ?
+        (Math.max(knowledge, 0) ** (1/3) / 1e12) * (1 + (Math.max(yachtMoney, 0) ** (1/30) / 100)) 
+        : Math.max(knowledge, 0) ** (1/3) / 1e12) 
+        * powerSurgeMultiplier * devMultiplier;
 }
+
+function calculateEffectivePower() {
+    // Calculate the base power generation
+    const basePower = calculateBasePower()
+
+    // If basePower is zero, return 0 to prevent division errors
+    if (basePower === 0) {
+        return 0;
+    }
+
+    const powerGeneratedIn2Hours = basePower * 2 * 3600;  // Power generated in 2 hours (2 * 3600 seconds)
+    
+    // Check how much power the player currently has
+    const extraPower = Math.max(power - powerGeneratedIn2Hours, 0);
+
+    // Calculate the diminishing multiplier, scaling as soon as it goes over 2 hours
+    const diminishingMultiplier = Math.max(0.05, 0.95 ** (extraPower / powerGeneratedIn2Hours)); 
+
+    // Return the effective power considering the diminishing multiplier
+    return basePower * diminishingMultiplier;
+}
+
 
 function updateEffectiveMultipliers() {
     effectiveCopiumPerSecond = copiumPerSecond * totalMultiplier;
@@ -510,6 +535,16 @@ function playMiniGame(gameType) {
         `In ${cooldownMinutes} minutes, you get to test your ${gameType} skills again.` : 
         `In ${cooldownMinutes} minutes, you get to test your ${gameType} again.`;
 
+    // Define the soft cap for each mini-game
+    const softCaps = {
+        speed: effectiveCopiumPerSecond * 12 * 60 * 60,  // 12 hours of copium per second
+        memory: effectiveDelusionPerSecond * 12 * 60 * 60,  // 12 hours of delusion per second
+        math: effectiveYachtMoneyPerSecond * 12 * 60 * 60,  // 12 hours of yacht money per second
+        luck: effectiveTrollPointsPerSecond * 12 * 60 * 60  // 12 hours of troll points per second
+    };
+
+    let softCapReached = false;  // Variable to check if the soft cap is reached
+
     // Speed mini-game logic
     if (gameType === 'speed') {
         let points = 0;
@@ -517,7 +552,6 @@ function playMiniGame(gameType) {
 
         // Show the modal and start the game when the modal is closed
         showMessageModal('Speed Game', `Tap on the screen as many times as you can in ${duration} seconds!`, false, false).then(() => {
-            // Function to handle clicks
             function clickHandler() {
                 points++;
             }
@@ -533,31 +567,38 @@ function playMiniGame(gameType) {
                 let reward;
                 let rewardPerClick;
                 if (speedGameSkill) {
-                    // Reward based on total number of clicks using the provided formula
                     reward = Math.max(Math.floor(Math.abs(copium) * ((points - 3) * 0.025)), 25);
-                    rewardPerClick = reward / points;
-                    showMessageModal('Speed Game Result', `You tapped ${points} times in ${duration} seconds. Each click was worth ${formatNumber(rewardPerClick)} copium. Your total click reward is ${formatNumber(reward)} copium!`, false, false, null, false, true);
                 } else {
-                    // Reward based on clicks per second
                     let clicksPerSecond = points / duration;
-                    if (clicksPerSecond > 3) { // More than 3 clicks per second
+                    if (clicksPerSecond > 3) {
                         reward = Math.max(Math.floor(Math.abs(copium) * ((clicksPerSecond - 3) * 0.025)), 25);
-                        rewardPerClick = reward / points;
-                        showMessageModal('Speed Game Result - Fast', `You tapped ${points} times in ${duration} seconds (${clicksPerSecond.toFixed(1)} taps per second). Each click was worth ${formatNumber(rewardPerClick)} copium. For being so fast you earned ${formatNumber(reward)} copium!`, false, false, null, false, true);
                     } else {
                         reward = -Math.max(Math.floor(Math.random() * Math.abs(copium) * 0.1), 10);
-                        rewardPerClick = reward / points;
-                        showMessageModal('Speed Game Result - Slow', `You tapped ${points} times in ${duration} seconds (${clicksPerSecond.toFixed(1)} taps per second). For being so slow you lost ${formatNumber(reward)} copium!`, false, false, null, false, true);
                     }
                 }
-                
+
+                // Apply the soft cap
+                if (reward > softCaps.speed) {
+                    reward = softCaps.speed;
+                    softCapReached = true;
+                }
+
                 copium += reward;
+                let resultMessage = `You tapped ${points} times in ${duration} seconds. Your total reward is ${formatNumber(reward)} copium!`;
+
+                // Add the soft cap message in orange if applicable
+                if (softCapReached) {
+                    resultMessage += '<br><span style="color: orange;">Soft cap reached: Maximum reward of 12 hours effective Copium applied.</span>';
+                }
+
+                showMessageModal('Speed Game Result', resultMessage, false, false, null, false, true);
                 updateDisplay(); // Update the display
                 startCooldown(gameType); // Start cooldown for the mini-game
             }, duration * 1000);
         });
-    } else if (gameType === 'memory') {
-        // Memory mini-game logic
+    } 
+    // Memory mini-game logic
+    else if (gameType === 'memory') {
         let sequenceLength = Math.floor(Math.random() * 5) + 3; // Random length between 3 and 7
         let sequence = '';
         for (let i = 0; i < sequenceLength; i++) {
@@ -571,27 +612,37 @@ function playMiniGame(gameType) {
                     let correct = userSequence === sequence;
                     let baseReward = correct ? Math.max(Math.floor(Math.abs(delusion) * 0.4), 25) : -Math.max(Math.floor(Math.random() * Math.abs(delusion) * 0.1), 10);
                     let reward = memoryGameSkill ? baseReward * 2 : baseReward; // Double the reward if memoryGameSkill is true
-                    // Adjust reward based on the toggleDelusion switch if it's visible
-                    if (!document.getElementById('toggleDelusionLabel').classList.contains('hidden')) {
-                        const toggleDelusion = document.getElementById('toggleDelusion').checked;
-                        reward = Math.abs(reward) * (toggleDelusion ? 1 : -1);
+                    
+                    // Apply the soft cap
+                    if (reward > softCaps.memory) {
+                        reward = softCaps.memory;
+                        softCapReached = true;
                     }
+
                     delusion += reward;
-                    showMessageModal('Memory Game Result', `You ${correct ? 'won' : 'lost'} and earned ${formatNumber(reward)} delusion!`);
+                    let resultMessage = `You ${correct ? 'won' : 'lost'} and earned ${formatNumber(reward)} delusion!`;
+
+                    // Add the soft cap message in orange if applicable
+                    if (softCapReached) {
+                        resultMessage += '<br><span style="color: orange;">Soft cap reached: Maximum reward of 12 hours effective Delusion applied.</span>';
+                    }
+
+                    showMessageModal('Memory Game Result', resultMessage);
                     updateDisplay(); // Update the display
                     startCooldown(gameType); // Start cooldown for the mini-game
                 });
             }, timeout * 1000);
         });
-    } else if (gameType === 'math') {
-        // Math mini-game logic
+    }
+    // Math mini-game logic
+    else if (gameType === 'math') {
         let num1 = Math.floor(Math.random() * 100) + 1;
         let num2 = Math.floor(Math.random() * 100) + 1;
         let num3 = Math.floor(Math.random() * 10) + 1;
         let operations = ['+', '-', '*', '/'];
         let op1 = operations[Math.floor(Math.random() * operations.length)];
         let op2 = operations[Math.floor(Math.random() * operations.length)];
-    
+
         let question, correctAnswer;
         if (mathGameSkill) {
             // Only 2 numbers and 1 operation
@@ -602,10 +653,10 @@ function playMiniGame(gameType) {
             question = `${num1} ${op1} ${num2} ${op2} ${num3}`;
             correctAnswer = eval(question.replace('/', '* 1.0 /')); // Ensure floating point division
         }
-    
+
         // Record the start time
         const startTime = Date.now();
-    
+
         showMessageModal('Math Game', `What is ${question}? (answer within 0.5 is acceptable; submit answer in 3 seconds or less to get triple reward)`, false, false, null, false, true).then(answer => {
             // Calculate the time difference in seconds
             const timeTaken = (Date.now() - startTime) / 1000;
@@ -613,31 +664,45 @@ function playMiniGame(gameType) {
             let isCorrect = Math.abs(Number(answer) - correctAnswer) < 0.5;
             let reward;
             let bonusMessage = '';
-    
+
             if (mathGameSkill) {
                 reward = isCorrect ? Math.max(Math.floor(Math.abs(yachtMoney) * 0.4), 50) : -Math.max(Math.floor(Math.random() * Math.abs(yachtMoney) * 0.2), 20);
             } else {
                 reward = isCorrect ? Math.max(Math.floor(Math.abs(yachtMoney) * 0.2), 25) : -Math.max(Math.floor(Math.random() * Math.abs(yachtMoney) * 0.1), 10);
             }
-    
+
             // If the answer was given within 3 seconds, apply 3x reward multiplier and set bonus message
             if (isCorrect && timeTaken <= 3) {
                 reward *= 3;
-                bonusMessage = `<br><br><span style="color: #66FF00;">You answered within 3 seconds and earned triple the reward!</span>`;
+                bonusMessage = `<br><span style="color: #66FF00;">You answered within 3 seconds and earned triple the reward!</span>`;
             }
-    
+
+            // Apply the soft cap
+            if (reward > softCaps.math) {
+                reward = softCaps.math;
+                softCapReached = true;
+            }
+
             yachtMoney += reward;
-            showMessageModal('Math Game Result', `You guessed ${answer} and the exact answer was ${correctAnswer}. You ${isCorrect ? 'won' : 'lost'} ${formatNumber(reward)} yachtMoney! ${cooldownMessage}  ${bonusMessage}`);
+            let resultMessage = `You guessed ${answer} and the exact answer was ${correctAnswer}. You ${isCorrect ? 'won' : 'lost'} ${formatNumber(reward)} yachtMoney! ${cooldownMessage} ${bonusMessage}`;
+
+            // Add the soft cap message in orange if applicable
+            if (softCapReached) {
+                resultMessage += '<br><span style="color: orange;">Soft cap reached: Maximum reward of 12 hours effective Yacht Money applied.</span>';
+            }
+
+            showMessageModal('Math Game Result', resultMessage);
             updateDisplay(); // Update the display
             startCooldown(gameType); // Start cooldown for the mini-game
         });
-    } else if (gameType === 'luck') {
-        // Luck mini-game logic
+    }
+    // Luck mini-game logic
+    else if (gameType === 'luck') {
         let result = (Math.random() * 200) + luckGameDelta; // Generates a random number (initially between -75 and +125%)
         let message = "";
         let reward = Math.floor(Math.abs(trollPoints) * (result / 100)); // Calculate reward based on the result percentage
         let gainLossMessage = reward >= 0 ? "gained" : "lost";
-    
+
         if (result > 100) {
             message = "SUPER LUCKY!!! 🍀🍀🍀";
         } else if (result > 75) {
@@ -649,13 +714,27 @@ function playMiniGame(gameType) {
         } else {
             message = "Extremely Unlucky 😞😞😞";
         }
-    
+
+        // Apply the soft cap
+        if (reward > softCaps.luck) {
+            reward = softCaps.luck;
+            softCapReached = true;
+        }
+
         trollPoints += reward;
-        showMessageModal('Luck Game Result', `You rolled ${result.toFixed(2)}%. ${message} You ${gainLossMessage} ${formatNumber(Math.abs(reward))} troll points! ${cooldownMessage}`);
+        let resultMessage = `You rolled ${result.toFixed(2)}%. ${message} You ${gainLossMessage} ${formatNumber(Math.abs(reward))} troll points! ${cooldownMessage}`;
+
+        // Add the soft cap message in orange if applicable
+        if (softCapReached) {
+            resultMessage += '<br><span style="color: orange;">Soft cap reached: Maximum reward of 12 hours effective Troll Points applied.</span>';
+        }
+
+        showMessageModal('Luck Game Result', resultMessage);
         updateDisplay(); // Update the display
         startCooldown(gameType); // Start cooldown for the mini-game
     }
 }
+            
 
 
 function startCooldown(gameType) {
@@ -1678,8 +1757,34 @@ function generateIdleResources(elapsedSeconds) {
     trollPoints += effectiveTrollPointsPerSecond * elapsedSeconds;
     hopium += effectiveHopiumPerSecond * elapsedSeconds;
     knowledge += effectiveKnowledgePerSecond * elapsedSeconds;
-    power += effectivePowerPerSecond * elapsedSeconds;
     serenity += effectiveSerenityPerSecond * elapsedSeconds;
+
+
+    const basePowerPerSecond = calculateBasePower();
+
+    if (basePowerPerSecond > 0) {
+
+        const powerGeneratedIn2Hours = basePowerPerSecond * 2 * 3600;  // Power generated in 2 hours (2 * 3600 seconds)
+
+        // Calculate the current diminishing multiplier based on the initial hoarded power
+        const initialExtraPower = Math.max(power - powerGeneratedIn2Hours, 0);
+        const initialDiminishingMultiplier = Math.max(0.05, 0.95 ** (initialExtraPower / powerGeneratedIn2Hours));
+
+        // Calculate the power generation for the current state
+        const initialPowerGenerated = basePowerPerSecond * initialDiminishingMultiplier * elapsedSeconds;
+
+        // If the player hoards more power, we adjust the multiplier accordingly for the remainder
+        const finalExtraPower = Math.max((power + initialPowerGenerated) - powerGeneratedIn2Hours, 0);
+        const finalDiminishingMultiplier = Math.max(0.05, 0.95 ** (finalExtraPower / powerGeneratedIn2Hours));
+
+        // Calculate the average diminishing multiplier over the elapsed time
+        const averageDiminishingMultiplier = (initialDiminishingMultiplier + finalDiminishingMultiplier) / 2;
+
+        // Calculate total power generated considering the average diminishing multiplier
+        power += basePowerPerSecond * averageDiminishingMultiplier * elapsedSeconds;
+
+    }
+
 }
 
 // Function to encode a name for safe usage in URLs or storage
