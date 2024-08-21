@@ -537,10 +537,10 @@ function playMiniGame(gameType) {
 
     // Define the soft cap for each mini-game
     const softCaps = {
-        speed: effectiveCopiumPerSecond * 12 * 60 * 60,  // 12 hours of copium per second
-        memory: effectiveDelusionPerSecond * 12 * 60 * 60,  // 12 hours of delusion per second
-        math: effectiveYachtMoneyPerSecond * 12 * 60 * 60,  // 12 hours of yacht money per second
-        luck: effectiveTrollPointsPerSecond * 12 * 60 * 60  // 12 hours of troll points per second
+        speed: Math.abs(effectiveCopiumPerSecond) * 12 * 60 * 60,  // 12 hours of copium per second
+        memory: Math.abs(effectiveDelusionPerSecond) * 12 * 60 * 60,  // 12 hours of delusion per second
+        math: Math.abs(effectiveYachtMoneyPerSecond) * 12 * 60 * 60,  // 12 hours of yacht money per second
+        luck: Math.abs(effectiveTrollPointsPerSecond) * 12 * 60 * 60  // 12 hours of troll points per second
     };
 
     let softCapReached = false;  // Variable to check if the soft cap is reached
@@ -734,6 +734,7 @@ function playMiniGame(gameType) {
         startCooldown(gameType); // Start cooldown for the mini-game
     }
 }
+
             
 
 
@@ -1904,7 +1905,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
 
         // Special case for the "Still very stupid" upgrade
         if (name === "Sauron") {
-            showMessageModal('Sadly', "This marks the end of v0.854, but your adventure is far from over! The Hall of Power is just the beginning, and there’s so much more to uncover. Each update brings new challenges and excitement, so stay tuned for what's coming next.<br><br>As you explore the Hall of Power and take on epic battles, I'd love to hear how you're enjoying them. How's the action? Are the battles keeping you on your toes? Your feedback is crucial in shaping the future of the game.<br><br>Join our vibrant Discord community to share your experiences, swap strategies, and help evolve the game. The next big update is just days away, but in the meantime, why not restart the game? Try new tactics, speed runs, and uncover hidden secrets on your path to ultimate power.<br><br>Your thoughts on the battles and the Hall of Power would be invaluable, so feel free to share on Discord or through the feedback form in settings. Let's continue this journey together and see where the Hall of Power leads us next!");
+            showMessageModal('Sadly', "This marks the end of v0.855, but your adventure is far from over! The Hall of Power is just the beginning, and there’s so much more to uncover. Each update brings new challenges and excitement, so stay tuned for what's coming next.<br><br>As you explore the Hall of Power and take on epic battles, I'd love to hear how you're enjoying them. How's the action? Are the battles keeping you on your toes? Your feedback is crucial in shaping the future of the game.<br><br>Join our vibrant Discord community to share your experiences, swap strategies, and help evolve the game. The next big update is just days away, but in the meantime, why not restart the game? Try new tactics, speed runs, and uncover hidden secrets on your path to ultimate power.<br><br>Your thoughts on the battles and the Hall of Power would be invaluable, so feel free to share on Discord or through the feedback form in settings. Let's continue this journey together and see where the Hall of Power leads us next!");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one
