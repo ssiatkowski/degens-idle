@@ -259,7 +259,7 @@ function loadGameState() {
 
     autoPrestigeThreshold = parseFloat(localStorage.getItem('autoPrestigeThreshold')) || null;
 
-    deadPoolRevives = parseFloat(localStorage.getItem('deadPoolRevives')) || 0;
+    deadpoolRevives = parseFloat(localStorage.getItem('deadpoolRevives')) || 0;
     
     // Retrieve and parse all upgrades with the isGodMode property from local storage
     const savedUpgrades = JSON.parse(localStorage.getItem('upgrades')) || [];
@@ -433,7 +433,7 @@ function saveGameState() {
 
     localStorage.setItem('autoPrestigeThreshold', autoPrestigeThreshold);
 
-    localStorage.setItem('deadPoolRevives', deadPoolRevives);
+    localStorage.setItem('deadpoolRevives', deadpoolRevives);
     
     localStorage.setItem('currentNumberFormat', JSON.stringify(currentNumberFormat));
 
@@ -1717,9 +1717,17 @@ async function bigCrunch() {
 
     if (canBigCrunch()) {
 
+        
+
+        let deadpoolHint = '';
+
+        if (deadpoolRevives > 0 && !purchasedUpgrades.some(up => up.name === 'Deadpool')) {
+            deadpoolHint = `<br><br><span style="color: #FFD700;">Your instincts hint that Big Crunch might also reset all of Deadpool's deaths...</span>`;
+        }
+
         const confirmed = await showMessageModal(
             'Big Crunch Confirmation',
-            `Are you sure you want to prestige? You will reset all resources, prestiges, and god-mode levels, but your Big Crunch Multiplier will increase <strong>from ${formatNumber(bigCrunchMultiplier)} to ${formatNumber(calculateBigCrunchMultiplier(power))}</strong>.<br> Big crunch multiplier stacks with all your other multipliers, plus additionally affects your Knowledge generation! (Your Big Crunch Power will lock in at the current Power level)`,
+            `Are you sure you want to prestige? You will reset all resources, prestiges, and god-mode levels, but your Big Crunch Multiplier will increase <strong>from ${formatNumber(bigCrunchMultiplier)} to ${formatNumber(calculateBigCrunchMultiplier(power))}</strong>.<br> Big crunch multiplier stacks with all your other multipliers, plus additionally affects your Knowledge generation! (Your Big Crunch Power will lock in at the current Power level)` + deadpoolHint,
             true
         );
 
@@ -1737,7 +1745,7 @@ async function bigCrunch() {
             puGodLevel = 0;
             puGodMultiplier = 1;
 
-            deadPoolRevives = 0;
+            deadpoolRevives = 0;
 
             upgrades.forEach(upgrade => {
                 upgrade.isGodMode = false;

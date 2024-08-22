@@ -82,7 +82,7 @@ let playerMaxHealth, enemyMaxHealth, currEnemyName;
 let playerInterval, enemyInterval;
 
 
-let deadPoolRevives = 0;
+let deadpoolRevives = 0;
 
 // Function to initialize and start the mini-game
 function startFightGame(enemyName, enemyImg) {
@@ -264,13 +264,13 @@ function attackEnemy() {
         enemyHealth -= Math.max(damage, 0);
 
         // 96% chance to restore Deadpool's health if he would be taken below 0
-        if (enemyHealth <= 0 && (deadPoolRevives < 69 || Math.random() < 0.96)) {
+        if (enemyHealth <= 0 && (deadpoolRevives < 69 || Math.random() < 0.96)) {
             enemyHealth = enemyMaxHealth;
-            deadPoolRevives += 1;
-            if (deadPoolRevives > 69){
-                logFight(`<span style='color: #AAFF00;'>${currEnemyName} dies and regenerates back to full health! (${deadPoolRevives} revives - you feel like he's killable now!)</span>`);
+            deadpoolRevives += 1;
+            if (deadpoolRevives > 69){
+                logFight(`<span style='color: #AAFF00;'>${currEnemyName} dies and regenerates back to full health! (${deadpoolRevives} revives - you feel like he's killable now!)</span>`);
             } else {
-                logFight(`<span style='color: green;'>${currEnemyName} dies and regenerates back to full health! (${deadPoolRevives} revives and counting)</span>`);
+                logFight(`<span style='color: green;'>${currEnemyName} dies and regenerates back to full health! (${deadpoolRevives} revives and counting)</span>`);
             }
         }
     } else if (currEnemyName === "Sauron") {
