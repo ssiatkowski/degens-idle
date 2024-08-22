@@ -852,6 +852,12 @@ const upgrades = [
         img: "imgs/the_temptations.jpg",        
     },
     {
+        name: "Thanks for the coffee",
+        cost: { copium: 0, delusion: 0, yachtMoney: 3e52, trollPoints: 0, hopium: 0, knowledge: 1e40, power: 100000, serenity: 0 },
+        earnings: { copiumPerSecond: 3.5e18, delusionPerSecond: 0, yachtMoneyPerSecond: 3.5e18, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 18000, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: "imgs/trump_look.jpg",        
+    },
+    {
         name: "Last Bit of Hope",
         cost: { copium: 0, delusion: 0, yachtMoney: 7.77e51, trollPoints: 0, hopium: 1e47, knowledge: 7.77e39, power: 777, serenity: 0 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 7.77e18, yachtMoneyPerSecond: 7.77e18, trollPointsPerSecond: 0, hopiumPerSecond: 7.77e12, knowledgePerSecond: 7770, powerPerSecond: 0, serenityPerSecond: 0 },
