@@ -1,7 +1,8 @@
 const enemyStats = {
     "Training Dummy": {
         health: 100,
-        power: 1,
+        minDamage: 1,
+        maxDamage: 8,
         attackSpeed: 1,
         defense: 0,
         critChance: 0,
@@ -9,7 +10,8 @@ const enemyStats = {
     },
     "Agent Smith": {
         health: 300,
-        power: 10,
+        minDamage: 5,
+        maxDamage: 15,
         attackSpeed: 3,
         defense: 5,
         critChance: 0,
@@ -17,7 +19,8 @@ const enemyStats = {
     },
     "Shao Kahn": {
         health: 600,
-        power: 13,
+        minDamage: 5,
+        maxDamage: 25,
         attackSpeed: 3,
         defense: 13,
         critChance: 0.2,
@@ -25,7 +28,8 @@ const enemyStats = {
     },
     "Darth Vader": {
         health: 2800,
-        power: 28,
+        minDamage: 8,
+        maxDamage: 48,
         attackSpeed: 4,
         defense: 28,
         critChance: 0,
@@ -33,7 +37,8 @@ const enemyStats = {
     },
     "Isshin": {
         health: 4000,
-        power: 8,
+        minDamage: 5,
+        maxDamage: 12,
         attackSpeed: 45,
         defense: 300,
         critChance: 0.08,
@@ -41,27 +46,29 @@ const enemyStats = {
     },
     "Sauron": {
         health: 350000,
-        power: 40,
+        minDamage: 30,
+        maxDamage: 50,
         attackSpeed: 7,
         defense: 15000,
         critChance: 0.03,
-        critDamage: 100,
+        critDamage: 100
     },
     "Kratos": {
         health: 5e8,
-        power: 1,
+        minDamage: 1,
+        maxDamage: 2,
         attackSpeed: 30,
         defense: 3e6,
         critChance: 0,
-        critDamage: 1,
+        critDamage: 1
     }
 };
 
 let playerAttackSpeed = 2;
 
 // Variables to store player and enemy stats
-let playerHealth, playerDefense, playerPower, playerCritChance, playerCritDamage;
-let enemyHealth, enemyPower, enemyDefense, enemyCritChance, enemyCritDamage, enemyAttackSpeed;
+let playerHealth, playerDefense, playerMinDamage, playerMaxDamage, playerCritChance, playerCritDamage;
+let enemyHealth, enemyDefense, enemyMinDamage, enemyMaxDamage, enemyCritChance, enemyCritDamage, enemyAttackSpeed;
 let playerMaxHealth, enemyMaxHealth, currEnemyName;
 let playerInterval, enemyInterval;
 
@@ -96,9 +103,12 @@ function startFightGame(enemyName, enemyImg) {
         playerHealth = Math.ceil((copium ** (1/20)));
         playerMaxHealth = playerHealth;
         playerDefense = Math.ceil((delusion ** (1/12)) / 500);
-        playerPower = Math.ceil(power);
         playerCritChance = Math.min(Math.ceil(trollPoints ** (1/50)) / 100, 0.9);
         playerCritDamage = 1 + Math.min(Math.ceil(trollPoints ** (1/25)) / 100, 99);
+
+        // Calculate player's damage range (±75%)
+        playerMinDamage = Math.floor(power * 0.25);
+        playerMaxDamage = Math.ceil(power * 1.75);
 
         currEnemyName = enemyName;
 
@@ -107,7 +117,8 @@ function startFightGame(enemyName, enemyImg) {
         // Set enemy stats using values from the enemyStats object
         enemyHealth = enemy.health;
         enemyMaxHealth = enemyHealth;
-        enemyPower = enemy.power;
+        enemyMinDamage = enemy.minDamage;
+        enemyMaxDamage = enemy.maxDamage;
         enemyDefense = enemy.defense;
         enemyCritChance = enemy.critChance;
         enemyCritDamage = enemy.critDamage;
@@ -115,14 +126,14 @@ function startFightGame(enemyName, enemyImg) {
 
         // Populate player and enemy stats in the UI
         document.getElementById('playerHealthStat').innerText = formatNumber(playerHealth);
-        document.getElementById('playerPowerStat').innerText = formatNumber(playerPower);
+        document.getElementById('playerDamageStat').innerText = `${formatNumber(playerMinDamage)} - ${formatNumber(playerMaxDamage)}`;
         document.getElementById('playerAttackSpeedStat').innerText = formatNumber(playerAttackSpeed);
         document.getElementById('playerDefenseStat').innerText = formatNumber(playerDefense);
         document.getElementById('playerCritChanceStat').innerText = formatNumber(playerCritChance * 100) + '%';
         document.getElementById('playerCritDamageStat').innerText = formatNumber(playerCritDamage * 100) + '%';
 
         document.getElementById('enemyHealthStat').innerText = formatNumber(enemyHealth);
-        document.getElementById('enemyPowerStat').innerText = formatNumber(enemyPower);
+        document.getElementById('enemyDamageStat').innerText = `${formatNumber(enemyMinDamage)} - ${formatNumber(enemyMaxDamage)}`;
         document.getElementById('enemyAttackSpeedStat').innerText = formatNumber(enemyAttackSpeed);
         document.getElementById('enemyDefenseStat').innerText = formatNumber(enemyDefense);
         document.getElementById('enemyCritChanceStat').innerText = formatNumber(enemyCritChance * 100) + '%';
@@ -212,52 +223,56 @@ function updateHealthBars() {
     enemyHealthBar.style.width = enemyHealthPercent + '%';
 
     // Display the current health number (one decimal place) on the health bar
-    document.querySelector('#playerHealthBar').innerHTML = `<div class="health-number">${playerHealth.toFixed(2)}</div>`;
-    document.querySelector('#enemyHealthBar').innerHTML = `<div class="health-number">${enemyHealth.toFixed(2)}</div>`;
+    document.querySelector('#playerHealthBar').innerHTML = `<div class="health-number">${formatNumber(Math.max(playerHealth,0).toFixed(0))}</div>`;
+    document.querySelector('#enemyHealthBar').innerHTML = `<div class="health-number">${formatNumber(Math.max(enemyHealth,0).toFixed(0))}</div>`;
 }
 
 // Function to handle player attacking the enemy
 function attackEnemy() {
     const isCritical = Math.random() < playerCritChance;
+    const baseDamage = Math.floor(Math.random() * (playerMaxDamage - playerMinDamage + 1)) + playerMinDamage;
     let damage = 0;
-    if (currEnemyName == "Sauron"){
-        damage = (playerPower - enemyDefense)/5;
-        logFight(`You attack ${currEnemyName} for ${formatNumber(Math.max(damage, 0))} damage. (Sauron absorbs 80% of damage and is immune to critical hits)`);
+
+    if (currEnemyName === "Sauron") {
+        damage = Math.floor((baseDamage - enemyDefense) / 10); // Sauron absorbs 90% of damage and is immune to critical hits
+        logFight(`You attack ${currEnemyName} for ${formatNumber(Math.max(damage, 0))} damage. (Sauron absorbs 90% of damage and is immune to critical hits)`);
     } else {
         if (!isCritical) {
-            damage = playerPower - enemyDefense;
+            damage = baseDamage - enemyDefense;
             logFight(`You attack ${currEnemyName} for ${formatNumber(Math.max(damage, 0))} damage!`);
         } else {
-            damage = playerPower * (playerCritDamage) - enemyDefense;
+            damage = Math.ceil(baseDamage * playerCritDamage) - enemyDefense;
             logFight(`<span style='color: #ADD8E6;'>You land a critical hit on ${currEnemyName} for ${formatNumber(Math.max(damage, 0))} damage!</span>`);
         }
     }
 
     enemyHealth -= Math.max(damage, 0);
-
     updateHealthBars();
 }
 
 // Function to handle enemy attacking the player
 function attackPlayer() {
     const isCritical = Math.random() < enemyCritChance;
+    const baseDamage = Math.floor(Math.random() * (enemyMaxDamage - enemyMinDamage + 1)) + enemyMinDamage;
     let damage = 0;
-    if (currEnemyName == "Kratos"){
-        damage = enemyPower - playerDefense;
-        enemyPower = enemyPower * 1.1;
-        logFight(`${currEnemyName} attacks you for ${formatNumber(Math.max(damage, 0))} damage. Kratos continues his combo and his damage grows to ${formatNumber(enemyPower)}!`);
+
+    if (currEnemyName === "Kratos") {
+        damage = baseDamage - playerDefense;
+        enemyMinDamage = enemyMinDamage * 1.1;
+        enemyMaxDamage = enemyMaxDamage * 1.1;
+        logFight(`${currEnemyName} attacks you for ${formatNumber(Math.max(damage, 0))} damage. Kratos continues his combo and his damage grows!`);
+        document.getElementById('enemyDamageStat').innerText = `${formatNumber(Math.floor(enemyMinDamage))} - ${formatNumber(Math.ceil(enemyMaxDamage))}`;
     } else {
         if (!isCritical) {
-            damage = enemyPower - playerDefense;
+            damage = baseDamage - playerDefense;
             logFight(`${currEnemyName} attacks you for ${formatNumber(Math.max(damage, 0))} damage!`);
         } else {
-            damage = enemyPower * (enemyCritDamage) - playerDefense;
+            damage = Math.ceil(baseDamage * enemyCritDamage) - playerDefense;
             logFight(`<span style='color: orange;'>${currEnemyName} lands a critical hit for ${formatNumber(Math.max(damage, 0))} damage!</span>`);
         }
     }
 
     playerHealth -= Math.max(damage, 0);
-
     updateHealthBars();
 }
 

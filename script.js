@@ -960,6 +960,11 @@ async function restartGame(isPrestige = false) {
             librarySkills.forEach(skill => {
                 skill.unlocked = false;
             });
+            
+            // Reset power hall skills
+            powerHallSkills.forEach(skill => {
+                skill.unlocked = false;
+            });
 
             cookieClickMultiplier = 10;
             luckGameDelta = -75;
@@ -1841,6 +1846,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
 
             if (!fightResult) {
                 showMessageModal('You Lost', `Defeat isn’t the end, ${name} just tested your limits. Get back up and come back stronger!`);
+                saveGameState();
                 return;
             }
         }
@@ -1905,7 +1911,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
 
         // Special case for the "Still very stupid" upgrade
         if (name === "Sauron") {
-            showMessageModal('Sadly', "This marks the end of v0.855, but your adventure is far from over! The Hall of Power is just the beginning, and there’s so much more to uncover. Each update brings new challenges and excitement, so stay tuned for what's coming next.<br><br>As you explore the Hall of Power and take on epic battles, I'd love to hear how you're enjoying them. How's the action? Are the battles keeping you on your toes? Your feedback is crucial in shaping the future of the game.<br><br>Join our vibrant Discord community to share your experiences, swap strategies, and help evolve the game. The next big update is just days away, but in the meantime, why not restart the game? Try new tactics, speed runs, and uncover hidden secrets on your path to ultimate power.<br><br>Your thoughts on the battles and the Hall of Power would be invaluable, so feel free to share on Discord or through the feedback form in settings. Let's continue this journey together and see where the Hall of Power leads us next!");
+            showMessageModal('Sadly', "This marks the end of v0.856, but your adventure is far from over! The Hall of Power is just the beginning, and there’s so much more to uncover. Each update brings new challenges and excitement, so stay tuned for what's coming next.<br><br>As you explore the Hall of Power and take on epic battles, I'd love to hear how you're enjoying them. How's the action? Are the battles keeping you on your toes? Your feedback is crucial in shaping the future of the game.<br><br>Join our vibrant Discord community to share your experiences, swap strategies, and help evolve the game. The next big update is just days away, but in the meantime, why not restart the game? Try new tactics, speed runs, and uncover hidden secrets on your path to ultimate power.<br><br>Your thoughts on the battles and the Hall of Power would be invaluable, so feel free to share on Discord or through the feedback form in settings. Let's continue this journey together and see where the Hall of Power leads us next!");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one
