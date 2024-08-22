@@ -82,7 +82,7 @@ let playerMaxHealth, enemyMaxHealth, currEnemyName;
 let playerInterval, enemyInterval;
 
 
-let deadPoolMinRevives = 6;
+let deadPoolMinRevives = 6.9;
 
 // Function to initialize and start the mini-game
 function startFightGame(enemyName, enemyImg) {
