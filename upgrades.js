@@ -841,7 +841,7 @@ const upgrades = [
     {
         name: "Sauron",
         cost: { copium: 5e48, delusion: 5e48, yachtMoney: 5e48, trollPoints: 5e48, hopium: 0, knowledge: 5e38, power: 10000, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 8e18, trollPointsPerSecond: 0, hopiumPerSecond: -9e12, knowledgePerSecond: 585000, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 8e18, trollPointsPerSecond: 0, hopiumPerSecond: -9e12, knowledgePerSecond: 545000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/sauron.jpg",
         isFight: true,
     },
@@ -854,30 +854,36 @@ const upgrades = [
     {
         name: "Last Bit of Hope",
         cost: { copium: 0, delusion: 0, yachtMoney: 7.77e51, trollPoints: 0, hopium: 1e47, knowledge: 7.77e39, power: 777, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 7.77e18, yachtMoneyPerSecond: 7.77e18, trollPointsPerSecond: 0, hopiumPerSecond: 7.77e13, knowledgePerSecond: 7777, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 7.77e18, yachtMoneyPerSecond: 7.77e18, trollPointsPerSecond: 0, hopiumPerSecond: 7.77e12, knowledgePerSecond: 7770, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/last_bit_of_hope.jpg",        
     },
     {
         name: "Kratos",
         cost: { copium: 5e51, delusion: 5e51, yachtMoney: 5e51, trollPoints: 5e51, hopium: 0, knowledge: 5e40, power: 500000, serenity: 0 },
-        earnings: { copiumPerSecond: 1e19, delusionPerSecond: 1e19, yachtMoneyPerSecond: 1e19, trollPointsPerSecond: 1e19, hopiumPerSecond: -6e14, knowledgePerSecond: 1.5e6, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 1e19, delusionPerSecond: 1e19, yachtMoneyPerSecond: 1e19, trollPointsPerSecond: 1e19, hopiumPerSecond: -6e14, knowledgePerSecond: 950000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/kratos.jpg",
         isFight: true,
     },
     {
         name: "Complex Skill Trees",
-        cost: { copium: 2e52, delusion: 0, yachtMoney: 0, trollPoints: 2e52, hopium: 2e47, knowledge: 2e41, power: 500000, serenity: 0 },
-        earnings: { copiumPerSecond: 6e18, delusionPerSecond: 4e18, yachtMoneyPerSecond: 0, trollPointsPerSecond: 7e18, hopiumPerSecond: 0, knowledgePerSecond: 35000, powerPerSecond: 0, serenityPerSecond: 0 },
+        cost: { copium: 2e52, delusion: 0, yachtMoney: 0, trollPoints: 2e52, hopium: 2e48, knowledge: 2e41, power: 500000, serenity: 0 },
+        earnings: { copiumPerSecond: 6e18, delusionPerSecond: 4e18, yachtMoneyPerSecond: 0, trollPointsPerSecond: 7e18, hopiumPerSecond: 0, knowledgePerSecond: 75000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/path_of_exile_skill_tree.jpg",
         message: `Huge shoutout to Path of Exile—the greatest game of all time! No other ARPG, or any game for that matter, has ever managed to replicate the sheer complexity and depth of its legendary skill trees. It’s a masterpiece of design, offering limitless possibilities for those daring enough to explore its vast network of nodes. Every decision shapes your journey, making each build a unique adventure.<br><br>Path of Exile has set a standard that’s unmatched, and we can only hope that Path of Exile 2 will continue to raise the bar even higher.`,
     },
     {
         name: "Deadpool",
         cost: { copium: 6.9e54, delusion: 6.9e54, yachtMoney: 6.9e54, trollPoints: 6.9e54, hopium: 0, knowledge: 6.9e44, power: 6.9e7, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 6.9e19, yachtMoneyPerSecond: 0, trollPointsPerSecond: 6.9e19, hopiumPerSecond: 0, knowledgePerSecond: 6.9e6, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 6.9e19, yachtMoneyPerSecond: 0, trollPointsPerSecond: 6.9e19, hopiumPerSecond: -6.9e15, knowledgePerSecond: 1.69e6, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/deadpool.jpg",
         message: 'You are definitely not supposed to be able to beat Deadpool yet. Please post in Discord if you managed this without cheating.',
         isFight: true,
+    },
+    {
+        name: "What The",
+        cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 5e55, hopium: 3e49, knowledge: 1e42, power: 1e6, serenity: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 125000, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: "imgs/what_the.jpg",
     },
 
 

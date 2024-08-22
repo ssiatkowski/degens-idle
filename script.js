@@ -258,6 +258,8 @@ function loadGameState() {
     if (transcendenceUnlocked) { document.getElementById('pu-god-display').style.display = 'block'; } 
 
     autoPrestigeThreshold = parseFloat(localStorage.getItem('autoPrestigeThreshold')) || null;
+
+    deadPoolRevives = parseFloat(localStorage.getItem('deadPoolRevives')) || 0;
     
     // Retrieve and parse all upgrades with the isGodMode property from local storage
     const savedUpgrades = JSON.parse(localStorage.getItem('upgrades')) || [];
@@ -431,6 +433,8 @@ function saveGameState() {
 
     localStorage.setItem('autoPrestigeThreshold', autoPrestigeThreshold);
 
+    localStorage.setItem('deadPoolRevives', deadPoolRevives);
+    
     localStorage.setItem('currentNumberFormat', JSON.stringify(currentNumberFormat));
 
     // Save unlocked library skills
@@ -1733,6 +1737,8 @@ async function bigCrunch() {
             puGodLevel = 0;
             puGodMultiplier = 1;
 
+            deadPoolRevives = 0;
+
             upgrades.forEach(upgrade => {
                 upgrade.isGodMode = false;
                 upgrade.isPUGodMode = false;
@@ -1957,8 +1963,8 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
         }
 
         // Special case for the "Still very stupid" upgrade
-        if (name === "Kratos") {
-            showMessageModal('Sadly', "This marks the end of v0.857, but your journey is just getting started! The Hall of Power is only the beginning, with new challenges and excitement in every update. How are you enjoying the battles? Are they keeping you on your toes? Your feedback is key to shaping the game.<br><br>While you wait for the next update (just days away!), why not restart, try new tactics, and uncover hidden secrets? Share your thoughts on the battles and Hall of Power on Discord or through the feedback form. Let’s keep this adventure going!");
+        if (name === "Complex Skill Trees") {
+            showMessageModal('Sadly', "This marks the end of v0.858, but your journey is just getting started! The Hall of Power is only the beginning, with new challenges and excitement in every update. How are you enjoying the battles? Are they keeping you on your toes? Your feedback is key to shaping the game.<br><br>While you wait for the next update (just days away!), why not restart, try new tactics, and uncover hidden secrets? Share your thoughts on the battles and Hall of Power on Discord or through the feedback form. Let’s keep this adventure going!");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one

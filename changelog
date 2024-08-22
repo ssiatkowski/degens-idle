@@ -237,6 +237,31 @@ function calculateEffectivePower() {
     return basePower * diminishingMultiplier;
 }
 
+function calculateBaseKnowledge() {
+    return knowledgePerSecond * totalMultiplier * (bigCrunchMultiplier ** (1/2));
+}
+
+function calculateEffectiveKnowledge() {
+    // Calculate the base knowledge generation
+    const baseKnowledge = calculateBaseKnowledge();
+
+    // If baseKnowledge is zero, return 0 to prevent division errors
+    if (baseKnowledge === 0) {
+        return 0;
+    }
+
+    const knowledgeGeneratedIn2Hours = baseKnowledge * 2 * 3600;  // Knowledge generated in 2 hours (2 * 3600 seconds)
+
+    // Check how much knowledge the player currently has
+    const extraKnowledge = Math.max(knowledge - knowledgeGeneratedIn2Hours, 0);
+
+    // Calculate the diminishing multiplier, scaling as soon as it goes over 2 hours
+    const diminishingMultiplier = Math.max(0.05, 0.95 ** (extraKnowledge / knowledgeGeneratedIn2Hours)); 
+
+    // Return the effective knowledge considering the diminishing multiplier
+    return baseKnowledge * diminishingMultiplier;
+}
+
 // Function to generate idle resources based on the elapsed time
 function generateIdleResources(elapsedSeconds) {
     // Increase resources based on their effective per second values and the elapsed time
@@ -245,9 +270,31 @@ function generateIdleResources(elapsedSeconds) {
     yachtMoney += effectiveYachtMoneyPerSecond * elapsedSeconds;
     trollPoints += effectiveTrollPointsPerSecond * elapsedSeconds;
     hopium += effectiveHopiumPerSecond * elapsedSeconds;
-    knowledge += effectiveKnowledgePerSecond * elapsedSeconds;
     serenity += effectiveSerenityPerSecond * elapsedSeconds;
 
+    const baseKnowledgePerSecond = calculateBaseKnowledge();
+
+    if (baseKnowledgePerSecond > 0) {
+
+        const knowledgeGeneratedIn2Hours = baseKnowledgePerSecond * 2 * 3600;  // Knowledge generated in 2 hours (2 * 3600 seconds)
+
+        // Calculate the current diminishing multiplier based on the initial hoarded knowledge
+        const initialExtraKnowledge = Math.max(knowledge - knowledgeGeneratedIn2Hours, 0);
+        const initialDiminishingMultiplier = Math.max(0.05, 0.95 ** (initialExtraKnowledge / knowledgeGeneratedIn2Hours));
+
+        // Calculate the knowledge generation for the current state
+        const initialKnowledgeGenerated = baseKnowledgePerSecond * initialDiminishingMultiplier * elapsedSeconds;
+
+        // If the player hoards more knowledge, we adjust the multiplier accordingly for the remainder
+        const finalExtraKnowledge = Math.max((knowledge + initialKnowledgeGenerated) - knowledgeGeneratedIn2Hours, 0);
+        const finalDiminishingMultiplier = Math.max(0.05, 0.95 ** (finalExtraKnowledge / knowledgeGeneratedIn2Hours));
+
+        // Calculate the average diminishing multiplier over the elapsed time
+        const averageDiminishingMultiplier = (initialDiminishingMultiplier + finalDiminishingMultiplier) / 2;
+
+        // Calculate total knowledge generated considering the average diminishing multiplier
+        knowledge += baseKnowledgePerSecond * averageDiminishingMultiplier * elapsedSeconds;
+    }
 
     const basePowerPerSecond = calculateBasePower();
 
@@ -276,7 +323,7 @@ function generateIdleResources(elapsedSeconds) {
 
 }
 
-///// also apply diminishing scaling to knowledge and hopium???
+///// also apply diminishing scaling to knowledge
 
 
 
@@ -504,3 +551,21 @@ function playMiniGame(gameType) {
     }
 }
 
+
+
+
+
+
+
+
+
+///// deadpool stuff
+
+
+localStorage.setItem('deadPoolRevives', deadPoolRevives);
+
+
+deadPoolRevives = parseFloat(localStorage.getItem('deadPoolRevives')) || 0;
+
+
+deadPoolRevives = 0;   ///// in bigCrunch()

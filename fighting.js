@@ -82,7 +82,7 @@ let playerMaxHealth, enemyMaxHealth, currEnemyName;
 let playerInterval, enemyInterval;
 
 
-let deadPoolMinRevives = 6.9;
+let deadPoolRevives = 0;
 
 // Function to initialize and start the mini-game
 function startFightGame(enemyName, enemyImg) {
@@ -248,12 +248,12 @@ function attackEnemy() {
     if (currEnemyName === "Deadpool") {
         if (!isCritical) {
             // Deadpool dodges all non-critical attacks
-            logFight(`<span style='color: yellow;'>${currEnemyName} effortlessly dodges your non-critical attack!</span>`);
+            logFight(`<span style='color: yellow;'>${currEnemyName} effortlessly dodges your non-critical attack! (100% chance)</span>`);
             return; // Deadpool dodged, so the attack ends here
         } else {
             // Deadpool dodges 69% of critical attacks
             if (Math.random() < 0.69) {
-                logFight(`<span style='color: orange;'>${currEnemyName} dodges your critical attack!</span>`);
+                logFight(`<span style='color: orange;'>${currEnemyName} dodges your critical attack! (69% chance)</span>`);
                 return; // Deadpool dodged, so the attack ends here
             }
             // If Deadpool doesn't dodge, calculate critical damage
@@ -264,10 +264,14 @@ function attackEnemy() {
         enemyHealth -= Math.max(damage, 0);
 
         // 96% chance to restore Deadpool's health if he would be taken below 0
-        if (enemyHealth <= 0 && (deadPoolMinRevives > 0 || Math.random() < 0.96)) {
+        if (enemyHealth <= 0 && (deadPoolRevives < 69 || Math.random() < 0.96)) {
             enemyHealth = enemyMaxHealth;
-            deadPoolMinRevives -= 1;
-            logFight(`<span style='color: red;'>${currEnemyName} regenerates back to full health!</span>`);
+            deadPoolRevives += 1;
+            if (deadPoolRevives > 69){
+                logFight(`<span style='color: #AAFF00;'>${currEnemyName} dies and regenerates back to full health! (${deadPoolRevives} revives - you feel like he's killable now!)</span>`);
+            } else {
+                logFight(`<span style='color: green;'>${currEnemyName} dies and regenerates back to full health! (${deadPoolRevives} revives and counting)</span>`);
+            }
         }
     } else if (currEnemyName === "Sauron") {
         damage = Math.floor((baseDamage - enemyDefense) / 10); // Sauron absorbs 90% of damage and is immune to critical hits
@@ -310,7 +314,7 @@ function attackPlayer() {
             if (Math.random() < 0.069) {
                 damage = Math.ceil(baseDamage * enemyCritDamage * 1.69) - playerDefense;
                 damage = Math.max(damage, 69);
-                logFight(`<span style='color: red;'>${currEnemyName} lands an EXTRA critical hit for ${formatNumber(Math.max(damage, 0))} damage!</span>`);
+                logFight(`<span style='color: red;'>${currEnemyName} lands an EXTRA critical hit for ${formatNumber(Math.max(damage, 0))} damage! (6.9% chance on crit)</span>`);
             // Deadpool lands a critical hit
             } else {
                 damage = Math.ceil(baseDamage * enemyCritDamage) - playerDefense;
