@@ -106,6 +106,31 @@ const miniGameTimeouts = {
 // Object to store interval references for each mini-game
 const miniGameIntervals = {};
 
+function calculateBaseKnowledge() {
+    return knowledgePerSecond * totalMultiplier * (bigCrunchMultiplier ** (1/2));
+}
+
+function calculateEffectiveKnowledge() {
+    // Calculate the base knowledge generation
+    const baseKnowledge = calculateBaseKnowledge();
+
+    // If baseKnowledge is zero, return 0 to prevent division errors
+    if (baseKnowledge === 0) {
+        return 0;
+    }
+
+    const knowledgeGeneratedIn2Hours = baseKnowledge * 2 * 3600;  // Knowledge generated in 2 hours (2 * 3600 seconds)
+
+    // Check how much knowledge the player currently has
+    const extraKnowledge = Math.max(knowledge - knowledgeGeneratedIn2Hours, 0);
+
+    // Calculate the diminishing multiplier, scaling as soon as it goes over 2 hours
+    const diminishingMultiplier = Math.max(0.05, 0.95 ** (extraKnowledge / knowledgeGeneratedIn2Hours)); 
+
+    // Return the effective knowledge considering the diminishing multiplier
+    return baseKnowledge * diminishingMultiplier;
+}
+
 function calculateBasePower() {
     return (moneyIsPowerTooSkill ?
         (Math.max(knowledge, 0) ** (1/3) / 1e12) * (1 + (Math.max(yachtMoney, 0) ** (1/30) / 100)) 
@@ -141,7 +166,7 @@ function updateEffectiveMultipliers() {
     effectiveYachtMoneyPerSecond = yachtMoneyPerSecond * totalMultiplier;
     effectiveTrollPointsPerSecond = trollPointsPerSecond * totalMultiplier;
     effectiveHopiumPerSecond = hopiumPerSecond * totalMultiplier;
-    effectiveKnowledgePerSecond = knowledgePerSecond * totalMultiplier * (bigCrunchMultiplier**(1/2));
+    effectiveKnowledgePerSecond = calculateEffectiveKnowledge();
 
     if (powerUnlocked){
         effectivePowerPerSecond = calculateEffectivePower();
@@ -504,7 +529,7 @@ function generateResources() {
     // Check if delusion drops below negative 1 trillion to start generating Knowledge
     if ((delusion < -1e12 || knowledgeGenerationSkill) && knowledgePerSecond === 0) {
         knowledgePerSecond = 0.000001
-        effectiveKnowledgePerSecond = knowledgePerSecond * totalMultiplier * (bigCrunchMultiplier**(1/2));
+        effectiveKnowledgePerSecond = calculateEffectiveKnowledge();
 
         if (!knowledgeGenerationSkill) {
             showMessageModal('The Age of Knowledge', `As you cross the threshold of -1 trillion delusion, the dense fog of confusion and distorted thoughts begins to lift. A sense of clarity pierces through the haze, revealing a world beyond the familiar chaos. The swirling mists part to unveil a luminous realm, shimmering with the light of hidden truths. For the first time, you feel a profound shift within, as the once insurmountable delusion gives way to the dawning of true knowledge. This newfound awareness pulses with a quiet intensity, each revelation a stepping stone towards deeper understanding. Your journey through the labyrinth of the mind has led to this pivotal moment, where the pursuit of enlightenment begins. Your mind expands, absorbing the essence of ancient wisdom and universal secrets, setting the stage for a transformative quest that transcends the ordinary limits of perception.`, false, false);
@@ -1762,9 +1787,31 @@ function generateIdleResources(elapsedSeconds) {
     yachtMoney += effectiveYachtMoneyPerSecond * elapsedSeconds;
     trollPoints += effectiveTrollPointsPerSecond * elapsedSeconds;
     hopium += effectiveHopiumPerSecond * elapsedSeconds;
-    knowledge += effectiveKnowledgePerSecond * elapsedSeconds;
     serenity += effectiveSerenityPerSecond * elapsedSeconds;
 
+    const baseKnowledgePerSecond = calculateBaseKnowledge();
+
+    if (baseKnowledgePerSecond > 0) {
+
+        const knowledgeGeneratedIn2Hours = baseKnowledgePerSecond * 2 * 3600;  // Knowledge generated in 2 hours (2 * 3600 seconds)
+
+        // Calculate the current diminishing multiplier based on the initial hoarded knowledge
+        const initialExtraKnowledge = Math.max(knowledge - knowledgeGeneratedIn2Hours, 0);
+        const initialDiminishingMultiplier = Math.max(0.05, 0.95 ** (initialExtraKnowledge / knowledgeGeneratedIn2Hours));
+
+        // Calculate the knowledge generation for the current state
+        const initialKnowledgeGenerated = baseKnowledgePerSecond * initialDiminishingMultiplier * elapsedSeconds;
+
+        // If the player hoards more knowledge, we adjust the multiplier accordingly for the remainder
+        const finalExtraKnowledge = Math.max((knowledge + initialKnowledgeGenerated) - knowledgeGeneratedIn2Hours, 0);
+        const finalDiminishingMultiplier = Math.max(0.05, 0.95 ** (finalExtraKnowledge / knowledgeGeneratedIn2Hours));
+
+        // Calculate the average diminishing multiplier over the elapsed time
+        const averageDiminishingMultiplier = (initialDiminishingMultiplier + finalDiminishingMultiplier) / 2;
+
+        // Calculate total knowledge generated considering the average diminishing multiplier
+        knowledge += baseKnowledgePerSecond * averageDiminishingMultiplier * elapsedSeconds;
+    }
 
     const basePowerPerSecond = calculateBasePower();
 
@@ -1910,8 +1957,8 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
         }
 
         // Special case for the "Still very stupid" upgrade
-        if (name === "Sauron") {
-            showMessageModal('Sadly', "This marks the end of v0.856, but your adventure is far from over! The Hall of Power is just the beginning, and there’s so much more to uncover. Each update brings new challenges and excitement, so stay tuned for what's coming next.<br><br>As you explore the Hall of Power and take on epic battles, I'd love to hear how you're enjoying them. How's the action? Are the battles keeping you on your toes? Your feedback is crucial in shaping the future of the game.<br><br>Join our vibrant Discord community to share your experiences, swap strategies, and help evolve the game. The next big update is just days away, but in the meantime, why not restart the game? Try new tactics, speed runs, and uncover hidden secrets on your path to ultimate power.<br><br>Your thoughts on the battles and the Hall of Power would be invaluable, so feel free to share on Discord or through the feedback form in settings. Let's continue this journey together and see where the Hall of Power leads us next!");
+        if (name === "Kratos") {
+            showMessageModal('Sadly', "This marks the end of v0.857, but your journey is just getting started! The Hall of Power is only the beginning, with new challenges and excitement in every update. How are you enjoying the battles? Are they keeping you on your toes? Your feedback is key to shaping the game.<br><br>While you wait for the next update (just days away!), why not restart, try new tactics, and uncover hidden secrets? Share your thoughts on the battles and Hall of Power on Discord or through the feedback form. Let’s keep this adventure going!");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one
@@ -2152,7 +2199,7 @@ function autobuyUpgrades(){
 
 
 // List of upgrades that should trigger truncation
-const keyUpgrades = ['The Finale', 'Agent Smith', 'Shao Kahn', 'Darth Vader', 'Isshin', 'Sauron','Kratos'];
+const keyUpgrades = ['The Finale', 'Agent Smith', 'Shao Kahn', 'Darth Vader', 'Isshin', 'Sauron','Kratos','Deadpool'];
 
 // Function to update the upgrade list display
 function updateUpgradeList() {
