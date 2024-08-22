@@ -66,7 +66,7 @@ const enemyStats = {
         health: 6.9e8,
         minDamage: 69,
         maxDamage: 69,
-        attackSpeed: 6,
+        attackSpeed: 6.9,
         defense: 6.9e7,
         critChance: 0.69,
         critDamage: 1.69
