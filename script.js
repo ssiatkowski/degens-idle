@@ -1717,8 +1717,6 @@ async function bigCrunch() {
 
     if (canBigCrunch()) {
 
-        
-
         let deadpoolHint = '';
 
         if (deadpoolRevives > 0 && !purchasedUpgrades.some(up => up.name === 'Deadpool')) {
