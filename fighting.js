@@ -263,16 +263,26 @@ function attackEnemy() {
 
         enemyHealth -= Math.max(damage, 0);
 
-        // 96% chance to restore Deadpool's health if he would be taken below 0
-        if (enemyHealth <= 0 && (deadpoolRevives < 69 || Math.random() < 0.96)) {
-            enemyHealth = enemyMaxHealth;
-            deadpoolRevives += 1;
-            if (deadpoolRevives > 69){
-                logFight(`<span style='color: #AAFF00;'>${currEnemyName} dies and regenerates back to full health! (${deadpoolRevives} revives - you feel like he's killable now!)</span>`);
-            } else {
+        // 99% chance to restore Deadpool's health initially, decreasing after 69 revives
+        if (enemyHealth <= 0) {
+            if (deadpoolRevives < 69) {
+                enemyHealth = enemyMaxHealth;
+                deadpoolRevives += 1;
                 logFight(`<span style='color: green;'>${currEnemyName} dies and regenerates back to full health! (${deadpoolRevives} revives and counting)</span>`);
+            } else {
+                // After 69 revives, calculate the revival chance
+                const revivalChance = 0.99 * Math.pow(0.99, deadpoolRevives - 69);
+                
+                if (Math.random() < revivalChance) {
+                    enemyHealth = enemyMaxHealth;
+                    deadpoolRevives += 1;
+                    logFight(`<span style='color: #AAFF00;'>${currEnemyName} dies and regenerates back to full health! (${deadpoolRevives} revives - you feel like he's killable now!)</span>`);
+                } else {
+                    logFight(`<span style='color: #39FF14;'>${currEnemyName} finally stays dead after ${deadpoolRevives} revives!</span>`);
+                }
             }
         }
+
     } else if (currEnemyName === "Sauron") {
         damage = Math.floor((baseDamage - enemyDefense) / 10); // Sauron absorbs 90% of damage and is immune to critical hits
         logFight(`You attack ${currEnemyName} for ${formatNumber(Math.max(damage, 0))} damage. (Sauron absorbs 90% of damage and is immune to critical hits)`);

@@ -369,7 +369,7 @@ document.getElementById('automationButton').addEventListener('click', function()
     automationContent.innerHTML = '';
 
     // Check if all features are locked (none are unlocked)
-    const allFeaturesLocked = !autobuyUpgradesSkill && autoPrestigeThreshold === null && !buyMarkersSkill;
+    const allFeaturesLocked = !autobuyUpgradesSkill && autoPrestigeThreshold === null && !buyMarkersSkill && autoAscendThreshold === null;
 
     // If all features are locked, show the "unlock automation" message
     if (allFeaturesLocked) {
@@ -457,9 +457,20 @@ document.getElementById('automationButton').addEventListener('click', function()
             automationContent.innerHTML += autoPrestigeHtml;
         }
 
+        // Dynamically add Auto-Ascend Threshold setting if available
+        if (autoAscendThreshold !== null) {
+            const autoAscendHtml = `
+                <div style="margin-bottom: 15px;">
+                    <label for="autoAscendThresholdInput">Auto Ascend Threshold (1 to ${numAscensionUpgrades}):</label>
+                    <input type="number" id="autoAscendThresholdInput" value="${autoAscendThreshold}" min="1" max="${numAscensionUpgrades}">
+                </div>
+            `;
+            automationContent.innerHTML += autoAscendHtml;
+        }
+
         // Check if any feature is missing and at least one is unlocked
-        const someFeaturesMissing = !autobuyUpgradesSkill || autoPrestigeThreshold === null || !buyMarkersSkill;
-        const atLeastOneFeatureUnlocked = autobuyUpgradesSkill || autoPrestigeThreshold !== null || buyMarkersSkill;
+        const someFeaturesMissing = !autobuyUpgradesSkill || autoPrestigeThreshold === null || !buyMarkersSkill || autoAscendThreshold === null;
+        const atLeastOneFeatureUnlocked = autobuyUpgradesSkill || autoPrestigeThreshold !== null || buyMarkersSkill || autoAscendThreshold !== null;
 
         if (someFeaturesMissing && atLeastOneFeatureUnlocked) {
             automationContent.innerHTML += `
@@ -482,6 +493,18 @@ document.getElementById('saveAutomationSettingsButton').addEventListener('click'
         if (isNaN(autoPrestigeThreshold) || autoPrestigeThreshold <= 0) {
             showImmediateMessageModal('Invalid Number', 'Please enter a valid positive number for the Auto Prestige Threshold.');
             return; // Prevent closing if there's an error
+        }
+    }
+
+    // Auto Ascend Threshold
+    if (autoAscendThreshold !== null) {
+        const ascendThresholdInput = parseInt(document.getElementById('autoAscendThresholdInput').value);
+
+        if (isNaN(ascendThresholdInput) || ascendThresholdInput < 1 || ascendThresholdInput > numAscensionUpgrades) {
+            showImmediateMessageModal('Invalid Number', `Please enter a valid number between 1 and ${numAscensionUpgrades} for the Auto Ascend Threshold.`);
+            return; // Prevent closing if there's an error
+        } else {
+            autoAscendThreshold = ascendThresholdInput;
         }
     }
 
@@ -523,6 +546,7 @@ document.getElementById('saveAutomationSettingsButton').addEventListener('click'
     document.getElementById('automationOverlay').style.display = 'none';
     showImmediateMessageModal('Automation Settings Saved', 'Your automation settings have been saved successfully.');
 });
+
 
 
 

@@ -74,6 +74,7 @@ let lessDiminishingPUGodModeSkill = false;
 let transcendenceUnlocked = false;
 
 let autoPrestigeThreshold = null;
+let autoAscendThreshold = null;
 
 let numAscensionUpgrades = 1;
 let numPUAscensionUpgrades = 2;
@@ -259,6 +260,8 @@ function loadGameState() {
 
     autoPrestigeThreshold = parseFloat(localStorage.getItem('autoPrestigeThreshold')) || null;
 
+    autoAscendThreshold = parseFloat(localStorage.getItem('autoAscendThreshold')) || null;
+
     deadpoolRevives = parseFloat(localStorage.getItem('deadpoolRevives')) || 0;
     
     // Retrieve and parse all upgrades with the isGodMode property from local storage
@@ -432,6 +435,9 @@ function saveGameState() {
     localStorage.setItem('knowledgeUnlocked', knowledgeUnlocked);
 
     localStorage.setItem('autoPrestigeThreshold', autoPrestigeThreshold);
+    localStorage.setItem('autoAscendThreshold', autoAscendThreshold);
+
+    
 
     localStorage.setItem('deadpoolRevives', deadpoolRevives);
     
@@ -595,15 +601,19 @@ function playMiniGame(gameType) {
                 
                 let reward;
                 let rewardPerClick;
+                let resultMessage;
+
                 if (speedGameSkill) {
-                    reward = Math.max(Math.floor(Math.abs(copium) * ((points - 3) * 0.025)), 25);
+                    reward = Math.max(Math.floor(Math.abs(copium) * ((points - 3) * 0.02)), 25);
+                    resultMessage = `You tapped ${points} times in ${duration} seconds. Your total reward is ${formatNumber(reward)} copium!`;
                 } else {
                     let clicksPerSecond = points / duration;
                     if (clicksPerSecond > 3) {
-                        reward = Math.max(Math.floor(Math.abs(copium) * ((clicksPerSecond - 3) * 0.025)), 25);
+                        reward = Math.max(Math.floor(Math.abs(copium) * ((clicksPerSecond - 3) * 0.02)), 25);
                     } else {
                         reward = -Math.max(Math.floor(Math.random() * Math.abs(copium) * 0.1), 10);
                     }
+                    resultMessage = `You tapped ${points} times (${clicksPerSecond.toFixed(2)} taps per second). Your total reward is ${formatNumber(reward)} copium!`;
                 }
 
                 // Apply the soft cap
@@ -613,7 +623,6 @@ function playMiniGame(gameType) {
                 }
 
                 copium += reward;
-                let resultMessage = `You tapped ${points} times in ${duration} seconds. Your total reward is ${formatNumber(reward)} copium!`;
 
                 // Add the soft cap message in orange if applicable
                 if (softCapReached) {
@@ -625,7 +634,8 @@ function playMiniGame(gameType) {
                 startCooldown(gameType); // Start cooldown for the mini-game
             }, duration * 1000);
         });
-    } 
+    }
+
     // Memory mini-game logic
     else if (gameType === 'memory') {
         let sequenceLength = Math.floor(Math.random() * 5) + 3; // Random length between 3 and 7
@@ -701,7 +711,7 @@ function playMiniGame(gameType) {
             }
 
             // If the answer was given within 3 seconds, apply 3x reward multiplier and set bonus message
-            if (isCorrect && timeTaken <= 3) {
+            if (isCorrect && timeTaken <= 3.25) {
                 reward *= 3;
                 bonusMessage = `<br><span style="color: #66FF00;">You answered within 3 seconds and earned triple the reward!</span>`;
             }
@@ -1021,6 +1031,7 @@ async function restartGame(isPrestige = false) {
             lessDiminishingGodModeSkill = false;
             lessDiminishingPUGodModeSkill = false;
             autoPrestigeThreshold = null;
+            autoAscendThreshold = null;
             autobuyUpgradesSkill = false;
 
             transcendenceUnlocked = false;
@@ -1133,7 +1144,7 @@ function updateTradeRatio() {
     // Special case for trading Copium to Hopium
     if (fromResource === 'copium' && toResource === 'hopium') {
         if (improvedTradeRatio){
-            tradeRatioDisplay.textContent = 'Trade ratio is 4M:1';
+            tradeRatioDisplay.textContent = 'Trade ratio is 5M:1';
         } else {
             tradeRatioDisplay.textContent = 'Trade ratio is 100M:1';
         }
@@ -1141,7 +1152,7 @@ function updateTradeRatio() {
         tradeRatioDisplay.textContent = 'Only Copium can convert to Hopium';
     } else {
         if (improvedTradeRatio){
-            tradeRatioDisplay.textContent = 'Trade ratio is 4:1';
+            tradeRatioDisplay.textContent = 'Trade ratio is 5:1';
         } else {
             tradeRatioDisplay.textContent = 'Trade ratio is 10:1';
         }
@@ -1242,7 +1253,7 @@ function tradeResources(tradeAmountInput = null) {
         }
         resourceAmount[fromResource] -= tradeAmount;
         if (improvedTradeRatio) {
-            resourceAmount[toResource] += tradeAmount / 4000000;
+            resourceAmount[toResource] += tradeAmount / 5000000;
             showStatusMessage(tradeButton, `Traded ${formatNumber(tradeAmount)} ${fromResource} for ${formatNumber(tradeAmount / 4000000)} ${toResource}.`, true);
         } else {
             resourceAmount[toResource] += tradeAmount / 100000000;
@@ -1259,7 +1270,7 @@ function tradeResources(tradeAmountInput = null) {
         }
         resourceAmount[fromResource] -= tradeAmount;
         if (improvedTradeRatio) {
-            resourceAmount[toResource] += tradeAmount / 4;
+            resourceAmount[toResource] += tradeAmount / 5;
             showStatusMessage(tradeButton, `Traded ${formatNumber(tradeAmount)} ${fromResource} for ${formatNumber(tradeAmount / 4)} ${toResource}.`, true);
         } else {
             resourceAmount[toResource] += tradeAmount / 10;
@@ -1764,6 +1775,34 @@ function updateAscendButton() {
     const ascendButton = document.getElementById('ascendButton');
     if (canAscend()) {
         ascendButton.style.display = 'block';
+        // Check if autoAscendThreshold is set and not null
+
+        if (autoAscendThreshold !== null) {
+            // Count the number of purchased upgrades that do not have isGodMode
+            const nonGodModeUpgrades = purchasedUpgrades.filter(upgrade => !upgrade.isGodMode).length;
+
+            // If the number of non-GodMode upgrades meets or exceeds the threshold, auto-ascend
+            if (nonGodModeUpgrades >= autoAscendThreshold) {
+                // Get the upgrades to ascend with
+                const selectedUpgrades = purchasedUpgrades.filter(upgrade => !upgrade.isGodMode).slice(0, autoAscendThreshold);
+
+                // Perform the ascension using the selected upgrades
+                const upgradesCount = selectedUpgrades.length;
+                godModeLevel += upgradesCount;
+                godModeMultiplier = calculateGodModeMultiplier(godModeLevel);
+
+                selectedUpgrades.forEach(upgrade => {
+                    upgrade.isGodMode = true;
+                });
+
+                epsMultiplier = Math.max(calculateAscensionEpsMult(), 1);
+                prestigeRequirement = calculateMinResource();
+                
+                restartGame(true); // Use the existing restartGame function with prestige mode
+                saveGameState(); // Save game state after ascending
+            }
+        }
+
     } else {
         ascendButton.style.display = 'none';
     }
@@ -1970,7 +2009,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
 
         // Special case for the "Still very stupid" upgrade
         if (name === "Complex Skill Trees") {
-            showMessageModal('Sadly', "This marks the end of v0.858, but your journey is just getting started! The Hall of Power is only the beginning, with new challenges and excitement in every update. How are you enjoying the battles? Are they keeping you on your toes? Your feedback is key to shaping the game.<br><br>While you wait for the next update (just days away!), why not restart, try new tactics, and uncover hidden secrets? Share your thoughts on the battles and Hall of Power on Discord or through the feedback form. Let’s keep this adventure going!");
+            showMessageModal('Sadly', "This marks the end of v0.859, but your journey is just getting started! The Hall of Power is only the beginning, with new challenges and excitement in every update. How are you enjoying the battles? Are they keeping you on your toes? Your feedback is key to shaping the game.<br><br>While you wait for the next update (just days away!), why not restart, try new tactics, and uncover hidden secrets? Share your thoughts on the battles and Hall of Power on Discord or through the feedback form. Let’s keep this adventure going!");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one

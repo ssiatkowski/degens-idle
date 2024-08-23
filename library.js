@@ -1,17 +1,17 @@
 const librarySkills = [
     { name: 'Cookie Recipe', cost: 1, description: 'This ancient cookie recipe permanently makes cookie clicks another 10x more powerful.', unlocked: false, level: 'History' },
     { name: 'Knowledge Generation', cost: 400, description: 'After Prestiging or Ascending, begin knowledge generation immediately without reaching -1T delusion.', unlocked: false, level: 'History' },
-    { name: 'Trade Ratios', cost: 1500, description: 'Lower trade ratio to 4:1 for top 4 resources and 4M:1 for Hopium.', unlocked: false, level: 'History' },
+    { name: 'Trade Ratios', cost: 1500, description: 'Lower trade ratio to 5:1 for top 4 resources and 5M:1 for Hopium.', unlocked: false, level: 'History' },
     { name: 'Cookie Boost', cost: 3e9, description: 'Cookie clicks now generate resources equal to your earnings per half a second (for the first 4 resources)', unlocked: false, level: 'History' }, 
     { name: 'Hopeful Cookie', cost: 3e26, description: 'Boosted cookie clicks also generate hopium at current earnings rate.', unlocked: false, level: 'History' }, 
     { name: 'Knowledgeable Cookie', cost: 9e45, description: 'Boosted cookie clicks also generate knowledge at current earnings rate.', unlocked: false, level: 'History' }, 
 
     { name: 'Cure for Delusion', cost: 5, description: 'Unlock ability to toggle whether delusion gain is positive or negative.', unlocked: false, level: 'Science' },
     { name: 'Luck is Rigged', cost: 777, description: 'Luck Game roll now picks from (-25% to 175%) instead of (-75% to 125%).', unlocked: false, level: 'Science' },
-    { name: "I Can't Math", cost: 1234, description: 'Math Game now only has 2 terms instead of 3. Reward is doubled.', unlocked: false, level: 'Science' },
-    { name: "Short Term Memory", cost: 11000, description: 'Memory Game maximum time is 15s instead of 40s. Reward is doubled.', unlocked: false, level: 'Science' },
-    { name: "Click Accumulation", cost: 23000, description: 'Speed Game reward is now for total number of clicks, instead of per second.', unlocked: false, level: 'Science' },
-    { name: 'Mini Gamer', cost: 7.5e22, description: 'All mini game cooldowns are reduced by 25%.', unlocked: false, level: 'Science' },
+    { name: "I Can't Math", cost: 9000, description: 'Math Game now only has 2 terms instead of 3. Reward is doubled.', unlocked: false, level: 'Science' },
+    { name: "Short Term Memory", cost: 80000, description: 'Memory Game maximum time is 15s instead of 40s. Reward is doubled.', unlocked: false, level: 'Science' },
+    { name: "Click Accumulation", cost: 1600000, description: 'Speed Game reward is now for total number of clicks, instead of per second.', unlocked: false, level: 'Science' },
+    { name: 'Mini Gamer', cost: 7.5e23, description: 'All mini game cooldowns are reduced by 25%.', unlocked: false, level: 'Science' },
 
     { name: 'Prestige Base', cost: 5000, description: 'Increase Base prestige multiplier from 1.5 to 1.75. Huuge.', unlocked: false, level: 'Nonlinear Partial Differential Equations' },
     { name: '2D Ascension', cost: 230000, description: 'Learn how to ascend God Mode Levels while only folding the space around you into two dimensions. Mathematically, instead of prestige changing to x**(1/3), it changes to x**(2/3).', unlocked: false, level: 'Nonlinear Partial Differential Equations' },
@@ -24,19 +24,19 @@ const librarySkills = [
     { name: 'Cookie Clicker Clicker', cost: 75, description: 'After Prestiging or Ascending, automatically click the cookie 10 times per second for 15 seconds.', unlocked: false, level: 'Artificial Intelligence' },
     { name: 'Double Ascension', cost: 1250, description: 'Gain up to 2 God-Mode levels per Ascension. Also select up to 2 upgrades to enhance to God Mode.', unlocked: false, level: 'Artificial Intelligence' },
     { name: 'Buy Markers', cost: 300000, description: 'Purchased Upgrades will now have a switch indicating whether or not they should be bought using "Buy Seen" and "Buy All" buttons. (Can toggle all in Automation Settings) ', unlocked: false, level: 'Artificial Intelligence' },
-    { name: 'Triple Ascension', cost: 3.5e6, description: 'Gain up to 3 God-Mode levels per Ascension. Also select up to 3 upgrades to enhance to God Mode.', unlocked: false, level: 'Artificial Intelligence' },
-    { name: 'Quintuple Transendence', cost: 5e19, description: 'Gain up to 5 Parallel Universe God-Mode levels per Transendence. Also select up to 5 upgrades to enhance to PU God Mode.', unlocked: false, level: 'Artificial Intelligence' },
+    { name: 'Quadruple Ascension', cost: 3.6e6, description: 'Gain up to 4 God-Mode levels per Ascension. Also select up to 4 upgrades to enhance to God Mode.', unlocked: false, level: 'Artificial Intelligence' },
+    { name: 'Septuple Transendence', cost: 7e19, description: 'Gain up to 7 Parallel Universe God-Mode levels per Transendence. Also select up to 7 upgrades to enhance to PU God Mode.', unlocked: false, level: 'Artificial Intelligence' },
+    { name: 'Autobuy Upgrades', cost: 3e22, description: `Buy Markers are repurposed to configure Autobuy - which will purchase afforable visible upgrades every 1.5 seconds. (Can toggle on/off in Automation Settings)`, unlocked: false, level: 'Artificial Intelligence' },
     { name: 'Septuple Ascension', cost: 7e24, description: 'Gain up to 7 God-Mode levels per Ascension. Also select up to 7 upgrades to enhance to God Mode.', unlocked: false, level: 'Artificial Intelligence' },
-    { name: 'Autobuy Upgrades', cost: 3e27, description: `Buy Markers are repurposed to configure Autobuy - which will purchase afforable visible upgrades every 1.5 seconds. (Can toggle on/off in Automation Settings)`, unlocked: false, level: 'Artificial Intelligence' },
- 
+
     { name: 'Knowledge is Power', cost: 1e6, description: 'Unlock new resource Power. Power is always generated based on your current amount of Knowledge.', unlocked: false, level: 'Celestial Bodies' },
     { name: 'Big Crunch', cost: 8e11, description: 'Could this be what Power is for? Unlock ability to force the universe into a Big Crunch and to be reborn anew!', unlocked: false, level: 'Celestial Bodies' },
     { name: 'Money is Power, too', cost: 2.5e20, description: 'Add a multiplier to Power generation based on Yacht Money (though it scales much less than with Knowledge)', unlocked: false, level: 'Celestial Bodies' },
     { name: 'Map to Hall of Power', cost: 1e24, description: 'You can now look at and admire the Power Hall button.', unlocked: false, level: 'Celestial Bodies' },
 
 
-    { name: 'The Perpetual Prestige', cost: 1e29, description: 'Auto-Prestige ability.  (Target prestige multiplier can be set in Automation Settings)', unlocked: false, level: '???' },
-    // { name: 'The Eternal Ascension', cost: 1e32, description: 'Auto-Ascend ability. (Target # upgrades can be set in Automation Settings)', unlocked: false, level: '???' },
+    { name: 'The Perpetual Prestige', cost: 1e25, description: 'Auto-Prestige ability.  (Target prestige multiplier can be set in Automation Settings. Default=10)', unlocked: false, level: '???' },
+    { name: 'The Eternal Ascension', cost: 1e29, description: 'Auto-Ascend ability. (Target # upgrades can be set in Automation Settings. Default=1)', unlocked: false, level: '???' },
     // { name: 'The Quantum Symphony', cost: 1e50, description: 'Auto Trasncend', unlocked: false, level: '???' },
     // { name: 'The Void of Non-Existence', cost: 1e55, description: 'Auto-Big Crunch', unlocked: false, level: '???' },
     // { name: 'The Infinite Fractal', cost: 1e33, description: '', unlocked: false, level: '???' },
@@ -185,12 +185,12 @@ function unlockLibrarySkill(skill, duringLoad = false) {
                 enableAllBuyMarkers(true);
                 break;
 
-            case 'Triple Ascension':
-                numAscensionUpgrades = Math.max(numAscensionUpgrades, 3);
+            case 'Quadruple Ascension':
+                numAscensionUpgrades = Math.max(numAscensionUpgrades, 4);
                 break;
 
-            case 'Quintuple Transendence':
-                numPUAscensionUpgrades = Math.max(numPUAscensionUpgrades, 5);
+            case 'Septuple Transendence':
+                numPUAscensionUpgrades = Math.max(numPUAscensionUpgrades, 7);
                 break;
                 
             case 'Septuple Ascension':
@@ -240,7 +240,11 @@ function unlockLibrarySkill(skill, duringLoad = false) {
                 }
                 break;
     
-                
+            case 'The Eternal Ascension':
+                if(autoAscendThreshold == null){
+                    autoAscendThreshold = 1;
+                }
+                break;
 
             // Add more cases as needed for additional skills
         
