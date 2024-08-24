@@ -35,11 +35,11 @@ const librarySkills = [
     { name: 'Map to Hall of Power', cost: 1e24, description: 'You can now look at and admire the Power Hall button.', unlocked: false, level: 'Celestial Bodies' },
 
 
-    { name: 'The Perpetual Prestige', cost: 1e25, description: 'Auto-Prestige ability.  (Target prestige multiplier can be set in Automation Settings. Default=10)', unlocked: false, level: '???' },
-    { name: 'The Eternal Ascension', cost: 1e29, description: 'Auto-Ascend ability. (Target # upgrades can be set in Automation Settings. Default=1)', unlocked: false, level: '???' },
-    // { name: 'The Quantum Symphony', cost: 1e50, description: 'Auto Trasncend', unlocked: false, level: '???' },
-    // { name: 'The Void of Non-Existence', cost: 1e55, description: 'Auto-Big Crunch', unlocked: false, level: '???' },
-    // { name: 'The Infinite Fractal', cost: 1e33, description: '', unlocked: false, level: '???' },
+    { name: 'Perpetual Prestige', cost: 1e25, description: 'Auto-Prestige ability.  (Target prestige multiplier can be set in Automation Settings. Default=10)', unlocked: false, level: '???' },
+    { name: 'Eternal Ascension', cost: 1e29, description: 'Auto-Ascend ability. (Target # upgrades can be set in Automation Settings. Default=Max)', unlocked: false, level: '???' },
+    // { name: 'Quantum Symphony', cost: 1e50, description: 'Auto Transcend', unlocked: false, level: '???' },
+    // { name: 'Void of Non-Existence', cost: 1e55, description: 'Auto-Big Crunch', unlocked: false, level: '???' },
+    // { name: 'Infinite Fractal', cost: 1e33, description: '', unlocked: false, level: '???' },
 
     // { name: 'Serenity', cost: 1e25, description: '', unlocked: false, level: '???' },
 
@@ -234,15 +234,15 @@ function unlockLibrarySkill(skill, duringLoad = false) {
                 unlockHallofPower();
                 break;
 
-            case 'The Perpetual Prestige':
+            case 'Perpetual Prestige':
                 if(autoPrestigeThreshold == null){
                     autoPrestigeThreshold = 10;
                 }
                 break;
     
-            case 'The Eternal Ascension':
+            case 'Eternal Ascension':
                 if(autoAscendThreshold == null){
-                    autoAscendThreshold = 1;
+                    autoAscendThreshold = numAscensionUpgrades;
                 }
                 break;
 
