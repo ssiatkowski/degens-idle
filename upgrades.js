@@ -484,7 +484,7 @@ const upgrades = [
     {
         name: "Shooter Dad",
         cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 5e11, knowledge: 100000, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 1.46e7, trollPointsPerSecond: 0, hopiumPerSecond: 125, knowledgePerSecond: 0.000079, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 1.46e7, trollPointsPerSecond: 0, hopiumPerSecond: 125, knowledgePerSecond: 0.000095, powerPerSecond: 0, serenityPerSecond: 0 },
         img: "imgs/shooter_swag.jpg",
     },
     {
