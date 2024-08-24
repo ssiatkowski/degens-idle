@@ -1,3 +1,9 @@
+body {
+    overflow-x: hidden;
+    overflow-y: auto;
+    touch-action: pan-y; /* Allow vertical scrolling but prevent horizontal scrolling */
+}
+
 /* The Modal (background) */
 .modal {
     display: none; /* Hidden by default */

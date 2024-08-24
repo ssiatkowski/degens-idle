@@ -2813,21 +2813,6 @@ function showImmediateMessageModal(title, message) {
     };
 }
 
-document.addEventListener('touchstart', function(event) {
-    const startX = event.touches[0].clientX;
-    const startY = event.touches[0].clientY;
-
-    document.addEventListener('touchmove', function(event) {
-        const deltaX = event.touches[0].clientX - startX;
-        const deltaY = event.touches[0].clientY - startY;
-
-        // Prevent horizontal scrolling only if vertical movement is dominant
-        if (Math.abs(deltaY) > Math.abs(deltaX)) {
-            // Instead of preventing the default behavior, you can apply logic here to handle the scroll better
-        }
-    }, { passive: true });
-}, { passive: true });
-
 
 
 // Expose functions to the global scope for use in the HTML
