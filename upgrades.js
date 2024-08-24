@@ -878,6 +878,18 @@ const upgrades = [
         message: `Huge shoutout to Path of Exile—the greatest game of all time! No other ARPG, or any game for that matter, has ever managed to replicate the sheer complexity and depth of its legendary skill trees. It’s a masterpiece of design, offering limitless possibilities for those daring enough to explore its vast network of nodes. Every decision shapes your journey, making each build a unique adventure.<br><br>Path of Exile has set a standard that’s unmatched, and we can only hope that Path of Exile 2 will continue to raise the bar even higher.`,
     },
     {
+        name: "Nagging Question",
+        cost: { copium: 2e53, delusion: 2e53, yachtMoney: 0, trollPoints: 8e53, hopium: 0, knowledge: 1e43, power: 1.5e6, serenity: 0 },
+        earnings: { copiumPerSecond: 7e18, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 3e18, hopiumPerSecond: 0, knowledgePerSecond: 18000, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: "imgs/deadpool_lives.jpg",        
+    },
+    {
+        name: "Unpopular Truth",
+        cost: { copium: 4e54, delusion: 0, yachtMoney: 0, trollPoints: 2e53, hopium: 0, knowledge: 1e43, power: 2e6, serenity: 0 },
+        earnings: { copiumPerSecond: 7e18, delusionPerSecond: 1e19, yachtMoneyPerSecond: 0, trollPointsPerSecond: 3e18, hopiumPerSecond: 0, knowledgePerSecond: 60000, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: "imgs/downvoted_opinion.jpg",        
+    },
+    {
         name: "Deadpool",
         cost: { copium: 6.9e54, delusion: 6.9e54, yachtMoney: 6.9e54, trollPoints: 6.9e54, hopium: 0, knowledge: 6.9e44, power: 6.9e7, serenity: 0 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 6.9e19, yachtMoneyPerSecond: 0, trollPointsPerSecond: 6.9e19, hopiumPerSecond: -6.9e15, knowledgePerSecond: 1.69e6, powerPerSecond: 0, serenityPerSecond: 0 },
