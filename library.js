@@ -7,11 +7,11 @@ const librarySkills = [
     { name: 'Knowledgeable Cookie', cost: 9e45, description: 'Boosted cookie clicks also generate knowledge at current earnings rate.', unlocked: false, level: 'History' }, 
 
     { name: 'Cure for Delusion', cost: 5, description: 'Unlock ability to toggle whether delusion gain is positive or negative.', unlocked: false, level: 'Science' },
-    { name: 'Luck is Rigged', cost: 777, description: 'Luck Game roll now picks from (-25% to 175%) instead of (-75% to 125%).', unlocked: false, level: 'Science' },
-    { name: "I Can't Math", cost: 9000, description: 'Math Game now only has 2 terms instead of 3. Reward is doubled.', unlocked: false, level: 'Science' },
-    { name: "Short Term Memory", cost: 80000, description: 'Memory Game maximum time is 15s instead of 40s. Reward is doubled.', unlocked: false, level: 'Science' },
-    { name: "Click Accumulation", cost: 1600000, description: 'Speed Game reward is now for total number of clicks, instead of per second.', unlocked: false, level: 'Science' },
-    { name: 'Mini Gamer', cost: 7.5e23, description: 'All mini game cooldowns are reduced by 25%.', unlocked: false, level: 'Science' },
+    { name: 'Luck is Rigged', cost: 777, description: 'Removes 1 unlucky box. Makes lucky boxes better (25%-125% instead of 10%-100%) and unlocky boxes less bad (5%-60% instead of 10%-75%).', unlocked: false, level: 'Science' },
+    { name: "I Can't Math", cost: 9000, description: 'Math Game timer increased from 12s to 20s, # portals reduced from 15 to 12, and reward is doubled.', unlocked: false, level: 'Science' },
+    { name: "Short Term Memory", cost: 80000, description: 'Memory Game sequence length reduced to (3-6) instead of (4-7) and reward is tripled.', unlocked: false, level: 'Science' },
+    { name: "Click Speed Demon", cost: 1600000, description: 'Dots in Speed Game get slighlty larger and reward is tripled.', unlocked: false, level: 'Science' },
+    { name: 'Mini Gamer', cost: 7.5e23, description: 'All mini game cooldowns are reduced by 50%.', unlocked: false, level: 'Science' },
 
     { name: 'Prestige Base', cost: 5000, description: 'Increase Base prestige multiplier from 1.5 to 1.75. Huuge.', unlocked: false, level: 'Nonlinear Partial Differential Equations' },
     { name: '2D Ascension', cost: 230000, description: 'Learn how to ascend God Mode Levels while only folding the space around you into two dimensions. Mathematically, instead of prestige changing to x**(1/3), it changes to x**(2/3).', unlocked: false, level: 'Nonlinear Partial Differential Equations' },
@@ -111,7 +111,7 @@ function unlockLibrarySkill(skill, duringLoad = false) {
                 break;
 
             case 'Luck is Rigged':
-                luckGameDelta = -25;
+                luckGameSkill = true;
                 break;
             
             case "I Can't Math":
@@ -122,7 +122,7 @@ function unlockLibrarySkill(skill, duringLoad = false) {
                 memoryGameSkill = true;
                 break;
                 
-            case "Click Accumulation":
+            case "Click Speed Demon":
                 speedGameSkill = true;
                 break;
                 

@@ -54,7 +54,6 @@ let isModalOpen = false;
 
 let cookieClickMultiplier = 10;
 let cookieAutoClicker = false;
-let luckGameDelta = -75;
 let knowledgeUnlocked = false;
 let knowledgeGenerationSkill = false;
 let prestigeBaseSkill = false;
@@ -63,6 +62,7 @@ let multibuyUpgradesSkill = false;
 let mathGameSkill = false;
 let memoryGameSkill = false;
 let speedGameSkill = false;
+let luckGameSkill = false;
 let miniGamerSkill = false;
 let powerUnlocked = false;
 let buyMarkersSkill = false;
@@ -92,24 +92,6 @@ let autobuyUpgradesSkill = false;
 let upgradeAmplifierSkill = false;
 let fasterAutobuyerskill = false;
 
-//cooldowns for mini games
-let cooldowns = {
-    speed: false,
-    memory: false,
-    math: false,
-    luck: false
-};
-
-// Mini-game timeouts in milliseconds
-const miniGameTimeouts = {
-    speed: 8 * 60 * 1000,  // 8 minutes
-    memory: 10 * 60 * 1000,  // 10 minutes
-    math: 6 * 60 * 1000,    // 6 minutes
-    luck: 4 * 60 * 1000     // 4 minutes
-};
-
-// Object to store interval references for each mini-game
-const miniGameIntervals = {};
 
 function calculateBaseKnowledge() {
     return knowledgePerSecond * totalMultiplier * (bigCrunchMultiplier ** (1/2));
@@ -578,344 +560,6 @@ function generateResources() {
 
 
 
-
-
-// Function to play a mini-game of a given type
-function playMiniGame(gameType) {
-    // Check if the mini-game is on cooldown
-    if (cooldowns[gameType]) return;
-
-    // Get the button element for the mini-game
-    const button = document.getElementById(`${gameType}Game`);
-    button.disabled = true; // Disable the button at the start of the game
-    button.classList.remove('affordable'); // Remove the 'affordable' class
-    button.classList.add('disabled'); // Add the 'disabled' class to change its appearance
-
-    // Convert mini-game timeouts from milliseconds to minutes for the message
-    const cooldownMinutes = (miniGamerSkill ? miniGameTimeouts[gameType] * 0.75 : miniGameTimeouts[gameType]) / (60 * 1000);
-    const cooldownMessage = (gameType === 'memory' || gameType === 'math') ? 
-        `In ${cooldownMinutes} minutes, you get to test your ${gameType} skills again.` : 
-        `In ${cooldownMinutes} minutes, you get to test your ${gameType} again.`;
-
-    // Define the soft cap for each mini-game
-    const softCaps = {
-        speed: Math.abs(effectiveCopiumPerSecond) * 12 * 60 * 60,  // 12 hours of copium per second
-        memory: Math.abs(effectiveDelusionPerSecond) * 12 * 60 * 60,  // 12 hours of delusion per second
-        math: Math.abs(effectiveYachtMoneyPerSecond) * 12 * 60 * 60,  // 12 hours of yacht money per second
-        luck: Math.abs(effectiveTrollPointsPerSecond) * 12 * 60 * 60  // 12 hours of troll points per second
-    };
-
-    let softCapReached = false;  // Variable to check if the soft cap is reached
-
-    // Speed mini-game logic
-    if (gameType === 'speed') {
-        let points = 0;
-        let duration = Math.floor(Math.random() * 5) + 2; // Random duration between 2 and 6 seconds
-
-        // Show the modal and start the game when the modal is closed
-        showMessageModal('Speed Game', `Tap on the screen as many times as you can in ${duration} seconds!`, false, false).then(() => {
-            function clickHandler() {
-                points++;
-            }
-
-            document.addEventListener('click', clickHandler); // Add click event listener
-            document.addEventListener('touchstart', clickHandler); // Add touch event listener
-
-            // End the game after the duration
-            setTimeout(() => {
-                document.removeEventListener('click', clickHandler); // Remove click event listener
-                document.removeEventListener('touchstart', clickHandler); // Remove touch event listener
-                
-                let reward;
-                let rewardPerClick;
-                let resultMessage;
-
-                if (speedGameSkill) {
-                    reward = Math.max(Math.floor(Math.abs(copium) * ((points - 3) * 0.02)), 25);
-                    resultMessage = `You tapped ${points} times in ${duration} seconds. Your total reward is ${formatNumber(reward)} copium!`;
-                } else {
-                    let clicksPerSecond = points / duration;
-                    if (clicksPerSecond > 3) {
-                        reward = Math.max(Math.floor(Math.abs(copium) * ((clicksPerSecond - 3) * 0.02)), 25);
-                    } else {
-                        reward = -Math.max(Math.floor(Math.random() * Math.abs(copium) * 0.1), 10);
-                    }
-                    resultMessage = `You tapped ${points} times (${clicksPerSecond.toFixed(2)} taps per second). Your total reward is ${formatNumber(reward)} copium!`;
-                }
-
-                // Apply the soft cap
-                if (reward > softCaps.speed) {
-                    reward = softCaps.speed;
-                    softCapReached = true;
-                }
-
-                copium += reward;
-
-                // Add the soft cap message in orange if applicable
-                if (softCapReached) {
-                    resultMessage += '<br><span style="color: orange;">Soft cap reached: Maximum reward of 12 hours effective Copium applied.</span>';
-                }
-
-                showMessageModal('Speed Game Result', resultMessage, false, false, null, false, true);
-                updateDisplay(); // Update the display
-                startCooldown(gameType); // Start cooldown for the mini-game
-            }, duration * 1000);
-        });
-    }
-
-    // Memory mini-game logic
-    else if (gameType === 'memory') {
-        let sequenceLength = Math.floor(Math.random() * 5) + 3; // Random length between 3 and 7
-        let sequence = '';
-        for (let i = 0; i < sequenceLength; i++) {
-            sequence += Math.floor(Math.random() * 10); // Random digit between 0 and 9
-        }
-        let maxTimeout = memoryGameSkill ? 15 : 40; // Set maximum timeout based on memoryGameSkill
-        let timeout = Math.floor(Math.random() * (maxTimeout - 5 + 1)) + 5; // Random timeout between 5 and maxTimeout seconds
-        showMessageModal('Memory Game', `Remember this sequence: ${sequence}`).then(() => {
-            setTimeout(() => {
-                showMessageModal('Memory Game', 'Enter the sequence:', false, false, null, false, true).then(userSequence => {
-                    let correct = userSequence === sequence;
-                    let baseReward = correct ? Math.max(Math.floor(Math.abs(delusion) * 0.4), 25) : -Math.max(Math.floor(Math.random() * Math.abs(delusion) * 0.1), 10);
-                    let reward = memoryGameSkill ? baseReward * 2 : baseReward; // Double the reward if memoryGameSkill is true
-                    
-                    // Apply the soft cap
-                    if (reward > softCaps.memory) {
-                        reward = softCaps.memory;
-                        softCapReached = true;
-                    }
-
-                    delusion += reward;
-                    let resultMessage = `You ${correct ? 'won' : 'lost'} and earned ${formatNumber(reward)} delusion!`;
-
-                    // Add the soft cap message in orange if applicable
-                    if (softCapReached) {
-                        resultMessage += '<br><span style="color: orange;">Soft cap reached: Maximum reward of 12 hours effective Delusion applied.</span>';
-                    }
-
-                    showMessageModal('Memory Game Result', resultMessage);
-                    updateDisplay(); // Update the display
-                    startCooldown(gameType); // Start cooldown for the mini-game
-                });
-            }, timeout * 1000);
-        });
-    }
-    // Math mini-game logic
-    else if (gameType === 'math') {
-        let num1 = Math.floor(Math.random() * 100) + 1;
-        let num2 = Math.floor(Math.random() * 100) + 1;
-        let num3 = Math.floor(Math.random() * 10) + 1;
-        let operations = ['+', '-', '*', '/'];
-        let op1 = operations[Math.floor(Math.random() * operations.length)];
-        let op2 = operations[Math.floor(Math.random() * operations.length)];
-
-        let question, correctAnswer;
-        if (mathGameSkill) {
-            // Only 2 numbers and 1 operation
-            question = `${num1} ${op1} ${num2}`;
-            correctAnswer = eval(question.replace('/', '* 1.0 /')); // Ensure floating point division
-        } else {
-            // Original question with 3 numbers and 2 operations
-            question = `${num1} ${op1} ${num2} ${op2} ${num3}`;
-            correctAnswer = eval(question.replace('/', '* 1.0 /')); // Ensure floating point division
-        }
-
-        // Record the start time
-        const startTime = Date.now();
-
-        showMessageModal('Math Game', `What is ${question}? (answer within 0.5 is acceptable; submit answer in 3 seconds or less to get triple reward)`, false, false, null, false, true).then(answer => {
-            // Calculate the time difference in seconds
-            const timeTaken = (Date.now() - startTime) / 1000;
-            
-            let isCorrect = Math.abs(Number(answer) - correctAnswer) < 0.5;
-            let reward;
-            let bonusMessage = '';
-
-            if (mathGameSkill) {
-                reward = isCorrect ? Math.max(Math.floor(Math.abs(yachtMoney) * 0.4), 50) : -Math.max(Math.floor(Math.random() * Math.abs(yachtMoney) * 0.2), 20);
-            } else {
-                reward = isCorrect ? Math.max(Math.floor(Math.abs(yachtMoney) * 0.2), 25) : -Math.max(Math.floor(Math.random() * Math.abs(yachtMoney) * 0.1), 10);
-            }
-
-            // If the answer was given within 3 seconds, apply 3x reward multiplier and set bonus message
-            if (isCorrect && timeTaken <= 3.25) {
-                reward *= 3;
-                bonusMessage = `<br><span style="color: #66FF00;">You answered within 3 seconds and earned triple the reward!</span>`;
-            }
-
-            // Apply the soft cap
-            if (reward > softCaps.math) {
-                reward = softCaps.math;
-                softCapReached = true;
-            }
-
-            yachtMoney += reward;
-            let resultMessage = `You guessed ${answer} and the exact answer was ${correctAnswer}. You ${isCorrect ? 'won' : 'lost'} ${formatNumber(reward)} yachtMoney! ${cooldownMessage} ${bonusMessage}`;
-
-            // Add the soft cap message in orange if applicable
-            if (softCapReached) {
-                resultMessage += '<br><span style="color: orange;">Soft cap reached: Maximum reward of 12 hours effective Yacht Money applied.</span>';
-            }
-
-            showMessageModal('Math Game Result', resultMessage);
-            updateDisplay(); // Update the display
-            startCooldown(gameType); // Start cooldown for the mini-game
-        });
-    }
-    // Luck mini-game logic
-    else if (gameType === 'luck') {
-        let result = (Math.random() * 200) + luckGameDelta; // Generates a random number (initially between -75 and +125%)
-        let message = "";
-        let reward = Math.floor(Math.abs(trollPoints) * (result / 100)); // Calculate reward based on the result percentage
-        let gainLossMessage = reward >= 0 ? "gained" : "lost";
-
-        if (result > 100) {
-            message = "SUPER LUCKY!!! 🍀🍀🍀";
-        } else if (result > 75) {
-            message = "Very Lucky!!";
-        } else if (result > 0) {
-            message = "Lucky!";
-        } else if (result > -40) {
-            message = "Unlucky!";
-        } else {
-            message = "Extremely Unlucky 😞😞😞";
-        }
-
-        // Apply the soft cap
-        if (reward > softCaps.luck) {
-            reward = softCaps.luck;
-            softCapReached = true;
-        }
-
-        trollPoints += reward;
-        let resultMessage = `You rolled ${result.toFixed(2)}%. ${message} You ${gainLossMessage} ${formatNumber(Math.abs(reward))} troll points! ${cooldownMessage}`;
-
-        // Add the soft cap message in orange if applicable
-        if (softCapReached) {
-            resultMessage += '<br><span style="color: orange;">Soft cap reached: Maximum reward of 12 hours effective Troll Points applied.</span>';
-        }
-
-        showMessageModal('Luck Game Result', resultMessage);
-        updateDisplay(); // Update the display
-        startCooldown(gameType); // Start cooldown for the mini-game
-    }
-}
-
-            
-
-
-function startCooldown(gameType) {
-    const button = document.getElementById(`${gameType}Game`);
-    const startTime = Date.now();
-    const cooldownDuration = miniGamerSkill ? miniGameTimeouts[gameType] * 0.75 : miniGameTimeouts[gameType];
-
-    localStorage.setItem(`${gameType}CooldownStart`, startTime);
-
-    cooldowns[gameType] = true;
-    if (button) {
-        button.classList.remove('affordable');
-        button.classList.add('disabled');
-        button.disabled = true;
-
-        let progressBar = button.querySelector('.progress');
-        if (!progressBar) {
-            progressBar = document.createElement('div');
-            progressBar.className = 'progress';
-            button.appendChild(progressBar);
-        }
-        progressBar.style.width = '0%';
-
-        const interval = setInterval(() => {
-            const elapsedTime = Date.now() - startTime;
-            const progressPercent = (elapsedTime / cooldownDuration) * 100;
-            progressBar.style.width = `${progressPercent}%`;
-
-            if (elapsedTime >= cooldownDuration) {
-                clearInterval(interval);
-                cooldowns[gameType] = false;
-                button.disabled = false;
-                button.classList.remove('disabled');
-                button.classList.add('affordable');
-                progressBar.style.width = '100%';
-            }
-        }, 200);
-
-        // Set timeout to reset button state after cooldown ends
-        setTimeout(() => {
-            cooldowns[gameType] = false;
-            if (button) {
-                button.disabled = false;
-                button.classList.remove('disabled');
-                button.classList.add('affordable');
-            }
-        }, cooldownDuration);
-    }
-}
-
-
-
-
-function unlockMiniGames() {
-    const now = Date.now();
-
-    Object.keys(miniGameTimeouts).forEach(gameType => {
-        const startTime = localStorage.getItem(`${gameType}CooldownStart`);
-        const button = document.getElementById(`${gameType}Game`);
-        const progressBar = button.querySelector('.progress');
-
-        button.style.display = 'block';
-
-        if (startTime) {
-            const elapsed = now - parseInt(startTime, 10);
-            const cooldownDuration = miniGamerSkill ? miniGameTimeouts[gameType] * 0.75 : miniGameTimeouts[gameType];
-
-            if (elapsed >= cooldownDuration) {
-                cooldowns[gameType] = false;
-                button.disabled = false;
-                button.classList.remove('disabled');
-                button.classList.add('affordable');
-                if (progressBar) {
-                    progressBar.style.width = '100%';
-                }
-            } else {
-                const remainingCooldown = cooldownDuration - elapsed;
-                const progressPercent = (elapsed / cooldownDuration) * 100;
-
-                button.disabled = true;
-                button.classList.add('disabled');
-                button.classList.remove('affordable');
-                if (progressBar) {
-                    progressBar.style.width = `${progressPercent}%`;
-                }
-
-                const interval = setInterval(() => {
-                    const newElapsed = Date.now() - parseInt(startTime, 10);
-                    const newProgressPercent = (newElapsed / cooldownDuration) * 100;
-
-                    if (newElapsed >= cooldownDuration) {
-                        clearInterval(interval);
-                        button.disabled = false;
-                        button.classList.remove('disabled');
-                        button.classList.add('affordable');
-                        if (progressBar) {
-                            progressBar.style.width = '100%';
-                        }
-                    } else {
-                        if (progressBar) {
-                            progressBar.style.width = `${newProgressPercent}%`;
-                        }
-                    }
-                }, 100);
-            }
-        } else {
-            startCooldown(gameType);
-        }
-    });
-}
-
-
-
-
 async function restartPrestige(){
     
     const confirmTitle = "Are You Sure You Want to Restart this Prestige?"
@@ -1033,7 +677,6 @@ async function restartGame(isPrestige = false) {
             });
 
             cookieClickMultiplier = 10;
-            luckGameDelta = -75;
             // Hide the delusion toggle switch
             document.getElementById('toggleDelusionLabel').classList.add('hidden');
             document.getElementById('buySeenButton').classList.add('hidden');
@@ -1046,6 +689,7 @@ async function restartGame(isPrestige = false) {
             mathGameSkill = false;
             memoryGameSkill = false;
             speedGameSkill = false;
+            luckGameSkill = false;
             miniGamerSkill = false;
             numAscensionUpgrades = 1;
             numPUAscensionUpgrades = 2;
@@ -2073,7 +1717,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
 
         // Special case for the "Still very stupid" upgrade
         if (name === "Complex Skill Trees") {
-            showMessageModal('Sadly', "This marks the end of v0.863, but your journey is just getting started! The Hall of Power is only the beginning, with new challenges and excitement in every update. How are you enjoying the battles? Are they keeping you on your toes? Your feedback is key to shaping the game.<br><br>While you wait for the next update (just days away!), why not restart, try new tactics, and uncover hidden secrets? Share your thoughts on the battles and Hall of Power on Discord or through the feedback form. Let’s keep this adventure going!");
+            showMessageModal('Sadly', "This marks the end of v0.864, but your journey is just getting started! The Hall of Power is only the beginning, with new challenges and excitement in every update. How are you enjoying the battles? Are they keeping you on your toes? Your feedback is key to shaping the game.<br><br>While you wait for the next update (just days away!), why not restart, try new tactics, and uncover hidden secrets? Share your thoughts on the battles and Hall of Power on Discord or through the feedback form. Let’s keep this adventure going!");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one
@@ -2648,6 +2292,14 @@ function displayNextModal() {
     if (imageName) {
         modalImage.src = imageName;
         modalImage.style.display = 'block';
+        // Adjust modal width based on image
+        modalImage.onload = () => {
+            if (!message) {
+                const imageWidth = modalImage.offsetWidth;
+                modalContent.style.width = `${imageWidth + 40}px`; // Add some padding
+                modalContent.style.maxWidth = '100%'; // Ensure it fits within the viewport
+            }
+        };
     } else {
         modalImage.style.display = 'none';
     }
