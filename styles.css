@@ -737,21 +737,19 @@ button.disabled {
 .custom-button {
     display: block;
     margin: 10px auto;
-    padding: 12px 0px;
     width: 100%;
+    height: 50px;
     font-weight: bold;
+    border-radius: 5px;
+    border: 2px solid rgb(0, 0, 0);
     cursor: pointer;
-    border-radius: 12px;
-    border: none;
     color: white;
     text-align: center;
     letter-spacing: 0.5px;
-    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    transition: 0.3s ease;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     background: linear-gradient(145deg, #fff, #f0f0f0);
-    white-space: nowrap; /* Prevents text from wrapping */
-    overflow: hidden; /* Ensures text does not overflow */
-    text-overflow: ellipsis; /* Adds an ellipsis (...) if the text is too long */
+    background-position-y: 50% ;
 }
 
 .custom-button:hover {
@@ -766,46 +764,55 @@ button.disabled {
 
 /* Prestige Button Styling */
 #prestigeButton.custom-button {
-    background-color: #f39c12;
-    background: linear-gradient(145deg, #f5a623, #f39c12); /* Subtle gradient */
+    border-color: rgb(255, 160, 87);
+    color: orange;
+    background-image: url('imgs/textures/prestige-button.png');
 }
 
 #prestigeButton.custom-button:hover {
-    background-color: #e67e22;
-    background: linear-gradient(145deg, #e68422, #e67e22);
+    border-color: rgb(255, 209, 122);
+    color: rgb(255, 227, 175);
+    box-shadow: 0px 0px 7px 5px rgb(199, 155, 72), 0px 0px 7px 3px rgb(146, 115, 57) inset;
+
 }
 
 /* Ascend Button Styling */
 #ascendButton.custom-button {
-    background-color: #1e90ff;
-    background: linear-gradient(145deg, #1f9bff, #1e90ff);
+    border-color: lightskyblue;
+    color: lightseagreen;
+    background-image: url('imgs/textures/god-mode-button.png');
 }
 
 #ascendButton.custom-button:hover {
-    background-color: #1c86ee;
-    background: linear-gradient(145deg, #1d92ee, #1c86ee);
+    border-color: rgb(122, 173, 255);
+    color: rgb(175, 182, 255);
+    box-shadow: 0px 0px 7px 5px rgb(93, 143, 174), 0px 0px 7px 3px rgb(100, 153, 186) inset;
 }
 
 /* Transcend Button Styling */
 #transcendButton.custom-button {
-    background-color: #8e44ad;
-    background: linear-gradient(145deg, #9449b3, #8e44ad);
+    border-color: #9449b3;
+    color: #b64fe3;
+    background-image: url('imgs/textures/parrallel-god-mode-button.png');
 }
 
 #transcendButton.custom-button:hover {
-    background-color: #7d3c98;
-    background: linear-gradient(145deg, #84419e, #7d3c98);
+    border-color: #9449b3;
+    color: #d2a3e7;
+    box-shadow: 0px 0px 7px 5px #783992, 0px 0px 7px 3px #7d3d98 inset;
 }
 
 /* Big Crunch Button Styling */
 #bigCrunchButton.custom-button {
-    background-color: #ff6347;
-    background: linear-gradient(145deg, #ff7155, #ff6347);
+    color: #ff5233;
+    border-color: #ff7a62;
+    background-image: url('imgs/textures/big-crunch-button.png');
 }
 
 #bigCrunchButton.custom-button:hover {
-    background-color: #ff4500;
-    background: linear-gradient(145deg, #ff5222, #ff4500);
+    border-color: #ff8558;
+    color: #ffad8f;
+    box-shadow: 0px 0px 7px 5px #a4421e, 0px 0px 7px 3px #a73c15 inset;
 }
 
 

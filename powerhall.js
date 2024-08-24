@@ -1,17 +1,20 @@
 
 const powerHallSkills = [
     { name: 'Power Surge', cost: 9000, description: 'Power Generation is increased by 50%!', unlocked: false, level: 'Arcane Magnetism' },
+    { name: 'Arcane Magnetizer', cost: 1e7, description: 'Upgrade autobuyer is now 5x faster!', unlocked: false, level: 'Arcane Magnetism' },
     // { name: 'Fake - Overcharge', cost: 10000, description: 'Unlock ability to spend all your power and multiply production of first 5 resources by square root of spent power.', unlocked: false, level: 'Arcane Magnetism' },
     // { name: 'Fake - Energy Overflow', cost: 1e30, description: 'Allow excess energy to overflow into additional resource generation.', unlocked: false, level: 'Arcane Magnetism' },
     
     // { name: 'Hyperconductor', cost: 1e30, description: `Add multiplier stacking with prestige/god-mode/etc. based on your number of purchased upgrades. (x${#purchasedupgrades})`, unlocked: false, level: 'Quantum Nexus' },
-   
+    { name: 'Astral Precision', cost: 3e7, description: 'Attack damage range rescaled from power -/+75% to power-25%/power+75%.', unlocked: false, level: 'Quantum Nexus' },
+
+
     { name: 'Lightning Reflexes', cost: 12000, description: 'Your attacks become 2.5x faster!', unlocked: false, level: 'Cosmic Dynamics' },
     { name: 'Supersonic Fury', cost: 1.2e8, description: 'Your attacks become even 2x faster!', unlocked: false, level: 'Cosmic Dynamics' },
     // { name: 'Astral Disruption', cost: 1e30, description: 'Your attacks have a 5% chance to stun the enemy for 1 second.', unlocked: false, level: 'Cosmic Dynamics' },
     { name: 'Graviton Burst', cost: 1.2e50, description: 'Your attacks are imperceptible to average beings. You now attack 5x faster!', unlocked: false, level: 'Cosmic Dynamics' },
 
-    // { name: 'Galactic Core', cost: 100000, description: 'Tap into the energy of a galactic core to power your operations.', unlocked: false, level: 'Celestial Manipulation' },
+    { name: 'Upgrade Amplifier', cost: 4e8, description: `First 4 resources gain a flat multiplier based on number of purchased upgrades.`, unlocked: false, level: 'Celestial Manipulation' },
     // { name: 'Stellar Harvesting', cost: 300000, description: 'Harvest energy directly from stars to fuel your needs.', unlocked: false, level: 'Celestial Manipulation' },
     // { name: 'Cosmic Battery', cost: 750000, description: 'Store cosmic energy in a battery with nearly unlimited capacity.', unlocked: false, level: 'Celestial Manipulation' }
 ];
@@ -49,6 +52,20 @@ function unlockPowerHallSkill(skill, duringLoad = false) {
                 powerSurgeMultiplier = Math.max(powerSurgeMultiplier, 1.5);
                 break;
 
+            case 'Arcane Magnetizer':
+                fasterAutobuyerskill = true;
+
+                if (autobuyIntervalId !== null) {
+                    clearInterval(autobuyIntervalId);
+                }
+                autobuyIntervalId = setInterval(autobuyUpgrades, 250);
+
+                break;
+
+            case 'Astral Precision':
+                playerMinDamageMult = 0.75;
+                break;
+
             case 'Lightning Reflexes':
                 playerAttackSpeed = Math.max(playerAttackSpeed, 5);
                 break;
@@ -59,6 +76,10 @@ function unlockPowerHallSkill(skill, duringLoad = false) {
 
             case 'Graviton Burst':
                 playerAttackSpeed = Math.max(playerAttackSpeed, 50);
+                break;
+
+            case 'Upgrade Amplifier':
+                upgradeAmplifierSkill = true;
                 break;
 
             default:

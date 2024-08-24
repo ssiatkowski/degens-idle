@@ -81,6 +81,8 @@ let enemyHealth, enemyDefense, enemyMinDamage, enemyMaxDamage, enemyCritChance, 
 let playerMaxHealth, enemyMaxHealth, currEnemyName;
 let playerInterval, enemyInterval;
 
+let playerMinDamageMult = 0.25;
+let playerMaxDamageMult = 1.75;
 
 let deadpoolRevives = 0;
 
@@ -118,9 +120,8 @@ function startFightGame(enemyName, enemyImg) {
         playerCritChance = Math.min(Math.ceil(trollPoints ** (1/50)) / 100, 0.9);
         playerCritDamage = 1 + Math.min(Math.ceil(trollPoints ** (1/25)) / 100, 99);
 
-        // Calculate player's damage range (±75%)
-        playerMinDamage = Math.floor(power * 0.25);
-        playerMaxDamage = Math.ceil(power * 1.75);
+        playerMinDamage = Math.floor(power * playerMinDamageMult);
+        playerMaxDamage = Math.ceil(power * playerMaxDamageMult);
 
         currEnemyName = enemyName;
 

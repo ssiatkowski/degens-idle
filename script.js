@@ -75,6 +75,7 @@ let transcendenceUnlocked = false;
 
 let autoPrestigeThreshold = null;
 let autoAscendThreshold = null;
+let autoTranscendThreshold = null;
 
 let numAscensionUpgrades = 1;
 let numPUAscensionUpgrades = 2;
@@ -87,6 +88,9 @@ let cookieKnowledgeable = false;
 // don't need to save - this gets called and set at load, then prevents to be reset on skill click
 let autobuyIntervalId = null; // Store the interval ID here
 let autobuyUpgradesSkill = false;
+
+let upgradeAmplifierSkill = false;
+let fasterAutobuyerskill = false;
 
 //cooldowns for mini games
 let cooldowns = {
@@ -162,10 +166,13 @@ function calculateEffectivePower() {
 
 
 function updateEffectiveMultipliers() {
-    effectiveCopiumPerSecond = copiumPerSecond * totalMultiplier;
-    effectiveDelusionPerSecond = delusionPerSecond * totalMultiplier;
-    effectiveYachtMoneyPerSecond = yachtMoneyPerSecond * totalMultiplier;
-    effectiveTrollPointsPerSecond = trollPointsPerSecond * totalMultiplier;
+    const amplifierMultiplier = upgradeAmplifierSkill ? purchasedUpgrades.length : 1;
+
+    effectiveCopiumPerSecond = copiumPerSecond * totalMultiplier * amplifierMultiplier;
+    effectiveDelusionPerSecond = delusionPerSecond * totalMultiplier * amplifierMultiplier;
+    effectiveYachtMoneyPerSecond = yachtMoneyPerSecond * totalMultiplier * amplifierMultiplier;
+    effectiveTrollPointsPerSecond = trollPointsPerSecond * totalMultiplier * amplifierMultiplier;
+
     effectiveHopiumPerSecond = hopiumPerSecond * totalMultiplier;
     effectiveKnowledgePerSecond = calculateEffectiveKnowledge();
 
@@ -261,6 +268,7 @@ function loadGameState() {
     autoPrestigeThreshold = parseFloat(localStorage.getItem('autoPrestigeThreshold')) || null;
 
     autoAscendThreshold = parseFloat(localStorage.getItem('autoAscendThreshold')) || null;
+    autoTranscendThreshold = parseFloat(localStorage.getItem('autoTranscendThreshold')) || null;
 
     deadpoolRevives = parseFloat(localStorage.getItem('deadpoolRevives')) || 0;
     
@@ -436,7 +444,7 @@ function saveGameState() {
 
     localStorage.setItem('autoPrestigeThreshold', autoPrestigeThreshold);
     localStorage.setItem('autoAscendThreshold', autoAscendThreshold);
-
+    localStorage.setItem('autoTranscendThreshold', autoTranscendThreshold);
     
 
     localStorage.setItem('deadpoolRevives', deadpoolRevives);
@@ -1032,12 +1040,20 @@ async function restartGame(isPrestige = false) {
             lessDiminishingPUGodModeSkill = false;
             autoPrestigeThreshold = null;
             autoAscendThreshold = null;
+            autoTranscendThreshold = null;
             autobuyUpgradesSkill = false;
+
+            upgradeAmplifierSkill = false;
+            fasterAutobuyerskill = false;
+
 
             transcendenceUnlocked = false;
 
             playerAttackSpeed = 2;
             powerSurgeMultiplier = 1;
+
+            playerMinDamageMult = 0.25;
+            playerMaxDamageMult = 1.75;
 
             powerUnlocked = false;
             document.getElementById('power-container').style.display = 'none';
@@ -1813,16 +1829,45 @@ function updateTranscendButton() {
     const transcendButton = document.getElementById('transcendButton');
     if (canTranscend()) {
         transcendButton.style.display = 'block';
+
+        // Check if autoTranscendThreshold is set and not null
+        if (autoTranscendThreshold !== null) {
+            // Count the number of purchased upgrades that do not have isPUGodMode
+            const nonPUGodModeUpgrades = purchasedUpgrades.filter(upgrade => !upgrade.isPUGodMode).length;
+
+            // If the number of non-PUGodMode upgrades meets or exceeds the threshold, auto-transcend
+            if (nonPUGodModeUpgrades >= autoTranscendThreshold) {
+                // Get the upgrades to transcend with
+                const selectedUpgrades = purchasedUpgrades.filter(upgrade => !upgrade.isPUGodMode).slice(0, autoTranscendThreshold);
+
+                // Perform the transcendence using the selected upgrades
+                const upgradesCount = selectedUpgrades.length;
+                puGodLevel += upgradesCount;
+                puGodMultiplier = calculatePUGodModeMultiplier(puGodLevel);
+
+                selectedUpgrades.forEach(upgrade => {
+                    upgrade.isPUGodMode = true;
+                });
+
+                epsMultiplier = Math.max(calculateAscensionEpsMult(), 1);
+                prestigeRequirement = calculateMinResource();
+                
+                restartGame(true); // Use the existing restartGame function with prestige mode
+                saveGameState(); // Save game state after transcending
+            }
+        }
+
     } else {
         transcendButton.style.display = 'none';
     }
 }
 
+
 function updateBigCrunchButton() {
     const bigCrunchButton = document.getElementById('bigCrunchButton');
     if (bigCrunchUnlocked && canBigCrunch()) {
         const newMultiplier = calculateBigCrunchMultiplier(power);
-        bigCrunchButton.textContent = `Big Crunch (x${formatNumber((newMultiplier / bigCrunchMultiplier))} multiplier)`;
+        bigCrunchButton.textContent = `BIG CRUNCH (x${formatNumber((newMultiplier / bigCrunchMultiplier))} MULT)`;
         bigCrunchButton.style.display = 'block';
     } else {
         bigCrunchButton.style.display = 'none';
@@ -1913,7 +1958,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
     // Find the upgrade object by its name in the available upgrades list
     const upgrade = availableUpgrades.find(up => up.name === upgradeName);
 
-    console.log(`buyUpgrade(${upgradeName})`);
+    // console.log(`buyUpgrade(${upgradeName})`);
     // If the upgrade is not found, log an error and return
     if (!upgrade) {
         console.error(`Upgrade not found: ${upgradeName}`);
@@ -2009,7 +2054,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
 
         // Special case for the "Still very stupid" upgrade
         if (name === "Complex Skill Trees") {
-            showMessageModal('Sadly', "This marks the end of v0.861, but your journey is just getting started! The Hall of Power is only the beginning, with new challenges and excitement in every update. How are you enjoying the battles? Are they keeping you on your toes? Your feedback is key to shaping the game.<br><br>While you wait for the next update (just days away!), why not restart, try new tactics, and uncover hidden secrets? Share your thoughts on the battles and Hall of Power on Discord or through the feedback form. Let’s keep this adventure going!");
+            showMessageModal('Sadly', "This marks the end of v0.862, but your journey is just getting started! The Hall of Power is only the beginning, with new challenges and excitement in every update. How are you enjoying the battles? Are they keeping you on your toes? Your feedback is key to shaping the game.<br><br>While you wait for the next update (just days away!), why not restart, try new tactics, and uncover hidden secrets? Share your thoughts on the battles and Hall of Power on Discord or through the feedback form. Let’s keep this adventure going!");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one
@@ -2029,7 +2074,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
 
     } else {
         const button = document.querySelector(`button[data-upgrade-name="${encodedUpgradeName}"]`);
-        showStatusMessage(button, 'Insufficient resources to purchase this upgrade.', false, 1500);
+        showStatusMessage(button, 'Insufficient resources to purchase this upgrade.', false, 1000);
     }
 }
 
@@ -2061,9 +2106,9 @@ function buyAllUpgrades(limit, pressedButton) {
         updateEffectiveMultipliers();
         updateDisplay();
         saveGameState();
-        showStatusMessage(pressedButton, `Purchased ${purchasedCount} upgrade(s).`, true, timeout=1500);
+        showStatusMessage(pressedButton, `Purchased ${purchasedCount} upgrade(s).`, true, timeout=1000);
     } else {
-        showStatusMessage(pressedButton, 'No upgrades were purchased.', false, timeout=1500);
+        showStatusMessage(pressedButton, 'No upgrades were purchased.', false, timeout=1000);
     }
 }
 

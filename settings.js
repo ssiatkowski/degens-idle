@@ -369,7 +369,7 @@ document.getElementById('automationButton').addEventListener('click', function()
     automationContent.innerHTML = '';
 
     // Check if all features are locked (none are unlocked)
-    const allFeaturesLocked = !autobuyUpgradesSkill && autoPrestigeThreshold === null && !buyMarkersSkill && autoAscendThreshold === null;
+    const allFeaturesLocked = !autobuyUpgradesSkill && autoPrestigeThreshold === null && !buyMarkersSkill && autoAscendThreshold === null && autoTranscendThreshold === null;
 
     // If all features are locked, show the "unlock automation" message
     if (allFeaturesLocked) {
@@ -468,9 +468,20 @@ document.getElementById('automationButton').addEventListener('click', function()
             automationContent.innerHTML += autoAscendHtml;
         }
 
+        // Dynamically add Auto-Transcend Threshold setting if available
+        if (autoTranscendThreshold !== null) {
+            const autoTranscendHtml = `
+                <div style="margin-bottom: 15px;">
+                    <label for="autoTranscendThresholdInput">Auto Transcend Threshold (1 to ${numPUAscensionUpgrades}):</label>
+                    <input type="number" id="autoTranscendThresholdInput" value="${autoTranscendThreshold}" min="1" max="${numPUAscensionUpgrades}">
+                </div>
+            `;
+            automationContent.innerHTML += autoTranscendHtml;
+        }
+
         // Check if any feature is missing and at least one is unlocked
-        const someFeaturesMissing = !autobuyUpgradesSkill || autoPrestigeThreshold === null || !buyMarkersSkill || autoAscendThreshold === null;
-        const atLeastOneFeatureUnlocked = autobuyUpgradesSkill || autoPrestigeThreshold !== null || buyMarkersSkill || autoAscendThreshold !== null;
+        const someFeaturesMissing = !autobuyUpgradesSkill || autoPrestigeThreshold === null || !buyMarkersSkill || autoAscendThreshold === null || autoTranscendThreshold === null;
+        const atLeastOneFeatureUnlocked = autobuyUpgradesSkill || autoPrestigeThreshold !== null || buyMarkersSkill || autoAscendThreshold !== null || autoTranscendThreshold === null;
 
         if (someFeaturesMissing && atLeastOneFeatureUnlocked) {
             automationContent.innerHTML += `
@@ -508,6 +519,18 @@ document.getElementById('saveAutomationSettingsButton').addEventListener('click'
         }
     }
 
+    // Auto Transcend Threshold
+    if (autoTranscendThreshold !== null) {
+        const transcendThresholdInput = parseInt(document.getElementById('autoTranscendThresholdInput').value);
+
+        if (isNaN(transcendThresholdInput) || transcendThresholdInput < 1 || transcendThresholdInput > numPUAscensionUpgrades) {
+            showImmediateMessageModal('Invalid Number', `Please enter a valid number between 1 and ${numPUAscensionUpgrades} for the Auto Transcend Threshold.`);
+            return; // Prevent closing if there's an error
+        } else {
+            autoTranscendThreshold = transcendThresholdInput;
+        }
+    }
+
     // Handle auto-buy upgrades only if the skill is unlocked
     if (autobuyUpgradesSkill) {
         const autoBuyUpgradesSwitch = document.getElementById('autoBuyUpgradesSwitch');
@@ -516,7 +539,7 @@ document.getElementById('saveAutomationSettingsButton').addEventListener('click'
         if (autoBuyUpgradesSwitch.checked) {
             // Enable auto-buy if it’s not already running
             if (autobuyIntervalId === null) {
-                autobuyIntervalId = setInterval(autobuyUpgrades, 1500);
+                autobuyIntervalId = setInterval(autobuyUpgrades, fasterAutobuyerskill ? 250 : 1500);
                 console.log("Auto-buy started"); // Debug log
             }
         } else {

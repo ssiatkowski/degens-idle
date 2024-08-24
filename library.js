@@ -22,9 +22,9 @@ const librarySkills = [
 
     { name: 'Multibuy Upgrades', cost: 2, description: 'Unlock "Buy Seen" and "Buy Max" buttons for Upgrades.', unlocked: false, level: 'Artificial Intelligence' },
     { name: 'Cookie Clicker Clicker', cost: 75, description: 'After Prestiging or Ascending, automatically click the cookie 10 times per second for 15 seconds.', unlocked: false, level: 'Artificial Intelligence' },
-    { name: 'Double Ascension', cost: 1250, description: 'Gain up to 2 God-Mode levels per Ascension. Also select up to 2 upgrades to enhance to God Mode.', unlocked: false, level: 'Artificial Intelligence' },
+    { name: 'Double Ascension', cost: 350, description: 'Gain up to 2 God-Mode levels per Ascension. Also select up to 2 upgrades to enhance to God Mode.', unlocked: false, level: 'Artificial Intelligence' },
     { name: 'Buy Markers', cost: 300000, description: 'Purchased Upgrades will now have a switch indicating whether or not they should be bought using "Buy Seen" and "Buy All" buttons. (Can toggle all in Automation Settings) ', unlocked: false, level: 'Artificial Intelligence' },
-    { name: 'Quadruple Ascension', cost: 3.6e6, description: 'Gain up to 4 God-Mode levels per Ascension. Also select up to 4 upgrades to enhance to God Mode.', unlocked: false, level: 'Artificial Intelligence' },
+    { name: 'Quadruple Ascension', cost: 4e6, description: 'Gain up to 4 God-Mode levels per Ascension. Also select up to 4 upgrades to enhance to God Mode.', unlocked: false, level: 'Artificial Intelligence' },
     { name: 'Septuple Transendence', cost: 7e19, description: 'Gain up to 7 Parallel Universe God-Mode levels per Transendence. Also select up to 7 upgrades to enhance to PU God Mode.', unlocked: false, level: 'Artificial Intelligence' },
     { name: 'Autobuy Upgrades', cost: 3e22, description: `Buy Markers are repurposed to configure Autobuy - which will purchase afforable visible upgrades every 1.5 seconds. (Can toggle on/off in Automation Settings)`, unlocked: false, level: 'Artificial Intelligence' },
     { name: 'Septuple Ascension', cost: 7e24, description: 'Gain up to 7 God-Mode levels per Ascension. Also select up to 7 upgrades to enhance to God Mode.', unlocked: false, level: 'Artificial Intelligence' },
@@ -37,7 +37,7 @@ const librarySkills = [
 
     { name: 'Perpetual Prestige', cost: 1e25, description: 'Auto-Prestige ability.  (Target prestige multiplier can be set in Automation Settings. Default=10)', unlocked: false, level: '???' },
     { name: 'Eternal Ascension', cost: 1e29, description: 'Auto-Ascend ability. (Target # upgrades can be set in Automation Settings. Default=Max)', unlocked: false, level: '???' },
-    // { name: 'Quantum Symphony', cost: 1e50, description: 'Auto Transcend', unlocked: false, level: '???' },
+    { name: 'Quantum Symphony', cost: 1e44, description: 'Auto-Transcend. (Similar to Auto-Ascend)', unlocked: false, level: '???' },
     // { name: 'Void of Non-Existence', cost: 1e55, description: 'Auto-Big Crunch', unlocked: false, level: '???' },
     // { name: 'Infinite Fractal', cost: 1e33, description: '', unlocked: false, level: '???' },
 
@@ -200,7 +200,7 @@ function unlockLibrarySkill(skill, duringLoad = false) {
             case 'Autobuy Upgrades':  
                 autobuyUpgradesSkill = true;
                 if (autobuyIntervalId === null) { // Check if the interval is not already running
-                    autobuyIntervalId = setInterval(autobuyUpgrades, 1500);
+                    autobuyIntervalId = setInterval(autobuyUpgrades, fasterAutobuyerskill ? 250 : 1500);
                 }
                 break;
 
@@ -243,6 +243,13 @@ function unlockLibrarySkill(skill, duringLoad = false) {
             case 'Eternal Ascension':
                 if(autoAscendThreshold == null){
                     autoAscendThreshold = numAscensionUpgrades;
+                }
+                break;
+
+                
+            case 'Quantum Symphony':
+                if(autoTranscendThreshold == null){
+                    autoTranscendThreshold = numPUAscensionUpgrades;
                 }
                 break;
 
