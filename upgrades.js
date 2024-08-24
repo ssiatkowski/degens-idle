@@ -43,7 +43,7 @@ const upgrades = [
     {
         name: `Not All Trolls Are Bad`,
         cost: { copium: 0, delusion: 380, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 4.2, delusionPerSecond: 0, yachtMoneyPerSecond: 1, trollPointsPerSecond: 4.2, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 4.2, delusionPerSecond: 0, yachtMoneyPerSecond: 2, trollPointsPerSecond: 4.2, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/happy_troll.jpg`,
     },
     {
@@ -343,32 +343,21 @@ const upgrades = [
         earnings: { copiumPerSecond: 650000, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0.0015, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/antimatter_dimensions.jpg`,
         message: 
-                `<div>
-                    <h2>Antimatter Dimensions: A Game-Changing Milestone</h2>
-                    <p>
-                        Ladies and gentlemen, behold the pinnacle of gaming excellence: <strong>Antimatter Dimensions</strong>. 
-                        This upgrade is not just a mere enhancement—it's a transformative journey into the very fabric of reality and beyond. 
-                        A game so influential that it has reshaped the landscape of entertainment and culture, overshadowing the combined legacies of GTA, Skyrim, Dota, Quake, FIFA, Pokemon, and Tetris.
-                    </p>
-                    <h3>The Secret to Unlocking "Knowledge"</h3>
-                    <p>
-                        Amidst the infinite possibilities lies a secret—an elusive new resource known as <strong>"Knowledge"</strong>. 
-                        This resource requires players to transcend conventional boundaries and embrace the unknown.
-                    </p>
-                    <p>
-                        To unlock <strong>Knowledge</strong>, one must first achieve the seemingly impossible feat of reaching 
-                        <strong>negative one Trillion delusion</strong>. This task demands perseverance, strategy, and an unwavering belief in the layers yet to be discovered.
-                    </p>
-                    <p><strong>This game taught us that there are always more layers.</strong></p>
-                    <div style="font-size: 48px; font-weight: bold; text-align: center;">
-                        KNOWLEDGE
-                    </div>
-                    <p>
-                        Unlocking <strong>Knowledge</strong> is more than just a milestone—it's a testament to the limitless potential of the human spirit 
-                        and the boundless nature of the universe. <strong>Antimatter Dimensions</strong> has not just entertained us; it has enlightened us, 
-                        revealing that the pursuit of knowledge and understanding is a journey with infinite horizons.
-                    </p>
-                </div>`
+                `<p>
+                    <strong>Antimatter Dimensions</strong> stands as a major milestone in the incremental and idle game genres. Its innovative gameplay and deep mechanics have set a new standard and significantly impacted these gaming communities.
+                </p>                
+                <div style="font-size: 32px; font-weight: bold; text-align: center;">
+                    KNOWLEDGE
+                </div>
+                <p>
+                    In celebration of <strong>Antimatter Dimensions</strong>, this game introduces a new resource: <strong>"Knowledge"</strong>. 
+                    This addition brings a new layer of complexity, challenging you to explore further and deepen your strategic gameplay.
+                </p>
+                <p>
+                    To unlock <strong>Knowledge</strong>, you must reach <strong>negative one Trillion delusion</strong>, demonstrating your commitment and skill.
+                </p>
+                <p><strong>Antimatter Dimensions</strong> has paved the way for innovations like <strong>Knowledge</strong>, expanding the horizons of incremental and idle gaming. Unlocking <strong>Knowledge</strong> highlights the game's ongoing evolution and celebrates the impact of <strong>Antimatter Dimensions</strong> on the genre.
+                </p>`
     },  
     {
         name: `Degens Idle Dev`,
@@ -856,6 +845,12 @@ const upgrades = [
         cost: { copium: 0, delusion: 0, yachtMoney: 3e52, trollPoints: 0, hopium: 0, knowledge: 1e40, power: 100000, serenity: 0 },
         earnings: { copiumPerSecond: 3.5e18, delusionPerSecond: 0, yachtMoneyPerSecond: 3.5e18, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 18000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/trump_look.jpg`,        
+    },
+    {
+        name: `Still Mediocre`,
+        cost: { copium: 0, delusion: 1e52, yachtMoney: 0, trollPoints: 5e52, hopium: 0, knowledge: 1e41, power: 30000, serenity: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 7e18, yachtMoneyPerSecond: 0, trollPointsPerSecond: 6e18, hopiumPerSecond: 0, knowledgePerSecond: 30000, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: `imgs/3rd_place_upvotes.jpg`,        
     },
     {
         name: `Last Bit of Hope`,

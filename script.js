@@ -1326,7 +1326,7 @@ function calculateBigCrunchMultiplier(bcPower = bigCrunchPower) {
 // Function to calculate the ascension eps multiplier
 function calculateAscensionEpsMult() {
     const exponent = twoDimensionalAscensionSkill ? 2 / 3 : 1 / 3;
-    return epsMultiplier ** exponent;
+    return Math.max(epsMultiplier ** exponent, 1);
 }
 
 async function ascend() {
@@ -1336,7 +1336,7 @@ async function ascend() {
     const selectedUpgrades = await showMessageModal(
         'God-Mode Ascension',
         `Are you sure you want to enter God-Mode level ${godModeLevel + 1}?<br><br>
-        Raising the level of God-Mode requires temporarily folding three dimensions in the space around you to a single point, which will unfortunately reduce your Prestige multiplier to its cube root. Your Prestige multiplier will shrink from <strong>x${formatNumber(epsMultiplier)}</strong> to <strong>x${formatNumber(calculateAscensionEpsMult())}</strong><br><br>
+        Raising the level of God-Mode requires temporarily folding three dimensions in the space around you to a single point, which will unfortunately reduce your Prestige multiplier to its cube root. Your Prestige multiplier will change from <strong>x${formatNumber(epsMultiplier)}</strong> to <strong>x${formatNumber(calculateAscensionEpsMult())}</strong><br><br>
         On the bright side, your God-Mode multiplier will increase from <strong>x${formatNumber(godModeMultiplier)}</strong> to at least <strong>x${formatNumber(calculateGodModeMultiplier(godModeLevel+1))}</strong>!<br><br>
         Additionally, you can ${upgradeText}.`,
         true,
@@ -1352,7 +1352,7 @@ async function ascend() {
             upgrade.isGodMode = true;
         });
 
-        epsMultiplier = Math.max(calculateAscensionEpsMult(), 1);
+        epsMultiplier = calculateAscensionEpsMult();
         prestigeRequirement = calculateMinResource();
         
         showMessageModal('Ascension Successful!', `<strong>You have entered God-Mode Level ${godModeLevel}.</strong><br> Your multiplier God-Mode is now x${formatNumber(godModeMultiplier)}, your prestige multiplier is x${formatNumber(epsMultiplier)}, and your chosen upgrades are 10x stronger.`);        
@@ -1371,7 +1371,7 @@ async function transcend() {
     const selectedUpgrades = await showMessageModal(
         'Parallel Universe God-Mode Ascension',
         `Are you sure you want to enter Parallel Universe God-Mode level ${puGodLevel + 1}?<br><br>${firstTranscendText}
-        Accessing this new dimension requires temporarily aligning your universe with a parallel one, which will unfortunately reduce your Prestige multiplier the same way that Ascending in your Universe would. Your Prestige multiplier will shrink from <strong>x${formatNumber(epsMultiplier)}</strong> to <strong>x${formatNumber(calculateAscensionEpsMult())}</strong><br><br>
+        Accessing this new dimension requires temporarily aligning your universe with a parallel one, which will unfortunately reduce your Prestige multiplier the same way that Ascending in your Universe would. Your Prestige multiplier will change from <strong>x${formatNumber(epsMultiplier)}</strong> to <strong>x${formatNumber(calculateAscensionEpsMult())}</strong><br><br>
         On the bright side, your Parallel Universe God-Mode multiplier will increase from <strong>x${formatNumber(puGodMultiplier)}</strong> to at least <strong>x${formatNumber(calculatePUGodModeMultiplier(puGodLevel+2))}</strong>!<br><br>
         Additionally, you can ${upgradeText}.`,
         true,
@@ -1390,7 +1390,7 @@ async function transcend() {
             upgrade.isPUGodMode = true;
         });
 
-        epsMultiplier = Math.max(calculateAscensionEpsMult(), 1);
+        epsMultiplier = calculateAscensionEpsMult();
         prestigeRequirement = calculateMinResource();
         
         showMessageModal('Transcendence Successful!', `<strong>You have entered Parallel Universe God-Mode Level ${puGodLevel}.</strong><br> Your Parallel Universe God-Mode multiplier is now x${formatNumber(puGodMultiplier)}, your prestige multiplier is x${formatNumber(epsMultiplier)}, and your chosen upgrades are 10x stronger.`);        
@@ -1474,7 +1474,7 @@ function updateAscendButton() {
                     upgrade.isGodMode = true;
                 });
 
-                epsMultiplier = Math.max(calculateAscensionEpsMult(), 1);
+                epsMultiplier = calculateAscensionEpsMult();
                 prestigeRequirement = calculateMinResource();
                 
                 restartGame(true); // Use the existing restartGame function with prestige mode
@@ -1512,7 +1512,7 @@ function updateTranscendButton() {
                     upgrade.isPUGodMode = true;
                 });
 
-                epsMultiplier = Math.max(calculateAscensionEpsMult(), 1);
+                epsMultiplier = calculateAscensionEpsMult();
                 prestigeRequirement = calculateMinResource();
                 
                 restartGame(true); // Use the existing restartGame function with prestige mode
@@ -1717,7 +1717,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
 
         // Special case for the "Still very stupid" upgrade
         if (name === "Complex Skill Trees") {
-            showMessageModal('Sadly', "This marks the end of v0.864, but your journey is just getting started! The Hall of Power is only the beginning, with new challenges and excitement in every update. How are you enjoying the battles? Are they keeping you on your toes? Your feedback is key to shaping the game.<br><br>While you wait for the next update (just days away!), why not restart, try new tactics, and uncover hidden secrets? Share your thoughts on the battles and Hall of Power on Discord or through the feedback form. Let’s keep this adventure going!");
+            showMessageModal('Sadly', "This marks the end of v0.865, but your journey is just getting started! The Hall of Power is only the beginning, with new challenges and excitement in every update. How are you enjoying the battles? Are they keeping you on your toes? Your feedback is key to shaping the game.<br><br>While you wait for the next update (just days away!), why not restart, try new tactics, and uncover hidden secrets? Share your thoughts on the battles and Hall of Power on Discord or through the feedback form. Let’s keep this adventure going!");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one
