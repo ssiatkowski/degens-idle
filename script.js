@@ -494,16 +494,15 @@ function showTooltip(event, earnings, isGodMode, isPUGodMode, hoverOverwrite) {
     let earningsClass = isGodMode ? 'godmode-earnings' : '';
     earningsClass = isPUGodMode ? 'pu-godmode-earnings' : earningsClass;
 
-    if (hoverOverwrite){
+    if (hoverOverwrite) {
         tooltip.innerHTML = `
         <div>
             <div class="upgrade-earnings ${earningsClass}">
                 ${hoverOverwrite} <!-- Formatted earnings -->
             </div>
         </div>
-    `;
-    }
-    else {
+        `;
+    } else {
         tooltip.innerHTML = `
             <div>
                 <div class="upgrade-earnings ${earningsClass}">
@@ -513,18 +512,38 @@ function showTooltip(event, earnings, isGodMode, isPUGodMode, hoverOverwrite) {
         `;
     }
 
+    // Show and position the tooltip initially
+    tooltip.style.display = 'block';
+    tooltip.style.position = 'absolute';
+
     if (window.innerWidth <= 768) {  // Mobile devices
-        tooltip.style.display = 'block';
-        tooltip.style.position = 'absolute';
-        tooltip.style.left = `${event.pageX + 40}px`;
-        tooltip.style.top = `${event.pageY + 40}px`;
+        tooltip.style.left = `${event.touches[0].pageX + 40}px`;
+        tooltip.style.top = `${event.touches[0].pageY + 40}px`;
+
+        // Add event listener to update tooltip position while moving finger
+        document.addEventListener('touchmove', moveTooltip, { passive: false });
     } else {  // Desktop devices
-        tooltip.style.display = 'block';
-        tooltip.style.position = 'absolute';
         tooltip.style.left = `${event.pageX + 10}px`;
         tooltip.style.top = `${event.pageY + 10}px`;
     }
+}
 
+// Function to move the tooltip with finger
+function moveTooltip(event) {
+    const tooltip = document.getElementById('upgradeTooltip');
+    if (tooltip) {
+        tooltip.style.left = `${event.touches[0].pageX + 40}px`;
+        tooltip.style.top = `${event.touches[0].pageY + 40}px`;
+    }
+}
+
+// Function to remove the tooltip and the move listener
+function removeTooltip() {
+    const tooltip = document.getElementById('upgradeTooltip');
+    if (tooltip) {
+        tooltip.style.display = 'none';
+        document.removeEventListener('touchmove', moveTooltip); // Remove the event listener when the tooltip is hidden
+    }
 }
 
 
@@ -2054,7 +2073,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
 
         // Special case for the "Still very stupid" upgrade
         if (name === "Complex Skill Trees") {
-            showMessageModal('Sadly', "This marks the end of v0.862, but your journey is just getting started! The Hall of Power is only the beginning, with new challenges and excitement in every update. How are you enjoying the battles? Are they keeping you on your toes? Your feedback is key to shaping the game.<br><br>While you wait for the next update (just days away!), why not restart, try new tactics, and uncover hidden secrets? Share your thoughts on the battles and Hall of Power on Discord or through the feedback form. Let’s keep this adventure going!");
+            showMessageModal('Sadly', "This marks the end of v0.863, but your journey is just getting started! The Hall of Power is only the beginning, with new challenges and excitement in every update. How are you enjoying the battles? Are they keeping you on your toes? Your feedback is key to shaping the game.<br><br>While you wait for the next update (just days away!), why not restart, try new tactics, and uncover hidden secrets? Share your thoughts on the battles and Hall of Power on Discord or through the feedback form. Let’s keep this adventure going!");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one
@@ -2458,11 +2477,6 @@ function initializeBuyButtons() {
 
 
 
-// Assuming showTooltip and hideTooltip functions are defined elsewhere
-
-
-
-
 // Developer mode multipliers
 let devMultiplier = 1;
 
@@ -2593,13 +2607,14 @@ document.addEventListener('keydown', (event) => {
 
 function showMessageModal(title, message, isConfirm = false, isUpgradeSelection = false, imageName = null, isTranscend = false, preventOutsideClose = false) {
     return new Promise((resolve, reject) => {
-        modalQueue.push({ title, message, isConfirm, isUpgradeSelection, imageName, isTranscend, preventOutsideClose, resolve, reject });
+        const isRestartDialog = title === "Are You Sure You Want to Restart?" || title === "You Didn't Ask for It, But I'll Give You One More Try";
+
+        modalQueue.push({ title, message, isConfirm, isUpgradeSelection, imageName, isTranscend, preventOutsideClose, resolve, reject, isRestartDialog });
         if (!isModalOpen) {
             displayNextModal();
         }
     });
 }
-
 
 function displayNextModal() {
     if (modalQueue.length === 0) {
@@ -2609,21 +2624,23 @@ function displayNextModal() {
 
     isModalOpen = true;
     const modal = document.getElementById('messageModal');
-    const closeButton = document.getElementById('closeMessageModal');
-    const modalCloseButton = document.getElementById('modalCloseButton');
-    const modalConfirmButtons = document.getElementById('modalConfirmButtons');
-    const modalConfirmButton = document.getElementById('modalConfirmButton');
-    const modalCancelButton = document.getElementById('modalCancelButton');
+    const modalContent = modal.querySelector('.modal-content'); // Select the modal content box
+
+    const { title, message, isConfirm, isUpgradeSelection, imageName, isTranscend, preventOutsideClose, resolve, isRestartDialog } = modalQueue.shift();
+
     const modalTitle = document.getElementById('modalTitle');
     const modalMessage = document.getElementById('modalMessage');
     const modalImage = document.getElementById('modalImage');
+    const closeButton = document.getElementById('closeMessageModal');
+    const modalConfirmButtons = document.getElementById('modalConfirmButtons');
+    const modalConfirmButton = document.getElementById('modalConfirmButton');
+    const modalCancelButton = document.getElementById('modalCancelButton');
+    const modalCloseButton = document.getElementById('modalCloseButton');
     const ascendUpgradeSelection = document.getElementById('ascendUpgradeSelection');
     const ascendUpgradeList = document.getElementById('ascendUpgradeList');
     const gameInputSection = document.getElementById('gameInputSection');
     const gameInput = document.getElementById('gameInput');
     const submitGameInputButton = document.getElementById('submitGameInputButton');
-
-    const { title, message, isConfirm, isUpgradeSelection, imageName, isTranscend, preventOutsideClose, resolve } = modalQueue.shift();
 
     modalTitle.textContent = title || '';
     modalMessage.innerHTML = message || '';
@@ -2636,6 +2653,13 @@ function displayNextModal() {
     }
 
     modal.style.display = 'block';
+
+    // Apply or remove the red background class
+    if (isRestartDialog) {
+        modalContent.classList.add('modal-restart');
+    } else {
+        modalContent.classList.remove('modal-restart');
+    }
 
     const closeModal = (result) => {
         modal.style.display = 'none';
@@ -2747,6 +2771,7 @@ function displayNextModal() {
         gameInputSection.style.display = 'block';
 
         gameInput.value = '';
+        gameInput.focus();
         submitGameInputButton.onclick = () => closeModal(gameInput.value);
 
         closeButton.onclick = () => closeModal(null);
@@ -2760,6 +2785,7 @@ function displayNextModal() {
         closeButton.onclick = () => closeModal();
     }
 }
+
 
 
 
@@ -2786,6 +2812,22 @@ function showImmediateMessageModal(title, message) {
         }
     };
 }
+
+document.addEventListener('touchstart', function(event) {
+    const startX = event.touches[0].clientX;
+    const startY = event.touches[0].clientY;
+
+    document.addEventListener('touchmove', function(event) {
+        const deltaX = event.touches[0].clientX - startX;
+        const deltaY = event.touches[0].clientY - startY;
+
+        // Prevent horizontal scrolling only if vertical movement is dominant
+        if (Math.abs(deltaY) > Math.abs(deltaX)) {
+            // Instead of preventing the default behavior, you can apply logic here to handle the scroll better
+        }
+    }, { passive: true });
+}, { passive: true });
+
 
 
 // Expose functions to the global scope for use in the HTML

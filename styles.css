@@ -25,6 +25,13 @@
     position: relative;
 }
 
+/* Add this to your existing CSS */
+.modal-restart {
+    background-color: #ff4d4d; /* Red background */
+    border: 2px solid #cc0000; /* Darker red border */
+    color: #330000; /* Dark red text color */
+}
+
 /* The Close Button */
 .close-button {
     color: #e0e0e0;
@@ -677,7 +684,12 @@ button.disabled {
     margin: 0 auto; /* Center horizontally */
     touch-action: manipulation;
     position: relative; /* Add this to position the tooltip */
+    user-select: none;  /* Prevent text selection */
+    -webkit-user-select: none;  /* Safari */
+    -moz-user-select: none;     /* Firefox */
+    -ms-user-select: none;      /* Internet Explorer/Edge */
 }
+
 
 #cookieButton img {
     width: 150px; /* Adjust size as needed */
@@ -687,22 +699,22 @@ button.disabled {
 #cookieButton:active img {
     transform: scale(0.9);
 }
-
 .cookieTooltip {
     visibility: hidden;
-    background-color: #555;
+    background-color: rgba(85, 85, 85, 0.8); /* Slightly see-through background */
     color: #fff;
     text-align: center;
     border-radius: 5px;
     padding: 5px 10px;
     position: absolute;
     z-index: 5;
-    bottom: 125%; /* Position above the cookie button */
+    bottom: 100%; /* Position above the cookie button */
     left: 50%;
     transform: translateX(-50%); /* Center the tooltip */
     opacity: 0;
     transition: opacity 0.3s;
     width: 200px; /* Adjust width as needed */
+    font-size: 12px; /* Smaller text size */
 }
 
 .cookieTooltip::after {
@@ -713,13 +725,14 @@ button.disabled {
     margin-left: -5px;
     border-width: 5px;
     border-style: solid;
-    border-color: #555 transparent transparent transparent; /* Arrow pointing down */
+    border-color: rgba(85, 85, 85, 0.8) transparent transparent transparent; /* Arrow pointing down with the same semi-transparent color */
 }
 
 #cookieButton:hover .cookieTooltip {
     visibility: visible;
     opacity: 1;
 }
+
 
 @keyframes clickAnimation {
     0% {
