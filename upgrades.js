@@ -118,10 +118,10 @@ const upgrades = [
         hoverOverwrite: `Investments = Good`,
     },
     {
-        name: `Big Pharma Simp`,
+        name: `A Like is a Like`,
         cost: { copium: 5000, delusion: 2000, yachtMoney: 1500, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 37, delusionPerSecond: 26, yachtMoneyPerSecond: -3, trollPointsPerSecond: -3, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
-        img: `imgs/unhackable.jpg`,
+        img: `imgs/liking_own_posts.jpg`,
     },
     {
         name: `Mail-Order Bride`,
@@ -224,7 +224,7 @@ const upgrades = [
     {
         name: `I'm gonna come`,
         cost: { copium: 75000, delusion: 75000, yachtMoney: 0, trollPoints: 50000, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: -70, delusionPerSecond: 0, yachtMoneyPerSecond: -225, trollPointsPerSecond: 550, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: -50, delusionPerSecond: 0, yachtMoneyPerSecond: -200, trollPointsPerSecond: 550, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/do_not_come.jpg`,
     },
     {
@@ -362,7 +362,7 @@ const upgrades = [
     {
         name: `Degens Idle Dev`,
         cost: { copium: 4.8e11, delusion: 0, yachtMoney: 0, trollPoints: 3e11, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 600000, delusionPerSecond: 0, yachtMoneyPerSecond: 50000, trollPointsPerSecond: 0, hopiumPerSecond: 0.004, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 600000, delusionPerSecond: 0, yachtMoneyPerSecond: 55000, trollPointsPerSecond: 0, hopiumPerSecond: 0.004, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/most_interesting_man.jpg`,
     },
     {
@@ -587,13 +587,13 @@ const upgrades = [
     {
         name: `Bruh`,
         cost: { copium: 1e20, delusion: 1e20, yachtMoney: 1e20, trollPoints: 1e20, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 9.5e7, delusionPerSecond: 9.5e7, yachtMoneyPerSecond: 9.5e7, trollPointsPerSecond: 9.5e7, hopiumPerSecond: 0, knowledgePerSecond: 0.0095, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 9.8e7, delusionPerSecond: 9.8e7, yachtMoneyPerSecond: 9.8e7, trollPointsPerSecond: 9.8e7, hopiumPerSecond: 0, knowledgePerSecond: 0.0095, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/bruh.jpg`,
     },
     {
         name: `BRUHHHH`,
         cost: { copium: 1e21, delusion: 1e21, yachtMoney: 1e21, trollPoints: 1e21, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 7.5e8, delusionPerSecond: 7.5e8, yachtMoneyPerSecond: 7.5e8, trollPointsPerSecond: 7.5e8, hopiumPerSecond: 0, knowledgePerSecond: 0.075, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 8.5e8, delusionPerSecond: 8.5e8, yachtMoneyPerSecond: 8.5e8, trollPointsPerSecond: 8.5e8, hopiumPerSecond: 0, knowledgePerSecond: 0.075, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/bruhhh.jpg`,
     },
     {
@@ -665,13 +665,13 @@ const upgrades = [
     {
         name: `Degens Idle Dev #2`,
         cost: { copium: 1.3e30, delusion: 5e30, yachtMoney: 3.2e31, trollPoints: 5e30, hopium: 2e24, knowledge: 1.8e21, power: 5e-3, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 2.5e13, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 250, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 3e13, trollPointsPerSecond: 1e11, hopiumPerSecond: 0, knowledgePerSecond: 250, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/most_interesting_man_2.jpg`,
     },
     {
         name: `It was only 4 items`,
         cost: { copium: 7e32, delusion: 0, yachtMoney: 1e35, trollPoints: 0, hopium: 0, knowledge: 6e23, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 1.2e12, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 81, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 1.3e12, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 85, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/forgetful_joe.jpg`,
     },
     {
@@ -683,7 +683,7 @@ const upgrades = [
     {
         name: `How are you though?`,
         cost: { copium: 0, delusion: 5e33, yachtMoney: 1.7e36, trollPoints: 0, hopium: 0, knowledge: 2e25, power: 1.1e-2, serenity: 0 },
-        earnings: { copiumPerSecond: 1.3e11, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 6.9e12, hopiumPerSecond: 150000, knowledgePerSecond: 170, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 1.3e12, delusionPerSecond: 5e11, yachtMoneyPerSecond: 0, trollPointsPerSecond: 6.9e12, hopiumPerSecond: 150000, knowledgePerSecond: 170, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/cheesy_grate.jpg`,
     },
     {
@@ -758,6 +758,14 @@ const upgrades = [
 
     },
     {
+        name: `Why Meemees Though`,
+        cost: { copium: 0, delusion: 1e41, yachtMoney: 0, trollPoints: 1e42, hopium: 0, knowledge: 2e31, power: 10, serenity: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 3e15, yachtMoneyPerSecond: 0, trollPointsPerSecond: 3e15, hopiumPerSecond: 0, knowledgePerSecond: 7000, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: `imgs/scumbage_mee_mee.jpg`,        
+        message: `The thrill of victory surges through you as your first opponent falls at your feet. The rush of adrenaline, the satisfaction of your hard-earned triumph—it's like nothing you've felt before. You feel your strength growing, your confidence soaring. This is what you've trained for, and it feels incredible!<br><br>But as the excitement pulses through your veins, a voice in the back of your mind whispers a reminder: Don't let it get to your head. This is just the beginning. The opponents ahead are far stronger, more dangerous, and they'll push you to your limits in ways you can't yet imagine. Stay sharp, stay focused, and keep preparing—because the real challenges are still to come.`,
+
+    },
+    {
         name: `Shao Kahn`,
         cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 5e41, hopium: 0, knowledge: 1e30, power: 30, serenity: 0 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 9e15, trollPointsPerSecond: 0, hopiumPerSecond: -1e8, knowledgePerSecond: 42000, powerPerSecond: 0, serenityPerSecond: 0 },
@@ -818,13 +826,13 @@ const upgrades = [
     {
         name: `What year is it?`,
         cost: { copium: 1e45, delusion: 1e45, yachtMoney: 1e45, trollPoints: 1e45, hopium: 0, knowledge: 1e38, power: 1000, serenity: 0 },
-        earnings: { copiumPerSecond: 8e17, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 8e17, hopiumPerSecond: 0, knowledgePerSecond: 25000, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 8e17, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 8e17, hopiumPerSecond: 0, knowledgePerSecond: 28000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/what_year_is_it.jpg`,        
     },
     {
         name: `Channel inner Tyson`,
         cost: { copium: 1e48, delusion: 1e48, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 1e38, power: 10000, serenity: 0 },
-        earnings: { copiumPerSecond: 9e17, delusionPerSecond: 9e17, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 50000, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 9e17, delusionPerSecond: 9e17, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 55000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/beeth_mode.jpg`,        
     },
     {
@@ -885,9 +893,21 @@ const upgrades = [
         img: `imgs/downvoted_opinion.jpg`,        
     },
     {
+        name: `Happy Birthday to me`,
+        cost: { copium: 0, delusion: 2e55, yachtMoney: 0, trollPoints: 1e55, hopium: 0, knowledge: 1e44, power: 1e6, serenity: 0 },
+        earnings: { copiumPerSecond: 3e18, delusionPerSecond: 0, yachtMoneyPerSecond: 1e19, trollPointsPerSecond: 3e18, hopiumPerSecond: 0, knowledgePerSecond: 75000, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: `imgs/happy_birthday.jpg`,        
+    },
+    {
+        name: `Real Life Girlfriend`,
+        cost: { copium: 1e55, delusion: 5e55, yachtMoney: 1e55, trollPoints: 0, hopium: 0, knowledge: 1.2e44, power: 8e5, serenity: 0 },
+        earnings: { copiumPerSecond: 2e18, delusionPerSecond: 5e19, yachtMoneyPerSecond: 0, trollPointsPerSecond: 2e18, hopiumPerSecond: 0, knowledgePerSecond: 90000, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: `imgs/real_life_girlfriend.jpg`,        
+    },
+    {
         name: `Deadpool`,
         cost: { copium: 6.9e54, delusion: 6.9e54, yachtMoney: 6.9e54, trollPoints: 6.9e54, hopium: 0, knowledge: 6.9e44, power: 6.9e7, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 6.9e19, yachtMoneyPerSecond: 0, trollPointsPerSecond: 6.9e19, hopiumPerSecond: -6.9e15, knowledgePerSecond: 1.69e6, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 6.9e20, yachtMoneyPerSecond: 0, trollPointsPerSecond: 6.9e20, hopiumPerSecond: -6.9e15, knowledgePerSecond: 1.69e6, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/deadpool.jpg`,
         message: `You are definitely not supposed to be able to beat Deadpool yet. Please post in Discord if you managed this without cheating.`,
         isFight: true,

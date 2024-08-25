@@ -91,6 +91,7 @@ let autobuyUpgradesSkill = false;
 
 let upgradeAmplifierSkill = false;
 let fasterAutobuyerskill = false;
+let nexusLifelineSkill = false;
 
 
 function calculateBaseKnowledge() {
@@ -708,6 +709,7 @@ async function restartGame(isPrestige = false) {
 
             upgradeAmplifierSkill = false;
             fasterAutobuyerskill = false;
+            nexusLifelineSkill = false;
 
 
             transcendenceUnlocked = false;
@@ -1717,7 +1719,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
 
         // Special case for the "Still very stupid" upgrade
         if (name === "Complex Skill Trees") {
-            showMessageModal('Sadly', "This marks the end of v0.865, but your journey is just getting started! The Hall of Power is only the beginning, with new challenges and excitement in every update. How are you enjoying the battles? Are they keeping you on your toes? Your feedback is key to shaping the game.<br><br>While you wait for the next update (just days away!), why not restart, try new tactics, and uncover hidden secrets? Share your thoughts on the battles and Hall of Power on Discord or through the feedback form. Let’s keep this adventure going!");
+            showMessageModal('Sadly', "This marks the end of v0.866, but your journey is just getting started! The Hall of Power is only the beginning, with new challenges and excitement in every update. How are you enjoying the battles? Are they keeping you on your toes? Your feedback is key to shaping the game.<br><br>While you wait for the next update (just days away!), why not restart, try new tactics, and uncover hidden secrets? Share your thoughts on the battles and Hall of Power on Discord or through the feedback form. Let’s keep this adventure going!");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one
@@ -1849,7 +1851,6 @@ function addPurchasedUpgrade(img, name, earnings, isGodMode = false, isPUGodMode
 
         toggleSwitch.addEventListener('change', (event) => {
             localStorage.setItem(`switchState-${name}`, JSON.stringify(event.target.checked));
-            console.log('Switch clicked')
         });
     }
 
@@ -2282,8 +2283,6 @@ function displayNextModal() {
     const modalCloseButton = document.getElementById('modalCloseButton');
     const ascendUpgradeSelection = document.getElementById('ascendUpgradeSelection');
     const ascendUpgradeList = document.getElementById('ascendUpgradeList');
-    const gameInputSection = document.getElementById('gameInputSection');
-    const gameInput = document.getElementById('gameInput');
     const submitGameInputButton = document.getElementById('submitGameInputButton');
 
     modalTitle.textContent = title || '';
@@ -2410,28 +2409,15 @@ function displayNextModal() {
         modalCloseButton.style.display = 'none';
         modalConfirmButtons.style.display = 'flex';
         ascendUpgradeSelection.style.display = 'none';
-        gameInputSection.style.display = 'none';
 
         modalConfirmButton.onclick = () => closeModal(true);
         modalCancelButton.onclick = () => closeModal(false);
 
         closeButton.onclick = () => closeModal(false);
-    } else if (message.includes('Enter the sequence:') || message.includes('What is ')) {
-        modalCloseButton.style.display = 'none';
-        modalConfirmButtons.style.display = 'none';
-        ascendUpgradeSelection.style.display = 'none';
-        gameInputSection.style.display = 'block';
-
-        gameInput.value = '';
-        gameInput.focus();
-        submitGameInputButton.onclick = () => closeModal(gameInput.value);
-
-        closeButton.onclick = () => closeModal(null);
     } else {
         modalCloseButton.style.display = 'block';
         modalConfirmButtons.style.display = 'none';
         ascendUpgradeSelection.style.display = 'none';
-        gameInputSection.style.display = 'none';
 
         modalCloseButton.onclick = () => closeModal();
         closeButton.onclick = () => closeModal();

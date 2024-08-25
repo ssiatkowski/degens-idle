@@ -301,8 +301,17 @@ function attackEnemy() {
         enemyHealth -= Math.max(damage, 0);
     }
 
+    // Check if Nexus Lifeline skill is active
+    if (nexusLifelineSkill === true) {
+        const healAmount = Math.floor(playerMaxHealth * 0.02);
+        playerHealth = playerHealth + healAmount;
+        logFight(`<span style='color: teal;'>You channel Nexus Lifeline to heal yourself for ${formatNumber(healAmount)}.</span>`);
+    }
+
+
     updateHealthBars();
 }
+
 
 // Function to handle enemy attacking the player
 function attackPlayer() {

@@ -5,9 +5,8 @@ const powerHallSkills = [
     // { name: 'Fake - Overcharge', cost: 10000, description: 'Unlock ability to spend all your power and multiply production of first 5 resources by square root of spent power.', unlocked: false, level: 'Arcane Magnetism' },
     // { name: 'Fake - Energy Overflow', cost: 1e30, description: 'Allow excess energy to overflow into additional resource generation.', unlocked: false, level: 'Arcane Magnetism' },
     
-    // { name: 'Hyperconductor', cost: 1e30, description: `Add multiplier stacking with prestige/god-mode/etc. based on your number of purchased upgrades. (x${#purchasedupgrades})`, unlocked: false, level: 'Quantum Nexus' },
-    { name: 'Astral Precision', cost: 3e7, description: 'Attack damage range rescaled from power -/+75% to power-25%/power+75%.', unlocked: false, level: 'Quantum Nexus' },
-
+    { name: 'Nexus Lifeline', cost: 5e6, description: 'With every attack, heal yourself for 2% max health. Overheal is possible.', unlocked: false, level: 'Quantum Nexus' },
+    { name: 'Astral Precision', cost: 3e7, description: 'Hone your accuracy. Minimum damage rescaled from power-75% to power-25%.', unlocked: false, level: 'Quantum Nexus' },
 
     { name: 'Lightning Reflexes', cost: 12000, description: 'Your attacks become 2.5x faster!', unlocked: false, level: 'Cosmic Dynamics' },
     { name: 'Supersonic Fury', cost: 1.2e8, description: 'Your attacks become even 2x faster!', unlocked: false, level: 'Cosmic Dynamics' },
@@ -61,6 +60,11 @@ function unlockPowerHallSkill(skill, duringLoad = false) {
                 autobuyIntervalId = setInterval(autobuyUpgrades, 250);
 
                 break;
+
+            case 'Nexus Lifeline':
+                nexusLifelineSkill = true;
+                break;
+    
 
             case 'Astral Precision':
                 playerMinDamageMult = 0.75;
