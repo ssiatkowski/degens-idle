@@ -755,15 +755,12 @@ const upgrades = [
         earnings: { copiumPerSecond: 1e15, delusionPerSecond: 1e15, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 5000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/feel_the_pump.jpg`,        
         message: `The thrill of victory surges through you as your first opponent falls at your feet. The rush of adrenaline, the satisfaction of your hard-earned triumph—it's like nothing you've felt before. You feel your strength growing, your confidence soaring. This is what you've trained for, and it feels incredible!<br><br>But as the excitement pulses through your veins, a voice in the back of your mind whispers a reminder: Don't let it get to your head. This is just the beginning. The opponents ahead are far stronger, more dangerous, and they'll push you to your limits in ways you can't yet imagine. Stay sharp, stay focused, and keep preparing—because the real challenges are still to come.`,
-
     },
     {
         name: `Why Meemees Though`,
         cost: { copium: 0, delusion: 1e41, yachtMoney: 0, trollPoints: 1e42, hopium: 0, knowledge: 2e31, power: 10, serenity: 0 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 3e15, yachtMoneyPerSecond: 0, trollPointsPerSecond: 3e15, hopiumPerSecond: 0, knowledgePerSecond: 7000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/scumbage_mee_mee.jpg`,        
-        message: `The thrill of victory surges through you as your first opponent falls at your feet. The rush of adrenaline, the satisfaction of your hard-earned triumph—it's like nothing you've felt before. You feel your strength growing, your confidence soaring. This is what you've trained for, and it feels incredible!<br><br>But as the excitement pulses through your veins, a voice in the back of your mind whispers a reminder: Don't let it get to your head. This is just the beginning. The opponents ahead are far stronger, more dangerous, and they'll push you to your limits in ways you can't yet imagine. Stay sharp, stay focused, and keep preparing—because the real challenges are still to come.`,
-
     },
     {
         name: `Shao Kahn`,
