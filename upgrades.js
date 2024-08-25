@@ -906,7 +906,6 @@ const upgrades = [
         cost: { copium: 6.9e54, delusion: 6.9e54, yachtMoney: 6.9e54, trollPoints: 6.9e54, hopium: 0, knowledge: 6.9e44, power: 6.9e7, serenity: 0 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 6.9e20, yachtMoneyPerSecond: 0, trollPointsPerSecond: 6.9e20, hopiumPerSecond: -6.9e15, knowledgePerSecond: 1.69e6, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/deadpool.jpg`,
-        message: `You are definitely not supposed to be able to beat Deadpool yet. Please post in Discord if you managed this without cheating.`,
         isFight: true,
     },
     {
@@ -914,6 +913,20 @@ const upgrades = [
         cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 5e55, hopium: 3e49, knowledge: 1e42, power: 1e6, serenity: 0 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 125000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/what_the.jpg`,
+    },
+    {
+        name: `Sebo's Luck`,
+        cost: { copium: 7e58, delusion: 0, yachtMoney: 0, trollPoints: 7e58, hopium: 0, knowledge: 7e43, power: 1e7, serenity: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 7e20, trollPointsPerSecond: 7e20, hopiumPerSecond: 0, knowledgePerSecond: 190000, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: `imgs/sebos_luck.jpg`,
+        message: `  <p>
+                        While this upgrade is active, congratulations—you’ve officially entered the elite club of absurdly lucky bastards. The universe bends over backwards just to make sure you always come out on top. Here’s how your cosmic luck flexes its muscles:
+                    </p>
+                    <ul>
+                        <li>You stumble upon a ridiculous <strong>1e65 Yacht Money</strong> like you’ve got a treasure magnet stuck to your ass.</li>
+                        <li>In the Luck Game, another unlucky box just nopes out, because even bad luck knows not to mess with you.</li>
+                        <li>In fights, your crit chance jumps by <strong>5%</strong>, because even your punches got the Midas touch.</li>
+                    </ul>`,
     },
 
 

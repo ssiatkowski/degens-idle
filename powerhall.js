@@ -84,6 +84,7 @@ function unlockPowerHallSkill(skill, duringLoad = false) {
 
             case 'Upgrade Amplifier':
                 upgradeAmplifierSkill = true;
+                updateEffectiveMultipliers();
                 break;
 
             default:

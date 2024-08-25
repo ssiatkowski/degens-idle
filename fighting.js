@@ -113,11 +113,14 @@ function startFightGame(enemyName, enemyImg) {
         enemyImage.alt = "Enemy Image";
         enemyImageContainer.appendChild(enemyImage);
 
+        const sebosLuck = purchasedUpgrades.some(upgrade => upgrade.name === "Sebo's Luck");
+
         // Get player stats from resources with rounding up
         playerHealth = Math.ceil((copium ** (1/20)));
         playerMaxHealth = playerHealth;
         playerDefense = Math.ceil((delusion ** (1/12)) / 500);
         playerCritChance = Math.min(Math.ceil(trollPoints ** (1/50)) / 100, 0.9);
+        playerCritChance = sebosLuck ? playerCritChance + 0.05 : playerCritChance;
         playerCritDamage = 1 + Math.min(Math.ceil(trollPoints ** (1/25)) / 100, 99);
 
         playerMinDamage = Math.floor(power * playerMinDamageMult);
