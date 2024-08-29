@@ -83,8 +83,11 @@ let playerInterval, enemyInterval;
 
 let playerMinDamageMult = 0.25;
 let playerMaxDamageMult = 1.75;
+let playerHealthMult = 1;
 
 let deadpoolRevives = 0;
+
+let firstAttackOfBattle = false;
 
 // Function to initialize and start the mini-game
 function startFightGame(enemyName, enemyImg) {
@@ -115,8 +118,10 @@ function startFightGame(enemyName, enemyImg) {
 
         const sebosLuck = purchasedUpgrades.some(upgrade => upgrade.name === "Sebo's Luck");
 
+        firstAttackOfBattle = primeImpactSkill ? true : false;
+
         // Get player stats from resources with rounding up
-        playerHealth = Math.ceil((copium ** (1/20)));
+        playerHealth = Math.ceil((copium ** (1/20)) * playerHealthMult);
         playerMaxHealth = playerHealth;
         playerDefense = Math.ceil((delusion ** (1/12)) / 500);
         playerCritChance = Math.min(Math.ceil(trollPoints ** (1/50)) / 100, 0.9);
@@ -250,19 +255,31 @@ function attackEnemy() {
     let damage = 0;
 
     if (currEnemyName === "Deadpool") {
-        if (!isCritical) {
-            // Deadpool dodges all non-critical attacks
-            logFight(`<span style='color: yellow;'>${currEnemyName} effortlessly dodges your non-critical attack! (100% chance)</span>`);
-            return; // Deadpool dodged, so the attack ends here
-        } else {
-            // Deadpool dodges 69% of critical attacks
-            if (Math.random() < 0.69) {
-                logFight(`<span style='color: orange;'>${currEnemyName} dodges your critical attack! (69% chance)</span>`);
-                return; // Deadpool dodged, so the attack ends here
+        
+        if (firstAttackOfBattle){
+            if (!isCritical) {
+                damage = baseDamage;
+                logFight(`<span style='color: #FBCEB1;'>Prime Impact:</span> You attack ${currEnemyName} for ${formatNumber(Math.max(damage, 0))} damage!`);
+            } else {
+                damage = Math.ceil(baseDamage * playerCritDamage);
+                logFight(`<span style='color: #FBCEB1;'>Prime Impact:</span> <span style='color: #ADD8E6;'>You land a critical hit on ${currEnemyName} for ${formatNumber(Math.max(damage, 0))} damage!</span>`);
             }
-            // If Deadpool doesn't dodge, calculate critical damage
-            damage = Math.ceil(baseDamage * playerCritDamage) - enemyDefense;
-            logFight(`<span style='color: #ADD8E6;'>You land a critical hit on ${currEnemyName} for ${formatNumber(Math.max(damage, 0))} damage!</span>`);
+            firstAttackOfBattle = false;
+        } else {
+            if (!isCritical) {
+                // Deadpool dodges all non-critical attacks
+                logFight(`<span style='color: yellow;'>${currEnemyName} effortlessly dodges your non-critical attack! (100% chance)</span>`);
+                return; // Deadpool dodged, so the attack ends here
+            } else {
+                // Deadpool dodges 69% of critical attacks
+                if (Math.random() < 0.69) {
+                    logFight(`<span style='color: orange;'>${currEnemyName} dodges your critical attack! (69% chance)</span>`);
+                    return; // Deadpool dodged, so the attack ends here
+                }
+                // If Deadpool doesn't dodge, calculate critical damage
+                damage = Math.ceil(baseDamage * playerCritDamage) - enemyDefense;
+                logFight(`<span style='color: #ADD8E6;'>You land a critical hit on ${currEnemyName} for ${formatNumber(Math.max(damage, 0))} damage!</span>`);
+            }
         }
 
         enemyHealth -= Math.max(damage, 0);
@@ -286,7 +303,17 @@ function attackEnemy() {
                 }
             }
         }
-
+    else if (firstAttackOfBattle){
+        if (!isCritical) {
+            damage = baseDamage;
+            logFight(`<span style='color: #FBCEB1;'>Prime Impact:</span> You attack ${currEnemyName} for ${formatNumber(Math.max(damage, 0))} damage!`);
+        } else {
+            damage = Math.ceil(baseDamage * playerCritDamage);
+            logFight(`<span style='color: #FBCEB1;'>Prime Impact:</span> <span style='color: #ADD8E6;'>You land a critical hit on ${currEnemyName} for ${formatNumber(Math.max(damage, 0))} damage!</span>`);
+        }
+        enemyHealth -= Math.max(damage, 0);
+        firstAttackOfBattle = false;
+    }
     } else if (currEnemyName === "Sauron") {
         damage = Math.floor((baseDamage - enemyDefense) / 10); // Sauron absorbs 90% of damage and is immune to critical hits
         logFight(`You attack ${currEnemyName} for ${formatNumber(Math.max(damage, 0))} damage. (Sauron absorbs 90% of damage and is immune to critical hits)`);

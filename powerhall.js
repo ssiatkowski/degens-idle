@@ -5,17 +5,17 @@ const powerHallSkills = [
     // { name: 'Fake - Overcharge', cost: 10000, description: 'Unlock ability to spend all your power and multiply production of first 5 resources by square root of spent power.', unlocked: false, level: 'Arcane Magnetism' },
     // { name: 'Fake - Energy Overflow', cost: 1e30, description: 'Allow excess energy to overflow into additional resource generation.', unlocked: false, level: 'Arcane Magnetism' },
     
+    { name: 'Vitality Matrix', cost: 45000, description: 'Maximum Health is increased by 50%!', unlocked: false, level: 'Quantum Nexus' },
     { name: 'Nexus Lifeline', cost: 5e6, description: 'With every attack, heal yourself for 2% max health. Overheal is possible.', unlocked: false, level: 'Quantum Nexus' },
     { name: 'Astral Precision', cost: 3e7, description: 'Hone your accuracy. Minimum damage rescaled from power-75% to power-25%.', unlocked: false, level: 'Quantum Nexus' },
 
     { name: 'Lightning Reflexes', cost: 12000, description: 'Your attacks become 2.5x faster!', unlocked: false, level: 'Cosmic Dynamics' },
     { name: 'Supersonic Fury', cost: 1.2e8, description: 'Your attacks become even 2x faster!', unlocked: false, level: 'Cosmic Dynamics' },
+    { name: 'Prime Impact', cost: 9e8, description: 'First attack always hits for full power (ignore enemy dodge rate and defense).', unlocked: false, level: 'Cosmic Dynamics' },
     // { name: 'Astral Disruption', cost: 1e30, description: 'Your attacks have a 5% chance to stun the enemy for 1 second.', unlocked: false, level: 'Cosmic Dynamics' },
     { name: 'Graviton Burst', cost: 1.2e50, description: 'Your attacks are imperceptible to average beings. You now attack 5x faster!', unlocked: false, level: 'Cosmic Dynamics' },
 
     { name: 'Upgrade Amplifier', cost: 4e8, description: `First 4 resources gain a flat multiplier based on number of purchased upgrades.`, unlocked: false, level: 'Celestial Manipulation' },
-    // { name: 'Stellar Harvesting', cost: 300000, description: 'Harvest energy directly from stars to fuel your needs.', unlocked: false, level: 'Celestial Manipulation' },
-    // { name: 'Cosmic Battery', cost: 750000, description: 'Store cosmic energy in a battery with nearly unlimited capacity.', unlocked: false, level: 'Celestial Manipulation' }
 ];
 
 
@@ -34,18 +34,6 @@ function unlockPowerHallSkill(skill, duringLoad = false) {
         `;
         
         switch (skill.name) {
-            case 'Overcharge':
-                if (!duringLoad) {
-                    showMessageModal('Not Yet Implemented', 'Sorry Power Hall skills functionality is not live yet.')
-                }
-                break;
-        
-            case 'Auto Prestige':
-                if (!duringLoad) {
-                    showMessageModal('Not Yet Implemented', 'Sorry Power Hall skills functionality is not live yet.')
-                }
-                break;
-
 
             case 'Power Surge':
                 powerSurgeMultiplier = Math.max(powerSurgeMultiplier, 1.5);
@@ -70,12 +58,21 @@ function unlockPowerHallSkill(skill, duringLoad = false) {
                 playerMinDamageMult = 0.75;
                 break;
 
+
+            case 'Vitality Matrix':
+                playerHealthMult = 1.5;
+                break;
+
             case 'Lightning Reflexes':
                 playerAttackSpeed = Math.max(playerAttackSpeed, 5);
                 break;
 
             case 'Supersonic Fury':
                 playerAttackSpeed = Math.max(playerAttackSpeed, 10);
+                break;
+
+            case 'Prime Impact':
+                primeImpactSkill = true;
                 break;
 
             case 'Graviton Burst':

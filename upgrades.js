@@ -669,6 +669,12 @@ const upgrades = [
         img: `imgs/most_interesting_man_2.jpg`,
     },
     {
+        name: `Sneaky Eavesdrop`,
+        cost: { copium: 0, delusion: 5e32, yachtMoney: 1e34, trollPoints: 5e30, hopium: 3e23, knowledge: 1e21, power: 0, serenity: 0 },
+        earnings: { copiumPerSecond: 1.8e11, delusionPerSecond: 3e11, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1.5e12, hopiumPerSecond: 0, knowledgePerSecond: 75, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: `imgs/earphones_on.jpg`,
+    },
+    {
         name: `It was only 4 items`,
         cost: { copium: 7e32, delusion: 0, yachtMoney: 8e34, trollPoints: 0, hopium: 0, knowledge: 6e23, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 1.3e12, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 85, powerPerSecond: 0, serenityPerSecond: 0 },
@@ -723,6 +729,12 @@ const upgrades = [
         earnings: { copiumPerSecond: 3e15, delusionPerSecond: 0, yachtMoneyPerSecond: 5e15, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 4200, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/musk_realization.jpg`,
         message: `In a moment of clarity, you realize that reaching a power level of 9000 won’t come easily—you'll need to train harder than ever before. But as this truth sinks in, another thought surfaces: Why stop at 9000? If you're going to push yourself, why not aim for power levels that have never existed in the multiverse? <br><br>With renewed determination, you commit yourself to relentless training. You’ll seek out the strongest opponents, not just to test your might, but to shatter every limit. Because why settle for ordinary power when the extraordinary is within reach?`
+    },
+    {
+        name: `Buy Apple Product`,
+        cost: { copium: 1.3e41, delusion: 0, yachtMoney: 7.5e41, trollPoints: 0, hopium: 8e32, knowledge: 0, power: 0.5, serenity: 0 },
+        earnings: { copiumPerSecond: 5e14, delusionPerSecond: 5e14, yachtMoneyPerSecond: 0, trollPointsPerSecond: 5e14, hopiumPerSecond: 0, knowledgePerSecond: 666, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: `imgs/apple_mug.jpg`,
     },
     {
         name: `Training Dummy`,
@@ -894,6 +906,14 @@ const upgrades = [
         cost: { copium: 0, delusion: 2e55, yachtMoney: 0, trollPoints: 1e55, hopium: 0, knowledge: 1e44, power: 1e6, serenity: 0 },
         earnings: { copiumPerSecond: 3e18, delusionPerSecond: 0, yachtMoneyPerSecond: 1e19, trollPointsPerSecond: 3e18, hopiumPerSecond: 0, knowledgePerSecond: 75000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/happy_birthday.jpg`,        
+    },
+    {
+        name: `The Rock`,
+        cost: { copium: 3e54, delusion: 1.8e55, yachtMoney: 0, trollPoints: 5e54, hopium: 0, knowledge: 8e43, power: 2e7, serenity: 0 },
+        earnings: { copiumPerSecond: 2e18, delusionPerSecond: 3e18, yachtMoneyPerSecond: 0, trollPointsPerSecond: 3e19, hopiumPerSecond: 0, knowledgePerSecond: 50000, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: `imgs/the_rock_photo.jpg`,                
+        message: `Don't worry, you never have to fight The Rock. He would beat you to a pulp.`,
+
     },
     {
         name: `Real Life Girlfriend`,
