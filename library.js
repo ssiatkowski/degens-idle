@@ -3,8 +3,8 @@ const librarySkills = [
     { name: 'Knowledge Generation', cost: 400, description: 'After Prestiging or Ascending, begin knowledge generation immediately without reaching -1T delusion.', unlocked: false, level: 'History' },
     { name: 'Trade Ratios', cost: 1500, description: 'Lower trade ratio to 5:1 for top 4 resources and 5M:1 for Hopium.', unlocked: false, level: 'History' },
     { name: 'Cookie Boost', cost: 3e9, description: 'Cookie clicks now generate resources equal to your earnings per half a second (for the first 4 resources)', unlocked: false, level: 'History' }, 
-    { name: 'Hopeful Cookie', cost: 3e26, description: 'Boosted cookie clicks also generate hopium at current earnings rate.', unlocked: false, level: 'History' }, 
-    { name: 'Knowledgeable Cookie', cost: 9e45, description: 'Boosted cookie clicks also generate knowledge at current earnings rate.', unlocked: false, level: 'History' }, 
+    { name: 'Hopeful Cookie', cost: 3e26, description: 'Boosted cookie clicks also generate hopium at 1/2 earnings rate.', unlocked: false, level: 'History' }, 
+    { name: 'Knowledgeable Cookie', cost: 9e45, description: 'Boosted cookie clicks generate knowledge at 1/4 earnings rate.', unlocked: false, level: 'History' }, 
 
     { name: 'Cure for Delusion', cost: 5, description: 'Unlock ability to toggle whether delusion gain is positive or negative.', unlocked: false, level: 'Science' },
     { name: 'Luck is Rigged', cost: 777, description: 'Remove 1 unlucky box. Makes lucky boxes better (25%-125% instead of 10%-100%) and unlocky boxes less bad (5%-55% instead of 10%-75%).', unlocked: false, level: 'Science' },

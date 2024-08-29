@@ -179,7 +179,7 @@ function cookieCollectAllResources() {
             hopium += Math.max(cookieClickMultiplier * totalMultiplier, effectiveHopiumPerSecond/2);
         }
         if (cookieKnowledgeable){
-            knowledge += Math.max(cookieClickMultiplier * totalMultiplier, effectiveKnowledgePerSecond/2);
+            knowledge += Math.max(cookieClickMultiplier * totalMultiplier, effectiveKnowledgePerSecond/4);
         }
     }
     else {
