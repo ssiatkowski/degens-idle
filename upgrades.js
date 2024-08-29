@@ -224,7 +224,7 @@ const upgrades = [
     {
         name: `I'm gonna come`,
         cost: { copium: 75000, delusion: 75000, yachtMoney: 0, trollPoints: 50000, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: -50, delusionPerSecond: 0, yachtMoneyPerSecond: -200, trollPointsPerSecond: 550, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: -40, delusionPerSecond: 0, yachtMoneyPerSecond: -180, trollPointsPerSecond: 550, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/do_not_come.jpg`,
     },
     {
@@ -491,7 +491,7 @@ const upgrades = [
     {
         name: `NGU Idle`,
         cost: { copium: 8e17, delusion: 3.5e17, yachtMoney: 3.5e17, trollPoints: 8e17, hopium: 1e12, knowledge: 6e7, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 9.6e7, delusionPerSecond: 4.7e7, yachtMoneyPerSecond: 7.5e7, trollPointsPerSecond: 1.8e8, hopiumPerSecond: 800, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 9.6e7, delusionPerSecond: 6.7e7, yachtMoneyPerSecond: 7.5e7, trollPointsPerSecond: 1.8e8, hopiumPerSecond: 800, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/ngu_idle.jpg`,
         message: `Congratulations on unlocking the "NGU Idle" upgrade! This upgrade is a tribute to one of the greatest idle games ever. NGU Idle, known for its deep mechanics and quirky humor, has set a high standard in the idle game genre.<br><br>Here's to celebrating a game that has set a high bar for idle games everywhere. Enjoy the nostalgia and the boost it brings to your Degens Idle journey -- you may now watch all your Numbers Go Up!`,
     },
@@ -516,31 +516,31 @@ const upgrades = [
     {
         name: `Never Admit Mistakes`,
         cost: { copium: 8e18, delusion: 5e18, yachtMoney: 0, trollPoints: 0, hopium: 2e13, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 8.9e7, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 9.3e7, hopiumPerSecond: 0, knowledgePerSecond: 0.0014, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 8.9e7, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 9.6e7, hopiumPerSecond: 0, knowledgePerSecond: 0.0014, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/marv.jpg`,
     },
     {
         name: `McDonalds Diet`,
         cost: { copium: 9e18, delusion: 9e18, yachtMoney: 3e18, trollPoints: 0, hopium: 3e13, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 5.82e7, delusionPerSecond: 4.5e7, yachtMoneyPerSecond: 0, trollPointsPerSecond: 8.5e7, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 6.8e7, delusionPerSecond: 4.5e7, yachtMoneyPerSecond: 0, trollPointsPerSecond: 8.5e7, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/mcdonalds.jpg`,
     },
     {
         name: `Careful Planning Time`,
         cost: { copium: 3e19, delusion: 1.4e19, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 3.1e8, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: -1e7, trollPointsPerSecond: 3.4e8, hopiumPerSecond: 2500, knowledgePerSecond: 0.00095, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: -1e7, trollPointsPerSecond: 3.6e8, hopiumPerSecond: 2500, knowledgePerSecond: 0.00095, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/leeroy_jenkins.jpg`,
     },
     {
         name: `First Pizza Meme`,
         cost: { copium: 2.5e19, delusion: 0, yachtMoney: 2.5e19, trollPoints: 5e19, hopium: 2e14, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 6.5e7, delusionPerSecond: 0, yachtMoneyPerSecond: -1e7, trollPointsPerSecond: 9e7, hopiumPerSecond: 0, knowledgePerSecond: 0.002, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 7.5e7, delusionPerSecond: 0, yachtMoneyPerSecond: -1e7, trollPointsPerSecond: 9e7, hopiumPerSecond: 0, knowledgePerSecond: 0.002, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/first_pizza_meme.jpg`,
     },
     {
         name: `Still very stupid`,
         cost: { copium: 0, delusion: 1.8e19, yachtMoney: 0, trollPoints: 0, hopium: 1.8e15, knowledge: 1.8e9, power: 1.8e-7, serenity: 0 },
-        earnings: { copiumPerSecond: 5.8e7, delusionPerSecond: 5.9e7, yachtMoneyPerSecond: 7.9e7, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0.0032, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 5.9e7, delusionPerSecond: 5.9e7, yachtMoneyPerSecond: 7.9e7, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0.0032, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/young_stupid.jpg`,
     },
     {
@@ -552,13 +552,13 @@ const upgrades = [
     {
         name: `Impossible`,
         cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 1, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: -5e7, knowledgePerSecond: 500, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: -1e8, knowledgePerSecond: 2000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/impossible.jpg`,
     },
     {
         name: `Where did the time go?`,
         cost: { copium: 7e19, delusion: 7e19, yachtMoney: 3e19, trollPoints: 0, hopium: 8e14, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 4.5e7, delusionPerSecond: 2.3e7, yachtMoneyPerSecond: 2e7, trollPointsPerSecond: 9e7, hopiumPerSecond: 0, knowledgePerSecond: 0.0033, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 4.5e7, delusionPerSecond: 4.3e7, yachtMoneyPerSecond: 2e7, trollPointsPerSecond: 9e7, hopiumPerSecond: 0, knowledgePerSecond: 0.0033, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/momoa_cavill.jpg`,
     },
     {
@@ -579,7 +579,7 @@ const upgrades = [
     {
         name: `Increlution`,
         cost: { copium: 9e19, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 1e16, knowledge: 1e9, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 2e7, yachtMoneyPerSecond: 4e7, trollPointsPerSecond: 9e7, hopiumPerSecond: -6000, knowledgePerSecond: 0.0024, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 3e7, yachtMoneyPerSecond: 4e7, trollPointsPerSecond: 9e7, hopiumPerSecond: -6000, knowledgePerSecond: 0.0024, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/increlution.jpg`,
         hoverOverwrite: `Purchase Early Access`,
         message: `Increlution is an incremental game that blends survival and strategy. Players gather resources, build structures, and fend off threats in a post-apocalyptic world, unlocking new technologies and abilities as they progress. Tragically, just like this upgrade image, the game was left in an unfinished state after collecting profits from early access sales, leaving fans hoping for future updates that may never come.`,
@@ -630,7 +630,7 @@ const upgrades = [
     {
         name: `Kamala 2024`,
         cost: { copium: 8.1e23, delusion: 0, yachtMoney: 0, trollPoints: 6e23, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 2e10, delusionPerSecond: 0, yachtMoneyPerSecond: -5e9, trollPointsPerSecond: 4e9, hopiumPerSecond: -8000, knowledgePerSecond: 0.23, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 2e10, delusionPerSecond: 0, yachtMoneyPerSecond: -5e9, trollPointsPerSecond: 4e9, hopiumPerSecond: -7000, knowledgePerSecond: 0.23, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/kool_aid.jpg`,
     },
     {
@@ -665,12 +665,12 @@ const upgrades = [
     {
         name: `Degens Idle Dev #2`,
         cost: { copium: 1.3e30, delusion: 5e30, yachtMoney: 3.2e31, trollPoints: 5e30, hopium: 2e24, knowledge: 1.8e21, power: 5e-3, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 3e13, trollPointsPerSecond: 1e11, hopiumPerSecond: 0, knowledgePerSecond: 250, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 3.3e13, trollPointsPerSecond: 1e11, hopiumPerSecond: 0, knowledgePerSecond: 250, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/most_interesting_man_2.jpg`,
     },
     {
         name: `It was only 4 items`,
-        cost: { copium: 7e32, delusion: 0, yachtMoney: 1e35, trollPoints: 0, hopium: 0, knowledge: 6e23, power: 0, serenity: 0 },
+        cost: { copium: 7e32, delusion: 0, yachtMoney: 8e34, trollPoints: 0, hopium: 0, knowledge: 6e23, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 1.3e12, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 85, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/forgetful_joe.jpg`,
     },
@@ -702,7 +702,7 @@ const upgrades = [
     {
         name: `Soothing Realization`,
         cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 5e31, knowledge: 2.5e25, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 9.5e12, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 3.5e7, knowledgePerSecond: 190, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 1.2e13, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 4.5e7, knowledgePerSecond: 240, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/how_i_sleep_knowing.jpg`,
     },
     {

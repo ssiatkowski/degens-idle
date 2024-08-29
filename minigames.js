@@ -37,10 +37,10 @@ function playMiniGame(gameType) {
 
     // Define the soft cap for each mini-game
     const softCaps = {
-        speed: Math.abs(effectiveCopiumPerSecond) * 12 * 60 * 60,  // 12 hours of copium per second
-        memory: Math.abs(effectiveDelusionPerSecond) * 12 * 60 * 60,  // 12 hours of delusion per second
-        math: Math.abs(effectiveYachtMoneyPerSecond) * 12 * 60 * 60,  // 12 hours of yacht money per second
-        luck: Math.abs(effectiveTrollPointsPerSecond) * 12 * 60 * 60  // 12 hours of troll points per second
+        speed: Math.max(Math.abs(effectiveCopiumPerSecond) * 8 * 60 * 60, 100),  // 8 hours of copium per second
+        memory: Math.max(Math.abs(effectiveDelusionPerSecond) * 8 * 60 * 60, 100),  // 8 hours of delusion per second
+        math: Math.max(Math.abs(effectiveYachtMoneyPerSecond) * 8 * 60 * 60, 100),  // 8 hours of yacht money per second
+        luck: Math.max(Math.abs(effectiveTrollPointsPerSecond) * 8 * 60 * 60, 100)  // 8 hours of troll points per second
     };
 
     let softCapReached = false;  // Variable to check if the soft cap is reached
@@ -103,28 +103,25 @@ function playMiniGame(gameType) {
                 let resultMessage;
 
                 let clicksPerSecond = points / duration;
-                if (clicksPerSecond > 0.49) {
+                if (clicksPerSecond > .99) {
                     reward = Math.max(Math.floor(Math.abs(copium) * (clicksPerSecond * 0.15)), 25);
                     if (speedGameSkill) { reward *= 3; }
+                    // Apply the soft cap
+                    if (reward > softCaps.speed) {
+                        reward = softCaps.speed;
+                        softCapReached = true;
+                    }
                     resultMessage = `You tapped ${points} dots (${clicksPerSecond.toFixed(2)} taps per second). Your reward is <span style="color: green;">${formatNumber(reward)}</span> copium!`;
                 } else {
                     reward = -Math.max(Math.floor(Math.abs(copium) * 0.25), 25);
                     resultMessage = `You were too slow, managing only ${clicksPerSecond.toFixed(2)} taps per second. You lose <span style="color: red;">${formatNumber(reward)}</span> copium. Try again later!`;
                 }
 
-
-
-                // Apply the soft cap
-                if (reward > softCaps.speed) {
-                    reward = softCaps.speed;
-                    softCapReached = true;
-                }
-
                 copium += reward;
 
                 // Add the soft cap message in orange if applicable
                 if (softCapReached) {
-                    resultMessage += '<br><span style="color: orange;">Soft cap reached: Maximum reward of 12 hours effective Copium applied.</span>';
+                    resultMessage += '<br><span style="color: orange;">Soft cap reached: Maximum reward of 8 hours effective Copium applied.</span>';
                 }
 
                 resultMessage += cooldownMessage;
@@ -277,7 +274,7 @@ function playMiniGame(gameType) {
                     : `You failed to match the pattern and lost <span style="color: red;">${formatNumber(Math.abs(reward))}</span> delusion!`;
 
                 if (softCapReached) {
-                    resultMessage += '<br><span style="color: orange;">Soft cap reached: Maximum reward of 12 hours effective Delusion applied.</span>';
+                    resultMessage += '<br><span style="color: orange;">Soft cap reached: Maximum reward of 8 hours effective Delusion applied.</span>';
                 }
 
                 resultMessage += cooldownMessage;
@@ -301,7 +298,7 @@ function playMiniGame(gameType) {
         let duration = mathGameSkill ? 20 : 12; // 12 or 20 seconds
         let portalValues = []; // Store all portal values
         let selectedPortals = []; // Store selected portals for checking
-        let targetSum = Math.floor(Math.random() * 90) + 10; // Random target sum between 10 and 99
+        let targetSum = Math.floor(Math.random() * 80) + 10; // Random target sum between 10 and 89
         let startTime = Date.now(); // Track the start time
 
         // Show the modal with instructions and start the game when the modal is closed
@@ -500,27 +497,25 @@ function playMiniGame(gameType) {
 
                 if (didWin) {
                     reward = Math.max(Math.floor(Math.abs(yachtMoney) * 0.45), 50);
+                    if (mathGameSkill) {
+                        reward *= 2; // Double the reward if mathGameSkill is active
+                    }
+                    // Apply the soft cap
+                    if (reward > softCaps.math) {
+                        reward = softCaps.math;
+                        softCapReached = true;
+                    }
                     resultMessage = `You found the correct sum and earned <span style="color: green;">${formatNumber(reward)}</span> yachtMoney!`;
                 } else {
                     reward = -Math.max(Math.floor(Math.abs(yachtMoney) * 0.2), 20);
                     resultMessage = `You didn't find the correct sum. You lost <span style="color: red;">${formatNumber(Math.abs(reward))}</span> yachtMoney.`;
                 }
 
-                if (mathGameSkill) {
-                    reward *= 2; // Double the reward if mathGameSkill is active
-                }
-
-                // Apply the soft cap
-                if (reward > softCaps.math) {
-                    reward = softCaps.math;
-                    softCapReached = true;
-                }
-
                 yachtMoney += reward;
 
                 // Add the soft cap message in orange if applicable
                 if (softCapReached) {
-                    resultMessage += '<br><span style="color: orange;">Soft cap reached: Maximum reward of 12 hours effective Yacht Money applied.</span>';
+                    resultMessage += '<br><span style="color: orange;">Soft cap reached: Maximum reward of 8 hours effective Yacht Money applied.</span>';
                 }
 
                 resultMessage += cooldownMessage;
@@ -542,7 +537,7 @@ else if (gameType === 'luck') {
     if (sebosLuck) {
         // If Sebo's Luck is active, only 4 values are needed
         boxValues = [
-            Math.floor(Math.random() * 56) - 60, // -60% to -5%
+            Math.floor(Math.random() * 51) - 55, // -55% to -5%
             Math.floor(Math.random() * 101) + 25, // 25% to 125%
             Math.floor(Math.random() * 101) + 25, // 25% to 125%
             Math.floor(Math.random() * 101) + 25  // 25% to 125%
@@ -550,8 +545,8 @@ else if (gameType === 'luck') {
     } else if (luckGameSkill) {
         // If luckGameSkill is active, but Sebo's Luck is not, 5 values are needed
         boxValues = [
-            Math.floor(Math.random() * 56) - 60, // -60% to -5%
-            Math.floor(Math.random() * 56) - 60, // -60% to -5%
+            Math.floor(Math.random() * 51) - 55, // -55% to -5%
+            Math.floor(Math.random() * 51) - 55, // -55% to -5%
             Math.floor(Math.random() * 101) + 25, // 25% to 125%
             Math.floor(Math.random() * 101) + 25, // 25% to 125%
             Math.floor(Math.random() * 101) + 25  // 25% to 125%
@@ -586,30 +581,32 @@ else if (gameType === 'luck') {
         gameArea.style.left = '5%';
         gameArea.style.width = '90%';
         gameArea.style.height = '90%';
-        gameArea.style.backgroundColor = '#000000';
+        gameArea.style.backgroundColor = '#1E1E1E'; // Darker gray for a sleeker look
         gameArea.style.zIndex = '1000';
+        gameArea.style.display = 'grid';
+        gameArea.style.gridTemplateColumns = `repeat(${totalBoxes <= 4 ? 2 : 3}, 1fr)`;
+        gameArea.style.justifyItems = 'center'; // Center the boxes
+        gameArea.style.alignItems = 'center'; // Center the boxes vertically
+        gameArea.style.borderRadius = '15px';
         document.body.appendChild(gameArea);
 
         const boxSize = Math.min(window.innerWidth, window.innerHeight) * 0.15; // Adjusted box size
-        const topRowSpacing = (gameArea.clientWidth - 3 * boxSize) / 4; // Spacing for the top row
-        const bottomRowSpacing = (gameArea.clientWidth - 3 * boxSize) / 4; // Spacing for the bottom row with 3 boxes
 
         // Create the boxes
         for (let i = 0; i < totalBoxes; i++) {
             const box = document.createElement('div');
-            box.style.position = 'absolute';
             box.style.width = `${boxSize}px`;
             box.style.height = `${boxSize}px`;
             box.style.borderRadius = '10px';
             box.style.backgroundColor = '#444444'; // Darker background for a cooler look
-            box.style.color = '#ffffff';
+            box.style.color = '#FFD700'; // Gold text color for better contrast
             box.style.display = 'flex';
             box.style.alignItems = 'center';
             box.style.justifyContent = 'center';
             box.style.fontSize = '24px';
             box.style.cursor = 'pointer';
             box.style.textAlign = 'center';
-            box.style.boxShadow = '0 0 15px rgba(0, 0, 0, 0.7)'; // Stronger shadow for depth
+            box.style.boxShadow = '0 0 15px rgba(255, 215, 0, 0.7)'; // Stronger shadow for depth
             box.style.transition = 'transform 0.2s, background-color 0.2s'; // Smooth transition for hover effects
             box.style.userSelect = 'none';
             box.textContent = '???'; // Initially hide the value
@@ -623,51 +620,32 @@ else if (gameType === 'luck') {
                 box.style.transform = 'scale(1)'; // Reset the box size on mouse out
             });
 
-            // Arrange the boxes based on totalBoxes
-            if (totalBoxes === 4) {
-                // For Sebo's Luck (4 boxes): 2 on top, 2 on bottom
-                if (i < 2) {
-                    box.style.top = '20%';
-                    box.style.left = `${topRowSpacing + i * (boxSize + topRowSpacing)}px`;
-                } else {
-                    box.style.top = '60%';
-                    box.style.left = `${topRowSpacing + (i - 2) * (boxSize + topRowSpacing)}px`;
-                }
-            } else if (totalBoxes === 5) {
-                // For luckGameSkill (5 boxes): 3 on top, 2 on bottom
-                if (i < 3) {
-                    box.style.top = '20%';
-                    box.style.left = `${topRowSpacing + i * (boxSize + topRowSpacing)}px`;
-                } else {
-                    box.style.top = '60%';
-                    box.style.left = `${(gameArea.clientWidth - 2 * boxSize) / 3 + (i - 3) * (boxSize + bottomRowSpacing)}px`;
-                }
-            } else {
-                // Default case (6 boxes): 3 on top, 3 on bottom
-                if (i < 3) {
-                    box.style.top = '20%';
-                    box.style.left = `${topRowSpacing + i * (boxSize + topRowSpacing)}px`;
-                } else {
-                    box.style.top = '60%';
-                    box.style.left = `${topRowSpacing + (i - 3) * (boxSize + topRowSpacing)}px`;
-                }
-            }
-
             // Store the value inside the box
             const boxValue = boxValues[i];
 
             // Add click event listener
             box.addEventListener('click', function () {
-                // Highlight the box based on win or loss and show the value
-                box.textContent = `${boxValue}%`;
-                box.style.backgroundColor = boxValue >= 0 ? '#00FF00' : '#FF0000'; // Green for win, red for loss
+                // Smooth reveal with a scale and fade-in effect
+                box.style.transition = 'all 0.3s ease';
+                box.style.transform = 'scale(1.2)';
+                box.style.opacity = '0';
+                setTimeout(() => {
+                    box.style.opacity = '1';
+                    box.textContent = `${boxValue}%`;
+                    box.style.backgroundColor = boxValue >= 0 ? '#00FF00' : '#FF0000'; // Green for win, red for loss
+                    box.style.transform = 'scale(1)';
+                }, 300);
 
-                // Add a slight tint to all other boxes based on their values
+                // Other boxes fade out and reveal their values
                 Array.from(gameArea.children).forEach((child, index) => {
                     if (child !== box) {
                         const childValue = boxValues[index];
-                        child.style.backgroundColor = childValue >= 0 ? '#008800' : '#880000'; // Darker green/red tint for others
-                        child.textContent = `${childValue}%`; // Reveal the value
+                        setTimeout(() => {
+                            child.style.transition = 'all 0.3s ease';
+                            child.style.opacity = '0.7';
+                            child.style.backgroundColor = childValue >= 0 ? '#008800' : '#880000'; // Darker green/red tint for others
+                            child.textContent = `${childValue}%`;
+                        }, 300);
                     }
                 });
 
@@ -680,21 +658,20 @@ else if (gameType === 'luck') {
 
                     // Calculate reward based on the chosen box value
                     reward = Math.floor(Math.abs(trollPoints) * (boxValue / 100));
-                    resultMessage = boxValue >= 0 ?
-                        `You chose a lucky box and gained <span style="color: green;">${formatNumber(reward)}</span> troll points!` :
-                        `You chose an unlucky box and lost <span style="color: red;">${formatNumber(Math.abs(reward))}</span> troll points.`;
-
                     // Apply the soft cap
                     if (reward > softCaps.luck) {
                         reward = softCaps.luck;
                         softCapReached = true;
                     }
+                    resultMessage = boxValue >= 0 ?
+                        `You chose a lucky box and gained <span style="color: green;">${formatNumber(reward)}</span> troll points!` :
+                        `You chose an unlucky box and lost <span style="color: red;">${formatNumber(Math.abs(reward))}</span> troll points.`;
 
                     trollPoints += reward;
 
                     // Add the soft cap message in orange if applicable
                     if (softCapReached) {
-                        resultMessage += '<br><span style="color: orange;">Soft cap reached: Maximum reward of 12 hours effective Troll Points applied.</span>';
+                        resultMessage += '<br><span style="color: orange;">Soft cap reached: Maximum reward of 8 hours effective Troll Points applied.</span>';
                     }
 
                     resultMessage += cooldownMessage;
@@ -702,7 +679,7 @@ else if (gameType === 'luck') {
                     showMessageModal('Luck Game Result', resultMessage, false, false, null, false, false);
                     updateDisplay(); // Update the display
                     startCooldown(gameType); // Start cooldown for the mini-game
-                }, 1200); // 1.25-second delay to show all boxes
+                }, 1200); // 1.2-second delay to show all boxes
             });
 
             // Append the box to the game area
@@ -710,6 +687,7 @@ else if (gameType === 'luck') {
         }
     });
 }
+
 
 
     saveGameState();

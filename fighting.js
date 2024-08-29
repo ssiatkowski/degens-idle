@@ -22,7 +22,7 @@ const enemyStats = {
         minDamage: 5,
         maxDamage: 25,
         attackSpeed: 3,
-        defense: 13,
+        defense: 16,
         critChance: 0.2,
         critDamage: 2
     },

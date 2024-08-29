@@ -7,10 +7,10 @@ const librarySkills = [
     { name: 'Knowledgeable Cookie', cost: 9e45, description: 'Boosted cookie clicks also generate knowledge at current earnings rate.', unlocked: false, level: 'History' }, 
 
     { name: 'Cure for Delusion', cost: 5, description: 'Unlock ability to toggle whether delusion gain is positive or negative.', unlocked: false, level: 'Science' },
-    { name: 'Luck is Rigged', cost: 777, description: 'Removes 1 unlucky box. Makes lucky boxes better (25%-125% instead of 10%-100%) and unlocky boxes less bad (5%-60% instead of 10%-75%).', unlocked: false, level: 'Science' },
+    { name: 'Luck is Rigged', cost: 777, description: 'Remove 1 unlucky box. Makes lucky boxes better (25%-125% instead of 10%-100%) and unlocky boxes less bad (5%-55% instead of 10%-75%).', unlocked: false, level: 'Science' },
     { name: "I Can't Math", cost: 9000, description: 'Math Game timer increased from 12s to 20s, # portals reduced from 14 to 11, and reward is doubled.', unlocked: false, level: 'Science' },
     { name: "Short Term Memory", cost: 80000, description: 'Memory Game sequence length reduced to (3-6) instead of (4-7) and reward is tripled.', unlocked: false, level: 'Science' },
-    { name: "Click Speed Demon", cost: 1600000, description: 'Dots in Speed Game get slighlty larger and reward is tripled.', unlocked: false, level: 'Science' },
+    { name: "Click Speed Demon", cost: 1600000, description: 'Dots in Speed Game get slightly larger and reward is tripled.', unlocked: false, level: 'Science' },
     { name: 'Mini Gamer', cost: 7.5e23, description: 'All mini game cooldowns are reduced by 50%.', unlocked: false, level: 'Science' },
 
     { name: 'Prestige Base', cost: 5000, description: 'Increase Base prestige multiplier from 1.5 to 1.75. Huuge.', unlocked: false, level: 'Nonlinear Partial Differential Equations' },
@@ -21,13 +21,13 @@ const librarySkills = [
 
 
     { name: 'Multibuy Upgrades', cost: 2, description: 'Unlock "Buy Seen" and "Buy Max" buttons for Upgrades.', unlocked: false, level: 'Artificial Intelligence' },
-    { name: 'Cookie Clicker Clicker', cost: 75, description: 'After Prestiging or Ascending, automatically click the cookie 10 times per second for 15 seconds.', unlocked: false, level: 'Artificial Intelligence' },
-    { name: 'Double Ascension', cost: 350, description: 'Gain up to 2 God-Mode levels per Ascension. Also select up to 2 upgrades to enhance to God Mode.', unlocked: false, level: 'Artificial Intelligence' },
+    { name: 'Double Ascension', cost: 20, description: 'Gain up to 2 God-Mode levels per Ascension. Also select up to 2 upgrades to enhance to God Mode.', unlocked: false, level: 'Artificial Intelligence' },
+    { name: 'Cookie Clicker Clicker', cost: 350, description: 'After Prestiging or Ascending, automatically click the cookie 10 times per second for 15 seconds.', unlocked: false, level: 'Artificial Intelligence' },
     { name: 'Buy Markers', cost: 300000, description: 'Purchased Upgrades will now have a switch indicating whether or not they should be bought using "Buy Seen" and "Buy All" buttons. (Can toggle all in Automation Settings) ', unlocked: false, level: 'Artificial Intelligence' },
     { name: 'Quadruple Ascension', cost: 4e6, description: 'Gain up to 4 God-Mode levels per Ascension. Also select up to 4 upgrades to enhance to God Mode.', unlocked: false, level: 'Artificial Intelligence' },
     { name: 'Septuple Transendence', cost: 7e19, description: 'Gain up to 7 Parallel Universe God-Mode levels per Transendence. Also select up to 7 upgrades to enhance to PU God Mode.', unlocked: false, level: 'Artificial Intelligence' },
     { name: 'Autobuy Upgrades', cost: 3e22, description: `Buy Markers are repurposed to configure Autobuy - which will purchase afforable visible upgrades every 1.5 seconds. (Can toggle on/off in Automation Settings)`, unlocked: false, level: 'Artificial Intelligence' },
-    { name: 'Septuple Ascension', cost: 7e24, description: 'Gain up to 7 God-Mode levels per Ascension. Also select up to 7 upgrades to enhance to God Mode.', unlocked: false, level: 'Artificial Intelligence' },
+    { name: 'Tenfold Ascension', cost: 1e25, description: 'Gain up to 10 God-Mode levels per Ascension. Also select up to 10 upgrades to enhance to God Mode.', unlocked: false, level: 'Artificial Intelligence' },
 
     { name: 'Knowledge is Power', cost: 1e6, description: 'Unlock new resource Power. Power is always generated based on your current amount of Knowledge.', unlocked: false, level: 'Celestial Bodies' },
     { name: 'Big Crunch', cost: 8e11, description: 'Could this be what Power is for? Unlock ability to force the universe into a Big Crunch and to be reborn anew!', unlocked: false, level: 'Celestial Bodies' },
@@ -193,8 +193,8 @@ function unlockLibrarySkill(skill, duringLoad = false) {
                 numPUAscensionUpgrades = Math.max(numPUAscensionUpgrades, 7);
                 break;
                 
-            case 'Septuple Ascension':
-                numAscensionUpgrades = Math.max(numAscensionUpgrades, 7);
+            case 'Tenfold Ascension':
+                numAscensionUpgrades = Math.max(numAscensionUpgrades, 10);
                 break;
 
             case 'Autobuy Upgrades':  
@@ -235,20 +235,20 @@ function unlockLibrarySkill(skill, duringLoad = false) {
                 break;
 
             case 'Perpetual Prestige':
-                if(autoPrestigeThreshold == null){
+                if(autoPrestigeThreshold === null){
                     autoPrestigeThreshold = 10;
                 }
                 break;
     
             case 'Eternal Ascension':
-                if(autoAscendThreshold == null){
+                if(autoAscendThreshold === null){
                     autoAscendThreshold = numAscensionUpgrades;
                 }
                 break;
 
                 
             case 'Quantum Symphony':
-                if(autoTranscendThreshold == null){
+                if(autoTranscendThreshold === null){
                     autoTranscendThreshold = numPUAscensionUpgrades;
                 }
                 break;

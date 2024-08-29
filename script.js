@@ -248,10 +248,11 @@ function loadGameState() {
     transcendenceUnlocked = JSON.parse(localStorage.getItem('transcendenceUnlocked')) || false;
     if (transcendenceUnlocked) { document.getElementById('pu-god-display').style.display = 'block'; } 
 
-    autoPrestigeThreshold = parseFloat(localStorage.getItem('autoPrestigeThreshold')) || null;
-
-    autoAscendThreshold = parseFloat(localStorage.getItem('autoAscendThreshold')) || null;
-    autoTranscendThreshold = parseFloat(localStorage.getItem('autoTranscendThreshold')) || null;
+    // Workaround to allow loading 0
+    autoPrestigeThreshold = !isNaN(parseFloat(localStorage.getItem('autoPrestigeThreshold'))) ? parseFloat(localStorage.getItem('autoPrestigeThreshold')) : null;
+    autoAscendThreshold = !isNaN(parseFloat(localStorage.getItem('autoAscendThreshold'))) ? parseFloat(localStorage.getItem('autoAscendThreshold')) : null;
+    autoTranscendThreshold = !isNaN(parseFloat(localStorage.getItem('autoTranscendThreshold'))) ? parseFloat(localStorage.getItem('autoTranscendThreshold')) : null;
+    
 
     deadpoolRevives = parseFloat(localStorage.getItem('deadpoolRevives')) || 0;
     
@@ -1331,13 +1332,19 @@ function calculateAscensionEpsMult() {
     return Math.max(epsMultiplier ** exponent, 1);
 }
 
+let ascendInProgress = false;
+
 async function ascend() {
+
+    if (ascendInProgress) return; // Prevent additional clicks if ascend is already in progress
+    ascendInProgress = true;
+
     const upgradeText = numAscensionUpgrades > 1
         ? `select up to ${numAscensionUpgrades} upgrades to enhance and increase your god mode multiplier accordingly`
         : "select an upgrade to enhance and increase your god mode multiplier";
     const selectedUpgrades = await showMessageModal(
         'God-Mode Ascension',
-        `Are you sure you want to enter God-Mode level ${godModeLevel + 1}?<br><br>
+        `Are you sure you want to ascend to increase your God-Mode level?<br><br>
         Raising the level of God-Mode requires temporarily folding three dimensions in the space around you to a single point, which will unfortunately reduce your Prestige multiplier to its cube root. Your Prestige multiplier will change from <strong>x${formatNumber(epsMultiplier)}</strong> to <strong>x${formatNumber(calculateAscensionEpsMult())}</strong><br><br>
         On the bright side, your God-Mode multiplier will increase from <strong>x${formatNumber(godModeMultiplier)}</strong> to at least <strong>x${formatNumber(calculateGodModeMultiplier(godModeLevel+1))}</strong>!<br><br>
         Additionally, you can ${upgradeText}.`,
@@ -1364,15 +1371,24 @@ async function ascend() {
         // Save game state after ascending
         saveGameState();
     }
+
+    // Re-enable after the function completes
+    setTimeout(() => {
+        ascendInProgress = false;
+    }, 300);
 }
 
 
 async function transcend() {
+    
+    if (ascendInProgress) return; // Prevent additional clicks if ascend is already in progress
+    ascendInProgress = true;
+
     const upgradeText = `select up to ${numPUAscensionUpgrades} upgrades to enhance and increase your Parallel Universe God-Mode multiplier accordingly`;
-    const firstTranscendText = puGodLevel < 1 ? `<span style="color: #FFD700;">Hey it's your intuition again. Transcending does not reset Big Crunch. But Big Crunch resets Transcends. It is recommended to get Big Crunch Multiplier at minimum above 10 (~0.00021 Big Crunch Power) before going down this path.</span><br><br>` : '';
+    const firstTranscendText = (puGodLevel < 1 && bigCrunchMultiplier < 12) ? `<span style="color: #FFD700;">Hey it's your intuition again. Transcending does not reset Big Crunch. But Big Crunch resets Transcends. It is recommended to get Big Crunch Multiplier at minimum above 10 (~0.00021 Big Crunch Power) before going down this path.</span><br><br>` : '';
     const selectedUpgrades = await showMessageModal(
         'Parallel Universe God-Mode Ascension',
-        `Are you sure you want to enter Parallel Universe God-Mode level ${puGodLevel + 1}?<br><br>${firstTranscendText}
+        `Are you sure you want to ascend to increase your Parallel Universe God-Mode level?<br><br>${firstTranscendText}
         Accessing this new dimension requires temporarily aligning your universe with a parallel one, which will unfortunately reduce your Prestige multiplier the same way that Ascending in your Universe would. Your Prestige multiplier will change from <strong>x${formatNumber(epsMultiplier)}</strong> to <strong>x${formatNumber(calculateAscensionEpsMult())}</strong><br><br>
         On the bright side, your Parallel Universe God-Mode multiplier will increase from <strong>x${formatNumber(puGodMultiplier)}</strong> to at least <strong>x${formatNumber(calculatePUGodModeMultiplier(puGodLevel+2))}</strong>!<br><br>
         Additionally, you can ${upgradeText}.`,
@@ -1402,7 +1418,13 @@ async function transcend() {
         // Save game state after transcending
         saveGameState();
     }
+
+    // Re-enable after the function completes
+    setTimeout(() => {
+        ascendInProgress = false;
+    }, 300);
 }
+
 
 
 async function bigCrunch() {
@@ -1458,7 +1480,7 @@ function updateAscendButton() {
         ascendButton.style.display = 'block';
         // Check if autoAscendThreshold is set and not null
 
-        if (autoAscendThreshold !== null) {
+        if (autoAscendThreshold !== null && autoAscendThreshold !== 0) {
             // Count the number of purchased upgrades that do not have isGodMode
             const nonGodModeUpgrades = purchasedUpgrades.filter(upgrade => !upgrade.isGodMode).length;
 
@@ -1496,7 +1518,7 @@ function updateTranscendButton() {
         transcendButton.style.display = 'block';
 
         // Check if autoTranscendThreshold is set and not null
-        if (autoTranscendThreshold !== null) {
+        if (autoTranscendThreshold !== null && autoTranscendThreshold !== 0) {
             // Count the number of purchased upgrades that do not have isPUGodMode
             const nonPUGodModeUpgrades = purchasedUpgrades.filter(upgrade => !upgrade.isPUGodMode).length;
 
@@ -1875,16 +1897,15 @@ function addPurchasedUpgrade(img, name, earnings, isGodMode = false, isPUGodMode
         });
     }
 
-    if (buyMarkersSkill) {
+    if (buyMarkersSkill && !isFight) {
         const savedSwitchState = JSON.parse(localStorage.getItem(`switchState-${name}`)) || false;
         if (toggleSwitch) {
             toggleSwitch.checked = savedSwitchState;
             toggleSwitch.parentElement.style.display = 'block';
         }
     } else {
-        const switchElement = document.getElementById(`toggle-${name}`);
-        if (switchElement) {
-            switchElement.parentElement.style.display = 'none';
+        if (toggleSwitch) {
+            toggleSwitch.parentElement.style.display = 'none';
         }
     }
 }
@@ -1905,21 +1926,17 @@ function enableAllBuyMarkers(firstUnlock=false) {
         let savedSwitchState = true;
         if (!firstUnlock) { savedSwitchState = JSON.parse(localStorage.getItem(`switchState-${name}`)) || false;}
         const toggleSwitch = document.getElementById(`toggle-${name}`);
-        if (toggleSwitch) {
+        if (toggleSwitch && !upgrade.isFight) {
             toggleSwitch.checked = savedSwitchState;
             toggleSwitch.parentElement.style.display = 'block'; // Make the switch visible
 
-
-            if(!upgrade.isFight){
-                // Add event listener for the switch
-                toggleSwitch.addEventListener('change', (event) => {
-                    const state = event.target.checked ? 'On' : 'Off';
-                    console.log(`Switch for upgrade ${name} set to ${state}`);
-                    // Save the switch state to local storage
-                    localStorage.setItem(`switchState-${name}`, JSON.stringify(event.target.checked));
-                });
-            }
-
+            // Add event listener for the switch
+            toggleSwitch.addEventListener('change', (event) => {
+                const state = event.target.checked ? 'On' : 'Off';
+                console.log(`Switch for upgrade ${name} set to ${state}`);
+                // Save the switch state to local storage
+                localStorage.setItem(`switchState-${name}`, JSON.stringify(event.target.checked));
+            });
 
             toggleSwitch.addEventListener('click', (event) => {
                 event.stopPropagation();
@@ -2457,7 +2474,17 @@ function showImmediateMessageModal(title, message) {
     };
 }
 
-
+// Throttle function
+function throttle(func, limit) {
+    let inThrottle;
+    return function() {
+        if (!inThrottle) {
+            func.apply(this, arguments);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
+        }
+    };
+}
 
 // Expose functions to the global scope for use in the HTML
 window.prestige = prestige;
@@ -2471,7 +2498,7 @@ window.buyUpgrade = buyUpgrade;
 // Add event listeners after the DOM content is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
     // Add event listener for the cookie button to collect all resources
-    document.getElementById('cookieButton').addEventListener('click', cookieCollectAllResources);
+    document.getElementById('cookieButton').addEventListener('click', throttle(cookieCollectAllResources, 70));
 
     // Add event listeners for resource collection buttons
     document.getElementById('collectCopiumButton').addEventListener('click', () => { collectResource('copium'); });
@@ -2495,17 +2522,18 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('restartButton').addEventListener('click', () => restartGame(false));
     document.getElementById('restartPrestige').addEventListener('click', () => restartPrestige());
 
-    // Add event listener for the prestige button
-    document.getElementById('prestigeButton').addEventListener('click', () => prestige());
 
-    // Add event listener for the ascend button
-    document.getElementById('ascendButton').addEventListener('click', ascend);
+    // Add event listener for the ascend button with throttling
+    document.getElementById('prestigeButton').addEventListener('click', () => throttle(prestige(), 500));
 
-    // Add event listener for the transcend button
-    document.getElementById('transcendButton').addEventListener('click', transcend);
+    // Add event listener for the ascend button with throttling
+    document.getElementById('ascendButton').addEventListener('click', throttle(ascend, 500));
+
+    // Add event listener for the transcend button with throttling
+    document.getElementById('transcendButton').addEventListener('click', throttle(transcend, 500));
     
-    // Add event listener for the ascend button
-    document.getElementById('bigCrunchButton').addEventListener('click', bigCrunch);
+    // Add event listener for the transcend button with throttling
+    document.getElementById('bigCrunchButton').addEventListener('click', throttle(bigCrunch, 500));
 
     // Add event listener for the buy all upgrades button
     document.getElementById('buySeenButton').addEventListener('click', function() { buyAllUpgrades(8, this);});

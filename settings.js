@@ -346,14 +346,18 @@ document.getElementById('feedbackButton').addEventListener('click', function() {
 function toggleAllBuyMarkers(targetState) {
 
     purchasedUpgrades.forEach(upgrade => {
+        const name = upgrade.name;
+        const toggleSwitch = document.getElementById(`toggle-${name}`);
         if (!upgrade.isFight) {
-            const name = upgrade.name;
             // Load the switch state from local storage
-            const toggleSwitch = document.getElementById(`toggle-${name}`);
             if (toggleSwitch) {
                 toggleSwitch.checked = targetState;
                 toggleSwitch.parentElement.style.display = 'block'; // Make the switch visible
             }
+        }
+        else{
+            toggleSwitch.checked = false;
+            toggleSwitch.parentElement.style.display = 'none'; // Make the switch visible
         }
     });
 
@@ -461,8 +465,9 @@ document.getElementById('automationButton').addEventListener('click', function()
         if (autoAscendThreshold !== null) {
             const autoAscendHtml = `
                 <div style="margin-bottom: 15px;">
-                    <label for="autoAscendThresholdInput">Auto Ascend Threshold (1 to ${numAscensionUpgrades}):</label>
-                    <input type="number" id="autoAscendThresholdInput" value="${autoAscendThreshold}" min="1" max="${numAscensionUpgrades}">
+                    <label for="autoAscendThresholdInput">Auto Ascend Threshold (0 to ${numAscensionUpgrades}):</label>
+                    <input type="number" id="autoAscendThresholdInput" value="${autoAscendThreshold}" min="0" max="${numAscensionUpgrades}">
+                    <span id="ascendWarning" style="display: none; color: red;">Disable auto ascend</span>
                 </div>
             `;
             automationContent.innerHTML += autoAscendHtml;
@@ -472,12 +477,58 @@ document.getElementById('automationButton').addEventListener('click', function()
         if (autoTranscendThreshold !== null) {
             const autoTranscendHtml = `
                 <div style="margin-bottom: 15px;">
-                    <label for="autoTranscendThresholdInput">Auto Transcend Threshold (1 to ${numPUAscensionUpgrades}):</label>
-                    <input type="number" id="autoTranscendThresholdInput" value="${autoTranscendThreshold}" min="1" max="${numPUAscensionUpgrades}">
+                    <label for="autoTranscendThresholdInput">Auto Transcend Threshold (0 to ${numPUAscensionUpgrades}):</label>
+                    <input type="number" id="autoTranscendThresholdInput" value="${autoTranscendThreshold}" min="0" max="${numPUAscensionUpgrades}">
+                    <span id="transcendWarning" style="display: none; color: red;">Disable auto transcend</span>
                 </div>
             `;
             automationContent.innerHTML += autoTranscendHtml;
         }
+
+        // Add listeners to detect when 0 is selected, including when settings are reopened
+        setTimeout(() => {
+            const autoAscendInput = document.getElementById('autoAscendThresholdInput');
+            const autoTranscendInput = document.getElementById('autoTranscendThresholdInput');
+            const ascendWarning = document.getElementById('ascendWarning');
+            const transcendWarning = document.getElementById('transcendWarning');
+
+            if (autoAscendInput) {
+                // Apply red color if autoAscendThreshold is 0 when reopening settings
+                if (parseInt(autoAscendInput.value) === 0) {
+                    autoAscendInput.style.color = 'red';
+                    ascendWarning.style.display = 'inline';
+                }
+
+                autoAscendInput.addEventListener('input', function() {
+                    if (parseInt(autoAscendInput.value) === 0) {
+                        autoAscendInput.style.color = 'red';
+                        ascendWarning.style.display = 'inline';
+                    } else {
+                        autoAscendInput.style.color = '';
+                        ascendWarning.style.display = 'none';
+                    }
+                });
+            }
+
+            if (autoTranscendInput) {
+                // Apply red color if autoTranscendThreshold is 0 when reopening settings
+                if (parseInt(autoTranscendInput.value) === 0) {
+                    autoTranscendInput.style.color = 'red';
+                    transcendWarning.style.display = 'inline';
+                }
+
+                autoTranscendInput.addEventListener('input', function() {
+                    if (parseInt(autoTranscendInput.value) === 0) {
+                        autoTranscendInput.style.color = 'red';
+                        transcendWarning.style.display = 'inline';
+                    } else {
+                        autoTranscendInput.style.color = '';
+                        transcendWarning.style.display = 'none';
+                    }
+                });
+            }
+        }, 0); // Ensure the inputs are rendered first
+
 
         // Check if any feature is missing and at least one is unlocked
         const someFeaturesMissing = !autobuyUpgradesSkill || autoPrestigeThreshold === null || !buyMarkersSkill || autoAscendThreshold === null || autoTranscendThreshold === null;
@@ -511,8 +562,8 @@ document.getElementById('saveAutomationSettingsButton').addEventListener('click'
     if (autoAscendThreshold !== null) {
         const ascendThresholdInput = parseInt(document.getElementById('autoAscendThresholdInput').value);
 
-        if (isNaN(ascendThresholdInput) || ascendThresholdInput < 1 || ascendThresholdInput > numAscensionUpgrades) {
-            showImmediateMessageModal('Invalid Number', `Please enter a valid number between 1 and ${numAscensionUpgrades} for the Auto Ascend Threshold.`);
+        if (isNaN(ascendThresholdInput) || ascendThresholdInput < 0 || ascendThresholdInput > numAscensionUpgrades) {
+            showImmediateMessageModal('Invalid Number', `Please enter a valid number between 0 and ${numAscensionUpgrades} for the Auto Ascend Threshold.`);
             return; // Prevent closing if there's an error
         } else {
             autoAscendThreshold = ascendThresholdInput;
@@ -523,8 +574,8 @@ document.getElementById('saveAutomationSettingsButton').addEventListener('click'
     if (autoTranscendThreshold !== null) {
         const transcendThresholdInput = parseInt(document.getElementById('autoTranscendThresholdInput').value);
 
-        if (isNaN(transcendThresholdInput) || transcendThresholdInput < 1 || transcendThresholdInput > numPUAscensionUpgrades) {
-            showImmediateMessageModal('Invalid Number', `Please enter a valid number between 1 and ${numPUAscensionUpgrades} for the Auto Transcend Threshold.`);
+        if (isNaN(transcendThresholdInput) || transcendThresholdInput < 0 || transcendThresholdInput > numPUAscensionUpgrades) {
+            showImmediateMessageModal('Invalid Number', `Please enter a valid number between 0 and ${numPUAscensionUpgrades} for the Auto Transcend Threshold.`);
             return; // Prevent closing if there's an error
         } else {
             autoTranscendThreshold = transcendThresholdInput;
@@ -569,6 +620,7 @@ document.getElementById('saveAutomationSettingsButton').addEventListener('click'
     document.getElementById('automationOverlay').style.display = 'none';
     showImmediateMessageModal('Automation Settings Saved', 'Your automation settings have been saved successfully.');
 });
+
 
 
 
