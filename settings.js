@@ -86,7 +86,15 @@ function exportSave() {
         bigCrunchPower,
         bigCrunchMultiplier,
         totalMultiplier,
-        firstTimePrestigeButtonAvailable,
+        firstTimePrestigeButtonAvailable, // Added
+        autoPrestigeThreshold, // Added
+        autoAscendThreshold, // Added
+        autoTranscendThreshold, // Added
+        deadpoolRevives, // Added
+        voidStabilizerActive, // Added
+        cookieBoost, // Added
+        transcendenceUnlocked, // Added
+        lastInteraction: Date.now(), // Updated to always track last interaction
         cookieClickMultiplier,
         cookieAutoClicker,
         knowledgeUnlocked,
@@ -100,16 +108,15 @@ function exportSave() {
         bigCrunchUnlocked,
         numAscensionUpgrades,
         improvedTradeRatio,
-        cookieBoost,
+        currentNumberFormat, // Added
         cooldowns,
-        transcendenceUnlocked,              // Added
-        numPUAscensionUpgrades,             // Added
-        lessDiminishingGodModeSkill,        // Added
-        lessDiminishingPUGodModeSkill,      // Added
+        numPUAscensionUpgrades,
+        lessDiminishingGodModeSkill,
+        lessDiminishingPUGodModeSkill,
         upgrades: upgrades.map(upgrade => ({
             name: upgrade.name,
             isGodMode: upgrade.isGodMode,
-            isPUGodMode: upgrade.isPUGodMode // Added to store isPUGodMode
+            isPUGodMode: upgrade.isPUGodMode
         })),
         purchasedUpgrades: purchasedUpgrades.map(upgrade => upgrade.name),
         cookieButtonVisible: document.getElementById('cookieButton').style.display === 'block',
@@ -117,7 +124,14 @@ function exportSave() {
             name: skill.name,
             unlocked: skill.unlocked
         })),
-        lastInteraction: Date.now()
+        powerHallSkills: powerHallSkills.map(skill => ({
+            name: skill.name,
+            unlocked: skill.unlocked
+        })), // Added
+        autoUpgradeStatus: purchasedUpgrades.reduce((acc, upgrade) => {
+            acc[upgrade.name] = document.getElementById(`toggle-${upgrade.name}`).checked;
+            return acc;
+        }, {}) // Added
     });
 
     const blob = new Blob([gameState], { type: 'application/json' });
@@ -130,7 +144,6 @@ function exportSave() {
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
 }
-
 
 function importSave(event) {
     const file = event.target.files[0];
@@ -176,26 +189,15 @@ function importSave(event) {
         bigCrunchPower = gameState.bigCrunchPower;
         bigCrunchMultiplier = gameState.bigCrunchMultiplier;
         totalMultiplier = gameState.totalMultiplier;
-        firstTimePrestigeButtonAvailable = gameState.firstTimePrestigeButtonAvailable;
-        cookieClickMultiplier = gameState.cookieClickMultiplier;
-        cookieAutoClicker = gameState.cookieAutoClicker;
-        knowledgeUnlocked = gameState.knowledgeUnlocked;
-        knowledgeGenerationSkill = gameState.knowledgeGenerationSkill;
-        prestigeBaseSkill = gameState.prestigeBaseSkill;
-        twoDimensionalAscensionSkill = gameState.twoDimensionalAscensionSkill;
-        multibuyUpgradesSkill = gameState.multibuyUpgradesSkill;
-        mathGameSkill = gameState.mathGameSkill;
-        powerUnlocked = gameState.powerUnlocked;
-        buyMarkersSkill = gameState.buyMarkersSkill;
-        bigCrunchUnlocked = gameState.bigCrunchUnlocked;
-        numAscensionUpgrades = gameState.numAscensionUpgrades;
-        improvedTradeRatio = gameState.improvedTradeRatio;
-        cookieBoost = gameState.cookieBoost;
-        cooldowns = gameState.cooldowns;
+        firstTimePrestigeButtonAvailable = gameState.firstTimePrestigeButtonAvailable; // Added
+        autoPrestigeThreshold = gameState.autoPrestigeThreshold; // Added
+        autoAscendThreshold = gameState.autoAscendThreshold; // Added
+        autoTranscendThreshold = gameState.autoTranscendThreshold; // Added
+        deadpoolRevives = gameState.deadpoolRevives; // Added
+        voidStabilizerActive = gameState.voidStabilizerActive; // Added
+        cookieBoost = gameState.cookieBoost; // Added
         transcendenceUnlocked = gameState.transcendenceUnlocked; // Added
-        numPUAscensionUpgrades = gameState.numPUAscensionUpgrades; // Added
-        lessDiminishingGodModeSkill = gameState.lessDiminishingGodModeSkill; // Added
-        lessDiminishingPUGodModeSkill = gameState.lessDiminishingPUGodModeSkill; // Added
+        currentNumberFormat = gameState.currentNumberFormat; // Added
 
         upgrades.forEach(upgrade => {
             const savedUpgrade = gameState.upgrades.find(up => up.name === upgrade.name);
@@ -218,6 +220,14 @@ function importSave(event) {
                 if (upgrade.name === "Cookie Clicker") {
                     document.getElementById('cookieButton').style.display = 'block';
                 }
+            }
+        });
+
+        // Restore auto upgrade statuses
+        Object.keys(gameState.autoUpgradeStatus || {}).forEach(upgradeName => {
+            const toggleElement = document.getElementById(`toggle-${upgradeName}`);
+            if (toggleElement) {
+                toggleElement.checked = gameState.autoUpgradeStatus[upgradeName];
             }
         });
 
@@ -246,6 +256,17 @@ function importSave(event) {
                 skill.unlocked = savedSkill.unlocked;
                 if (skill.unlocked) {
                     unlockLibrarySkill(skill, true);
+                }
+            }
+        });
+
+        // Handle power hall skills
+        powerHallSkills.forEach(skill => {
+            const savedSkill = gameState.powerHallSkills.find(s => s.name === skill.name);
+            if (savedSkill) {
+                skill.unlocked = savedSkill.unlocked;
+                if (skill.unlocked) {
+                    unlockPowerHallSkill(skill, true);
                 }
             }
         });
@@ -288,6 +309,7 @@ function importSave(event) {
 
     reader.readAsText(file);
 }
+
 
 
 
