@@ -866,7 +866,7 @@ const upgrades = [
     {
         name: `Still Mediocre`,
         cost: { copium: 0, delusion: 1e52, yachtMoney: 0, trollPoints: 5e52, hopium: 0, knowledge: 1e41, power: 30000, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 8e18, yachtMoneyPerSecond: 0, trollPointsPerSecond: 7e18, hopiumPerSecond: 0, knowledgePerSecond: 30000, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 8e18, yachtMoneyPerSecond: 0, trollPointsPerSecond: 7e18, hopiumPerSecond: 0, knowledgePerSecond: 35000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/3rd_place_upvotes.jpg`,        
     },
     {
@@ -892,7 +892,7 @@ const upgrades = [
     {
         name: `Nagging Question`,
         cost: { copium: 2e53, delusion: 2e53, yachtMoney: 0, trollPoints: 8e53, hopium: 0, knowledge: 1e43, power: 1.5e6, serenity: 0 },
-        earnings: { copiumPerSecond: 7e18, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 3e18, hopiumPerSecond: 0, knowledgePerSecond: 18000, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 7e18, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 3e18, hopiumPerSecond: 0, knowledgePerSecond: 38000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/deadpool_lives.jpg`,        
     },
     {
