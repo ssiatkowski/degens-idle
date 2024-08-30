@@ -1,21 +1,28 @@
 
 const powerHallSkills = [
     { name: 'Power Surge', cost: 9000, description: 'Power Generation is increased by 50%!', unlocked: false, level: 'Arcane Magnetism' },
+    { name: 'Temporal Flux', cost: 1e6, description: 'Gain 10% dodge chance after landing critical hits. Bonus resets on successful dodge.', unlocked: false, level: 'Arcane Magnetism' },
     { name: 'Arcane Magnetizer', cost: 1e7, description: 'Upgrade autobuyer is now 5x faster!', unlocked: false, level: 'Arcane Magnetism' },
-    // { name: 'Fake - Overcharge', cost: 10000, description: 'Unlock ability to spend all your power and multiply production of first 5 resources by square root of spent power.', unlocked: false, level: 'Arcane Magnetism' },
-    // { name: 'Fake - Energy Overflow', cost: 1e30, description: 'Allow excess energy to overflow into additional resource generation.', unlocked: false, level: 'Arcane Magnetism' },
-    
+    { name: 'Gravity Well', cost: 1e7, description: 'Every 5 successful attacks, reduce enemy minimum damage by 50% for 3 attacks.', unlocked: false, level: 'Arcane Magnetism' },
+    { name: 'Temporal Guard', cost: 2.5e9, description: 'After every successful dodge, increase your defense by 7% for the rest of the battle.', unlocked: false, level: 'Arcane Magnetism' },
+
     { name: 'Vitality Matrix', cost: 45000, description: 'Maximum Health is increased by 50%!', unlocked: false, level: 'Quantum Nexus' },
     { name: 'Nexus Lifeline', cost: 5e6, description: 'With every attack, heal yourself for 2% max health. Overheal is possible.', unlocked: false, level: 'Quantum Nexus' },
     { name: 'Astral Precision', cost: 3e7, description: 'Hone your accuracy. Minimum damage rescaled from power-75% to power-25%.', unlocked: false, level: 'Quantum Nexus' },
+    { name: 'Void Stabilizer', cost: 1.75e8, description: 'Reduce damage taken from attacks by 50% while your health is above 80%', unlocked: false, level: 'Quantum Nexus' },
 
     { name: 'Lightning Reflexes', cost: 12000, description: 'Your attacks become 2.5x faster!', unlocked: false, level: 'Cosmic Dynamics' },
+    { name: 'Astral Disruption', cost: 150000, description: 'Your attacks have a 5% chance to stun the enemy for 1 attack.', unlocked: false, level: 'Cosmic Dynamics' },
     { name: 'Supersonic Fury', cost: 1.2e8, description: 'Your attacks become even 2x faster!', unlocked: false, level: 'Cosmic Dynamics' },
     { name: 'Prime Impact', cost: 9e8, description: 'First attack always hits for full power (ignore enemy dodge rate and defense).', unlocked: false, level: 'Cosmic Dynamics' },
-    // { name: 'Astral Disruption', cost: 1e30, description: 'Your attacks have a 5% chance to stun the enemy for 1 second.', unlocked: false, level: 'Cosmic Dynamics' },
     { name: 'Graviton Burst', cost: 1.2e50, description: 'Your attacks are imperceptible to average beings. You now attack 5x faster!', unlocked: false, level: 'Cosmic Dynamics' },
-
+    
+    { name: 'Stellar Harvest', cost: 2.5e7, description: `Increase generation of all first 7 resources by 50% for 60 seconds after defeating a boss. (multiplicative)`, unlocked: false, level: 'Celestial Manipulation' },
+    { name: 'POWER is Power!', cost: 2.5e8, description: `Power generation increased by 10% for each purchased Power Hall skill (multiplicative).`, unlocked: false, level: 'Celestial Manipulation' },
     { name: 'Upgrade Amplifier', cost: 4e8, description: `First 4 resources gain a flat multiplier based on number of purchased upgrades.`, unlocked: false, level: 'Celestial Manipulation' },
+
+    //{ name: '?', cost: 4e8, description: `?`, unlocked: false, level: 'Nebular Command' },
+
 ];
 
 
@@ -39,6 +46,10 @@ function unlockPowerHallSkill(skill, duringLoad = false) {
                 powerSurgeMultiplier = Math.max(powerSurgeMultiplier, 1.5);
                 break;
 
+            case 'Temporal Flux':
+                temporalFluxSkill = true;
+                break;
+    
             case 'Arcane Magnetizer':
                 fasterAutobuyerskill = true;
 
@@ -47,6 +58,10 @@ function unlockPowerHallSkill(skill, duringLoad = false) {
                 }
                 autobuyIntervalId = setInterval(autobuyUpgrades, 250);
 
+                break;
+
+            case 'Gravity Well':
+                gravityWellSkill = true;
                 break;
 
             case 'Nexus Lifeline':
@@ -58,13 +73,24 @@ function unlockPowerHallSkill(skill, duringLoad = false) {
                 playerMinDamageMult = 0.75;
                 break;
 
-
+            case 'Void Stabilizer':
+                voidStabilizerSkill = true;
+                break;
+    
+            case 'Temporal Guard':
+                temporalGuardSkill = true;
+                break;
+        
             case 'Vitality Matrix':
                 playerHealthMult = 1.5;
                 break;
 
             case 'Lightning Reflexes':
                 playerAttackSpeed = Math.max(playerAttackSpeed, 5);
+                break;
+
+            case 'Astral Disruption':
+                playerStunChance = Math.max(playerStunChance, 0.05);
                 break;
 
             case 'Supersonic Fury':
@@ -77,6 +103,14 @@ function unlockPowerHallSkill(skill, duringLoad = false) {
 
             case 'Graviton Burst':
                 playerAttackSpeed = Math.max(playerAttackSpeed, 50);
+                break;
+
+            case 'Stellar Harvest':
+                stellarHarvestSkill = true;
+                break;
+
+            case 'POWER is Power!':
+                powerIsPowerSkill = true;
                 break;
 
             case 'Upgrade Amplifier':

@@ -71,6 +71,8 @@ let moneyIsPowerTooSkill = false;
 let lessDiminishingGodModeSkill = false;
 let lessDiminishingPUGodModeSkill = false;
 
+let compressedBigCrunchMult = 1;
+
 let transcendenceUnlocked = false;
 
 let autoPrestigeThreshold = null;
@@ -92,11 +94,19 @@ let autobuyUpgradesSkill = false;
 let upgradeAmplifierSkill = false;
 let fasterAutobuyerskill = false;
 let nexusLifelineSkill = false;
+let gravityWellSkill = false;
+let temporalFluxSkill = false;
 let primeImpactSkill = false;
+let powerIsPowerSkill = false;
+let voidStabilizerSkill = false;
+let temporalGuardSkill = false;
+
+let stellarHarvestSkill = false;
+let stellarHarvestMult = 1;
 
 
 function calculateBaseKnowledge() {
-    return knowledgePerSecond * totalMultiplier * (bigCrunchMultiplier ** (1/2));
+    return knowledgePerSecond * totalMultiplier * (bigCrunchMultiplier ** (1/2)) * stellarHarvestMult;
 }
 
 function calculateEffectiveKnowledge() {
@@ -121,10 +131,16 @@ function calculateEffectiveKnowledge() {
 }
 
 function calculateBasePower() {
-    return (moneyIsPowerTooSkill ?
+    let basePower = (moneyIsPowerTooSkill ?
         (Math.max(knowledge, 0) ** (1/3) / 1e12) * (1 + (Math.max(yachtMoney, 0) ** (1/30) / 100)) 
         : Math.max(knowledge, 0) ** (1/3) / 1e12) 
-        * powerSurgeMultiplier * devMultiplier;
+        * powerSurgeMultiplier * devMultiplier * stellarHarvestMult;
+
+    if (powerIsPowerSkill) {
+        basePower *= 1.1 ** (powerHallSkills.filter(skill => skill.unlocked).length);
+    }
+
+    return basePower;
 }
 
 function calculateEffectivePower() {
@@ -152,12 +168,12 @@ function calculateEffectivePower() {
 function updateEffectiveMultipliers() {
     const amplifierMultiplier = upgradeAmplifierSkill ? purchasedUpgrades.length : 1;
 
-    effectiveCopiumPerSecond = copiumPerSecond * totalMultiplier * amplifierMultiplier;
-    effectiveDelusionPerSecond = delusionPerSecond * totalMultiplier * amplifierMultiplier;
-    effectiveYachtMoneyPerSecond = yachtMoneyPerSecond * totalMultiplier * amplifierMultiplier;
-    effectiveTrollPointsPerSecond = trollPointsPerSecond * totalMultiplier * amplifierMultiplier;
+    effectiveCopiumPerSecond = copiumPerSecond * totalMultiplier * amplifierMultiplier * stellarHarvestMult;
+    effectiveDelusionPerSecond = delusionPerSecond * totalMultiplier * amplifierMultiplier * stellarHarvestMult;
+    effectiveYachtMoneyPerSecond = yachtMoneyPerSecond * totalMultiplier * amplifierMultiplier * stellarHarvestMult;
+    effectiveTrollPointsPerSecond = trollPointsPerSecond * totalMultiplier * amplifierMultiplier * stellarHarvestMult;
 
-    effectiveHopiumPerSecond = hopiumPerSecond * totalMultiplier;
+    effectiveHopiumPerSecond = hopiumPerSecond * totalMultiplier * stellarHarvestMult;
     effectiveKnowledgePerSecond = calculateEffectiveKnowledge();
 
     if (powerUnlocked){
@@ -709,11 +725,20 @@ async function restartGame(isPrestige = false) {
             autoTranscendThreshold = null;
             autobuyUpgradesSkill = false;
 
+            compressedBigCrunchMult = 1;
+
             upgradeAmplifierSkill = false;
             fasterAutobuyerskill = false;
             nexusLifelineSkill = false;
+            temporalFluxSkill = false;
             primeImpactSkill = false;
+            powerIsPowerSkill = false;
+            stellarHarvestSkill = false;
+            gravityWellSkill = false;
+            voidStabilizerSkill = false;
+            temporalGuardSkill = false;
 
+            stellarHarvestMult = 1;
 
             transcendenceUnlocked = false;
 
@@ -768,6 +793,7 @@ async function restartGame(isPrestige = false) {
         // Restore all upgrades
         availableUpgrades = upgrades.slice(); // Reset available upgrades to the original state
 
+        stellarHarvestMult = 1;
 
         // Start unlock timeouts for mini-games
         unlockMiniGames();
@@ -1303,7 +1329,7 @@ function canTranscend() {
 }
 
 function canBigCrunch() {
-    return power > bigCrunchPower;
+    return power * compressedBigCrunchMult > bigCrunchPower;
 }
 
 function calculateGodModeMultiplier(gmLevlel = godModeLevel) {
@@ -1443,12 +1469,12 @@ async function bigCrunch() {
 
         const confirmed = await showMessageModal(
             'Big Crunch Confirmation',
-            `Are you sure you want to prestige? You will reset all resources, prestiges, and god-mode levels, but your Big Crunch Multiplier will increase <strong>from ${formatNumber(bigCrunchMultiplier)} to ${formatNumber(calculateBigCrunchMultiplier(power))}</strong>.<br> Big crunch multiplier stacks with all your other multipliers, plus additionally affects your Knowledge generation! (Your Big Crunch Power will lock in at the current Power level)` + deadpoolHint,
+            `Are you sure you want to prestige? You will reset all resources, prestiges, and god-mode levels, but your Big Crunch Multiplier will increase <strong>from ${formatNumber(bigCrunchMultiplier)} to ${formatNumber(calculateBigCrunchMultiplier(power * compressedBigCrunchMult))}</strong>.<br> Big crunch multiplier stacks with all your other multipliers, plus additionally affects your Knowledge generation! (Your Big Crunch Power will lock in at the current Power level)` + deadpoolHint,
             true
         );
 
         if (confirmed) {
-            bigCrunchPower = power;
+            bigCrunchPower = power * compressedBigCrunchMult;
             bigCrunchMultiplier = calculateBigCrunchMultiplier();
             
             // Call restartGame with isPrestige flag set to true
@@ -1557,7 +1583,7 @@ function updateTranscendButton() {
 function updateBigCrunchButton() {
     const bigCrunchButton = document.getElementById('bigCrunchButton');
     if (bigCrunchUnlocked && canBigCrunch()) {
-        const newMultiplier = calculateBigCrunchMultiplier(power);
+        const newMultiplier = calculateBigCrunchMultiplier(power*compressedBigCrunchMult);
         bigCrunchButton.textContent = `BIG CRUNCH (x${formatNumber((newMultiplier / bigCrunchMultiplier))} MULT)`;
         bigCrunchButton.style.display = 'block';
     } else {
@@ -1750,8 +1776,8 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
         }
 
         // Special case for the "Still very stupid" upgrade
-        if (name === "Sebo's Luck") {
-            showMessageModal('Sadly', "This marks the end of v0.869, but your journey is just getting started! The Hall of Power is only the beginning, with new challenges and excitement in every update. How are you enjoying the battles? Are they keeping you on your toes? Your feedback is key to shaping the game.<br><br>While you wait for the next update (just days away!), why not restart, try new tactics, and uncover hidden secrets? Share your thoughts on the battles and Hall of Power on Discord or through the feedback form. Let’s keep this adventure going!");
+        if (name === "Deadlines") {
+            showMessageModal('Sadly', "This marks the end of v0.87. I hope you're enjoying the thrill of these battles and unlocking the secrets of the Power Hall skills. The adventure is far from over, and your feedback is what makes it truly epic. Join us on Discord and share your experiences, strategies, and thoughts. Let’s shape the future of the game together and make each update more exciting than the last!");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one
@@ -1986,7 +2012,7 @@ function autobuyUpgrades(){
 
 
 // List of upgrades that should trigger truncation
-const keyUpgrades = ['The Finale', 'Agent Smith', 'Shao Kahn', 'Darth Vader', 'Isshin', 'Sauron','Kratos','Deadpool'];
+const keyUpgrades = ['The Finale', 'Agent Smith', 'Shao Kahn', 'Darth Vader', 'Isshin', 'Sauron','Kratos','Deadpool','Chuck Norris'];
 
 // Function to update the upgrade list display
 function updateUpgradeList() {

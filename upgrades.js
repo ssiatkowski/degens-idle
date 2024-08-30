@@ -948,6 +948,72 @@ const upgrades = [
                         <li>In fights, your crit chance jumps by <strong>5%</strong>, because even your punches got the Midas touch.</li>
                     </ul>`,
     },
-
+    {
+        name: `I'm Rich`,
+        cost: { copium: 1e61, delusion: 0, yachtMoney: 1e63, trollPoints: 0, hopium: 0, knowledge: 1.5e42, power: 2e6, serenity: 0 },
+        earnings: { copiumPerSecond: 5e20, delusionPerSecond: 0, yachtMoneyPerSecond: 5e20, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 350000, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: `imgs/money_everywhere.jpg`,        
+    },
+    {
+        name: `Spend That Money`,
+        cost: { copium: 0, delusion: 0, yachtMoney: 2.5e64, trollPoints: 0, hopium: 0, knowledge: 5e44, power: 3e7, serenity: 0 },
+        earnings: { copiumPerSecond: 9e20, delusionPerSecond: 8e20, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 200000, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: `imgs/treat_yo_self.jpg`,        
+    },
+    {
+        name: `When prestige layer?`,
+        cost: { copium: 0, delusion: 1.7e61, yachtMoney: 2e63, trollPoints: 1e62, hopium: 0, knowledge: 3e45, power: 2.4e7, serenity: 0 },
+        earnings: { copiumPerSecond: 3.7e20, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1e21, hopiumPerSecond: 0, knowledgePerSecond: 270000, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: `imgs/big_crunch_candy.jpg`,        
+    },
+    {
+        name: `Don't split hairs`,
+        cost: { copium: 2.3e62, delusion: 2.1e62, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 4e45, power: 2.9e7, serenity: 0 },
+        earnings: { copiumPerSecond: 6.5e20, delusionPerSecond: 6.5e20, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1e21, hopiumPerSecond: 0, knowledgePerSecond: 310000, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: `imgs/comb_over.jpg`,        
+    },
+    {
+        name: `Kung Fu Bunny`,
+        cost: { copium: 0, delusion: 2.3e62, yachtMoney: 0, trollPoints: 5e62, hopium: 0, knowledge: 8e45, power: 4.9e7, serenity: 0 },
+        earnings: { copiumPerSecond: 1.5e21, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 580000, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: `imgs/bunny_martial_arts.jpg`,        
+    },
+    {
+        name: `Biggest Conspiracy`,
+        cost: { copium: 0, delusion: 0, yachtMoney: 1.8e64, trollPoints: 2.5e63, hopium: 0, knowledge: 1e46, power: 3.5e7, serenity: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 1.9e21, yachtMoneyPerSecond: 0, trollPointsPerSecond: 2.4e21, hopiumPerSecond: 0, knowledgePerSecond: 450000, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: `imgs/dank_memes_steel_beams.jpg`,        
+    },
+    {
+        name: `Chuck Norris`,
+        cost: { copium: 1e63, delusion: 1e63, yachtMoney: 1e63, trollPoints: 1e63, hopium: 0, knowledge: 1e47, power: 1e8, serenity: 0 },
+        earnings: { copiumPerSecond: 1.5e24, delusionPerSecond: 0, yachtMoneyPerSecond: 1.5e24, trollPointsPerSecond: 0, hopiumPerSecond: -1e20, knowledgePerSecond: 1e7, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: `imgs/chuck_norris.jpg`,
+        isFight: true,
+    },
+    {
+        name: `Surprise Package`,
+        cost: { copium: 2e64, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 1e46, power: 6.5e7, serenity: 0 },
+        earnings: { copiumPerSecond: 2.8e23, delusionPerSecond: 3.3e23, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 1.2e6, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: `imgs/wasnt_a_fart.jpg`,        
+    },
+    {
+        name: `Wasted Memes`,
+        cost: { copium: 0, delusion: 2e63, yachtMoney: 3e64, trollPoints: 0, hopium: 0, knowledge: 2e47, power: 8.5e7, serenity: 0 },
+        earnings: { copiumPerSecond: 4.5e23, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1.5e24, hopiumPerSecond: 0, knowledgePerSecond: 1.4e6, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: `imgs/meme_for_mom.jpg`,        
+    },
+    {
+        name: `WTF is that Face`,
+        cost: { copium: 0, delusion: 9e63, yachtMoney: 0, trollPoints: 3e64, hopium: 0, knowledge: 2e47, power: 8.5e7, serenity: 0 },
+        earnings: { copiumPerSecond: 3e23, delusionPerSecond: 3e23, yachtMoneyPerSecond: 0, trollPointsPerSecond: 2.4e24, hopiumPerSecond: 0, knowledgePerSecond: 1.6e6, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: `imgs/accidental_selfie.jpg`,        
+    },
+    {
+        name: `Deadlines`,
+        cost: { copium: 0, delusion: 0, yachtMoney: 5e64, trollPoints: 5e64, hopium: 0, knowledge: 9e47, power: 2e8, serenity: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 9e24, trollPointsPerSecond: 4e24, hopiumPerSecond: 0, knowledgePerSecond: 3.7e6, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: `imgs/deadlines.jpg`,        
+    },
 
 ];
