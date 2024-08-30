@@ -16,13 +16,14 @@
 /* Center the content and space between player and enemy */
 .fighting-overlay-content {
     display: flex;
-    justify-content: space-between; /* Space between player and enemy */
-    align-items: center;
-    width: 80%; /* Adjust width as needed */
+    justify-content: space-between;
+    align-items: stretch; /* Stretch sections to be the same height */
+    width: 80%;
     max-width: 1000px;
     margin: 0 auto;
     padding: 20px 0;
 }
+
 
 /* Health Bars */
 .health-bar {
@@ -80,30 +81,39 @@
     line-height: 1.1; /* Adjust the line height to reduce spacing */
 }
 
-/* Adjust the size and positioning of the images */
+/* Adjust the size and positioning of the sections */
 .enemy-section, .player-section {
-    width: 25%; /* Set the width of the images to 25% of the screen */
-    max-width: 200px; /* Optional: Set a maximum width */
+    width: 35%; /* Set the width of the sections */
+    max-width: 400px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 0 20px; /* Add space between player and enemy sections */
-    background-color: rgba(0, 0, 0, 0.6); /* Darker transparent background */
-    padding: 10px; /* Add some padding around the content */
-    border-radius: 10px; /* Round the corners for a smoother look */
+    margin: 0 20px;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 10px;
+    border-radius: 10px;
+    box-sizing: border-box;
+    justify-content: space-between; /* Ensure content is spaced evenly */
+    height: 100%; /* Ensure both sections stretch to the same height */
+    min-height: 300px; /* Ensure minimum height for consistency */
 }
+
+
+/* Images aligned at the bottom */
 .enemy-section img, .player-section img {
     width: 100%;
     height: auto; /* Maintain aspect ratio */
-    margin-bottom: 10px; /* Add some space between the image and health bar */
+    margin-top: auto; /* Push the image to the bottom */
 }
 
-/* Player and Enemy Stats */
+/* Ensure stats are always at the top and images centered */
 .stats {
     text-align: left;
-    margin-top: 10px;
+    margin-bottom: 10px;
     font-size: 14px;
-    color: white; /* Ensure text is visible */
+    color: white;
+    width: 100%;
+    flex: 1; /* Allow stats to grow and fill space */
 }
 
 /* Stats styling */
@@ -165,6 +175,7 @@
         white-space: nowrap; /* Prevent text wrapping */
         overflow: hidden; /* Hide any overflow text */
         text-overflow: ellipsis; /* Add ellipsis (...) to overflow text */
+        font-size: 10px; /* Smaller font size for mobile devices */
     }
 
     /* Adjust the flex layout to avoid wrapping */

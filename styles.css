@@ -583,11 +583,6 @@ button.disabled {
     grid-template-columns: repeat(1, 1fr); 
 }
 
-/* Default styles */
-.stats p {
-    font-size: 14px; /* Default font size */
-}
-
 /* Mobile styles */
 @media only screen and (max-width: 600px) {
 }
@@ -649,10 +644,6 @@ button.disabled {
     font-size: 0.8em; 
     }
 
-    
-    .stats p {
-        font-size: 10px; /* Smaller font size for mobile devices */
-    }
 }
 
 #ascendUpgradeSelection {
