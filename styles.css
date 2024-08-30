@@ -583,6 +583,15 @@ button.disabled {
     grid-template-columns: repeat(1, 1fr); 
 }
 
+/* Default styles */
+.stats p {
+    font-size: 14px; /* Default font size */
+}
+
+/* Mobile styles */
+@media only screen and (max-width: 600px) {
+}
+
 /* Media Queries for Mobile Devices */
 @media (max-width: 768px) {
     #title-container {
@@ -638,6 +647,11 @@ button.disabled {
 
     #upgradeList {
     font-size: 0.8em; 
+    }
+
+    
+    .stats p {
+        font-size: 10px; /* Smaller font size for mobile devices */
     }
 }
 
