@@ -114,7 +114,7 @@ const enemyStats = {
         dodge: 0.25,
         nonCritDodge: 0.75,
         stun: 0.5,
-        absorb: 0.5
+        absorb: 0.25
     }
 };
 
@@ -125,7 +125,7 @@ let playerAttackSpeed = 2;
 let playerHealth, playerDefense, playerMinDamage, playerMaxDamage, playerCritChance, playerCritDamage;
 let enemyHealth, enemyDefense, enemyMinDamage, enemyMaxDamage, enemyCritChance, enemyCritDamage, enemyAttackSpeed;
 let enemyDodge, enemyNonCritDodge, enemyStunChance, enemyAbsorb;
-let playerMaxHealth, enemyMaxHealth, currEnemyName;
+let playerMaxHealth, enemyMaxHealth, currEnemyName, playerDefenseBase;
 let playerInterval, enemyInterval;
 
 let playerMinDamageMult = 0.25;
@@ -188,7 +188,8 @@ function startFightGame(enemyName, enemyImg) {
         // Get player stats from resources with rounding up
         playerHealth = Math.ceil((copium ** (1/20)) * playerHealthMult);
         playerMaxHealth = playerHealth;
-        playerDefense = Math.ceil((delusion ** (1/12)) / 500);
+        playerDefenseBase = Math.ceil((delusion ** (1/12)) / 500);
+        playerDefense = playerDefenseBase;
         playerCritChance = Math.min(Math.ceil(trollPoints ** (1/50)) / 100, 0.9);
         playerCritChance = sebosLuck ? playerCritChance + 0.05 : playerCritChance;
         playerCritDamage = 1 + Math.min(Math.ceil(trollPoints ** (1/25)) / 100, 99);
@@ -477,24 +478,62 @@ function attackEnemy() {
         logFight(`<span style='color: #DFFF00;'>You stun ${currEnemyName}! (${enemyStunCount} turn(s) stunned)</span>`);
     }
 
-    // Handle special case for Deadpool revives
-    if (currEnemyName === "Deadpool" && enemyHealth <= 0) {
-        if (deadpoolRevives < 69) {
+// Handle special case for Deadpool revives
+if (currEnemyName === "Deadpool" && enemyHealth <= 0) {
+    if (deadpoolRevives < 69) {
+        enemyHealth = enemyMaxHealth;
+        deadpoolRevives += 1;
+        logFight(`<span style='color: green;'>${currEnemyName} dies and regenerates back to full health! 
+            (<span style='font-weight: bold; font-size: 1.4em;'>${deadpoolRevives}</span> revives and counting)</span>`);
+
+        // Call updateHealthBars to ensure the health bar reflects the new health
+        updateHealthBars();
+
+        // Get the enemy health bar element and change its color to green
+        const enemyHealthBar = document.getElementById('enemyHealthBar');
+        if (enemyHealthBar) {
+            enemyHealthBar.style.backgroundColor = '#39FF14'; // Bright green color
+        }
+
+        // After a short delay, revert the health bar color back to red
+        setTimeout(() => {
+            if (enemyHealthBar) {
+                enemyHealthBar.style.backgroundColor = '#f00'; // Red color
+            }
+        }, 150); // Slightly longer delay to ensure the flash is visible
+
+    } else {
+        // After 69 revives, calculate the revival chance
+        const revivalChance = 0.99 * Math.pow(0.99, deadpoolRevives - 69);
+        if (Math.random() < revivalChance) {
             enemyHealth = enemyMaxHealth;
             deadpoolRevives += 1;
-            logFight(`<span style='color: green;'>${currEnemyName} dies and regenerates back to full health! (${deadpoolRevives} revives and counting)</span>`);
-        } else {
-            // After 69 revives, calculate the revival chance
-            const revivalChance = 0.99 * Math.pow(0.99, deadpoolRevives - 69);
-            if (Math.random() < revivalChance) {
-                enemyHealth = enemyMaxHealth;
-                deadpoolRevives += 1;
-                logFight(`<span style='color: #AAFF00;'>${currEnemyName} dies and regenerates back to full health! (${deadpoolRevives} revives - you feel like he's killable now!)</span>`);
-            } else {
-                logFight(`<span style='color: #39FF14;'>${currEnemyName} finally stays dead after ${deadpoolRevives} revives!</span>`);
+            logFight(`<span style='color: #AAFF00;'>${currEnemyName} dies and regenerates back to full health! 
+                (<span style='font-weight: bold; font-size: 1.4em;'>${deadpoolRevives}</span> revives - you feel like he's killable now!)</span>`);
+
+            // Call updateHealthBars to ensure the health bar reflects the new health
+            updateHealthBars();
+
+            // Get the enemy health bar element and change its color to green
+            const enemyHealthBar = document.getElementById('enemyHealthBar');
+            if (enemyHealthBar) {
+                enemyHealthBar.style.backgroundColor = '#39FF14'; // Bright green color
             }
+
+            setTimeout(() => {
+                if (enemyHealthBar) {
+                    enemyHealthBar.style.backgroundColor = '#f00';
+                }
+            }, 150); // Slightly longer delay to ensure the flash is visible
+        } else {
+            logFight(`<span style='color: #39FF14;'>${currEnemyName} finally stays dead after 
+                <span style='font-weight: bold; font-size: 1.4em;'>${deadpoolRevives}</span> revives!</span>`);
         }
     }
+}
+
+
+
 
     // Update health bars
     updateHealthBars();
@@ -534,8 +573,8 @@ function attackPlayer() {
             logFight(`Temporal Flux ended. Dodge bonus removed.`);
         }
         if (temporalGuardSkill){
-            logFight(`<span style='color: #6082B6;'>Temporal Guard activated! Your defense increased by ${formatNumber(playerDefense * 0.07)}.</span>`);
-            playerDefense *= 1.07;
+            logFight(`<span style='color: #6082B6;'>Temporal Guard activated! Your defense increased by ${formatNumber(playerDefenseBase * 0.15)}.</span>`);
+            playerDefense = playerDefense + (playerDefenseBase * 1.15);
             document.getElementById('playerDefenseStat').innerText = formatNumber(playerDefense);
         }
         return; // Player dodged, so the attack ends here
@@ -589,9 +628,9 @@ function attackPlayer() {
             playerStunCount += grappleStunTurns;
             logFight(`<span style='color: #FF4500;'>Chuck Norris performs a Grappling Move, stunning you for ${grappleStunTurns} turn(s).</span>`);
         } else { // 10% chance for Jump Kick
-            playerMaxDamage *= 0.87;
+            playerMaxDamage *= 0.8;
             document.getElementById('playerDamageStat').innerText = `${formatNumber(playerMinDamage)} - ${formatNumber(playerMaxDamage)}`;
-            logFight(`<span style='color: #8B0000;'>Chuck Norris executes a Jump Kick! Your maximum attack damage is reduced by 13%.</span>`);
+            logFight(`<span style='color: #8B0000;'>Chuck Norris executes a Jump Kick! Your maximum attack damage is reduced by 20%.</span>`);
         }
     } else if (currEnemyName === "Kratos") {
         damage = baseDamage - playerDefense;

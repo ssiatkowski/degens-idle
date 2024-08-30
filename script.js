@@ -776,6 +776,11 @@ async function restartGame(isPrestige = false) {
 
         const cookieButtonVisible = JSON.parse(localStorage.getItem('cookieButtonVisible'));
         if (cookieButtonVisible && cookieAutoClicker) {
+            const cookieButton = document.getElementById('cookieButton');
+            
+            // Add the spinning class to trigger the animation
+            cookieButton.classList.add('spinning');
+        
             const intervalId = setInterval(() => {
                 cookieCollectAllResources();
             }, 100); // 100 milliseconds = 0.1 seconds
@@ -783,7 +788,10 @@ async function restartGame(isPrestige = false) {
             // Stop the interval after 15 seconds
             setTimeout(() => {
                 clearInterval(intervalId);
-            }, 15000); // 10000 milliseconds = 15 seconds
+        
+                // Remove the spinning class to stop the animation
+                cookieButton.classList.remove('spinning');
+            }, 15000); // 15000 milliseconds = 15 seconds
         }
 
         // Clear purchased upgrades
@@ -1310,7 +1318,7 @@ function updatePrestigeButton() {
         prestigeButton.textContent = `PRESTIGE (x${formatNumber(newMultiplier / epsMultiplier)} MULT)`;
         prestigeButton.style.display = 'block';
         // Check if auto-prestige should be triggered
-        if (autoPrestigeThreshold !== null && (newMultiplier / epsMultiplier) > autoPrestigeThreshold) {
+        if (autoPrestigeThreshold !== null && (newMultiplier / epsMultiplier) > autoPrestigeThreshold && !isFightInProgress) {
             prestige(true); // Trigger auto-prestige
         }
     } else {
@@ -1510,7 +1518,7 @@ function updateAscendButton() {
         ascendButton.style.display = 'block';
         // Check if autoAscendThreshold is set and not null
 
-        if (autoAscendThreshold !== null && autoAscendThreshold !== 0) {
+        if (autoAscendThreshold !== null && autoAscendThreshold !== 0 && !isFightInProgress) {
             // Count the number of purchased upgrades that do not have isGodMode
             const nonGodModeUpgrades = purchasedUpgrades.filter(upgrade => !upgrade.isGodMode).length;
 
@@ -1548,7 +1556,7 @@ function updateTranscendButton() {
         transcendButton.style.display = 'block';
 
         // Check if autoTranscendThreshold is set and not null
-        if (autoTranscendThreshold !== null && autoTranscendThreshold !== 0) {
+        if (autoTranscendThreshold !== null && autoTranscendThreshold !== 0 && !isFightInProgress) {
             // Count the number of purchased upgrades that do not have isPUGodMode
             const nonPUGodModeUpgrades = purchasedUpgrades.filter(upgrade => !upgrade.isPUGodMode).length;
 
@@ -1777,7 +1785,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
 
         // Special case for the "Still very stupid" upgrade
         if (name === "Deadlines") {
-            showMessageModal('Sadly', "This marks the end of v0.87. I hope you're enjoying the thrill of these battles and unlocking the secrets of the Power Hall skills. The adventure is far from over, and your feedback is what makes it truly epic. Join us on Discord and share your experiences, strategies, and thoughts. Let’s shape the future of the game together and make each update more exciting than the last!");
+            showMessageModal('Sadly', "This marks the end of v0.871. I hope you're enjoying the thrill of these battles and unlocking the secrets of the Power Hall skills. The adventure is far from over, and your feedback is what makes it truly epic. Join us on Discord and share your experiences, strategies, and thoughts. Let’s shape the future of the game together and make each update more exciting than the last!");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one
@@ -1990,6 +1998,8 @@ function isAffordable(cost) {
 
 function autobuyUpgrades(){
     
+    if(isFightInProgress) return;
+
     let topUpgrades = availableUpgrades.slice(0, 8);
 
     let upgradeBought = false;

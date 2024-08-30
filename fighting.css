@@ -43,6 +43,11 @@
     z-index: 1; /* Ensure it stays behind the health number */
 }
 
+.health-flash-green {
+    background-color: #39FF14 !important; /* Bright green color */
+    transition: background-color 0.1s ease-in-out; /* Smooth transition */
+}
+
 /* Health Number */
 .health-number {
     position: absolute;
@@ -62,7 +67,7 @@
 .fight-log {
     width: 80%; /* Make it span the entire width of the overlay content */
     max-width: 800px;
-    max-height: 200px;
+    max-height: 300px;
     overflow-y: auto;
     background-color: #222;
     padding: 10px;
@@ -72,6 +77,7 @@
     text-align: left;
     color: white; /* Ensure text is visible */
     margin: 20px auto; /* Center the fight log */
+    line-height: 1.1; /* Adjust the line height to reduce spacing */
 }
 
 /* Adjust the size and positioning of the images */

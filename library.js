@@ -33,12 +33,12 @@ const librarySkills = [
     { name: 'Big Crunch', cost: 8e11, description: 'Could this be what Power is for? Unlock ability to force the universe into a Big Crunch and to be reborn anew!', unlocked: false, level: 'Celestial Bodies' },
     { name: 'Money is Power, too', cost: 2.5e20, description: 'Add a multiplier to Power generation based on Yacht Money (though it scales much less than with Knowledge)', unlocked: false, level: 'Celestial Bodies' },
     { name: 'Map to Hall of Power', cost: 1e24, description: 'You can now look at and admire the Power Hall button.', unlocked: false, level: 'Celestial Bodies' },
-    { name: 'Compressed Power', cost: 1e49, description: 'Current power counts as 50% more for Big Crunch Power.', unlocked: false, level: 'Celestial Bodies' },
+    { name: 'Compressed Power', cost: 1e49, description: 'Current power counts as 200% more for Big Crunch Power.', unlocked: false, level: 'Celestial Bodies' },
 
 
     { name: 'Perpetual Prestige', cost: 1e25, description: 'Auto-Prestige ability.  (Target prestige multiplier can be set in Automation Settings. Default=10)', unlocked: false, level: '???' },
     { name: 'Eternal Ascension', cost: 1e29, description: 'Auto-Ascend ability. (Target # upgrades can be set in Automation Settings. Default=Max)', unlocked: false, level: '???' },
-    { name: 'Quantum Symphony', cost: 1e44, description: 'Auto-Transcend. (Similar to Auto-Ascend)', unlocked: false, level: '???' },
+    { name: 'Quantum Symphony', cost: 1e42, description: 'Auto-Transcend. (Similar to Auto-Ascend)', unlocked: false, level: '???' },
     // { name: 'Void of Non-Existence', cost: 1e55, description: 'Auto-Big Crunch', unlocked: false, level: '???' },
     // { name: 'Infinite Fractal', cost: 1e33, description: '', unlocked: false, level: '???' },
 
@@ -236,7 +236,7 @@ function unlockLibrarySkill(skill, duringLoad = false) {
                 break;
 
             case 'Compressed Power':
-                compressedBigCrunchMult = 1.5;
+                compressedBigCrunchMult = 3;
                 break;
 
             case 'Perpetual Prestige':

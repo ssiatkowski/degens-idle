@@ -707,7 +707,6 @@ button.disabled {
     -ms-user-select: none;      /* Internet Explorer/Edge */
 }
 
-
 #cookieButton img {
     width: 150px; /* Adjust size as needed */
     height: auto;
@@ -716,6 +715,21 @@ button.disabled {
 #cookieButton:active img {
     transform: scale(0.9);
 }
+
+#cookieButton.spinning img {
+    animation: spin-animation 1s linear infinite;
+}
+
+
+@keyframes spin-animation {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
 .cookieTooltip {
     visibility: hidden;
     background-color: rgba(85, 85, 85, 0.8); /* Slightly see-through background */

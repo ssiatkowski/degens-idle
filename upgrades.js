@@ -757,7 +757,7 @@ const upgrades = [
     {
         name: `Agent Smith`,
         cost: { copium: 0, delusion: 1e41, yachtMoney: 0, trollPoints: 1e41, hopium: 0, knowledge: 2e29, power: 18, serenity: 0 },
-        earnings: { copiumPerSecond: 6e15, delusionPerSecond: 0, yachtMoneyPerSecond: 6e15, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 10000, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 6e15, delusionPerSecond: 0, yachtMoneyPerSecond: 6e15, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 15000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/agent_smith.jpg`,
         isFight: true,
     },
@@ -777,7 +777,7 @@ const upgrades = [
     {
         name: `Shao Kahn`,
         cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 5e41, hopium: 0, knowledge: 1e30, power: 30, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 9e15, trollPointsPerSecond: 0, hopiumPerSecond: -1e8, knowledgePerSecond: 42000, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 9e15, trollPointsPerSecond: 0, hopiumPerSecond: -1e8, knowledgePerSecond: 48000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/shao_kahn.jpg`,
         isFight: true,
     },
@@ -796,7 +796,7 @@ const upgrades = [
     {
         name: `Darth Vader`,
         cost: { copium: 0, delusion: 0, yachtMoney: 1e43, trollPoints: 0, hopium: 0, knowledge: 1e31, power: 40, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 4.5e16, trollPointsPerSecond: 0, hopiumPerSecond: -5e8, knowledgePerSecond: 78000, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 4.5e16, trollPointsPerSecond: 0, hopiumPerSecond: -5e8, knowledgePerSecond: 88000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/darth_vader.jpg`,
         isFight: true,
     },
@@ -816,14 +816,14 @@ const upgrades = [
     {
         name: `Isshin`,
         cost: { copium: 1e43, delusion: 9e42, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 1e32, power: 200, serenity: 0 },
-        earnings: { copiumPerSecond: 1e17, delusionPerSecond: 1e17, yachtMoneyPerSecond: 1e17, trollPointsPerSecond: 0, hopiumPerSecond: -1.2e10, knowledgePerSecond: 135000, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 1e17, delusionPerSecond: 1e17, yachtMoneyPerSecond: 1e17, trollPointsPerSecond: 0, hopiumPerSecond: -1.2e10, knowledgePerSecond: 145000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/isshin.jpg`,
         isFight: true,
     },
     {
         name: `Work do be like that`,
         cost: { copium: 0, delusion: 0, yachtMoney: 2e44, trollPoints: 0, hopium: 0, knowledge: 1e33, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 4e17, trollPointsPerSecond: 2e17, hopiumPerSecond: 0, knowledgePerSecond: 20000, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 4e17, trollPointsPerSecond: 2e17, hopiumPerSecond: 0, knowledgePerSecond: 22000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/shift_start_end.jpg`,        
     },
     {
@@ -841,26 +841,26 @@ const upgrades = [
     {
         name: `Channel inner Tyson`,
         cost: { copium: 1e48, delusion: 1e48, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 1e38, power: 10000, serenity: 0 },
-        earnings: { copiumPerSecond: 9e17, delusionPerSecond: 9e17, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 56000, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 9e17, delusionPerSecond: 9e17, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 58000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/beeth_mode.jpg`,        
     },
     {
         name: `Sauron`,
         cost: { copium: 5e48, delusion: 5e48, yachtMoney: 5e48, trollPoints: 5e48, hopium: 0, knowledge: 5e38, power: 10000, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 8e18, trollPointsPerSecond: 0, hopiumPerSecond: -9e12, knowledgePerSecond: 545000, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 8e18, trollPointsPerSecond: 0, hopiumPerSecond: -9e12, knowledgePerSecond: 565000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/sauron.jpg`,
         isFight: true,
     },
     {
         name: `Avoid Temptations`,
         cost: { copium: 2e52, delusion: 0, yachtMoney: 2e52, trollPoints: 0, hopium: 0, knowledge: 1e40, power: 1000, serenity: 0 },
-        earnings: { copiumPerSecond: 2e18, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 5e18, hopiumPerSecond: 0, knowledgePerSecond: 20000, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 2e18, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 5e18, hopiumPerSecond: 0, knowledgePerSecond: 25000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/the_temptations.jpg`,        
     },
     {
         name: `Thanks for the coffee`,
         cost: { copium: 0, delusion: 0, yachtMoney: 3e52, trollPoints: 0, hopium: 0, knowledge: 1e40, power: 100000, serenity: 0 },
-        earnings: { copiumPerSecond: 3.5e18, delusionPerSecond: 0, yachtMoneyPerSecond: 3.5e18, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 18000, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 3.5e18, delusionPerSecond: 0, yachtMoneyPerSecond: 3.5e18, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 28000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/trump_look.jpg`,        
     },
     {
@@ -872,13 +872,13 @@ const upgrades = [
     {
         name: `Last Bit of Hope`,
         cost: { copium: 0, delusion: 0, yachtMoney: 7.77e51, trollPoints: 0, hopium: 1e47, knowledge: 7.77e39, power: 777, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 7.77e18, yachtMoneyPerSecond: 7.77e18, trollPointsPerSecond: 0, hopiumPerSecond: 7.77e12, knowledgePerSecond: 7770, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 7.77e18, yachtMoneyPerSecond: 7.77e18, trollPointsPerSecond: 0, hopiumPerSecond: 7.77e12, knowledgePerSecond: 77700, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/last_bit_of_hope.jpg`,        
     },
     {
         name: `Kratos`,
         cost: { copium: 5e51, delusion: 5e51, yachtMoney: 5e51, trollPoints: 5e51, hopium: 0, knowledge: 5e40, power: 500000, serenity: 0 },
-        earnings: { copiumPerSecond: 1e19, delusionPerSecond: 1e19, yachtMoneyPerSecond: 1e19, trollPointsPerSecond: 1e19, hopiumPerSecond: -6e14, knowledgePerSecond: 950000, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 1e19, delusionPerSecond: 1e19, yachtMoneyPerSecond: 1e19, trollPointsPerSecond: 1e19, hopiumPerSecond: -6e14, knowledgePerSecond: 980000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/kratos.jpg`,
         isFight: true,
     },
@@ -892,13 +892,13 @@ const upgrades = [
     {
         name: `Nagging Question`,
         cost: { copium: 2e53, delusion: 2e53, yachtMoney: 0, trollPoints: 8e53, hopium: 0, knowledge: 1e43, power: 1.5e6, serenity: 0 },
-        earnings: { copiumPerSecond: 7e18, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 3e18, hopiumPerSecond: 0, knowledgePerSecond: 38000, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 7e18, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 3e18, hopiumPerSecond: 0, knowledgePerSecond: 48000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/deadpool_lives.jpg`,        
     },
     {
         name: `Unpopular Truth`,
         cost: { copium: 4e54, delusion: 0, yachtMoney: 0, trollPoints: 2e53, hopium: 0, knowledge: 1e43, power: 2e6, serenity: 0 },
-        earnings: { copiumPerSecond: 8e18, delusionPerSecond: 1e19, yachtMoneyPerSecond: 0, trollPointsPerSecond: 4e18, hopiumPerSecond: 0, knowledgePerSecond: 60000, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 8e18, delusionPerSecond: 1e19, yachtMoneyPerSecond: 0, trollPointsPerSecond: 4e18, hopiumPerSecond: 0, knowledgePerSecond: 63000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/downvoted_opinion.jpg`,        
     },
     {
@@ -910,7 +910,7 @@ const upgrades = [
     {
         name: `The Rock`,
         cost: { copium: 3e54, delusion: 1.8e55, yachtMoney: 0, trollPoints: 5e54, hopium: 0, knowledge: 8e43, power: 2e7, serenity: 0 },
-        earnings: { copiumPerSecond: 2e18, delusionPerSecond: 3e18, yachtMoneyPerSecond: 0, trollPointsPerSecond: 3e19, hopiumPerSecond: 0, knowledgePerSecond: 50000, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 2e18, delusionPerSecond: 3e18, yachtMoneyPerSecond: 0, trollPointsPerSecond: 3e19, hopiumPerSecond: 0, knowledgePerSecond: 57000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/the_rock_photo.jpg`,                
         message: `Don't worry, you never have to fight The Rock. He would beat you to a pulp.`,
 
@@ -918,7 +918,7 @@ const upgrades = [
     {
         name: `Real Life Girlfriend`,
         cost: { copium: 1e55, delusion: 5e55, yachtMoney: 1e55, trollPoints: 0, hopium: 0, knowledge: 1.2e44, power: 8e5, serenity: 0 },
-        earnings: { copiumPerSecond: 2e18, delusionPerSecond: 5e19, yachtMoneyPerSecond: 0, trollPointsPerSecond: 2e18, hopiumPerSecond: 0, knowledgePerSecond: 90000, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 2e18, delusionPerSecond: 5e19, yachtMoneyPerSecond: 0, trollPointsPerSecond: 2e18, hopiumPerSecond: 0, knowledgePerSecond: 93000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/real_life_girlfriend.jpg`,        
     },
     {
@@ -937,7 +937,7 @@ const upgrades = [
     {
         name: `Sebo's Luck`,
         cost: { copium: 7e58, delusion: 0, yachtMoney: 0, trollPoints: 7e58, hopium: 0, knowledge: 7e43, power: 1e7, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 7e20, trollPointsPerSecond: 7e20, hopiumPerSecond: 0, knowledgePerSecond: 190000, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 7e20, trollPointsPerSecond: 7e20, hopiumPerSecond: 0, knowledgePerSecond: 195000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/sebos_luck.jpg`,
         message: `  <p>
                         While this upgrade is active, congratulations—you’ve officially entered the elite club of absurdly lucky bastards. The universe bends over backwards just to make sure you always come out on top. Here’s how your cosmic luck flexes its muscles:
@@ -1014,6 +1014,12 @@ const upgrades = [
         cost: { copium: 0, delusion: 0, yachtMoney: 5e64, trollPoints: 5e64, hopium: 0, knowledge: 9e47, power: 2e8, serenity: 0 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 9e24, trollPointsPerSecond: 4e24, hopiumPerSecond: 0, knowledgePerSecond: 3.7e6, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/deadlines.jpg`,        
+    },
+    {
+        name: `Musical Chairs`,
+        cost: { copium: 0, delusion: 0, yachtMoney: 9e64, trollPoints: 0, hopium: 0, knowledge: 8e47, power: 1.5e8, serenity: 0 },
+        earnings: { copiumPerSecond: 1e24, delusionPerSecond: 2e24, yachtMoneyPerSecond: 0, trollPointsPerSecond: 2e24, hopiumPerSecond: 0, knowledgePerSecond: 3.5e6, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: `imgs/musical_chairs.jpg`,        
     },
 
 ];
