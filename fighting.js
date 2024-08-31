@@ -115,7 +115,93 @@ const enemyStats = {
         nonCritDodge: 0.75,
         stun: 0.5,
         absorb: 0.25
-    }
+    },
+    "Vegeta": {
+        health: 8e11,
+        minDamage: 100,
+        maxDamage: 300,
+        attackSpeed: 5,
+        defense: 2e9,
+        critChance: 0.1,
+        critDamage: 1.5,
+        dodge: 0,
+        nonCritDodge: 0.1,
+        stun: 0,
+        absorb: 0,
+        nextBoss: "Vegeta SS2",
+    },
+    "Vegeta SS2": {
+        health: 1e12,
+        minDamage: 200,
+        maxDamage: 400,
+        attackSpeed: 7,
+        defense: 3e9,
+        critChance: 0.1,
+        critDamage: 1.75,
+        dodge: 0,
+        nonCritDodge: 0.2,
+        stun: 0.1,
+        absorb: 0,
+        img: `imgs/vegeta_2.jpg`,
+        nextBoss: "Vegeta SS3",
+    },
+    "Vegeta SS3": {
+        health: 2e12,
+        minDamage: 300,
+        maxDamage: 500,
+        attackSpeed: 9,
+        defense: 4e9,
+        critChance: 0.15,
+        critDamage: 2,
+        dodge: 0,
+        nonCritDodge: 0.8,
+        stun: 0.15,
+        absorb: 0,
+        img: `imgs/vegeta_3.jpg`,
+        nextBoss: "Vegeta SS God",
+    },
+    "Vegeta SS God": {
+        health: 3e12,
+        minDamage: 800,
+        maxDamage: 1100,
+        attackSpeed: 11,
+        defense: 0, //+ 1e8 * player defense, player defense = 0
+        critChance: 0.15,
+        critDamage: 2,
+        dodge: 0,
+        nonCritDodge: 0.8,
+        stun: 0.2,
+        absorb: 0,
+        img: `imgs/vegeta_4.jpg`,
+        nextBoss: "Vegeta SS Eternal",
+    },
+    "Vegeta SS Eternal": {
+        health: 9e12,
+        minDamage: 900,
+        maxDamage: 1200,
+        attackSpeed: 13,
+        defense: 1.5e10, 
+        critChance: 0.2,
+        critDamage: 3,
+        dodge: 0.2,
+        nonCritDodge: 0.8,
+        stun: 0.25,
+        absorb: 0,
+        img: `imgs/vegeta_5.jpg`,
+    },
+    // "Kaguya": {
+    //     health: 3e12,
+    //     minDamage: 50,
+    //     maxDamage: 100,
+    //     attackSpeed: 30,
+    //     defense: 3e9,
+    //     critChance: 0,
+    //     critDamage: 1,
+    //     dodge: 0,
+    //     nonCritDodge: 0.5,
+    //     stun: 0,
+    //     absorb: 0.666
+    // }
 };
 
 
@@ -125,7 +211,7 @@ let playerAttackSpeed = 2;
 let playerHealth, playerDefense, playerMinDamage, playerMaxDamage, playerCritChance, playerCritDamage;
 let enemyHealth, enemyDefense, enemyMinDamage, enemyMaxDamage, enemyCritChance, enemyCritDamage, enemyAttackSpeed;
 let enemyDodge, enemyNonCritDodge, enemyStunChance, enemyAbsorb;
-let playerMaxHealth, enemyMaxHealth, currEnemyName, playerDefenseBase;
+let playerMaxHealth, enemyMaxHealth, currEnemyName, playerDefenseBase, playerCurrentAttackSpeed;
 let playerInterval, enemyInterval;
 
 let playerMinDamageMult = 0.25;
@@ -188,11 +274,13 @@ function startFightGame(enemyName, enemyImg) {
         // Get player stats from resources with rounding up
         playerHealth = Math.ceil((copium ** (1/20)) * playerHealthMult);
         playerMaxHealth = playerHealth;
-        playerDefenseBase = Math.ceil((delusion ** (1/12)) / 500);
+        playerDefenseBase = delusion > 0 ? Math.ceil((delusion ** (1/12)) / 500) : 0;
         playerDefense = playerDefenseBase;
         playerCritChance = Math.min(Math.ceil(trollPoints ** (1/50)) / 100, 0.9);
         playerCritChance = sebosLuck ? playerCritChance + 0.05 : playerCritChance;
         playerCritDamage = 1 + Math.min(Math.ceil(trollPoints ** (1/25)) / 100, 99);
+
+        playerCurrentAttackSpeed = playerAttackSpeed;
 
         playerMinDamage = Math.floor(power * playerMinDamageMult);
         playerMaxDamage = Math.ceil(power * playerMaxDamageMult);
@@ -234,7 +322,7 @@ function startFightGame(enemyName, enemyImg) {
         // Populate player and enemy stats in the UI
         document.getElementById('playerHealthStat').innerText = formatNumber(playerHealth);
         document.getElementById('playerDamageStat').innerText = `${formatNumber(playerMinDamage)} - ${formatNumber(playerMaxDamage)}`;
-        document.getElementById('playerAttackSpeedStat').innerText = formatNumber(playerAttackSpeed);
+        document.getElementById('playerAttackSpeedStat').innerText = formatNumber(playerCurrentAttackSpeed);
         document.getElementById('playerDefenseStat').innerText = formatNumber(playerDefense);
         document.getElementById('playerCritChanceStat').innerText = formatNumber(playerCritChance * 100) + '%';
         document.getElementById('playerCritDamageStat').innerText = formatNumber(playerCritDamage * 100) + '%';
@@ -271,8 +359,10 @@ function startFightGame(enemyName, enemyImg) {
             endFight(true); // Pass true to indicate the player forfeited
         };
 
-        // Start the fight loop
-        fightLoop(resolve);
+        // Add a 0.25-second delay before starting the fight loop
+        setTimeout(() => {
+            fightLoop(resolve);
+        }, 250); // 250 milliseconds = 0.25 seconds
     });
 }
 
@@ -281,7 +371,7 @@ function updateStatsUI() {
     // Player Stats
     document.getElementById('playerHealthStat').innerText = formatNumber(playerHealth);
     document.getElementById('playerDamageStat').innerText = `${formatNumber(playerMinDamage)} - ${formatNumber(playerMaxDamage)}`;
-    document.getElementById('playerAttackSpeedStat').innerText = formatNumber(playerAttackSpeed);
+    document.getElementById('playerAttackSpeedStat').innerText = formatNumber(playerCurrentAttackSpeed);
     document.getElementById('playerDefenseStat').innerText = formatNumber(playerDefense);
     
     toggleStatDisplay('playerCritChanceContainer', playerCritChance > 0);
@@ -334,14 +424,14 @@ function toggleStatDisplay(containerId, shouldDisplay) {
 
 
 function fightLoop(resolve) {
-    const playerAttackInterval = 5000 / playerAttackSpeed ; // Player attacks every 2 seconds (fixed)
+    const playerAttackInterval = 5000 / playerCurrentAttackSpeed ; // Player attacks every 2 seconds (fixed)
     const enemyAttackInterval = 5000 / enemyAttackSpeed; // Calculate interval from attack speed
 
     // Player attack loop
     playerInterval = setInterval(() => {
         if (fightEnded) return; // Stop if the fight has ended
 
-        attackEnemy();
+        attackEnemy(resolve);
 
         // Check if the enemy is defeated
         if (enemyHealth <= 0) {
@@ -394,7 +484,7 @@ function updateHealthBars() {
 }
 
 // Function to handle player attacking the enemy
-function attackEnemy() {
+function attackEnemy(resolve) {
     // Check if the player is stunned
     if (playerStunCount > 0) {
         playerStunCount--;
@@ -472,44 +562,26 @@ function attackEnemy() {
         }
     }
 
+    // Check if Nexus Lifeline skill is active
+    if (nexusLifelineSkill) {
+        const healAmount = Math.floor(playerMaxHealth * 0.02);
+        playerHealth = playerHealth + healAmount;
+        logFight(`<span style='color: teal;'>You channel Nexus Lifeline to heal yourself for ${formatNumber(healAmount)}.</span>`);
+    }
+
     // Handle Stun mechanics
     if (damage > 0 && Math.random() < playerStunChance) {
         enemyStunCount++;
         logFight(`<span style='color: #DFFF00;'>You stun ${currEnemyName}! (${enemyStunCount} turn(s) stunned)</span>`);
     }
 
-// Handle special case for Deadpool revives
-if (currEnemyName === "Deadpool" && enemyHealth <= 0) {
-    if (deadpoolRevives < 69) {
-        enemyHealth = enemyMaxHealth;
-        deadpoolRevives += 1;
-        logFight(`<span style='color: green;'>${currEnemyName} dies and regenerates back to full health! 
-            (<span style='font-weight: bold; font-size: 1.4em;'>${deadpoolRevives}</span> revives and counting)</span>`);
-
-        // Call updateHealthBars to ensure the health bar reflects the new health
-        updateHealthBars();
-
-        // Get the enemy health bar element and change its color to green
-        const enemyHealthBar = document.getElementById('enemyHealthBar');
-        if (enemyHealthBar) {
-            enemyHealthBar.style.backgroundColor = '#39FF14'; // Bright green color
-        }
-
-        // After a short delay, revert the health bar color back to red
-        setTimeout(() => {
-            if (enemyHealthBar) {
-                enemyHealthBar.style.backgroundColor = '#f00'; // Red color
-            }
-        }, 150); // Slightly longer delay to ensure the flash is visible
-
-    } else {
-        // After 69 revives, calculate the revival chance
-        const revivalChance = 0.99 * Math.pow(0.99, deadpoolRevives - 69);
-        if (Math.random() < revivalChance) {
+    // Handle special case for Deadpool revives
+    if (currEnemyName === "Deadpool" && enemyHealth <= 0) {
+        if (deadpoolRevives < 69) {
             enemyHealth = enemyMaxHealth;
             deadpoolRevives += 1;
-            logFight(`<span style='color: #AAFF00;'>${currEnemyName} dies and regenerates back to full health! 
-                (<span style='font-weight: bold; font-size: 1.4em;'>${deadpoolRevives}</span> revives - you feel like he's killable now!)</span>`);
+            logFight(`<span style='color: green;'>${currEnemyName} dies and regenerates back to full health! 
+                (<span style='font-weight: bold; font-size: 1.4em;'>${deadpoolRevives}</span> revives and counting)</span>`);
 
             // Call updateHealthBars to ensure the health bar reflects the new health
             updateHealthBars();
@@ -520,30 +592,122 @@ if (currEnemyName === "Deadpool" && enemyHealth <= 0) {
                 enemyHealthBar.style.backgroundColor = '#39FF14'; // Bright green color
             }
 
+            // After a short delay, revert the health bar color back to red
             setTimeout(() => {
                 if (enemyHealthBar) {
-                    enemyHealthBar.style.backgroundColor = '#f00';
+                    enemyHealthBar.style.backgroundColor = '#f00'; // Red color
                 }
             }, 150); // Slightly longer delay to ensure the flash is visible
+
         } else {
-            logFight(`<span style='color: #39FF14;'>${currEnemyName} finally stays dead after 
-                <span style='font-weight: bold; font-size: 1.4em;'>${deadpoolRevives}</span> revives!</span>`);
+            // After 69 revives, calculate the revival chance
+            const revivalChance = 0.99 * Math.pow(0.99, deadpoolRevives - 69);
+            if (Math.random() < revivalChance) {
+                enemyHealth = enemyMaxHealth;
+                deadpoolRevives += 1;
+                logFight(`<span style='color: #AAFF00;'>${currEnemyName} dies and regenerates back to full health! 
+                    (<span style='font-weight: bold; font-size: 1.4em;'>${deadpoolRevives}</span> revives - you feel like he's killable now!)</span>`);
+
+                // Call updateHealthBars to ensure the health bar reflects the new health
+                updateHealthBars();
+
+                // Get the enemy health bar element and change its color to green
+                const enemyHealthBar = document.getElementById('enemyHealthBar');
+                if (enemyHealthBar) {
+                    enemyHealthBar.style.backgroundColor = '#39FF14'; // Bright green color
+                }
+
+                setTimeout(() => {
+                    if (enemyHealthBar) {
+                        enemyHealthBar.style.backgroundColor = '#f00';
+                    }
+                }, 150); // Slightly longer delay to ensure the flash is visible
+            } else {
+                logFight(`<span style='color: #39FF14;'>${currEnemyName} finally stays dead after 
+                    <span style='font-weight: bold; font-size: 1.4em;'>${deadpoolRevives}</span> revives!</span>`);
+            }
         }
     }
-}
+
+    // Handle special case for Vegeta with multiple forms
+    if (enemyHealth <= 0 && enemyStats[currEnemyName].nextBoss) {
+
+        // Clear the previous enemy attack interval and set a new one
+        clearIntervals();
+
+        currEnemyName = enemyStats[currEnemyName].nextBoss;
+
+        const enemy = enemyStats[currEnemyName];
+
+        // Set enemy stats using values from the enemyStats object
+        enemyHealth = enemy.health;
+        enemyMaxHealth = enemyHealth;
+        enemyMinDamage = enemy.minDamage;
+        enemyMaxDamage = enemy.maxDamage;
+        enemyDefense = enemy.defense;
+        enemyCritChance = enemy.critChance;
+        enemyCritDamage = enemy.critDamage;
+        enemyAttackSpeed = enemy.attackSpeed;
+        enemyDodge = enemy.dodge;
+        enemyNonCritDodge = enemy.nonCritDodge;
+        enemyStunChance = enemy.stun;
+        enemyAbsorb = enemy.absorb;
+
+        enemyStunCount = 0;
+        enemyGravityWellCount = 0;
+
+        firstAttackOfBattle = primeImpactSkill ? true : false;
+
+        logFight(`<span style='color: #FF4500; font-weight: bold; font-size: 1.5em;'>Vegeta has transformed into ${currEnemyName}!</span>`);
+
+        // Special case for "Vegeta SS God"
+        if (currEnemyName === "Vegeta SS God") {
+            if (playerDefense > 0) {
+                const absorbedDefense = playerDefense * 1e8;
+                delusion = 0;
+                enemyDefense += absorbedDefense;
+                playerDefense = 0;
+
+                logFight(`<span style='color: #FFD700; font-weight: bold; font-size: 1.3em;'>Vegeta SS God sees right through you, erasing all your delusions and absorbing all of your defensive powers! His defense skyrockets by ${formatNumber(absorbedDefense)}!</span>`);
+            } else {
+                playerDefenseBase = 1000;
+                playerDefense = 1000; // Grant the player 1k defense
+                logFight(`<span style='color: #00FF00; font-weight: bold; font-size: 1.3em;'>You outwitted Vegeta SS God! His attempt to absorb your defense fails, and instead, you gain 1,000 base defense!</span>`);
+            }
+        }
+
+        // Special case for "Vegeta SS Eternal"
+        if (currEnemyName === "Vegeta SS Eternal") {
+            if (hopium < 0) {
+                playerCurrentAttackSpeed *= 0.5; // Decrease attack speed by 50%
+                logFight(`<span style='color: #FF4500; font-weight: bold; font-size: 1.3em;'>Vegeta SS Eternal senses your despair, and the extremely fucking powerful magnetic field around him slows your attacks by 50%!</span>`);
+            } else {
+                playerCurrentAttackSpeed *= 1.5; // Increase attack speed by 50%
+                logFight(`<span style='color: #00FF00; font-weight: bold; font-size: 1.3em;'>Vegeta SS Eternal feels your hope, and the extremely fucking powerful magnetic field around him boosts your attack speed by 50%!</span>`);
+            }
+        }
+
+        playerCurrentAttackSpeed
+        updateStatsUI();
+
+        // Update the enemy image
+        const enemyImageContainer = document.getElementById('enemyImageContainer');
+        enemyImageContainer.innerHTML = ''; // Clear previous image
+        const enemyImage = document.createElement('img');
+        enemyImage.src = enemy.img;
+        enemyImage.alt = "Enemy Image";
+        enemyImageContainer.appendChild(enemyImage);
 
 
+        // Add a 0.5-second delay before starting the fight loop
+        setTimeout(() => {
+            fightLoop(resolve);
+        }, 500); // 500 milliseconds = 0.5 seconds
+    }
 
 
     // Update health bars
     updateHealthBars();
-
-    // Check if Nexus Lifeline skill is active
-    if (nexusLifelineSkill) {
-        const healAmount = Math.floor(playerMaxHealth * 0.02);
-        playerHealth = playerHealth + healAmount;
-        logFight(`<span style='color: teal;'>You channel Nexus Lifeline to heal yourself for ${formatNumber(healAmount)}.</span>`);
-    }
 }
 
 
@@ -574,7 +738,7 @@ function attackPlayer() {
         }
         if (temporalGuardSkill){
             logFight(`<span style='color: #6082B6;'>Temporal Guard activated! Your defense increased by ${formatNumber(playerDefenseBase * 0.15)}.</span>`);
-            playerDefense = playerDefense + (playerDefenseBase * 1.15);
+            playerDefense = playerDefense + (playerDefenseBase * 0.15);
             document.getElementById('playerDefenseStat').innerText = formatNumber(playerDefense);
         }
         return; // Player dodged, so the attack ends here
@@ -590,8 +754,8 @@ function attackPlayer() {
             logFight(`Temporal Flux ended. Dodge bonus removed.`);
         }
         if (temporalGuardSkill){
-            logFight(`<span style='color: #6082B6;'>Temporal Guard activated! Your defense increased by ${formatNumber(playerDefense * 0.07)}.</span>`);
-            playerDefense *= 1.07;
+            logFight(`<span style='color: #6082B6;'>Temporal Guard activated! Your defense increased by ${formatNumber(playerDefenseBase * 0.15)}.</span>`);
+            playerDefense = playerDefense + (playerDefenseBase * 0.15);
             document.getElementById('playerDefenseStat').innerText = formatNumber(playerDefense);
         }
         return; // Player dodged, so the attack ends here

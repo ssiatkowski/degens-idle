@@ -1021,5 +1021,22 @@ const upgrades = [
         earnings: { copiumPerSecond: 1e24, delusionPerSecond: 2e24, yachtMoneyPerSecond: 0, trollPointsPerSecond: 2e24, hopiumPerSecond: 0, knowledgePerSecond: 3.5e6, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/musical_chairs.jpg`,        
     },
-
+    {
+        name: `Vegeta`,
+        cost: { copium: 3e64, delusion: 0, yachtMoney: 3e64, trollPoints: 3e64, hopium: 0, knowledge: 1e49, power: 6e8, serenity: 0 },
+        earnings: { copiumPerSecond: 3e25, delusionPerSecond: 3e25, yachtMoneyPerSecond: 3e25, trollPointsPerSecond: 3e25, hopiumPerSecond: -1e23, knowledgePerSecond: 8.9e7, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: `imgs/vegeta.jpg`,
+        isFight: true,
+        message: `<p><strong>Vegeta:</strong> You’ve done it… you’ve finally reached the pinnacle of power. But understand this, it was never about me. From the very beginning, I groomed you for this moment, pushing you to break your limits, to become stronger than you ever imagined.</p>
+                <p>Each battle, every struggle—it was all to forge you into the warrior you’ve become today. Not for my sake, but for the fate of the multiverse. There’s a darkness far greater than anything you’ve faced—a force that threatens all of existence. And now…</p>
+                <p><strong>Vegeta:</strong> You’re ready. My goal was for you to grow strong enough to stop her. Now, go do it. Save the multiverse!</p>
+                <p>With those words, Vegeta collapses, a proud but weary smile on his face, knowing his mission is complete.</p>`,
+    },
+    // {
+    //     name: `Kaguya`,
+    //     cost: { copium: 3e64, delusion: 3e64, yachtMoney: 3e64, trollPoints: 3e64, hopium: 0, knowledge: 1e49, power: 6e8, serenity: 0 },
+    //     earnings: { copiumPerSecond: 3e25, delusionPerSecond: 3e25, yachtMoneyPerSecond: 3e25, trollPointsPerSecond: 3e25, hopiumPerSecond: -1e23, knowledgePerSecond: 8.9e7, powerPerSecond: 0, serenityPerSecond: 0 },
+    //     img: `imgs/kaguya.jpg`,
+    //     isFight: true,
+    // },
 ];
