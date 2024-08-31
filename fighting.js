@@ -104,7 +104,7 @@ const enemyStats = {
         absorb: 0
     },
     "Chuck Norris": {
-        health: 2.5e11,
+        health: 3e11,
         minDamage: 100,
         maxDamage: 500,
         attackSpeed: 7,
@@ -117,7 +117,7 @@ const enemyStats = {
         absorb: 0.25
     },
     "Vegeta": {
-        health: 8e11,
+        health: 9e11,
         minDamage: 100,
         maxDamage: 300,
         attackSpeed: 5,
@@ -131,7 +131,7 @@ const enemyStats = {
         nextBoss: "Vegeta SS2",
     },
     "Vegeta SS2": {
-        health: 1e12,
+        health: 1.5e12,
         minDamage: 200,
         maxDamage: 400,
         attackSpeed: 7,
@@ -211,7 +211,7 @@ let playerAttackSpeed = 2;
 let playerHealth, playerDefense, playerMinDamage, playerMaxDamage, playerCritChance, playerCritDamage;
 let enemyHealth, enemyDefense, enemyMinDamage, enemyMaxDamage, enemyCritChance, enemyCritDamage, enemyAttackSpeed;
 let enemyDodge, enemyNonCritDodge, enemyStunChance, enemyAbsorb;
-let playerMaxHealth, enemyMaxHealth, currEnemyName, playerDefenseBase, playerCurrentAttackSpeed;
+let playerMaxHealth, enemyMaxHealth, currEnemyName, playerDefenseBase, playerCurrentAttackSpeed, playerBaseMaxDamage;
 let playerInterval, enemyInterval;
 
 let playerMinDamageMult = 0.25;
@@ -230,6 +230,8 @@ let enemyStunCount = 0;
 
 let enemyGravityWellCount = 0;
 
+let astralEdgeMult = 1;
+
 let playerAttackCount = 0;
 
 let playerTemporalFluxCount = 0;
@@ -239,6 +241,8 @@ let deadpoolRevives = 0;
 let voidStabilizerActive = false;
 
 let firstAttackOfBattle = false;
+
+let mysticReboundCount = 0;
 
 // Function to initialize and start the mini-game
 function startFightGame(enemyName, enemyImg) {
@@ -283,7 +287,8 @@ function startFightGame(enemyName, enemyImg) {
         playerCurrentAttackSpeed = playerAttackSpeed;
 
         playerMinDamage = Math.floor(power * playerMinDamageMult);
-        playerMaxDamage = Math.ceil(power * playerMaxDamageMult);
+        playerBaseMaxDamage = Math.ceil(power * playerMaxDamageMult);
+        playerMaxDamage = playerBaseMaxDamage;
 
         playerDodge = playerDodgeBase;
 
@@ -292,6 +297,7 @@ function startFightGame(enemyName, enemyImg) {
 
         playerAttackCount = 0;
         enemyGravityWellCount = 0;
+        mysticReboundCount = 0;
 
         voidStabilizerActive = false;
         if (voidStabilizerSkill){
@@ -532,7 +538,7 @@ function attackEnemy(resolve) {
     // Handle Temporal Flux skill
     if (isCritical && temporalFluxSkill) {
         playerTemporalFluxCount++;
-        playerDodge = Math.min(playerDodgeBase + (playerTemporalFluxCount * 0.1), 1); // Increase player dodge by 10% per Temporal Flux Count
+        playerDodge = Math.min(playerDodgeBase + (playerTemporalFluxCount * 0.1) + (mysticReboundCount > 0 ? 0.2 : 0), 1);
         document.getElementById('playerDodgeStat').innerText = formatNumber(playerDodge * 100) + '%';
         logFight(`<span style='color: #1E90FF;'>Temporal Flux activated! Dodge increased to ${formatNumber(playerDodge * 100)}%`);
     }
@@ -655,6 +661,7 @@ function attackEnemy(resolve) {
 
         enemyStunCount = 0;
         enemyGravityWellCount = 0;
+        astralEdgeMult = 1;
 
         firstAttackOfBattle = primeImpactSkill ? true : false;
 
@@ -668,7 +675,7 @@ function attackEnemy(resolve) {
                 enemyDefense += absorbedDefense;
                 playerDefense = 0;
 
-                logFight(`<span style='color: #FFD700; font-weight: bold; font-size: 1.3em;'>Vegeta SS God sees right through you, erasing all your delusions and absorbing all of your defensive powers! His defense skyrockets by ${formatNumber(absorbedDefense)}!</span>`);
+                logFight(`<span style='color: #FFD700; font-weight: bold; font-size: 1.3em;'>Vegeta SS God sees right through you, erasing all your delusions and absorbing all of your defensive powers! His defense skyrockets to ${formatNumber(absorbedDefense)}!</span>`);
             } else {
                 playerDefenseBase = 1000;
                 playerDefense = 1000; // Grant the player 1k defense
@@ -723,6 +730,17 @@ function attackPlayer() {
         return; // Skip the enemy's turn
     }
 
+    // Check if Mystic Rebound is active and decrement count
+    if (mysticReboundSkill && mysticReboundCount > 0) {
+        mysticReboundCount--;
+
+        if (mysticReboundCount === 0) {
+            playerDodge = Math.min(playerDodgeBase + (playerTemporalFluxCount * 0.1) + (mysticReboundCount > 0 ? 0.2 : 0), 1);
+            document.getElementById('playerDodgeStat').innerText = formatNumber(playerDodge * 100) + '%';
+            logFight(`<span style='color: #FF69B4;'>Mystic Rebound bonus has ended. Dodge chance returned to normal.</span>`);
+        }
+    }
+
     const isCritical = Math.random() < enemyCritChance;
     const baseDamage = Math.floor(Math.random() * (enemyMaxDamage - enemyMinDamage + 1)) + enemyMinDamage;
     let damage = 0;
@@ -732,7 +750,7 @@ function attackPlayer() {
         logFight(`<span style='color: #32CD32;'>You effortlessly dodge ${currEnemyName}'s non-critical attack!</span>`);
         if (playerTemporalFluxCount > 0) {
             playerTemporalFluxCount = 0;
-            playerDodge = playerDodgeBase;
+            playerDodge = Math.min(playerDodgeBase + (playerTemporalFluxCount * 0.1) + (mysticReboundCount > 0 ? 0.2 : 0), 1);
             document.getElementById('playerDodgeStat').innerText = formatNumber(playerDodge * 100) + '%';
             logFight(`Temporal Flux ended. Dodge bonus removed.`);
         }
@@ -749,7 +767,7 @@ function attackPlayer() {
         logFight(`<span style='color: #7CFC00;'>You dodge ${currEnemyName}'s attack!</span>`);
         if (playerTemporalFluxCount > 0) {
             playerTemporalFluxCount = 0;
-            playerDodge = playerDodgeBase;
+            playerDodge = Math.min(playerDodgeBase + (playerTemporalFluxCount * 0.1) + (mysticReboundCount > 0 ? 0.2 : 0), 1);
             document.getElementById('playerDodgeStat').innerText = formatNumber(playerDodge * 100) + '%';
             logFight(`Temporal Flux ended. Dodge bonus removed.`);
         }
@@ -792,7 +810,8 @@ function attackPlayer() {
             playerStunCount += grappleStunTurns;
             logFight(`<span style='color: #FF4500;'>Chuck Norris performs a Grappling Move, stunning you for ${grappleStunTurns} turn(s).</span>`);
         } else { // 10% chance for Jump Kick
-            playerMaxDamage *= 0.8;
+            playerBaseMaxDamage *= 0.8;
+            playerMaxDamage = Math.ceil(playerBaseMaxDamage * astralEdgeMult);
             document.getElementById('playerDamageStat').innerText = `${formatNumber(playerMinDamage)} - ${formatNumber(playerMaxDamage)}`;
             logFight(`<span style='color: #8B0000;'>Chuck Norris executes a Jump Kick! Your maximum attack damage is reduced by 20%.</span>`);
         }
@@ -839,6 +858,16 @@ function attackPlayer() {
     // Apply damage to player health
     playerHealth -= Math.max(damage, 0);
 
+    // Handle Mystic Rebound skill activation
+    if (isCritical && mysticReboundSkill) {
+        if (mysticReboundCount === 0) {
+            logFight(`<span style='color: #FF69B4;'>Mystic Rebound bonus activated! Your dodge chance has increased.</span>`);
+        }
+        mysticReboundCount = 6;
+        playerDodge = Math.min(playerDodgeBase + (playerTemporalFluxCount * 0.1) + (mysticReboundCount > 0 ? 0.2 : 0), 1);
+        document.getElementById('playerDodgeStat').innerText = formatNumber(playerDodge * 100) + '%';
+    }
+
     if (voidStabilizerActive && (playerHealth / playerMaxHealth) < 0.8){
         voidStabilizerActive = false;
         playerAbsorb = playerAbsorbBase;
@@ -859,6 +888,12 @@ function attackPlayer() {
     if (damage > 0 && Math.random() < enemyStunChance) {
         playerStunCount++;
         logFight(`<span style='color: #8B008B;'>${currEnemyName} stuns you! (${playerStunCount} turn(s) stunned)</span>`);
+    }
+
+    if (damage > 0 && astralEdgeSkill){
+        astralEdgeMult = 1 + (((playerMaxHealth - playerHealth) / playerMaxHealth) / 2);
+        playerMaxDamage = Math.ceil(playerBaseMaxDamage * astralEdgeMult);
+        document.getElementById('playerDamageStat').innerText = `${formatNumber(playerMinDamage)} - ${formatNumber(playerMaxDamage)}`;
     }
 
     // Update health bars

@@ -5,11 +5,13 @@ const powerHallSkills = [
     { name: 'Arcane Magnetizer', cost: 1e7, description: 'Upgrade autobuyer is now 5x faster!', unlocked: false, level: 'Arcane Magnetism' },
     { name: 'Gravity Well', cost: 1e7, description: 'Every 5 successful attacks, reduce enemy minimum damage by 50% for 3 attacks.', unlocked: false, level: 'Arcane Magnetism' },
     { name: 'Temporal Guard', cost: 2.5e9, description: 'After every successful dodge, increase your defense by 15% of your base defense.', unlocked: false, level: 'Arcane Magnetism' },
+    { name: 'Mystic Rebound', cost: 4e10, description: 'Increase your dodge chance by 20% for the next 5 attacks after being hit by a critical strike.', unlocked: false, level: 'Arcane Magnetism' },
 
     { name: 'Vitality Matrix', cost: 45000, description: 'Maximum Health is increased by 50%!', unlocked: false, level: 'Quantum Nexus' },
     { name: 'Nexus Lifeline', cost: 5e6, description: 'With every attack, heal yourself for 2% max health. Overheal is possible.', unlocked: false, level: 'Quantum Nexus' },
     { name: 'Astral Precision', cost: 3e7, description: 'Hone your accuracy. Minimum damage rescaled from power-75% to power-25%.', unlocked: false, level: 'Quantum Nexus' },
-    { name: 'Void Stabilizer', cost: 1.75e8, description: 'Reduce damage taken from attacks by 50% while your health is above 80%', unlocked: false, level: 'Quantum Nexus' },
+    { name: 'Void Stabilizer', cost: 1.75e8, description: 'Reduce damage taken from attacks by 50% until your health drops below 80%', unlocked: false, level: 'Quantum Nexus' },
+    { name: 'Astral Edge', cost: 1.8e11, description: 'Increase your maximum damage by 1% for each 2% of your health missing.', unlocked: false, level: 'Quantum Nexus' },
 
     { name: 'Lightning Reflexes', cost: 12000, description: 'Your attacks become 2.5x faster!', unlocked: false, level: 'Cosmic Dynamics' },
     { name: 'Astral Disruption', cost: 150000, description: 'Your attacks have a 5% chance to stun the enemy for 1 attack.', unlocked: false, level: 'Cosmic Dynamics' },
@@ -76,11 +78,20 @@ function unlockPowerHallSkill(skill, duringLoad = false) {
             case 'Void Stabilizer':
                 voidStabilizerSkill = true;
                 break;
+
+            case 'Astral Edge':
+                astralEdgeSkill = true;
+                break;
+                
     
             case 'Temporal Guard':
                 temporalGuardSkill = true;
                 break;
         
+            case 'Mystic Rebound':
+                mysticReboundSkill = true;
+                break;
+
             case 'Vitality Matrix':
                 playerHealthMult = 1.5;
                 break;
