@@ -990,7 +990,7 @@ const upgrades = [
     {
         name: `Chuck Norris`,
         cost: { copium: 1e63, delusion: 1e63, yachtMoney: 1e63, trollPoints: 1e63, hopium: 0, knowledge: 1e47, power: 1e8, serenity: 0 },
-        earnings: { copiumPerSecond: 1.5e24, delusionPerSecond: 0, yachtMoneyPerSecond: 1.5e24, trollPointsPerSecond: 0, hopiumPerSecond: -1e20, knowledgePerSecond: 1e7, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 1.5e24, delusionPerSecond: 0, yachtMoneyPerSecond: 1.5e24, trollPointsPerSecond: 0, hopiumPerSecond: -1e21, knowledgePerSecond: 1e7, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/chuck_norris.jpg`,
         isFight: true,
     },
@@ -1027,7 +1027,7 @@ const upgrades = [
     {
         name: `Vegeta`,
         cost: { copium: 3e64, delusion: 0, yachtMoney: 3e64, trollPoints: 3e64, hopium: 0, knowledge: 1e49, power: 6e8, serenity: 0 },
-        earnings: { copiumPerSecond: 3e25, delusionPerSecond: 3e25, yachtMoneyPerSecond: 3e25, trollPointsPerSecond: 3e25, hopiumPerSecond: -1e23, knowledgePerSecond: 8.9e7, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 3e25, delusionPerSecond: 3e25, yachtMoneyPerSecond: 3e25, trollPointsPerSecond: 3e25, hopiumPerSecond: -1e26, knowledgePerSecond: 8.9e7, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/vegeta.jpg`,
         isFight: true,
         message: `<p><strong>Vegeta:</strong> You’ve done it… you’ve finally reached the pinnacle of power. But understand this, it was never about me. From the very beginning, I groomed you for this moment, pushing you to break your limits, to become stronger than you ever imagined.</p>
@@ -1086,6 +1086,12 @@ const upgrades = [
         cost: { copium: 4e66, delusion: 0, yachtMoney: 0, trollPoints: 1e66, hopium: 0, knowledge: 8e49, power: 1.4e9, serenity: 0 },
         earnings: { copiumPerSecond: 8e26, delusionPerSecond: 8e26, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 1.1e7, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/say_what_what.jpg`,        
+    },
+    {         
+        name: `Blunt Dreams`,
+        cost: { copium: 4.2e68, delusion: 4.2e68, yachtMoney: 4.2e68, trollPoints: 4.2e68, hopium: 0, knowledge: 4.2e51, power: 4.2e9, serenity: 0 },
+        earnings: { copiumPerSecond: 4.2e27, delusionPerSecond: 4.2e27, yachtMoneyPerSecond: 4.2e27, trollPointsPerSecond: 4.2e27, hopiumPerSecond: 0, knowledgePerSecond: 4.2e7, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: `imgs/ez_blunt.jpg`,        
     },
 
     // {

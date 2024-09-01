@@ -5,7 +5,7 @@ const powerHallSkills = [
     { name: 'Arcane Magnetizer', cost: 1e7, description: 'Upgrade autobuyer is now 5x faster!', unlocked: false, level: 'Arcane Magnetism' },
     { name: 'Gravity Well', cost: 1e7, description: 'Every 5 successful attacks, reduce enemy minimum damage by 50% for 3 attacks.', unlocked: false, level: 'Arcane Magnetism' },
     { name: 'Temporal Guard', cost: 2.5e9, description: 'After every successful dodge, increase your defense by 15% of your base defense.', unlocked: false, level: 'Arcane Magnetism' },
-    { name: 'Mystic Rebound', cost: 4e10, description: 'Increase your dodge chance by 20% for the next 5 attacks after being hit by a critical strike.', unlocked: false, level: 'Arcane Magnetism' },
+    { name: 'Mystic Rebound', cost: 3e10, description: 'Increase your dodge chance by 20% for the next 5 attacks after being hit by a critical strike.', unlocked: false, level: 'Arcane Magnetism' },
 
     { name: 'Vitality Matrix', cost: 45000, description: 'Maximum Health is increased by 50%!', unlocked: false, level: 'Quantum Nexus' },
     { name: 'Nexus Lifeline', cost: 5e6, description: 'With every attack, heal yourself for 2% max health. Overheal is possible.', unlocked: false, level: 'Quantum Nexus' },
@@ -19,9 +19,10 @@ const powerHallSkills = [
     { name: 'Prime Impact', cost: 9e8, description: 'First attack always hits for full power (ignore enemy dodge rate and defense).', unlocked: false, level: 'Cosmic Dynamics' },
     { name: 'Graviton Burst', cost: 1.2e50, description: 'Your attacks are imperceptible to average beings. You now attack 5x faster!', unlocked: false, level: 'Cosmic Dynamics' },
     
-    { name: 'Stellar Harvest', cost: 2.5e7, description: `Increase generation of all first 7 resources by 50% for 60 seconds after defeating a boss. (multiplicative)`, unlocked: false, level: 'Celestial Manipulation' },
+    { name: 'Stellar Harvest', cost: 2.5e7, description: `Increase generation of all first 7 resources by 40% for 60 seconds after defeating a boss. (multiplicative)`, unlocked: false, level: 'Celestial Manipulation' },
     { name: 'POWER is Power!', cost: 2.5e8, description: `Power generation increased by 10% for each purchased Power Hall skill (multiplicative).`, unlocked: false, level: 'Celestial Manipulation' },
     { name: 'Upgrade Amplifier', cost: 4e8, description: `First 4 resources gain a flat multiplier based on number of purchased upgrades.`, unlocked: false, level: 'Celestial Manipulation' },
+    { name: 'Celestial Collector', cost: 5e10, description: `Stellar Harvest buff is extended to 60% power and lasts for 10 minutes.`, unlocked: false, level: 'Celestial Manipulation' },
 
     //{ name: '?', cost: 4e8, description: `?`, unlocked: false, level: 'Nebular Command' },
 
@@ -128,6 +129,11 @@ function unlockPowerHallSkill(skill, duringLoad = false) {
                 upgradeAmplifierSkill = true;
                 updateEffectiveMultipliers();
                 break;
+
+            case 'Celestial Collector':
+                celestialCollectorSkill = true;
+                break;
+                
 
             default:
                 console.warn(`No handler for skill: ${skill.name}`);

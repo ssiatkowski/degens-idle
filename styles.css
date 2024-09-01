@@ -907,6 +907,19 @@ button.disabled {
     transition: all 0.5s ease;
 }
 
+.stellar-harvest-text {
+    font-size: 1.2em;
+    color: rgb(190, 247, 190);
+    font-weight: bold;
+    text-shadow: 
+        0 0 4px #32cd32,  /* First layer of green glow */
+        0 0 8px #00ff00;  /* Third layer with a brighter green */
+    margin-top: 10px;
+    text-align: center;
+    transition: all 0.5s ease;
+}
+
+
 /* Library button specific styles */
 #libraryButton {
     background-color: #8B4513; /* SaddleBrown */

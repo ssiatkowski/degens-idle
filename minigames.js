@@ -298,7 +298,7 @@ function playMiniGame(gameType) {
         let duration = mathGameSkill ? 20 : 12; // 12 or 20 seconds
         let portalValues = []; // Store all portal values
         let selectedPortals = []; // Store selected portals for checking
-        let targetSum = Math.floor(Math.random() * 80) + 10; // Random target sum between 10 and 89
+        let targetSum = Math.floor(Math.random() * 75) + 10; // Random target sum between 10 and 84
         let startTime = Date.now(); // Track the start time
 
         // Show the modal with instructions and start the game when the modal is closed

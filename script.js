@@ -58,6 +58,7 @@ let knowledgeUnlocked = false;
 let knowledgeGenerationSkill = false;
 let prestigeBaseSkill = false;
 let twoDimensionalAscensionSkill = false;
+let linearAscensionSkill = false;
 let multibuyUpgradesSkill = false;
 let mathGameSkill = false;
 let memoryGameSkill = false;
@@ -70,6 +71,7 @@ let bigCrunchUnlocked = false;
 let moneyIsPowerTooSkill = false;
 let lessDiminishingGodModeSkill = false;
 let lessDiminishingPUGodModeSkill = false;
+let perfectGodModeSkill = false;
 
 let compressedBigCrunchMult = 1;
 
@@ -104,7 +106,10 @@ let astralEdgeSkill = false;
 let mysticReboundSkill = false;
 
 let stellarHarvestSkill = false;
+let celestialCollectorSkill = false;
 let stellarHarvestMult = 1;
+
+let currentTimeouts = [];  // Array to store all active timeout IDs
 
 
 function calculateBaseKnowledge() {
@@ -627,6 +632,12 @@ function clearAllIntervals() {
     });
 }
 
+function clearAllTimeouts() {
+    // Iterate over the array and clear each timeout
+    currentTimeouts.forEach(timeoutId => clearTimeout(timeoutId));
+    // Clear the array after canceling all timeouts
+    currentTimeouts = [];
+}
 
 
 async function restartGame(isPrestige = false) {
@@ -706,6 +717,7 @@ async function restartGame(isPrestige = false) {
             knowledgeGenerationSkill = false;
             prestigeBaseSkill = false;
             twoDimensionalAscensionSkill = false;
+            linearAscensionSkill = false;
             multibuyUpgradesSkill = false;
             mathGameSkill = false;
             memoryGameSkill = false;
@@ -722,6 +734,7 @@ async function restartGame(isPrestige = false) {
             moneyIsPowerTooSkill = false;
             lessDiminishingGodModeSkill = false;
             lessDiminishingPUGodModeSkill = false;
+            perfectGodModeSkill = false;
             autoPrestigeThreshold = null;
             autoAscendThreshold = null;
             autoTranscendThreshold = null;
@@ -736,6 +749,7 @@ async function restartGame(isPrestige = false) {
             primeImpactSkill = false;
             powerIsPowerSkill = false;
             stellarHarvestSkill = false;
+            celestialCollectorSkill = false;
             gravityWellSkill = false;
             voidStabilizerSkill = false;
             temporalGuardSkill = false;
@@ -777,6 +791,7 @@ async function restartGame(isPrestige = false) {
             localStorage.clear();
         }
 
+        clearAllTimeouts();
 
         const cookieButtonVisible = JSON.parse(localStorage.getItem('cookieButtonVisible'));
         if (cookieButtonVisible && cookieAutoClicker) {
@@ -790,12 +805,14 @@ async function restartGame(isPrestige = false) {
             }, 100); // 100 milliseconds = 0.1 seconds
         
             // Stop the interval after 15 seconds
-            setTimeout(() => {
+            const timeoutId = setTimeout(() => {
                 clearInterval(intervalId);
         
                 // Remove the spinning class to stop the animation
                 cookieButton.classList.remove('spinning');
             }, 15000); // 15000 milliseconds = 15 seconds
+
+            currentTimeouts.push(timeoutId);
         }
 
         // Clear purchased upgrades
@@ -806,6 +823,7 @@ async function restartGame(isPrestige = false) {
         availableUpgrades = upgrades.slice(); // Reset available upgrades to the original state
 
         stellarHarvestMult = 1;
+        updateStellarHarvestDisplay();
 
         // Start unlock timeouts for mini-games
         unlockMiniGames();
@@ -1345,8 +1363,8 @@ function canBigCrunch() {
 }
 
 function calculateGodModeMultiplier(gmLevlel = godModeLevel) {
-    let productX = 1; // Initialize the product to 1 for the first element
-    const diminishFactor = lessDiminishingGodModeSkill ? 0.985 : 0.975
+    let productX = 1; // Initialize the product to 1 for the first element    
+    const diminishFactor = perfectGodModeSkill ? 0.992 : (lessDiminishingGodModeSkill ? 0.985 : 0.975);
     for (let i = 0; i < gmLevlel; i++) {
         let xi = 1 + 0.25 * Math.pow(diminishFactor, i); // Calculate xi
         productX *= xi; // Multiply the current xi to the cumulative product
@@ -1370,9 +1388,14 @@ function calculateBigCrunchMultiplier(bcPower = bigCrunchPower) {
 
 // Function to calculate the ascension eps multiplier
 function calculateAscensionEpsMult() {
+    if (linearAscensionSkill) {
+        return Math.max(epsMultiplier / 2, 1);
+    }
+
     const exponent = twoDimensionalAscensionSkill ? 2 / 3 : 1 / 3;
     return Math.max(epsMultiplier ** exponent, 1);
 }
+
 
 let ascendInProgress = false;
 
@@ -1795,7 +1818,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
 
         // Special case for the "Still very stupid" upgrade
         if (name === "Kaguya") {
-            showMessageModal('Sadly', "This marks the end of v0.873. I hope you're enjoying the thrill of these battles and unlocking the secrets of the Power Hall skills. The adventure is far from over, and your feedback is what makes it truly epic. Join us on Discord and share your experiences, strategies, and thoughts. Let’s shape the future of the game together and make each update more exciting than the last!");
+            showMessageModal('Sadly', "This marks the end of v0.874. I hope you're enjoying the thrill of these battles and unlocking the secrets of the Power Hall skills. The adventure is far from over, and your feedback is what makes it truly epic. Join us on Discord and share your experiences, strategies, and thoughts. Let’s shape the future of the game together and make each update more exciting than the last!");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one
@@ -2010,7 +2033,7 @@ function autobuyUpgrades(){
     
     if(isFightInProgress) return;
 
-    let topUpgrades = availableUpgrades.slice(0, 8);
+    let topUpgrades = availableUpgrades.slice(0, 16);
 
     let upgradeBought = false;
     topUpgrades.forEach(upgrade => {
@@ -2193,6 +2216,16 @@ function initializeBuyButtons() {
     }
 }
 
+// Update the Stellar Harvest text display based on the multiplier
+function updateStellarHarvestDisplay() {
+    const stellarHarvestDisplay = document.getElementById('stellar-harvest-display');
+    if (stellarHarvestMult > 1) {
+        stellarHarvestDisplay.style.display = 'block';
+        stellarHarvestDisplay.textContent = `Stellar Harvest Mult x${formatNumber(stellarHarvestMult)}`;
+    } else {
+        stellarHarvestDisplay.style.display = 'none';
+    }
+}
 
 
 // Developer mode multipliers

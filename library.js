@@ -16,8 +16,9 @@ const librarySkills = [
     { name: 'Prestige Base', cost: 5000, description: 'Increase Base prestige multiplier from 1.5 to 1.75. Huuge.', unlocked: false, level: 'Nonlinear Partial Differential Equations' },
     { name: '2D Ascension', cost: 230000, description: 'Learn how to ascend God Mode Levels while only folding the space around you into two dimensions. Mathematically, instead of prestige changing to x**(1/3), it changes to x**(2/3).', unlocked: false, level: 'Nonlinear Partial Differential Equations' },
     { name: 'Less Diminishing God-Mode', cost: 1e14, description: 'Decrease diminishing returns at higher God-Mode levels. Mathematically, instead of diminishing at 97.5%, the multiplier dimninishes at 98.5%. (This is big at high god-mode levels)', unlocked: false, level: 'Nonlinear Partial Differential Equations' },
-    { name: 'Much Less Diminishing Parallel God-Mode', cost: 2e35, description: 'Greatly decrease diminishing returns at higher Parallel Universe God-Mode levels. Mathematically, instead of diminishing at 97.5%, the multiplier dimninishes at 99.0%. (This is incredibly OP at higher PU God Mode levels)', unlocked: false, level: 'Nonlinear Partial Differential Equations' },
-    // { name: 'Perfect God-Mode', cost: 1e14, description: 'Apart from Hawking Radiation, this God-Mode is practically lossless. Dimishes at 99.9% (You must know this is huge)', unlocked: false, level: 'Nonlinear Partial Differential Equations' },
+    { name: 'Much Less Diminishing Parallel God-Mode', cost: 2e35, description: 'Greatly decrease diminishing returns at higher Parallel Universe God-Mode levels. Mathematically, multiplier dimninishes at 99.0% instead of 97.5%. (Incredibly OP at higher PU God Mode levels)', unlocked: false, level: 'Nonlinear Partial Differential Equations' },
+    { name: 'Linear Ascension', cost: 2e43, description: 'Learn how to ascend God Mode without folding dimensions. Prestige mulitplier only goes down by a factor of 2.', unlocked: false, level: 'Nonlinear Partial Differential Equations' },
+    { name: 'Perfect God-Mode', cost: 2e58, description: 'Make God-Mode better than PU God-Mode. Dimishes at 99.2%. (You must already know this is huge)', unlocked: false, level: 'Nonlinear Partial Differential Equations' },
 
 
     { name: 'Multibuy Upgrades', cost: 2, description: 'Unlock "Buy Seen" and "Buy Max" buttons for Upgrades.', unlocked: false, level: 'Artificial Intelligence' },
@@ -33,7 +34,8 @@ const librarySkills = [
     { name: 'Big Crunch', cost: 8e11, description: 'Could this be what Power is for? Unlock ability to force the universe into a Big Crunch and to be reborn anew!', unlocked: false, level: 'Celestial Bodies' },
     { name: 'Money is Power, too', cost: 2.5e20, description: 'Add a multiplier to Power generation based on Yacht Money (though it scales much less than with Knowledge)', unlocked: false, level: 'Celestial Bodies' },
     { name: 'Map to Hall of Power', cost: 1e24, description: 'You can now look at and admire the Power Hall button.', unlocked: false, level: 'Celestial Bodies' },
-    { name: 'Compressed Power', cost: 1e49, description: 'Current power counts as 200% more for Big Crunch Power.', unlocked: false, level: 'Celestial Bodies' },
+    { name: 'Compressed Power', cost: 1e49, description: 'Current power counts as 3x more for Big Crunch Power.', unlocked: false, level: 'Celestial Bodies' },
+    { name: 'Condensed Power', cost: 1e68, description: 'Current power counts as 20x more for Big Crunch Power.', unlocked: false, level: 'Celestial Bodies' },
 
 
     { name: 'Perpetual Prestige', cost: 1e25, description: 'Auto-Prestige ability.  (Target prestige multiplier can be set in Automation Settings. Default=10)', unlocked: false, level: '???' },
@@ -164,7 +166,34 @@ function unlockLibrarySkill(skill, duringLoad = false) {
                 updateMultipliersDisplay();
                 updateEffectiveMultipliers();
                 break;
-                
+
+            case 'Linear Ascension':
+                linearAscensionSkill = true;
+                if (!duringLoad) {
+                    showMessageModal('Linear Ascension', 'Ahh, the difference that exponential vs linear makes.', false, false, 'imgs/graphs/linear_ascension.png')
+                }
+                break;
+
+                case 'Perfect God-Mode':
+                    perfectGodModeSkill = true;
+                    if (!duringLoad) {
+                        showMessageModal(
+                            'Perfect God-Mode', 
+                            `Remember the equation: <strong>GodModeMultiplier = &prod;<sub>i=0</sub><sup>gmLevel - 1</sup> &#40;1 + 0.25 &times; diminishFactor<sup>i</sup>&#41;</strong><br><br>
+                            Now featuring a superior diminishing factor of <strong>99.2%</strong>! This is a significant improvement over the <strong>99%</strong> factor in Parallel God Mode. 
+                            The graph below illustrates how this seemingly small difference leads to a much higher multiplier, especially at higher God-Mode levels. 
+                            At God-Mode Level 150, you will see an immediate improvement of about 5 orders of magnitude.`,
+                            false, 
+                            false, 
+                            'imgs/graphs/perfect_gm_diminishing.png'
+                        );
+                    }
+                    godModeMultiplier = calculateGodModeMultiplier(godModeLevel);
+                    updateMultipliersDisplay();
+                    updateEffectiveMultipliers();
+                    break;
+
+
             case 'Multibuy Upgrades':
                 multibuyUpgradesSkill = true;
                 initializeBuyButtons();
@@ -236,8 +265,13 @@ function unlockLibrarySkill(skill, duringLoad = false) {
                 break;
 
             case 'Compressed Power':
-                compressedBigCrunchMult = 3;
+                compressedBigCrunchMult = Math.max(compressedBigCrunchMult, 3);
                 break;
+
+            case 'Condensed Power':
+                compressedBigCrunchMult = 20;
+                break;
+                
 
             case 'Perpetual Prestige':
                 if(autoPrestigeThreshold === null){

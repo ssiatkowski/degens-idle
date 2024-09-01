@@ -20,7 +20,7 @@ const enemyStats = {
         defense: 5,
         critChance: 0,
         critDamage: 1,
-        dodge: 0,
+        dodge: 0.1,
         nonCritDodge: 0,
         stun: 0,
         absorb: 0
@@ -49,7 +49,7 @@ const enemyStats = {
         dodge: 0,
         nonCritDodge: 0,
         stun: 0,
-        absorb: 0
+        absorb: 0.2
     },
     "Isshin": {
         health: 4000,
@@ -60,7 +60,7 @@ const enemyStats = {
         critChance: 0.08,
         critDamage: 15,
         dodge: 0,
-        nonCritDodge: 0,
+        nonCritDodge: 0.3,
         stun: 0,
         absorb: 0
     },
@@ -190,8 +190,8 @@ const enemyStats = {
         img: `imgs/vegeta_5.jpg`,
     },
     // "Kaguya": {
-    //     health: 3e12,
-    //     minDamage: 50,
+    //     health: 1e16,
+    //     minDamage: 200,
     //     maxDamage: 100,
     //     attackSpeed: 30,
     //     defense: 3e9,
@@ -670,7 +670,7 @@ function attackEnemy(resolve) {
         // Special case for "Vegeta SS God"
         if (currEnemyName === "Vegeta SS God") {
             if (playerDefense > 0) {
-                const absorbedDefense = playerDefense * 1e8;
+                const absorbedDefense = playerDefense * 1e9;
                 delusion = 0;
                 enemyDefense += absorbedDefense;
                 playerDefense = 0;
@@ -963,20 +963,27 @@ function endFight(isForfeit = false) {
         logFight("<span style='color: green;'>You are the Winner!</span>");
         overlayWinnerLoserText("Winner", "Dead");
 
-        // Stellar Harvest Skill effect
-        if (stellarHarvestSkill) {
-            stellarHarvestMult *= 1.5;
-            updateEffectiveMultipliers();
-            //TODO: use global tooltip instead
-            //logFight(`<span style='color: #FFD700;'>Stellar Harvest activated! Power generation currently increased by a total of x${stellarHarvestMult}</span>`);
+    // Stellar Harvest Skill effect
+    if (stellarHarvestSkill) {
+        const multiplier = celestialCollectorSkill ? 1.6: 1.4;
+        const duration = celestialCollectorSkill ? 600000 : 60000; // 10 minutes (600,000 ms) or 1 minute (60,000 ms)
 
-            // Set a timeout to reset the multiplier after 60 seconds
-            setTimeout(() => {
-                stellarHarvestMult = Math.max(stellarHarvestMult/1.5,1);
-                updateEffectiveMultipliers();
-                //TODO: use global tooltip to show it decreased
-            }, 60000); // 60000 milliseconds = 60 seconds
-        }
+        stellarHarvestMult *= multiplier;
+        updateEffectiveMultipliers();
+        updateStellarHarvestDisplay();
+        //TODO: use global tooltip instead
+
+        // Set a timeout to reset the multiplier after the specified duration
+        const timeoutId = setTimeout(() => {
+            stellarHarvestMult = Math.max(stellarHarvestMult / multiplier, 1);
+            updateEffectiveMultipliers();
+            updateStellarHarvestDisplay();
+            //TODO: use global tooltip to show it decreased
+        }, duration);
+
+        // Store the timeout ID in the array
+        currentTimeouts.push(timeoutId);
+    }
     } else {
         logFight(`<span style='color: red;'>${currEnemyName} is the Winner!</span>`);
         overlayWinnerLoserText("Loser", "Taunting");
