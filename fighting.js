@@ -194,7 +194,7 @@ const enemyStats = {
         minDamage: 2000,
         maxDamage: 3000,
         attackSpeed: 30,
-        defense: 1e13,
+        defense: 5e14,
         critChance: 0.1,
         critDamage: 1.5,
         dodge: 0.2,
@@ -764,7 +764,7 @@ function attackEnemy(resolve) {
             enemyHealth = enemyMaxHealth;
             playerStunCount += 100;
             enemyAttackSpeed *= 2.5;
-            logFight(`<span style='color: #800020; font-weight: bold; font-size: 1.3em;'>Kaguya uses Izanami! She loses her right eye, goes blind, and stuns you for 100 turns and is enraged so her attack speed increases 2.5x! However, she can no longer land critical strikes or use ocular techniques.</span>`);
+            logFight(`<span style='color: #800020; font-weight: bold; font-size: 1.3em;'>Kaguya uses Izanami! She loses her right eye, goes blind, and stuns you for 100 turns and is enraged so her attack speed increases 2.5x! However, she can no longer land critical strikes or use Amaterasu/Tsukuyomi.</span>`);
     
             // Disable critical strikes because Kaguya is now blind
             enemyCritChance = 0;
@@ -938,7 +938,7 @@ function attackPlayer() {
         const randPlanetaryDevastation = Math.random() < 0.01;
         const randAmaterasu = Math.random() < 0.06;
         const randTsukuyomi = Math.random() < 0.03;
-        const randSusanoo = Math.random() < 0.15;
+        const randSusanoo = Math.random() < 0.1;
         const randKamui = Math.random() < 0.04;
     
         if (randChakraAbsorption) { // Chakra Absorption
@@ -988,7 +988,7 @@ function attackPlayer() {
             logFight(`<span style='color: #9370DB;'>Kaguya uses Tsukuyomi! You gain 1 Tsukuyomi stack, causing you to attack yourself next turn.</span>`);
         }
         
-        if (randSusanoo && !izanamiUsed) { // Susanoo
+        if (randSusanoo) { // Susanoo
             enemyDefense *= 1.02; // Increase Kaguya's defense by 2%
             document.getElementById('enemyDefenseStat').innerText = formatNumber(enemyDefense);
             logFight(`<span style='color: #4682B4;'>Kaguya activates Susanoo! Her defense increases by 2%.</span>`);
