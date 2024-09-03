@@ -932,8 +932,8 @@ function attackPlayer() {
         }
     } else if (currEnemyName === "Kaguya") {
         // Independent chance for each attack
-        const randChakraAbsorption = Math.random() < 0.01;
-        const randTruthSeekerBall = Math.random() < 0.02;
+        const randChakraAbsorption = Math.random() < 0.015;
+        const randTruthSeekerBall = Math.random() < 0.025;
         const randByakugan64Palms = Math.random() < 0.13;
         const randPlanetaryDevastation = Math.random() < 0.01;
         const randAmaterasu = Math.random() < 0.06;
