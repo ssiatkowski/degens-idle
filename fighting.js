@@ -932,6 +932,7 @@ function attackPlayer() {
             power *= 0.9; // Reduce power by 10%
             playerMinDamage = Math.floor(power * playerMinDamageMult);
             playerBaseMaxDamage = Math.ceil(power * playerMaxDamageMult);
+            playerMaxDamage = Math.ceil(playerBaseMaxDamage * astralEdgeMult);
             document.getElementById('playerDamageStat').innerText = `${formatNumber(playerMinDamage)} - ${formatNumber(playerMaxDamage)}`;
             logFight(`<span style='color: #FF0000;'>Kaguya uses Chakra Absorption! Your power is reduced by 10%, and damage recalculated.</span>`);
         }

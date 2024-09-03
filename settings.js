@@ -97,7 +97,6 @@ function exportSave() {
         lastInteraction: Date.now(), // Updated to always track last interaction
         cookieClickMultiplier,
         cookieAutoClicker,
-        knowledgeUnlocked,
         knowledgeGenerationSkill,
         prestigeBaseSkill,
         twoDimensionalAscensionSkill,
@@ -242,11 +241,6 @@ function importSave(event) {
             } else {
                 cookieTooltip.textContent = `Each cookie click counts as ${cookieClickMultiplier} clicks on collect buttons for Copium, Delusion, Yacht Money, and Troll Points!`;
             }
-        }
-
-        // Check if Knowledge is unlocked and update UI
-        if (gameState.knowledgeUnlocked) {
-            unhideKnowledge();
         }
 
         // Handle library skills
