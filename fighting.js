@@ -934,11 +934,11 @@ function attackPlayer() {
         // Independent chance for each attack
         const randChakraAbsorption = Math.random() < 0.015;
         const randTruthSeekerBall = Math.random() < 0.025;
-        const randByakugan64Palms = Math.random() < 0.13;
+        const randByakugan64Palms = Math.random() < 0.14;
         const randPlanetaryDevastation = Math.random() < 0.01;
         const randAmaterasu = Math.random() < 0.06;
         const randTsukuyomi = Math.random() < 0.03;
-        const randSusanoo = Math.random() < 0.1;
+        const randSusanoo = Math.random() < 0.12;
         const randKamui = Math.random() < 0.04;
     
         if (randChakraAbsorption) { // Chakra Absorption
