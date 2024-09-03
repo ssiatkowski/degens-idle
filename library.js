@@ -40,7 +40,7 @@ const librarySkills = [
 
     { name: 'Perpetual Prestige', cost: 1e25, description: 'Auto-Prestige ability.  (Target prestige multiplier can be set in Automation Settings. Default=100)', unlocked: false, level: '???' },
     { name: 'Eternal Ascension', cost: 1e29, description: 'Auto-Ascend ability. (Target # upgrades can be set in Automation Settings. Default=Off)', unlocked: false, level: '???' },
-    { name: 'Quantum Symphony', cost: 1e42, description: 'Auto-Transcend. (Similar to Auto-Ascend)', unlocked: false, level: '???' },
+    { name: 'Quantum Symphony', cost: 1e41, description: 'Auto-Transcend. (Similar to Auto-Ascend)', unlocked: false, level: '???' },
     // { name: 'Void of Non-Existence', cost: 1e55, description: 'Auto-Big Crunch', unlocked: false, level: '???' },
     // { name: 'Infinite Fractal', cost: 1e33, description: '', unlocked: false, level: '???' },
 
