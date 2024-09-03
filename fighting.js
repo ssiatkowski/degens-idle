@@ -1144,6 +1144,10 @@ function endFight(isForfeit = false) {
         updateStellarHarvestDisplay();
         //TODO: use global tooltip instead
 
+        if(stellarHarvestMult > 50){
+            unlockAchievement('Stellar Harvester');
+        }
+
         // Set a timeout to reset the multiplier after the specified duration
         const timeoutId = setTimeout(() => {
             stellarHarvestMult = Math.max(stellarHarvestMult / multiplier, 1);

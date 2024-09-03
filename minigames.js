@@ -706,6 +706,9 @@ function playMiniGame(gameType) {
                         if(boxValue >= 124){
                             unlockAchievement('Pure Luck');
                         }
+                        if(sebosLuck && boxValue <= -48){
+                            unlockAchievement('That is some Bad Luck');
+                        }
 
                         showMessageModal('Luck Game Result', resultMessage, false, false, null, false, false);
                         updateDisplay(); // Update the display

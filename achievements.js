@@ -36,6 +36,12 @@ const achievements = [
         img: 'imgs/achievements/first_prestige.jpg',
     },
     {
+        name: 'Click the Clicker',
+        isUnlocked: false,
+        hoverText: 'you can click on purchased upgrades',
+        img: 'imgs/achievements/click_the_clicker.jpg',
+    },
+    {
         name: 'Cookie Clicker',
         isUnlocked: false,
         hoverText: 'some upgrades unlock new mechanics',
@@ -138,12 +144,6 @@ const achievements = [
         img: 'imgs/achievements/uninitialized.jpg',
     },
     {
-        name: 'Does Not Exist 22',
-        isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
-    },
-    {
         name: 'Does Not Exist 23',
         isUnlocked: false,
         hoverText: 'Does not exist yet',
@@ -222,22 +222,22 @@ const achievements = [
         img: 'imgs/achievements/max_automation.jpg',
     },
     {
-        name: 'Does Not Exist 35',
+        name: 'Over 9000',
         isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
+        hoverText: 'prestige for over 9000 mult',
+        img: 'imgs/achievements/over_9000.jpg',
     },
     {
-        name: 'Does Not Exist 36',
+        name: 'Discord',
         isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
+        hoverText: 'join the Discord',
+        img: 'imgs/achievements/discord.jpg',
     },
     {
-        name: 'Does Not Exist 37',
+        name: 'Precision Buying',
         isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
+        hoverText: 'let me do this myself',
+        img: 'imgs/achievements/precision_buying.jpg',
     },
     {
         name: 'Begin Training',
@@ -270,10 +270,10 @@ const achievements = [
         img: 'imgs/achievements/uninitialized.jpg',
     },
     {
-        name: 'Does Not Exist 43',
+        name: 'Going in Blind',
         isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
+        hoverText: 'get far without knowing how to play?',
+        img: 'imgs/achievements/going_in_blind.jpg',
     },
     {
         name: 'Remember Trading?',
@@ -342,16 +342,16 @@ const achievements = [
         img: 'imgs/achievements/vegeta_power.jpg',
     },
     {
-        name: 'Does Not Exist 55',
+        name: 'That is some Bad Luck',
         isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
+        hoverText: 'keep playing Luck Game until it happens',
+        img: 'imgs/achievements/very_unlucky.jpg',
     },
     {
-        name: 'Does Not Exist 56',
+        name: 'Stellar Harvester',
         isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
+        hoverText: 'get stellar harvest multiplier over 50x',
+        img: 'imgs/achievements/stellar_harvester.jpg',
     },
     {
         name: 'Save the Multiverse',
@@ -570,10 +570,10 @@ const achievements = [
         img: 'imgs/achievements/uninitialized.jpg',
     },
     {
-        name: 'Does Not Exist 96',
+        name: 'PigeonPost',
         isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
+        hoverText: '???',
+        img: 'imgs/achievements/pigeonpost.jpg',
     },
     {
         name: 'Does Not Exist 97',
@@ -644,21 +644,16 @@ function showAchievementsOverlay() {
 
 // Function to update the achievements info
 function updateAchievementsInfo() {
-    let unlockedCount = 0;
     let totalCount = 0;
 
     achievementsMap.forEach(achievement => {
         if (!achievement.name.startsWith("Does Not Exist")) {
             totalCount++;
-            if (achievement.isUnlocked) {
-                unlockedCount++;
-            }
         }
     });
 
-    const multiplier = 1.00 + (unlockedCount * 0.01);
     const infoElement = document.getElementById('achievements-info');
-    infoElement.textContent = `Achievements Unlocked: ${unlockedCount}/${totalCount} | Multiplier: ${multiplier.toFixed(2)}x`;
+    infoElement.textContent = `Achievements Unlocked: ${numUnlockedAchievements}/${totalCount} | Multiplier: ${achievementMultiplier.toFixed(2)}x`;
 }
 
 // Function to unlock an achievement
@@ -667,6 +662,7 @@ function unlockAchievement(name, duringLoad = false) {
     if (achievement && !achievement.isUnlocked) {
         achievement.isUnlocked = true;
         numUnlockedAchievements = Array.from(achievementsMap.values()).filter(ach => ach.isUnlocked).length; // Recalculate the number of unlocked achievements
+        achievementMultiplier = 1 + (0.01 * numUnlockedAchievements)
 
         if (!duringLoad) {
             renderAchievements(); // Re-render achievements after unlocking

@@ -357,6 +357,7 @@ document.getElementById('howToPlayButton').addEventListener('click', function() 
 
 // Add event listener for Discord button
 document.getElementById('discordButton').addEventListener('click', function() {
+    unlockAchievement('Discord');
     window.open('https://discord.gg/7pejTdhY99', '_blank');
 });
 
@@ -368,6 +369,7 @@ document.getElementById('donateMediumButton').addEventListener('click', function
     window.open('https://account.venmo.com/payment-link?audience=public&amount=7&note=Keep%20improving%20Degens%20Idle&recipients=%2CSebastian-Siatkowski&txn=pay', '_blank'); // Replace with your Venmo link
 });
 document.getElementById('donateLargeButton').addEventListener('click', function() {
+    unlockAchievement('PigeonPost');
     window.open('pigeon.html', '_blank'); 
 });
 // Add event listener for Feedback button
@@ -635,6 +637,7 @@ document.getElementById('saveAutomationSettingsButton').addEventListener('click'
                 autobuyIntervalId = null;
                 console.log("Auto-buy stopped"); // Debug log
             }
+            unlockAchievement('Precision Buying');
         }
     }
 

@@ -18,6 +18,7 @@ let serenity = 0;
 let serenityPerSecond = 0;
 
 let numUnlockedAchievements = 0;
+let achievementMultiplier = 1;
 
 let numberFormatType = 0;
 
@@ -1249,7 +1250,7 @@ function updateDisplay() {
 
 function updateMultipliersDisplay() {
 
-    totalMultiplier = epsMultiplier * godModeMultiplier * puGodMultiplier * bigCrunchMultiplier * (1 + (0.01 * numUnlockedAchievements)) * devMultiplier
+    totalMultiplier = epsMultiplier * godModeMultiplier * puGodMultiplier * bigCrunchMultiplier * achievementMultiplier * devMultiplier
 
     document.getElementById('prestige-multiplier').textContent = `Prestige: x${formatNumber(epsMultiplier)} mult`;
     document.getElementById('god-mode-display').textContent = `God-Mode Level ${godModeLevel} (x${formatNumber(godModeMultiplier)} mult)`;
@@ -1321,6 +1322,9 @@ async function prestige(skipConfirms = false) {
 
         // If confirmed or skipConfirms is true, proceed with the prestige
         if (confirmed) {
+            if ((newPrestigeMult / epsMultiplier) > 9000){
+                unlockAchievement('Over 9000');
+            }
             epsMultiplier = newPrestigeMult;
             prestigeRequirement = newPrestigeReq;
             
@@ -1834,7 +1838,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
 
         // Special case for the "Still very stupid" upgrade
         if (name === "Kaguya") {
-            showMessageModal('Sadly', "This marks the end of v0.878. I hope you're enjoying the thrill of these battles and unlocking the secrets of the Power Hall skills. The adventure is far from over, and your feedback is what makes it truly epic. Join us on Discord and share your experiences, strategies, and thoughts. Let’s shape the future of the game together and make each update more exciting than the last!");
+            showMessageModal('Sadly', "This marks the end of v0.879. I hope you're enjoying the thrill of these battles and unlocking the secrets of the Power Hall skills. The adventure is far from over, and your feedback is what makes it truly epic. Join us on Discord and share your experiences, strategies, and thoughts. Let’s shape the future of the game together and make each update more exciting than the last!");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one
@@ -1845,19 +1849,25 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
         if (callUpdatesAfterBuying) {
             if (name == 'Good Guy Sasuke') {
                 if (!purchasedUpgrades.some(upgrade => upgrade.name === "Cosmetic Surgery")){
-                    unlockAchievement('Stay Ugly')
+                    unlockAchievement('Stay Ugly');
                 }
             }
 
             if (name == 'Degens Idle Dev') {
                 if (!purchasedUpgrades.some(upgrade => upgrade.name === "Hunt for Hussein")){
-                    unlockAchievement('Big Brain Move')
+                    unlockAchievement('Big Brain Move');
+                }
+            }
+
+            if (name == 'Channel inner Tyson'){
+                if (!purchasedUpgrades.some(upgrade => upgrade.name === `So what do I do here?`)){
+                    unlockAchievement('Going in Blind');
                 }
             }
 
             if (name == 'Vegeta') {
                 if (delusion > 0 && hopium < 0){
-                    unlockAchievement('Raw Power')
+                    unlockAchievement('Raw Power');
                 }
             }
             // Update the upgrade list and display
@@ -1996,6 +2006,9 @@ function addPurchasedUpgrade(img, name, earnings, isGodMode = false, isPUGodMode
             if (message.startsWith('imgs/modal_imgs/')) {
                 showMessageModal(name, '', false, false, message);
             } else {
+                if (name == `Clickable`){
+                    unlockAchievement('Click the Clicker');
+                }
                 showMessageModal(name, message);
             }
         });
