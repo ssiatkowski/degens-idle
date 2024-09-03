@@ -38,8 +38,8 @@ const librarySkills = [
     { name: 'Condensed Power', cost: 1e68, description: 'Current power counts as 20x more for Big Crunch Power.', unlocked: false, level: 'Celestial Bodies' },
 
 
-    { name: 'Perpetual Prestige', cost: 1e25, description: 'Auto-Prestige ability.  (Target prestige multiplier can be set in Automation Settings. Default=10)', unlocked: false, level: '???' },
-    { name: 'Eternal Ascension', cost: 1e29, description: 'Auto-Ascend ability. (Target # upgrades can be set in Automation Settings. Default=Max)', unlocked: false, level: '???' },
+    { name: 'Perpetual Prestige', cost: 1e25, description: 'Auto-Prestige ability.  (Target prestige multiplier can be set in Automation Settings. Default=100)', unlocked: false, level: '???' },
+    { name: 'Eternal Ascension', cost: 1e29, description: 'Auto-Ascend ability. (Target # upgrades can be set in Automation Settings. Default=Off)', unlocked: false, level: '???' },
     { name: 'Quantum Symphony', cost: 1e42, description: 'Auto-Transcend. (Similar to Auto-Ascend)', unlocked: false, level: '???' },
     // { name: 'Void of Non-Existence', cost: 1e55, description: 'Auto-Big Crunch', unlocked: false, level: '???' },
     // { name: 'Infinite Fractal', cost: 1e33, description: '', unlocked: false, level: '???' },
@@ -275,20 +275,20 @@ function unlockLibrarySkill(skill, duringLoad = false) {
 
             case 'Perpetual Prestige':
                 if(autoPrestigeThreshold === null){
-                    autoPrestigeThreshold = 10;
+                    autoPrestigeThreshold = 100;
                 }
                 break;
     
             case 'Eternal Ascension':
                 if(autoAscendThreshold === null){
-                    autoAscendThreshold = numAscensionUpgrades;
+                    autoAscendThreshold = 0;
                 }
                 break;
 
                 
             case 'Quantum Symphony':
                 if(autoTranscendThreshold === null){
-                    autoTranscendThreshold = numPUAscensionUpgrades;
+                    autoTranscendThreshold = 0;
                 }
                 break;
 

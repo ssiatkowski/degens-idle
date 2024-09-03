@@ -104,11 +104,11 @@ const enemyStats = {
         absorb: 0
     },
     "Chuck Norris": {
-        health: 3e11,
+        health: 4e11,
         minDamage: 100,
         maxDamage: 500,
         attackSpeed: 7,
-        defense: 1.5e8,
+        defense: 5e8,
         critChance: 0,
         critDamage: 1,
         dodge: 0.25,
@@ -117,11 +117,11 @@ const enemyStats = {
         absorb: 0.25
     },
     "Vegeta": {
-        health: 9e11,
+        health: 1.5e12,
         minDamage: 100,
         maxDamage: 300,
         attackSpeed: 5,
-        defense: 2e9,
+        defense: 3e9,
         critChance: 0.1,
         critDamage: 1.5,
         dodge: 0,
@@ -131,11 +131,11 @@ const enemyStats = {
         nextBoss: "Vegeta SS2",
     },
     "Vegeta SS2": {
-        health: 1.5e12,
+        health: 3e12,
         minDamage: 200,
         maxDamage: 400,
         attackSpeed: 7,
-        defense: 3e9,
+        defense: 5e9,
         critChance: 0.1,
         critDamage: 1.75,
         dodge: 0,
@@ -146,11 +146,11 @@ const enemyStats = {
         nextBoss: "Vegeta SS3",
     },
     "Vegeta SS3": {
-        health: 2e12,
+        health: 5e12,
         minDamage: 300,
         maxDamage: 500,
         attackSpeed: 9,
-        defense: 4e9,
+        defense: 1e10,
         critChance: 0.15,
         critDamage: 2,
         dodge: 0,
@@ -161,7 +161,7 @@ const enemyStats = {
         nextBoss: "Vegeta SS God",
     },
     "Vegeta SS God": {
-        health: 3e12,
+        health: 7e12,
         minDamage: 800,
         maxDamage: 1100,
         attackSpeed: 11,
@@ -180,28 +180,29 @@ const enemyStats = {
         minDamage: 900,
         maxDamage: 1200,
         attackSpeed: 13,
-        defense: 1.5e10, 
+        defense: 3e10, 
         critChance: 0.2,
-        critDamage: 3,
+        critDamage: 2.5,
         dodge: 0.2,
         nonCritDodge: 0.8,
         stun: 0.25,
         absorb: 0,
         img: `imgs/vegeta_5.jpg`,
     },
-    // "Kaguya": {
-    //     health: 1e16,
-    //     minDamage: 200,
-    //     maxDamage: 100,
-    //     attackSpeed: 30,
-    //     defense: 3e9,
-    //     critChance: 0,
-    //     critDamage: 1,
-    //     dodge: 0,
-    //     nonCritDodge: 0.5,
-    //     stun: 0,
-    //     absorb: 0.666
-    // }
+    "Kaguya": {
+        health: 1e18,
+        minDamage: 2000,
+        maxDamage: 3000,
+        attackSpeed: 30,
+        defense: 1e12,
+        critChance: 0.1,
+        critDamage: 1.5,
+        dodge: 0.2,
+        nonCritDodge: 0.4,
+        stun: 0,
+        absorb: 0.666,
+        img: 'imgs/kaguya.jpg'
+    }
 };
 
 
@@ -227,6 +228,8 @@ let playerAbsorbBase = 0;
 
 let playerStunCount = 0;
 let enemyStunCount = 0;
+let playerAmaterasuStacks = 0;
+let playerTsukuyomiStacks = 0;
 
 let enemyGravityWellCount = 0;
 
@@ -241,6 +244,10 @@ let deadpoolRevives = 0;
 let voidStabilizerActive = false;
 
 let firstAttackOfBattle = false;
+
+let kamuiActive = false;
+let izanagiUsed = false;
+let izanamiUsed = false;
 
 let mysticReboundCount = 0;
 
@@ -276,8 +283,8 @@ function startFightGame(enemyName, enemyImg) {
         firstAttackOfBattle = primeImpactSkill ? true : false;
 
         // Get player stats from resources with rounding up
-        playerHealth = Math.ceil((copium ** (1/20)) * playerHealthMult);
-        playerMaxHealth = playerHealth;
+        playerMaxHealth = Math.ceil((copium ** (1/20)) * playerHealthMult);
+        playerHealth = playerMaxHealth;
         playerDefenseBase = delusion > 0 ? Math.ceil((delusion ** (1/12)) / 500) : 0;
         playerDefense = playerDefenseBase;
         playerCritChance = Math.min(Math.ceil(trollPoints ** (1/50)) / 100, 0.9);
@@ -294,10 +301,15 @@ function startFightGame(enemyName, enemyImg) {
 
         playerStunCount = 0;
         playerTemporalFluxCount = 0;
+        playerAmaterasuStacks = 0;
+        playerTsukuyomiStacks = 0;
 
         playerAttackCount = 0;
         enemyGravityWellCount = 0;
         mysticReboundCount = 0;
+
+        izanagiUsed = false;
+        izanamiUsed = false;
 
         voidStabilizerActive = false;
         if (voidStabilizerSkill){
@@ -324,28 +336,17 @@ function startFightGame(enemyName, enemyImg) {
         enemyAbsorb = enemy.absorb;
 
         enemyStunCount = 0;
+        kamuiActive = false;
+        
+        fightEnded = false; // Reset the flag when the fight starts
 
-        // Populate player and enemy stats in the UI
-        document.getElementById('playerHealthStat').innerText = formatNumber(playerHealth);
-        document.getElementById('playerDamageStat').innerText = `${formatNumber(playerMinDamage)} - ${formatNumber(playerMaxDamage)}`;
-        document.getElementById('playerAttackSpeedStat').innerText = formatNumber(playerCurrentAttackSpeed);
-        document.getElementById('playerDefenseStat').innerText = formatNumber(playerDefense);
-        document.getElementById('playerCritChanceStat').innerText = formatNumber(playerCritChance * 100) + '%';
-        document.getElementById('playerCritDamageStat').innerText = formatNumber(playerCritDamage * 100) + '%';
 
-        document.getElementById('enemyHealthStat').innerText = formatNumber(enemyHealth);
-        document.getElementById('enemyDamageStat').innerText = `${formatNumber(enemyMinDamage)} - ${formatNumber(enemyMaxDamage)}`;
-        document.getElementById('enemyAttackSpeedStat').innerText = formatNumber(enemyAttackSpeed);
-        document.getElementById('enemyDefenseStat').innerText = formatNumber(enemyDefense);
-        document.getElementById('enemyCritChanceStat').innerText = formatNumber(enemyCritChance * 100) + '%';
-        document.getElementById('enemyCritDamageStat').innerText = formatNumber(enemyCritDamage * 100) + '%';
 
         // Update health bars
         updateHealthBars();
 
         updateStatsUI();
 
-        fightEnded = false; // Reset the flag when the fight starts
 
         // Show the fighting overlay
         document.getElementById('fightingOverlay').style.display = 'flex';
@@ -365,17 +366,30 @@ function startFightGame(enemyName, enemyImg) {
             endFight(true); // Pass true to indicate the player forfeited
         };
 
-        // Add a 0.25-second delay before starting the fight loop
+        if (currEnemyName === "Chuck Norris") {
+            if (!purchasedUpgrades.some(upgrade => upgrade.name === "Training Dummy")) {
+                enemyDefense /= 2;
+                enemyHealth /= 2;
+                enemyAbsorb = 0;
+                document.getElementById('enemyDefenseStat').innerText = formatNumber(enemyDefense);
+                document.getElementById('playerAbsorbStat').innerText = formatNumber(playerAbsorb * 100) + '%';
+                logFight("<span style='color: green; font-size: 1.2em';>You catch Chuck Norris mid-session while he's pummeling the Training Dummy. Seizing the moment, you sneak up and deliver a wrenching gut shot right to his kidney. The impact is so brutal that it cuts his health and defense in half for the rest of the battle, and he is unable to absorb any damage.</span>");
+            } else {
+                logFight("<span style='color: red; font-size: 1.2em';>Chuck Norris has no distractions and is ready to fight you at full power.</span>");
+            }
+        }
+
+        // Add a 0.5-second delay before starting the fight loop
         setTimeout(() => {
             fightLoop(resolve);
-        }, 250); // 250 milliseconds = 0.25 seconds
+        }, 500); // 500 milliseconds = 0.5 seconds
     });
 }
 
 // Function to update UI stats
 function updateStatsUI() {
     // Player Stats
-    document.getElementById('playerHealthStat').innerText = formatNumber(playerHealth);
+    document.getElementById('playerHealthStat').innerText = formatNumber(playerMaxHealth);
     document.getElementById('playerDamageStat').innerText = `${formatNumber(playerMinDamage)} - ${formatNumber(playerMaxDamage)}`;
     document.getElementById('playerAttackSpeedStat').innerText = formatNumber(playerCurrentAttackSpeed);
     document.getElementById('playerDefenseStat').innerText = formatNumber(playerDefense);
@@ -491,11 +505,29 @@ function updateHealthBars() {
 
 // Function to handle player attacking the enemy
 function attackEnemy(resolve) {
+
+    // Handle Amaterasu (before stun check)
+    if (playerAmaterasuStacks > 0) {
+        const amaterasuDamage = Math.floor(playerMaxHealth * 0.001 * playerAmaterasuStacks);
+        playerHealth -= amaterasuDamage;
+        logFight(`<span style='color: black;'>${playerAmaterasuStacks} stacks of Amaterasu burn you for ${formatNumber(amaterasuDamage)} damage!</span>`);
+    }
+
     // Check if the player is stunned
     if (playerStunCount > 0) {
         playerStunCount--;
         logFight(`<span style='color: #FF4500;'>You are stunned and unable to move! (${playerStunCount} turn(s) remaining)</span>`);
         return; // Skip the player's turn
+    }
+
+    // Handle Tsukuyomi (after stun check)
+    if (playerTsukuyomiStacks > 0) {
+        const selfDamage = Math.max(Math.ceil((Math.random() * (playerMaxDamage - playerMinDamage + 1) + playerMinDamage - (playerDefense*1e11)) / 1e12), 100);
+        playerHealth -= selfDamage;
+        logFight(`<span style='color: #9370DB;'>Tsukuyomi activates! You attack yourself for ${formatNumber(selfDamage)} damage!</span>`);
+        playerTsukuyomiStacks--; // Remove one stack
+        updateHealthBars();
+        return; // Skip attacking the enemy, as the player attacked themselves
     }
 
     const isCritical = Math.random() < playerCritChance;
@@ -522,6 +554,13 @@ function attackEnemy(resolve) {
         // Handle regular dodge mechanics (applies to both critical and non-critical hits)
         if (Math.random() < enemyStats[currEnemyName].dodge) {
             logFight(`<span style='color: orange;'>${currEnemyName} dodges your attack!</span>`);
+            return; // Enemy dodged, so the attack ends here
+        }
+
+        // Handle regular dodge mechanics (applies to both critical and non-critical hits)
+        if (kamuiActive && isCritical) {
+            logFight(`<span style='color: orange;'>${currEnemyName} uses Kamui and dodges your critical attack!</span>`);
+            kamuiActive = false;
             return; // Enemy dodged, so the attack ends here
         }
 
@@ -706,11 +745,48 @@ function attackEnemy(resolve) {
         enemyImageContainer.appendChild(enemyImage);
 
 
-        // Add a 0.5-second delay before starting the fight loop
-        setTimeout(() => {
-            fightLoop(resolve);
-        }, 500); // 500 milliseconds = 0.5 seconds
     }
+
+    if (currEnemyName === "Kaguya" && enemyHealth <= enemyMaxHealth) {
+
+        if (izanagiUsed && !izanamiUsed && enemyHealth <= enemyMaxHealth) {
+            
+            // Clear the previous enemy attack interval and set a new one
+            clearIntervals();
+
+            // Kaguya uses Izanami, loses her right eye, goes blind, and stuns the player for 100 turns
+            izanamiUsed = true;
+            enemyHealth = enemyMaxHealth;
+            playerStunCount += 100;
+            enemyAttackSpeed *= 3;
+            logFight(`<span style='color: #800020; font-weight: bold; font-size: 1.3em;'>Kaguya uses Izanami! She loses her right eye, goes blind, and stuns you for 100 turns and is enraged so her attack speed triples! However, she can no longer land critical strikes or use ocular techniques.</span>`);
+    
+            // Disable critical strikes because Kaguya is now blind
+            enemyCritChance = 0;
+            document.getElementById('enemyCritChanceStat').innerText = formatNumber(enemyCritChance * 100) + '%';
+            
+            setTimeout(() => {
+                fightLoop(resolve);
+            }, 1000);
+        }
+
+        if (!izanagiUsed && enemyHealth <= 0) {
+            
+            // Clear the previous enemy attack interval and set a new one
+            clearIntervals();
+
+            // Kaguya uses Izanagi, loses her left eye, and sets her health to 10x maxHealth
+            izanagiUsed = true;
+            enemyHealth = enemyMaxHealth * 10;
+            logFight(`<span style='color: #800020; font-weight: bold; font-size: 1.3em;'>Kaguya uses Izanagi! She loses her left eye and her health is restored to ${formatNumber(enemyHealth)}!</span>`);
+    
+            setTimeout(() => {
+                fightLoop(resolve);
+            }, 1000);
+        }
+        
+    }
+    
 
 
     // Update health bars
@@ -755,8 +831,8 @@ function attackPlayer() {
             logFight(`Temporal Flux ended. Dodge bonus removed.`);
         }
         if (temporalGuardSkill){
-            logFight(`<span style='color: #6082B6;'>Temporal Guard activated! Your defense increased by ${formatNumber(playerDefenseBase * 0.15)}.</span>`);
-            playerDefense = playerDefense + (playerDefenseBase * 0.15);
+            logFight(`<span style='color: #6082B6;'>Temporal Guard activated! Your defense increased by ${formatNumber(playerDefenseBase * 0.1)}.</span>`);
+            playerDefense = playerDefense + (playerDefenseBase * 0.1);
             document.getElementById('playerDefenseStat').innerText = formatNumber(playerDefense);
         }
         return; // Player dodged, so the attack ends here
@@ -772,8 +848,8 @@ function attackPlayer() {
             logFight(`Temporal Flux ended. Dodge bonus removed.`);
         }
         if (temporalGuardSkill){
-            logFight(`<span style='color: #6082B6;'>Temporal Guard activated! Your defense increased by ${formatNumber(playerDefenseBase * 0.15)}.</span>`);
-            playerDefense = playerDefense + (playerDefenseBase * 0.15);
+            logFight(`<span style='color: #6082B6;'>Temporal Guard activated! Your defense increased by ${formatNumber(playerDefenseBase * 0.1)}.</span>`);
+            playerDefense = playerDefense + (playerDefenseBase * 0.1);
             document.getElementById('playerDefenseStat').innerText = formatNumber(playerDefense);
         }
         return; // Player dodged, so the attack ends here
@@ -837,6 +913,71 @@ function attackPlayer() {
                 damage = Math.max(damage, 6.9);
                 logFight(`<span style='color: orange;'>${currEnemyName} lands a critical hit for ${formatNumber(Math.max(damage, 0))} damage!</span>`);
             }
+        }
+    } else if (currEnemyName === "Kaguya") {
+        // Independent chance for each attack
+        const randChakraAbsorption = Math.random() < 0.01;
+        const randTruthSeekerBall = Math.random() < 0.03;
+        const randByakugan64Palms = Math.random() < 0.13;
+        const randPlanetaryDevastation = Math.random() < 0.01;
+        const randAmaterasu = Math.random() < 0.05;
+        const randTsukuyomi = Math.random() < 0.02;
+        const randSusanoo = Math.random() < 0.07;
+        const randKamui = Math.random() < 0.04;
+    
+        if (randChakraAbsorption) { // Chakra Absorption
+            power *= 0.9; // Reduce power by 10%
+            playerMinDamage = Math.floor(power * playerMinDamageMult);
+            playerBaseMaxDamage = Math.ceil(power * playerMaxDamageMult);
+            document.getElementById('playerDamageStat').innerText = `${formatNumber(playerMinDamage)} - ${formatNumber(playerMaxDamage)}`;
+            logFight(`<span style='color: #FF0000;'>Kaguya uses Chakra Absorption! Your power is reduced by 10%, and damage recalculated.</span>`);
+        }
+        
+        if (randTruthSeekerBall) { // Truth Seeker Ball
+            copium *= 0.9; // Reduce copium by 10%
+            delusion *= 0.9; // Reduce delusion by 10%
+            playerMaxHealth = Math.ceil(Math.pow(copium, 1 / 20) * playerHealthMult);
+            playerDefenseBase = delusion > 0 ? Math.ceil(Math.pow(delusion, 1 / 12) / 500) : 0;
+            document.getElementById('playerHealthStat').innerText = formatNumber(playerMaxHealth);
+            logFight(`<span style='color: #FF4500;'>Kaguya uses Truth Seeker Ball! Your copium and delusion are reduced by 10%, and max health and base defense recalculated.</span>`);
+        }
+        
+        if (randByakugan64Palms) { // Byakugan 128 Palms
+            let criticalHits = 0;
+            for (let i = 0; i < 64; i++) {
+                const isCrit = Math.random() < enemyCritChance;
+                let attackDamage = Math.max(Math.ceil(baseDamage * (isCrit ? enemyCritDamage : 1)) - playerDefense, 0);
+                attackDamage = Math.max(attackDamage, isCrit ? 20:1);
+                damage += attackDamage;
+                if (isCrit) criticalHits++;
+            }
+            logFight(`<span style='color: #FFA500;'>Kaguya unleashes Byakugan 64 Palms! ${criticalHits} critical hits out of 64 attacks, dealing a total of ${formatNumber(damage)} damage.</span>`);
+        }
+        
+        if (randPlanetaryDevastation) { // Planetary Devastation
+            playerStunCount += 10;
+            logFight(`<span style='color: #8B0000;'>Kaguya uses Planetary Devastation! You are stunned for 10 turns.</span>`);
+        }
+        
+        if (randAmaterasu && !izanamiUsed) { // Amaterasu
+            playerAmaterasuStacks += 1;
+            logFight(`<span style='color: black;'>Kaguya casts Amaterasu! You gain 1 Amaterasu stack, which will damage you each time you attack.</span>`);
+        }
+        
+        if (randTsukuyomi && !izanamiUsed) { // Tsukuyomi
+            playerTsukuyomiStacks += 1;
+            logFight(`<span style='color: #9370DB;'>Kaguya uses Tsukuyomi! You gain 1 Tsukuyomi stack, causing you to attack yourself next turn.</span>`);
+        }
+        
+        if (randSusanoo && !izanamiUsed) { // Susanoo
+            enemyDefense *= 1.02; // Increase Kaguya's defense by 2%
+            document.getElementById('enemyDefenseStat').innerText = formatNumber(enemyDefense);
+            logFight(`<span style='color: #4682B4;'>Kaguya activates Susanoo! Her defense increases by 2%.</span>`);
+        }
+        
+        if (randKamui) { // Kamui
+            kamuiActive = true; // Kaguya dodges the next critical attack
+            logFight(`<span style='color: #8A2BE2;'>Kaguya uses Kamui! She will dodge the next critical attack.</span>`);
         }
     } else {
         // Calculate damage
@@ -965,8 +1106,8 @@ function endFight(isForfeit = false) {
 
     // Stellar Harvest Skill effect
     if (stellarHarvestSkill) {
-        const multiplier = celestialCollectorSkill ? 1.6: 1.4;
-        const duration = celestialCollectorSkill ? 600000 : 60000; // 10 minutes (600,000 ms) or 1 minute (60,000 ms)
+        const multiplier = celestialCollectorSkill ? 1.5: 1.3;
+        const duration = celestialCollectorSkill ? 600000 : 180000; // 10 minutes (600,000 ms) or 3 minute (180,000 ms)
 
         stellarHarvestMult *= multiplier;
         updateEffectiveMultipliers();

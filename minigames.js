@@ -12,7 +12,7 @@ const miniGameTimeouts = {
     speed:  6 * 60 * 1000,  // 6 minutes
     memory: 10 * 60 * 1000, // 10 minutes
     math:   8 * 60 * 1000,  // 8 minutes
-    luck:   4 * 60 * 1000   // 4 minutes
+    luck:   4 * 60 * 1000,   // 4 minutes
 };
 
 // Object to store interval references for each mini-game
@@ -129,6 +129,7 @@ function playMiniGame(gameType) {
                 showMessageModal('Speed Game Result', resultMessage, false, false, null, false, true);
                 updateDisplay(); // Update the display
                 startCooldown(gameType); // Start cooldown for the mini-game
+                saveGameState();
             }, duration * 1000);
         });
     }
@@ -283,6 +284,7 @@ function playMiniGame(gameType) {
                 updateDisplay(); // Update the display
                 startCooldown(gameType); // Start cooldown for the mini-game
                 document.body.removeChild(gameArea); // Remove the game area
+                saveGameState();
             }
 
             // Start the game logic
@@ -523,175 +525,172 @@ function playMiniGame(gameType) {
                 showMessageModal('Math Portal Puzzle Result', resultMessage, false, false, null, false, false);
                 updateDisplay(); // Update the display
                 startCooldown(gameType); // Start cooldown for the mini-game
+                saveGameState();
             }
         });
     }
 
-// Luck mini-game logic
-else if (gameType === 'luck') {
-    let boxValues = [];
-    const sebosLuck = purchasedUpgrades.some(upgrade => upgrade.name === "Sebo's Luck");
-    let totalBoxes = sebosLuck ? 4 : (luckGameSkill ? 5 : 6);
+    // Luck mini-game logic
+    else if (gameType === 'luck') {
+        let boxValues = [];
+        const sebosLuck = purchasedUpgrades.some(upgrade => upgrade.name === "Sebo's Luck");
+        let totalBoxes = sebosLuck ? 4 : (luckGameSkill ? 5 : 6);
 
-    // Adjust the value ranges based on luckGameSkill and Sebo's Luck
-    if (sebosLuck) {
-        // If Sebo's Luck is active, only 4 values are needed
-        boxValues = [
-            Math.floor(Math.random() * 46) - 50, // -50% to -5% 
-            Math.floor(Math.random() * 101) + 25, // 25% to 125%
-            Math.floor(Math.random() * 101) + 25, // 25% to 125%
-            Math.floor(Math.random() * 101) + 25  // 25% to 125%
-        ];
-    } else if (luckGameSkill) {
-        // If luckGameSkill is active, but Sebo's Luck is not, 5 values are needed
-        boxValues = [
-            Math.floor(Math.random() * 46) - 50, // -50% to -5%
-            Math.floor(Math.random() * 46) - 50, // -50% to -5% 
-            Math.floor(Math.random() * 101) + 25, // 25% to 125%
-            Math.floor(Math.random() * 101) + 25, // 25% to 125%
-            Math.floor(Math.random() * 101) + 25  // 25% to 125%
-        ];
-    } else {
-        // Default scenario with 6 values
-        boxValues = [
-            Math.floor(Math.random() * 66) - 70, // -70% to -5%
-            Math.floor(Math.random() * 66) - 70, // -70% to -5%
-            Math.floor(Math.random() * 66) - 70, // -70% to -5%
-            Math.floor(Math.random() * 91) + 10,  // 10% to 100%
-            Math.floor(Math.random() * 91) + 10,  // 10% to 100%
-            Math.floor(Math.random() * 91) + 10   // 10% to 100%
-        ];
-    }
+        // Adjust the value ranges based on luckGameSkill and Sebo's Luck
+        if (sebosLuck) {
+            // If Sebo's Luck is active, only 4 values are needed
+            boxValues = [
+                Math.floor(Math.random() * 46) - 50, // -50% to -5% 
+                Math.floor(Math.random() * 101) + 25, // 25% to 125%
+                Math.floor(Math.random() * 101) + 25, // 25% to 125%
+                Math.floor(Math.random() * 101) + 25  // 25% to 125%
+            ];
+        } else if (luckGameSkill) {
+            // If luckGameSkill is active, but Sebo's Luck is not, 5 values are needed
+            boxValues = [
+                Math.floor(Math.random() * 46) - 50, // -50% to -5%
+                Math.floor(Math.random() * 46) - 50, // -50% to -5% 
+                Math.floor(Math.random() * 101) + 25, // 25% to 125%
+                Math.floor(Math.random() * 101) + 25, // 25% to 125%
+                Math.floor(Math.random() * 101) + 25  // 25% to 125%
+            ];
+        } else {
+            // Default scenario with 6 values
+            boxValues = [
+                Math.floor(Math.random() * 66) - 70, // -70% to -5%
+                Math.floor(Math.random() * 66) - 70, // -70% to -5%
+                Math.floor(Math.random() * 66) - 70, // -70% to -5%
+                Math.floor(Math.random() * 91) + 10,  // 10% to 100%
+                Math.floor(Math.random() * 91) + 10,  // 10% to 100%
+                Math.floor(Math.random() * 91) + 10   // 10% to 100%
+            ];
+        }
 
-    // Shuffle the box values to randomize the order
-    boxValues = boxValues.sort(() => Math.random() - 0.5);
+        // Shuffle the box values to randomize the order
+        boxValues = boxValues.sort(() => Math.random() - 0.5);
 
-    // Show the modal with instructions and start the game when the modal is closed
-    showMessageModal(
-        'Luck Game',
-        `<strong style="font-size: 1.2em;">Choose a box!</strong><br><br>
-        Test your luck and see what fate has in store for you.`,
-        false,
-        false
-    ).then(() => {
-        // Create a game area
-        const gameArea = document.createElement('div');
-        gameArea.style.position = 'fixed';
-        gameArea.style.top = '5%';
-        gameArea.style.left = '5%';
-        gameArea.style.width = '90%';
-        gameArea.style.height = '90%';
-        gameArea.style.backgroundColor = '#1E1E1E'; // Darker gray for a sleeker look
-        gameArea.style.zIndex = '1000';
-        gameArea.style.display = 'grid';
-        gameArea.style.gridTemplateColumns = `repeat(${totalBoxes <= 4 ? 2 : 3}, 1fr)`;
-        gameArea.style.justifyItems = 'center'; // Center the boxes
-        gameArea.style.alignItems = 'center'; // Center the boxes vertically
-        gameArea.style.borderRadius = '15px';
-        document.body.appendChild(gameArea);
+        // Show the modal with instructions and start the game when the modal is closed
+        showMessageModal(
+            'Luck Game',
+            `<strong style="font-size: 1.2em;">Choose a box!</strong><br><br>
+            Test your luck and see what fate has in store for you.`,
+            false,
+            false
+        ).then(() => {
+            // Create a game area
+            const gameArea = document.createElement('div');
+            gameArea.style.position = 'fixed';
+            gameArea.style.top = '5%';
+            gameArea.style.left = '5%';
+            gameArea.style.width = '90%';
+            gameArea.style.height = '90%';
+            gameArea.style.backgroundColor = '#1E1E1E'; // Darker gray for a sleeker look
+            gameArea.style.zIndex = '1000';
+            gameArea.style.display = 'grid';
+            gameArea.style.gridTemplateColumns = `repeat(${totalBoxes <= 4 ? 2 : 3}, 1fr)`;
+            gameArea.style.justifyItems = 'center'; // Center the boxes
+            gameArea.style.alignItems = 'center'; // Center the boxes vertically
+            gameArea.style.borderRadius = '15px';
+            document.body.appendChild(gameArea);
 
-        const boxSize = Math.min(window.innerWidth, window.innerHeight) * 0.15; // Adjusted box size
+            const boxSize = Math.min(window.innerWidth, window.innerHeight) * 0.15; // Adjusted box size
 
-        // Create the boxes
-        for (let i = 0; i < totalBoxes; i++) {
-            const box = document.createElement('div');
-            box.style.width = `${boxSize}px`;
-            box.style.height = `${boxSize}px`;
-            box.style.borderRadius = '10px';
-            box.style.backgroundColor = '#444444'; // Darker background for a cooler look
-            box.style.color = '#FFD700'; // Gold text color for better contrast
-            box.style.display = 'flex';
-            box.style.alignItems = 'center';
-            box.style.justifyContent = 'center';
-            box.style.fontSize = '24px';
-            box.style.cursor = 'pointer';
-            box.style.textAlign = 'center';
-            box.style.boxShadow = '0 0 15px rgba(255, 215, 0, 0.7)'; // Stronger shadow for depth
-            box.style.transition = 'transform 0.2s, background-color 0.2s'; // Smooth transition for hover effects
-            box.style.userSelect = 'none';
-            box.textContent = '???'; // Initially hide the value
+            // Create the boxes
+            for (let i = 0; i < totalBoxes; i++) {
+                const box = document.createElement('div');
+                box.style.width = `${boxSize}px`;
+                box.style.height = `${boxSize}px`;
+                box.style.borderRadius = '10px';
+                box.style.backgroundColor = '#444444'; // Darker background for a cooler look
+                box.style.color = '#FFD700'; // Gold text color for better contrast
+                box.style.display = 'flex';
+                box.style.alignItems = 'center';
+                box.style.justifyContent = 'center';
+                box.style.fontSize = '24px';
+                box.style.cursor = 'pointer';
+                box.style.textAlign = 'center';
+                box.style.boxShadow = '0 0 15px rgba(255, 215, 0, 0.7)'; // Stronger shadow for depth
+                box.style.transition = 'transform 0.2s, background-color 0.2s'; // Smooth transition for hover effects
+                box.style.userSelect = 'none';
+                box.textContent = '???'; // Initially hide the value
 
-            // Add hover effect to make the boxes "pop"
-            box.addEventListener('mouseover', () => {
-                box.style.transform = 'scale(1.1)'; // Slightly enlarge the box on hover
-            });
-
-            box.addEventListener('mouseout', () => {
-                box.style.transform = 'scale(1)'; // Reset the box size on mouse out
-            });
-
-            // Store the value inside the box
-            const boxValue = boxValues[i];
-
-            // Add click event listener
-            box.addEventListener('click', function () {
-                // Smooth reveal with a scale and fade-in effect
-                box.style.transition = 'all 0.3s ease';
-                box.style.transform = 'scale(1.2)';
-                box.style.opacity = '0';
-                setTimeout(() => {
-                    box.style.opacity = '1';
-                    box.textContent = `${boxValue}%`;
-                    box.style.backgroundColor = boxValue >= 0 ? '#00FF00' : '#FF0000'; // Green for win, red for loss
-                    box.style.transform = 'scale(1)';
-                }, 300);
-
-                // Other boxes fade out and reveal their values
-                Array.from(gameArea.children).forEach((child, index) => {
-                    if (child !== box) {
-                        const childValue = boxValues[index];
-                        setTimeout(() => {
-                            child.style.transition = 'all 0.3s ease';
-                            child.style.opacity = '0.7';
-                            child.style.backgroundColor = childValue >= 0 ? '#008800' : '#880000'; // Darker green/red tint for others
-                            child.textContent = `${childValue}%`;
-                        }, 300);
-                    }
+                // Add hover effect to make the boxes "pop"
+                box.addEventListener('mouseover', () => {
+                    box.style.transform = 'scale(1.1)'; // Slightly enlarge the box on hover
                 });
 
-                // End the game after showing all boxes
-                setTimeout(() => {
-                    document.body.removeChild(gameArea); // Remove the game area
+                box.addEventListener('mouseout', () => {
+                    box.style.transform = 'scale(1)'; // Reset the box size on mouse out
+                });
 
-                    let reward;
-                    let resultMessage;
+                // Store the value inside the box
+                const boxValue = boxValues[i];
 
-                    // Calculate reward based on the chosen box value
-                    reward = Math.floor(Math.abs(trollPoints) * (boxValue / 100));
-                    // Apply the soft cap
-                    if (reward > softCaps.luck) {
-                        reward = softCaps.luck;
-                        softCapReached = true;
-                    }
-                    resultMessage = boxValue >= 0 ?
-                        `You chose a lucky box and gained <span style="color: green;">${formatNumber(reward)}</span> troll points!` :
-                        `You chose an unlucky box and lost <span style="color: red;">${formatNumber(Math.abs(reward))}</span> troll points.`;
+                // Add click event listener
+                box.addEventListener('click', function () {
+                    // Smooth reveal with a scale and fade-in effect
+                    box.style.transition = 'all 0.3s ease';
+                    box.style.transform = 'scale(1.2)';
+                    box.style.opacity = '0';
+                    setTimeout(() => {
+                        box.style.opacity = '1';
+                        box.textContent = `${boxValue}%`;
+                        box.style.backgroundColor = boxValue >= 0 ? '#00FF00' : '#FF0000'; // Green for win, red for loss
+                        box.style.transform = 'scale(1)';
+                    }, 300);
 
-                    trollPoints += reward;
+                    // Other boxes fade out and reveal their values
+                    Array.from(gameArea.children).forEach((child, index) => {
+                        if (child !== box) {
+                            const childValue = boxValues[index];
+                            setTimeout(() => {
+                                child.style.transition = 'all 0.3s ease';
+                                child.style.opacity = '0.7';
+                                child.style.backgroundColor = childValue >= 0 ? '#008800' : '#880000'; // Darker green/red tint for others
+                                child.textContent = `${childValue}%`;
+                            }, 300);
+                        }
+                    });
 
-                    // Add the soft cap message in orange if applicable
-                    if (softCapReached) {
-                        resultMessage += '<br><span style="color: orange;">Soft cap reached: Maximum reward of 8 hours effective Troll Points applied.</span>';
-                    }
+                    // End the game after showing all boxes
+                    setTimeout(() => {
+                        document.body.removeChild(gameArea); // Remove the game area
 
-                    resultMessage += cooldownMessage;
+                        let reward;
+                        let resultMessage;
 
-                    showMessageModal('Luck Game Result', resultMessage, false, false, null, false, false);
-                    updateDisplay(); // Update the display
-                    startCooldown(gameType); // Start cooldown for the mini-game
-                }, 1200); // 1.2-second delay to show all boxes
-            });
+                        // Calculate reward based on the chosen box value
+                        reward = Math.floor(Math.abs(trollPoints) * (boxValue / 100));
+                        // Apply the soft cap
+                        if (reward > softCaps.luck) {
+                            reward = softCaps.luck;
+                            softCapReached = true;
+                        }
+                        resultMessage = boxValue >= 0 ?
+                            `You chose a lucky box and gained <span style="color: green;">${formatNumber(reward)}</span> troll points!` :
+                            `You chose an unlucky box and lost <span style="color: red;">${formatNumber(Math.abs(reward))}</span> troll points.`;
 
-            // Append the box to the game area
-            gameArea.appendChild(box);
-        }
-    });
-}
+                        trollPoints += reward;
 
+                        // Add the soft cap message in orange if applicable
+                        if (softCapReached) {
+                            resultMessage += '<br><span style="color: orange;">Soft cap reached: Maximum reward of 8 hours effective Troll Points applied.</span>';
+                        }
 
+                        resultMessage += cooldownMessage;
 
-    saveGameState();
+                        showMessageModal('Luck Game Result', resultMessage, false, false, null, false, false);
+                        updateDisplay(); // Update the display
+                        startCooldown(gameType); // Start cooldown for the mini-game
+                        saveGameState();
+                    }, 1200); // 1.2-second delay to show all boxes
+                });
 
+                // Append the box to the game area
+                gameArea.appendChild(box);
+            }
+        });
+    }
 }
 
             

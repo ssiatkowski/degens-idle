@@ -54,7 +54,6 @@ let isModalOpen = false;
 
 let cookieClickMultiplier = 10;
 let cookieAutoClicker = false;
-let knowledgeUnlocked = false;
 let knowledgeGenerationSkill = false;
 let prestigeBaseSkill = false;
 let twoDimensionalAscensionSkill = false;
@@ -110,6 +109,7 @@ let celestialCollectorSkill = false;
 let stellarHarvestMult = 1;
 
 let currentTimeouts = [];  // Array to store all active timeout IDs
+let cookieIntervalId;
 
 
 function calculateBaseKnowledge() {
@@ -324,11 +324,6 @@ function loadGameState() {
         }
     }
 
-    // Check if Knowledge is already unlocked
-    if (localStorage.getItem('knowledgeUnlocked') === 'true') {
-        unhideKnowledge();
-    }
-
     // Load unlocked skills
     const savedLibrarySkills = JSON.parse(localStorage.getItem('librarySkills')) || [];
     if (Array.isArray(savedLibrarySkills)) {
@@ -448,8 +443,6 @@ function saveGameState() {
 
     localStorage.setItem('transcendenceUnlocked', transcendenceUnlocked);
     
-    localStorage.setItem('knowledgeUnlocked', knowledgeUnlocked);
-
     localStorage.setItem('autoPrestigeThreshold', autoPrestigeThreshold);
     localStorage.setItem('autoAscendThreshold', autoAscendThreshold);
     localStorage.setItem('autoTranscendThreshold', autoTranscendThreshold);
@@ -693,8 +686,6 @@ async function restartGame(isPrestige = false) {
                 upgrade.isPUGodMode = false;
             });
 
-            document.getElementById('knowledge-container').style.display = 'none';
-            knowledgeUnlocked = false;
             document.getElementById('power-container').style.display = 'none';
             document.getElementById('serenity-container').style.display = 'none';
 
@@ -792,6 +783,7 @@ async function restartGame(isPrestige = false) {
         }
 
         clearAllTimeouts();
+        clearInterval(cookieIntervalId)
 
         const cookieButtonVisible = JSON.parse(localStorage.getItem('cookieButtonVisible'));
         if (cookieButtonVisible && cookieAutoClicker) {
@@ -800,13 +792,13 @@ async function restartGame(isPrestige = false) {
             // Add the spinning class to trigger the animation
             cookieButton.classList.add('spinning');
         
-            const intervalId = setInterval(() => {
+            cookieIntervalId = setInterval(() => {
                 cookieCollectAllResources();
             }, 100); // 100 milliseconds = 0.1 seconds
         
             // Stop the interval after 15 seconds
             const timeoutId = setTimeout(() => {
-                clearInterval(intervalId);
+                clearInterval(cookieIntervalId);
         
                 // Remove the spinning class to stop the animation
                 cookieButton.classList.remove('spinning');
@@ -1237,11 +1229,6 @@ function updateMultipliersDisplay() {
     document.getElementById('big-crunch-display').textContent = `Big Crunch Power ${formatNumber(bigCrunchPower)} (x${formatNumber(bigCrunchMultiplier)} mult + KPSx${formatNumber(bigCrunchMultiplier**(1/2))})`;
 }
 
-function unhideKnowledge() {
-    document.getElementById('knowledge-container').style.display = 'block';
-    knowledgeUnlocked = true;
-}
-
 function unhidePower() {
     document.getElementById('power-container').style.display = 'block';
     powerUnlocked = true;
@@ -1496,15 +1483,9 @@ async function bigCrunch() {
 
     if (canBigCrunch()) {
 
-        let deadpoolHint = '';
-
-        if (deadpoolRevives > 0 && !purchasedUpgrades.some(up => up.name === 'Deadpool')) {
-            deadpoolHint = `<br><br><span style="color: #FFD700;">Your instincts hint that Big Crunch might also reset all of Deadpool's deaths...</span>`;
-        }
-
         const confirmed = await showMessageModal(
             'Big Crunch Confirmation',
-            `Are you sure you want to prestige? You will reset all resources, prestiges, and god-mode levels, but your Big Crunch Multiplier will increase <strong>from ${formatNumber(bigCrunchMultiplier)} to ${formatNumber(calculateBigCrunchMultiplier(power * compressedBigCrunchMult))}</strong>.<br> Big crunch multiplier stacks with all your other multipliers, plus additionally affects your Knowledge generation! (Your Big Crunch Power will lock in at the current Power level)` + deadpoolHint,
+            `Are you sure you want to prestige? You will reset all resources, prestiges, and god-mode levels, but your Big Crunch Multiplier will increase <strong>from ${formatNumber(bigCrunchMultiplier)} to ${formatNumber(calculateBigCrunchMultiplier(power * compressedBigCrunchMult))}</strong>.<br> Big crunch multiplier stacks with all your other multipliers, plus additionally affects your Knowledge generation! (Your Big Crunch Power will lock in at the current Power level)`,
             true
         );
 
@@ -1521,8 +1502,6 @@ async function bigCrunch() {
             godModeMultiplier = 1;
             puGodLevel = 0;
             puGodMultiplier = 1;
-
-            deadpoolRevives = 0;
 
             upgrades.forEach(upgrade => {
                 upgrade.isGodMode = false;
@@ -1811,14 +1790,9 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
             localStorage.setItem('messageShownUpgrades', JSON.stringify(messageShownUpgrades));
         }
 
-        // Special case for the "Antimatter Dimension" upgrade
-        if (name === "Antimatter Dimensions") {
-            unhideKnowledge();
-        }
-
         // Special case for the "Still very stupid" upgrade
         if (name === "Kaguya") {
-            showMessageModal('Sadly', "This marks the end of v0.874. I hope you're enjoying the thrill of these battles and unlocking the secrets of the Power Hall skills. The adventure is far from over, and your feedback is what makes it truly epic. Join us on Discord and share your experiences, strategies, and thoughts. Let’s shape the future of the game together and make each update more exciting than the last!");
+            showMessageModal('Sadly', "This marks the end of v0.875. I hope you're enjoying the thrill of these battles and unlocking the secrets of the Power Hall skills. The adventure is far from over, and your feedback is what makes it truly epic. Join us on Discord and share your experiences, strategies, and thoughts. Let’s shape the future of the game together and make each update more exciting than the last!");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one
@@ -2033,7 +2007,7 @@ function autobuyUpgrades(){
     
     if(isFightInProgress) return;
 
-    let topUpgrades = availableUpgrades.slice(0, 16);
+    let topUpgrades = availableUpgrades.slice(0, 10);
 
     let upgradeBought = false;
     topUpgrades.forEach(upgrade => {

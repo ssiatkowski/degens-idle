@@ -346,13 +346,6 @@ const upgrades = [
                 `<p>
                     <strong>Antimatter Dimensions</strong> stands as a major milestone in the incremental and idle game genres. Its innovative gameplay and deep mechanics have set a new standard and significantly impacted these gaming communities.
                 </p>                
-                <div style="font-size: 32px; font-weight: bold; text-align: center;">
-                    KNOWLEDGE
-                </div>
-                <p>
-                    In celebration of <strong>Antimatter Dimensions</strong>, this game introduces a new resource: <strong>"Knowledge"</strong>. 
-                    This addition brings a new layer of complexity, challenging you to explore further and deepen your strategic gameplay.
-                </p>
                 <p>
                     To unlock <strong>Knowledge</strong>, you must reach <strong>negative one Trillion delusion</strong>, demonstrating your commitment and skill.
                 </p>
@@ -990,7 +983,7 @@ const upgrades = [
     {
         name: `Chuck Norris`,
         cost: { copium: 1e63, delusion: 1e63, yachtMoney: 1e63, trollPoints: 1e63, hopium: 0, knowledge: 1e47, power: 1e8, serenity: 0 },
-        earnings: { copiumPerSecond: 1.5e24, delusionPerSecond: 0, yachtMoneyPerSecond: 1.5e24, trollPointsPerSecond: 0, hopiumPerSecond: -1e21, knowledgePerSecond: 1e7, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 1.5e24, delusionPerSecond: 0, yachtMoneyPerSecond: 1.5e24, trollPointsPerSecond: 0, hopiumPerSecond: -2e20, knowledgePerSecond: 1e7, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/chuck_norris.jpg`,
         isFight: true,
     },
@@ -1093,12 +1086,12 @@ const upgrades = [
         earnings: { copiumPerSecond: 4.2e27, delusionPerSecond: 4.2e27, yachtMoneyPerSecond: 4.2e27, trollPointsPerSecond: 4.2e27, hopiumPerSecond: 0, knowledgePerSecond: 4.2e7, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/ez_blunt.jpg`,        
     },
-
-    // {
-    //     name: `Kaguya`,
-    //     cost: { copium: 3e64, delusion: 3e64, yachtMoney: 3e64, trollPoints: 3e64, hopium: 0, knowledge: 1e49, power: 6e8, serenity: 0 },
-    //     earnings: { copiumPerSecond: 3e25, delusionPerSecond: 3e25, yachtMoneyPerSecond: 3e25, trollPointsPerSecond: 3e25, hopiumPerSecond: -1e23, knowledgePerSecond: 8.9e7, powerPerSecond: 0, serenityPerSecond: 0 },
-    //     img: `imgs/kaguya.jpg`,
-    //     isFight: true,
-    // },
+    {
+        name: `Kaguya`,
+        cost: { copium: 6e69, delusion: 6e69, yachtMoney: 6e69, trollPoints: 6e69, hopium: 0, knowledge: 6e52, power: 6e11, serenity: 0 },
+        earnings: { copiumPerSecond: 3e30, delusionPerSecond: 3e30, yachtMoneyPerSecond: 3e30, trollPointsPerSecond: 3e30, hopiumPerSecond: -1e35, knowledgePerSecond: 3e9, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: `imgs/kaguya.jpg`,
+        isFight: true,
+        hoverOverwrite: 'WARNING: She is not balanced. She will drain your resoures. Not meant to be killed. Only fight if you want to hate her.'
+    },
 ];
