@@ -1099,7 +1099,7 @@ const upgrades = [
                 <p>With these words, Kaguya fades away, leaving you alone with your thoughts, victorious but unfulfilled, questioning the true meaning of the path you've chosen.</p>`,
     },
     {         
-        name: `She wasn't the final boss?`,
+        name: `Not the final boss?`,
         cost: { copium: 1e75, delusion: 1e75, yachtMoney: 1e75, trollPoints: 1e75, hopium: 0, knowledge: 1e53, power: 1e11, serenity: 0 },
         earnings: { copiumPerSecond: 1e30, delusionPerSecond: 0, yachtMoneyPerSecond: 5e29, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 2e8, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/surprise_pikachu.jpg`,        
@@ -1108,10 +1108,10 @@ const upgrades = [
         name: `Great Find`,
         cost: { copium: 0, delusion: 7e77, yachtMoney: 2e78, trollPoints: 0, hopium: 0, knowledge: 1e54, power: 3e11, serenity: 0 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 2e30, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 2e8, powerPerSecond: 0, serenityPerSecond: 0 },
-        img: `imgs/perfect_avocade.jpg`,        
+        img: `imgs/perfect_avocado.jpg`,        
     },
     {         
-        name: `Doggos are Priceless`,
+        name: `Priceless Doggos`,
         cost: { copium: 3e78, delusion: 0, yachtMoney: 5e78, trollPoints: 0, hopium: 0, knowledge: 3e55, power: 1e12, serenity: 0 },
         earnings: { copiumPerSecond: 3e30, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 3e8, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/spending_money_on_dogs.jpg`,        

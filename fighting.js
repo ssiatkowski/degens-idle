@@ -505,21 +505,26 @@ function attackEnemy(resolve) {
 
     // Handle Amaterasu (before stun check)
     if (playerAmaterasuStacks > 0) {
-        const amaterasuDamage = Math.floor(playerMaxHealth * 0.001 * playerAmaterasuStacks);
+        const amaterasuDamage = Math.floor(playerMaxHealth * 0.002 * playerAmaterasuStacks);
         playerHealth -= amaterasuDamage;
         logFight(`<span style='color: black;'>${playerAmaterasuStacks} stacks of Amaterasu burn you for ${formatNumber(amaterasuDamage)} damage!</span>`);
     }
 
     // Check if the player is stunned
     if (playerStunCount > 0) {
-        playerStunCount--;
-        logFight(`<span style='color: #FF4500;'>You are stunned and unable to move! (${playerStunCount} turn(s) remaining)</span>`);
+        if(quantumBastionSkill){
+            logFight(`<span style='color: #FF4500;'>You are stunned and unable to move! Quantum Bastion is helping you recover quicker. (${playerStunCount} turn(s) remaining)</span>`);
+            playerStunCount = Math.max(playerStunCount-2, 0);
+        } else{
+            logFight(`<span style='color: #FF4500;'>You are stunned and unable to move! (${playerStunCount} turn(s) remaining)</span>`);
+            playerStunCount--;
+        }
         return; // Skip the player's turn
     }
 
     // Handle Tsukuyomi (after stun check)
     if (playerTsukuyomiStacks > 0) {
-        const selfDamage = Math.max(Math.ceil((Math.random() * (playerMaxDamage - playerMinDamage + 1) + playerMinDamage - (playerDefense*1e11)) / 1e12), 100);
+        const selfDamage = Math.min(Math.max(Math.ceil((Math.random() * (playerMaxDamage - playerMinDamage + 1) + playerMinDamage - (playerDefense*1e11)) / 1e12), playerMaxHealth*0.01), playerMaxHealth*0.2);
         playerHealth -= selfDamage;
         logFight(`<span style='color: #9370DB;'>Tsukuyomi activates! You attack yourself for ${formatNumber(selfDamage)} damage!</span>`);
         playerTsukuyomiStacks--; // Remove one stack
@@ -758,12 +763,13 @@ function attackEnemy(resolve) {
             izanamiUsed = true;
             enemyHealth = enemyMaxHealth;
             playerStunCount += 100;
-            enemyAttackSpeed *= 3;
-            logFight(`<span style='color: #800020; font-weight: bold; font-size: 1.3em;'>Kaguya uses Izanami! She loses her right eye, goes blind, and stuns you for 100 turns and is enraged so her attack speed triples! However, she can no longer land critical strikes or use ocular techniques.</span>`);
+            enemyAttackSpeed *= 2.5;
+            logFight(`<span style='color: #800020; font-weight: bold; font-size: 1.3em;'>Kaguya uses Izanami! She loses her right eye, goes blind, and stuns you for 100 turns and is enraged so her attack speed increases 2.5x! However, she can no longer land critical strikes or use ocular techniques.</span>`);
     
             // Disable critical strikes because Kaguya is now blind
             enemyCritChance = 0;
             document.getElementById('enemyCritChanceStat').innerText = formatNumber(enemyCritChance * 100) + '%';
+            document.getElementById('enemyAttackSpeedStat').innerText = formatNumber(enemyAttackSpeed);
             
             setTimeout(() => {
                 fightLoop(resolve);
@@ -778,7 +784,7 @@ function attackEnemy(resolve) {
             // Kaguya uses Izanagi, loses her left eye, and sets her health to 10x maxHealth
             izanagiUsed = true;
             enemyHealth = enemyMaxHealth * 3;
-            logFight(`<span style='color: #800020; font-weight: bold; font-size: 1.3em;'>Kaguya uses Izanagi! She loses her left eye and her health is restored to ${formatNumber(enemyHealth)}!</span>`);
+            logFight(`<span style='color: #800020; font-weight: bold; font-size: 1.3em;'>Kaguya uses Izanagi! She loses her left eye and her health is restored to 3x her Max Health!</span>`);
     
             setTimeout(() => {
                 fightLoop(resolve);
@@ -930,9 +936,9 @@ function attackPlayer() {
         const randTruthSeekerBall = Math.random() < 0.02;
         const randByakugan64Palms = Math.random() < 0.13;
         const randPlanetaryDevastation = Math.random() < 0.01;
-        const randAmaterasu = Math.random() < 0.05;
-        const randTsukuyomi = Math.random() < 0.02;
-        const randSusanoo = Math.random() < 0.08;
+        const randAmaterasu = Math.random() < 0.06;
+        const randTsukuyomi = Math.random() < 0.03;
+        const randSusanoo = Math.random() < 0.15;
         const randKamui = Math.random() < 0.04;
     
         if (randChakraAbsorption) { // Chakra Absorption
@@ -951,6 +957,7 @@ function attackPlayer() {
             playerMaxHealth = Math.ceil(Math.pow(copium, 1 / 20) * playerHealthMult);
             playerDefenseBase = delusion > 0 ? Math.ceil(Math.pow(delusion, 1 / 12) / 500) : 0;
             document.getElementById('playerHealthStat').innerText = formatNumber(playerMaxHealth);
+            document.getElementById('playerDefenseStat').innerText = formatNumber(playerDefense);
             logFight(`<span style='color: #FF4500;'>Kaguya uses Truth Seeker Ball! Your copium, delusion, and defense are reduced by 10%, and max health and base defense recalculated.</span>`);
         }
         
@@ -967,7 +974,7 @@ function attackPlayer() {
         }
         
         if (randPlanetaryDevastation) { // Planetary Devastation
-            playerStunCount += 10;
+            playerStunCount += 5;
             logFight(`<span style='color: #8B0000;'>Kaguya uses Planetary Devastation! You are stunned for 10 turns.</span>`);
         }
         

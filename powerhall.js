@@ -12,6 +12,7 @@ const powerHallSkills = [
     { name: 'Astral Precision', cost: 3e7, description: 'Hone your accuracy. Minimum damage rescaled from power-75% to power-25%.', unlocked: false, level: 'Quantum Nexus' },
     { name: 'Void Stabilizer', cost: 1.75e8, description: 'Reduce damage taken from attacks by 50% until your health drops below 80%', unlocked: false, level: 'Quantum Nexus' },
     { name: 'Astral Edge', cost: 1.8e11, description: 'Increase your maximum damage by 1% for each 2% of your health missing.', unlocked: false, level: 'Quantum Nexus' },
+    { name: 'Quantum Bastion', cost: 1e15, description: 'Resistant to stuns - reduce 2 turns of stun count per turn.', unlocked: false, level: 'Quantum Nexus' },
 
     { name: 'Lightning Reflexes', cost: 12000, description: 'Your attacks become 2.5x faster!', unlocked: false, level: 'Cosmic Dynamics' },
     { name: 'Astral Disruption', cost: 150000, description: 'Your attacks have a 5% chance to stun the enemy for 1 attack.', unlocked: false, level: 'Cosmic Dynamics' },
@@ -84,6 +85,9 @@ function unlockPowerHallSkill(skill, duringLoad = false) {
                 astralEdgeSkill = true;
                 break;
                 
+            case 'Quantum Bastion':
+                quantumBastionSkill = true;
+                break;
     
             case 'Temporal Guard':
                 temporalGuardSkill = true;

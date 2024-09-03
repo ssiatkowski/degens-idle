@@ -103,6 +103,7 @@ let voidStabilizerSkill = false;
 let temporalGuardSkill = false;
 let astralEdgeSkill = false;
 let mysticReboundSkill = false;
+let quantumBastionSkill = false;
 
 let stellarHarvestSkill = false;
 let celestialCollectorSkill = false;
@@ -741,6 +742,7 @@ async function restartGame(isPrestige = false) {
             temporalGuardSkill = false;
             astralEdgeSkill = false;
             mysticReboundSkill = false;
+            quantumBastionSkill = false;
 
             stellarHarvestMult = 1;
 
@@ -1787,7 +1789,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
 
         // Special case for the "Still very stupid" upgrade
         if (name === "Kaguya") {
-            showMessageModal('Sadly', "This marks the end of v0.876. I hope you're enjoying the thrill of these battles and unlocking the secrets of the Power Hall skills. The adventure is far from over, and your feedback is what makes it truly epic. Join us on Discord and share your experiences, strategies, and thoughts. Let’s shape the future of the game together and make each update more exciting than the last!");
+            showMessageModal('Sadly', "This marks the end of v0.877. I hope you're enjoying the thrill of these battles and unlocking the secrets of the Power Hall skills. The adventure is far from over, and your feedback is what makes it truly epic. Join us on Discord and share your experiences, strategies, and thoughts. Let’s shape the future of the game together and make each update more exciting than the last!");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one

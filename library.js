@@ -18,7 +18,7 @@ const librarySkills = [
     { name: 'Less Diminishing God-Mode', cost: 1e14, description: 'Decrease diminishing returns at higher God-Mode levels. Mathematically, instead of diminishing at 97.5%, the multiplier dimninishes at 98.5%. (This is big at high god-mode levels)', unlocked: false, level: 'Nonlinear Partial Differential Equations' },
     { name: 'Much Less Diminishing Parallel God-Mode', cost: 2e35, description: 'Greatly decrease diminishing returns at higher Parallel Universe God-Mode levels. Mathematically, multiplier dimninishes at 99.0% instead of 97.5%. (Incredibly OP at higher PU God Mode levels)', unlocked: false, level: 'Nonlinear Partial Differential Equations' },
     { name: 'Linear Ascension', cost: 2e43, description: 'Learn how to ascend God Mode without folding dimensions. Prestige mulitplier only goes down by a factor of 2.', unlocked: false, level: 'Nonlinear Partial Differential Equations' },
-    { name: 'Perfect God-Mode', cost: 2e58, description: 'Make God-Mode better than PU God-Mode. Dimishes at 99.2%. (You must already know this is huge)', unlocked: false, level: 'Nonlinear Partial Differential Equations' },
+    { name: 'Perfect God-Mode', cost: 2e57, description: 'Make God-Mode better than PU God-Mode. Dimishes at 99.2%. (You must already know this is huge)', unlocked: false, level: 'Nonlinear Partial Differential Equations' },
 
 
     { name: 'Multibuy Upgrades', cost: 2, description: 'Unlock "Buy Seen" and "Buy Max" buttons for Upgrades.', unlocked: false, level: 'Artificial Intelligence' },

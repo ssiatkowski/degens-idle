@@ -9,7 +9,7 @@ let cooldowns = {
 
 // Mini-game timeouts in milliseconds
 const miniGameTimeouts = {
-    speed:  6 * 60 * 1000,  // 6 minutes
+    speed:   1000,  // 6 minutes
     memory: 10 * 60 * 1000, // 10 minutes
     math:   8 * 60 * 1000,  // 8 minutes
     luck:   4 * 60 * 1000,   // 4 minutes
@@ -48,10 +48,11 @@ function playMiniGame(gameType) {
     // Speed mini-game logic
     if (gameType === 'speed') {
         let points = 0;
+        let misclicks = 0;
         let duration = Math.floor(Math.random() * 6) + 3; // Random duration between 3 and 8 seconds
 
         // Show the modal and start the game when the modal is closed
-        showMessageModal('Speed Game', `Tap on the dots as many times as you can in ${duration} seconds!`, false, false).then(() => {
+        showMessageModal('Speed Game', `Tap on the dots as many times as you can in ${duration} seconds! Be careful, clicks outside the dots will count as -0.5 points.`, false, false).then(() => {
             // Create a game area
             const gameArea = document.createElement('div');
             gameArea.style.position = 'fixed';
@@ -96,25 +97,36 @@ function playMiniGame(gameType) {
             createDot();
             createDot();
 
+            // Add click event listener for the game area
+            gameArea.addEventListener('click', function(event) {
+                if (!event.target.style.backgroundColor || event.target.style.backgroundColor !== '#ff4444') {
+                    misclicks++;
+                }
+            });
+
             // End the game after the duration
             setTimeout(() => {
                 document.body.removeChild(gameArea); // Remove the game area
                 let reward;
                 let resultMessage;
 
-                let clicksPerSecond = points / duration;
-                if (clicksPerSecond > .99) {
-                    reward = Math.max(Math.floor(Math.abs(copium) * (clicksPerSecond * 0.15)), 25);
+                misclicks = Math.max(misclicks - points, 0);
+
+                let effectivePoints = points - (0.5 * misclicks);
+                let effectiveClicksPerSecond = effectivePoints / duration;
+
+                if (effectiveClicksPerSecond > 1.49) {
+                    reward = Math.max(Math.floor(Math.abs(copium) * (effectiveClicksPerSecond * 0.15)), 25);
                     if (speedGameSkill) { reward *= 3; }
                     // Apply the soft cap
                     if (reward > softCaps.speed) {
                         reward = softCaps.speed;
                         softCapReached = true;
                     }
-                    resultMessage = `You tapped ${points} dots (${clicksPerSecond.toFixed(2)} taps per second). Your reward is <span style="color: green;">${formatNumber(reward)}</span> copium!`;
+                    resultMessage = `You tapped ${points} dots with ${misclicks} misclicks in ${duration} seconds (${effectiveClicksPerSecond.toFixed(2)} points per second). Your reward is <span style="color: green;">${formatNumber(reward)}</span> copium!`;
                 } else {
                     reward = -Math.max(Math.floor(Math.abs(copium) * 0.25), 25);
-                    resultMessage = `You were too slow, managing only ${clicksPerSecond.toFixed(2)} taps per second. You lose <span style="color: red;">${formatNumber(reward)}</span> copium. Try again later!`;
+                    resultMessage = `You were too slow, managing only ${points} taps on dots with ${misclicks} misclicks in ${duration} seconds (${effectiveClicksPerSecond.toFixed(2)} points per second). You lose <span style="color: red;">${formatNumber(reward)}</span> copium. Try again later!`;
                 }
 
                 copium += reward;
@@ -133,6 +145,8 @@ function playMiniGame(gameType) {
             }, duration * 1000);
         });
     }
+
+
 
     // Memory mini-game logic
     else if (gameType === 'memory') {
