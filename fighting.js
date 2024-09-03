@@ -190,11 +190,11 @@ const enemyStats = {
         img: `imgs/vegeta_5.jpg`,
     },
     "Kaguya": {
-        health: 1e18,
+        health: 3e17,
         minDamage: 2000,
         maxDamage: 3000,
         attackSpeed: 30,
-        defense: 1e12,
+        defense: 1e13,
         critChance: 0.1,
         critDamage: 1.5,
         dodge: 0.2,
@@ -830,9 +830,14 @@ function attackPlayer() {
             document.getElementById('playerDodgeStat').innerText = formatNumber(playerDodge * 100) + '%';
             logFight(`Temporal Flux ended. Dodge bonus removed.`);
         }
-        if (temporalGuardSkill){
-            logFight(`<span style='color: #6082B6;'>Temporal Guard activated! Your defense increased by ${formatNumber(playerDefenseBase * 0.1)}.</span>`);
-            playerDefense = playerDefense + (playerDefenseBase * 0.1);
+        if (temporalGuardSkill) {
+            const newPlayerDefense = Math.min(playerDefense + (playerDefenseBase * 0.1), playerDefenseBase * 3);
+            if (newPlayerDefense > playerDefense) {
+                logFight(`<span style='color: #6082B6;'>Temporal Guard activated! Your defense increased by ${formatNumber(newPlayerDefense-playerDefense)}.</span>`);
+            } else {
+                logFight(`<span style='color: #6082B6;'>Temporal Guard activated, but your defense has already reached its maximum.</span>`);
+            }
+            playerDefense = newPlayerDefense;
             document.getElementById('playerDefenseStat').innerText = formatNumber(playerDefense);
         }
         return; // Player dodged, so the attack ends here
@@ -847,9 +852,14 @@ function attackPlayer() {
             document.getElementById('playerDodgeStat').innerText = formatNumber(playerDodge * 100) + '%';
             logFight(`Temporal Flux ended. Dodge bonus removed.`);
         }
-        if (temporalGuardSkill){
-            logFight(`<span style='color: #6082B6;'>Temporal Guard activated! Your defense increased by ${formatNumber(playerDefenseBase * 0.1)}.</span>`);
-            playerDefense = playerDefense + (playerDefenseBase * 0.1);
+        if (temporalGuardSkill) {
+            const newPlayerDefense = Math.min(playerDefense + (playerDefenseBase * 0.1), playerDefenseBase * 3);
+            if (newPlayerDefense > playerDefense) {
+                logFight(`<span style='color: #6082B6;'>Temporal Guard activated! Your defense increased by ${formatNumber(newPlayerDefense-playerDefense)}.</span>`);
+            } else {
+                logFight(`<span style='color: #6082B6;'>Temporal Guard activated, but your defense has already reached its maximum.</span>`);
+            }
+            playerDefense = newPlayerDefense;
             document.getElementById('playerDefenseStat').innerText = formatNumber(playerDefense);
         }
         return; // Player dodged, so the attack ends here
@@ -922,7 +932,7 @@ function attackPlayer() {
         const randPlanetaryDevastation = Math.random() < 0.01;
         const randAmaterasu = Math.random() < 0.05;
         const randTsukuyomi = Math.random() < 0.02;
-        const randSusanoo = Math.random() < 0.07;
+        const randSusanoo = Math.random() < 0.08;
         const randKamui = Math.random() < 0.04;
     
         if (randChakraAbsorption) { // Chakra Absorption

@@ -1092,6 +1092,28 @@ const upgrades = [
         earnings: { copiumPerSecond: 3e30, delusionPerSecond: 3e30, yachtMoneyPerSecond: 3e30, trollPointsPerSecond: 3e30, hopiumPerSecond: -1e35, knowledgePerSecond: 3e9, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/kaguya.jpg`,
         isFight: true,
-        hoverOverwrite: 'WARNING: She is not balanced. She will drain your resoures. Not meant to be killed. Only fight if you want to hate her.'
+        hoverOverwrite: `WARNING: She is not balanced. She will drain your resoures. Not meant to be killed. Only fight if you want to hate her.`,
+        message: `<p><strong>Kaguya:</strong> So, you've done it. You've saved the multiverse from destruction. You've become the hero that all worlds will remember. But tell me, warrior, why do you still feel so empty inside?</p>
+                <p>You wield power beyond imagination, power that has crushed your enemies and saved countless lives. Yet, deep within, there’s a void that no victory can fill, a nagging sense that something vital is missing. Why does hope continue to slip through your grasp?</p>
+                <p><strong>Kaguya:</strong> Power alone was never the answer. You sought satisfaction, but all you found was more longing. What is it that you truly seek, if not the ultimate satisfaction? Why does the light of your triumph feel so dim?</p>
+                <p>With these words, Kaguya fades away, leaving you alone with your thoughts, victorious but unfulfilled, questioning the true meaning of the path you've chosen.</p>`,
+    },
+    {         
+        name: `She wasn't the final boss?`,
+        cost: { copium: 1e75, delusion: 1e75, yachtMoney: 1e75, trollPoints: 1e75, hopium: 0, knowledge: 1e53, power: 1e11, serenity: 0 },
+        earnings: { copiumPerSecond: 1e30, delusionPerSecond: 0, yachtMoneyPerSecond: 5e29, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 2e8, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: `imgs/surprise_pikachu.jpg`,        
+    },
+    {         
+        name: `Great Find`,
+        cost: { copium: 0, delusion: 7e77, yachtMoney: 2e78, trollPoints: 0, hopium: 0, knowledge: 1e54, power: 3e11, serenity: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 2e30, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 2e8, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: `imgs/perfect_avocade.jpg`,        
+    },
+    {         
+        name: `Doggos are Priceless`,
+        cost: { copium: 3e78, delusion: 0, yachtMoney: 5e78, trollPoints: 0, hopium: 0, knowledge: 3e55, power: 1e12, serenity: 0 },
+        earnings: { copiumPerSecond: 3e30, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 3e8, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: `imgs/spending_money_on_dogs.jpg`,        
     },
 ];

@@ -4,7 +4,7 @@ const powerHallSkills = [
     { name: 'Temporal Flux', cost: 1e6, description: 'Gain 10% dodge chance after landing critical hits. Bonus resets on successful dodge.', unlocked: false, level: 'Arcane Magnetism' },
     { name: 'Arcane Magnetizer', cost: 1e7, description: 'Upgrade autobuyer is now 5x faster!', unlocked: false, level: 'Arcane Magnetism' },
     { name: 'Gravity Well', cost: 1e7, description: 'Every 5 successful attacks, reduce enemy minimum damage by 50% for 3 attacks.', unlocked: false, level: 'Arcane Magnetism' },
-    { name: 'Temporal Guard', cost: 2.5e9, description: 'After every successful dodge, increase your defense by 10% of your base defense.', unlocked: false, level: 'Arcane Magnetism' },
+    { name: 'Temporal Guard', cost: 2.5e9, description: 'After every successful dodge, increase your defense by 10% of your base defense. (max +200%)', unlocked: false, level: 'Arcane Magnetism' },
     { name: 'Mystic Rebound', cost: 3e10, description: 'Increase your dodge chance by 20% for the next 5 attacks after being hit by a critical strike.', unlocked: false, level: 'Arcane Magnetism' },
 
     { name: 'Vitality Matrix', cost: 45000, description: 'Maximum Health is increased by 50%!', unlocked: false, level: 'Quantum Nexus' },
