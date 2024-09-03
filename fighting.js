@@ -771,6 +771,14 @@ function attackEnemy(resolve) {
             document.getElementById('enemyCritChanceStat').innerText = formatNumber(enemyCritChance * 100) + '%';
             document.getElementById('enemyAttackSpeedStat').innerText = formatNumber(enemyAttackSpeed);
             
+            // Update the enemy image
+            const enemyImageContainer = document.getElementById('enemyImageContainer');
+            enemyImageContainer.innerHTML = ''; // Clear previous image
+            const enemyImage = document.createElement('img');
+            enemyImage.src = 'imgs/kaguya_blind.jpg';
+            enemyImage.alt = "Enemy Image";
+            enemyImageContainer.appendChild(enemyImage);
+
             setTimeout(() => {
                 fightLoop(resolve);
             }, 1000);
@@ -951,14 +959,14 @@ function attackPlayer() {
         }
         
         if (randTruthSeekerBall) { // Truth Seeker Ball
-            copium *= 0.9; // Reduce copium by 10%
-            delusion *= 0.9; // Reduce delusion by 10%
-            playerDefense *= 0.9;
+            copium *= 0.85; // Reduce copium by 10%
+            delusion *= 0.85; // Reduce delusion by 10%
+            playerDefense *= 0.85;
             playerMaxHealth = Math.ceil(Math.pow(copium, 1 / 20) * playerHealthMult);
             playerDefenseBase = delusion > 0 ? Math.ceil(Math.pow(delusion, 1 / 12) / 500) : 0;
             document.getElementById('playerHealthStat').innerText = formatNumber(playerMaxHealth);
             document.getElementById('playerDefenseStat').innerText = formatNumber(playerDefense);
-            logFight(`<span style='color: #FF4500;'>Kaguya uses Truth Seeker Ball! Your copium, delusion, and defense are reduced by 10%, and max health and base defense recalculated.</span>`);
+            logFight(`<span style='color: #FF4500;'>Kaguya uses Truth Seeker Ball! Your copium, delusion, and defense are reduced by 15%, and max health and base defense recalculated.</span>`);
         }
         
         if (randByakugan64Palms) { // Byakugan 128 Palms
@@ -980,12 +988,12 @@ function attackPlayer() {
         
         if (randAmaterasu && !izanamiUsed) { // Amaterasu
             playerAmaterasuStacks += 1;
-            logFight(`<span style='color: black;'>Kaguya casts Amaterasu! You gain 1 Amaterasu stack, which will damage you each time you attack.</span>`);
+            logFight(`<span style='color: black;'>Kaguya casts Amaterasu! You gain 1 eternal flame stack, which will damage you each time you attack.</span>`);
         }
         
         if (randTsukuyomi && !izanamiUsed) { // Tsukuyomi
             playerTsukuyomiStacks += 1;
-            logFight(`<span style='color: #9370DB;'>Kaguya uses Tsukuyomi! You gain 1 Tsukuyomi stack, causing you to attack yourself next turn.</span>`);
+            logFight(`<span style='color: #9370DB;'>Kaguya uses Tsukuyomi! You gain 1 stack of insanity, causing you to attack yourself next turn.</span>`);
         }
         
         if (randSusanoo) { // Susanoo
@@ -1051,7 +1059,7 @@ function attackPlayer() {
     }
 
     if (damage > 0 && astralEdgeSkill){
-        astralEdgeMult = 1 + (((playerMaxHealth - playerHealth) / playerMaxHealth) / 2);
+        astralEdgeMult = Math.max(1 + (((playerMaxHealth - playerHealth) / playerMaxHealth) / 2), 1);
         playerMaxDamage = Math.ceil(playerBaseMaxDamage * astralEdgeMult);
         document.getElementById('playerDamageStat').innerText = `${formatNumber(playerMinDamage)} - ${formatNumber(playerMaxDamage)}`;
     }
