@@ -80,7 +80,7 @@ const achievements = [
     {
         name: 'Speed Demon',
         isUnlocked: false,
-        hoverText: 'score over 3.2 points per second in speed game',
+        hoverText: 'score over 3 points per second in speed game',
         img: 'imgs/achievements/speed_demon.jpg',
     },
     {
@@ -324,6 +324,12 @@ const achievements = [
         img: 'imgs/achievements/uninitialized.jpg',
     },
     {
+        name: 'Nebula Overdrive',
+        isUnlocked: false,
+        hoverText: 'Why spend power?',
+        img: 'imgs/achievements/nebula_overdrive.jpg',
+    },
+    {
         name: 'Outsmart Vegeta SS God',
         isUnlocked: false,
         hoverText: 'pay attention to fight log',
@@ -354,22 +360,16 @@ const achievements = [
         img: 'imgs/achievements/stellar_harvester.jpg',
     },
     {
+        name: 'Overkill Much?',
+        isUnlocked: false,
+        hoverText: 'send him flying out of the matrix',
+        img: 'imgs/achievements/out_of_the_matrix.jpg',
+    },
+    {
         name: 'Save the Multiverse',
         isUnlocked: false,
         hoverText: 'someone wants to destroy the multiverse - STOP THEM!',
         img: 'imgs/achievements/save_the_multiverse.jpg',
-    },
-    {
-        name: 'Does Not Exist 58',
-        isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
-    },
-    {
-        name: 'Does Not Exist 62',
-        isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
     },
     {
         name: 'Does Not Exist 63',
@@ -540,10 +540,10 @@ const achievements = [
         img: 'imgs/achievements/uninitialized.jpg',
     },
     {
-        name: 'Does Not Exist 91',
+        name: 'The Tiniest Crunch',
         isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
+        hoverText: '???',
+        img: 'imgs/achievements/tiniest_crunch.jpg',
     },
     {
         name: 'Does Not Exist 92',
@@ -558,10 +558,10 @@ const achievements = [
         img: 'imgs/achievements/uninitialized.jpg',
     },
     {
-        name: 'Does Not Exist 94',
+        name: 'Rasta Deadpool',
         isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
+        hoverText: '???',
+        img: 'imgs/achievements/rasta_deadpool.jpg',
     },
     {
         name: 'Does Not Exist 95',

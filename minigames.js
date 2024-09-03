@@ -123,7 +123,7 @@ function playMiniGame(gameType) {
                         reward = softCaps.speed;
                         softCapReached = true;
                     }
-                    if (effectiveClicksPerSecond > 3.2){
+                    if (effectiveClicksPerSecond >= 3){
                         unlockAchievement('Speed Demon');
                     }
                     resultMessage = `You tapped ${points} dots with ${misclicks} misclicks in ${duration} seconds (${effectiveClicksPerSecond.toFixed(2)} points per second). Your reward is <span style="color: green;">${formatNumber(reward)}</span> copium!`;
@@ -153,7 +153,7 @@ function playMiniGame(gameType) {
 
     // Memory mini-game logic
     else if (gameType === 'memory') {
-        let gridSize = Math.floor(Math.random() * 3) + 4; // Random size of the grid (3x3,4x4,5x5)
+        let gridSize = Math.floor(Math.random() * 3) + 4; // Random size of the grid (4x4,5x5,6x6)
         let sequenceLength = Math.floor(Math.random() * 4) + (memoryGameSkill ? 3 : 4); // Random sequence length between 4 and 7  (3-6 with memoryGameSkill)
         let sequence = [];
         let playerSequence = [];

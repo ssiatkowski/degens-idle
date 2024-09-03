@@ -25,7 +25,7 @@ const powerHallSkills = [
     { name: 'Upgrade Amplifier', cost: 4e8, description: `First 4 resources gain a flat multiplier based on number of purchased upgrades.`, unlocked: false, level: 'Celestial Manipulation' },
     { name: 'Celestial Collector', cost: 5e10, description: `Stellar Harvest buff is extended to 50% power and lasts for 10 minutes.`, unlocked: false, level: 'Celestial Manipulation' },
 
-    //{ name: '?', cost: 4e8, description: `?`, unlocked: false, level: 'Nebular Command' },
+    { name: 'Nebula Overdrive', cost: 1e6, description: `Purchasing upgrades no longer consumes power. Power cost still applies.`, unlocked: false, level: 'Nebular Command' },
 
 ];
 
@@ -138,6 +138,10 @@ function unlockPowerHallSkill(skill, duringLoad = false) {
                 celestialCollectorSkill = true;
                 break;
                 
+            case 'Nebula Overdrive':
+                unlockAchievement('Nebula Overdrive');
+                nebulaOverdriveSkill = true;
+                break;
 
             default:
                 console.warn(`No handler for skill: ${skill.name}`);

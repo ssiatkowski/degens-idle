@@ -653,6 +653,9 @@ function attackEnemy(resolve) {
             if (Math.random() < revivalChance) {
                 enemyHealth = enemyMaxHealth;
                 deadpoolRevives += 1;
+                if (deadpoolRevives >= 420){
+                    unlockAchievement('Rasta Deadpool');
+                }
                 logFight(`<span style='color: #AAFF00;'>${currEnemyName} dies and regenerates back to full health! 
                     (<span style='font-weight: bold; font-size: 1.4em;'>${deadpoolRevives}</span> revives - you feel like he's killable now!)</span>`);
 

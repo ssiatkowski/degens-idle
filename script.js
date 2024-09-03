@@ -108,6 +108,7 @@ let astralEdgeSkill = false;
 let mysticReboundSkill = false;
 let quantumBastionSkill = false;
 
+let nebulaOverdriveSkill = false;
 let stellarHarvestSkill = false;
 let celestialCollectorSkill = false;
 let stellarHarvestMult = 1;
@@ -759,6 +760,7 @@ async function restartGame(isPrestige = false) {
             temporalFluxSkill = false;
             primeImpactSkill = false;
             powerIsPowerSkill = false;
+            nebulaOverdriveSkill = false;
             stellarHarvestSkill = false;
             celestialCollectorSkill = false;
             gravityWellSkill = false;
@@ -1527,7 +1529,11 @@ async function bigCrunch() {
         );
 
         if (confirmed) {
+
             bigCrunchPower = power * compressedBigCrunchMult;
+            if((calculateBigCrunchMultiplier() / bigCrunchMultiplier) < 1.1){
+                unlockAchievement('The Tiniest Crunch');
+            }
             bigCrunchMultiplier = calculateBigCrunchMultiplier();
             
             // Call restartGame with isPrestige flag set to true
@@ -1750,7 +1756,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
         trollPoints -= cost.trollPoints || 0;
         hopium -= cost.hopium || 0;
         knowledge -= cost.knowledge || 0;
-        power -= cost.power || 0;
+        power = nebulaOverdriveSkill ? power : power - cost.power || 0;
         serenity -= cost.serenity || 0;
 
         // Special case for the "Antimatter Dimension" upgrade
@@ -1838,7 +1844,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
 
         // Special case for the "Still very stupid" upgrade
         if (name === "Kaguya") {
-            showMessageModal('Sadly', "This marks the end of v0.879. I hope you're enjoying the thrill of these battles and unlocking the secrets of the Power Hall skills. The adventure is far from over, and your feedback is what makes it truly epic. Join us on Discord and share your experiences, strategies, and thoughts. Let’s shape the future of the game together and make each update more exciting than the last!");
+            showMessageModal('Sadly', "This marks the end of v0.88. I hope you're enjoying the thrill of these battles and unlocking the secrets of the Power Hall skills. The adventure is far from over, and your feedback is what makes it truly epic. Join us on Discord and share your experiences, strategies, and thoughts. Let’s shape the future of the game together and make each update more exciting than the last!");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one
@@ -1851,25 +1857,24 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
                 if (!purchasedUpgrades.some(upgrade => upgrade.name === "Cosmetic Surgery")){
                     unlockAchievement('Stay Ugly');
                 }
-            }
-
-            if (name == 'Degens Idle Dev') {
+            } else if (name == 'Degens Idle Dev') {
                 if (!purchasedUpgrades.some(upgrade => upgrade.name === "Hunt for Hussein")){
                     unlockAchievement('Big Brain Move');
                 }
-            }
-
-            if (name == 'Channel inner Tyson'){
+            } else if (name == 'Channel inner Tyson'){
                 if (!purchasedUpgrades.some(upgrade => upgrade.name === `So what do I do here?`)){
                     unlockAchievement('Going in Blind');
                 }
-            }
-
-            if (name == 'Vegeta') {
+            } else if (name == 'Vegeta') {
                 if (delusion > 0 && hopium < 0){
                     unlockAchievement('Raw Power');
                 }
+            } else if (name == 'Agent Smith'){
+                if (power >= 1e11){
+                    unlockAchievement('Overkill Much?');
+                }
             }
+
             // Update the upgrade list and display
             updateUpgradeList();
             updateMultipliersDisplay();
