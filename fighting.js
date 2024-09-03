@@ -777,7 +777,7 @@ function attackEnemy(resolve) {
 
             // Kaguya uses Izanagi, loses her left eye, and sets her health to 10x maxHealth
             izanagiUsed = true;
-            enemyHealth = enemyMaxHealth * 10;
+            enemyHealth = enemyMaxHealth * 3;
             logFight(`<span style='color: #800020; font-weight: bold; font-size: 1.3em;'>Kaguya uses Izanagi! She loses her left eye and her health is restored to ${formatNumber(enemyHealth)}!</span>`);
     
             setTimeout(() => {

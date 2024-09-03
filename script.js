@@ -2024,7 +2024,7 @@ function autobuyUpgrades(){
 
 
 // List of upgrades that should trigger truncation
-const keyUpgrades = ['The Finale', 'Agent Smith', 'Shao Kahn', 'Darth Vader', 'Isshin', 'Sauron','Kratos','Deadpool','Chuck Norris', 'Vegeta'];
+const keyUpgrades = ['The Finale', 'Agent Smith', 'Shao Kahn', 'Darth Vader', 'Isshin', 'Sauron','Kratos','Deadpool','Chuck Norris', 'Vegeta', 'Kaguya'];
 
 // Function to update the upgrade list display
 function updateUpgradeList() {
