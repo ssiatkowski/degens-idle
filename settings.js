@@ -489,7 +489,7 @@ document.getElementById('automationButton').addEventListener('click', function()
             const autoPrestigeHtml = `
                 <div style="margin-bottom: 15px;">
                     <label for="autoPrestigeThresholdInput">Auto Prestige Threshold:</label>
-                    <input type="number" id="autoPrestigeThresholdInput" value="${autoPrestigeThreshold}" step="0.1">
+                    <input type="number" id="autoPrestigeThresholdInput" value="${autoPrestigeThreshold}" step="0.1" style="font-size: 16px;">
                 </div>
             `;
             automationContent.innerHTML += autoPrestigeHtml;
@@ -500,7 +500,7 @@ document.getElementById('automationButton').addEventListener('click', function()
             const autoAscendHtml = `
                 <div style="margin-bottom: 15px;">
                     <label for="autoAscendThresholdInput">Auto Ascend Threshold (0 to ${numAscensionUpgrades}):</label>
-                    <input type="number" id="autoAscendThresholdInput" value="${autoAscendThreshold}" min="0" max="${numAscensionUpgrades}">
+                    <input type="number" id="autoAscendThresholdInput" value="${autoAscendThreshold}" min="0" max="${numAscensionUpgrades}" style="font-size: 16px;">
                     <span id="ascendWarning" style="display: none; color: red;">Disable auto ascend</span>
                 </div>
             `;
@@ -512,7 +512,7 @@ document.getElementById('automationButton').addEventListener('click', function()
             const autoTranscendHtml = `
                 <div style="margin-bottom: 15px;">
                     <label for="autoTranscendThresholdInput">Auto Transcend Threshold (0 to ${numPUAscensionUpgrades}):</label>
-                    <input type="number" id="autoTranscendThresholdInput" value="${autoTranscendThreshold}" min="0" max="${numPUAscensionUpgrades}">
+                    <input type="number" id="autoTranscendThresholdInput" value="${autoTranscendThreshold}" min="0" max="${numPUAscensionUpgrades}" style="font-size: 16px;">
                     <span id="transcendWarning" style="display: none; color: red;">Disable auto transcend</span>
                 </div>
             `;
