@@ -195,6 +195,7 @@ function updateEffectiveMultipliers() {
     effectiveSerenityPerSecond = serenityPerSecond * totalMultiplier;
 }
 
+let cookieClicks = 0;
 
 // Function to handle cookie click
 function cookieCollectAllResources() {
@@ -216,16 +217,36 @@ function cookieCollectAllResources() {
         yachtMoney += cookieClickMultiplier * totalMultiplier;
         trollPoints += cookieClickMultiplier * totalMultiplier;
     }
+    cookieClicks++;
+    if(cookieClicks >= 500 && cookieClicks <= 505){
+        unlockAchievement('Fatigued Finger');
+    }
     updateDisplay();
 }
 
+// Initialize fidgetClicks as an object to track each resource
+let fidgetClicks = {
+    copium: false,
+    delusion: false,
+    yachtMoney: false,
+    trollPoints: false
+};
+
 // Function to collect a specific resource and update the game state
 function collectResource(resource) {
-    // Increase the appropriate resource by the epsMultiplier
+    // Increase the appropriate resource by the totalMultiplier
     if (resource === 'copium') copium += totalMultiplier;
     if (resource === 'delusion') delusion += totalMultiplier;
     if (resource === 'yachtMoney') yachtMoney += totalMultiplier;
     if (resource === 'trollPoints') trollPoints += totalMultiplier;
+    
+    // Track the resource click if cookieKnowledgeable is true
+    if (cookieKnowledgeable) {
+        fidgetClicks[resource] = true;
+        if (fidgetClicks.copium && fidgetClicks.delusion && fidgetClicks.yachtMoney && fidgetClicks.trollPoints) {
+            unlockAchievement('Fidget Clicks');
+        }
+    }
     
     // Update the display to reflect the new resource values
     updateDisplay();
@@ -591,6 +612,7 @@ function generateResources() {
 
     // Check if delusion drops below negative 1 trillion to start generating Knowledge
     if ((delusion < -1e12 || knowledgeGenerationSkill) && knowledgePerSecond === 0) {
+        unlockAchievement('Clarity');
         knowledgePerSecond = 0.000001
         effectiveKnowledgePerSecond = calculateEffectiveKnowledge();
 
@@ -613,6 +635,7 @@ async function restartPrestige(){
                             <p>If you’re certain this is the right move—maybe because your upgrade path took a wrong turn—then go ahead and hit that button. Otherwise, maybe pause and think it over. 😅</p>`;
     if (await showMessageModal(confirmTitle, confirmMessage, true, false)) {
         // Call restartGame with isPrestige flag set to true
+        unlockAchievement('Do-Over');
         restartGame(true);
     }
 }
@@ -991,6 +1014,10 @@ function tradeResources(tradeAmountInput = null) {
     // If tradeAmountInput is null, use the value from the input field
     if (!tradeAmountInput) {
         tradeAmountInput = document.getElementById('tradeAmount').value;
+    }
+
+    if(tradeAmountInput == '100%'){
+        unlockAchievement('All In');
     }
 
     // Calculate the trade amount using the parseFormattedNumber function
@@ -1844,7 +1871,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
 
         // Special case for the "Still very stupid" upgrade
         if (name === "Kaguya") {
-            showMessageModal('Sadly', "This marks the end of v0.88. I hope you're enjoying the thrill of these battles and unlocking the secrets of the Power Hall skills. The adventure is far from over, and your feedback is what makes it truly epic. Join us on Discord and share your experiences, strategies, and thoughts. Let’s shape the future of the game together and make each update more exciting than the last!");
+            showMessageModal('Sadly', "This marks the end of v0.881. I hope you're enjoying the thrill of these battles and unlocking the secrets of the Power Hall skills. The adventure is far from over, and your feedback is what makes it truly epic. Join us on Discord and share your experiences, strategies, and thoughts. Let’s shape the future of the game together and make each update more exciting than the last!");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one

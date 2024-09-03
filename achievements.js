@@ -2,7 +2,7 @@ const achievements = [
     {
         name: 'First',
         isUnlocked: false,
-        hoverText: 'click achievments button',
+        hoverText: 'click achievements button',
         img: 'imgs/achievements/number_1.jpg',
     },
     {
@@ -66,6 +66,12 @@ const achievements = [
         img: 'imgs/achievements/brain.jpg',
     },
     {
+        name: 'Clarity',
+        isUnlocked: false,
+        hoverText: 'reach -1T delusion',
+        img: 'imgs/achievements/clarity.jpg',
+    },
+    {
         name: 'Now we are Progressing',
         isUnlocked: false,
         hoverText: 'why only ascend one upgrade at a time?',
@@ -114,34 +120,28 @@ const achievements = [
         img: 'imgs/achievements/power_unlocked.jpg',
     },
     {
+        name: 'Fifth',
+        isUnlocked: false,
+        hoverText: 'keep clicking achievements button',
+        img: 'imgs/achievements/number_5.jpg',
+    },
+    {
         name: 'Burn the World',
         isUnlocked: false,
         hoverText: 'past the point of no return',
         img: 'imgs/achievements/mosquitos.jpg',
     },
     {
-        name: 'Does Not Exist 17',
+        name: 'Fatigued Finger',
         isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
+        hoverText: '500 clicks on cookie',
+        img: 'imgs/achievements/fatigued_finger.jpg',
     },
     {
-        name: 'Does Not Exist 18',
+        name: 'All In',
         isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
-    },
-    {
-        name: 'Does Not Exist 19',
-        isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
-    },
-    {
-        name: 'Does Not Exist 20',
-        isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
+        hoverText: 'this achievement is related to the trade function',
+        img: 'imgs/achievements/all_in.jpg',
     },
     {
         name: 'Does Not Exist 23',
@@ -168,10 +168,10 @@ const achievements = [
         img: 'imgs/achievements/uninitialized.jpg',
     },
     {
-        name: 'Does Not Exist 27',
+        name: 'Do-Over',
         isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
+        hoverText: 'if only there was a way to undo mistakes',
+        img: 'imgs/achievements/do_over.jpg',
     },
     {
         name: 'Buy the Map',
@@ -582,10 +582,10 @@ const achievements = [
         img: 'imgs/achievements/uninitialized.jpg',
     },
     {
-        name: 'Does Not Exist 98',
+        name: 'Fidget Clicks',
         isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
+        hoverText: '???',
+        img: 'imgs/achievements/fidget_clicks.jpg',
     },
     {
         name: 'Does Not Exist 99',
@@ -634,11 +634,16 @@ function renderAchievements() {
     updateAchievementsInfo();
 }
 
+let numAchievementsOpens = 0;
 // Function to show the achievements overlay
 function showAchievementsOverlay() {
     const overlay = document.getElementById('achievementsOverlay');
     overlay.style.display = 'flex'; // Show the overlay and center it
     unlockAchievement('First');
+    numAchievementsOpens++;
+    if (numAchievementsOpens==5){
+        unlockAchievement('Fifth');
+    }
     renderAchievements(); // Render the achievements grid inside the overlay
 }
 
