@@ -989,9 +989,9 @@ function attackPlayer() {
         }
         
         if (randSusanoo) { // Susanoo
-            enemyDefense *= 1.02; // Increase Kaguya's defense by 2%
+            enemyDefense *= 1.03; // Increase Kaguya's defense by 3%
             document.getElementById('enemyDefenseStat').innerText = formatNumber(enemyDefense);
-            logFight(`<span style='color: #4682B4;'>Kaguya activates Susanoo! Her defense increases by 2%.</span>`);
+            logFight(`<span style='color: #4682B4;'>Kaguya activates Susanoo! Her defense increases by 3%.</span>`);
         }
         
         if (randKamui) { // Kamui
