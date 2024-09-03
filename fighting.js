@@ -745,6 +745,9 @@ function attackEnemy(resolve) {
         enemyImageContainer.appendChild(enemyImage);
 
 
+        setTimeout(() => {
+            fightLoop(resolve);
+        }, 750);
     }
 
     if (currEnemyName === "Kaguya" && enemyHealth <= enemyMaxHealth) {
@@ -917,7 +920,7 @@ function attackPlayer() {
     } else if (currEnemyName === "Kaguya") {
         // Independent chance for each attack
         const randChakraAbsorption = Math.random() < 0.01;
-        const randTruthSeekerBall = Math.random() < 0.03;
+        const randTruthSeekerBall = Math.random() < 0.02;
         const randByakugan64Palms = Math.random() < 0.13;
         const randPlanetaryDevastation = Math.random() < 0.01;
         const randAmaterasu = Math.random() < 0.05;
@@ -936,10 +939,11 @@ function attackPlayer() {
         if (randTruthSeekerBall) { // Truth Seeker Ball
             copium *= 0.9; // Reduce copium by 10%
             delusion *= 0.9; // Reduce delusion by 10%
+            playerDefense *= 0.9;
             playerMaxHealth = Math.ceil(Math.pow(copium, 1 / 20) * playerHealthMult);
             playerDefenseBase = delusion > 0 ? Math.ceil(Math.pow(delusion, 1 / 12) / 500) : 0;
             document.getElementById('playerHealthStat').innerText = formatNumber(playerMaxHealth);
-            logFight(`<span style='color: #FF4500;'>Kaguya uses Truth Seeker Ball! Your copium and delusion are reduced by 10%, and max health and base defense recalculated.</span>`);
+            logFight(`<span style='color: #FF4500;'>Kaguya uses Truth Seeker Ball! Your copium, delusion, and defense are reduced by 10%, and max health and base defense recalculated.</span>`);
         }
         
         if (randByakugan64Palms) { // Byakugan 128 Palms
