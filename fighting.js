@@ -340,14 +340,6 @@ function startFightGame(enemyName, enemyImg) {
         
         fightEnded = false; // Reset the flag when the fight starts
 
-
-
-        // Update health bars
-        updateHealthBars();
-
-        updateStatsUI();
-
-
         // Show the fighting overlay
         document.getElementById('fightingOverlay').style.display = 'flex';
 
@@ -378,6 +370,11 @@ function startFightGame(enemyName, enemyImg) {
                 logFight("<span style='color: red; font-size: 1.2em';>Chuck Norris has no distractions and is ready to fight you at full power.</span>");
             }
         }
+
+        // Update health bars
+        updateHealthBars();
+
+        updateStatsUI();
 
         // Add a 0.5-second delay before starting the fight loop
         setTimeout(() => {

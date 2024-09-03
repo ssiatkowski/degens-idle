@@ -588,10 +588,6 @@ async function restartPrestige(){
 <p>If you're absolutely sure that you need to reset because you messed up your upgrade buying, then go ahead and click that button. Otherwise, maybe just take a deep breath and reconsider. 😅</p>`;
 
     if (await showMessageModal(confirmTitle, confirmMessage, true, false)) {
-
-        epsMultiplier = 1;
-        prestigeRequirement = 1000;
-        
         // Call restartGame with isPrestige flag set to true
         restartGame(true);
     }
