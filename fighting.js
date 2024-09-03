@@ -176,11 +176,11 @@ const enemyStats = {
         nextBoss: "Vegeta SS Eternal",
     },
     "Vegeta SS Eternal": {
-        health: 9e12,
+        health: 1.2e13,
         minDamage: 900,
         maxDamage: 1200,
         attackSpeed: 13,
-        defense: 3e10, 
+        defense: 5e10, 
         critChance: 0.2,
         critDamage: 2.5,
         dodge: 0.2,
@@ -727,11 +727,11 @@ function attackEnemy(resolve) {
         // Special case for "Vegeta SS Eternal"
         if (currEnemyName === "Vegeta SS Eternal") {
             if (hopium < 0) {
-                playerCurrentAttackSpeed *= 0.5; // Decrease attack speed by 50%
-                logFight(`<span style='color: #FF4500; font-weight: bold; font-size: 1.3em;'>Vegeta SS Eternal senses your despair, and the extremely fucking powerful magnetic field around him slows your attacks by 50%!</span>`);
+                playerCurrentAttackSpeed *= 0.25; // Decrease attack speed by 75%
+                logFight(`<span style='color: #FF4500; font-weight: bold; font-size: 1.3em;'>Vegeta SS Eternal senses your despair, and the extremely fucking powerful magnetic field around him slows your attacks by 75%!</span>`);
             } else {
-                playerCurrentAttackSpeed *= 1.5; // Increase attack speed by 50%
-                logFight(`<span style='color: #00FF00; font-weight: bold; font-size: 1.3em;'>Vegeta SS Eternal feels your hope, and the extremely fucking powerful magnetic field around him boosts your attack speed by 50%!</span>`);
+                playerCurrentAttackSpeed *= 1.75; // Increase attack speed by 75%
+                logFight(`<span style='color: #00FF00; font-weight: bold; font-size: 1.3em;'>Vegeta SS Eternal feels your hope, and the extremely fucking powerful magnetic field around him boosts your attack speed by 75%!</span>`);
             }
         }
 
