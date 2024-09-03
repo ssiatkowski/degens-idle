@@ -3,6 +3,8 @@ function openSettings() {
     const settingsOverlay = document.getElementById('settingsOverlay');
     settingsOverlay.style.display = 'flex';
     
+    unlockAchievement('Settings');
+
     // Add a temporary event listener to close the overlay when clicking outside of it
     setTimeout(() => {
         document.addEventListener('click', outsideClickListener);
@@ -127,6 +129,10 @@ function exportSave() {
             name: skill.name,
             unlocked: skill.unlocked
         })), // Added
+        achievements: Array.from(achievementsMap.values()).map(achievement => ({
+            name: achievement.name,
+            isUnlocked: achievement.isUnlocked
+        })), // Added achievements
         autoUpgradeStatus: purchasedUpgrades.reduce((acc, upgrade) => {
             acc[upgrade.name] = document.getElementById(`toggle-${upgrade.name}`).checked;
             return acc;
@@ -243,6 +249,14 @@ function importSave(event) {
             }
         }
 
+        // Handle achievements
+        achievementsMap.forEach((achievement, name) => {
+            const savedAchievement = gameState.achievements.find(a => a.name === name);
+            if (savedAchievement && savedAchievement.isUnlocked) {
+                unlockAchievement(name, true); // Use the unlockAchievement function with duringLoad set to true
+            }
+        });
+
         // Handle library skills
         librarySkills.forEach(skill => {
             const savedSkill = gameState.librarySkills.find(s => s.name === skill.name);
@@ -264,6 +278,7 @@ function importSave(event) {
                 }
             }
         });
+
 
         // Check the state of delusion and update the switch position accordingly
         const toggleDelusion = document.getElementById('toggleDelusion');
@@ -335,6 +350,7 @@ document.getElementById('importFileInput').addEventListener('change', importSave
 // Add event listener for Import Save button
 document.getElementById('howToPlayButton').addEventListener('click', function() {
     closeSettings();
+    unlockAchievement('How to Play');
     showMessageModal('How to Play', '', false, false, 'imgs/modal_imgs/howtoplay.png');
 });
 
@@ -583,6 +599,9 @@ document.getElementById('saveAutomationSettingsButton').addEventListener('click'
             return; // Prevent closing if there's an error
         } else {
             autoAscendThreshold = ascendThresholdInput;
+            if(ascendThresholdInput >= 10){
+                unlockAchievement('Max Automation')
+            }
         }
     }
 

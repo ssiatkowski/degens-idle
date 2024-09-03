@@ -1072,3 +1072,30 @@ input:checked + .slider:before {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Shadow for depth */
     z-index: 3;
 }
+
+#popup-tooltip {
+    position: fixed;
+    bottom: 40px; /* Moved up slightly */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: gray;
+    color: white;
+    padding: 20px 40px; /* Increased padding for a bigger window */
+    border-radius: 10px; /* Increased border-radius for a smoother appearance */
+    font-size: 18px; /* Slightly larger font size */
+    font-weight: bold; /* Make the font bold */
+    z-index: 10000;
+    opacity: 0;
+    transition: opacity 1.0s ease;
+    max-width: 80%; /* Optional: Restrict the max width */
+    text-align: center; /* Center text inside the tooltip */
+}
+
+#popup-tooltip.visible-popup-tooltip {
+    opacity: 1;
+}
+
+.hidden-popup-tooltip {
+    opacity: 0;
+}
+

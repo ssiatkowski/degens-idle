@@ -97,6 +97,7 @@ const upgrades = [
         cost: { copium: 1000, delusion: 1000, yachtMoney: 1000, trollPoints: 1000, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 10, delusionPerSecond: 10, yachtMoneyPerSecond: 10, trollPointsPerSecond: 10, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/captain_degen.jpg`,
+        achievement: 'Grasshopper',
     },
     {
         name: `Swing and a Miss`,
@@ -186,6 +187,7 @@ const upgrades = [
         img: `imgs/cookie_clicker.jpg`,
         message: `In the vast world of idle games, one title stands as the beacon that lit the path for all others: Cookie Clicker. Launched in 2013, Cookie Clicker captivated millions with its simple yet endlessly engaging premise. The thrill of watching numbers grow, the joy of achieving milestones, and the addictiveness of endless clicking and upgrading—all these elements combined to create a phenomenon that transcended the gaming community.\n\nIn homage to this legendary game, you have now unlocked a cookie! Clicking this cookie will count as clicking each collect button 10 times! It will persist across Prestiges! Happy clicking!`,
         hoverOverwrite: `It's a cookie. Just eat it.`,
+        achievement: 'Cookie Clicker',
     },
     {
         name: `Cosmetic Surgery`,
@@ -434,6 +436,7 @@ const upgrades = [
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 6.9e5, trollPointsPerSecond: 6.9e6, hopiumPerSecond: 0, knowledgePerSecond: 0.000026, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/rick_roll.jpg`,
         hoverOverwrite: `Thank you for playing...`,
+        achievement: 'Get Rick Rolled',
     },
     {
         name: `Plot Twist?`,
@@ -483,6 +486,7 @@ const upgrades = [
         earnings: { copiumPerSecond: -2.5e7, delusionPerSecond: 0, yachtMoneyPerSecond: -1.3e7, trollPointsPerSecond: -4e7, hopiumPerSecond: -75, knowledgePerSecond: 0.0025, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/all_your_base.jpg`,
         hoverOverwrite: `Xy'løth Q'värk, F'näürg zxÿl-gørh'tha! Z'qúol b'zhåk vi'krêth, nx'tuöl j'dä!`,
+        achievement: 'Build a Base',
     },
     {
         name: `NGU Idle`,
@@ -502,6 +506,7 @@ const upgrades = [
                 <p><strong>You notice that prestige and god-mode multipliers do not directly affect power generation - this must be something bigger than anything you have encountered so far!</strong></p>
                 <p>Driven by curiosity and a burning desire to uncover the secrets that lie ahead, you must find out soon. Each step forward brings you closer to the answers, each discovery a piece of the grand puzzle. Embrace this newfound power, for it is both a gift and a challenge—a test to see if you can wield it wisely.</p>
                 `,
+        achievement: 'Power Unlocked',
     },
     {
         name: `Honest Work`,
@@ -564,6 +569,7 @@ const upgrades = [
         img: `imgs/mosquito.jpg`,
         hoverOverwrite: `WARNING: BUY ONLY IF YOU HAVE A VERY SPECIFIC PLAN IN MIND`,
         message: `Why, oh why, did you go through with this? I warned you! Now, mosquitoes infest your universe, and trust me, they’re not here to help. What were you planning? Whatever it was, I hope it was worth the incessant buzzing and biting. If this was all part of some grand scheme, good luck—you'll need it. Otherwise, enjoy your itchy, sleepless nights. Mosquito Madness has begun, and there’s no turning back now. If you ever somehow get a chance for a do-over, hopefully, you'll have learned your lesson!`,
+        achievement: 'Burn the World',
     },
     {
         name: `Mistakes`,
@@ -749,6 +755,7 @@ const upgrades = [
                 <p>With the training dummy as your practice ground, you’ve gained a deeper understanding of combat. Continue to refine your skills, plan your battles wisely, and always stay prepared. Every decision you make and every resource you spend could be the key to your next victory.</p>
                 `,
         isFight: true,
+        achievement: 'Begin Training',
     },
     {
         name: `Agent Smith`,
@@ -776,6 +783,7 @@ const upgrades = [
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 9e15, trollPointsPerSecond: 0, hopiumPerSecond: -1e8, knowledgePerSecond: 48000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/shao_kahn.jpg`,
         isFight: true,
+        achievement: 'Mortal Kombat'
     },
     {
         name: `Small Wins`,
@@ -870,6 +878,7 @@ const upgrades = [
         cost: { copium: 0, delusion: 0, yachtMoney: 7.77e51, trollPoints: 0, hopium: 1e47, knowledge: 7.77e39, power: 777, serenity: 0 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 7.77e18, yachtMoneyPerSecond: 7.77e18, trollPointsPerSecond: 0, hopiumPerSecond: 7.77e12, knowledgePerSecond: 77700, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/last_bit_of_hope.jpg`,        
+        achievement: 'Remember Trading?',
     },
     {
         name: `Kratos`,
@@ -1097,6 +1106,7 @@ const upgrades = [
                 <p>You wield power beyond imagination, power that has crushed your enemies and saved countless lives. Yet, deep within, there’s a void that no victory can fill, a nagging sense that something vital is missing. Why does hope continue to slip through your grasp?</p>
                 <p><strong>Kaguya:</strong> Power alone was never the answer. You sought satisfaction, but all you found was more longing. What is it that you truly seek, if not the ultimate satisfaction? Why does the light of your triumph feel so dim?</p>
                 <p>With these words, Kaguya fades away, leaving you alone with your thoughts, victorious but unfulfilled, questioning the true meaning of the path you've chosen.</p>`,
+        achievement: 'Save the Multiverse',
     },
     {         
         name: `Not the final boss?`,

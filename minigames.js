@@ -123,6 +123,9 @@ function playMiniGame(gameType) {
                         reward = softCaps.speed;
                         softCapReached = true;
                     }
+                    if (effectiveClicksPerSecond > 3.2){
+                        unlockAchievement('Speed Demon');
+                    }
                     resultMessage = `You tapped ${points} dots with ${misclicks} misclicks in ${duration} seconds (${effectiveClicksPerSecond.toFixed(2)} points per second). Your reward is <span style="color: green;">${formatNumber(reward)}</span> copium!`;
                 } else {
                     reward = -Math.max(Math.floor(Math.abs(copium) * 0.25), 25);
@@ -280,6 +283,10 @@ function playMiniGame(gameType) {
                 if (reward > softCaps.memory) {
                     reward = softCaps.memory;
                     softCapReached = true;
+                }
+
+                if(correct && gridSize >= 6 && sequenceLength >= 6){
+                    unlockAchievement('Memory Master');
                 }
 
                 delusion += reward;
@@ -521,6 +528,9 @@ function playMiniGame(gameType) {
                         reward = softCaps.math;
                         softCapReached = true;
                     }
+                    if (targetSum >= 83){
+                        unlockAchievement('Math Genius');
+                    }
                     resultMessage = `You found the correct sum and earned <span style="color: green;">${formatNumber(reward)}</span> yachtMoney!`;
                 } else {
                     reward = -Math.max(Math.floor(Math.abs(yachtMoney) * 0.2), 20);
@@ -692,6 +702,10 @@ function playMiniGame(gameType) {
                         }
 
                         resultMessage += cooldownMessage;
+
+                        if(boxValue >= 124){
+                            unlockAchievement('Pure Luck');
+                        }
 
                         showMessageModal('Luck Game Result', resultMessage, false, false, null, false, false);
                         updateDisplay(); // Update the display

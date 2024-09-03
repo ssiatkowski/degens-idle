@@ -17,6 +17,8 @@ let powerPerSecond = 0;
 let serenity = 0;
 let serenityPerSecond = 0;
 
+let numUnlockedAchievements = 0;
+
 let numberFormatType = 0;
 
 let effectiveCopiumPerSecond = 0;
@@ -325,6 +327,15 @@ function loadGameState() {
         }
     }
 
+    const savedAchievements = JSON.parse(localStorage.getItem('achievements')) || [];
+    if (Array.isArray(savedAchievements)) {
+        savedAchievements.forEach(savedAchievement => {
+            if (savedAchievement.isUnlocked) {
+                unlockAchievement(savedAchievement.name, true); // Use the unlockAchievement function with duringLoad set to true
+            }
+        });
+    }
+
     // Load unlocked skills
     const savedLibrarySkills = JSON.parse(localStorage.getItem('librarySkills')) || [];
     if (Array.isArray(savedLibrarySkills)) {
@@ -352,6 +363,7 @@ function loadGameState() {
             }
         });
     }
+    
 
     // Check the state of delusion and update the switch position accordingly
     const toggleDelusion = document.getElementById('toggleDelusion');
@@ -464,6 +476,16 @@ function saveGameState() {
         const unlockedpowerHallSkills = powerHallSkills.filter(skill => skill.unlocked);
         localStorage.setItem('powerHallSkills', JSON.stringify(unlockedpowerHallSkills));
     }
+
+    // Save unlocked achievements
+    const unlockedAchievements = [];
+    achievementsMap.forEach(achievement => {
+        if (achievement.isUnlocked) {
+            unlockedAchievements.push({ name: achievement.name, isUnlocked: achievement.isUnlocked });
+        }
+    });
+    localStorage.setItem('achievements', JSON.stringify(unlockedAchievements));
+
 
     // Save the state of each switch
     purchasedUpgrades.forEach(upgrade => {
@@ -667,6 +689,7 @@ async function restartGame(isPrestige = false) {
             epsMultiplier = 1;
             prestigeRequirement = 1000;
 
+
             godModeLevel = 0;
             godModeMultiplier = 1;
             puGodLevel = 0;
@@ -748,6 +771,8 @@ async function restartGame(isPrestige = false) {
 
             transcendenceUnlocked = false;
 
+            deadpoolRevives = 0;
+
             playerAttackSpeed = 2;
             powerSurgeMultiplier = 1;
 
@@ -774,6 +799,12 @@ async function restartGame(isPrestige = false) {
                 cooldowns[gameType] = false;
                 resetButtonAndProgress(gameType,);
             });
+
+            // Reset achievements
+            achievementsMap.forEach(achievement => {
+                achievement.isUnlocked = false;
+            });
+            renderAchievements(); // Re-render the achievements grid
 
             // Clear all local storage
             localStorage.clear();
@@ -1218,7 +1249,7 @@ function updateDisplay() {
 
 function updateMultipliersDisplay() {
 
-    totalMultiplier = epsMultiplier * godModeMultiplier * puGodMultiplier * bigCrunchMultiplier * devMultiplier
+    totalMultiplier = epsMultiplier * godModeMultiplier * puGodMultiplier * bigCrunchMultiplier * (1 + (0.01 * numUnlockedAchievements)) * devMultiplier
 
     document.getElementById('prestige-multiplier').textContent = `Prestige: x${formatNumber(epsMultiplier)} mult`;
     document.getElementById('god-mode-display').textContent = `God-Mode Level ${godModeLevel} (x${formatNumber(godModeMultiplier)} mult)`;
@@ -1304,6 +1335,7 @@ async function prestige(skipConfirms = false) {
             // If skipConfirms is false and epsMultiplier is less than 5, show the success modal
             if (!skipConfirms && epsMultiplier < 5) {
                 showMessageModal('Prestige Successful!', `Your multiplier is now x${formatNumber(epsMultiplier)}. All resources have been reset.`);
+                unlockAchievement('First Prestige');
             }
         }
     }
@@ -1325,6 +1357,7 @@ function updatePrestigeButton() {
         prestigeButton.style.display = 'block';
         // Check if auto-prestige should be triggered
         if (autoPrestigeThreshold !== null && (newMultiplier / epsMultiplier) > autoPrestigeThreshold && !isFightInProgress) {
+            showPopupTooltip(`Auto-Prestiged for x${formatNumber(newMultiplier / epsMultiplier)}`, color='#DAA520')
             prestige(true); // Trigger auto-prestige
         }
     } else {
@@ -1415,10 +1448,12 @@ async function ascend() {
         
         showMessageModal('Ascension Successful!', `<strong>You have entered God-Mode Level ${godModeLevel}.</strong><br> Your multiplier God-Mode is now x${formatNumber(godModeMultiplier)}, your prestige multiplier is x${formatNumber(epsMultiplier)}, and your chosen upgrades are 10x stronger.`);        
 
+        unlockAchievement('First Ascension');
 
         restartGame(true); // Use the existing restartGame function with prestige mode
         // Save game state after ascending
         saveGameState();
+
     }
 
     // Re-enable after the function completes
@@ -1462,6 +1497,7 @@ async function transcend() {
         
         showMessageModal('Transcendence Successful!', `<strong>You have entered Parallel Universe God-Mode Level ${puGodLevel}.</strong><br> Your Parallel Universe God-Mode multiplier is now x${formatNumber(puGodMultiplier)}, your prestige multiplier is x${formatNumber(epsMultiplier)}, and your chosen upgrades are 10x stronger.`);        
 
+        unlockAchievement('Transcend');
 
         restartGame(true); // Use the existing restartGame function with prestige mode
         // Save game state after transcending
@@ -1505,6 +1541,7 @@ async function bigCrunch() {
                 upgrade.isPUGodMode = false;
             });
 
+            unlockAchievement('Big Crunch');
 
             // Save game state after prestige
             updateMultipliersDisplay();
@@ -1541,6 +1578,8 @@ function updateAscendButton() {
 
                 epsMultiplier = calculateAscensionEpsMult();
                 prestigeRequirement = calculateMinResource();
+
+                showPopupTooltip(`Auto-Ascended ${autoAscendThreshold} Upgrades`, color='#00008B')
                 
                 restartGame(true); // Use the existing restartGame function with prestige mode
                 saveGameState(); // Save game state after ascending
@@ -1579,6 +1618,8 @@ function updateTranscendButton() {
 
                 epsMultiplier = calculateAscensionEpsMult();
                 prestigeRequirement = calculateMinResource();
+                
+                showPopupTooltip(`Auto-Transcended ${autoTranscendThreshold} Upgrades`, color='#702963')
                 
                 restartGame(true); // Use the existing restartGame function with prestige mode
                 saveGameState(); // Save game state after transcending
@@ -1756,6 +1797,11 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
         // Add the upgrade to the purchased upgrades list
         purchasedUpgrades.push(upgrade);
 
+        // Check if the upgrade has an associated achievement and unlock it
+        if (upgrade.achievement) {
+            unlockAchievement(upgrade.achievement);
+        }
+
         // Special case for unlocking the "Cookie Clicker" upgrade
         if (name === "Cookie Clicker") {
             document.getElementById('cookieButton').style.display = 'block';
@@ -1770,7 +1816,6 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
         if (name === "Sebo's Luck") {
             yachtMoney += 1e65;
         }
-
 
         // Check if the upgrade message has been shown before
         const messageShownUpgrades = JSON.parse(localStorage.getItem('messageShownUpgrades')) || [];
@@ -1789,7 +1834,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
 
         // Special case for the "Still very stupid" upgrade
         if (name === "Kaguya") {
-            showMessageModal('Sadly', "This marks the end of v0.877. I hope you're enjoying the thrill of these battles and unlocking the secrets of the Power Hall skills. The adventure is far from over, and your feedback is what makes it truly epic. Join us on Discord and share your experiences, strategies, and thoughts. Let’s shape the future of the game together and make each update more exciting than the last!");
+            showMessageModal('Sadly', "This marks the end of v0.878. I hope you're enjoying the thrill of these battles and unlocking the secrets of the Power Hall skills. The adventure is far from over, and your feedback is what makes it truly epic. Join us on Discord and share your experiences, strategies, and thoughts. Let’s shape the future of the game together and make each update more exciting than the last!");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one
@@ -1798,6 +1843,23 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
         }
 
         if (callUpdatesAfterBuying) {
+            if (name == 'Good Guy Sasuke') {
+                if (!purchasedUpgrades.some(upgrade => upgrade.name === "Cosmetic Surgery")){
+                    unlockAchievement('Stay Ugly')
+                }
+            }
+
+            if (name == 'Degens Idle Dev') {
+                if (!purchasedUpgrades.some(upgrade => upgrade.name === "Hunt for Hussein")){
+                    unlockAchievement('Big Brain Move')
+                }
+            }
+
+            if (name == 'Vegeta') {
+                if (delusion > 0 && hopium < 0){
+                    unlockAchievement('Raw Power')
+                }
+            }
             // Update the upgrade list and display
             updateUpgradeList();
             updateMultipliersDisplay();
@@ -2527,6 +2589,29 @@ function showImmediateMessageModal(title, message) {
         }
     };
 }
+
+let currentPopupTooltipTimeoutId = null;
+
+function showPopupTooltip(message, color = 'gray', durationSeconds = 2) {
+    const tooltip = document.getElementById('popup-tooltip');
+    tooltip.textContent = message;
+    tooltip.style.backgroundColor = color;
+    tooltip.classList.add('visible-popup-tooltip');
+    tooltip.classList.remove('hidden-popup-tooltip');
+
+    // Clear any existing timeout to avoid closing the current tooltip prematurely
+    if (currentPopupTooltipTimeoutId) {
+        clearTimeout(currentPopupTooltipTimeoutId);
+    }
+
+    // Set a new timeout and store its ID
+    currentPopupTooltipTimeoutId = setTimeout(() => {
+        tooltip.classList.remove('visible-popup-tooltip');
+        tooltip.classList.add('hidden-popup-tooltip');
+        currentPopupTooltipTimeoutId = null; // Clear the timeout ID after it completes
+    }, durationSeconds * 1000);
+}
+
 
 // Throttle function
 function throttle(func, limit) {

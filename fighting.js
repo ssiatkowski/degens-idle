@@ -365,6 +365,7 @@ function startFightGame(enemyName, enemyImg) {
                 enemyAbsorb = 0;
                 document.getElementById('enemyDefenseStat').innerText = formatNumber(enemyDefense);
                 document.getElementById('playerAbsorbStat').innerText = formatNumber(playerAbsorb * 100) + '%';
+                unlockAchievement('Chuck Norris Kidney');
                 logFight("<span style='color: green; font-size: 1.2em';>You catch Chuck Norris mid-session while he's pummeling the Training Dummy. Seizing the moment, you sneak up and deliver a wrenching gut shot right to his kidney. The impact is so brutal that it cuts his health and defense in half for the rest of the battle, and he is unable to absorb any damage.</span>");
             } else {
                 logFight("<span style='color: red; font-size: 1.2em';>Chuck Norris has no distractions and is ready to fight you at full power.</span>");
@@ -720,6 +721,7 @@ function attackEnemy(resolve) {
             } else {
                 playerDefenseBase = 1000;
                 playerDefense = 1000; // Grant the player 1k defense
+                unlockAchievement('Outsmart Vegeta SS God');
                 logFight(`<span style='color: #00FF00; font-weight: bold; font-size: 1.3em;'>You outwitted Vegeta SS God! His attempt to absorb your defense fails, and instead, you gain 1,000 base defense!</span>`);
             }
         }
@@ -731,6 +733,7 @@ function attackEnemy(resolve) {
                 logFight(`<span style='color: #FF4500; font-weight: bold; font-size: 1.3em;'>Vegeta SS Eternal senses your despair, and the extremely fucking powerful magnetic field around him slows your attacks by 75%!</span>`);
             } else {
                 playerCurrentAttackSpeed *= 1.75; // Increase attack speed by 75%
+                unlockAchievement('Outsmart Vegeta SS Eternal');
                 logFight(`<span style='color: #00FF00; font-weight: bold; font-size: 1.3em;'>Vegeta SS Eternal feels your hope, and the extremely fucking powerful magnetic field around him boosts your attack speed by 75%!</span>`);
             }
         }

@@ -250,6 +250,8 @@ function openPowerHall() {
         powerHallOverlay.style.display = 'flex';
         updatePowerHallSkillDisplay();
 
+        unlockAchievement('Enter Hall of Power');
+
         // Add a temporary event listener to close the overlay when clicking outside of it
         setTimeout(() => {
             document.addEventListener('click', outsidePowerHallClickListener);

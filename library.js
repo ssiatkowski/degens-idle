@@ -204,6 +204,7 @@ function unlockLibrarySkill(skill, duringLoad = false) {
                 break;
 
             case 'Double Ascension':
+                unlockAchievement('Now we are Progressing');
                 numAscensionUpgrades = Math.max(numAscensionUpgrades, 2);
                 break;
 
@@ -261,6 +262,7 @@ function unlockLibrarySkill(skill, duringLoad = false) {
                 break;
 
             case 'Map to Hall of Power':
+                unlockAchievement('Buy the Map');
                 unlockHallofPower();
                 break;
 
@@ -406,6 +408,7 @@ function initializeSkills() {
 }
 
 function openLibrary() {
+    unlockAchievement('Hall of Knowledge');
     if (purchasedUpgrades.find(up => up.name === 'The Library')) {
         const libraryOverlay = document.getElementById('libraryOverlay');
         libraryOverlay.style.display = 'flex';
