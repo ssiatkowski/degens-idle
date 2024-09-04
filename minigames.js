@@ -37,10 +37,10 @@ function playMiniGame(gameType) {
 
     // Define the soft cap for each mini-game
     const softCaps = {
-        speed: Math.max(Math.abs(effectiveCopiumPerSecond) * 8 * 60 * 60, 100),  // 8 hours of copium per second
-        memory: Math.max(Math.abs(effectiveDelusionPerSecond) * 8 * 60 * 60, 100),  // 8 hours of delusion per second
-        math: Math.max(Math.abs(effectiveYachtMoneyPerSecond) * 8 * 60 * 60, 100),  // 8 hours of yacht money per second
-        luck: Math.max(Math.abs(effectiveTrollPointsPerSecond) * 8 * 60 * 60, 100)  // 8 hours of troll points per second
+        speed: Math.max(Math.abs(effectiveCopiumPerSecond) * 10 * 60 * 60, 100),  // 10 hours of copium per second
+        memory: Math.max(Math.abs(effectiveDelusionPerSecond) * 10 * 60 * 60, 100),  // 10 hours of delusion per second
+        math: Math.max(Math.abs(effectiveYachtMoneyPerSecond) * 10 * 60 * 60, 100),  // 10 hours of yacht money per second
+        luck: Math.max(Math.abs(effectiveTrollPointsPerSecond) * 10 * 60 * 60, 100)  // 10 hours of troll points per second
     };
 
     let softCapReached = false;  // Variable to check if the soft cap is reached

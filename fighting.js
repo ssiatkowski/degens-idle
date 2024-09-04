@@ -339,6 +339,7 @@ function startFightGame(enemyName, enemyImg) {
         kamuiActive = false;
         
         fightEnded = false; // Reset the flag when the fight starts
+        isProgrammaticScroll = true;
 
         // Show the fighting overlay
         document.getElementById('fightingOverlay').style.display = 'flex';
@@ -719,6 +720,7 @@ function attackEnemy(resolve) {
                 delusion = 0;
                 enemyDefense += absorbedDefense;
                 playerDefense = 0;
+                playerDefenseBase = 0;
 
                 logFight(`<span style='color: #FFD700; font-weight: bold; font-size: 1.3em;'>Vegeta SS God sees right through you, erasing all your delusions and absorbing all of your defensive powers! His defense skyrockets to ${formatNumber(absorbedDefense)}!</span>`);
             } else {
@@ -1093,7 +1095,7 @@ document.getElementById('fightLog').addEventListener('scroll', () => {
             clearTimeout(scrollTimeout);
         }
 
-        showPopupTooltip('Fight Log auto scrolling paused for 5 seconds', 'gray', 1)
+        if (!fightEnded) { showPopupTooltip('Fight Log scroll paused for 5 seconds', 'gray', 0.5); }
 
         // Reset the timer for 5 seconds
         scrollTimeout = setTimeout(() => {

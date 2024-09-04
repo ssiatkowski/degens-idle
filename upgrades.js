@@ -993,7 +993,7 @@ const upgrades = [
     {
         name: `Chuck Norris`,
         cost: { copium: 1e63, delusion: 1e63, yachtMoney: 1e63, trollPoints: 1e63, hopium: 0, knowledge: 4e47, power: 3e8, serenity: 0 },
-        earnings: { copiumPerSecond: 1.5e24, delusionPerSecond: 0, yachtMoneyPerSecond: 1.5e24, trollPointsPerSecond: 0, hopiumPerSecond: -2e20, knowledgePerSecond: 1e7, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 1.5e24, delusionPerSecond: 0, yachtMoneyPerSecond: 1.5e24, trollPointsPerSecond: 0, hopiumPerSecond: -1e20, knowledgePerSecond: 1e7, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/chuck_norris.jpg`,
         isFight: true,
     },
@@ -1023,13 +1023,13 @@ const upgrades = [
     },
     {
         name: `Musical Chairs`,
-        cost: { copium: 0, delusion: 0, yachtMoney: 9e64, trollPoints: 0, hopium: 0, knowledge: 8e47, power: 1.5e9, serenity: 0 },
+        cost: { copium: 0, delusion: 0, yachtMoney: 9e65, trollPoints: 0, hopium: 0, knowledge: 8e48, power: 1.5e9, serenity: 0 },
         earnings: { copiumPerSecond: 1e24, delusionPerSecond: 2e24, yachtMoneyPerSecond: 0, trollPointsPerSecond: 2e24, hopiumPerSecond: 0, knowledgePerSecond: 3.5e6, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/musical_chairs.jpg`,        
     },
     {
         name: `Vegeta`,
-        cost: { copium: 3e64, delusion: 0, yachtMoney: 3e64, trollPoints: 3e64, hopium: 0, knowledge: 5e49, power: 5e10, serenity: 0 },
+        cost: { copium: 3e67, delusion: 0, yachtMoney: 3e67, trollPoints: 3e67, hopium: 0, knowledge: 5e50, power: 5e10, serenity: 0 },
         earnings: { copiumPerSecond: 3e25, delusionPerSecond: 3e25, yachtMoneyPerSecond: 3e25, trollPointsPerSecond: 3e25, hopiumPerSecond: -1e26, knowledgePerSecond: 8.9e7, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/vegeta.jpg`,
         isFight: true,
@@ -1068,31 +1068,31 @@ const upgrades = [
     },
     {
         name: `Moo-ving Violation`,
-        cost: { copium: 0, delusion: 0, yachtMoney: 5e65, trollPoints: 0, hopium: 0, knowledge: 5e49, power: 1.1e10, serenity: 0 },
+        cost: { copium: 0, delusion: 0, yachtMoney: 5e65, trollPoints: 0, hopium: 0, knowledge: 5e49, power: 2e10, serenity: 0 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1e26, hopiumPerSecond: 0, knowledgePerSecond: 1e7, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/wyoming_traffic.jpg`,        
     },
     {         
         name: `Charging Into Forums`,
-        cost: { copium: 4e65, delusion: 0, yachtMoney: 0, trollPoints: 1e66, hopium: 0, knowledge: 6e49, power: 1.2e10, serenity: 0 },
+        cost: { copium: 4e67, delusion: 0, yachtMoney: 0, trollPoints: 1e68, hopium: 0, knowledge: 6e50, power: 3e10, serenity: 0 },
         earnings: { copiumPerSecond: 2e26, delusionPerSecond: 2e26, yachtMoneyPerSecond: 0, trollPointsPerSecond: 5e25, hopiumPerSecond: 0, knowledgePerSecond: 1.5e7, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/keyboard_warrior.jpg`,        
     },
     {         
         name: `Frowning on Jetski?`,
-        cost: { copium: 0, delusion: 0, yachtMoney: 3e66, trollPoints: 1e66, hopium: 0, knowledge: 7e49, power: 1.3e10, serenity: 0 },
+        cost: { copium: 0, delusion: 0, yachtMoney: 3e68, trollPoints: 1e69, hopium: 0, knowledge: 7e50, power: 4e10, serenity: 0 },
         earnings: { copiumPerSecond: 1e26, delusionPerSecond: 0, yachtMoneyPerSecond: 6e26, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 1.3e7, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/money_does_buy_happiness.jpg`,        
     },
     {         
         name: `Smile and Nod`,
-        cost: { copium: 4e66, delusion: 0, yachtMoney: 0, trollPoints: 1e66, hopium: 0, knowledge: 8e49, power: 1.4e10, serenity: 0 },
+        cost: { copium: 4e68, delusion: 0, yachtMoney: 0, trollPoints: 1e69, hopium: 0, knowledge: 8e50, power: 5e10, serenity: 0 },
         earnings: { copiumPerSecond: 8e26, delusionPerSecond: 8e26, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 1.1e7, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/say_what_what.jpg`,        
     },
     {         
         name: `Blunt Dreams`,
-        cost: { copium: 4.2e68, delusion: 4.2e68, yachtMoney: 4.2e68, trollPoints: 4.2e68, hopium: 0, knowledge: 4.2e51, power: 4.2e10, serenity: 0 },
+        cost: { copium: 4.2e68, delusion: 4.2e68, yachtMoney: 4.2e68, trollPoints: 4.2e68, hopium: 0, knowledge: 4.2e51, power: 4.2e11, serenity: 0 },
         earnings: { copiumPerSecond: 4.2e27, delusionPerSecond: 4.2e27, yachtMoneyPerSecond: 4.2e27, trollPointsPerSecond: 4.2e27, hopiumPerSecond: 0, knowledgePerSecond: 4.2e7, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/ez_blunt.jpg`,        
     },
@@ -1106,13 +1106,19 @@ const upgrades = [
     {         
         name: `Going Crazy Over Here`,
         cost: { copium: 5e71, delusion: 5e69, yachtMoney: 0, trollPoints: 3e71, hopium: 0, knowledge: 3e53, power: 2e12, serenity: 0 },
-        earnings: { copiumPerSecond: 1e28, delusionPerSecond: 1e28, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 1.2e8, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 1e28, delusionPerSecond: 1e28, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 1.8e8, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/going_crazy_over_here.jpg`,       
         hoverOverwrite: `When you max out every stat and skill, but still get destroyed by Kaguya.`,
     },
+    {         
+        name: `Unprecedented Overlap`,
+        cost: { copium: 1e72, delusion: 2e71, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 3e55, power: 2e14, serenity: 0 },
+        earnings: { copiumPerSecond: 2e28, delusionPerSecond: 2e28, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 3.3e8, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: `imgs/unprecedented_overlap.jpg`
+    },
     {
         name: `Kaguya`,
-        cost: { copium: 6e69, delusion: 6e69, yachtMoney: 6e69, trollPoints: 6e69, hopium: 0, knowledge: 6e53, power: 3e12, serenity: 0 },
+        cost: { copium: 6e69, delusion: 6e69, yachtMoney: 6e69, trollPoints: 6e69, hopium: 0, knowledge: 6e55, power: 1e15, serenity: 0 },
         earnings: { copiumPerSecond: 3e30, delusionPerSecond: 3e30, yachtMoneyPerSecond: 3e30, trollPointsPerSecond: 3e30, hopiumPerSecond: -1e35, knowledgePerSecond: 3e9, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/kaguya.jpg`,
         isFight: true,
