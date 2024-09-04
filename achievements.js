@@ -390,16 +390,16 @@ const achievements = [
         img: 'imgs/achievements/uninitialized.jpg',
     },
     {
-        name: 'Does Not Exist 66',
+        name: 'Make Kuzzi Love You',
         isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
+        hoverText: 'fill out the game feedback form with lots of details',
+        img: 'imgs/achievements/feedback.jpg',
     },
     {
-        name: 'Does Not Exist 67',
+        name: 'Take a Break',
         isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
+        hoverText: 'collect 24hr+ offline gains',
+        img: 'imgs/achievements/offline_gains.jpg',
     },
     {
         name: 'Does Not Exist 68',
@@ -670,6 +670,7 @@ function unlockAchievement(name, duringLoad = false) {
         achievementMultiplier = 1 + (0.01 * numUnlockedAchievements)
 
         if (!duringLoad) {
+            saveGameState();
             renderAchievements(); // Re-render achievements after unlocking
             updateMultipliersDisplay();
             showPopupTooltip(`Unlocked Achievement: ${name}`, color='#1B4D3E', durationSeconds=5);

@@ -883,7 +883,7 @@ const upgrades = [
     },
     {
         name: `Kratos`,
-        cost: { copium: 5e51, delusion: 5e51, yachtMoney: 5e51, trollPoints: 5e51, hopium: 0, knowledge: 5e40, power: 500000, serenity: 0 },
+        cost: { copium: 5e51, delusion: 5e51, yachtMoney: 5e51, trollPoints: 5e51, hopium: 0, knowledge: 5e41, power: 500000, serenity: 0 },
         earnings: { copiumPerSecond: 1e19, delusionPerSecond: 1e19, yachtMoneyPerSecond: 1e19, trollPointsPerSecond: 1e19, hopiumPerSecond: -6e14, knowledgePerSecond: 980000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/kratos.jpg`,
         isFight: true,
@@ -929,7 +929,7 @@ const upgrades = [
     },
     {
         name: `Deadpool`,
-        cost: { copium: 6.9e54, delusion: 6.9e54, yachtMoney: 6.9e54, trollPoints: 6.9e54, hopium: 0, knowledge: 6.9e44, power: 6.9e7, serenity: 0 },
+        cost: { copium: 6.9e54, delusion: 6.9e54, yachtMoney: 6.9e54, trollPoints: 6.9e54, hopium: 0, knowledge: 6.9e45, power: 6.9e7, serenity: 0 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 6.9e20, yachtMoneyPerSecond: 0, trollPointsPerSecond: 6.9e20, hopiumPerSecond: -6.9e15, knowledgePerSecond: 1.69e6, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/deadpool.jpg`,
         isFight: true,
@@ -992,7 +992,7 @@ const upgrades = [
     },
     {
         name: `Chuck Norris`,
-        cost: { copium: 1e63, delusion: 1e63, yachtMoney: 1e63, trollPoints: 1e63, hopium: 0, knowledge: 1e47, power: 3e8, serenity: 0 },
+        cost: { copium: 1e63, delusion: 1e63, yachtMoney: 1e63, trollPoints: 1e63, hopium: 0, knowledge: 4e47, power: 3e8, serenity: 0 },
         earnings: { copiumPerSecond: 1.5e24, delusionPerSecond: 0, yachtMoneyPerSecond: 1.5e24, trollPointsPerSecond: 0, hopiumPerSecond: -2e20, knowledgePerSecond: 1e7, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/chuck_norris.jpg`,
         isFight: true,
@@ -1029,7 +1029,7 @@ const upgrades = [
     },
     {
         name: `Vegeta`,
-        cost: { copium: 3e64, delusion: 0, yachtMoney: 3e64, trollPoints: 3e64, hopium: 0, knowledge: 1e49, power: 5e10, serenity: 0 },
+        cost: { copium: 3e64, delusion: 0, yachtMoney: 3e64, trollPoints: 3e64, hopium: 0, knowledge: 5e49, power: 5e10, serenity: 0 },
         earnings: { copiumPerSecond: 3e25, delusionPerSecond: 3e25, yachtMoneyPerSecond: 3e25, trollPointsPerSecond: 3e25, hopiumPerSecond: -1e26, knowledgePerSecond: 8.9e7, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/vegeta.jpg`,
         isFight: true,
@@ -1112,7 +1112,7 @@ const upgrades = [
     },
     {
         name: `Kaguya`,
-        cost: { copium: 6e69, delusion: 6e69, yachtMoney: 6e69, trollPoints: 6e69, hopium: 0, knowledge: 6e52, power: 3e12, serenity: 0 },
+        cost: { copium: 6e69, delusion: 6e69, yachtMoney: 6e69, trollPoints: 6e69, hopium: 0, knowledge: 6e53, power: 3e12, serenity: 0 },
         earnings: { copiumPerSecond: 3e30, delusionPerSecond: 3e30, yachtMoneyPerSecond: 3e30, trollPointsPerSecond: 3e30, hopiumPerSecond: -1e35, knowledgePerSecond: 3e9, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/kaguya.jpg`,
         isFight: true,

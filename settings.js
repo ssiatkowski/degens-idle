@@ -374,6 +374,7 @@ document.getElementById('donateLargeButton').addEventListener('click', function(
 });
 // Add event listener for Feedback button
 document.getElementById('feedbackButton').addEventListener('click', function() {
+    unlockAchievement('Make Kuzzi Love You');
     window.open('https://docs.google.com/forms/d/e/1FAIpQLSfaQdxaBFCdT789rVTSvFuScEEzlu4rDabjFUX0zkCKinyvKA/viewform?usp=sf_link', '_blank');
 });
 
