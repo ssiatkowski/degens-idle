@@ -1089,6 +1089,7 @@ input:checked + .slider:before {
     transition: opacity 1.0s ease;
     max-width: 80%; /* Optional: Restrict the max width */
     text-align: center; /* Center text inside the tooltip */
+    pointer-events: none; /* Ensure no blocking when hidden or visible */
 }
 
 #popup-tooltip.visible-popup-tooltip {
