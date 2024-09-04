@@ -379,24 +379,30 @@ document.getElementById('feedbackButton').addEventListener('click', function() {
 });
 
 function toggleAllBuyMarkers(targetState) {
-
     purchasedUpgrades.forEach(upgrade => {
         const name = upgrade.name;
         const toggleSwitch = document.getElementById(`toggle-${name}`);
+        
         if (!upgrade.isFight) {
-            // Load the switch state from local storage
             if (toggleSwitch) {
                 toggleSwitch.checked = targetState;
                 toggleSwitch.parentElement.style.display = 'block'; // Make the switch visible
+                
+                // Save the state to localStorage
+                localStorage.setItem(`switchState-${name}`, JSON.stringify(targetState));
+            }
+        } else {
+            if (toggleSwitch) {
+                toggleSwitch.checked = false;
+                toggleSwitch.parentElement.style.display = 'none'; // Hide the switch for fight upgrades
+                
+                // Save the state as unchecked in localStorage for fight upgrades
+                localStorage.setItem(`switchState-${name}`, JSON.stringify(false));
             }
         }
-        else{
-            toggleSwitch.checked = false;
-            toggleSwitch.parentElement.style.display = 'none'; // Make the switch visible
-        }
     });
-
 }
+
 
 
 // Open the automation overlay

@@ -583,9 +583,6 @@ button.disabled {
     grid-template-columns: repeat(1, 1fr); 
 }
 
-/* Mobile styles */
-@media only screen and (max-width: 600px) {
-}
 
 /* Media Queries for Mobile Devices */
 @media (max-width: 768px) {
@@ -644,6 +641,9 @@ button.disabled {
     font-size: 0.8em; 
     }
 
+    .ascend-upgrade-item {
+        transform: scale(0.8); /* Scale down to 70% (30% smaller) */
+    }
 }
 
 #ascendUpgradeSelection {

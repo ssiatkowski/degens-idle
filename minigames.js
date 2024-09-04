@@ -703,10 +703,10 @@ function playMiniGame(gameType) {
 
                         resultMessage += cooldownMessage;
 
-                        if(boxValue >= 124){
+                        if(boxValue >= 123){
                             unlockAchievement('Pure Luck');
                         }
-                        if(sebosLuck && boxValue <= -48){
+                        if(sebosLuck && boxValue <= -49.9){
                             unlockAchievement('That is some Bad Luck');
                         }
 

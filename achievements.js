@@ -104,7 +104,7 @@ const achievements = [
     {
         name: 'Pure Luck',
         isUnlocked: false,
-        hoverText: 'get over 124% return from lucky box',
+        hoverText: 'get over 123% return from lucky box',
         img: 'imgs/achievements/pure_luck.jpg',
     },
     {
@@ -294,16 +294,16 @@ const achievements = [
         img: 'imgs/achievements/uninitialized.jpg',
     },
     {
-        name: 'Does Not Exist 48',
+        name: 'Reject Rejection',
         isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
+        hoverText: '1 for 1 on job hunt',
+        img: 'imgs/achievements/reject_rejection.jpg',
     },
     {
-        name: 'Does Not Exist 49',
+        name: 'How did you know you could enter?',
         isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
+        hoverText: 'enter Hall of Power without knowing how much power is needed',
+        img: 'imgs/achievements/hall_of_power_without_vegeta.jpg',
     },
     {
         name: 'Chuck Norris Kidney',
@@ -326,7 +326,7 @@ const achievements = [
     {
         name: 'Nebula Overdrive',
         isUnlocked: false,
-        hoverText: 'Why spend power?',
+        hoverText: 'why spend power?',
         img: 'imgs/achievements/nebula_overdrive.jpg',
     },
     {

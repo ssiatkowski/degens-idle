@@ -256,6 +256,10 @@ function openPowerHall() {
 
         unlockAchievement('Enter Hall of Power');
 
+        if(!purchasedUpgrades.some(upgrade => upgrade.name === "Helpful Vegeta")){
+            unlockAchievement('How did you know you could enter?');
+        }
+
         // Add a temporary event listener to close the overlay when clicking outside of it
         setTimeout(() => {
             document.addEventListener('click', outsidePowerHallClickListener);

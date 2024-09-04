@@ -30,7 +30,7 @@ const enemyStats = {
         minDamage: 5,
         maxDamage: 25,
         attackSpeed: 3,
-        defense: 16,
+        defense: 18,
         critChance: 0.2,
         critDamage: 2,
         dodge: 0,
@@ -43,7 +43,7 @@ const enemyStats = {
         minDamage: 8,
         maxDamage: 48,
         attackSpeed: 4,
-        defense: 28,
+        defense: 50,
         critChance: 0,
         critDamage: 1,
         dodge: 0,
@@ -56,7 +56,7 @@ const enemyStats = {
         minDamage: 5,
         maxDamage: 12,
         attackSpeed: 45,
-        defense: 300,
+        defense: 400,
         critChance: 0.08,
         critDamage: 15,
         dodge: 0,
@@ -82,7 +82,7 @@ const enemyStats = {
         minDamage: 1,
         maxDamage: 2,
         attackSpeed: 30,
-        defense: 3e6,
+        defense: 4e6,
         critChance: 0,
         critDamage: 1,
         dodge: 0,
@@ -108,7 +108,7 @@ const enemyStats = {
         minDamage: 100,
         maxDamage: 500,
         attackSpeed: 7,
-        defense: 5e8,
+        defense: 8e8,
         critChance: 0,
         critDamage: 1,
         dodge: 0.25,
@@ -121,7 +121,7 @@ const enemyStats = {
         minDamage: 100,
         maxDamage: 300,
         attackSpeed: 5,
-        defense: 3e9,
+        defense: 5e9,
         critChance: 0.1,
         critDamage: 1.5,
         dodge: 0,
@@ -135,7 +135,7 @@ const enemyStats = {
         minDamage: 200,
         maxDamage: 400,
         attackSpeed: 7,
-        defense: 5e9,
+        defense: 7e9,
         critChance: 0.1,
         critDamage: 1.75,
         dodge: 0,
@@ -180,7 +180,7 @@ const enemyStats = {
         minDamage: 900,
         maxDamage: 1200,
         attackSpeed: 13,
-        defense: 5e10, 
+        defense: 6e10, 
         critChance: 0.2,
         critDamage: 2.5,
         dodge: 0.2,
@@ -1074,15 +1074,60 @@ function attackPlayer() {
     updateHealthBars();
 }
 
+let userScrolledRecently = false;
+let isProgrammaticScroll = false;
+let scrollTimeout = null;
+let scrollPending = false;
+let logBatch = '';
+const DEBOUNCE_DELAY = 100; // 100 ms delay for batching
 
+// Event listener to detect user scroll activity
+document.getElementById('fightLog').addEventListener('scroll', () => {
+    if (isProgrammaticScroll) {
+        isProgrammaticScroll = false; // Reset the flag after a programmatic scroll
+    } else {
+        userScrolledRecently = true;
 
-// Function to log fight actions
+        // Clear any existing timeout
+        if (scrollTimeout) {
+            clearTimeout(scrollTimeout);
+        }
+
+        showPopupTooltip('Fight Log auto scrolling paused for 5 seconds', 'gray', 1)
+
+        // Reset the timer for 5 seconds
+        scrollTimeout = setTimeout(() => {
+            userScrolledRecently = false;
+        }, 5000); // 5 seconds
+    }
+});
+
+// Function to log fight actions (with batching)
 function logFight(message) {
     if (fightEnded) return; // Do not log any more messages if the fight has ended
 
     const fightLog = document.getElementById('fightLog');
-    fightLog.innerHTML += `<p>${message}</p>`;
-    fightLog.scrollTop = fightLog.scrollHeight; // Scroll to bottom
+
+    // Batch messages instead of directly updating the DOM
+    logBatch += `<p>${message}</p>`;
+
+    // Debounce the scroll update
+    if (!scrollPending) {
+        scrollPending = true;
+        setTimeout(() => {
+            // Update the DOM with batched messages
+            fightLog.innerHTML += logBatch;
+            logBatch = ''; // Clear the batch
+
+            // Scroll to bottom if the user hasn't scrolled manually in the last 5 seconds
+            if (!userScrolledRecently) {
+                isProgrammaticScroll = true; // Set flag before programmatic scroll
+                fightLog.scrollTop = fightLog.scrollHeight;
+            }
+
+            scrollPending = false;
+        }, DEBOUNCE_DELAY);
+    }
 }
 
 // Function to handle the end of the fight
