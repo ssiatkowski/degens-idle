@@ -190,11 +190,11 @@ const enemyStats = {
         img: `imgs/vegeta_5.jpg`,
     },
     "Kaguya": {
-        health: 3e17,
+        health: 2.22e17,
         minDamage: 2000,
         maxDamage: 3000,
-        attackSpeed: 30,
-        defense: 5e14,
+        attackSpeed: 22.2,
+        defense: 4e14,
         critChance: 0.1,
         critDamage: 1.5,
         dodge: 0.2,
@@ -202,6 +202,20 @@ const enemyStats = {
         stun: 0,
         absorb: 0.666,
         img: 'imgs/kaguya.jpg'
+    },
+    "Saitama": {
+        health: 1e22,
+        minDamage: 0,
+        maxDamage: 0,
+        attackSpeed: 10,
+        defense: 0,
+        critChance: 0,
+        critDamage: 1,
+        dodge: 0,
+        nonCritDodge: 0,
+        stun: 0,
+        absorb: 0,
+        img: 'imgs/saitama.jpg'
     }
 };
 
@@ -232,6 +246,7 @@ let playerAmaterasuStacks = 0;
 let playerTsukuyomiStacks = 0;
 
 let enemyGravityWellCount = 0;
+let gravityWellQueue = [];
 
 let astralEdgeMult = 1;
 
@@ -306,6 +321,7 @@ function startFightGame(enemyName, enemyImg) {
 
         playerAttackCount = 0;
         enemyGravityWellCount = 0;
+        gravityWellQueue = [];
         mysticReboundCount = 0;
 
         izanagiUsed = false;
@@ -353,7 +369,7 @@ function startFightGame(enemyName, enemyImg) {
             event.stopPropagation(); // Prevent the click from propagating to the document
             logFight("<span style='color: red;'>You forfeited the fight!</span>");
             fightEnded = true; // Set the flag to true when forfeiting
-            clearIntervals(); // Stop the game intervals
+            clearAttackIntervals(); // Stop the game intervals
             forfeitButton.disabled = true; // Disable the forfeit button to prevent multiple clicks
             resolve(false); // Resolve the promise with a loss
             endFight(true); // Pass true to indicate the player forfeited
@@ -371,17 +387,62 @@ function startFightGame(enemyName, enemyImg) {
             } else {
                 logFight("<span style='color: red; font-size: 1.2em';>Chuck Norris has no distractions and is ready to fight you at full power.</span>");
             }
-        }
+        } 
 
         // Update health bars
         updateHealthBars();
 
         updateStatsUI();
 
-        // Add a 0.5-second delay before starting the fight loop
-        setTimeout(() => {
-            fightLoop(resolve);
-        }, 500); // 500 milliseconds = 0.5 seconds
+        if (currEnemyName === "Saitama") {
+            setTimeout(() => {
+                logFight("<span style='color: #b3a125; font-size: 1.2em';>Saitama: Oh, hello there.</span>");
+            }, 500);
+            
+            setTimeout(() => {
+                logFight("<span style='color: #6b8ca4; font-size: 1.2em';>You: What? I can sense your power. YOU could have stopped her yourself, why didn’t you?</span>");
+            }, 1000);
+            
+            setTimeout(() => {
+                logFight("<span style='color: #b3a125; font-size: 1.2em';>Saitama: It would have been boring.</span>");
+            }, 1500);
+            
+            setTimeout(() => {
+                logFight("<span style='color: #6b8ca4; font-size: 1.2em';>You: But you were going to let her destroy the multiverse?</span>");
+            }, 2000);
+            
+            setTimeout(() => {
+                logFight("<span style='color: #b3a125; font-size: 1.2em';>Saitama: There’s no meaning to existence anyway. Everything is boring.</span>");
+            }, 2500);
+            
+            setTimeout(() => {
+                logFight("<span style='color: #6b8ca4; font-size: 1.2em';>You: What the hell, man? Why so bleak?</span>");
+            }, 3000);
+            
+            setTimeout(() => {
+                logFight("<span style='color: #b3a125; font-size: 1.2em';>Saitama: I’m bored. I’m gonna go now.</span>");
+            }, 3500);
+            
+            setTimeout(() => {
+                logFight("<span style='color: #6b8ca4; font-size: 1.2em';>You: No! Stand and fight!</span>");
+            }, 4000);
+            
+            setTimeout(() => {
+                logFight("<span style='color: #b3a125; font-size: 1.2em';>Saitama: *yawns*</span>");
+            }, 4500);            
+            // Start the fight loop
+            // Add a 0.25-second delay before starting the fight loop
+            setTimeout(() => {
+                fightLoop(resolve);
+            }, 5000); // 250 milliseconds = 0.25 seconds
+        } else{
+            // Start the fight loop
+            // Add a 0.25-second delay before starting the fight loop
+            setTimeout(() => {
+                fightLoop(resolve);
+            }, 250); // 250 milliseconds = 0.25 seconds
+        }
+
     });
 }
 
@@ -455,7 +516,7 @@ function fightLoop(resolve) {
         // Check if the enemy is defeated
         if (enemyHealth <= 0) {
             fightEnded = true; // Set flag to true to indicate the fight has ended
-            clearIntervals(); // Stop both intervals
+            clearAttackIntervals(); // Stop both intervals
             resolve(true); // Resolve the promise with a win
             endFight(); // End the fight visuals
         }
@@ -465,12 +526,12 @@ function fightLoop(resolve) {
     enemyInterval = setInterval(() => {
         if (fightEnded) return; // Stop if the fight has ended
 
-        attackPlayer();
+        attackPlayer(resolve);
 
         // Check if the player is defeated
         if (playerHealth <= 0) {
             fightEnded = true; // Set flag to true to indicate the fight has ended
-            clearIntervals(); // Stop both intervals
+            clearAttackIntervals(); // Stop both intervals
             resolve(false); // Resolve the promise with a loss
             endFight(); // End the fight visuals
         }
@@ -478,7 +539,7 @@ function fightLoop(resolve) {
 }
 
 // Function to clear both game intervals
-function clearIntervals() {
+function clearAttackIntervals() {
     clearInterval(playerInterval);
     clearInterval(enemyInterval);
 }
@@ -550,13 +611,13 @@ function attackEnemy(resolve) {
         firstAttackOfBattle = false;
     } else {
         // Handle non-critical dodge mechanics (applies only if not a critical hit)
-        if (!isCritical && Math.random() < enemyStats[currEnemyName].nonCritDodge) {
+        if (!isCritical && Math.random() < enemyNonCritDodge) {
             logFight(`<span style='color: yellow;'>${currEnemyName} effortlessly dodges your non-critical attack!</span>`);
             return; // Enemy dodged, so the attack ends here
         }
 
         // Handle regular dodge mechanics (applies to both critical and non-critical hits)
-        if (Math.random() < enemyStats[currEnemyName].dodge) {
+        if (Math.random() < enemyDodge) {
             logFight(`<span style='color: orange;'>${currEnemyName} dodges your attack!</span>`);
             return; // Enemy dodged, so the attack ends here
         }
@@ -590,8 +651,8 @@ function attackEnemy(resolve) {
     if(damage > 0){
         
         let ogDmg = damage;
-        damage = Math.max(damage * (1 - enemyStats[currEnemyName].absorb), 0);
-        if (enemyStats[currEnemyName].absorb > 0) {
+        damage = Math.max(damage * (1 - enemyAbsorb), 0);
+        if (enemyAbsorb > 0) {
             logFight(`<span style='color: #8A2BE2;'>${currEnemyName} absorbs ${formatNumber(ogDmg - damage)} of the damage!</span>`);
         }
     }
@@ -599,17 +660,20 @@ function attackEnemy(resolve) {
     // Apply damage to enemy health
     enemyHealth -= Math.max(damage, 0);
 
-    if (damage > 0){
+    if (damage > 0) {
         playerAttackCount++;
-        if (gravityWellSkill && (playerAttackCount % 5 == 0)){
-            if (enemyGravityWellCount == 0){
-                enemyMinDamage /= 2;
+        if (gravityWellSkill && (playerAttackCount % 5 == 0)) {
+            if (enemyGravityWellCount == 0) {
+                const halvedDamage = enemyMinDamage / 2;
+                gravityWellQueue.push(halvedDamage); // Push the halved damage to the queue
+                enemyMinDamage = halvedDamage;
                 document.getElementById('enemyDamageStat').innerText = `${formatNumber(enemyMinDamage)} - ${formatNumber(enemyMaxDamage)}`;
                 logFight(`<span style='color: #ECFFDC;'>Gravity Well activated! ${currEnemyName}'s minimum damage is halved.</span>`);
             }
             enemyGravityWellCount += 3;
         }
     }
+    
 
     // Check if Nexus Lifeline skill is active
     if (nexusLifelineSkill) {
@@ -682,10 +746,10 @@ function attackEnemy(resolve) {
     }
 
     // Handle special case for Vegeta with multiple forms
-    if (enemyHealth <= 0 && enemyStats[currEnemyName].nextBoss) {
+    if (currEnemyName.startsWith("Vegeta") && enemyHealth <= 0 && enemyStats[currEnemyName].nextBoss) {
 
         // Clear the previous enemy attack interval and set a new one
-        clearIntervals();
+        clearAttackIntervals();
 
         currEnemyName = enemyStats[currEnemyName].nextBoss;
 
@@ -707,6 +771,7 @@ function attackEnemy(resolve) {
 
         enemyStunCount = 0;
         enemyGravityWellCount = 0;
+        gravityWellQueue = [];
         astralEdgeMult = 1;
 
         firstAttackOfBattle = primeImpactSkill ? true : false;
@@ -743,7 +808,6 @@ function attackEnemy(resolve) {
             }
         }
 
-        playerCurrentAttackSpeed
         updateStatsUI();
 
         // Update the enemy image
@@ -765,14 +829,14 @@ function attackEnemy(resolve) {
         if (izanagiUsed && !izanamiUsed && enemyHealth <= enemyMaxHealth) {
             
             // Clear the previous enemy attack interval and set a new one
-            clearIntervals();
+            clearAttackIntervals();
 
             // Kaguya uses Izanami, loses her right eye, goes blind, and stuns the player for 100 turns
             izanamiUsed = true;
             enemyHealth = enemyMaxHealth;
-            playerStunCount += 100;
-            enemyAttackSpeed *= 2.5;
-            logFight(`<span style='color: #800020; font-weight: bold; font-size: 1.3em;'>Kaguya uses Izanami! She loses her right eye, goes blind, and stuns you for 100 turns and is enraged so her attack speed increases 2.5x! However, she can no longer land critical strikes or use Amaterasu/Tsukuyomi.</span>`);
+            playerStunCount += 66;
+            enemyAttackSpeed *= 3;
+            logFight(`<span style='color: #800020; font-weight: bold; font-size: 1.3em;'>Kaguya uses Izanami! She loses her right eye, goes blind, stuns you for 66 turns and is enraged so her attack speed increases 3x! However, she can no longer land critical strikes or use Amaterasu/Tsukuyomi.</span>`);
     
             // Disable critical strikes because Kaguya is now blind
             enemyCritChance = 0;
@@ -795,7 +859,7 @@ function attackEnemy(resolve) {
         if (!izanagiUsed && enemyHealth <= 0) {
             
             // Clear the previous enemy attack interval and set a new one
-            clearIntervals();
+            clearAttackIntervals();
 
             // Kaguya uses Izanagi, loses her left eye, and sets her health to 10x maxHealth
             izanagiUsed = true;
@@ -809,6 +873,43 @@ function attackEnemy(resolve) {
         
     }
     
+    if (currEnemyName === "Saitama" && enemyHealth <= (0.1 * enemyMaxHealth)) {
+        // Clear the previous enemy attack interval and set a new one
+        clearAttackIntervals();
+    
+        // Saitama gets serious - change his name, restore health, and increase attack speed
+        currEnemyName = "Serious Saitama";
+        enemyHealth = enemyMaxHealth; // Restore his health to full
+        enemyAttackSpeed = enemyAttackSpeed * 10; // Set his attack speed to 100
+        enemyMinDamage = enemyMinDamage * 10;
+        enemyMaxDamage = enemyMaxDamage * 10;
+        enemyDefense = enemyDefense * 10;
+        
+        logFight(`<span style='color: #b3a125; font-weight: bold; font-size: 1.3em;'>Saitama gets serious! No tricks up his sleeve, just raw power. Brace yourself!</span>`);
+        
+        if (!purchasedUpgrades.some(upgrade => upgrade.name === "Training Dummy")) {
+            enemyStunCount = 100;
+            //unlockAchievement('Same Trick Twice?');
+            logFight("<span style='color: green; font-size: 1.2em';>Can't believe the Training Dummy trick worked again! This time, it was rigged with a galactic paralyzer device, stunning Saitama for 100 turns.</span>");
+        }        
+
+        // Update the enemy image to the serious version of Saitama
+        const enemyImageContainer = document.getElementById('enemyImageContainer');
+        enemyImageContainer.innerHTML = ''; // Clear the previous image
+        const enemyImage = document.createElement('img');
+        enemyImage.src = 'imgs/saitama_serious.jpg'; // Path to the serious Saitama image
+        enemyImage.alt = "Serious Saitama";
+        enemyImageContainer.appendChild(enemyImage);
+
+        updateStatsUI();
+    
+        // Delay of 1 second before continuing the fight
+        setTimeout(() => {
+            fightLoop(resolve);
+        }, 1000);
+    }
+    
+    
 
 
     // Update health bars
@@ -820,7 +921,7 @@ function attackEnemy(resolve) {
 
 
 // Function to handle enemy attacking the player
-function attackPlayer() {
+function attackPlayer(resolve) {
     // Check if the enemy is stunned
     if (enemyStunCount > 0) {
         enemyStunCount--;
@@ -950,11 +1051,11 @@ function attackPlayer() {
         // Independent chance for each attack
         const randChakraAbsorption = Math.random() < 0.015;
         const randTruthSeekerBall = Math.random() < 0.025;
-        const randByakugan64Palms = Math.random() < 0.14;
+        const randByakugan64Palms = Math.random() < 0.13;
         const randPlanetaryDevastation = Math.random() < 0.01;
-        const randAmaterasu = Math.random() < 0.06;
-        const randTsukuyomi = Math.random() < 0.03;
-        const randSusanoo = Math.random() < 0.12;
+        const randAmaterasu = Math.random() < 0.08;
+        const randTsukuyomi = Math.random() < 0.04;
+        const randSusanoo = Math.random() < 0.17;
         const randKamui = Math.random() < 0.04;
     
         if (randChakraAbsorption) { // Chakra Absorption
@@ -991,7 +1092,7 @@ function attackPlayer() {
         
         if (randPlanetaryDevastation) { // Planetary Devastation
             playerStunCount += 5;
-            logFight(`<span style='color: #8B0000;'>Kaguya uses Planetary Devastation! You are stunned for 10 turns.</span>`);
+            logFight(`<span style='color: #8B0000;'>Kaguya uses Planetary Devastation! You are stunned for 5 turns.</span>`);
         }
         
         if (randAmaterasu && !izanamiUsed) { // Amaterasu
@@ -1014,6 +1115,64 @@ function attackPlayer() {
             kamuiActive = true; // Kaguya dodges the next critical attack
             logFight(`<span style='color: #8A2BE2;'>Kaguya uses Kamui! She will dodge the next critical attack.</span>`);
         }
+    } else if (currEnemyName === "Saitama") {
+        // Randomly determine Saitama's move
+        const rand = Math.random() * 100;
+    
+        if (rand < 10) { // 10% chance for Jumping Jacks
+            enemyCritDamage += 0.1;
+            logFight(`<span style='color: #d4af37;'>Saitama does Jumping Jacks! His critical damage increases by 10%.</span>`);
+        } else if (rand < 20) { // 10% chance for Push Ups
+            enemyMinDamage += 100;
+            enemyMaxDamage += 200;
+            logFight(`<span style='color: #b8860b;'>Saitama does Push Ups! His minimum damage increases by 200 and his maximum damage by 300.</span>`);
+        } else if (rand < 30) { // 10% chance for Side Hops
+            const dodgeIncrease = 0.012 * (1 - enemyDodge); // Diminishing dodge increase based on remaining potential
+            enemyDodge = Math.min(enemyDodge + dodgeIncrease, 1); // Ensure it doesn't exceed 1
+            logFight(`<span style='color: #daa520;'>Saitama does Side Hops! His dodge rate increases by ${formatNumber(dodgeIncrease*100)}%.</span>`);
+        } else if (rand < 40) { // 10% chance for Cracks Knuckles
+            const critIncrease = 0.015 * (1 - enemyCritChance); // Diminishing crti chance increase based on remaining potential
+            enemyCritChance = Math.min(enemyCritChance + critIncrease, 1); // Ensure it doesn't exceed 1
+            logFight(`<span style='color: #cd853f;'>Saitama cracks his knuckles! His critical chance increases by ${formatNumber(critIncrease * 100)}%.</span>`);
+        } else if (rand < 50) { // 10% chance for Squats
+            enemyDefense += 5e15; // Increases defense by 5 Qa
+            logFight(`<span style='color: #b22222;'>Saitama does Squats! His defense increases by 2 quadrilion.</span>`);
+        } else if (rand < 60) { // 10% chance for Sit Ups
+            const absorbIncrease = 0.02 * (1 - enemyAbsorb); // Diminishing absorb increase based on remaining potential
+            enemyAbsorb = Math.min(enemyAbsorb + absorbIncrease, 0.999999); // Ensure it doesn't exceed 1
+            logFight(`<span style='color: #ff6347;'>Saitama does Sit Ups! His damage absorption increases by ${formatNumber(absorbIncrease * 100)}%.</span>`);
+        } else if (rand < 70) { // 10% chance for Breathes on You
+            if (isCritical) { // Critical hit scenario
+                damage = Math.ceil(baseDamage * enemyCritDamage) - playerDefense;
+                logFight(`<span style='color: orange;'>Saitama breathes on you and lands a critical hit for ${formatNumber(Math.max(damage, 0))} damage!</span>`);
+            } else { // Normal damage
+                damage = baseDamage - playerDefense;
+                logFight(`<span style='color: #ff7f50;'>Saitama breathes on you, dealing normal damage (${formatNumber(Math.max(damage, 0))}).</span>`);
+            }
+        } else if (rand < 80) { // 10% chance for Menacing Look
+            playerCurrentAttackSpeed = playerCurrentAttackSpeed * 0.99;
+            logFight(`<span style='color: #ff4500;'>Saitama gives a menacing look! Your attack speed decreases by 1%.</span>`);
+            // Clear the previous enemy attack interval and set a new one
+            clearAttackIntervals();
+            setTimeout(() => {
+                fightLoop(resolve);
+            }, 100);
+        } else if (rand < 90) { // 10% chance for Flicks Your Ear
+            if (isCritical) { // Critical hit scenario
+                playerCritChance = Math.max(playerCritChance * 0.98, 0); // Reduce crit chance by 2%
+                playerCritDamage = Math.max(playerCritDamage * 0.96, 0); // Reduce crit chance by 4%
+                logFight(`<span style='color: orange;'>Saitama flicks your ear and lowers your crit chance by 2% and crit damage by 4%!</span>`);
+            } else { // Normal hit, lowers crit chance by 1%
+                playerCritChance = Math.max(playerCritChance * 0.99, 0); // Reduce crit chance by 1%
+                playerCritDamage = Math.max(playerCritDamage * 0.98, 0); // Reduce crit chance by 2%
+                logFight(`<span style='color: #ff8c00;'>Saitama flicks your ear and lowers your crit chance by 1% and crit damage by 2%!</span>`);
+            }
+        } else { // 10% chance for Says Something Stupid
+            playerStunChance = playerStunChance * 0.99;
+            logFight(`<span style='color: #ffa07a;'>Saitama says something stupid! Your stun chance decreases by 1%.</span>`);
+        }
+
+        updateStatsUI();
     } else {
         // Calculate damage
         if (isCritical) {
@@ -1052,12 +1211,21 @@ function attackPlayer() {
 
     if (enemyGravityWellCount > 0) {
         enemyGravityWellCount--;
-
+    
         if (enemyGravityWellCount == 0) {
-            enemyMinDamage *= 2;
-            document.getElementById('enemyDamageStat').innerText = `${formatNumber(enemyMinDamage)} - ${formatNumber(enemyMaxDamage)}`;
-            logFight(`<span style='color: #ECFFDC;'>The gravity well has dissipated, and ${currEnemyName}'s power returns!</span>`);
+            if (gravityWellQueue.length > 0) {
+                const restoredDamage = gravityWellQueue.shift(); // Remove the first value from the queue
+                enemyMinDamage = enemyMinDamage + restoredDamage;
+                document.getElementById('enemyDamageStat').innerText = `${formatNumber(enemyMinDamage)} - ${formatNumber(enemyMaxDamage)}`;
+                logFight(`<span style='color: #ECFFDC;'>The gravity well has dissipated, and ${currEnemyName}'s power returns!</span>`);
+            }
         }
+    }
+    
+    if (currEnemyName === 'Serious Saitama'){
+        enemyMaxDamage *= 1.002;
+        document.getElementById('enemyDamageStat').innerText = `${formatNumber(enemyMinDamage)} - ${formatNumber(enemyMaxDamage)}`;
+        logFight(`<span style='color: #b3a125; '>Saitama gets slightly more serious!</span>`);
     }
 
     // Handle Stun mechanics
@@ -1135,7 +1303,7 @@ function logFight(message) {
 // Function to handle the end of the fight
 function endFight(isForfeit = false) {
     fightEnded = true; // Set the flag to true when the fight ends
-    clearIntervals(); // Ensure the intervals are stopped
+    clearAttackIntervals(); // Ensure the intervals are stopped
 
     // Disable the forfeit button
     const forfeitButton = document.getElementById('forfeitButton');
@@ -1233,7 +1401,11 @@ function overlayWinnerLoserText(playerResult, enemyResult) {
         enemyResultText.innerText = 'Taunting';
         enemyResultText.classList.add('result-text', 'taunting-text');
     } else {
-        enemyResultText.innerText = 'Dead';
+        if (currEnemyName === "Serious Saitama") {
+            enemyResultText.innerText = 'Defeated';
+        } else {
+            enemyResultText.innerText = 'Dead';
+        }
         enemyResultText.classList.add('result-text', 'dead-text');
     }
     enemyImageContainer.appendChild(enemyResultText);

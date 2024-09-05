@@ -35,7 +35,7 @@ const librarySkills = [
     { name: 'Money is Power, too', cost: 2.5e20, description: 'Add a multiplier to Power generation based on Yacht Money (though it scales much less than with Knowledge)', unlocked: false, level: 'Celestial Bodies' },
     { name: 'Map to Hall of Power', cost: 1e24, description: 'You can now look at and admire the Power Hall button.', unlocked: false, level: 'Celestial Bodies' },
     { name: 'Compressed Power', cost: 5e32, description: 'Current power counts as 3x more for Big Crunch Power.', unlocked: false, level: 'Celestial Bodies' },
-    { name: 'Condensed Power', cost: 1e65, description: 'Current power counts as 20x more for Big Crunch Power.', unlocked: false, level: 'Celestial Bodies' },
+    { name: 'Condensed Power', cost: 1e63, description: 'Current power counts as 30x more for Big Crunch Power.', unlocked: false, level: 'Celestial Bodies' },
 
 
     { name: 'Perpetual Prestige', cost: 1e25, description: 'Auto-Prestige ability.  (Target prestige multiplier can be set in Automation Settings. Default=100)', unlocked: false, level: '???' },
@@ -271,7 +271,7 @@ function unlockLibrarySkill(skill, duringLoad = false) {
                 break;
 
             case 'Condensed Power':
-                compressedBigCrunchMult = 20;
+                compressedBigCrunchMult = 30;
                 break;
                 
 

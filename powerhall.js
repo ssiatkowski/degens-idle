@@ -18,14 +18,14 @@ const powerHallSkills = [
     { name: 'Astral Disruption', cost: 150000, description: 'Your attacks have a 5% chance to stun the enemy for 1 attack.', unlocked: false, level: 'Cosmic Dynamics' },
     { name: 'Supersonic Fury', cost: 1.2e8, description: 'Your attacks become even 2x faster!', unlocked: false, level: 'Cosmic Dynamics' },
     { name: 'Prime Impact', cost: 9e8, description: 'First attack always hits for full power (ignore enemy dodge rate and defense).', unlocked: false, level: 'Cosmic Dynamics' },
-    { name: 'Graviton Burst', cost: 1.2e50, description: 'Your attacks are imperceptible to average beings. You now attack 5x faster!', unlocked: false, level: 'Cosmic Dynamics' },
+    { name: 'Graviton Burst', cost: 4e16, description: 'Your attacks are imperceptible to average beings. You now attack 5x faster!', unlocked: false, level: 'Cosmic Dynamics' },
     
     { name: 'Stellar Harvest', cost: 2.5e7, description: `Increase generation of all first 7 resources by 30% for 3 minutes after defeating a boss. (multiplicative)`, unlocked: false, level: 'Celestial Manipulation' },
     { name: 'POWER is Power!', cost: 2.5e8, description: `Power generation increased by 10% for each purchased Power Hall skill (multiplicative).`, unlocked: false, level: 'Celestial Manipulation' },
     { name: 'Upgrade Amplifier', cost: 4e8, description: `First 4 resources gain a flat multiplier based on number of purchased upgrades.`, unlocked: false, level: 'Celestial Manipulation' },
     { name: 'Celestial Collector', cost: 5e10, description: `Stellar Harvest buff is extended to 50% power and lasts for 10 minutes.`, unlocked: false, level: 'Celestial Manipulation' },
 
-    { name: 'Nebula Overdrive', cost: 1e6, description: `Purchasing upgrades no longer consumes power. Power cost still applies.`, unlocked: false, level: 'Nebular Command' },
+    { name: 'Nebula Overdrive', cost: 5e5, description: `Purchasing non-boss upgrades no longer consumes power. Power cost still applies.`, unlocked: false, level: 'Nebular Command' },
 
 ];
 
@@ -118,7 +118,7 @@ function unlockPowerHallSkill(skill, duringLoad = false) {
                 break;
 
             case 'Graviton Burst':
-                playerAttackSpeed = Math.max(playerAttackSpeed, 50);
+                playerAttackSpeed = Math.max(playerAttackSpeed, 25);
                 break;
 
             case 'Stellar Harvest':

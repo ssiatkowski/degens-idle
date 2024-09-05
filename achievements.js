@@ -180,10 +180,10 @@ const achievements = [
         img: 'imgs/achievements/map_to_power.jpg',
     },
     {
-        name: 'Does Not Exist 28',
+        name: 'Better Safe Than Sorry',
         isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
+        hoverText: 'do not lose your progress',
+        img: 'imgs/achievements/better_safe_than_sorry.jpg',
     },
     {
         name: 'Transcend',
@@ -360,6 +360,12 @@ const achievements = [
         img: 'imgs/achievements/stellar_harvester.jpg',
     },
     {
+        name: 'Condensed Crunch',
+        isUnlocked: false,
+        hoverText: 'you may need this to take her down',
+        img: 'imgs/achievements/condensed_crunch.jpg',
+    },
+    {
         name: 'Overkill Much?',
         isUnlocked: false,
         hoverText: 'send him flying out of the matrix',
@@ -370,12 +376,6 @@ const achievements = [
         isUnlocked: false,
         hoverText: 'someone wants to destroy the multiverse - STOP THEM!',
         img: 'imgs/achievements/save_the_multiverse.jpg',
-    },
-    {
-        name: 'Does Not Exist 63',
-        isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
     },
     {
         name: 'Does Not Exist 64',
@@ -510,10 +510,10 @@ const achievements = [
         img: 'imgs/achievements/uninitialized.jpg',
     },
     {
-        name: 'Does Not Exist 86',
+        name: 'Developer Options',
         isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
+        hoverText: '1←2←1→1←1→ 2→2←1←2→1→',
+        img: 'imgs/achievements/developer_options.jpg',
     },
     {
         name: 'Does Not Exist 87',

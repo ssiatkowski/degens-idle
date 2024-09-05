@@ -1,5 +1,8 @@
 // Function to open the settings overlay
 function openSettings() {
+    // First, call saveGameState to ensure everything is saved to localStorage
+    saveGameState();
+
     const settingsOverlay = document.getElementById('settingsOverlay');
     settingsOverlay.style.display = 'flex';
     
@@ -52,273 +55,63 @@ function outsideDonationClickListener(event) {
     }
 }
 
-function exportSave() {
-    const gameState = JSON.stringify({
-        copium,
-        copiumPerSecond,
-        delusion,
-        delusionPerSecond,
-        yachtMoney,
-        yachtMoneyPerSecond,
-        trollPoints,
-        trollPointsPerSecond,
-        hopium,
-        hopiumPerSecond,
-        knowledge,
-        knowledgePerSecond,
-        power,
-        powerPerSecond,
-        serenity,
-        serenityPerSecond,
-        effectiveCopiumPerSecond,
-        effectiveDelusionPerSecond,
-        effectiveYachtMoneyPerSecond,
-        effectiveTrollPointsPerSecond,
-        effectiveHopiumPerSecond,
-        effectiveKnowledgePerSecond,
-        effectivePowerPerSecond,
-        effectiveSerenityPerSecond,
-        prestiges,
-        epsMultiplier,
-        prestigeRequirement,
-        godModeLevel,
-        godModeMultiplier,
-        puGodLevel,
-        puGodMultiplier,
-        bigCrunchPower,
-        bigCrunchMultiplier,
-        totalMultiplier,
-        firstTimePrestigeButtonAvailable, // Added
-        autoPrestigeThreshold, // Added
-        autoAscendThreshold, // Added
-        autoTranscendThreshold, // Added
-        deadpoolRevives, // Added
-        voidStabilizerActive, // Added
-        cookieBoost, // Added
-        transcendenceUnlocked, // Added
-        lastInteraction: Date.now(), // Updated to always track last interaction
-        cookieClickMultiplier,
-        cookieAutoClicker,
-        knowledgeGenerationSkill,
-        prestigeBaseSkill,
-        twoDimensionalAscensionSkill,
-        multibuyUpgradesSkill,
-        mathGameSkill,
-        powerUnlocked,
-        buyMarkersSkill,
-        bigCrunchUnlocked,
-        numAscensionUpgrades,
-        improvedTradeRatio,
-        currentNumberFormat, // Added
-        cooldowns,
-        numPUAscensionUpgrades,
-        lessDiminishingGodModeSkill,
-        lessDiminishingPUGodModeSkill,
-        upgrades: upgrades.map(upgrade => ({
-            name: upgrade.name,
-            isGodMode: upgrade.isGodMode,
-            isPUGodMode: upgrade.isPUGodMode
-        })),
-        purchasedUpgrades: purchasedUpgrades.map(upgrade => upgrade.name),
-        cookieButtonVisible: document.getElementById('cookieButton').style.display === 'block',
-        librarySkills: librarySkills.map(skill => ({
-            name: skill.name,
-            unlocked: skill.unlocked
-        })),
-        powerHallSkills: powerHallSkills.map(skill => ({
-            name: skill.name,
-            unlocked: skill.unlocked
-        })), // Added
-        achievements: Array.from(achievementsMap.values()).map(achievement => ({
-            name: achievement.name,
-            isUnlocked: achievement.isUnlocked
-        })), // Added achievements
-        autoUpgradeStatus: purchasedUpgrades.reduce((acc, upgrade) => {
-            acc[upgrade.name] = document.getElementById(`toggle-${upgrade.name}`).checked;
-            return acc;
-        }, {}) // Added
-    });
 
-    const blob = new Blob([gameState], { type: 'application/json' });
+function exportSave(fname='degens_idle_save.json') {
+
+    unlockAchievement('Better Safe Than Sorry');
+
+    // Get all localStorage data and stringify it
+    const allData = JSON.stringify(localStorage);
+
+    // Create a Blob and trigger download
+    const blob = new Blob([allData], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
+    
+    // Create a link element to download the file
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'degens_idle_save.json';
+    a.download = fname; // Name of the exported file
     document.body.appendChild(a);
     a.click();
+    
+    // Clean up the DOM elements
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
 }
 
+
 function importSave(event) {
-    const file = event.target.files[0];
-    if (!file) {
-        return;
-    }
+    // Backup the current save
+    exportSave('backup_degens_idle_save.json');
 
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        const gameState = JSON.parse(e.target.result);
+    // Restart the game and chain the rest of the logic
+    restartGame(false, true).then(() => {
+        const file = event.target.files[0];
+        if (!file) {
+            return;
+        }
 
-        copium = gameState.copium;
-        copiumPerSecond = gameState.copiumPerSecond;
-        delusion = gameState.delusion;
-        delusionPerSecond = gameState.delusionPerSecond;
-        yachtMoney = gameState.yachtMoney;
-        yachtMoneyPerSecond = gameState.yachtMoneyPerSecond;
-        trollPoints = gameState.trollPoints;
-        trollPointsPerSecond = gameState.trollPointsPerSecond;
-        hopium = gameState.hopium;
-        hopiumPerSecond = gameState.hopiumPerSecond;
-        knowledge = gameState.knowledge;
-        knowledgePerSecond = gameState.knowledgePerSecond;
-        power = gameState.power;
-        powerPerSecond = gameState.powerPerSecond;
-        serenity = gameState.serenity;
-        serenityPerSecond = gameState.serenityPerSecond;
-        effectiveCopiumPerSecond = gameState.effectiveCopiumPerSecond;
-        effectiveDelusionPerSecond = gameState.effectiveDelusionPerSecond;
-        effectiveYachtMoneyPerSecond = gameState.effectiveYachtMoneyPerSecond;
-        effectiveTrollPointsPerSecond = gameState.effectiveTrollPointsPerSecond;
-        effectiveHopiumPerSecond = gameState.effectiveHopiumPerSecond;
-        effectiveKnowledgePerSecond = gameState.effectiveKnowledgePerSecond;
-        effectivePowerPerSecond = gameState.effectivePowerPerSecond;
-        effectiveSerenityPerSecond = gameState.effectiveSerenityPerSecond;
-        prestiges = gameState.prestiges;
-        epsMultiplier = gameState.epsMultiplier;
-        prestigeRequirement = gameState.prestigeRequirement;
-        godModeLevel = gameState.godModeLevel;
-        godModeMultiplier = gameState.godModeMultiplier;
-        puGodLevel = gameState.puGodLevel;
-        puGodMultiplier = gameState.puGodMultiplier;
-        bigCrunchPower = gameState.bigCrunchPower;
-        bigCrunchMultiplier = gameState.bigCrunchMultiplier;
-        totalMultiplier = gameState.totalMultiplier;
-        firstTimePrestigeButtonAvailable = gameState.firstTimePrestigeButtonAvailable; // Added
-        autoPrestigeThreshold = gameState.autoPrestigeThreshold; // Added
-        autoAscendThreshold = gameState.autoAscendThreshold; // Added
-        autoTranscendThreshold = gameState.autoTranscendThreshold; // Added
-        deadpoolRevives = gameState.deadpoolRevives; // Added
-        voidStabilizerActive = gameState.voidStabilizerActive; // Added
-        cookieBoost = gameState.cookieBoost; // Added
-        transcendenceUnlocked = gameState.transcendenceUnlocked; // Added
-        currentNumberFormat = gameState.currentNumberFormat; // Added
+        const reader = new FileReader();
 
-        upgrades.forEach(upgrade => {
-            const savedUpgrade = gameState.upgrades.find(up => up.name === upgrade.name);
-            if (savedUpgrade) {
-                upgrade.isGodMode = savedUpgrade.isGodMode;
-                upgrade.isPUGodMode = savedUpgrade.isPUGodMode; // Restore isPUGodMode state
-            }
-        });
+        reader.onload = function(e) {
+            // Parse the imported file contents
+            const importedData = JSON.parse(e.target.result);
 
-        purchasedUpgrades = gameState.purchasedUpgrades.map(name => upgrades.find(up => up.name === name)).filter(Boolean);
-        availableUpgrades = upgrades.filter(upgrade => !purchasedUpgrades.includes(upgrade));
-
-        // Clear the purchased upgrades list before adding new ones
-        document.getElementById('purchasedList').innerHTML = '';
-
-        // Handle UI elements for upgrades
-        purchasedUpgrades.forEach(upgrade => {
-            if (upgrade) {
-                addPurchasedUpgrade(upgrade.img, upgrade.name, upgrade.earnings, upgrade.isGodMode, upgrade.isPUGodMode, upgrade.message);
-                if (upgrade.name === "Cookie Clicker") {
-                    document.getElementById('cookieButton').style.display = 'block';
+            // Clear current localStorage and load everything from the imported data
+            localStorage.clear();
+            for (const key in importedData) {
+                if (importedData.hasOwnProperty(key)) {
+                    localStorage.setItem(key, importedData[key]);
                 }
             }
-        });
 
-        // Restore auto upgrade statuses
-        Object.keys(gameState.autoUpgradeStatus || {}).forEach(upgradeName => {
-            const toggleElement = document.getElementById(`toggle-${upgradeName}`);
-            if (toggleElement) {
-                toggleElement.checked = gameState.autoUpgradeStatus[upgradeName];
-            }
-        });
+            // Call loadGameState to apply the imported game state
+            loadGameState();
+        };
 
-        // Handle the Cookie Clicker button visibility
-        const cookieButtonVisible = gameState.cookieButtonVisible;
-        if (cookieButtonVisible) {
-            document.getElementById('cookieButton').style.display = 'block';
-            cookieClickMultiplier = gameState.cookieClickMultiplier;
-            const cookieTooltip = document.querySelector('#cookieButton .cookieTooltip');
-            if(cookieBoost){
-                cookieTooltip.textContent = `Each cookie click generates the amount of Copium, Delusion, Yacht Money, and Troll Points that you earn in half a second.`;
-            } else {
-                cookieTooltip.textContent = `Each cookie click counts as ${cookieClickMultiplier} clicks on collect buttons for Copium, Delusion, Yacht Money, and Troll Points!`;
-            }
-        }
-
-        // Handle achievements
-        achievementsMap.forEach((achievement, name) => {
-            const savedAchievement = gameState.achievements.find(a => a.name === name);
-            if (savedAchievement && savedAchievement.isUnlocked) {
-                unlockAchievement(name, true); // Use the unlockAchievement function with duringLoad set to true
-            }
-        });
-
-        // Handle library skills
-        librarySkills.forEach(skill => {
-            const savedSkill = gameState.librarySkills.find(s => s.name === skill.name);
-            if (savedSkill) {
-                skill.unlocked = savedSkill.unlocked;
-                if (skill.unlocked) {
-                    unlockLibrarySkill(skill, true);
-                }
-            }
-        });
-
-        // Handle power hall skills
-        powerHallSkills.forEach(skill => {
-            const savedSkill = gameState.powerHallSkills.find(s => s.name === skill.name);
-            if (savedSkill) {
-                skill.unlocked = savedSkill.unlocked;
-                if (skill.unlocked) {
-                    unlockPowerHallSkill(skill, true);
-                }
-            }
-        });
-
-
-        // Check the state of delusion and update the switch position accordingly
-        const toggleDelusion = document.getElementById('toggleDelusion');
-        if (delusionPerSecond >= 0) {
-            toggleDelusion.checked = true;
-        } else {
-            toggleDelusion.checked = false;
-        }
-
-        // Handle the Transcendence UI
-        if (transcendenceUnlocked) {
-            document.getElementById('pu-god-display').style.display = 'block';
-        }
-
-        // Update various UI elements based on loaded state
-        updateTradeRatio();
-        if(buyMarkersSkill){ 
-            enableAllBuyMarkers(); 
-        }
-
-        updateMultipliersDisplay();
-        updateEffectiveMultipliers();
-
-        // Retrieve the last interaction time, defaulting to the current time if not found
-        const lastInteraction = gameState.lastInteraction || Date.now();
-        const now = Date.now();
-        const elapsedSeconds = (now - lastInteraction) / 1000;
-
-        // Generate idle resources based on the elapsed time
-        generateIdleResources(elapsedSeconds);
-
-        // Update the display and the upgrade list, and unlock any available mini-games
-        updateDisplay();
-        updateUpgradeList();
-        unlockMiniGames();
-    };
-
-    reader.readAsText(file);
+        reader.readAsText(file);
+    });
 }
-
 
 
 
@@ -337,7 +130,7 @@ document.getElementById('closeDonationOverlay').addEventListener('click', closeD
 document.getElementById('closeDonationButton').addEventListener('click', closeDonation);
 
 // Add event listener for Export Save button
-document.getElementById('exportSaveButton').addEventListener('click', exportSave);
+document.getElementById('exportSaveButton').addEventListener('click', () => exportSave());
 
 // Add event listener for Import Save button
 document.getElementById('importSaveButton').addEventListener('click', function() {
@@ -690,4 +483,7 @@ document.getElementById('numberFormatButton').addEventListener('click', function
         currentNumberFormat = "Mixed";
     }
     this.textContent = `Number Format: ${currentNumberFormat}`;
+    
+    localStorage.setItem('currentNumberFormat', JSON.stringify(currentNumberFormat));
+    window.location.reload();
 });

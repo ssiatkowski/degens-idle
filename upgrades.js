@@ -800,7 +800,7 @@ const upgrades = [
     },
     {
         name: `Darth Vader`,
-        cost: { copium: 0, delusion: 0, yachtMoney: 1e43, trollPoints: 0, hopium: 0, knowledge: 1e31, power: 40, serenity: 0 },
+        cost: { copium: 0, delusion: 0, yachtMoney: 1e43, trollPoints: 0, hopium: 0, knowledge: 1e31, power: 60, serenity: 0 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 4.5e16, trollPointsPerSecond: 0, hopiumPerSecond: -5e8, knowledgePerSecond: 88000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/darth_vader.jpg`,
         isFight: true,
@@ -904,19 +904,19 @@ const upgrades = [
     {
         name: `Unpopular Truth`,
         cost: { copium: 4e54, delusion: 0, yachtMoney: 0, trollPoints: 2e53, hopium: 0, knowledge: 1e43, power: 2e6, serenity: 0 },
-        earnings: { copiumPerSecond: 8e18, delusionPerSecond: 1e19, yachtMoneyPerSecond: 0, trollPointsPerSecond: 4e18, hopiumPerSecond: 0, knowledgePerSecond: 63000, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 8e18, delusionPerSecond: 1e19, yachtMoneyPerSecond: 0, trollPointsPerSecond: 4e18, hopiumPerSecond: 0, knowledgePerSecond: 73000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/downvoted_opinion.jpg`,        
     },
     {
         name: `Happy Birthday to me`,
         cost: { copium: 0, delusion: 2e55, yachtMoney: 0, trollPoints: 1e55, hopium: 0, knowledge: 1e44, power: 1e6, serenity: 0 },
-        earnings: { copiumPerSecond: 3e18, delusionPerSecond: 0, yachtMoneyPerSecond: 1e19, trollPointsPerSecond: 3e18, hopiumPerSecond: 0, knowledgePerSecond: 75000, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 3e18, delusionPerSecond: 0, yachtMoneyPerSecond: 1e19, trollPointsPerSecond: 3e18, hopiumPerSecond: 0, knowledgePerSecond: 85000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/happy_birthday.jpg`,        
     },
     {
         name: `The Rock`,
         cost: { copium: 3e54, delusion: 1.8e55, yachtMoney: 0, trollPoints: 5e54, hopium: 0, knowledge: 8e43, power: 2e7, serenity: 0 },
-        earnings: { copiumPerSecond: 2e18, delusionPerSecond: 3e18, yachtMoneyPerSecond: 0, trollPointsPerSecond: 3e19, hopiumPerSecond: 0, knowledgePerSecond: 57000, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 2e18, delusionPerSecond: 3e18, yachtMoneyPerSecond: 0, trollPointsPerSecond: 3e19, hopiumPerSecond: 0, knowledgePerSecond: 87000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/the_rock_photo.jpg`,                
         message: `Don't worry, you never have to fight The Rock. He would beat you to a pulp.`,
 
@@ -924,7 +924,7 @@ const upgrades = [
     {
         name: `Real Life Girlfriend`,
         cost: { copium: 1e55, delusion: 5e55, yachtMoney: 1e55, trollPoints: 0, hopium: 0, knowledge: 1.2e44, power: 8e5, serenity: 0 },
-        earnings: { copiumPerSecond: 2e18, delusionPerSecond: 5e19, yachtMoneyPerSecond: 0, trollPointsPerSecond: 2e18, hopiumPerSecond: 0, knowledgePerSecond: 93000, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 2e18, delusionPerSecond: 5e19, yachtMoneyPerSecond: 0, trollPointsPerSecond: 2e18, hopiumPerSecond: 0, knowledgePerSecond: 97000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/real_life_girlfriend.jpg`,        
     },
     {
@@ -1029,8 +1029,8 @@ const upgrades = [
     },
     {
         name: `Vegeta`,
-        cost: { copium: 3e67, delusion: 0, yachtMoney: 3e67, trollPoints: 3e67, hopium: 0, knowledge: 5e50, power: 5e10, serenity: 0 },
-        earnings: { copiumPerSecond: 3e25, delusionPerSecond: 3e25, yachtMoneyPerSecond: 3e25, trollPointsPerSecond: 3e25, hopiumPerSecond: -1e26, knowledgePerSecond: 8.9e7, powerPerSecond: 0, serenityPerSecond: 0 },
+        cost: { copium: 3e67, delusion: 0, yachtMoney: 3e67, trollPoints: 3e67, hopium: 0, knowledge: 5e50, power: 2e10, serenity: 0 },
+        earnings: { copiumPerSecond: 3e25, delusionPerSecond: 3e25, yachtMoneyPerSecond: 3e25, trollPointsPerSecond: 3e25, hopiumPerSecond: -1e26, knowledgePerSecond: 3e8, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/vegeta.jpg`,
         isFight: true,
         message: `<p><strong>Vegeta:</strong> You’ve done it… you’ve finally reached the pinnacle of power. But understand this, it was never about me. From the very beginning, I groomed you for this moment, pushing you to break your limits, to become stronger than you ever imagined.</p>
@@ -1087,7 +1087,7 @@ const upgrades = [
     {         
         name: `Smile and Nod`,
         cost: { copium: 4e68, delusion: 0, yachtMoney: 0, trollPoints: 1e69, hopium: 0, knowledge: 8e50, power: 5e10, serenity: 0 },
-        earnings: { copiumPerSecond: 8e26, delusionPerSecond: 8e26, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 1.1e7, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 8e26, delusionPerSecond: 8e26, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 1.2e7, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/say_what_what.jpg`,        
     },
     {         
@@ -1098,31 +1098,43 @@ const upgrades = [
     },
     {         
         name: `Jump 1M Times`,
-        cost: { copium: 9e69, delusion: 0, yachtMoney: 0, trollPoints: 9e69, hopium: 0, knowledge: 2e52, power: 1e12, serenity: 0 },
-        earnings: { copiumPerSecond: 8e27, delusionPerSecond: 2e27, yachtMoneyPerSecond: 0, trollPointsPerSecond: 5e27, hopiumPerSecond: 0, knowledgePerSecond: 9e7, powerPerSecond: 0, serenityPerSecond: 0 },
+        cost: { copium: 9e71, delusion: 0, yachtMoney: 0, trollPoints: 9e71, hopium: 0, knowledge: 2e54, power: 1e12, serenity: 0 },
+        earnings: { copiumPerSecond: 8e27, delusionPerSecond: 2e27, yachtMoneyPerSecond: 0, trollPointsPerSecond: 5e27, hopiumPerSecond: 0, knowledgePerSecond: 9.5e7, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/achievement_fiend.jpg`,       
         hoverOverwrite: `Must. Get. All. Achievements.`,
     },
     {         
         name: `Going Crazy Over Here`,
-        cost: { copium: 5e71, delusion: 5e69, yachtMoney: 0, trollPoints: 3e71, hopium: 0, knowledge: 3e53, power: 2e12, serenity: 0 },
-        earnings: { copiumPerSecond: 1e28, delusionPerSecond: 1e28, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 1.8e8, powerPerSecond: 0, serenityPerSecond: 0 },
+        cost: { copium: 5e72, delusion: 5e69, yachtMoney: 0, trollPoints: 3e72, hopium: 0, knowledge: 8e54, power: 2e12, serenity: 0 },
+        earnings: { copiumPerSecond: 1e28, delusionPerSecond: 1e28, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 1.9e8, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/going_crazy_over_here.jpg`,       
         hoverOverwrite: `When you max out every stat and skill, but still get destroyed by Kaguya.`,
     },
     {         
-        name: `Unprecedented Overlap`,
-        cost: { copium: 1e72, delusion: 2e71, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 3e55, power: 2e14, serenity: 0 },
-        earnings: { copiumPerSecond: 2e28, delusionPerSecond: 2e28, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 3.3e8, powerPerSecond: 0, serenityPerSecond: 0 },
+        name: `Healthy Choices`,
+        cost: { copium: 9e72, delusion: 1e71, yachtMoney: 0, trollPoints: 9e72, hopium: 0, knowledge: 5e58, power: 1.5e13, serenity: 0 },
+        earnings: { copiumPerSecond: 3e28, delusionPerSecond: 0, yachtMoneyPerSecond: 1.2e28, trollPointsPerSecond: 3e28, hopiumPerSecond: 0, knowledgePerSecond: 5.5e8, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: `imgs/training_for_kaguya.jpg`
+    },
+    {         
+        name: `Unprecedented`,
+        cost: { copium: 1e73, delusion: 2e72, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 3e55, power: 2e14, serenity: 0 },
+        earnings: { copiumPerSecond: 2e28, delusionPerSecond: 2e28, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 8.5e8, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/unprecedented_overlap.jpg`
+    },
+    {         
+        name: `Bitch Back Off`,
+        cost: { copium: 1e80, delusion: 1e80, yachtMoney: 1e80, trollPoints: 1e80, hopium: 0, knowledge: 3e60, power: 3e14, serenity: 0 },
+        earnings: { copiumPerSecond: 4e28, delusionPerSecond: 4e28, yachtMoneyPerSecond: 0, trollPointsPerSecond: 5e28, hopiumPerSecond: 0, knowledgePerSecond: 1.3e9, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: `imgs/bitch_back_off.jpg`
     },
     {
         name: `Kaguya`,
-        cost: { copium: 6e69, delusion: 6e69, yachtMoney: 6e69, trollPoints: 6e69, hopium: 0, knowledge: 6e55, power: 1e15, serenity: 0 },
-        earnings: { copiumPerSecond: 3e30, delusionPerSecond: 3e30, yachtMoneyPerSecond: 3e30, trollPointsPerSecond: 3e30, hopiumPerSecond: -1e35, knowledgePerSecond: 3e9, powerPerSecond: 0, serenityPerSecond: 0 },
+        cost: { copium: 6e79, delusion: 6e79, yachtMoney: 6e79, trollPoints: 6e79, hopium: 0, knowledge: 6e60, power: 5e14, serenity: 0 },
+        earnings: { copiumPerSecond: 5e30, delusionPerSecond: 5e30, yachtMoneyPerSecond: 5e30, trollPointsPerSecond: 5e30, hopiumPerSecond: -1e35, knowledgePerSecond: 5e10, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/kaguya.jpg`,
         isFight: true,
-        hoverOverwrite: `WARNING: She is not balanced. She will drain your resoures. Not meant to be killed. Only fight if you want to hate her.`,
+        hoverOverwrite: `She is evil. She will drain your resoures. Only fight if you want to hate her.`,
         message: `<p><strong>Kaguya:</strong> So, you've done it. You've saved the multiverse from destruction. You've become the hero that all worlds will remember. But tell me, warrior, why do you still feel so empty inside?</p>
                 <p>You wield power beyond imagination, power that has crushed your enemies and saved countless lives. Yet, deep within, there’s a void that no victory can fill, a nagging sense that something vital is missing. Why does hope continue to slip through your grasp?</p>
                 <p><strong>Kaguya:</strong> Power alone was never the answer. You sought satisfaction, but all you found was more longing. What is it that you truly seek, if not the ultimate satisfaction? Why does the light of your triumph feel so dim?</p>
@@ -1131,20 +1143,84 @@ const upgrades = [
     },
     {         
         name: `Not the final boss?`,
-        cost: { copium: 1e75, delusion: 1e75, yachtMoney: 1e75, trollPoints: 1e75, hopium: 0, knowledge: 1e53, power: 3e12, serenity: 0 },
-        earnings: { copiumPerSecond: 1e30, delusionPerSecond: 0, yachtMoneyPerSecond: 5e29, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 2e8, powerPerSecond: 0, serenityPerSecond: 0 },
+        cost: { copium: 1e80, delusion: 1e80, yachtMoney: 1e80, trollPoints: 1e80, hopium: 0, knowledge: 1e60, power: 1e13, serenity: 0 },
+        earnings: { copiumPerSecond: 1e30, delusionPerSecond: 0, yachtMoneyPerSecond: 5e29, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 9e8, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/surprise_pikachu.jpg`,        
     },
     {         
         name: `Great Find`,
-        cost: { copium: 0, delusion: 7e77, yachtMoney: 2e78, trollPoints: 0, hopium: 0, knowledge: 1e54, power: 5e12, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 2e30, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 2e8, powerPerSecond: 0, serenityPerSecond: 0 },
+        cost: { copium: 0, delusion: 7e80, yachtMoney: 2e80, trollPoints: 0, hopium: 0, knowledge: 1e61, power: 1e14, serenity: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 2e30, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 2e9, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/perfect_avocado.jpg`,        
     },
     {         
         name: `Priceless Doggos`,
-        cost: { copium: 3e78, delusion: 0, yachtMoney: 5e78, trollPoints: 0, hopium: 0, knowledge: 3e55, power: 1e13, serenity: 0 },
-        earnings: { copiumPerSecond: 3e30, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 3e8, powerPerSecond: 0, serenityPerSecond: 0 },
+        cost: { copium: 3e81, delusion: 0, yachtMoney: 5e81, trollPoints: 0, hopium: 0, knowledge: 3e61, power: 3e14, serenity: 0 },
+        earnings: { copiumPerSecond: 3e30, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 4e9, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/spending_money_on_dogs.jpg`,        
+    },
+    {         
+        name: `Feels Bad Man`,
+        cost: { copium: 4e81, delusion: 0, yachtMoney: 6e81, trollPoints: 0, hopium: 0, knowledge: 4e61, power: 1e15, serenity: 0 },
+        earnings: { copiumPerSecond: 4e30, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 5e9, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: `imgs/feels_bad_man.jpg`,        
+    },
+    {         
+        name: `Bare Minimum`,
+        cost: { copium: 5e81, delusion: 0, yachtMoney: 0, trollPoints: 5e81, hopium: 0, knowledge: 5e62, power: 2e15, serenity: 0 },
+        earnings: { copiumPerSecond: 3e30, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 6e9, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: `imgs/bare_minimum.jpg`,        
+    },
+    {         
+        name: `How Unoriginal!`,
+        cost: { copium: 6e81, delusion: 0, yachtMoney: 7e81, trollPoints: 0, hopium: 0, knowledge: 6e62, power: 3e15, serenity: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 5e30, yachtMoneyPerSecond: 0, trollPointsPerSecond: 5e30, hopiumPerSecond: 0, knowledgePerSecond: 7e9, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: `imgs/too_long_didnt_read.jpg`,        
+    },
+    {         
+        name: `Why so serious?`,
+        cost: { copium: 2e82, delusion: 0, yachtMoney: 2e82, trollPoints: 0, hopium: 0, knowledge: 1e63, power: 2e16, serenity: 0 },
+        earnings: { copiumPerSecond: 8e30, delusionPerSecond: 8e30, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 4e10, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: `imgs/why_so_serious.jpg`,        
+    },
+    {         
+        name: `Stealth +5`,
+        cost: { copium: 0, delusion: 1e83, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 2e65, power: 3e16, serenity: 0 },
+        earnings: { copiumPerSecond: 2e31, delusionPerSecond: 2e31, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 1e11, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: `imgs/stealthy_zebra.jpg`,     
+        message: `Well, well, well... It seems you've stumbled upon 'Stealth +5.' But wait, there's a catch: there's no stealth in this game, silly! At this point, you should know better than to try sneaking around.<br><br>If you're thinking you can just tiptoe past the final boss— Saitama —think again. There's no hiding from him. You'll have to face the One Punch Man head-on, fair and square. No invisibility cloaks, no shadowy escapes... just pure, unfiltered, glorious combat. Good luck!`   
+    },
+    {
+        name: `Saitama`,
+        cost: { copium: 5e85, delusion: 5e85, yachtMoney: 5e85, trollPoints: 5e85, hopium: 0, knowledge: 5e66, power: 5e16, serenity: 0 },
+        earnings: { copiumPerSecond: 5e33, delusionPerSecond: 5e33, yachtMoneyPerSecond: 5e33, trollPointsPerSecond: 5e33, hopiumPerSecond: -1e40, knowledgePerSecond: 8e11, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: `imgs/saitama.jpg`,
+        isFight: true,
+        hoverOverwrite: `WARNING: Not Balanced Yet`,
+        message: `<p style="font-size: 1.2em; color: #b3a125;">
+                        Saitama breathes heavily, sweat dripping from his brow, bruises marking his usually invulnerable body. His excitement is palpable, a faint smile tugging at the corners of his mouth. “You… you actually pushed me. I didn’t think it was possible,” he says, his voice carrying an unfamiliar edge of exhilaration. For the first time in years, he felt the rush of a real fight. You can see it in his eyes—a spark that wasn’t there before. “You gave me a real challenge... I haven’t felt this alive in so long.”
+                    </p>
+                    <p style="font-size: 1.2em; color: #6b8ca4;">
+                        You stand there, staring at him, the weight of your victory sinking in. You've hurt him—truly hurt him—but something feels off. Instead of triumph, there’s an unsettling hollowness growing inside you. This was it, the fight you dreamed of, the one that was supposed to give you meaning. But now, in this moment of victory, as Saitama acknowledges your strength, it feels... empty.
+                    </p>
+                    <p style="font-size: 1.2em; color: #b3a125;">
+                        “Thank you,” Saitama says, his grin widening, almost childlike. “This is the fight I’ve been waiting for. I didn’t think anyone could ever push me this far.” He coughs, clutching his side, clearly in pain, yet his eyes shine with a light you’ve never seen before. “You’ve done it. You’ve made me care about fighting again.”
+                    </p>
+                    <p style="font-size: 1.2em; color: #6b8ca4;">
+                        His words should fill you with pride, but instead, they leave you hollow. You won. You gave him what he wanted. But what about you? As Saitama revels in the moment, you can’t help but feel a sense of loss creeping in. You’ve spent so long training, pushing yourself beyond limits, all for this moment—this chance to prove yourself against the only being who could rival your strength. And now that it’s over, there’s nothing left. No higher peak to climb. No grander opponent to face. You've won, but at what cost?
+                    </p>
+                    <p style="font-size: 1.2em; color: #b3a125;">
+                        “So, what now?” Saitama asks, his voice light but genuine. “You’ve beaten me, or close enough. What’s next for you?” He looks at you curiously, like someone who still has something to look forward to. There’s a fire in his eyes now, one you’ve reignited. But you? You’re left with only the smoldering ashes of what you once thought was your purpose.
+                    </p>
+                    <p style="font-size: 1.2em; color: #6b8ca4;">
+                        What now? The question hangs in the air, echoing through the battlefield and deep into your soul. You try to think of an answer, but there’s nothing. No more mountains to climb. No more enemies to face. Your journey, once driven by the desire to overcome, has left you standing at the edge of a void. The thrill of the fight, the struggle for purpose—it’s all gone now. You thought that defeating him would bring you fulfillment, but instead, it has left you adrift in an endless sea of uncertainty. 
+                    </p>
+                    <p style="font-size: 1.2em; color: #6b8ca4;">
+                        You glance at Saitama, now recharged with a sense of purpose you’ve unknowingly given him, but that same purpose has slipped through your fingers. You have achieved the ultimate victory... and now you stand at the summit of existence, staring down into a vast emptiness where meaning once was. What do you do when you’ve won the greatest battle of your life, only to realize that the fight was all you had? 
+                    </p>
+                    <p style="font-size: 1.2em; color: #6b8ca4;">
+                        Saitama walks away, still smiling, while you remain motionless. You have everything... and yet nothing. The fight is over, and with it, the purpose you had built your life around. What’s left? What can possibly come next? 
+                    </p>`,
+        //achievement: 'Hang Up Boxing Gloves',
     },
 ];

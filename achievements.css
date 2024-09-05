@@ -1,4 +1,3 @@
-/* Overlay for Achievements */
 .achievements-overlay {
     position: fixed;
     top: 0;
@@ -10,37 +9,37 @@
     justify-content: center;
     align-items: center;
     z-index: 3;
-    overflow: hidden; /* Prevent body scrolling */
+    overflow: hidden; /* Prevent scrolling on both axes */
 }
 
 .achievements-overlay-content {
     background-color: #1e1e1e;
-    padding: 20px 20px 40px 20px; /* Padding on all sides */
+    padding: 20px; /* Adjust padding */
     border: 1px solid #333;
     border-radius: 10px;
     text-align: center;
     color: #e0e0e0;
-    max-width: 1000px; /* Increased max-width to allow more space */
+    max-width: 1000px;
     width: 100%;
-    max-height: 90%; /* Ensure it fits within the screen */
+    max-height: 90%; /* Ensure content fits within the screen */
     overflow-y: auto; /* Enable vertical scrolling */
-    box-sizing: border-box; /* Include padding in the width calculation */
+    overflow-x: hidden; /* Disable horizontal scrolling */
+    box-sizing: border-box; /* Include padding in width calculation */
 }
 
-/* Update grid styles */
 #achievements-grid {
     display: grid;
-    grid-template-columns: repeat(10, 1fr); /* 10 columns for larger screens */
-    gap: 5px; /* Reduced gap to avoid too much space */
-    width: calc(100% - 20px); /* Adjust width to prevent overflow */
-    margin: 0 auto; /* Center the grid within the modal */
+    grid-template-columns: repeat(10, 1fr); /* 10 columns */
+    gap: 5px;
+    width: 100%; /* Set width to 100% to prevent overflow */
+    margin: 0 auto; /* Center the grid */
     margin-top: 20px;
+    box-sizing: border-box; /* Ensure padding doesn't cause overflow */
 }
 
-
 .achievement {
-    width: 70px;
-    height: 70px;
+    width: 80px;
+    height: 80px;
     position: relative;
 }
 
@@ -117,11 +116,11 @@
 /* Responsive adjustments for smaller screens */
 @media (max-width: 768px) {
     #achievements-grid {
-        grid-template-columns: repeat(5, 1fr); /* 5 columns for mobile screens */
+        grid-template-columns: repeat(4, 1fr); /* 5 columns for mobile screens */
     }
 
     .achievement {
-        width: 50px; /* Slightly smaller images on mobile */
-        height: 50px;
+        width: 70px; /* Slightly smaller images on mobile */
+        height: 70px;
     }
 }
