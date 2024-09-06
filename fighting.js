@@ -204,7 +204,7 @@ const enemyStats = {
         img: 'imgs/kaguya.jpg'
     },
     "Saitama": {
-        health: 1e22,
+        health: 2e22,
         minDamage: 0,
         maxDamage: 0,
         attackSpeed: 10,
@@ -1171,7 +1171,7 @@ function attackPlayer(resolve) {
             enemyMaxDamage += 200;
             logFight(`<span style='color: #b8860b;'>Saitama does Push Ups! His minimum damage increases by 200 and his maximum damage by 300.</span>`);
         } else if (rand < 30) { // 10% chance for Side Hops
-            const dodgeIncrease = 0.012 * (1 - enemyDodge); // Diminishing dodge increase based on remaining potential
+            const dodgeIncrease = 0.011 * (1 - enemyDodge); // Diminishing dodge increase based on remaining potential
             enemyDodge = Math.min(enemyDodge + dodgeIncrease, 1); // Ensure it doesn't exceed 1
             logFight(`<span style='color: #daa520;'>Saitama does Side Hops! His dodge rate increases by ${formatNumber(dodgeIncrease*100)}%.</span>`);
         } else if (rand < 40) { // 10% chance for Cracks Knuckles
