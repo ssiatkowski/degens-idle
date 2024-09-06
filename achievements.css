@@ -70,11 +70,12 @@
     position: absolute;
     z-index: 1;
     bottom: 105%; /* Position above the achievement */
-    left: 50%;
-    transform: translateX(-50%);
+    left: 50%; /* Default centered */
+    transform: translateX(-50%); /* Default centered */
     opacity: 0;
-    transition: opacity 0.3s;
+    transition: opacity 0.3s, left 0.3s, right 0.3s, transform 0.3s; /* Allow transitions */
 }
+
 
 .achievement:hover .hover-text {
     visibility: visible;

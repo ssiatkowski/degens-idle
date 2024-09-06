@@ -263,6 +263,7 @@ let firstAttackOfBattle = false;
 let kamuiActive = false;
 let izanagiUsed = false;
 let izanamiUsed = false;
+let sasukeIsHelping = false;
 
 let mysticReboundCount = 0;
 
@@ -375,7 +376,10 @@ function startFightGame(enemyName, enemyImg) {
             endFight(true); // Pass true to indicate the player forfeited
         };
 
+        let preFightMessage = false;
+
         if (currEnemyName === "Chuck Norris") {
+            preFightMessage = true;
             if (!purchasedUpgrades.some(upgrade => upgrade.name === "Training Dummy")) {
                 enemyDefense /= 2;
                 enemyHealth /= 2;
@@ -383,11 +387,20 @@ function startFightGame(enemyName, enemyImg) {
                 document.getElementById('enemyDefenseStat').innerText = formatNumber(enemyDefense);
                 document.getElementById('playerAbsorbStat').innerText = formatNumber(playerAbsorb * 100) + '%';
                 unlockAchievement('Chuck Norris Kidney');
-                logFight("<span style='color: green; font-size: 1.2em';>You catch Chuck Norris mid-session while he's pummeling the Training Dummy. Seizing the moment, you sneak up and deliver a wrenching gut shot right to his kidney. The impact is so brutal that it cuts his health and defense in half for the rest of the battle, and he is unable to absorb any damage.</span>");
+                logFight("<span style='color: green; font-weight: bold; font-size: 1.3em';>You catch Chuck Norris mid-session while he's pummeling the Training Dummy. Seizing the moment, you sneak up and deliver a wrenching gut shot right to his kidney. The impact is so brutal that it cuts his health and defense in half for the rest of the battle, and he is unable to absorb any damage.</span>");
             } else {
-                logFight("<span style='color: red; font-size: 1.2em';>Chuck Norris has no distractions and is ready to fight you at full power.</span>");
+                logFight("<span style='color: red; font-weight: bold; font-size: 1.3em';>Chuck Norris has no distractions and is ready to fight you at full power.</span>");
             }
-        } 
+        } else if (currEnemyName === "Kaguya") {
+            preFightMessage = true;
+            if (!purchasedUpgrades.some(upgrade => upgrade.name === "Good Guy Sasuke")) {
+                sasukeIsHelping = true; // Set Sasuke's help flag to true
+                unlockAchievement('Sidekick');
+                logFight("<span style='color: green; font-weight: bold; font-size: 1.3em';>Sasuke joins your side to stop Kaguya and save the multiverse.</span>");
+            } else {
+                logFight("<span style='color: red; font-weight: bold; font-size: 1.3em';>You stand alone against the biggest evil the world has ever seen.</span>");
+            }
+        }
 
         // Update health bars
         updateHealthBars();
@@ -437,10 +450,17 @@ function startFightGame(enemyName, enemyImg) {
             }, 5000); // 250 milliseconds = 0.25 seconds
         } else{
             // Start the fight loop
-            // Add a 0.25-second delay before starting the fight loop
-            setTimeout(() => {
-                fightLoop(resolve);
-            }, 250); // 250 milliseconds = 0.25 seconds
+            if (preFightMessage){
+                // Add a 1-second delay before starting the fight loop
+                setTimeout(() => {
+                    fightLoop(resolve);
+                }, 1000); // 1000 milliseconds = 1 seconds
+            } else {
+                // Add a 0.25-second delay before starting the fight loop
+                setTimeout(() => {
+                    fightLoop(resolve);
+                }, 250); // 250 milliseconds = 0.25 seconds
+            }
         }
 
     });
@@ -570,7 +590,13 @@ function attackEnemy(resolve) {
     if (playerAmaterasuStacks > 0) {
         const amaterasuDamage = Math.floor(playerMaxHealth * 0.002 * playerAmaterasuStacks);
         playerHealth -= amaterasuDamage;
-        logFight(`<span style='color: black;'>${playerAmaterasuStacks} stacks of Amaterasu burn you for ${formatNumber(amaterasuDamage)} damage!</span>`);
+        logFight(`<span style='color: black;'>${playerAmaterasuStacks.toFixed(1)} stacks of Amaterasu burn you for ${formatNumber(amaterasuDamage)} damage!</span>`);
+        
+        // Check if Sasuke is helping and reduce Amaterasu stacks by 0.1
+        if (sasukeIsHelping) {
+            playerAmaterasuStacks = Math.max(0, playerAmaterasuStacks - 0.1); // Ensure it doesn't go below 0
+            logFight(`<span style='color: blue;'>Sasuke is helping put out the flames!</span>`);
+        }
     }
 
     // Check if the player is stunned
@@ -595,7 +621,7 @@ function attackEnemy(resolve) {
         return; // Skip attacking the enemy, as the player attacked themselves
     }
 
-    const isCritical = Math.random() < playerCritChance;
+    let isCritical = Math.random() < playerCritChance;
     const baseDamage = Math.floor(Math.random() * (playerMaxDamage - playerMinDamage + 1)) + playerMinDamage;
     let damage = 0;
 
@@ -624,10 +650,17 @@ function attackEnemy(resolve) {
 
         // Handle regular dodge mechanics (applies to both critical and non-critical hits)
         if (kamuiActive && isCritical) {
-            logFight(`<span style='color: orange;'>${currEnemyName} uses Kamui and dodges your critical attack!</span>`);
             kamuiActive = false;
-            return; // Enemy dodged, so the attack ends here
+            if (sasukeIsHelping) {
+                // Sasuke helps prevent Kamui from ending the turn, but makes the hit non-critical
+                logFight(`<span style='color: blue;'>Sasuke sees through ${currEnemyName}'s Kamui escape! You still land a hit, but it's no longer critical.</span>`);
+                isCritical = false; // Hit is still successful, but not critical
+            } else {
+                logFight(`<span style='color: orange;'>${currEnemyName} uses Kamui and dodges your critical attack!</span>`);
+                return; // Enemy dodged, so the attack ends here
+            }
         }
+
 
         // Calculate damage
         if (isCritical) {
@@ -1053,10 +1086,10 @@ function attackPlayer(resolve) {
         const randTruthSeekerBall = Math.random() < 0.025;
         const randByakugan64Palms = Math.random() < 0.13;
         const randPlanetaryDevastation = Math.random() < 0.01;
-        const randAmaterasu = Math.random() < 0.08;
+        const randAmaterasu = Math.random() < 0.15;
         const randTsukuyomi = Math.random() < 0.04;
-        const randSusanoo = Math.random() < 0.17;
-        const randKamui = Math.random() < 0.04;
+        const randSusanoo = Math.random() < 0.18;
+        const randKamui = Math.random() < 0.06;
     
         if (randChakraAbsorption) { // Chakra Absorption
             power *= 0.9; // Reduce power by 10%
@@ -1106,9 +1139,14 @@ function attackPlayer(resolve) {
         }
         
         if (randSusanoo) { // Susanoo
-            enemyDefense *= 1.03; // Increase Kaguya's defense by 3%
+            if (sasukeIsHelping) {
+                enemyDefense *= 1.03; // Throttle Susanoo to 75% power, increasing defense by 3%
+                logFight(`<span style='color: blue;'>Kaguya activates Susanoo but Sasuke throttles it! Her defense increases by only 3%.</span>`);
+            } else {
+                enemyDefense *= 1.04; // Increase Kaguya's defense by 4%
+                logFight(`<span style='color: #4682B4;'>Kaguya activates Susanoo! Her defense increases by 4%.</span>`);
+            }
             document.getElementById('enemyDefenseStat').innerText = formatNumber(enemyDefense);
-            logFight(`<span style='color: #4682B4;'>Kaguya activates Susanoo! Her defense increases by 3%.</span>`);
         }
         
         if (randKamui) { // Kamui

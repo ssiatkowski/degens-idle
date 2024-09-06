@@ -304,6 +304,8 @@ function loadGameState() {
     }
 
     deadpoolRevives = parseFloat(localStorage.getItem('deadpoolRevives')) || 0;
+
+    forgetfulnessCounter = parseFloat(localStorage.getItem('forgetfulnessCounter')) || 0;
     
     // Retrieve and parse all upgrades with the isGodMode property from local storage
     const savedUpgrades = JSON.parse(localStorage.getItem('upgrades')) || [];
@@ -1756,6 +1758,7 @@ function decodeName(encodedName) {
 }
 
 let isFightInProgress = false; // Flag to prevent multiple fight triggers
+let forgetfulnessCounter = 0;
 
 // Function to handle the purchase of an upgrade
 async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
@@ -1794,6 +1797,11 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
 
             if (name === 'Vegeta' && !purchasedUpgrades.some(upgrade => upgrade.name === "Cosmetic Surgery")){
                 showMessageModal('Hmph', `After all your time and effort tracking down Vegeta, you finally confront him, only to hear, "Hmph, you're too ugly to fight," as he flies off without a second thought. Frustrated and defeated, you realize you might need to find another way to make yourself more visually impressive—something that even Vegeta can't ignore.`);
+                forgetfulnessCounter++;
+                localStorage.setItem('forgetfulnessCounter', forgetfulnessCounter);
+                if (forgetfulnessCounter >= 25) {
+                    unlockAchievement('Delusion Causes Forgetfulness');
+                }
                 return;
             }
 
@@ -1804,6 +1812,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
 
             if (!fightResult) {
                 showMessageModal('You Lost', `Defeat isn’t the end, ${name} just tested your limits. Get back up and come back stronger!`);
+                unlockAchievement('Get Up and Try Again');
                 saveGameState();
                 return;
             }
@@ -1874,7 +1883,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
 
         // Special case for the "Still very stupid" upgrade
         if (name === 'Saitama') {
-            showMessageModal('Sadly', "This marks the end of v0.901. I hope you're enjoyed the thrill of these battles and unlocking the secrets of the Power Hall skills. The adventure is far from over, and your feedback is what makes it truly epic. Join us on Discord and share your experiences, strategies, and thoughts. Let’s shape the future of the game together and make each update more exciting than the last!");
+            showMessageModal('Sadly', "This marks the end of v0.902. I hope you're enjoyed the thrill of these battles and unlocking the secrets of the Power Hall skills. The adventure is far from over, and your feedback is what makes it truly epic. Join us on Discord and share your experiences, strategies, and thoughts. Let’s shape the future of the game together and make each update more exciting than the last!");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one
@@ -1893,6 +1902,14 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
         } else if (name == `Job Application #3`){
             if (!purchasedUpgrades.some(upgrade => upgrade.name === `Job Application`) && !purchasedUpgrades.some(upgrade => upgrade.name === `Job Application #2`)){
                 unlockAchievement('Reject Rejection');
+            }
+        } else if (name == `Soothing Realization`){
+            if (!purchasedUpgrades.some(upgrade => upgrade.name === `Cookie Clicker`) && !purchasedUpgrades.some(upgrade => upgrade.name === `NGU Idle`) && !purchasedUpgrades.some(upgrade => upgrade.name === `Melvor Idle`) && !purchasedUpgrades.some(upgrade => upgrade.name === `Antimatter Dimensions`) && !purchasedUpgrades.some(upgrade => upgrade.name === `Increlution`)){
+                unlockAchievement('Degens Idle Purist');
+            }
+        } else if (name == 'Spend That Money'){
+            if (!purchasedUpgrades.some(upgrade => upgrade.name === `Sebo's Luck`)){
+                unlockAchievement('Take Out a Loan');
             }
         }
 
@@ -2099,10 +2116,24 @@ function addPurchasedUpgrade(img, name, earnings, isGodMode = false, isPUGodMode
 
             if (message.startsWith('imgs/modal_imgs/')) {
                 showMessageModal(name, '', false, false, message);
+                if (name == `What is DEGENS?`) {
+                    let admireTimeoutId = setTimeout(() => {
+                        unlockAchievement('Admire The Acronym');
+                    }, 15000);
+            
+                    // Delay the event listener for a moment to avoid canceling the timeout by the same initial click
+                    setTimeout(() => {
+                        document.addEventListener('click', function cancelTimeout() {
+                            clearTimeout(admireTimeoutId);
+                            document.removeEventListener('click', cancelTimeout); // Remove the event listener to prevent multiple cancellations
+                        });
+                    }, 50); // Slight delay to ensure the first click doesn't cancel the timeout
+                }
             } else {
                 if (name == `Clickable`){
                     unlockAchievement('Click the Clicker');
                 }
+
                 showMessageModal(name, message);
             }
         });

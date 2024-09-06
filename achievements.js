@@ -108,6 +108,12 @@ const achievements = [
         img: 'imgs/achievements/pure_luck.jpg',
     },
     {
+        name: 'Admire The Acronym',
+        isUnlocked: false,
+        hoverText: 'understand the meaning of this game',
+        img: 'imgs/achievements/admiring.jpg',
+    },
+    {
         name: 'Build a Base',
         isUnlocked: false,
         hoverText: 'do what it says',
@@ -144,22 +150,16 @@ const achievements = [
         img: 'imgs/achievements/all_in.jpg',
     },
     {
-        name: 'Does Not Exist 23',
+        name: 'Degens Idle Purist',
         isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
+        hoverText: 'one game at a time',
+        img: 'imgs/achievements/degens_idle_purist.jpg',
     },
     {
         name: 'Big Crunch',
         isUnlocked: false,
         hoverText: 'just another prestige layer',
         img: 'imgs/achievements/big_crunch.jpg',
-    },
-    {
-        name: 'Does Not Exist 25',
-        isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
     },
     {
         name: 'Does Not Exist 26',
@@ -246,10 +246,10 @@ const achievements = [
         img: 'imgs/achievements/begin_training.jpg',
     },
     {
-        name: 'Does Not Exist 39',
+        name: 'Get Up and Try Again',
         isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
+        hoverText: 'you win some, you lose some',
+        img: 'imgs/achievements/get_up_and_try_again.jpg',
     },
     {
         name: 'Mortal Kombat',
@@ -288,10 +288,10 @@ const achievements = [
         img: 'imgs/achievements/uninitialized.jpg',
     },
     {
-        name: 'Does Not Exist 47',
+        name: 'Take Out a Loan',
         isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
+        hoverText: 'spend money before you get it',
+        img: 'imgs/achievements/take_out_a_loan.jpg',
     },
     {
         name: 'Reject Rejection',
@@ -366,6 +366,12 @@ const achievements = [
         img: 'imgs/achievements/condensed_crunch.jpg',
     },
     {
+        name: 'Sidekick',
+        isUnlocked: false,
+        hoverText: `don't fight alone`,
+        img: 'imgs/achievements/sidekick.jpg',
+    },
+    {
         name: 'Overkill Much?',
         isUnlocked: false,
         hoverText: 'send him flying out of the matrix',
@@ -378,16 +384,10 @@ const achievements = [
         img: 'imgs/achievements/save_the_multiverse.jpg',
     },
     {
-        name: 'Does Not Exist 64',
+        name: 'Delusion Causes Forgetfulness',
         isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
-    },
-    {
-        name: 'Does Not Exist 65',
-        isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
+        hoverText: 'forget to get "it" enough times',
+        img: 'imgs/achievements/forgetfulness.jpg',
     },
     {
         name: 'Make Kuzzi Love You',
@@ -612,7 +612,13 @@ function renderAchievements() {
     const container = document.getElementById('achievements-grid');
     container.innerHTML = ''; // Clear any existing content
 
-    achievementsMap.forEach(achievement => { // Iterate over the map
+    // Dynamically calculate the number of columns based on screen width
+    const columns = window.innerWidth <= 768 ? 4 : 10; // 4 columns for mobile, 10 for desktop
+
+    // Convert achievementsMap to an array if it's a Map
+    const achievementsArray = Array.from(achievementsMap.values()); // Ensure map values are treated as an array
+
+    achievementsArray.forEach((achievement, index) => {
         const achievementElement = document.createElement('div');
         achievementElement.className = 'achievement';
         if (achievement.isUnlocked) {
@@ -620,7 +626,7 @@ function renderAchievements() {
         }
 
         const img = document.createElement('img');
-        img.src = achievement.img; // Ensure the image paths match this format
+        img.src = achievement.img;
 
         const hoverText = document.createElement('div');
         hoverText.className = 'hover-text';
@@ -629,10 +635,32 @@ function renderAchievements() {
         achievementElement.appendChild(img);
         achievementElement.appendChild(hoverText);
         container.appendChild(achievementElement);
+
+        // Get the column position based on index and number of columns
+        const columnPosition = (index % columns) + 1; // 1-based column position
+
+        // Reset hoverText to default centered position for all
+        hoverText.style.left = '50%';
+        hoverText.style.right = 'auto';
+        hoverText.style.transform = 'translateX(-50%)'; // Center by default
+
+        // If in the leftmost column, move hover text right by 10px
+        if (columnPosition === 1) {
+            hoverText.style.left = '0px';
+            hoverText.style.transform = 'none'; // Remove centering for left column
+        }
+
+        // If in the rightmost column, move hover text left by 10px
+        if (columnPosition === columns) {
+            hoverText.style.left = 'auto'; // Remove left positioning
+            hoverText.style.right = '0px'; // Add right position
+            hoverText.style.transform = 'none'; // Remove centering for right column
+        }
     });
 
     updateAchievementsInfo();
 }
+
 
 let numAchievementsOpens = 0;
 // Function to show the achievements overlay
@@ -671,7 +699,6 @@ function unlockAchievement(name, duringLoad = false) {
 
         if (!duringLoad) {
             saveGameState();
-            renderAchievements(); // Re-render achievements after unlocking
             updateMultipliersDisplay();
             showPopupTooltip(`Unlocked Achievement: ${name}`, color='#1B4D3E', durationSeconds=5);
         }
