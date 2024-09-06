@@ -116,6 +116,7 @@ let stellarHarvestMult = 1;
 let currentTimeouts = [];  // Array to store all active timeout IDs
 let cookieIntervalId;
 
+let crunchTimer = 0;
 
 function calculateBaseKnowledge() {
     return knowledgePerSecond * totalMultiplier * (bigCrunchMultiplier ** (1/2)) * stellarHarvestMult;
@@ -285,6 +286,8 @@ function loadGameState() {
     // Retrieve and parse the big crunch values from local storage, defaulting to 1e-7 or 1 if not found
     bigCrunchPower = parseFloat(localStorage.getItem('bigCrunchPower')) || 1e-7;
     bigCrunchMultiplier = parseFloat(localStorage.getItem('bigCrunchMultiplier')) || 1;
+
+    crunchTimer = parseFloat(localStorage.getItem('crunchTimer')) || 0;
     
     // Load the first time prestige button available flag
     firstTimePrestigeButtonAvailable = JSON.parse(localStorage.getItem('firstTimePrestigeButtonAvailable')) || true;
@@ -306,6 +309,8 @@ function loadGameState() {
     deadpoolRevives = parseFloat(localStorage.getItem('deadpoolRevives')) || 0;
 
     forgetfulnessCounter = parseFloat(localStorage.getItem('forgetfulnessCounter')) || 0;
+    numMathSolves = parseFloat(localStorage.getItem('numMathSolves')) || 0;
+
     
     // Retrieve and parse all upgrades with the isGodMode property from local storage
     const savedUpgrades = JSON.parse(localStorage.getItem('upgrades')) || [];
@@ -461,6 +466,9 @@ function saveGameState() {
 
     // Save the current time as the last interaction time
     localStorage.setItem('lastInteraction', Date.now());
+
+    // Save current crunch timer
+    localStorage.setItem('crunchTimer', crunchTimer);
     
     // Save all upgrades with the isGodMode property
     localStorage.setItem('upgrades', JSON.stringify(upgrades.map(upgrade => ({
@@ -622,6 +630,8 @@ function generateResources() {
             showMessageModal('The Age of Knowledge', `As you cross the threshold of -1 trillion delusion, the dense fog of confusion and distorted thoughts begins to lift. A sense of clarity pierces through the haze, revealing a world beyond the familiar chaos. The swirling mists part to unveil a luminous realm, shimmering with the light of hidden truths. For the first time, you feel a profound shift within, as the once insurmountable delusion gives way to the dawning of true knowledge. This newfound awareness pulses with a quiet intensity, each revelation a stepping stone towards deeper understanding. Your journey through the labyrinth of the mind has led to this pivotal moment, where the pursuit of enlightenment begins. Your mind expands, absorbing the essence of ancient wisdom and universal secrets, setting the stage for a transformative quest that transcends the ordinary limits of perception.`, false, false);
         }
     }
+
+    crunchTimer += 0.5;
 
     updateDisplay();
 }
@@ -1575,6 +1585,8 @@ async function bigCrunch() {
             puGodLevel = 0;
             puGodMultiplier = 1;
 
+            crunchTimer = 0;
+
             upgrades.forEach(upgrade => {
                 upgrade.isGodMode = false;
                 upgrade.isPUGodMode = false;
@@ -1695,6 +1707,8 @@ function generateIdleResources(elapsedSeconds) {
     if (elapsedSeconds > 60 * 60 * 24){
         unlockAchievement('Take a Break');
     }
+
+    crunchTimer += elapsedSeconds;
 
     const baseKnowledgePerSecond = calculateBaseKnowledge();
 
@@ -1883,7 +1897,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
 
         // Special case for the "Still very stupid" upgrade
         if (name === 'Saitama') {
-            showMessageModal('Sadly', "This marks the end of v0.902. I hope you're enjoyed the thrill of these battles and unlocking the secrets of the Power Hall skills. The adventure is far from over, and your feedback is what makes it truly epic. Join us on Discord and share your experiences, strategies, and thoughts. Let’s shape the future of the game together and make each update more exciting than the last!");
+            showMessageModal('Sadly', "This marks the end of v0.903. I hope you're enjoyed the thrill of these battles and unlocking the secrets of the Power Hall skills. The adventure is far from over, and your feedback is what makes it truly epic. Join us on Discord and share your experiences, strategies, and thoughts. Let’s shape the future of the game together and make each update more exciting than the last!");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one
@@ -2483,8 +2497,8 @@ function devIncreasePrestigeMultiplier() {
     updateDisplay();
 }
 
-// Add event listener for the key combinations
-document.addEventListener('keydown', (event) => {
+// Define the hotkey handler function
+function hotkeyHandler(event) {
     if (event.shiftKey && event.altKey) {
         switch (event.key) {
             case '!':
@@ -2509,22 +2523,37 @@ document.addEventListener('keydown', (event) => {
                 devIncreasePrestigeMultiplier();
                 break;
         }
-    }
-    else {
+    } else {
         switch (event.key) {
             case 'm':
-                if (multibuyUpgradesButtonsUnlocked){
+                if (multibuyUpgradesButtonsUnlocked) {
                     buyAllUpgrades(100, document.getElementById('buyMaxButton'));
                 }
                 break;
             case 's':
-                if (multibuyUpgradesButtonsUnlocked){
+                if (multibuyUpgradesButtonsUnlocked) {
                     buyAllUpgrades(8, document.getElementById('buyMaxButton'));
                 }
                 break;
         }
     }
+}
+
+// Get the input element
+const tradeInput = document.getElementById('tradeAmount');
+
+// Disable the hotkey handler when the input is focused
+tradeInput.addEventListener('focus', () => {
+    document.removeEventListener('keydown', hotkeyHandler);
 });
+
+// Re-enable the hotkey handler when the input loses focus
+tradeInput.addEventListener('blur', () => {
+    document.addEventListener('keydown', hotkeyHandler);
+});
+
+// Initially add the hotkey listener
+document.addEventListener('keydown', hotkeyHandler);
 
 
 function showMessageModal(title, message, isConfirm = false, isUpgradeSelection = false, imageName = null, isTranscend = false, preventOutsideClose = false) {

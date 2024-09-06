@@ -407,6 +407,10 @@ function openLibrary() {
         libraryOverlay.style.display = 'flex';
         updateSkillDisplay();
 
+        if(crunchTimer < 10){
+            unlockAchievement('Skipping Grades');
+        }
+
         // Add a temporary event listener to close the overlay when clicking outside of it
         setTimeout(() => {
             document.addEventListener('click', outsideLibraryClickListener);

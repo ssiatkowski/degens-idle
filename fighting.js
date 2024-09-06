@@ -907,44 +907,48 @@ function attackEnemy(resolve) {
     }
     
     if (currEnemyName === "Saitama" && enemyHealth <= (0.1 * enemyMaxHealth)) {
-        // Clear the previous enemy attack interval and set a new one
-        clearAttackIntervals();
-    
-        // Saitama gets serious - change his name, restore health, and increase attack speed
-        currEnemyName = "Serious Saitama";
-        enemyHealth = enemyMaxHealth; // Restore his health to full
-        enemyAttackSpeed = enemyAttackSpeed * 10; // Set his attack speed to 100
-        enemyMinDamage = enemyMinDamage * 10;
-        enemyMaxDamage = enemyMaxDamage * 10;
-        enemyDefense = enemyDefense * 10;
-        
-        logFight(`<span style='color: #b3a125; font-weight: bold; font-size: 1.3em;'>Saitama gets serious! No tricks up his sleeve, just raw power. Brace yourself!</span>`);
-        
-        if (!purchasedUpgrades.some(upgrade => upgrade.name === "Training Dummy")) {
-            enemyStunCount = 100;
-            //unlockAchievement('Same Trick Twice?');
-            logFight("<span style='color: green; font-size: 1.2em';>Can't believe the Training Dummy trick worked again! This time, it was rigged with a galactic paralyzer device, stunning Saitama for 100 turns.</span>");
-        }        
 
-        // Update the enemy image to the serious version of Saitama
-        const enemyImageContainer = document.getElementById('enemyImageContainer');
-        enemyImageContainer.innerHTML = ''; // Clear the previous image
-        const enemyImage = document.createElement('img');
-        enemyImage.src = 'imgs/saitama_serious.jpg'; // Path to the serious Saitama image
-        enemyImage.alt = "Serious Saitama";
-        enemyImageContainer.appendChild(enemyImage);
-
-        updateStatsUI();
-    
-        // Delay of 1 second before continuing the fight
-        setTimeout(() => {
-            fightLoop(resolve);
-        }, 1000);
+        // Check for special interaction: one-punch KO
+        if (damage > (2 * enemyMaxHealth) && enemyHealth <= 0) {
+            unlockAchievement('One Hit KO');
+            logFight(`<span style='color: #FFDEAD; font-size: 1.3em;'>You have One Punched the One Punch Man!</span>`);
+        } else{
+            // Clear the previous enemy attack interval and set a new one
+            clearAttackIntervals();
+        
+            // Saitama gets serious - change his name, restore health, and increase attack speed
+            currEnemyName = "Serious Saitama";
+            enemyHealth = enemyMaxHealth; // Restore his health to full
+            enemyAttackSpeed = enemyAttackSpeed * 10; // Set his attack speed to 100
+            enemyMinDamage = enemyMinDamage * 10;
+            enemyMaxDamage = enemyMaxDamage * 10;
+            enemyDefense = enemyDefense * 10;
+            
+            logFight(`<span style='color: #b3a125; font-weight: bold; font-size: 1.3em;'>Saitama gets serious! No tricks up his sleeve, just raw power. Brace yourself!</span>`);
+            
+            if (!purchasedUpgrades.some(upgrade => upgrade.name === "Training Dummy")) {
+                enemyStunCount = 100;
+                logFight("<span style='color: green; font-size: 1.2em';>Can't believe the Training Dummy trick worked again! This time, it was rigged with a galactic paralyzer device, stunning Saitama for 100 turns.</span>");
+            }
+        
+            // Update the enemy image to the serious version of Saitama
+            const enemyImageContainer = document.getElementById('enemyImageContainer');
+            enemyImageContainer.innerHTML = ''; // Clear the previous image
+            const enemyImage = document.createElement('img');
+            enemyImage.src = 'imgs/saitama_serious.jpg'; // Path to the serious Saitama image
+            enemyImage.alt = "Serious Saitama";
+            enemyImageContainer.appendChild(enemyImage);
+        
+            updateStatsUI();
+        
+            // Delay of 1 second before continuing the fight
+            setTimeout(() => {
+                fightLoop(resolve);
+            }, 1000);
+                
+        }
     }
     
-    
-
-
     // Update health bars
     updateHealthBars();
 }
@@ -1177,7 +1181,10 @@ function attackPlayer(resolve) {
             logFight(`<span style='color: #b22222;'>Saitama does Squats! His defense increases by 2 quadrilion.</span>`);
         } else if (rand < 60) { // 10% chance for Sit Ups
             const absorbIncrease = 0.02 * (1 - enemyAbsorb); // Diminishing absorb increase based on remaining potential
-            enemyAbsorb = Math.min(enemyAbsorb + absorbIncrease, 0.999999); // Ensure it doesn't exceed 1
+            enemyAbsorb = Math.min(enemyAbsorb + absorbIncrease, 0.9999); // Ensure it doesn't exceed 1
+            if (enemyAbsorb > 0.9){
+                unlockAchievement('More than Sauron');
+            }
             logFight(`<span style='color: #ff6347;'>Saitama does Sit Ups! His damage absorption increases by ${formatNumber(absorbIncrease * 100)}%.</span>`);
         } else if (rand < 70) { // 10% chance for Breathes on You
             if (isCritical) { // Critical hit scenario

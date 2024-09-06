@@ -1114,6 +1114,12 @@ const upgrades = [
         hoverOverwrite: `When you max out every stat and skill, but still get destroyed by Kaguya.`,
     },
     {         
+        name: `Foreshadowing #3`,
+        cost: { copium: 8e72, delusion: 9e70, yachtMoney: 3e70, trollPoints: 0, hopium: 0, knowledge: 2e56, power: 5e12, serenity: 0 },
+        earnings: { copiumPerSecond: 1.5e28, delusionPerSecond: 0, yachtMoneyPerSecond: 9e27, trollPointsPerSecond: 1e28, hopiumPerSecond: 0, knowledgePerSecond: 3.3e8, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: `imgs/distracted_boyfriend_3.jpg`,       
+    },
+    {         
         name: `Healthy Choices`,
         cost: { copium: 9e72, delusion: 1e71, yachtMoney: 0, trollPoints: 9e72, hopium: 0, knowledge: 5e58, power: 1.5e13, serenity: 0 },
         earnings: { copiumPerSecond: 3e28, delusionPerSecond: 0, yachtMoneyPerSecond: 1.2e28, trollPointsPerSecond: 3e28, hopiumPerSecond: 0, knowledgePerSecond: 5.5e8, powerPerSecond: 0, serenityPerSecond: 0 },
@@ -1224,6 +1230,12 @@ const upgrades = [
                     <p style="font-size: 1.2em; color: #6b8ca4;">
                         Saitama walks away, still smiling, while you remain motionless. You have everything... and yet nothing. The fight is over, and with it, the purpose you had built your life around. What’s left? What can possibly come next? 
                     </p>`,
-        //achievement: 'Hang Up Boxing Gloves',
+        achievement: 'Hang Up Boxing Gloves',
+    },
+    {         
+        name: `Smash That Like Button`,
+        cost: { copium: 0, delusion: 1e83, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 2e65, power: 3e16, serenity: 0 },
+        earnings: { copiumPerSecond: 2e31, delusionPerSecond: 2e31, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 1e11, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: `imgs/the_like_button.jpg`,     
     },
 ];

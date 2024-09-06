@@ -162,10 +162,10 @@ const achievements = [
         img: 'imgs/achievements/big_crunch.jpg',
     },
     {
-        name: 'Does Not Exist 26',
+        name: 'When Math Maths',
         isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
+        hoverText: 'win math game using at least 5 portals',
+        img: 'imgs/achievements/when_math_maths.jpg',
     },
     {
         name: 'Do-Over',
@@ -312,10 +312,10 @@ const achievements = [
         img: 'imgs/achievements/chuck_norris_kidney.jpg',
     },
     {
-        name: 'Does Not Exist 50',
+        name: 'Skipping Grades',
         isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
+        hoverText: 'enter Hall of Knowledge in less than 10 seconds',
+        img: 'imgs/achievements/skipping_grades.jpg',
     },
     {
         name: 'Does Not Exist 51',
@@ -402,10 +402,10 @@ const achievements = [
         img: 'imgs/achievements/offline_gains.jpg',
     },
     {
-        name: 'Does Not Exist 68',
+        name: 'Pie Guy',
         isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
+        hoverText: 'solve &pi;&times;100 math problems',
+        img: 'imgs/achievements/pie_guy.jpg',
     },
     {
         name: 'Does Not Exist 69',
@@ -426,10 +426,10 @@ const achievements = [
         img: 'imgs/achievements/uninitialized.jpg',
     },
     {
-        name: 'Does Not Exist 72',
+        name: 'Hang Up Boxing Gloves',
         isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
+        hoverText: 'win the final battle',
+        img: 'imgs/achievements/hanging_gloves.jpg',
     },
     {
         name: 'Does Not Exist 73',
@@ -522,10 +522,10 @@ const achievements = [
         img: 'imgs/achievements/uninitialized.jpg',
     },
     {
-        name: 'Does Not Exist 88',
+        name: 'One Hit KO',
         isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
+        hoverText: 'one punch the man',
+        img: 'imgs/achievements/one_punch_the_man.jpg',
     },
     {
         name: 'Does Not Exist 89',
@@ -540,16 +540,16 @@ const achievements = [
         img: 'imgs/achievements/uninitialized.jpg',
     },
     {
+        name: 'More than Sauron',
+        isUnlocked: false,
+        hoverText: '???',
+        img: 'imgs/achievements/damage_absorption.jpg',
+    },
+    {
         name: 'The Tiniest Crunch',
         isUnlocked: false,
         hoverText: '???',
         img: 'imgs/achievements/tiniest_crunch.jpg',
-    },
-    {
-        name: 'Does Not Exist 92',
-        isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
     },
     {
         name: 'Does Not Exist 93',

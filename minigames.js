@@ -18,6 +18,8 @@ const miniGameTimeouts = {
 // Object to store interval references for each mini-game
 const miniGameIntervals = {};
 
+let numMathSolves = 0;
+
 // Function to play a mini-game of a given type
 function playMiniGame(gameType) {
     // Check if the mini-game is on cooldown
@@ -530,6 +532,14 @@ function playMiniGame(gameType) {
                     }
                     if (targetSum >= 83){
                         unlockAchievement('Math Genius');
+                    }
+                    if (selectedPortals.length >= 5) {
+                        unlockAchievement('When Math Maths');
+                    }
+                    numMathSolves++;
+                    localStorage.setItem('numMathSolves', numMathSolves);
+                    if (numMathSolves > 314) {
+                        unlockAchievement('Pie Guy');
                     }
                     resultMessage = `You found the correct sum and earned <span style="color: green;">${formatNumber(reward)}</span> yachtMoney!`;
                 } else {
