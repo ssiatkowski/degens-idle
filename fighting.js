@@ -906,10 +906,10 @@ function attackEnemy(resolve) {
         
     }
     
-    if (currEnemyName === "Saitama" && enemyHealth <= (0.1 * enemyMaxHealth)) {
+    if (currEnemyName === "Saitama" && enemyHealth <= (0.25 * enemyMaxHealth)) {
 
         // Check for special interaction: one-punch KO
-        if (damage > (2 * enemyMaxHealth) && enemyHealth <= 0) {
+        if (damage > enemyMaxHealth && enemyHealth <= 0) {
             unlockAchievement('One Hit KO');
             logFight(`<span style='color: #FFDEAD; font-size: 1.3em;'>You have One Punched the One Punch Man!</span>`);
         } else{
@@ -918,7 +918,6 @@ function attackEnemy(resolve) {
         
             // Saitama gets serious - change his name, restore health, and increase attack speed
             currEnemyName = "Serious Saitama";
-            enemyHealth = enemyMaxHealth; // Restore his health to full
             enemyAttackSpeed = enemyAttackSpeed * 10; // Set his attack speed to 100
             enemyMinDamage = enemyMinDamage * 10;
             enemyMaxDamage = enemyMaxDamage * 10;
@@ -929,7 +928,9 @@ function attackEnemy(resolve) {
             if (!purchasedUpgrades.some(upgrade => upgrade.name === "Training Dummy")) {
                 enemyStunCount = 100;
                 logFight("<span style='color: green; font-size: 1.2em';>Can't believe the Training Dummy trick worked again! This time, it was rigged with a galactic paralyzer device, stunning Saitama for 100 turns.</span>");
-            }
+            } else {
+                logFight("<span style='color: red; font-size: 1.2em';>Before you have time to process what just happened, Saitama charges towards you.</span>");
+            } 
         
             // Update the enemy image to the serious version of Saitama
             const enemyImageContainer = document.getElementById('enemyImageContainer');
@@ -1162,8 +1163,8 @@ function attackPlayer(resolve) {
         const rand = Math.random() * 100;
     
         if (rand < 10) { // 10% chance for Jumping Jacks
-            enemyCritDamage += 0.1;
-            logFight(`<span style='color: #d4af37;'>Saitama does Jumping Jacks! His critical damage increases by 10%.</span>`);
+            enemyCritDamage += 0.15;
+            logFight(`<span style='color: #d4af37;'>Saitama does Jumping Jacks! His critical damage increases by 15%.</span>`);
         } else if (rand < 20) { // 10% chance for Push Ups
             enemyMinDamage += 100;
             enemyMaxDamage += 200;
@@ -1195,8 +1196,8 @@ function attackPlayer(resolve) {
                 logFight(`<span style='color: #ff7f50;'>Saitama breathes on you, dealing normal damage (${formatNumber(Math.max(damage, 0))}).</span>`);
             }
         } else if (rand < 80) { // 10% chance for Menacing Look
-            playerCurrentAttackSpeed = playerCurrentAttackSpeed * 0.99;
-            logFight(`<span style='color: #ff4500;'>Saitama gives a menacing look! Your attack speed decreases by 1%.</span>`);
+            playerCurrentAttackSpeed = playerCurrentAttackSpeed * 0.995;
+            logFight(`<span style='color: #ff4500;'>Saitama gives a menacing look! Your attack speed decreases by 0.5%.</span>`);
             // Clear the previous enemy attack interval and set a new one
             clearAttackIntervals();
             setTimeout(() => {
@@ -1205,12 +1206,12 @@ function attackPlayer(resolve) {
         } else if (rand < 90) { // 10% chance for Flicks Your Ear
             if (isCritical) { // Critical hit scenario
                 playerCritChance = Math.max(playerCritChance * 0.98, 0); // Reduce crit chance by 2%
-                playerCritDamage = Math.max(playerCritDamage * 0.96, 0); // Reduce crit chance by 4%
-                logFight(`<span style='color: orange;'>Saitama flicks your ear and lowers your crit chance by 2% and crit damage by 4%!</span>`);
+                playerCritDamage = Math.max(playerCritDamage * 0.98, 0); // Reduce crit chance by 2%
+                logFight(`<span style='color: orange;'>Saitama flicks your ear and lowers your crit chance and crit damage by 2%!</span>`);
             } else { // Normal hit, lowers crit chance by 1%
                 playerCritChance = Math.max(playerCritChance * 0.99, 0); // Reduce crit chance by 1%
-                playerCritDamage = Math.max(playerCritDamage * 0.98, 0); // Reduce crit chance by 2%
-                logFight(`<span style='color: #ff8c00;'>Saitama flicks your ear and lowers your crit chance by 1% and crit damage by 2%!</span>`);
+                playerCritDamage = Math.max(playerCritDamage * 0.99, 0); // Reduce crit chance by 1%
+                logFight(`<span style='color: #ff8c00;'>Saitama flicks your ear and lowers your crit chance and crit damage by 1%!</span>`);
             }
         } else { // 10% chance for Says Something Stupid
             playerStunChance = playerStunChance * 0.99;
@@ -1268,7 +1269,7 @@ function attackPlayer(resolve) {
     }
     
     if (currEnemyName === 'Serious Saitama'){
-        enemyMaxDamage *= 1.002;
+        enemyMaxDamage *= 1.001;
         document.getElementById('enemyDamageStat').innerText = `${formatNumber(enemyMinDamage)} - ${formatNumber(enemyMaxDamage)}`;
         logFight(`<span style='color: #b3a125; '>Saitama gets slightly more serious!</span>`);
     }

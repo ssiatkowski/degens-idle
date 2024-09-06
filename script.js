@@ -75,6 +75,8 @@ let lessDiminishingGodModeSkill = false;
 let lessDiminishingPUGodModeSkill = false;
 let perfectGodModeSkill = false;
 
+let serenityUnlocked = false;
+
 let compressedBigCrunchMult = 1;
 
 let transcendenceUnlocked = false;
@@ -193,7 +195,7 @@ function updateEffectiveMultipliers() {
         effectivePowerPerSecond = calculateEffectivePower();
     }
 
-    effectiveSerenityPerSecond = serenityPerSecond * totalMultiplier;
+    effectiveSerenityPerSecond = serenityPerSecond;
 }
 
 let cookieClicks = 0;
@@ -311,6 +313,7 @@ function loadGameState() {
     forgetfulnessCounter = parseFloat(localStorage.getItem('forgetfulnessCounter')) || 0;
     numMathSolves = parseFloat(localStorage.getItem('numMathSolves')) || 0;
 
+    serenityUnlocked = JSON.parse(localStorage.getItem('serenityUnlocked')) || false;
     
     // Retrieve and parse all upgrades with the isGodMode property from local storage
     const savedUpgrades = JSON.parse(localStorage.getItem('upgrades')) || [];
@@ -824,6 +827,9 @@ async function restartGame(isPrestige = false, forceRestart = false) {
             powerUnlocked = false;
             document.getElementById('power-container').style.display = 'none';
             
+            serenityUnlocked = false;
+            document.getElementById('serenity-container').style.display = 'none';
+
             document.getElementById('pu-god-display').style.display = 'none';
             document.getElementById('big-crunch-display').style.display = 'none';
             document.getElementById('powerHallButton').style.display = 'none';
@@ -1307,6 +1313,8 @@ function unhidePower() {
 
 function unhideSerenity() {
     document.getElementById('serenity-container').style.display = 'block';
+    serenityUnlocked = true;
+    localStorage.setItem('serenityUnlocked', 'true');
 }
 
 function unlockBigCrunch() {
@@ -1569,12 +1577,15 @@ async function bigCrunch() {
 
         if (confirmed) {
 
+            // Capture the screen and animate the compression
+            await animateBigCrunchEffect();
+
             bigCrunchPower = power * compressedBigCrunchMult;
             if((calculateBigCrunchMultiplier() / bigCrunchMultiplier) < 1.1){
                 unlockAchievement('The Tiniest Crunch');
             }
             bigCrunchMultiplier = calculateBigCrunchMultiplier();
-            
+
             // Call restartGame with isPrestige flag set to true
             restartGame(true);
 
@@ -1601,10 +1612,42 @@ async function bigCrunch() {
             updateMultipliersDisplay();
             saveGameState();
 
-            showMessageModal('Big Crunch Successful!', `Your multiplier is now x${bigCrunchMultiplier.toFixed(2)}. All resources have been reset.`);
+            showMessageModal('Big Crunch Successful!', `Your multiplier is now x${formatNumber(bigCrunchMultiplier)}. All resources have been reset.`);
+
+            // Animate the expansion back to full screen
+            animateBigCrunchExpansion();
         }
     }
 }
+
+// Compression effect (Big Crunch)
+async function animateBigCrunchEffect() {
+    return new Promise((resolve) => {
+        const body = document.body;
+        body.style.transition = "transform 1s ease-in-out, opacity 1s ease-in-out";
+        body.style.transform = "scale(0)"; // Shrink the screen to 0 size
+
+        setTimeout(() => {
+            resolve();  // Continue after the animation is complete
+        }, 1000); // 1-second duration for the compression effect
+    });
+}
+
+// Expansion effect after restart
+function animateBigCrunchExpansion() {
+    const body = document.body;
+    body.style.transition = "transform 1s ease-in-out, opacity 1s ease-in-out";
+    body.style.transform = "scale(1)"; // Restore to full size
+
+    setTimeout(() => {
+        // Clean up any additional effects or restart logic
+        body.style.transition = "";
+        body.style.transform = "";
+        body.style.opacity = "";
+    }, 1000); // 1-second duration for the expansion effect
+}
+
+
 
 function updateAscendButton() {
     const ascendButton = document.getElementById('ascendButton');
@@ -1880,6 +1923,12 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
             yachtMoney += 1e65;
         }
 
+        if (name == "Cosmic Drought") {
+            stellarHarvestMult = 1;
+            updateStellarHarvestDisplay();
+            unlockAchievement('Cosmic Drought');
+        }
+
         // Check if the upgrade message has been shown before
         const messageShownUpgrades = JSON.parse(localStorage.getItem('messageShownUpgrades')) || [];
         const isFirstPurchase = !messageShownUpgrades.includes(name);
@@ -1895,9 +1944,8 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
             localStorage.setItem('messageShownUpgrades', JSON.stringify(messageShownUpgrades));
         }
 
-        // Special case for the "Still very stupid" upgrade
-        if (name === 'Saitama') {
-            showMessageModal('Sadly', "This marks the end of v0.903. I hope you're enjoyed the thrill of these battles and unlocking the secrets of the Power Hall skills. The adventure is far from over, and your feedback is what makes it truly epic. Join us on Discord and share your experiences, strategies, and thoughts. Let’s shape the future of the game together and make each update more exciting than the last!");
+        if (name === 'Puppy Love') {
+            showMessageModal('Sadly', "This marks the end of v0.904. Hope you enjoyed the Power Saga and are excited for the next content! Your feedback and ideas are what help shape the future of the game. Be active on Discord, share your experiences, and let's create something epic together. The best is yet to come, and we can't wait to keep building this adventure with you!");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one
@@ -1940,6 +1988,9 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
                 if (power >= 1e11){
                     unlockAchievement('Overkill Much?');
                 }
+            } else if (name == `Perfection doesn't exi...`){
+                unhideSerenity();
+                unlockAchievement('Serenity');
             }
 
             // Update the upgrade list and display

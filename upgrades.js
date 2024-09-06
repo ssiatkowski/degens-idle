@@ -514,7 +514,7 @@ const upgrades = [
     {
         name: `Honest Work`,
         cost: { copium: 0, delusion: 0, yachtMoney: 1.6e18, trollPoints: 0, hopium: 4.2e13, knowledge: 2.25e8, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 5.1e6, delusionPerSecond: 1.95e7, yachtMoneyPerSecond: 5.3e6, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0.00048, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 6.1e6, delusionPerSecond: 1.95e7, yachtMoneyPerSecond: 9.3e6, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0.00048, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/honest_work.jpg`,
     },
     {
@@ -1122,25 +1122,25 @@ const upgrades = [
     {         
         name: `Healthy Choices`,
         cost: { copium: 9e72, delusion: 1e71, yachtMoney: 0, trollPoints: 9e72, hopium: 0, knowledge: 5e58, power: 1.5e13, serenity: 0 },
-        earnings: { copiumPerSecond: 3e28, delusionPerSecond: 0, yachtMoneyPerSecond: 1.2e28, trollPointsPerSecond: 3e28, hopiumPerSecond: 0, knowledgePerSecond: 5.5e8, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 3e28, delusionPerSecond: 0, yachtMoneyPerSecond: 1.2e28, trollPointsPerSecond: 3e28, hopiumPerSecond: 0, knowledgePerSecond: 6.5e8, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/training_for_kaguya.jpg`
     },
     {         
         name: `Unprecedented`,
         cost: { copium: 1e73, delusion: 2e72, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 3e55, power: 2e14, serenity: 0 },
-        earnings: { copiumPerSecond: 2e28, delusionPerSecond: 2e28, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 8.5e8, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 2e28, delusionPerSecond: 2e28, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 8.7e8, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/unprecedented_overlap.jpg`
     },
     {         
         name: `Bitch Back Off`,
         cost: { copium: 1e80, delusion: 1e80, yachtMoney: 1e80, trollPoints: 1e80, hopium: 0, knowledge: 3e60, power: 3e14, serenity: 0 },
-        earnings: { copiumPerSecond: 4e28, delusionPerSecond: 4e28, yachtMoneyPerSecond: 0, trollPointsPerSecond: 5e28, hopiumPerSecond: 0, knowledgePerSecond: 1.3e9, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 4e28, delusionPerSecond: 4e28, yachtMoneyPerSecond: 0, trollPointsPerSecond: 5e28, hopiumPerSecond: 0, knowledgePerSecond: 1.4e9, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/bitch_back_off.jpg`
     },
     {
         name: `Kaguya`,
         cost: { copium: 6e79, delusion: 6e79, yachtMoney: 6e79, trollPoints: 6e79, hopium: 0, knowledge: 6e60, power: 5e14, serenity: 0 },
-        earnings: { copiumPerSecond: 5e30, delusionPerSecond: 5e30, yachtMoneyPerSecond: 5e30, trollPointsPerSecond: 5e30, hopiumPerSecond: -1e35, knowledgePerSecond: 5e10, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 5e30, delusionPerSecond: 5e30, yachtMoneyPerSecond: 5e30, trollPointsPerSecond: 5e30, hopiumPerSecond: -1e35, knowledgePerSecond: 5e11, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/kaguya.jpg`,
         isFight: true,
         hoverOverwrite: `She is evil. She will drain your resoures. Only fight if you want to hate her.`,
@@ -1153,49 +1153,49 @@ const upgrades = [
     {         
         name: `Not the final boss?`,
         cost: { copium: 1e80, delusion: 1e80, yachtMoney: 1e80, trollPoints: 1e80, hopium: 0, knowledge: 1e60, power: 1e13, serenity: 0 },
-        earnings: { copiumPerSecond: 1e30, delusionPerSecond: 0, yachtMoneyPerSecond: 5e29, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 9e8, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 1.5e30, delusionPerSecond: 0, yachtMoneyPerSecond: 8e29, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 4e9, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/surprise_pikachu.jpg`,        
     },
     {         
         name: `Great Find`,
-        cost: { copium: 0, delusion: 7e80, yachtMoney: 2e80, trollPoints: 0, hopium: 0, knowledge: 1e61, power: 1e14, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 2e30, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 2e9, powerPerSecond: 0, serenityPerSecond: 0 },
+        cost: { copium: 0, delusion: 9e80, yachtMoney: 3e80, trollPoints: 0, hopium: 0, knowledge: 1e61, power: 1e14, serenity: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 3e30, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 8e9, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/perfect_avocado.jpg`,        
     },
     {         
         name: `Priceless Doggos`,
         cost: { copium: 3e81, delusion: 0, yachtMoney: 5e81, trollPoints: 0, hopium: 0, knowledge: 3e61, power: 3e14, serenity: 0 },
-        earnings: { copiumPerSecond: 3e30, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 4e9, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 3e30, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 1.6e10, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/spending_money_on_dogs.jpg`,        
     },
     {         
         name: `Feels Bad Man`,
         cost: { copium: 4e81, delusion: 0, yachtMoney: 6e81, trollPoints: 0, hopium: 0, knowledge: 4e61, power: 1e15, serenity: 0 },
-        earnings: { copiumPerSecond: 4e30, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 5e9, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 4e30, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 3.2e10, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/feels_bad_man.jpg`,        
     },
     {         
         name: `Bare Minimum`,
         cost: { copium: 5e81, delusion: 0, yachtMoney: 0, trollPoints: 5e81, hopium: 0, knowledge: 5e62, power: 2e15, serenity: 0 },
-        earnings: { copiumPerSecond: 3e30, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 6e9, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 3e30, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 6.4e10, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/bare_minimum.jpg`,        
     },
     {         
         name: `How Unoriginal!`,
         cost: { copium: 6e81, delusion: 0, yachtMoney: 7e81, trollPoints: 0, hopium: 0, knowledge: 6e62, power: 3e15, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 5e30, yachtMoneyPerSecond: 0, trollPointsPerSecond: 5e30, hopiumPerSecond: 0, knowledgePerSecond: 7e9, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 5e30, yachtMoneyPerSecond: 0, trollPointsPerSecond: 5e30, hopiumPerSecond: 0, knowledgePerSecond: 1.2e10, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/too_long_didnt_read.jpg`,        
     },
     {         
         name: `Why so serious?`,
         cost: { copium: 2e82, delusion: 0, yachtMoney: 2e82, trollPoints: 0, hopium: 0, knowledge: 1e63, power: 2e16, serenity: 0 },
-        earnings: { copiumPerSecond: 8e30, delusionPerSecond: 8e30, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 4e10, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 9e30, delusionPerSecond: 9e30, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 1.9e11, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/why_so_serious.jpg`,        
     },
     {         
         name: `Stealth +5`,
         cost: { copium: 0, delusion: 1e83, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 2e65, power: 3e16, serenity: 0 },
-        earnings: { copiumPerSecond: 2e31, delusionPerSecond: 2e31, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 1e11, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 8e31, delusionPerSecond: 8e31, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 8e11, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/stealthy_zebra.jpg`,     
         message: `Well, well, well... It seems you've stumbled upon 'Stealth +5.' But wait, there's a catch: there's no stealth in this game, silly! At this point, you should know better than to try sneaking around.<br><br>If you're thinking you can just tiptoe past the final boss— Saitama —think again. There's no hiding from him. You'll have to face the One Punch Man head-on, fair and square. No invisibility cloaks, no shadowy escapes... just pure, unfiltered, glorious combat. Good luck!`   
     },
@@ -1234,8 +1234,71 @@ const upgrades = [
     },
     {         
         name: `Smash That Like Button`,
-        cost: { copium: 0, delusion: 1e83, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 2e65, power: 3e16, serenity: 0 },
-        earnings: { copiumPerSecond: 2e31, delusionPerSecond: 2e31, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 1e11, powerPerSecond: 0, serenityPerSecond: 0 },
-        img: `imgs/the_like_button.jpg`,     
+        cost: { copium: 0, delusion: 1e83, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 2e65, power: 5e15, serenity: 0 },
+        earnings: { copiumPerSecond: 2e31, delusionPerSecond: 2e31, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 1e33, knowledgePerSecond: 3e11, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: `imgs/the_like_button.jpg`,
+        message: `That was it... the final boss. For real this time. But don't worry—the game is far from over! While the fighting saga has reached its end, there's still plenty to explore and achieve. How are you feeling right now? Joyful? Sad? Angry? Let me know—drop a comment in the Discord!`,     
     },
+    {         
+        name: `I've been there`,
+        cost: { copium: 1e85, delusion: 0, yachtMoney: 0, trollPoints: 1e85, hopium: 0, knowledge: 1e66, power: 1e16, serenity: 0 },
+        earnings: { copiumPerSecond: 2e31, delusionPerSecond: 0, yachtMoneyPerSecond: 1e32, trollPointsPerSecond: 0, hopiumPerSecond: -1e39, knowledgePerSecond: 6e11, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: `imgs/memes_not_funny.jpg`,
+    },
+    {         
+        name: `You tell me!`,
+        cost: { copium: 2e85, delusion: 3e85, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 3e66, power: 2e16, serenity: 0 },
+        earnings: { copiumPerSecond: 2e31, delusionPerSecond: 3e31, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1e31, hopiumPerSecond: -5e39, knowledgePerSecond: 9e11, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: `imgs/why_im_single.jpg`,
+    },
+    {         
+        name: `What to do`,
+        cost: { copium: 0, delusion: 0, yachtMoney: 5e85, trollPoints: 5e85, hopium: 0, knowledge: 1e67, power: 4e16, serenity: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 5e32, trollPointsPerSecond: 0, hopiumPerSecond: -1e40, knowledgePerSecond: 1.2e12, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: `imgs/when_you_lose_hope.jpg`,
+    },
+    {         
+        name: `Existential Dread`,
+        cost: { copium: 2e87, delusion: 0, yachtMoney: 0, trollPoints: 2e87, hopium: 0, knowledge: 2e68, power: 1e17, serenity: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 5e32, trollPointsPerSecond: 0, hopiumPerSecond: -3e40, knowledgePerSecond: 2e12, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: `imgs/meaning_of_life_bear.jpg`,
+        message: `<p>Your influence spans galaxies, your strength unmatched. And yet, as you stand at the summit, a strange emptiness settles in. There is nothing left to conquer, no greater battles to fight. You have it all—so why does it feel so hollow?</p>
+                <p>The universe, vast and indifferent, stretches endlessly before you. But in this infinite expanse, purpose has become elusive. What is the point of it all when you are already the most powerful? You’ve conquered everything—except meaning.</p>
+                <p>As you ponder what’s next, you may find that even the greatest victories are swallowed by the void of what remains undone. Perhaps, in the end, it’s not about power at all, but the search for something more—if such a thing even exists.</p>`,
+    },
+    {         
+        name: `Cosmic Drought`,
+        cost: { copium: 5e88, delusion: 5e88, yachtMoney: 5e88, trollPoints: 5e88, hopium: 0, knowledge: 1e69, power: 5e17, serenity: 0 },
+        earnings: { copiumPerSecond: 1e40, delusionPerSecond: 1e40, yachtMoneyPerSecond: 1e40, trollPointsPerSecond: 1e40, hopiumPerSecond: -1e48, knowledgePerSecond: 3e15, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: `imgs/cosmic_drought.jpg`,
+        message: `<p>The cosmic drought has brought an end to your Stellar Harvest. The star systems you once nurtured have faded, and your operations across the multiverse have halted.</p>
+                <p>But your heroic efforts in saving the multiverse haven’t gone unnoticed. Word has reached the galactic federation, and in recognition of your valor and the financial burdens you've faced, they've granted you an allowance.</p>
+                <p>Though the road ahead is uncertain, with the federation's support, new possibilities await. The multiverse may still need you.</p>`,
+    },
+    {         
+        name: `Search for Hope`,
+        cost: { copium: 5e92, delusion: 0, yachtMoney: 0, trollPoints: 5e92, hopium: 0, knowledge: 1e70, power: 8e17, serenity: 0 },
+        earnings: { copiumPerSecond: 1e39, delusionPerSecond: 0, yachtMoneyPerSecond: 5e38, trollPointsPerSecond: 0, hopiumPerSecond: -1e47, knowledgePerSecond: 1e13, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: `imgs/all_hope_lost.jpg`,
+        message: `<p>You’ve scoured every corner of the universe, seeking answers, seeking hope. Time and again, your search has come up empty. The stars, once symbols of possibility, now feel distant, cold. Every path you’ve followed has led back to the same conclusion: there is nothing.</p>
+                    <p>What else could you do? You’ve tried everything, reached further than anyone before you. Yet, the void remains, and with it, the weight of futility. Each attempt to grasp meaning slips away like stardust in the wind. Is this all there is?</p>
+                    <p>Perhaps the question isn’t about where to go next—but whether there’s anywhere left to go at all.</p>`,
+    },
+    {         
+        name: `Perfection doesn't exi...`,
+        cost: { copium: 2e95, delusion: 0, yachtMoney: 0, trollPoints: 2e95, hopium: 0, knowledge: 1e71, power: 0, serenity: 0 },
+        earnings: { copiumPerSecond: 2e39, delusionPerSecond: 0, yachtMoneyPerSecond: 2e39, trollPointsPerSecond: 0, hopiumPerSecond: 2e47, knowledgePerSecond: 2e13, powerPerSecond: 0, serenityPerSecond: 0.0001 },
+        img: `imgs/perfection.jpg`,
+        message: `<p>And then, you meet her — someone so radiant, so breathtaking, that the very fabric of your reality shifts. Her presence is like nothing you’ve ever encountered, a beauty that transcends anything you've known. It's not just her flawless appearance — the perfect harmony of grace and strength — but something deeper, something that resonates with the very core of who you are.</p>
+                <p>The way she moves, effortless and serene, fills the space with an aura of peace. Her eyes hold entire galaxies, infinite and warm, drawing you into a sense of calm you didn't know you could feel. Every word she speaks feels like a melody, each glance a quiet promise of something greater. She is perfection in form and spirit, radiating a love and understanding that you've long searched for.</p>
+                <p>In her presence, everything changes. The emptiness that once consumed you is replaced with a deep, abiding serenity. You finally understand that this is what you’ve been searching for all along. In that moment, you <strong>unlock a new resource—Serenity</strong>. It is the true source of happiness, the balance you didn’t know you needed. From now on, everything feels right. You’ve found your purpose.</p>
+                `,
+    },
+    {         
+        name: `Puppy Love`,
+        cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0.025 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 4e40, hopiumPerSecond: 2e47, knowledgePerSecond: 2e13, powerPerSecond: 0, serenityPerSecond: 0.0003 },
+        img: `imgs/puppy_love.jpg`,
+    },
+
 ];

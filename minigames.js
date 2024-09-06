@@ -323,7 +323,7 @@ function playMiniGame(gameType) {
         let duration = mathGameSkill ? 20 : 12; // 12 or 20 seconds
         let portalValues = []; // Store all portal values
         let selectedPortals = []; // Store selected portals for checking
-        let targetSum = Math.floor(Math.random() * 75) + 10; // Random target sum between 10 and 84
+        let targetSum = Math.floor(Math.random() * 71) + 10; // Random target sum between 10 and 80
         let startTime = Date.now(); // Track the start time
 
         // Show the modal with instructions and start the game when the modal is closed
@@ -530,7 +530,7 @@ function playMiniGame(gameType) {
                         reward = softCaps.math;
                         softCapReached = true;
                     }
-                    if (targetSum >= 83){
+                    if (targetSum >= 78){
                         unlockAchievement('Math Genius');
                     }
                     if (selectedPortals.length >= 5) {

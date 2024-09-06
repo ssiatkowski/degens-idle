@@ -98,7 +98,7 @@ const achievements = [
     {
         name: 'Math Genius',
         isUnlocked: false,
-        hoverText: 'win math game with target over 83',
+        hoverText: 'win math game with target over 78',
         img: 'imgs/achievements/math_genius.jpg',
     },
     {
@@ -160,12 +160,6 @@ const achievements = [
         isUnlocked: false,
         hoverText: 'just another prestige layer',
         img: 'imgs/achievements/big_crunch.jpg',
-    },
-    {
-        name: 'When Math Maths',
-        isUnlocked: false,
-        hoverText: 'win math game using at least 5 portals',
-        img: 'imgs/achievements/when_math_maths.jpg',
     },
     {
         name: 'Do-Over',
@@ -408,6 +402,12 @@ const achievements = [
         img: 'imgs/achievements/pie_guy.jpg',
     },
     {
+        name: 'When Math Maths',
+        isUnlocked: false,
+        hoverText: 'win math game using at least 5 portals',
+        img: 'imgs/achievements/when_math_maths.jpg',
+    },
+    {
         name: 'Does Not Exist 69',
         isUnlocked: false,
         hoverText: 'Does not exist yet',
@@ -432,10 +432,10 @@ const achievements = [
         img: 'imgs/achievements/hanging_gloves.jpg',
     },
     {
-        name: 'Does Not Exist 73',
+        name: 'Cosmic Drought',
         isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
+        hoverText: 'buy a certain upgrade',
+        img: 'imgs/achievements/cosmic_drought.jpg',
     },
     {
         name: 'Does Not Exist 74',
@@ -444,10 +444,10 @@ const achievements = [
         img: 'imgs/achievements/uninitialized.jpg',
     },
     {
-        name: 'Does Not Exist 75',
+        name: 'Serenity',
         isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
+        hoverText: 'unlock the 8th resource',
+        img: 'imgs/achievements/serenity.jpg',
     },
     {
         name: 'Does Not Exist 76',
