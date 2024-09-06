@@ -20,16 +20,18 @@ const librarySkills = [
     { name: 'Linear Ascension', cost: 2e43, description: 'Learn how to ascend God Mode without folding dimensions. Prestige mulitplier only goes down by a factor of 2.', unlocked: false, level: 'Nonlinear Partial Differential Equations' },
     { name: 'Perfect God-Mode', cost: 2e57, description: 'Make God-Mode better than PU God-Mode. Dimishes at 99.2%. (You must already know this is huge)', unlocked: false, level: 'Nonlinear Partial Differential Equations' },
 
-
-    { name: 'Multibuy Upgrades', cost: 2, description: 'Unlock "Buy Seen" and "Buy Max" buttons for Upgrades.', unlocked: false, level: 'Artificial Intelligence' },
+    { name: 'Buy Markers', cost: 2, description: 'Purchased Upgrades will now have a switch indicating whether or not they should be bought using "Buy Seen" and "Buy All" buttons. (Can toggle all in Automation Settings) ', unlocked: false, level: 'Artificial Intelligence' },
     { name: 'Double Ascension', cost: 20, description: 'Gain up to 2 God-Mode levels per Ascension. Also select up to 2 upgrades to enhance to God Mode.', unlocked: false, level: 'Artificial Intelligence' },
     { name: 'Cookie Clicker Clicker', cost: 350, description: 'After Prestiging or Ascending, automatically click the cookie 10 times per second for 15 seconds.', unlocked: false, level: 'Artificial Intelligence' },
-    { name: 'Buy Markers', cost: 300000, description: 'Purchased Upgrades will now have a switch indicating whether or not they should be bought using "Buy Seen" and "Buy All" buttons. (Can toggle all in Automation Settings) ', unlocked: false, level: 'Artificial Intelligence' },
     { name: 'Quadruple Ascension', cost: 4e6, description: 'Gain up to 4 God-Mode levels per Ascension. Also select up to 4 upgrades to enhance to God Mode.', unlocked: false, level: 'Artificial Intelligence' },
     { name: 'Septuple Transendence', cost: 7e19, description: 'Gain up to 7 Parallel Universe God-Mode levels per Transendence. Also select up to 7 upgrades to enhance to PU God Mode.', unlocked: false, level: 'Artificial Intelligence' },
-    { name: 'Autobuy Upgrades', cost: 3e22, description: `Buy Markers are repurposed to configure Autobuy - which will purchase afforable visible upgrades every 1.5 seconds. (Can toggle on/off in Automation Settings)`, unlocked: false, level: 'Artificial Intelligence' },
     { name: 'Tenfold Ascension', cost: 1e25, description: 'Gain up to 10 God-Mode levels per Ascension. Also select up to 10 upgrades to enhance to God Mode.', unlocked: false, level: 'Artificial Intelligence' },
 
+    { name: 'Autobuy Upgrades', cost: 3e22, description: `Will purchase affordable Marked upgrades every 1.5 seconds. (Can toggle in Automation Settings)`, unlocked: false, level: 'Robotics' },
+    { name: 'Perpetual Prestige', cost: 1e25, description: 'Auto-Prestige ability.  (Target prestige multiplier can be set in Automation Settings. Default=100)', unlocked: false, level: 'Robotics' },
+    { name: 'Eternal Ascension', cost: 1e29, description: 'Auto-Ascend ability. (Target # upgrades can be set in Automation Settings. Default=Off)', unlocked: false, level: 'Robotics' },
+    { name: 'Quantum Symphony', cost: 1e41, description: 'Auto-Transcend. (Similar to Auto-Ascend)', unlocked: false, level: 'Robotics' },
+    
     { name: 'Knowledge is Power', cost: 1e6, description: 'Unlock new resource Power. Power is always generated based on your current amount of Knowledge.', unlocked: false, level: 'Celestial Bodies' },
     { name: 'Big Crunch', cost: 8e11, description: 'Could this be what Power is for? Unlock ability to force the universe into a Big Crunch and to be reborn anew!', unlocked: false, level: 'Celestial Bodies' },
     { name: 'Money is Power, too', cost: 2.5e20, description: 'Add a multiplier to Power generation based on Yacht Money (though it scales much less than with Knowledge)', unlocked: false, level: 'Celestial Bodies' },
@@ -38,9 +40,6 @@ const librarySkills = [
     { name: 'Condensed Power', cost: 1e63, description: 'Current power counts as 30x more for Big Crunch Power.', unlocked: false, level: 'Celestial Bodies' },
 
 
-    { name: 'Perpetual Prestige', cost: 1e25, description: 'Auto-Prestige ability.  (Target prestige multiplier can be set in Automation Settings. Default=100)', unlocked: false, level: '???' },
-    { name: 'Eternal Ascension', cost: 1e29, description: 'Auto-Ascend ability. (Target # upgrades can be set in Automation Settings. Default=Off)', unlocked: false, level: '???' },
-    { name: 'Quantum Symphony', cost: 1e41, description: 'Auto-Transcend. (Similar to Auto-Ascend)', unlocked: false, level: '???' },
     // { name: 'Void of Non-Existence', cost: 1e55, description: 'Auto-Big Crunch', unlocked: false, level: '???' },
     // { name: 'Infinite Fractal', cost: 1e33, description: '', unlocked: false, level: '???' },
 
@@ -192,12 +191,6 @@ function unlockLibrarySkill(skill, duringLoad = false) {
                     updateMultipliersDisplay();
                     updateEffectiveMultipliers();
                     break;
-
-
-            case 'Multibuy Upgrades':
-                multibuyUpgradesSkill = true;
-                initializeBuyButtons();
-                break;
         
             case 'Cookie Clicker Clicker':
                 cookieAutoClicker = true;

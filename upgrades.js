@@ -257,10 +257,13 @@ const upgrades = [
         img: `imgs/blaze_it.jpg`,
     },
     {
-        name: `Pudge`,
+        name: `Proceed with Caution`,
         cost: { copium: 1000000, delusion: 0, yachtMoney: 0, trollPoints: 1000000, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 60, delusionPerSecond: 0, yachtMoneyPerSecond: 400, trollPointsPerSecond: 100, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
-        img: `imgs/pudge.jpg`,
+        img: `imgs/proceed_with_caution.jpg`,
+        message: `<p>You've just permanently unlocked the <strong>"Buy Seen"</strong> and <strong>"Buy Max"</strong> buttons. These will help you speed up your progress by purchasing all affordable upgrades with a single click. However, <strong>be cautious</strong>—for now, these buttons will also buy upgrades that might work against you. Choose wisely!</p>
+                    <p><strong>Hint 1:</strong> You can press <strong>S</strong> and <strong>M</strong> on your keyboard to quickly use these features.</p>
+                    <p><strong>Hint 2:</strong> A setting to exclude specific upgrades you don’t want will be unlockable soon!</p>`,
     },
     {
         name: `WE MADE IT!`,

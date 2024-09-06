@@ -118,6 +118,12 @@ html, body {
     background-color: #f44336; /* Red */
 }
 
+#modalImage {
+    max-width: 90vw; /* Set maximum width to 90% of the viewport width */
+    max-height: 1400px;
+    width: auto; /* Maintain the image's aspect ratio */
+    margin: 10px 0;
+}
 
 body {
     display: flex;

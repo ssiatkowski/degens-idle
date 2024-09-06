@@ -61,7 +61,7 @@ let knowledgeGenerationSkill = false;
 let prestigeBaseSkill = false;
 let twoDimensionalAscensionSkill = false;
 let linearAscensionSkill = false;
-let multibuyUpgradesSkill = false;
+let multibuyUpgradesButtonsUnlocked = false;
 let mathGameSkill = false;
 let memoryGameSkill = false;
 let speedGameSkill = false;
@@ -297,6 +297,11 @@ function loadGameState() {
     autoAscendThreshold = !isNaN(parseFloat(localStorage.getItem('autoAscendThreshold'))) ? parseFloat(localStorage.getItem('autoAscendThreshold')) : null;
     autoTranscendThreshold = !isNaN(parseFloat(localStorage.getItem('autoTranscendThreshold'))) ? parseFloat(localStorage.getItem('autoTranscendThreshold')) : null;
     
+    // read multibuyUpgradesButtonsUnlocked from localstorage
+    multibuyUpgradesButtonsUnlocked = JSON.parse(localStorage.getItem('multibuyUpgradesButtonsUnlocked')) || false;
+    if (multibuyUpgradesButtonsUnlocked){
+        initializeBuyButtons();
+    }
 
     deadpoolRevives = parseFloat(localStorage.getItem('deadpoolRevives')) || 0;
     
@@ -619,8 +624,6 @@ function generateResources() {
     updateDisplay();
 }
 
-
-
 async function restartPrestige(){
     
     const confirmTitle = "Are You Sure You Want to Restart this Prestige?"
@@ -631,6 +634,7 @@ async function restartPrestige(){
     if (await showMessageModal(confirmTitle, confirmMessage, true, false)) {
         // Call restartGame with isPrestige flag set to true
         unlockAchievement('Do-Over');
+        prestigeRequirement = calculateMinResource();
         restartGame(true);
     }
 }
@@ -751,7 +755,7 @@ async function restartGame(isPrestige = false, forceRestart = false) {
             prestigeBaseSkill = false;
             twoDimensionalAscensionSkill = false;
             linearAscensionSkill = false;
-            multibuyUpgradesSkill = false;
+            multibuyUpgradesButtonsUnlocked = false;
             mathGameSkill = false;
             memoryGameSkill = false;
             speedGameSkill = false;
@@ -1870,7 +1874,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
 
         // Special case for the "Still very stupid" upgrade
         if (name === 'Saitama') {
-            showMessageModal('Sadly', "This marks the end of v0.9. I hope you're enjoyed the thrill of these battles and unlocking the secrets of the Power Hall skills. The adventure is far from over, and your feedback is what makes it truly epic. Join us on Discord and share your experiences, strategies, and thoughts. Let’s shape the future of the game together and make each update more exciting than the last!");
+            showMessageModal('Sadly', "This marks the end of v0.901. I hope you're enjoyed the thrill of these battles and unlocking the secrets of the Power Hall skills. The adventure is far from over, and your feedback is what makes it truly epic. Join us on Discord and share your experiences, strategies, and thoughts. Let’s shape the future of the game together and make each update more exciting than the last!");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one
@@ -1929,7 +1933,17 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
 function buyAllUpgrades(limit, pressedButton) {
     let purchasedCount = 0; // Initialize a counter for the purchased upgrades
     
-    availableUpgrades.slice(0, limit).forEach(upgrade => {
+    let topUpgrades = availableUpgrades.slice(0, limit);
+
+    if(limit === 8){
+        const truncateIndex = topUpgrades.findIndex(upgrade => keyUpgrades.includes(upgrade.name));
+        // Truncate the list if any key upgrade is found
+        if (truncateIndex !== -1) {
+            topUpgrades = topUpgrades.slice(0, truncateIndex + 1);
+        }
+    }
+
+    topUpgrades.forEach(upgrade => {
         if (buyMarkersSkill) {
             const switchElement = JSON.parse(localStorage.getItem(`switchState-${upgrade.name}`));
             if (switchElement && isAffordable(upgrade.cost)) {
@@ -1952,7 +1966,7 @@ function buyAllUpgrades(limit, pressedButton) {
         saveGameState();
         showStatusMessage(pressedButton, `Purchased ${purchasedCount} upgrade(s).`, true, timeout=1000);
     } else {
-        showStatusMessage(pressedButton, 'No upgrades were purchased.', false, timeout=1000);
+        showStatusMessage(pressedButton, 'No upgrades were purchased.', false, timeout=500);
     }
 }
 
@@ -2034,6 +2048,13 @@ function addPurchasedUpgrade(img, name, earnings, isGodMode = false, isPUGodMode
             </div>
         </div>
     `;
+
+    if (!multibuyUpgradesButtonsUnlocked && name === `Proceed with Caution`){
+        multibuyUpgradesButtonsUnlocked = true;
+        // save multibuyUpgradesButtonsUnlocked to localStorage
+        localStorage.setItem('multibuyUpgradesButtonsUnlocked', 'true');
+        initializeBuyButtons();
+    }
 
     purchasedList.prepend(upgradeElement);
 
@@ -2461,12 +2482,12 @@ document.addEventListener('keydown', (event) => {
     else {
         switch (event.key) {
             case 'm':
-                if (multibuyUpgradesSkill){
+                if (multibuyUpgradesButtonsUnlocked){
                     buyAllUpgrades(100, document.getElementById('buyMaxButton'));
                 }
                 break;
             case 's':
-                if (multibuyUpgradesSkill){
+                if (multibuyUpgradesButtonsUnlocked){
                     buyAllUpgrades(8, document.getElementById('buyMaxButton'));
                 }
                 break;
