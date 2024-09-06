@@ -27,7 +27,7 @@ const librarySkills = [
     { name: 'Septuple Transendence', cost: 7e19, description: 'Gain up to 7 Parallel Universe God-Mode levels per Transendence. Also select up to 7 upgrades to enhance to PU God Mode.', unlocked: false, level: 'Artificial Intelligence' },
     { name: 'Tenfold Ascension', cost: 1e25, description: 'Gain up to 10 God-Mode levels per Ascension. Also select up to 10 upgrades to enhance to God Mode.', unlocked: false, level: 'Artificial Intelligence' },
 
-    { name: 'Autobuy Upgrades', cost: 3e21, description: `Will purchase affordable Marked upgrades every 1.5 seconds. (Can toggle in Automation Settings)`, unlocked: false, level: 'Robotics' },
+    { name: 'Autobuy Upgrades', cost: 3e21, description: `Will purchase affordable Marked upgrades (even unseen) every 1.5 seconds. (Can toggle in Automation Settings)`, unlocked: false, level: 'Robotics' },
     { name: 'Perpetual Prestige', cost: 1e24, description: 'Auto-Prestige ability.  (Target prestige multiplier can be set in Automation Settings. Default=100)', unlocked: false, level: 'Robotics' },
     { name: 'Eternal Ascension', cost: 1e28, description: 'Auto-Ascend ability. (Target # upgrades can be set in Automation Settings. Default=Off)', unlocked: false, level: 'Robotics' },
     { name: 'Quantum Symphony', cost: 1e40, description: 'Auto-Transcend. (Similar to Auto-Ascend)', unlocked: false, level: 'Robotics' },

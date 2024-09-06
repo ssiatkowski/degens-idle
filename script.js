@@ -149,7 +149,7 @@ function calculateBasePower() {
     let basePower = (moneyIsPowerTooSkill ?
         (Math.max(knowledge, 0) ** (1/3) / 1e12) * (1 + (Math.max(yachtMoney, 0) ** (1/30) / 100)) 
         : Math.max(knowledge, 0) ** (1/3) / 1e12) 
-        * powerSurgeMultiplier * devMultiplier * stellarHarvestMult;
+        * powerSurgeMultiplier * devMultiplier * stellarHarvestMult * achievementMultiplier;
 
     if (powerIsPowerSkill) {
         basePower *= 1.1 ** (powerHallSkills.filter(skill => skill.unlocked).length);
@@ -195,7 +195,7 @@ function updateEffectiveMultipliers() {
         effectivePowerPerSecond = calculateEffectivePower();
     }
 
-    effectiveSerenityPerSecond = serenityPerSecond;
+    effectiveSerenityPerSecond = serenityPerSecond * achievementMultiplier;
 }
 
 let cookieClicks = 0;
@@ -312,6 +312,9 @@ function loadGameState() {
 
     forgetfulnessCounter = parseFloat(localStorage.getItem('forgetfulnessCounter')) || 0;
     numMathSolves = parseFloat(localStorage.getItem('numMathSolves')) || 0;
+
+    consecutiveClicks = parseInt(localStorage.getItem('consecutiveClicks')) || 0;
+    lastClickedBoxIndex = parseInt(localStorage.getItem('lastClickedBoxIndex')) || 0;
 
     serenityUnlocked = JSON.parse(localStorage.getItem('serenityUnlocked')) || false;
     
@@ -1015,6 +1018,11 @@ function updateTradeButtonText() {
     }
 }
 
+// Variables to track attempts to trade Delusion, Troll Points, and Yacht Money for Hopium
+let attemptedDelusionTrade = false;
+let attemptedTrollPointsTrade = false;
+let attemptedYachtMoneyTrade = false;
+
 function tradeResources(tradeAmountInput = null) {
     const fromResource = document.getElementById('fromResource').value;
     const toResource = document.getElementById('toResource').value;
@@ -1072,6 +1080,18 @@ function tradeResources(tradeAmountInput = null) {
         }
     } else if (toResource === 'hopium') {
         showStatusMessage(tradeButton, "Only Copium can convert to Hopium.", false);
+        // Track attempts to trade Delusion, Troll Points, and Yacht Money for Hopium
+        if (fromResource === 'delusion') {
+            attemptedDelusionTrade = true;
+        } else if (fromResource === 'trollPoints') {
+            attemptedTrollPointsTrade = true;
+        } else if (fromResource === 'yachtMoney') {
+            attemptedYachtMoneyTrade = true;
+        }
+        // Check if all three resources have been attempted for Hopium trade
+        if (attemptedDelusionTrade && attemptedTrollPointsTrade && attemptedYachtMoneyTrade) {
+            unlockAchievement('No Means No');
+        }
         return;
     } else {
         // General trade case for other resources
@@ -1552,6 +1572,11 @@ async function transcend() {
 
         unlockAchievement('Transcend');
 
+        //if length of selectedupgrades is 1
+        if (selectedUpgrades.length == 1) {
+            unlockAchievement('Slow and Steady');
+        }
+
         restartGame(true); // Use the existing restartGame function with prestige mode
         // Save game state after transcending
         saveGameState();
@@ -1945,7 +1970,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
         }
 
         if (name === 'Puppy Love') {
-            showMessageModal('Sadly', "This marks the end of v0.904. Hope you enjoyed the Power Saga and are excited for the next content! Your feedback and ideas are what help shape the future of the game. Be active on Discord, share your experiences, and let's create something epic together. The best is yet to come, and we can't wait to keep building this adventure with you!");
+            showMessageModal('Sadly', "This marks the end of v0.905. Hope you enjoyed the Power Saga and are excited for the next content! Your feedback and ideas are what help shape the future of the game. Be active on Discord, share your experiences, and let's create something epic together. The best is yet to come, and we can't wait to keep building this adventure with you!");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one

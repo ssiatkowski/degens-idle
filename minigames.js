@@ -9,16 +9,19 @@ let cooldowns = {
 
 // Mini-game timeouts in milliseconds
 const miniGameTimeouts = {
-    speed:   6 * 60 * 1000,  // 6 minutes
+    speed:    1000,  // 6 minutes
     memory: 10 * 60 * 1000, // 10 minutes
     math:   8 * 60 * 1000,  // 8 minutes
-    luck:   4 * 60 * 1000,   // 4 minutes
+    luck:   4 * 60 *1000,   // 4 minutes
 };
 
 // Object to store interval references for each mini-game
 const miniGameIntervals = {};
 
 let numMathSolves = 0;
+
+let lastClickedBoxIndex = null;
+let consecutiveClicks = 0;
 
 // Function to play a mini-game of a given type
 function playMiniGame(gameType) {
@@ -51,11 +54,10 @@ function playMiniGame(gameType) {
     if (gameType === 'speed') {
         let points = 0;
         let misclicks = 0;
+        let startingDotsClicked = 0;  // Counter for starting dots
         let duration = Math.floor(Math.random() * 6) + 3; // Random duration between 3 and 8 seconds
 
-        // Show the modal and start the game when the modal is closed
         showMessageModal('Speed Game', `Tap on the dots as many times as you can in ${duration} seconds! Be careful, clicks outside the dots will count as -0.5 points.`, false, false).then(() => {
-            // Create a game area
             const gameArea = document.createElement('div');
             gameArea.style.position = 'fixed';
             gameArea.style.top = '5%';
@@ -66,20 +68,18 @@ function playMiniGame(gameType) {
             gameArea.style.zIndex = '1000';
             document.body.appendChild(gameArea);
 
-            // Calculate dot size based on screen size (e.g., 15% of the screen width)
-            const dotSize = Math.min(window.innerWidth, window.innerHeight) * (speedGameSkill ? 0.17 : 0.13); // 15% of the smaller dimension
+            const dotSize = Math.min(window.innerWidth, window.innerHeight) * (speedGameSkill ? 0.17 : 0.13);
 
             // Function to create a dot at a random position within the game area
-            function createDot() {
+            function createDot(isStartingDot = false) {
                 const dot = document.createElement('div');
                 dot.style.position = 'absolute';
-                dot.style.width = `${dotSize}px`;  // Dot size
+                dot.style.width = `${dotSize}px`;  
                 dot.style.height = `${dotSize}px`;
                 dot.style.borderRadius = '50%';
                 dot.style.backgroundColor = '#ff4444';
                 dot.style.cursor = 'pointer';
 
-                // Set random position
                 const randomX = Math.random() * (gameArea.clientWidth - dotSize);
                 const randomY = Math.random() * (gameArea.clientHeight - dotSize);
                 dot.style.left = `${randomX}px`;
@@ -90,14 +90,19 @@ function playMiniGame(gameType) {
                     points++;
                     gameArea.removeChild(dot); // Remove the clicked dot
                     createDot(); // Create a new dot
+
+                    // If it's a starting dot, increment the counter
+                    if (isStartingDot) {
+                        startingDotsClicked++;
+                    }
                 });
 
                 gameArea.appendChild(dot);
             }
 
-            // Create two initial dots
-            createDot();
-            createDot();
+            // Create two initial dots (starting dots)
+            createDot(true);  // First starting dot
+            createDot(true);  // Second starting dot
 
             // Add click event listener for the game area
             gameArea.addEventListener('click', function(event) {
@@ -120,14 +125,20 @@ function playMiniGame(gameType) {
                 if (effectiveClicksPerSecond > 1.49) {
                     reward = Math.max(Math.floor(Math.abs(copium) * (effectiveClicksPerSecond * 0.15)), 25);
                     if (speedGameSkill) { reward *= 3; }
-                    // Apply the soft cap
                     if (reward > softCaps.speed) {
                         reward = softCaps.speed;
                         softCapReached = true;
                     }
-                    if (effectiveClicksPerSecond >= 3){
+
+                    // If fewer than 2 starting dots were clicked, unlock the achievement
+                    if (startingDotsClicked == 1) {
+                        unlockAchievement('Why Discriminate Dots?');
+                    }
+
+                    if (effectiveClicksPerSecond >= 3) {
                         unlockAchievement('Speed Demon');
                     }
+
                     resultMessage = `You tapped ${points} dots with ${misclicks} misclicks in ${duration} seconds (${effectiveClicksPerSecond.toFixed(2)} points per second). Your reward is <span style="color: green;">${formatNumber(reward)}</span> copium!`;
                 } else {
                     reward = -Math.max(Math.floor(Math.abs(copium) * 0.25), 25);
@@ -136,7 +147,6 @@ function playMiniGame(gameType) {
 
                 copium += reward;
 
-                // Add the soft cap message in orange if applicable
                 if (softCapReached) {
                     resultMessage += '<br><span style="color: orange;">Soft cap reached: Maximum reward of 8 hours effective Copium applied.</span>';
                 }
@@ -144,13 +154,12 @@ function playMiniGame(gameType) {
                 resultMessage += cooldownMessage;
 
                 showMessageModal('Speed Game Result', resultMessage, false, false, null, false, true);
-                updateDisplay(); // Update the display
-                startCooldown(gameType); // Start cooldown for the mini-game
+                updateDisplay(); 
+                startCooldown(gameType); 
                 saveGameState();
             }, duration * 1000);
         });
     }
-
 
 
     // Memory mini-game logic
@@ -685,6 +694,21 @@ function playMiniGame(gameType) {
                             }, 300);
                         }
                     });
+
+                    // Check if the same box was clicked 10 times in a row
+                    if (lastClickedBoxIndex === i) {
+                        consecutiveClicks++;
+                        //save consecutiveClicks to localstorage
+                        localStorage.setItem('consecutiveClicks', consecutiveClicks);
+                        if (consecutiveClicks >= 10) {
+                            unlockAchievement('Is This Your Lucky Box?');
+                        }
+                    } else {
+                        lastClickedBoxIndex = i;
+                        consecutiveClicks = 1; // Reset the counter if a different box is clicked
+                        localStorage.setItem('lastClickedBoxIndex', lastClickedBoxIndex);
+                        localStorage.setItem('consecutiveClicks', consecutiveClicks);
+                    }
 
                     // End the game after showing all boxes
                     setTimeout(() => {

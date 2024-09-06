@@ -186,28 +186,28 @@ const achievements = [
         img: 'imgs/achievements/transcendence.jpg',
     },
     {
-        name: 'Does Not Exist 30',
+        name: 'Is This Your Lucky Box?',
         isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
+        hoverText: '10th time is the charm',
+        img: 'imgs/achievements/lucky_box.jpg',
     },
     {
-        name: 'Does Not Exist 31',
+        name: 'Why Discriminate Dots?',
         isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
+        hoverText: 'win a speed game while ignoring a dot',
+        img: 'imgs/achievements/discriminate_dots.jpg',
     },
     {
-        name: 'Does Not Exist 32',
+        name: 'Slow and Steady',
         isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
+        hoverText: 'stop and smell the roses - slow down your transcends',
+        img: 'imgs/achievements/single_transcend.jpg',
     },
     {
-        name: 'Does Not Exist 33',
+        name: 'No Means No',
         isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
+        hoverText: 'only copium please',
+        img: 'imgs/achievements/forced_trade.jpg',
     },
     {
         name: 'Max Automation',
@@ -258,10 +258,10 @@ const achievements = [
         img: 'imgs/achievements/hall_of_power.jpg',
     },
     {
-        name: 'Does Not Exist 42',
+        name: 'Skip Leg Day',
         isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
+        hoverText: 'spare the training dummy',
+        img: 'imgs/achievements/skip_leg_day.jpg',
     },
     {
         name: 'Going in Blind',
@@ -686,7 +686,7 @@ function updateAchievementsInfo() {
     });
 
     const infoElement = document.getElementById('achievements-info');
-    infoElement.textContent = `Achievements Unlocked: ${numUnlockedAchievements}/${totalCount} | Multiplier: ${achievementMultiplier.toFixed(2)}x`;
+    infoElement.textContent = `Achievements Unlocked: ${numUnlockedAchievements}/${totalCount} | Multiplier: ${achievementMultiplier.toFixed(2)}x (to ALL RESOURCES)`;
 }
 
 // Function to unlock an achievement

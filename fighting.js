@@ -17,7 +17,7 @@ const enemyStats = {
         minDamage: 5,
         maxDamage: 15,
         attackSpeed: 3,
-        defense: 5,
+        defense: 8,
         critChance: 0,
         critDamage: 1,
         dodge: 0.1,
@@ -30,7 +30,7 @@ const enemyStats = {
         minDamage: 5,
         maxDamage: 25,
         attackSpeed: 3,
-        defense: 18,
+        defense: 25,
         critChance: 0.2,
         critDamage: 2,
         dodge: 0,
@@ -39,11 +39,11 @@ const enemyStats = {
         absorb: 0
     },
     "Darth Vader": {
-        health: 2800,
+        health: 3000,
         minDamage: 8,
         maxDamage: 48,
         attackSpeed: 4,
-        defense: 50,
+        defense: 80,
         critChance: 0,
         critDamage: 1,
         dodge: 0,
@@ -52,11 +52,11 @@ const enemyStats = {
         absorb: 0.2
     },
     "Isshin": {
-        health: 4000,
+        health: 5000,
         minDamage: 5,
         maxDamage: 12,
         attackSpeed: 45,
-        defense: 400,
+        defense: 500,
         critChance: 0.08,
         critDamage: 15,
         dodge: 0,
@@ -65,11 +65,11 @@ const enemyStats = {
         absorb: 0
     },
     "Sauron": {
-        health: 350000,
+        health: 450000,
         minDamage: 30,
         maxDamage: 50,
         attackSpeed: 7,
-        defense: 15000,
+        defense: 20000,
         critChance: 0.03,
         critDamage: 100,
         dodge: 0,
@@ -78,11 +78,11 @@ const enemyStats = {
         absorb: 0.9
     },
     "Kratos": {
-        health: 5e8,
+        health: 6.7e8,
         minDamage: 1,
         maxDamage: 2,
         attackSpeed: 30,
-        defense: 4e6,
+        defense: 5e6,
         critChance: 0,
         critDamage: 1,
         dodge: 0,
@@ -100,15 +100,15 @@ const enemyStats = {
         critDamage: 1.69,
         dodge: 0.69,
         nonCritDodge: 1,
-        stun: 0,
-        absorb: 0
+        stun: 0.069,
+        absorb: 0.069
     },
     "Chuck Norris": {
-        health: 4e11,
+        health: 5e11,
         minDamage: 100,
         maxDamage: 500,
         attackSpeed: 7,
-        defense: 8e8,
+        defense: 1.5e9,
         critChance: 0,
         critDamage: 1,
         dodge: 0.25,
@@ -117,11 +117,11 @@ const enemyStats = {
         absorb: 0.25
     },
     "Vegeta": {
-        health: 1.5e12,
+        health: 1.8e12,
         minDamage: 100,
         maxDamage: 300,
         attackSpeed: 5,
-        defense: 5e9,
+        defense: 6e9,
         critChance: 0.1,
         critDamage: 1.5,
         dodge: 0,
@@ -131,11 +131,11 @@ const enemyStats = {
         nextBoss: "Vegeta SS2",
     },
     "Vegeta SS2": {
-        health: 3e12,
+        health: 3.6e12,
         minDamage: 200,
         maxDamage: 400,
         attackSpeed: 7,
-        defense: 7e9,
+        defense: 9e9,
         critChance: 0.1,
         critDamage: 1.75,
         dodge: 0,
@@ -146,11 +146,11 @@ const enemyStats = {
         nextBoss: "Vegeta SS3",
     },
     "Vegeta SS3": {
-        health: 5e12,
+        health: 7e12,
         minDamage: 300,
         maxDamage: 500,
         attackSpeed: 9,
-        defense: 1e10,
+        defense: 1.4e10,
         critChance: 0.15,
         critDamage: 2,
         dodge: 0,
@@ -161,11 +161,11 @@ const enemyStats = {
         nextBoss: "Vegeta SS God",
     },
     "Vegeta SS God": {
-        health: 7e12,
+        health: 9e12,
         minDamage: 800,
         maxDamage: 1100,
         attackSpeed: 11,
-        defense: 0, //+ 1e8 * player defense, player defense = 0
+        defense: 0,
         critChance: 0.15,
         critDamage: 2,
         dodge: 0,
@@ -176,11 +176,11 @@ const enemyStats = {
         nextBoss: "Vegeta SS Eternal",
     },
     "Vegeta SS Eternal": {
-        health: 1.2e13,
+        health: 1.5e13,
         minDamage: 900,
         maxDamage: 1200,
         attackSpeed: 13,
-        defense: 6e10, 
+        defense: 8e10, 
         critChance: 0.2,
         critDamage: 2.5,
         dodge: 0.2,
@@ -255,6 +255,7 @@ let playerAttackCount = 0;
 let playerTemporalFluxCount = 0;
 
 let deadpoolRevives = 0;
+let vegetaAbsorbedDefense = 0;
 
 let voidStabilizerActive = false;
 
@@ -266,6 +267,7 @@ let izanamiUsed = false;
 let sasukeIsHelping = false;
 
 let mysticReboundCount = 0;
+
 
 // Function to initialize and start the mini-game
 function startFightGame(enemyName, enemyImg) {
@@ -328,6 +330,8 @@ function startFightGame(enemyName, enemyImg) {
         izanagiUsed = false;
         izanamiUsed = false;
 
+        vegetaAbsorbedDefense = 0;
+
         voidStabilizerActive = false;
         if (voidStabilizerSkill){
             voidStabilizerActive = true;
@@ -376,10 +380,7 @@ function startFightGame(enemyName, enemyImg) {
             endFight(true); // Pass true to indicate the player forfeited
         };
 
-        let preFightMessage = false;
-
         if (currEnemyName === "Chuck Norris") {
-            preFightMessage = true;
             if (!purchasedUpgrades.some(upgrade => upgrade.name === "Training Dummy")) {
                 enemyDefense /= 2;
                 enemyHealth /= 2;
@@ -392,11 +393,10 @@ function startFightGame(enemyName, enemyImg) {
                 logFight("<span style='color: red; font-weight: bold; font-size: 1.3em';>Chuck Norris has no distractions and is ready to fight you at full power.</span>");
             }
         } else if (currEnemyName === "Kaguya") {
-            preFightMessage = true;
             if (!purchasedUpgrades.some(upgrade => upgrade.name === "Good Guy Sasuke")) {
                 sasukeIsHelping = true; // Set Sasuke's help flag to true
                 unlockAchievement('Sidekick');
-                logFight("<span style='color: green; font-weight: bold; font-size: 1.3em';>Sasuke joins your side to stop Kaguya and save the multiverse.</span>");
+                logFight("<span style='color: green; font-weight: bold; font-size: 1.3em';>Sasuke joins your side to stop Kaguya and save the multiverse. Although he is leagues below her, Sasuke will assist by partially countering some of her Sharingan powers with his own.</span>");
             } else {
                 logFight("<span style='color: red; font-weight: bold; font-size: 1.3em';>You stand alone against the biggest evil the world has ever seen.</span>");
             }
@@ -450,7 +450,7 @@ function startFightGame(enemyName, enemyImg) {
             }, 5000); // 250 milliseconds = 0.25 seconds
         } else{
             // Start the fight loop
-            if (preFightMessage){
+            if (currEnemyName === "Chuck Norris" || currEnemyName === "Kaguya" || currEnemyName === "Training Dummy"){
                 // Add a 1-second delay before starting the fight loop
                 setTimeout(() => {
                     fightLoop(resolve);
@@ -814,13 +814,13 @@ function attackEnemy(resolve) {
         // Special case for "Vegeta SS God"
         if (currEnemyName === "Vegeta SS God") {
             if (playerDefense > 0) {
-                const absorbedDefense = playerDefense * 1e9;
+                vegetaAbsorbedDefense = playerDefense * 2e9;
                 delusion = 0;
-                enemyDefense += absorbedDefense;
+                enemyDefense += vegetaAbsorbedDefense;
                 playerDefense = 0;
                 playerDefenseBase = 0;
 
-                logFight(`<span style='color: #FFD700; font-weight: bold; font-size: 1.3em;'>Vegeta SS God sees right through you, erasing all your delusions and absorbing all of your defensive powers! His defense skyrockets to ${formatNumber(absorbedDefense)}!</span>`);
+                logFight(`<span style='color: #FFD700; font-weight: bold; font-size: 1.3em;'>Vegeta SS God sees right through you, erasing all your delusions and absorbing all of your defensive powers! His defense skyrockets to ${formatNumber(vegetaAbsorbedDefense)}!</span>`);
             } else {
                 playerDefenseBase = 1000;
                 playerDefense = 1000; // Grant the player 1k defense
@@ -831,6 +831,7 @@ function attackEnemy(resolve) {
 
         // Special case for "Vegeta SS Eternal"
         if (currEnemyName === "Vegeta SS Eternal") {
+            enemyDefense += vegetaAbsorbedDefense;
             if (hopium < 0) {
                 playerCurrentAttackSpeed *= 0.25; // Decrease attack speed by 75%
                 logFight(`<span style='color: #FF4500; font-weight: bold; font-size: 1.3em;'>Vegeta SS Eternal senses your despair, and the extremely fucking powerful magnetic field around him slows your attacks by 75%!</span>`);
@@ -1393,6 +1394,9 @@ function endFight(isForfeit = false) {
 
     if (isForfeit) {
         // Player forfeited, so they lose and the enemy is taunting
+        if(currEnemyName === 'Training Dummy' && power > 1000){
+            unlockAchievement('Skip Leg Day');
+        }
         overlayWinnerLoserText("Loser", "Taunting");
     } else if (playerHealth > 0) {
         logFight("<span style='color: green;'>You are the Winner!</span>");
