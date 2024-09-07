@@ -1,31 +1,31 @@
 
 const powerHallSkills = [
     { name: 'Power Surge', cost: 9000, description: 'Power Generation is increased by 50%!', unlocked: false, level: 'Arcane Magnetism' },
-    { name: 'Temporal Flux', cost: 1e6, description: 'Gain 10% dodge chance after landing critical hits. Bonus resets on successful dodge.', unlocked: false, level: 'Arcane Magnetism' },
+    { name: 'Temporal Flux', cost: 1.5e6, description: 'Gain 10% dodge chance after landing critical hits. Bonus resets on successful dodge.', unlocked: false, level: 'Arcane Magnetism' },
     { name: 'Arcane Magnetizer', cost: 8e6, description: 'Upgrade autobuyer is now 5x faster!', unlocked: false, level: 'Arcane Magnetism' },
-    { name: 'Gravity Well', cost: 1.2e7, description: 'Every 5 successful attacks, reduce enemy minimum damage by 50% for 3 attacks.', unlocked: false, level: 'Arcane Magnetism' },
-    { name: 'Temporal Guard', cost: 2.5e9, description: 'After every successful dodge, increase your defense by 10% of your base defense. (max +200%)', unlocked: false, level: 'Arcane Magnetism' },
-    { name: 'Mystic Rebound', cost: 3e10, description: 'Increase your dodge chance by 20% for the next 5 attacks after being hit by a critical strike.', unlocked: false, level: 'Arcane Magnetism' },
+    { name: 'Gravity Well', cost: 1.5e7, description: 'Every 5 successful attacks, reduce enemy minimum damage by 50% for 3 attacks.', unlocked: false, level: 'Arcane Magnetism' },
+    { name: 'Temporal Guard', cost: 3e9, description: 'After every successful dodge, increase your defense by 10% of your base defense. (max +200%)', unlocked: false, level: 'Arcane Magnetism' },
+    { name: 'Mystic Rebound', cost: 4e10, description: 'Increase your dodge chance by 20% for the next 5 attacks after being hit by a critical strike.', unlocked: false, level: 'Arcane Magnetism' },
 
-    { name: 'Vitality Matrix', cost: 45000, description: 'Maximum Health is increased by 50%!', unlocked: false, level: 'Quantum Nexus' },
-    { name: 'Nexus Lifeline', cost: 5e6, description: 'With every attack, heal yourself for 2% max health. Overheal is possible.', unlocked: false, level: 'Quantum Nexus' },
-    { name: 'Astral Precision', cost: 3e7, description: 'Hone your accuracy. Minimum damage rescaled from power-75% to power-25%.', unlocked: false, level: 'Quantum Nexus' },
-    { name: 'Void Stabilizer', cost: 1.75e8, description: 'Reduce damage taken from attacks by 50% until your health drops below 80%', unlocked: false, level: 'Quantum Nexus' },
-    { name: 'Astral Edge', cost: 1.8e11, description: 'Increase your maximum damage by 1% for each 2% of your health missing.', unlocked: false, level: 'Quantum Nexus' },
-    { name: 'Quantum Bastion', cost: 1e15, description: 'Resistant to stuns - reduce 2 turns of stun count per turn.', unlocked: false, level: 'Quantum Nexus' },
+    { name: 'Vitality Matrix', cost: 60000, description: 'Maximum Health is increased by 50%!', unlocked: false, level: 'Quantum Nexus' },
+    { name: 'Nexus Lifeline', cost: 7e6, description: 'With every attack, heal yourself for 2% max health. Overheal is possible.', unlocked: false, level: 'Quantum Nexus' },
+    { name: 'Astral Precision', cost: 4e7, description: 'Hone your accuracy. Minimum damage rescaled from power-75% to power-25%.', unlocked: false, level: 'Quantum Nexus' },
+    { name: 'Void Stabilizer', cost: 2e8, description: 'Reduce damage taken from attacks by 50% until your health drops below 80%', unlocked: false, level: 'Quantum Nexus' },
+    { name: 'Astral Edge', cost: 2e11, description: 'Increase your maximum damage by 1% for each 2% of your health missing.', unlocked: false, level: 'Quantum Nexus' },
+    { name: 'Quantum Bastion', cost: 1.5e15, description: 'Resistant to stuns - reduce 2 turns of stun count per turn.', unlocked: false, level: 'Quantum Nexus' },
 
-    { name: 'Lightning Reflexes', cost: 12000, description: 'Your attacks become 2.5x faster!', unlocked: false, level: 'Cosmic Dynamics' },
-    { name: 'Astral Disruption', cost: 150000, description: 'Your attacks have a 5% chance to stun the enemy for 1 attack.', unlocked: false, level: 'Cosmic Dynamics' },
-    { name: 'Supersonic Fury', cost: 1.2e8, description: 'Your attacks become even 2x faster!', unlocked: false, level: 'Cosmic Dynamics' },
-    { name: 'Prime Impact', cost: 9e8, description: 'First attack always hits for full power (ignore enemy dodge rate and defense).', unlocked: false, level: 'Cosmic Dynamics' },
-    { name: 'Graviton Burst', cost: 4e16, description: 'Your attacks are imperceptible to average beings. You now attack 5x faster!', unlocked: false, level: 'Cosmic Dynamics' },
+    { name: 'Lightning Reflexes', cost: 15000, description: 'Your attacks become 2.5x faster!', unlocked: false, level: 'Cosmic Dynamics' },
+    { name: 'Astral Disruption', cost: 200000, description: 'Your attacks have a 5% chance to stun the enemy for 1 attack.', unlocked: false, level: 'Cosmic Dynamics' },
+    { name: 'Supersonic Fury', cost: 1.5e8, description: 'Your attacks become even 2x faster!', unlocked: false, level: 'Cosmic Dynamics' },
+    { name: 'Prime Impact', cost: 1e9, description: 'First attack always hits for full power (ignore enemy dodge rate and defense).', unlocked: false, level: 'Cosmic Dynamics' },
+    { name: 'Graviton Burst', cost: 6e16, description: 'Your attacks are imperceptible to average beings. You now attack 5x faster!', unlocked: false, level: 'Cosmic Dynamics' },
     
-    { name: 'Stellar Harvest', cost: 2.5e7, description: `Increase generation of all first 7 resources by 30% for 3 minutes after defeating a boss. (multiplicative)`, unlocked: false, level: 'Celestial Manipulation' },
-    { name: 'POWER is Power!', cost: 2.5e8, description: `Power generation increased by 10% for each purchased Power Hall skill (multiplicative).`, unlocked: false, level: 'Celestial Manipulation' },
-    { name: 'Upgrade Amplifier', cost: 4e8, description: `First 4 resources gain a flat multiplier based on number of purchased upgrades.`, unlocked: false, level: 'Celestial Manipulation' },
-    { name: 'Celestial Collector', cost: 5e10, description: `Stellar Harvest buff is extended to 50% power and lasts for 10 minutes.`, unlocked: false, level: 'Celestial Manipulation' },
+    { name: 'Stellar Harvest', cost: 3e7, description: `Increase generation of all first 7 resources by 30% for 3 minutes after defeating a boss. (multiplicative)`, unlocked: false, level: 'Celestial Manipulation' },
+    { name: 'POWER is Power!', cost: 3e8, description: `Power generation increased by 10% for each purchased Power Hall skill (multiplicative).`, unlocked: false, level: 'Celestial Manipulation' },
+    { name: 'Upgrade Amplifier', cost: 5e8, description: `First 4 resources gain a flat multiplier based on number of purchased upgrades.`, unlocked: false, level: 'Celestial Manipulation' },
+    { name: 'Celestial Collector', cost: 7e10, description: `Stellar Harvest buff is extended to 50% power and lasts for 10 minutes.`, unlocked: false, level: 'Celestial Manipulation' },
 
-    { name: 'Nebula Overdrive', cost: 5e5, description: `Purchasing non-boss upgrades no longer consumes power. Power cost still applies.`, unlocked: false, level: 'Nebular Command' },
+    { name: 'Nebula Overdrive', cost: 7e5, description: `Purchasing non-boss upgrades no longer consumes power. Power cost still applies.`, unlocked: false, level: 'Nebular Command' },
 
 ];
 

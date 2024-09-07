@@ -194,7 +194,7 @@ const enemyStats = {
         minDamage: 2000,
         maxDamage: 3000,
         attackSpeed: 22.2,
-        defense: 4e14,
+        defense: 4e15,
         critChance: 0.1,
         critDamage: 1.5,
         dodge: 0.2,
@@ -927,8 +927,8 @@ function attackEnemy(resolve) {
             logFight(`<span style='color: #b3a125; font-weight: bold; font-size: 1.3em;'>Saitama gets serious! No tricks up his sleeve, just raw power. Brace yourself!</span>`);
             
             if (!purchasedUpgrades.some(upgrade => upgrade.name === "Training Dummy")) {
-                enemyStunCount = 100;
-                logFight("<span style='color: green; font-size: 1.2em';>Can't believe the Training Dummy trick worked again! This time, it was rigged with a galactic paralyzer device, stunning Saitama for 100 turns.</span>");
+                enemyStunCount = 200;
+                logFight("<span style='color: green; font-size: 1.2em';>Can't believe the Training Dummy trick worked again! This time, it was rigged with a galactic paralyzer device, stunning Saitama for 200 turns.</span>");
             } else {
                 logFight("<span style='color: red; font-size: 1.2em';>Before you have time to process what just happened, Saitama charges towards you.</span>");
             } 
