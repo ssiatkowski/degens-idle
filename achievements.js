@@ -700,6 +700,7 @@ function unlockAchievement(name, duringLoad = false) {
         if (!duringLoad) {
             saveGameState();
             updateMultipliersDisplay();
+            updateEffectiveMultipliers();
             showPopupTooltip(`Unlocked Achievement: ${name}`, color='#1B4D3E', durationSeconds=5);
         }
     }

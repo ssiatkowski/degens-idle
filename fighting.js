@@ -413,7 +413,7 @@ function startFightGame(enemyName, enemyImg) {
             }, 500);
             
             setTimeout(() => {
-                logFight("<span style='color: #6b8ca4; font-size: 1.2em';>You: What? I can sense your power. YOU could have stopped her yourself, why didn’t you?</span>");
+                logFight("<span style='color: #6b8ca4; font-size: 1.2em';>You: What? I can sense your power. You could have stopped her yourself, why didn’t you?</span>");
             }, 1000);
             
             setTimeout(() => {
