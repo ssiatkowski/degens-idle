@@ -2971,7 +2971,7 @@ function calculateTooltip(resourceId) {
     }
 
     // Special Big Crunch Extra for Knowledge (darker red)
-    if (resourceId === 'knowledge') {
+    if (bigCrunchMultiplier !== 1 && resourceId === 'knowledge') {
         const bigCrunchExtra = Math.pow(bigCrunchMultiplier, 0.5);  // Big Crunch Extra
         tooltip += `<span style="color:#B22222">x${formatNumber(bigCrunchExtra)} (Big Crunch Extra)</span><br>`;  // Darker Red
     }
