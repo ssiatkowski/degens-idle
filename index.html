@@ -92,18 +92,18 @@
             </div>
         </div>
         <div id="game">
-            <!-- Copium Resource -->
-            <div class="resource-container">
+            <div class="resource">
                 <p><b>C</b>opium: <span id="copium" class="resource-value">0</span></p>
                 <p class="per-second">Copium per second: <span id="cps">0</span></p>
                 <div class="buttons">
                     <button id="collectCopiumButton" class="collect-button">Collect Copium</button>
-                    <button id="speedGame" class="game-button">Speed Game</button>
+                    <button id="speedGame" class="game-button">
+                        <span class="button-content">Speed Game</span>
+                        <div class="progress"></div>
+                    </button>
                 </div>
             </div>
-        
-            <!-- Delusion Resource -->
-            <div class="resource-container">
+            <div class="resource">
                 <p><b>D</b>elusion: <span id="delusion" class="resource-value">0</span></p>
                 <p class="per-second">Delusion per second: <span id="dps">0</span>
                     <label class="switch hidden" id="toggleDelusionLabel">
@@ -113,66 +113,58 @@
                 </p>
                 <div class="buttons">
                     <button id="collectDelusionButton" class="collect-button">Collect Delusion</button>
-                    <button id="memoryGame" class="game-button">Memory Game</button>
+                    <button id="memoryGame" class="game-button">
+                        <span class="button-content">Memory Game</span>
+                        <div class="progress"></div>
+                    </button>
                 </div>
             </div>
-        
-            <!-- Yacht Money Resource -->
-            <div class="resource-container">
+            <div class="resource">
                 <p><b>Y</b>acht <b>M</b>oney: <span id="yachtMoney" class="resource-value">0</span></p>
                 <p class="per-second">Yacht Money per second: <span id="ymps">0</span></p>
                 <div class="buttons">
                     <button id="collectYachtMoneyButton" class="collect-button">Collect Yacht Money</button>
-                    <button id="mathGame" class="game-button">Math Game</button>
+                    <button id="mathGame" class="game-button">
+                        <span class="button-content">Math Game</span>
+                        <div class="progress"></div>
+                    </button>
                 </div>
             </div>
-        
-            <!-- Troll Points Resource -->
-            <div class="resource-container">
+            <div class="resource">
                 <p><b>T</b>roll <b>P</b>oints: <span id="trollPoints" class="resource-value">0</span></p>
                 <p class="per-second">Troll Points per second: <span id="tpps">0</span></p>
                 <div class="buttons">
                     <button id="collectTrollPointsButton" class="collect-button">Collect Troll Points</button>
-                    <button id="luckGame" class="game-button">Luck Game</button>
+                    <button id="luckGame" class="game-button">
+                        <span class="button-content">Luck Game</span>
+                        <div class="progress"></div>
+                    </button>
                 </div>
             </div>
-        
-            <!-- Hopium Resource -->
-            <div class="resource-container">
+            <div class="resource">
                 <p><b>H</b>opium: <span id="hopium" class="resource-value">0</span></p>
                 <p class="per-second">Hopium per second: <span id="hps">0</span></p>
+                <!-- No collect button for Hopium -->
             </div>
-        
-            <!-- Knowledge Resource -->
-            <div class="resource-container">
+            <div class="resource">
                 <p><b>K</b>nowledge: <span id="knowledge" class="resource-value">0</span></p>
                 <p class="per-second">Knowledge per second: <span id="kps">0</span></p>
             </div>
-        
-            <!-- Power Resource (Hidden by Default) -->
-            <div class="resource-container" id="power-container" style="display: none;">
+            <div class="resource" id="power-container" style="display: none;">
                 <p><b>P</b>ower: <span id="power" class="resource-value">0</span></p>
                 <p class="per-second">Power per second: <span id="pps">0</span></p>
             </div>
-        
-            <!-- Serenity Resource (Hidden by Default) -->
-            <div class="resource-container" id="serenity-container" style="display: none;">
+            <div class="resource" id="serenity-container" style="display: none;">
                 <p><b>S</b>erenity: <span id="serenity" class="resource-value">0</span></p>
                 <p class="per-second">Serenity per second: <span id="sps">0</span></p>
             </div>
-        
-            <!-- Cookie Button -->
             <div id="cookieButtonContainer">
                 <button id="cookieButton" style="display:none;">
                     <img src="imgs/cookie.jpg" alt="Cookie">
                     <span class="cookieTooltip">Each cookie click counts as 10 clicks on collect buttons for Copium, Delusion, Yacht Money, and Troll Points!</span>
                 </button>
             </div>
-        
-            <!-- Stellar Harvest Display -->
             <p class="stellar-harvest-text" id="stellar-harvest-display" style="display:none;">Stellar Harvest Mult x1.00</p>
-        
-            <!-- Other Elements (Hidden by Default) -->
             <button id="prestigeButton" style="display:none;" class="custom-button">Prestige</button>
             <p class="prestige-multiplier-text" id="prestige-multiplier">Prestige: x1.00 mult</p>
             <button id="ascendButton" style="display:none;" class="custom-button">ASCEND ABOVE MORTALS</button>
@@ -181,13 +173,9 @@
             <p class="pu-god-text" id="pu-god-display" style="display:none;">PU God Level 0 (x1.00 mult)</p>
             <button id="bigCrunchButton" style="display:none;" class="custom-button">Big Crunch</button>
             <p class="big-crunch-text" id="big-crunch-display" style="display:none;">Big Crunch Power 1e-7 (x1.00 mult)</p>
-        
-            <!-- Knowledge and Power Hall Buttons -->
             <button id="libraryButton">Hall of Knowledge</button>
-            <button id="powerHallButton" style="display:none;">Hall of Power</button>
+            <button id="powerHallButton" style="display:none;">Hall of Power</button>        
         </div>
-        
-             
         <div id="upgrades">
             <h2>Upgrades</h2>
             <div class="multibuy-buttons-container">
@@ -316,7 +304,7 @@
         <div class="settings-overlay-content">
             <span class="close-button" id="closeSettingsOverlay">&times;</span>
             <h1>Settings</h1>
-            <h4>Degens Idle v0.906</h4>
+            <h4>Degens Idle v0.905</h4>
             
             <div class="settings-section">
                 <h3>Save Management</h3>

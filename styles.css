@@ -238,49 +238,6 @@ h1, h2 {
     font-size: 2em;
     font-weight: bold;
     color: #76ff03; /* Light green for resource values */
-    position: relative;
-    cursor: pointer;
-}
-
-.resource-container {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 5px;
-    padding: 10px;
-    background-color: #222;
-    border-radius: 5px;
-    position: relative;
-}
-
-.resource-container:hover {
-    background-color: #333;
-    cursor: pointer;
-}
-
-.buttons {
-    display: flex;
-    justify-content: space-between; /* Ensure the buttons are spaced horizontally */
-    gap: 10px;
-}
-
-.resource-gain-tooltip {
-    position: absolute;
-    background-color: #333;
-    color: #fff;
-    padding: 5px;
-    border-radius: 5px;
-    font-size: 18px;
-    z-index: 1000;
-    white-space: nowrap;
-    top: 110%;  /* Position below the container */
-    left: 50%;
-    transform: translateX(-50%);  /* Center the tooltip horizontally */
-}
-
-
-/* Optional styling for values, you can modify based on your preferences */
-.resource-value, .per-second {
-    color: #7FFF00;  /* Set color or style of text */
 }
 
 .per-second {
@@ -289,6 +246,11 @@ h1, h2 {
     margin-top: -10px;
     margin-bottom: 10px;
 }
+
+/* .resource .per-second {
+    display: flex;
+    align-items: center;
+} */
 
 button {
     padding: 10px 20px;
@@ -456,7 +418,6 @@ button.game-button:active {
 /* Ensure buttons are aligned next to each other */
 .resource .buttons {
     display: flex;
-    justify-content: space-between; /* Ensure the buttons are spaced horizontally */
     gap: 10px;
 }
 
