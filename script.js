@@ -2857,6 +2857,161 @@ function showPopupTooltip(message, color = 'gray', durationSeconds = 2) {
 }
 
 
+document.querySelectorAll('.resource-value').forEach(function (element) {
+    let tooltipContainer;  // Declare outside to reference in both mouseenter and mouseleave
+
+    element.addEventListener('mouseenter', function (event) {
+        let resourceId = element.id;  // Directly use element.id
+        let tooltipText = calculateTooltip(resourceId);  // Get tooltip content
+
+        // Ensure no tooltip exists before creating a new one
+        if (!tooltipContainer) {
+            tooltipContainer = document.createElement('div');
+            tooltipContainer.className = 'resource-gain-tooltip';
+            tooltipContainer.innerHTML = tooltipText;
+
+            document.body.appendChild(tooltipContainer);
+
+            const rect = element.getBoundingClientRect();
+            tooltipContainer.style.position = 'absolute';
+            tooltipContainer.style.top = `${rect.bottom + window.scrollY + 10}px`;  // Add a slight margin below
+            tooltipContainer.style.left = `${rect.left + (rect.width / 2)}px`;
+            tooltipContainer.style.transform = 'translateX(-50%)';  // Center the tooltip
+        }
+    });
+
+    element.addEventListener('mouseleave', function () {
+        // Remove the tooltip only if it exists
+        if (tooltipContainer) {
+            tooltipContainer.remove();
+            tooltipContainer = null;  // Set to null to allow recreation on next hover
+        }
+    });
+});
+
+
+
+
+function calculateTooltip(resourceId) {
+let tooltip = '';
+let baseValue, basePerSecond;
+
+switch (resourceId) {
+    case 'copium':
+        baseValue = 'Copium';
+        basePerSecond = copiumPerSecond;
+        break;
+    case 'delusion':
+        baseValue = 'Delusion';
+        basePerSecond = delusionPerSecond;
+        break;
+    case 'yachtMoney':
+        baseValue = 'Yacht Money';
+        basePerSecond = yachtMoneyPerSecond;
+        break;
+    case 'trollPoints':
+        baseValue = 'Troll Points';
+        basePerSecond = trollPointsPerSecond;
+        break;
+    case 'hopium':
+        baseValue = 'Hopium';
+        basePerSecond = hopiumPerSecond;
+        break;
+    case 'knowledge':
+        baseValue = 'Knowledge';
+        basePerSecond = knowledgePerSecond;
+        break;
+    case 'power':
+        baseValue = 'Power';
+        basePerSecond = (Math.max(knowledge, 0) ** (1 / 3)) / 1e12;
+        break;
+    case 'serenity':
+        baseValue = 'Serenity';
+        basePerSecond = serenityPerSecond;
+        break;
+    default:
+        return 'Gain calculation based on upgrades and boosts.';
+}
+
+// Base gain display
+tooltip += `<b>${formatNumber(basePerSecond)}</b> (Base ${baseValue} Gain)</b><br>`;
+
+// Power-specific multipliers
+if (resourceId === 'power') {
+    // Money is Power multiplier
+    if (moneyIsPowerTooSkill) {
+        let moneyIsPowerMultiplier = (1 + (Math.max(yachtMoney, 0) ** (1 / 30)) / 100);
+        tooltip += `<span style="color:#FFA500">x${formatNumber(moneyIsPowerMultiplier)} (Money is Power)</span><br>`;
+    }
+
+    // Power Surge Multiplier
+    if (powerSurgeMultiplier !== 1) {
+        tooltip += `<span style="color:#FF4500">x${formatNumber(powerSurgeMultiplier)} (Power Surge)</span><br>`;  // Dark Orange
+    }
+
+    // Power is Power multiplier
+    if (powerIsPowerSkill) {
+        let powerIsPowerMultiplier = 1.1 ** (powerHallSkills.filter(skill => skill.unlocked).length);
+        tooltip += `<span style="color:#8A2BE2">x${formatNumber(powerIsPowerMultiplier)} (Power is Power)</span><br>`;  // BlueViolet
+    }
+}
+
+// Non-Power resources: apply general multipliers
+if (resourceId !== 'power' && resourceId !== 'serenity') {
+    if (epsMultiplier !== 1) {
+        tooltip += `<span style="color:#FFD700">x${formatNumber(epsMultiplier)} (Prestige)</span><br>`;
+    }
+    if (godModeMultiplier !== 1) {
+        tooltip += `<span style="color:#1E90FF">x${formatNumber(godModeMultiplier)} (God-Mode)</span><br>`;
+    }
+    if (puGodMultiplier !== 1) {
+        tooltip += `<span style="color:#BA55D3">x${formatNumber(puGodMultiplier)} (PU God)</span><br>`;
+    }
+    if (bigCrunchMultiplier !== 1) {
+        tooltip += `<span style="color:#FF6347">x${formatNumber(bigCrunchMultiplier)} (Big Crunch)</span><br>`;
+    }
+}
+
+// Special Big Crunch Extra for Knowledge (darker red)
+if (bigCrunchMultiplier !== 1 && resourceId === 'knowledge') {
+    const bigCrunchExtra = Math.pow(bigCrunchMultiplier, 0.5);  // Big Crunch Extra
+    tooltip += `<span style="color:#B22222">x${formatNumber(bigCrunchExtra)} (Big Crunch Extra)</span><br>`;  // Darker Red
+}
+
+// Achievement Multiplier (for all resources, including Power and Serenity)
+if (achievementMultiplier !== 1) {
+    tooltip += `<span style="color:#008080">x${formatNumber(achievementMultiplier)} (Achievements)</span><br>`;
+}
+
+// Stellar Harvest Multiplier (for all resources, including Power, but not Serenity)
+if (resourceId !== 'serenity' && stellarHarvestMult !== 1) {
+    tooltip += `<span style="color:#32CD32">x${formatNumber(stellarHarvestMult)} (Stellar Harvest)</span><br>`;
+}
+
+// Only show the amplifier multiplier if it's not Hopium, Knowledge, Power, or Serenity
+if (resourceId !== 'hopium' && resourceId !== 'knowledge' && resourceId !== 'power' && resourceId !== 'serenity' && upgradeAmplifierSkill) {
+    tooltip += `<span style="color:#CD853F">x${formatNumber(purchasedUpgrades.length)} (# Upgrades)</span><br>`;
+}
+
+if (resourceId === 'knowledge') {
+    // Diminishing multiplier for Knowledge
+    const diminishingMultiplier = calculateEffectiveKnowledge() / calculateBaseKnowledge();
+    if (diminishingMultiplier < 1) {
+        tooltip += `<span style="color:#DC143C">x${formatNumber(diminishingMultiplier)} (Diminishing Returns)</span><br>`;  // Crimson Red
+    }
+}
+
+if (resourceId === 'power') {
+    // Diminishing multiplier for Power
+    const diminishingMultiplier = calculateEffectivePower() / calculateBasePower();
+    if (diminishingMultiplier < 1) {
+        tooltip += `<span style="color:#DC143C">x${formatNumber(diminishingMultiplier)} (Diminishing Returns)</span><br>`;  // Crimson Red
+    }
+}
+
+return tooltip;
+}
+
 // Throttle function
 function throttle(func, limit) {
     let inThrottle;

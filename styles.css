@@ -240,6 +240,24 @@ h1, h2 {
     color: #76ff03; /* Light green for resource values */
 }
 
+.resource-value:hover {
+    background-color: #333;
+    cursor: pointer;
+}
+
+.resource-gain-tooltip {
+    pointer-events: none;  /* Make the tooltip non-interactive */
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 18px;
+    max-width: 300px;
+    z-index: 1000; /* Ensure it's above other elements */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    position: absolute; /* Ensure proper placement */
+}
+
 .per-second {
     font-size: 0.8em;
     color: #bdbdbd; /* Lighter text color for per second info */
