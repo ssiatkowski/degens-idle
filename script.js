@@ -855,6 +855,7 @@ async function restartGame(isPrestige = false, forceRestart = false) {
                 achievement.isUnlocked = false;
             });
             renderAchievements(); // Re-render the achievements grid
+            achievementMultiplier = 1;
 
             localStorage.clear();
         }
