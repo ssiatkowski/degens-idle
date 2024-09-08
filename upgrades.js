@@ -428,6 +428,13 @@ const upgrades = [
         hoverOverwrite: `Should be helpful right?`,
     },
     {
+        name: `Hoverboard`,
+        cost: { copium: 0, delusion: 0, yachtMoney: 1e14, trollPoints: 1e14, hopium: 5000000, knowledge: 75, power: 0, serenity: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 1e6, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1e6, hopiumPerSecond: 0.3, knowledgePerSecond: 0.00001, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: `imgs/hoverboard.jpg`,
+        message: `imgs/modal_imgs/resource_hover.jpg`,
+    },
+    {
         name: `Cybertruck`,
         cost: { copium: 0, delusion: 0, yachtMoney: 3e14, trollPoints: 0, hopium: 10000000, knowledge: 0, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 1.05e7, delusionPerSecond: 1.65e6, yachtMoneyPerSecond: -100000, trollPointsPerSecond: 1.2e6, hopiumPerSecond: 0, knowledgePerSecond: 0.0000035, powerPerSecond: 0, serenityPerSecond: 0 },
@@ -1044,19 +1051,19 @@ const upgrades = [
     {
         name: `Oedipus`,
         cost: { copium: 1e65, delusion: 0, yachtMoney: 0, trollPoints: 1e65, hopium: 0, knowledge: 1e49, power: 6.5e10, serenity: 0 },
-        earnings: { copiumPerSecond: 1e25, delusionPerSecond: 1e25, yachtMoneyPerSecond: 0, trollPointsPerSecond: 2e25, hopiumPerSecond: 0, knowledgePerSecond: 8e6, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 1e25, delusionPerSecond: 1e25, yachtMoneyPerSecond: 0, trollPointsPerSecond: 2e25, hopiumPerSecond: 0, knowledgePerSecond: 9e6, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/mom_at_stripclub.jpg`,        
     },
     {
         name: `Excuse me?`,
         cost: { copium: 3e65, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 2e49, power: 1.2e11, serenity: 0 },
-        earnings: { copiumPerSecond: 2.5e25, delusionPerSecond: 0, yachtMoneyPerSecond: 5e25, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 7e6, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 2.5e25, delusionPerSecond: 0, yachtMoneyPerSecond: 5e25, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 8e6, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/washing_dishes.jpg`,        
     },
     {
         name: `Best Meme`,
         cost: { copium: 3e65, delusion: 2e65, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 3e49, power: 8e10, serenity: 0 },
-        earnings: { copiumPerSecond: 3.5e25, delusionPerSecond: 1e25, yachtMoneyPerSecond: 1e25, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 5e6, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 3.5e25, delusionPerSecond: 1e25, yachtMoneyPerSecond: 1e25, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 6e6, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/best_meme.jpg`,   
         message: `<p>Days have passed since you defeated the Super Saiyan, a warrior who once seemed like an unstoppable force of nature. The memory of that battle lingers, a testament to your newfound strength. Yet, as the dust settles and the adrenaline fades, an unsettling question claws at your mind: Why, despite your victory, do you feel so empty?</p>
                 <p>You’ve grown stronger than you ever imagined, but that power feels strangely hollow. The words Vegeta uttered before his fall echo in the quiet moments: “She’s out there, threatening the multiverse.” But who is this mysterious "she"? What kind of terror could instill such fear in one as powerful as him?</p>
@@ -1066,31 +1073,31 @@ const upgrades = [
     {
         name: `Facepalm`,
         cost: { copium: 0, delusion: 3e65, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 4e49, power: 1.4e10, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 5e25, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1e25, hopiumPerSecond: 0, knowledgePerSecond: 9e6, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 5e25, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1e25, hopiumPerSecond: 0, knowledgePerSecond: 1.2e7, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/andrew_tate.jpg`,        
     },
     {
         name: `Moo-ving Violation`,
         cost: { copium: 0, delusion: 0, yachtMoney: 5e65, trollPoints: 0, hopium: 0, knowledge: 5e49, power: 2.8e10, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1e26, hopiumPerSecond: 0, knowledgePerSecond: 1e7, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1e26, hopiumPerSecond: 0, knowledgePerSecond: 1.5e7, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/wyoming_traffic.jpg`,        
     },
     {         
         name: `Charging Into Forums`,
         cost: { copium: 4e67, delusion: 0, yachtMoney: 0, trollPoints: 1e68, hopium: 0, knowledge: 6e50, power: 4.2e10, serenity: 0 },
-        earnings: { copiumPerSecond: 2e26, delusionPerSecond: 2e26, yachtMoneyPerSecond: 0, trollPointsPerSecond: 5e25, hopiumPerSecond: 0, knowledgePerSecond: 1.5e7, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 2e26, delusionPerSecond: 2e26, yachtMoneyPerSecond: 0, trollPointsPerSecond: 5e25, hopiumPerSecond: 0, knowledgePerSecond: 1.6e7, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/keyboard_warrior.jpg`,        
     },
     {         
         name: `Frowning on Jetski?`,
         cost: { copium: 0, delusion: 0, yachtMoney: 3e68, trollPoints: 1e69, hopium: 0, knowledge: 7e50, power: 5e10, serenity: 0 },
-        earnings: { copiumPerSecond: 1e26, delusionPerSecond: 0, yachtMoneyPerSecond: 6e26, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 1.3e7, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 1e26, delusionPerSecond: 0, yachtMoneyPerSecond: 6e26, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 1.4e7, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/money_does_buy_happiness.jpg`,        
     },
     {         
         name: `Smile and Nod`,
         cost: { copium: 4e68, delusion: 0, yachtMoney: 0, trollPoints: 1e69, hopium: 0, knowledge: 8e50, power: 7e10, serenity: 0 },
-        earnings: { copiumPerSecond: 8e26, delusionPerSecond: 8e26, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 1.6e7, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 8e26, delusionPerSecond: 8e26, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 2.4e7, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/say_what_what.jpg`,        
     },
     {         
@@ -1101,40 +1108,40 @@ const upgrades = [
     },
     {         
         name: `Jump 1M Times`,
-        cost: { copium: 9e71, delusion: 0, yachtMoney: 0, trollPoints: 9e71, hopium: 0, knowledge: 2e54, power: 1.3e12, serenity: 0 },
-        earnings: { copiumPerSecond: 8e27, delusionPerSecond: 2e27, yachtMoneyPerSecond: 0, trollPointsPerSecond: 5e27, hopiumPerSecond: 0, knowledgePerSecond: 1.3e8, powerPerSecond: 0, serenityPerSecond: 0 },
+        cost: { copium: 9e71, delusion: 0, yachtMoney: 0, trollPoints: 9e71, hopium: 0, knowledge: 2e54, power: 1.2e12, serenity: 0 },
+        earnings: { copiumPerSecond: 8e27, delusionPerSecond: 2e27, yachtMoneyPerSecond: 0, trollPointsPerSecond: 5e27, hopiumPerSecond: 0, knowledgePerSecond: 1.6e8, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/achievement_fiend.jpg`,       
         hoverOverwrite: `Must. Get. All. Achievements.`,
     },
     {         
         name: `Going Crazy Over Here`,
-        cost: { copium: 5e72, delusion: 5e69, yachtMoney: 0, trollPoints: 3e72, hopium: 0, knowledge: 8e54, power: 2.6e12, serenity: 0 },
-        earnings: { copiumPerSecond: 1e28, delusionPerSecond: 1e28, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 2.4e8, powerPerSecond: 0, serenityPerSecond: 0 },
+        cost: { copium: 5e72, delusion: 5e69, yachtMoney: 0, trollPoints: 3e72, hopium: 0, knowledge: 8e54, power: 2.5e12, serenity: 0 },
+        earnings: { copiumPerSecond: 1e28, delusionPerSecond: 1e28, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 2.9e8, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/going_crazy_over_here.jpg`,       
         hoverOverwrite: `When you max out every stat and skill, but still get destroyed by Kaguya.`,
     },
     {         
         name: `Foreshadowing #3`,
-        cost: { copium: 8e72, delusion: 9e70, yachtMoney: 3e70, trollPoints: 0, hopium: 0, knowledge: 2e56, power: 7e12, serenity: 0 },
-        earnings: { copiumPerSecond: 1.5e28, delusionPerSecond: 0, yachtMoneyPerSecond: 9e27, trollPointsPerSecond: 1e28, hopiumPerSecond: 0, knowledgePerSecond: 4.3e8, powerPerSecond: 0, serenityPerSecond: 0 },
+        cost: { copium: 8e72, delusion: 9e70, yachtMoney: 3e70, trollPoints: 0, hopium: 0, knowledge: 2e56, power: 6.5e12, serenity: 0 },
+        earnings: { copiumPerSecond: 1.5e28, delusionPerSecond: 0, yachtMoneyPerSecond: 9e27, trollPointsPerSecond: 1e28, hopiumPerSecond: 0, knowledgePerSecond: 8.3e8, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/distracted_boyfriend_3.jpg`,       
     },
     {         
         name: `Healthy Choices`,
         cost: { copium: 9e72, delusion: 1e71, yachtMoney: 0, trollPoints: 9e72, hopium: 0, knowledge: 5e58, power: 1.8e13, serenity: 0 },
-        earnings: { copiumPerSecond: 3e28, delusionPerSecond: 0, yachtMoneyPerSecond: 1.2e28, trollPointsPerSecond: 3e28, hopiumPerSecond: 0, knowledgePerSecond: 6.5e8, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 3e28, delusionPerSecond: 0, yachtMoneyPerSecond: 1.2e28, trollPointsPerSecond: 3e28, hopiumPerSecond: 0, knowledgePerSecond: 1.3e9, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/training_for_kaguya.jpg`
     },
     {         
         name: `Unprecedented`,
-        cost: { copium: 1e73, delusion: 2e72, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 3e55, power: 2.7e14, serenity: 0 },
-        earnings: { copiumPerSecond: 2e28, delusionPerSecond: 2e28, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 8.7e8, powerPerSecond: 0, serenityPerSecond: 0 },
+        cost: { copium: 1e73, delusion: 2e72, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 3e55, power: 2.3e14, serenity: 0 },
+        earnings: { copiumPerSecond: 2e28, delusionPerSecond: 2e28, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 1.6e9, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/unprecedented_overlap.jpg`
     },
     {         
         name: `Bitch Back Off`,
-        cost: { copium: 1e80, delusion: 1e80, yachtMoney: 1e80, trollPoints: 1e80, hopium: 0, knowledge: 3e60, power: 3.5e14, serenity: 0 },
-        earnings: { copiumPerSecond: 4e28, delusionPerSecond: 4e28, yachtMoneyPerSecond: 0, trollPointsPerSecond: 5e28, hopiumPerSecond: 0, knowledgePerSecond: 1.4e9, powerPerSecond: 0, serenityPerSecond: 0 },
+        cost: { copium: 1e80, delusion: 1e80, yachtMoney: 1e80, trollPoints: 1e80, hopium: 0, knowledge: 3e60, power: 3.2e14, serenity: 0 },
+        earnings: { copiumPerSecond: 4e28, delusionPerSecond: 4e28, yachtMoneyPerSecond: 0, trollPointsPerSecond: 5e28, hopiumPerSecond: 0, knowledgePerSecond: 2.8e9, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/bitch_back_off.jpg`
     },
     {
@@ -1299,6 +1306,12 @@ const upgrades = [
         cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0.025 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 4e42, hopiumPerSecond: 2e47, knowledgePerSecond: 2e13, powerPerSecond: 0, serenityPerSecond: 0.0003 },
         img: `imgs/puppy_love.jpg`,
+    },
+    {         
+        name: `Love Shop`,
+        cost: { copium: 0, delusion: 0, yachtMoney: 3e96, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0.1 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 2e47, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0.0001 },
+        img: `imgs/love_shop.jpg`,
     },
 
 ];

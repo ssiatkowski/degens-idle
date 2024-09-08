@@ -1882,7 +1882,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
                 showMessageModal('Hmph', `After all your time and effort tracking down Vegeta, you finally confront him, only to hear, "Hmph, you're too ugly to fight," as he flies off without a second thought. Frustrated and defeated, you realize you might need to find another way to make yourself more visually impressive—something that even Vegeta can't ignore.`);
                 forgetfulnessCounter++;
                 localStorage.setItem('forgetfulnessCounter', forgetfulnessCounter);
-                if (forgetfulnessCounter >= 25) {
+                if (forgetfulnessCounter >= 15) {
                     unlockAchievement('Delusion Causes Forgetfulness');
                 }
                 return;
@@ -1971,7 +1971,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
         }
 
         if (name === 'Puppy Love') {
-            showMessageModal('Sadly', "This marks the end of v0.905. Hope you enjoyed the Power Saga and are excited for the next content! Your feedback and ideas are what help shape the future of the game. Be active on Discord, share your experiences, and let's create something epic together. The best is yet to come, and we can't wait to keep building this adventure with you!");
+            showMessageModal('Sadly', "This marks the end of v0.906b. Hope you enjoyed the Power Saga and are excited for the next content! Your feedback and ideas are what help shape the future of the game. Be active on Discord, share your experiences, and let's create something epic together. The best is yet to come, and we can't wait to keep building this adventure with you!");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one
@@ -2574,6 +2574,26 @@ function devIncreasePrestigeMultiplier() {
     updateDisplay();
 }
 
+let resourceGenerationInterval;
+let isDevGameLoop = false;  // Track whether the dev option is enabled
+function toggleDevMode(intervalTime) {
+    isDevGameLoop = !isDevGameLoop;  // Toggle the dev mode flag
+
+    if (isDevGameLoop) {
+        // Set the interval to 50ms in dev mode
+        clearInterval(resourceGenerationInterval);
+        // Set a new interval with the given time
+        resourceGenerationInterval = setInterval(generateResources, intervalTime);
+        console.log(`Dev mode enabled: Interval set to ${intervalTime}ms.`);
+    } else {
+        // Reset the interval back to 500ms when dev mode is off
+        clearInterval(resourceGenerationInterval);
+        // Set a new interval with the given time
+        resourceGenerationInterval = setInterval(generateResources, 500);
+        console.log("Dev mode disabled: Interval reset to 500ms.");
+    }
+}
+
 // Define the hotkey handler function
 function hotkeyHandler(event) {
     if (event.shiftKey && event.altKey) {
@@ -2586,6 +2606,12 @@ function hotkeyHandler(event) {
                 break;
             case '#':
                 toggleDevMultiplier(1000);
+                break;
+            case '$':
+                toggleDevMode(50);
+                break;
+            case '%':
+                toggleDevMode(5);
                 break;
             case 'A':
                 devAscend();
@@ -2874,7 +2900,7 @@ document.querySelectorAll('.resource-value').forEach(function (element) {
 
             const rect = element.getBoundingClientRect();
             tooltipContainer.style.position = 'absolute';
-            tooltipContainer.style.top = `${rect.bottom + window.scrollY + 10}px`;  // Add a slight margin below
+            tooltipContainer.style.top = `${rect.bottom + window.scrollY + 28}px`;  // Add a slight margin below
             tooltipContainer.style.left = `${rect.left + (rect.width / 2)}px`;
             tooltipContainer.style.transform = 'translateX(-50%)';  // Center the tooltip
         }
@@ -2887,7 +2913,16 @@ document.querySelectorAll('.resource-value').forEach(function (element) {
             tooltipContainer = null;  // Set to null to allow recreation on next hover
         }
     });
+
+    // For mobile: Hide tooltip when tapping elsewhere on the screen
+    document.addEventListener('touchstart', function (e) {
+        if (tooltipContainer) {
+            tooltipContainer.remove();
+            tooltipContainer = null;  // Remove and allow recreation on next hover
+        }
+    });
 });
+
 
 
 
@@ -3109,7 +3144,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Unlock mini-games based on the current game state
     unlockMiniGames(); 
     // Set an interval to generate resources every second
-    setInterval(generateResources, 500);
+    resourceGenerationInterval = setInterval(generateResources, 500);
     // Update the list of available upgrades
     updateUpgradeList();
     // Update the display with the current game state

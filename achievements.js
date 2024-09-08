@@ -80,7 +80,7 @@ const achievements = [
     {
         name: 'Get Rick Rolled',
         isUnlocked: false,
-        hoverText: 'try to finish the game',
+        hoverText: 'try to finish the game way too early',
         img: 'imgs/achievements/rick_roll.jpg',
     },
     {
