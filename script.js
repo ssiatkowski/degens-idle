@@ -1970,8 +1970,8 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
             localStorage.setItem('messageShownUpgrades', JSON.stringify(messageShownUpgrades));
         }
 
-        if (name === 'Puppy Love') {
-            showMessageModal('Sadly', "This marks the end of v0.906b. Hope you enjoyed the Power Saga and are excited for the next content! Your feedback and ideas are what help shape the future of the game. Be active on Discord, share your experiences, and let's create something epic together. The best is yet to come, and we can't wait to keep building this adventure with you!");
+        if (name === 'Love Shop') {
+            showMessageModal('Sadly', "This marks the end of v0.907. Hope you enjoyed the Power Saga and are excited for the next content! Your feedback and ideas are what help shape the future of the game. Be active on Discord, share your experiences, and let's create something epic together. The best is yet to come, and we can't wait to keep building this adventure with you!");
         }
 
         // Apply a mini prestige multiplier if the upgrade has one
