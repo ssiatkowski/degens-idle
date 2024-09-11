@@ -30,7 +30,7 @@
 
 .lovehall-overlay-content h1,
 .lovehall-overlay-content h4 {
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(0, 0, 0, 0.7);
     color: #ff66b2;
     padding: 10px;
     font-size: 18px;
@@ -59,7 +59,7 @@
     flex-direction: column; /* Stack skill pairs vertically within the column */
     width: 30%; /* Set each column to take up 30% of the width */
     padding: 10px;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black */
     border: 8px solid #444;
     margin: 0 10px;
     border-radius: 10px;

@@ -1,40 +1,40 @@
 
 const loveHallSkills = [
-    // 10x Level
+    // 2.828x Level - Bell's Inequality for quantum entangled particle correlation
     { name: 'Delusion Echo', cost: 0.25, description: '5x Delusion gain.', unlocked: false, level: '10x Level', pair: 1 },
     { name: 'Copium Surge', cost: 0.25, description: '5x Copium gain.', unlocked: false, level: '10x Level', pair: 1 },
 
     { name: '???', cost: 1, description: '???', unlocked: false, level: '10x Level', pair: 2 },
     { name: 'Cosmic Embrace', cost: 1, description: 'Gain +1 Love Point every embrace.', unlocked: false, level: '10x Level', pair: 2 },
 
-    { name: 'Serenity Flow', cost: 60, description: 'Hopium gain is multiplied by square root of Serenity.', unlocked: false, level: '10x Level', pair: 3 },
-    { name: 'Serene Boost', cost: 60, description: '2x Serenity gain.', unlocked: false, level: '10x Level', pair: 3 },
+    { name: 'Serenity Flow', cost: 5, description: 'Hopium gain is multiplied by square root of Serenity.', unlocked: false, level: '10x Level', pair: 3 },
+    { name: 'Serene Boost', cost: 5, description: '2x Serenity gain.', unlocked: false, level: '10x Level', pair: 3 },
 
-    { name: 'Power Infusion', cost: 250, description: '2x Power gain.', unlocked: false, level: '10x Level', pair: 4 },
-    { name: 'Love Surge', cost: 250, description: 'Gain +2 Love Points every embrace.', unlocked: false, level: '10x Level', pair: 4 },
+    { name: 'Power Infusion', cost: 15, description: '2x Power gain.', unlocked: false, level: '10x Level', pair: 4 },
+    { name: 'Love Surge', cost: 15, description: 'Gain +2 Love Points every embrace.', unlocked: false, level: '10x Level', pair: 4 },
 
 
     //25x gm, 25x pugm
 
-    // 20x Level
-    { name: 'Knowledge Infusion', cost: 1, description: '8x Knowledge gain.', unlocked: false, level: '100x Level', pair: 21 },
-    { name: 'Resource Boost', cost: 1, description: '8x gain to first 4 resources.', unlocked: false, level: '100x Level', pair: 21 },
+    // 27x Level - dimensions in string theory
+    { name: 'Knowledge Infusion', cost: 0.25, description: '8x Knowledge gain.', unlocked: false, level: '100x Level', pair: 21 },
+    { name: 'Resource Boost', cost: 0.25, description: '8x gain to first 4 resources.', unlocked: false, level: '100x Level', pair: 21 },
 
-    { name: 'Hall of Knowledge Auto-Buy', cost: 10, description: 'Automatically buy upgrades from the Hall of Knowledge.', unlocked: false, level: '100x Level', pair: 22 },
-    { name: 'Hall of Power Auto-Buy', cost: 10, description: 'Automatically buy upgrades from the Hall of Power.', unlocked: false, level: '100x Level', pair: 22 },
+    { name: 'Hall of Knowledge Auto-Buy', cost: 1, description: 'Automatically buy upgrades from the Hall of Knowledge.', unlocked: false, level: '100x Level', pair: 22 },
+    { name: 'Hall of Power Auto-Buy', cost: 1, description: 'Automatically buy upgrades from the Hall of Power.', unlocked: false, level: '100x Level', pair: 22 },
 
-    { name: 'Auto Fight', cost: 40, description: 'Spare opponents how are far weaker than you and auto unlock the upgrades.', unlocked: false, level: '100x Level', pair: 23 },
-    { name: 'Hopium Fix', cost: 40, description: 'Fix Hopium in the same way Delusion is fixed.', unlocked: false, level: '100x Level', pair: 23 },
+    { name: 'Auto Fight', cost: 5, description: 'Spare opponents how are far weaker than you and auto unlock the upgrades.', unlocked: false, level: '100x Level', pair: 23 },
+    { name: 'Hopium Fix', cost: 5, description: 'Fix Hopium in the same way Delusion is fixed.', unlocked: false, level: '100x Level', pair: 23 },
 
-    // 30x Level
-    { name: 'Hopium Trade', cost: 9, description: 'Trade Hopium for any of the first 4 resources at a 1:1 ratio.', unlocked: false, level: '1000x Level', pair: 31 },
-    { name: 'Auto Prestige', cost: 9, description: 'Automatically apply Prestige Mult without resetting.', unlocked: false, level: '1000x Level', pair: 31 },
+    // 42x Level - the meaning of life
+    { name: 'Hopium Trade', cost: 3, description: 'Trade Hopium for any of the first 4 resources at a 1:1 ratio.', unlocked: false, level: '1000x Level', pair: 31 },
+    { name: 'Auto Prestige', cost: 3, description: 'Automatically apply Prestige Mult without resetting.', unlocked: false, level: '1000x Level', pair: 31 },
 
-    { name: 'Serenity Multiplier', cost: 50, description: 'Multiply Serenity by log10 of Love Points.', unlocked: false, level: '1000x Level', pair: 32 },
-    { name: 'Auto Hopium Trade', cost: 50, description: 'Automatically trade Hopium for any resource that is lacking.', unlocked: false, level: '1000x Level', pair: 32 },
+    { name: 'Serenity Multiplier', cost: 8, description: 'Multiply Serenity by log10 of Love Points.', unlocked: false, level: '1000x Level', pair: 32 },
+    { name: 'Auto Hopium Trade', cost: 8, description: 'Automatically trade Hopium for any resource that is lacking.', unlocked: false, level: '1000x Level', pair: 32 },
 
-    { name: 'Knowledge Exchange', cost: 300, description: 'Trade Hopium for Knowledge at a 1e20:1 ratio.', unlocked: false, level: '1000x Level', pair: 33 },
-    { name: 'Big Crunch Factor Boost', cost: 300, description: 'Increase Big Crunch factor from 2 to 2.1.', unlocked: false, level: '1000x Level', pair: 33 }
+    { name: 'Knowledge Exchange', cost: 25, description: 'Trade Hopium for Knowledge at a 1e20:1 ratio.', unlocked: false, level: '1000x Level', pair: 33 },
+    { name: 'Big Crunch Factor Boost', cost: 25, description: 'Increase Big Crunch factor from 2 to 2.1.', unlocked: false, level: '1000x Level', pair: 33 }
 ];
 
 
