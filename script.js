@@ -17,6 +17,8 @@ let powerPerSecond = 0;
 let serenity = 0;
 let serenityPerSecond = 0;
 
+let lovePoints = 0;
+
 let numUnlockedAchievements = 0;
 let achievementMultiplier = 1;
 
@@ -76,6 +78,7 @@ let lessDiminishingPUGodModeSkill = false;
 let perfectGodModeSkill = false;
 
 let serenityUnlocked = false;
+let loveHallUnlocked = false;
 
 let compressedBigCrunchMult = 1;
 
@@ -114,6 +117,7 @@ let nebulaOverdriveSkill = false;
 let stellarHarvestSkill = false;
 let celestialCollectorSkill = false;
 let stellarHarvestMult = 1;
+let stellarCookieSkill = false;
 
 let currentTimeouts = [];  // Array to store all active timeout IDs
 let cookieIntervalId;
@@ -280,6 +284,8 @@ function loadGameState() {
     serenity = parseFloat(localStorage.getItem('serenity')) || 0;
     serenityPerSecond = parseFloat(localStorage.getItem('serenityPerSecond')) || 0;
 
+    lovePoints = parseFloat(localStorage.getItem('lovePoints')) || 0;
+
     // Retrieve and parse the prestige values from local storage, defaulting to 0 or 1 if not found
     prestiges = parseInt(localStorage.getItem('prestiges')) || 0;
     epsMultiplier = parseFloat(localStorage.getItem('epsMultiplier')) || 1;
@@ -317,6 +323,10 @@ function loadGameState() {
     lastClickedBoxIndex = parseInt(localStorage.getItem('lastClickedBoxIndex')) || 0;
 
     serenityUnlocked = JSON.parse(localStorage.getItem('serenityUnlocked')) || false;
+    document.getElementById('serenity-container').style.display = serenityUnlocked ? 'block' : 'none';
+
+    loveHallUnlocked = JSON.parse(localStorage.getItem('loveHallUnlocked')) || false;
+    document.getElementById('loveHallButton').style.display = loveHallUnlocked ? 'flex' : 'none';
     
     // Retrieve and parse all upgrades with the isGodMode property from local storage
     const savedUpgrades = JSON.parse(localStorage.getItem('upgrades')) || [];
@@ -348,7 +358,7 @@ function loadGameState() {
     // Reapply the purchased upgrades and handle any special cases (e.g., "Cookie Clicker")
     purchasedUpgrades.forEach(upgrade => {
         if (upgrade) {
-            addPurchasedUpgrade(upgrade.img, upgrade.name, upgrade.earnings, upgrade.isGodMode, upgrade.isPUGodMode, upgrade.message, upgrade.isFight);
+            addPurchasedUpgrade(upgrade.img, upgrade.name, upgrade.earnings, upgrade.isGodMode, upgrade.isPUGodMode, upgrade.message, upgrade.isFight, upgrade.isMeditation);
             if (upgrade.name === "Cookie Clicker") {
                 document.getElementById('cookieButton').style.display = 'block';
             }
@@ -406,6 +416,10 @@ function loadGameState() {
     }
     
 
+    // load the state of the createBackupOnImportCheckbox and set the checkbox per the value
+    const createBackupOnImportCheckbox = document.getElementById('createBackupOnImportCheckbox');
+    createBackupOnImportCheckbox.checked = JSON.parse(localStorage.getItem('createBackupOnImportCheckbox')) || false;
+
     // Check the state of delusion and update the switch position accordingly
     const toggleDelusion = document.getElementById('toggleDelusion');
     if (delusionPerSecond >= 0) {
@@ -460,6 +474,8 @@ function saveGameState() {
     localStorage.setItem('powerPerSecond', powerPerSecond);
     localStorage.setItem('serenity', serenity);
     localStorage.setItem('serenityPerSecond', serenityPerSecond);
+
+    localStorage.setItem('lovePoints', lovePoints);
     
     // Save the prestige values to local storage
     localStorage.setItem('prestiges', prestiges);
@@ -498,7 +514,6 @@ function saveGameState() {
     localStorage.setItem('autoPrestigeThreshold', autoPrestigeThreshold);
     localStorage.setItem('autoAscendThreshold', autoAscendThreshold);
     localStorage.setItem('autoTranscendThreshold', autoTranscendThreshold);
-    
 
     localStorage.setItem('deadpoolRevives', deadpoolRevives);
     
@@ -531,6 +546,10 @@ function saveGameState() {
         const switchState = document.getElementById(`toggle-${upgrade.name}`).checked;
         localStorage.setItem(`switchState-${upgrade.name}`, JSON.stringify(switchState));
     });
+
+    //save the state of createBackupOnImportCheckbox checkbox
+    localStorage.setItem('createBackupOnImportCheckbox', document.getElementById('createBackupOnImportCheckbox').checked)
+
 }
 
 
@@ -728,6 +747,8 @@ async function restartGame(isPrestige = false, forceRestart = false) {
         serenity = 0;
         serenityPerSecond = 0;
 
+        lovePoints = 0;
+
         // Reset ascends and multipliers if it's a full restart
         if (!isPrestige) {
             prestiges = 0;
@@ -812,6 +833,7 @@ async function restartGame(isPrestige = false, forceRestart = false) {
             astralEdgeSkill = false;
             mysticReboundSkill = false;
             quantumBastionSkill = false;
+            stellarCookieSkill = false;
 
             stellarHarvestMult = 1;
 
@@ -832,6 +854,9 @@ async function restartGame(isPrestige = false, forceRestart = false) {
             
             serenityUnlocked = false;
             document.getElementById('serenity-container').style.display = 'none';
+            loveHallUnlocked = false;
+            document.getElementById('loveHallButton').style.display = 'none';
+            
 
             document.getElementById('pu-god-display').style.display = 'none';
             document.getElementById('big-crunch-display').style.display = 'none';
@@ -872,13 +897,18 @@ async function restartGame(isPrestige = false, forceRestart = false) {
             cookieIntervalId = setInterval(() => {
                 cookieCollectAllResources();
             }, 100); // 100 milliseconds = 0.1 seconds
+
+            const thisCookieIntervalId = cookieIntervalId;
         
             // Stop the interval after 15 seconds
             const timeoutId = setTimeout(() => {
-                clearInterval(cookieIntervalId);
+                if (thisCookieIntervalId === cookieIntervalId) {
+                    clearInterval(thisCookieIntervalId);
         
-                // Remove the spinning class to stop the animation
-                cookieButton.classList.remove('spinning');
+                    // Remove the spinning class to stop the animation
+                    cookieButton.classList.remove('spinning');
+                }
+
             }, 15000); // 15000 milliseconds = 15 seconds
 
             currentTimeouts.push(timeoutId);
@@ -1354,6 +1384,12 @@ function unlockHallofPower() {
     document.getElementById('powerHallButton').style.display = 'flex';
 }
 
+function unlockHallofLove() {
+    unlockAchievement('Love Shop');
+    document.getElementById('loveHallButton').style.display = 'flex';
+    loveHallUnlocked = true;
+    localStorage.setItem('loveHallUnlocked', 'true');
+}
 
 // Function to calculate the prestige multiplier based on the lowest of the first four resources
 function calculatePrestigeMultiplier() {
@@ -1431,7 +1467,7 @@ function updatePrestigeButton() {
         prestigeButton.textContent = `PRESTIGE (x${formatNumber(newMultiplier / epsMultiplier)} MULT)`;
         prestigeButton.style.display = 'block';
         // Check if auto-prestige should be triggered
-        if (autoPrestigeThreshold !== null && (newMultiplier / epsMultiplier) > autoPrestigeThreshold && !isFightInProgress) {
+        if (autoPrestigeThreshold !== null && (newMultiplier / epsMultiplier) > autoPrestigeThreshold && !isEventInProgress) {
             showPopupTooltip(`Auto-Prestiged for x${formatNumber(newMultiplier / epsMultiplier)}`, color='#DAA520')
             prestige(true); // Trigger auto-prestige
         }
@@ -1681,7 +1717,7 @@ function updateAscendButton() {
         ascendButton.style.display = 'block';
         // Check if autoAscendThreshold is set and not null
 
-        if (autoAscendThreshold !== null && autoAscendThreshold !== 0 && !isFightInProgress) {
+        if (autoAscendThreshold !== null && autoAscendThreshold !== 0 && !isEventInProgress) {
             // Count the number of purchased upgrades that do not have isGodMode
             const nonGodModeUpgrades = purchasedUpgrades.filter(upgrade => !upgrade.isGodMode).length;
 
@@ -1719,7 +1755,7 @@ function updateTranscendButton() {
         transcendButton.style.display = 'block';
 
         // Check if autoTranscendThreshold is set and not null
-        if (autoTranscendThreshold !== null && autoTranscendThreshold !== 0 && !isFightInProgress) {
+        if (autoTranscendThreshold !== null && autoTranscendThreshold !== 0 && !isEventInProgress) {
             // Count the number of purchased upgrades that do not have isPUGodMode
             const nonPUGodModeUpgrades = purchasedUpgrades.filter(upgrade => !upgrade.isPUGodMode).length;
 
@@ -1840,13 +1876,13 @@ function decodeName(encodedName) {
     return decodeURIComponent(encodedName);
 }
 
-let isFightInProgress = false; // Flag to prevent multiple fight triggers
+let isEventInProgress = false; // Flag to prevent multiple fight triggers
 let forgetfulnessCounter = 0;
 
 // Function to handle the purchase of an upgrade
 async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
     // If a fight is in progress, don't allow buying another upgrade
-    if (isFightInProgress) return;
+    if (isEventInProgress) return;
 
     // Decode the upgrade name
     const upgradeName = decodeName(encodedUpgradeName);
@@ -1861,7 +1897,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
     }
 
     // Destructure the upgrade object to get its properties
-    const { cost, earnings, img, name, message, miniPrestigeMultiplier, isFight } = upgrade;
+    const { cost, earnings, img, name, message, miniPrestigeMultiplier, isFight, isMeditation } = upgrade;
 
     // Check if the player has enough resources to purchase the upgrade
     if (isAffordable(cost)) {
@@ -1872,7 +1908,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
         trollPoints -= cost.trollPoints || 0;
         hopium -= cost.hopium || 0;
         knowledge -= cost.knowledge || 0;
-        power = (nebulaOverdriveSkill && !isFight) ? power : power - cost.power || 0;
+        power = (nebulaOverdriveSkill && !isFight && !isMeditation) ? power : power - cost.power || 0;
         serenity -= cost.serenity || 0;
 
         // Special case for the "Antimatter Dimension" upgrade
@@ -1888,10 +1924,10 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
                 return;
             }
 
-            isFightInProgress = true; // Set the flag to prevent multiple fight triggers
+            isEventInProgress = true; // Set the flag to prevent multiple fight triggers
 
             const fightResult = await startFightGame(name, img);
-            isFightInProgress = false; // Reset the flag after the fight ends
+            isEventInProgress = false; // Reset the flag after the fight ends
 
             if (!fightResult) {
                 showMessageModal('You Lost', `Defeat isn’t the end, ${name} just tested your limits. Get back up and come back stronger!`);
@@ -1900,6 +1936,21 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
                 return;
             }
         }
+
+            // Special case for the "Antimatter Dimension" upgrade
+            if (isMeditation) {
+
+                isEventInProgress = true; // Set the flag to prevent multiple fight triggers
+    
+                const meditationResult = await startMeditationGame(name, img);
+                isEventInProgress = false; // Reset the flag after the fight ends
+    
+                if (!meditationResult) {
+                    showMessageModal('You Lost', `Meditating on ${name} proved too challenging, and your concentration slipped. But deeper focus is within your grasp—return when your mind is at peace, and you'll surely overcome this challenge.`);
+                    saveGameState();
+                    return;
+                }
+            }
 
         // Increase the per second earnings for each resource, apply God Mode multiplier if applicable
         const multiplier = (upgrade.isGodMode && upgrade.isPUGodMode) ? 100 :
@@ -1923,7 +1974,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
         }
 
         // Add the purchased upgrade to the display
-        addPurchasedUpgrade(img, name, earnings, upgrade.isGodMode, upgrade.isPUGodMode, upgrade.message, upgrade.isFight);
+        addPurchasedUpgrade(img, name, earnings, upgrade.isGodMode, upgrade.isPUGodMode, upgrade.message, upgrade.isFight, upgrade.isMeditation);
         // Remove the upgrade from the available upgrades list
         availableUpgrades.splice(availableUpgrades.indexOf(upgrade), 1);
         // Add the upgrade to the purchased upgrades list
@@ -1950,6 +2001,11 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
         }
 
         if (name == "Cosmic Drought") {
+            if (stellarCookieSkill) {
+                clearInterval(cookieIntervalId)
+                document.getElementById('cookieButton');
+                cookieButton.classList.remove('spinning');
+            }
             stellarHarvestMult = 1;
             updateStellarHarvestDisplay();
             unlockAchievement('Cosmic Drought');
@@ -1970,9 +2026,9 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
             localStorage.setItem('messageShownUpgrades', JSON.stringify(messageShownUpgrades));
         }
 
-        if (name === 'Love Shop') {
-            showMessageModal('Sadly', "This marks the end of v0.907. Hope you enjoyed the Power Saga and are excited for the next content! Your feedback and ideas are what help shape the future of the game. Be active on Discord, share your experiences, and let's create something epic together. The best is yet to come, and we can't wait to keep building this adventure with you!");
-        }
+        if (name === 'Attack The Day') {
+            showMessageModal('Sadly', "This marks the end of v0.91. Hope you enjoyed the Power Saga! Congratulations on your first successful meditation – hopefully, you're excited for what this new mechanic will unlock. There's no way to get Love Points just yet, and the Love Hall skills aren't implemented, but feel free to preview them as much as you like. The journey is only beginning, and feedback will continue shaping the future of this game. Stay active on Discord, share your thoughts, and together, something truly epic can be created!");
+        }        
 
         // Apply a mini prestige multiplier if the upgrade has one
         if (miniPrestigeMultiplier) {
@@ -2017,6 +2073,10 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
             } else if (name == `Perfection doesn't exi...`){
                 unhideSerenity();
                 unlockAchievement('Serenity');
+            } else if (name == 'Love Shop'){
+                unlockHallofLove();
+            } else if (name == 'Training Dummy' && crunchTimer < 15.1){
+                unlockAchievement('Eager to Train');
             }
 
             // Update the upgrade list and display
@@ -2128,7 +2188,7 @@ const devCheatSequence = [
 // Track the current sequence
 let currentCheatSequence = [];
 
-function addPurchasedUpgrade(img, name, earnings, isGodMode = false, isPUGodMode = false, message = null, isFight = false) {
+function addPurchasedUpgrade(img, name, earnings, isGodMode = false, isPUGodMode = false, message = null, isFight = false, isMeditation = false) {
     const purchasedList = document.getElementById('purchasedList');
     const upgradeElement = document.createElement('div');
     upgradeElement.classList.add('purchased-upgrade');
@@ -2168,7 +2228,7 @@ function addPurchasedUpgrade(img, name, earnings, isGodMode = false, isPUGodMode
 
     const toggleSwitch = document.getElementById(`toggle-${name}`);
 
-    if (toggleSwitch && !isFight) { // Only add event listeners if it's not a fight upgrade
+    if (toggleSwitch && !isFight && !isMeditation) { // Only add event listeners if it's not a fight upgrade
         toggleSwitch.addEventListener('click', (event) => {
             event.stopPropagation();
         });
@@ -2230,7 +2290,7 @@ function addPurchasedUpgrade(img, name, earnings, isGodMode = false, isPUGodMode
         });
     }
 
-    if (buyMarkersSkill && !isFight) {
+    if (buyMarkersSkill && !isFight && !isMeditation) {
         const savedSwitchState = JSON.parse(localStorage.getItem(`switchState-${name}`)) || false;
         if (toggleSwitch) {
             toggleSwitch.checked = savedSwitchState;
@@ -2246,10 +2306,6 @@ function addPurchasedUpgrade(img, name, earnings, isGodMode = false, isPUGodMode
 
 
 
-
-
-
-
 function enableAllBuyMarkers(firstUnlock=false) {
 
     purchasedUpgrades.forEach(upgrade => {
@@ -2259,7 +2315,7 @@ function enableAllBuyMarkers(firstUnlock=false) {
         let savedSwitchState = true;
         if (!firstUnlock) { savedSwitchState = JSON.parse(localStorage.getItem(`switchState-${name}`)) || false;}
         const toggleSwitch = document.getElementById(`toggle-${name}`);
-        if (toggleSwitch && !upgrade.isFight) {
+        if (toggleSwitch && !upgrade.isFight && !upgrade.isMeditation) {
             toggleSwitch.checked = savedSwitchState;
             toggleSwitch.parentElement.style.display = 'block'; // Make the switch visible
 
@@ -2293,7 +2349,7 @@ function isAffordable(cost) {
 
 function autobuyUpgrades(){
     
-    if(isFightInProgress) return;
+    if(isEventInProgress) return;
 
     let topUpgrades = availableUpgrades.slice(0, 10);
 
@@ -2317,7 +2373,7 @@ function autobuyUpgrades(){
 
 
 // List of upgrades that should trigger truncation
-const keyUpgrades = ['The Finale', 'Agent Smith', 'Shao Kahn', 'Darth Vader', 'Isshin', 'Sauron','Kratos','The Rock','Deadpool','Chuck Norris', 'Vegeta', 'Kaguya','Saitama'];
+const keyUpgrades = ['The Finale', 'Agent Smith', 'Shao Kahn', 'Darth Vader', 'Isshin', 'Sauron','Kratos','The Rock','Deadpool','Chuck Norris', 'Vegeta', 'Kaguya','Saitama',`Meditation`,`Yin and Yang`];
 
 // Function to update the upgrade list display
 function updateUpgradeList() {

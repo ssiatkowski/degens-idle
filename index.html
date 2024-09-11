@@ -43,13 +43,15 @@
             "datePublished": "2024-08-20"
         }
         </script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/localforage/1.9.0/localforage.min.js"></script> -->
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="library.css">    
     <link rel="stylesheet" href="powerhall.css">    
+    <link rel="stylesheet" href="lovehall.css">    
     <link rel="stylesheet" href="settings.css">
     <link rel="stylesheet" href="fighting.css">
+    <link rel="stylesheet" href="meditation.css">
     <link rel="stylesheet" href="achievements.css">
-    <link href="https://fonts.googleapis.com/css2?family=Uncial+Antiqua&display=swap" rel="stylesheet"> <!-- Google Font -->
 </head>
 <body>
     <div id="messageModal" class="modal">
@@ -174,7 +176,8 @@
             <button id="bigCrunchButton" style="display:none;" class="custom-button">Big Crunch</button>
             <p class="big-crunch-text" id="big-crunch-display" style="display:none;">Big Crunch Power 1e-7 (x1.00 mult)</p>
             <button id="libraryButton">Hall of Knowledge</button>
-            <button id="powerHallButton" style="display:none;">Hall of Power</button>        
+            <button id="powerHallButton" style="display:none;">Hall of Power</button>     
+            <button id="loveHallButton" style="display:none;">Hall of Love</button>         
         </div>
         <div id="upgrades">
             <h2>Upgrades</h2>
@@ -276,6 +279,51 @@
         <!-- Forfeit Button -->
         <button id="forfeitButton" class="forfeit-button">Forfeit</button>
     </div>
+    <div id="meditationOverlay" class="meditation-overlay" style="display: none;">
+        <div id="meditationWrapper" class="meditation-wrapper">
+            <div class="meditation-overlay-content">
+                <!-- Meditation Arena -->
+                <div class="meditation-arena">
+                    <div id="arena" class="arena"></div>
+                </div>
+    
+                <!-- Meditation Info Section -->
+                <div class="meditation-info">
+                    <h2 id="meditationChallengeName">Meditation Challenge: Yin and Yang</h2>
+                </div>
+    
+                <!-- Updated Meditation Stats Section -->
+                <div id="meditationStats" class="meditation-info">
+                    <div class="stat-row">
+                        <p>Time: <span id="meditationTimer" class="stat-value"></span></p>
+                        <p>Lives: <span id="meditationLives" class="stat-value"></span></p>
+                    </div>
+                    <div class="stat-row">
+                        <p># of Balls: <span id="meditationBallCount" class="stat-value"></span></p>
+                        <p>Ball Size: <span id="meditationBallSize" class="stat-value"></span></p>
+                    </div>
+                    <div class="stat-row">
+                        <p>Arena Size: <span id="meditationArenaSize" class="stat-value"></span></p>
+                        <p>Velocity: <span id="meditationVelocity" class="stat-value"></span></p>
+                    </div>
+                    <div class="stat-row">
+                        <p>Turn Radius: <span id="meditationTurnRadius" class="stat-value"></span>&deg;</p>
+                        <p>Gravity: <span id="meditationGravity" class="stat-value"></span></p>
+                    </div>
+                    <div class="stat-row">
+                        <p>Respawn Time: <span id="meditationRespawnTime" class="stat-value"></span>s</p>
+                        <p>Wind: <span id="meditationWind" class="stat-value"></span></p>
+                    </div>
+                </div>
+                
+    
+                <!-- Stop Meditation Button -->
+                <button id="meditationStopButton" class="meditation-stop-button">Stop Meditation</button>
+            </div>
+        </div>
+    </div>
+    
+      
     <!-- Include the Library overlay HTML -->
     <div id="libraryOverlay" class="library-overlay" style="display: none;">
         <div class="library-overlay-content">
@@ -299,17 +347,34 @@
             <button id="closePowerHallButton">Exit</button>
         </div>
     </div>
+    <div id="loveHallOverlay" class="lovehall-overlay" style="display: none;">
+        <div class="lovehall-overlay-content">
+            <span class="close-button" id="closeLoveHallOverlay">&times;</span>
+            <h1>HALL OF LOVE</h1>
+            <h4>Welcome to the Hall of Love, where you have found that love and serenity are the keys to life’s true balance. As you continue to grow in love, you discover that harmony is the foundation of all things. The skills here are purchased using love points, which you acquire each time you perform an Infinite Embrace. These skills are entangled forces within three pillars of balance. For every skill you purchase, its entangled counterpart becomes more costly, reinforcing the delicate equilibrium between growth and sacrifice. In the first pillar, this increase is tenfold, in the second, one hundredfold, and in the third, one thousandfold. Choose wisely, for balance is the ultimate lesson of love.</h4>
+            <!-- More visible Love Points display -->
+            <div id="lovePointsDisplay">
+                Love Points: 0
+            </div>
+
+            <div id="loveHallSkills">
+                <!-- Skills will be dynamically added here -->
+            </div>
+
+            <button id="closeLoveHallButton">Exit</button>
+        </div>
+    </div>    
     <!-- Settings Overlay -->
     <div id="settingsOverlay" class="settings-overlay" style="display: none;">
         <div class="settings-overlay-content">
             <span class="close-button" id="closeSettingsOverlay">&times;</span>
             <h1>Settings</h1>
-            <h4>Degens Idle v0.907</h4>
+            <h4>Degens Idle v0.91</h4>
             
             <div class="settings-section">
                 <h3>Save Management</h3>
                 <p>
-                    Exporting your game will save a file to your Downloads folder. When importing, a backup of your current save will also be saved to your Downloads folder before loading the chosen file.
+                    Exporting your game will save a file to your Downloads folder. (Currently does not work on mobile)
                 </p>
                 <div class="settings-buttons">
                     <button id="exportSaveButton">
@@ -319,7 +384,13 @@
                         <img src="imgs/textures/upload.png" alt="Upload Icon"> Import Save
                     </button>
                 </div>
+                <!-- New checkbox for 'Create Save Backup on Import' -->
+                <div class="settings-checkbox">
+                    <input type="checkbox" id="createBackupOnImportCheckbox" name="createBackupOnImport">
+                    <label for="createBackupOnImport">Create Save Backup on Import</label>
+                </div>
             </div>
+            
             
             <div class="settings-section">
                 <h3>Gameplay Options</h3>
@@ -405,8 +476,10 @@
     <script src="script.js"></script>
     <script src="library.js"></script>
     <script src="powerhall.js"></script>
+    <script src="lovehall.js"></script>
     <script src="settings.js"></script>
     <script src="fighting.js"></script>
+    <script src="meditation.js"></script>
     <script src="minigames.js"></script>
     <script src="achievements.js"></script>
 </body>

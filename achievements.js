@@ -312,10 +312,10 @@ const achievements = [
         img: 'imgs/achievements/skipping_grades.jpg',
     },
     {
-        name: 'Does Not Exist 51',
+        name: 'Eager to Train',
         isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
+        hoverText: 'defeat Training Dummy in less than 15 seconds',
+        img: 'imgs/achievements/training_hard.jpg',
     },
     {
         name: 'Nebula Overdrive',
@@ -446,20 +446,20 @@ const achievements = [
     {
         name: 'Serenity',
         isUnlocked: false,
-        hoverText: 'unlock the 8th resource',
+        hoverText: 'discover the 8th resource',
         img: 'imgs/achievements/serenity.jpg',
     },
     {
-        name: 'Does Not Exist 76',
+        name: 'Love Shop',
         isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
+        hoverText: 'unlock the Hall of Love',
+        img: 'imgs/achievements/love_shop.jpg',
     },
     {
-        name: 'Does Not Exist 77',
+        name: 'Focus Your Mind',
         isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
+        hoverText: 'succeed your first meditation',
+        img: 'imgs/achievements/yin_yang.jpg',
     },
     {
         name: 'Does Not Exist 78',

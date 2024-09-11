@@ -26,6 +26,7 @@ const powerHallSkills = [
     { name: 'Celestial Collector', cost: 7e10, description: `Stellar Harvest buff is extended to 50% power and lasts for 10 minutes.`, unlocked: false, level: 'Celestial Manipulation' },
 
     { name: 'Nebula Overdrive', cost: 7e5, description: `Purchasing non-boss upgrades no longer consumes power. Power cost still applies.`, unlocked: false, level: 'Nebular Command' },
+    { name: 'Stellar Cookie', cost: 5e12, description: `Auto click the cookie 10 times per second for 15 seconds while Stellar Harvest is active.`, unlocked: false, level: 'Nebular Command'},
 
 ];
 
@@ -142,6 +143,11 @@ function unlockPowerHallSkill(skill, duringLoad = false) {
                 unlockAchievement('Nebula Overdrive');
                 nebulaOverdriveSkill = true;
                 break;
+
+            case 'Stellar Cookie':
+                stellarCookieSkill = true;
+                break;
+                
 
             default:
                 console.warn(`No handler for skill: ${skill.name}`);

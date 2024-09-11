@@ -472,7 +472,7 @@ const upgrades = [
     {
         name: `Why Memes Though?`,
         cost: { copium: 1e16, delusion: 0, yachtMoney: 1e15, trollPoints: 0, hopium: 0, knowledge: 20000, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 5e6, delusionPerSecond: 3e6, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 3, knowledgePerSecond: 0.00005, powerPerSecond: 0, serenityPerSecond: 0 },   
+        earnings: { copiumPerSecond: 5e6, delusionPerSecond: 4e6, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 3, knowledgePerSecond: 0.00005, powerPerSecond: 0, serenityPerSecond: 0 },   
         img: `imgs/why_memes.jpg`,
         message: `<p>The internet is more than just a tool—it’s a pivotal stepping stone in our evolution and technological advancement. It’s where ideas are born, shared, and transformed, connecting minds across the globe. At the very core of this vast network lies the humble meme.</p>
                 <p>Memes are the language of the internet, capturing complex ideas, emotions, and cultural moments in bite-sized, shareable formats. They spread faster than any traditional medium, influencing thoughts, trends, and even shaping societal narratives. In many ways, memes are the digital reflection of our collective consciousness.</p>
@@ -508,7 +508,7 @@ const upgrades = [
     {
         name: `Unlimited Power`,
         cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 3.3e-9, serenity: 0 },
-        earnings: { copiumPerSecond: 2.5e6, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1.55e7, hopiumPerSecond: 1.9, knowledgePerSecond: 0.000018, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 2.5e6, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1.55e7, hopiumPerSecond: 2.9, knowledgePerSecond: 0.000028, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/unlimited_power.jpg`,
         message: `<p>As the gears of progress click into place, you feel a surge of energy coursing through your veins. The very essence of the universe seems to hum in harmony with your newfound abilities. "All you know for now is that power is unlocked," echoes a distant voice in your mind, as if whispered by the ancients who have tread this path before you.</p>
                 <p>Gaining power feels good—no, it feels exhilarating. You sense the weight of the world lifting, replaced by a tantalizing promise of untapped potential. This isn't just strength; it's an awakening, a key to doors that were previously hidden in the shadows of your ignorance.</p>
@@ -1294,7 +1294,7 @@ const upgrades = [
     {         
         name: `Perfection doesn't exi...`,
         cost: { copium: 2e96, delusion: 0, yachtMoney: 0, trollPoints: 2e96, hopium: 0, knowledge: 1e71, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 2e42, delusionPerSecond: 0, yachtMoneyPerSecond: 2e42, trollPointsPerSecond: 0, hopiumPerSecond: 2e47, knowledgePerSecond: 2e13, powerPerSecond: 0, serenityPerSecond: 0.0001 },
+        earnings: { copiumPerSecond: 2e42, delusionPerSecond: 0, yachtMoneyPerSecond: 2e42, trollPointsPerSecond: 0, hopiumPerSecond: 2e47, knowledgePerSecond: 2e13, powerPerSecond: 0, serenityPerSecond: 0.00015 },
         img: `imgs/perfection.jpg`,
         message: `<p>And then, you meet her — someone so radiant, so breathtaking, that the very fabric of your reality shifts. Her presence is like nothing you’ve ever encountered, a beauty that transcends anything you've known. It's not just her flawless appearance — the perfect harmony of grace and strength — but something deeper, something that resonates with the very core of who you are.</p>
                 <p>The way she moves, effortless and serene, fills the space with an aura of peace. Her eyes hold entire galaxies, infinite and warm, drawing you into a sense of calm you didn't know you could feel. Every word she speaks feels like a melody, each glance a quiet promise of something greater. She is perfection in form and spirit, radiating a love and understanding that you've long searched for.</p>
@@ -1304,14 +1304,58 @@ const upgrades = [
     {         
         name: `Puppy Love`,
         cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0.025 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 4e42, hopiumPerSecond: 2e47, knowledgePerSecond: 2e13, powerPerSecond: 0, serenityPerSecond: 0.0003 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 4e42, hopiumPerSecond: 2e47, knowledgePerSecond: 2e13, powerPerSecond: 0, serenityPerSecond: 0.0001 },
         img: `imgs/puppy_love.jpg`,
     },
     {         
         name: `Love Shop`,
         cost: { copium: 0, delusion: 0, yachtMoney: 3e96, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0.1 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 2e47, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0.0001 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 2e47, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0.00002 },
         img: `imgs/love_shop.jpg`,
+    },
+    {         
+        name: `Meditation`,
+        cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 1e72, power: 1e19, serenity: 0.1 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 3e13, powerPerSecond: 0, serenityPerSecond: 0.0001 },
+        img: `imgs/meditation.jpg`,
+        message: `<h2>Meditation Unlocked: The Path Beyond the Physical</h2>
+                    <p>After pushing past all physical limits, you’ve discovered that the true answers lie beyond the material world. You have unlocked <strong>Meditation</strong>, a metaphysical realm where the deepest questions can be answered. In this state, you will be guided through an abstract challenge: keep a set of mystical <strong>balls</strong> within the boundaries of a meditative space for a certain duration. Succeeding in your meditation will reveal powerful upgrades, each related to different belief systems, philosophies, religions, and worldviews.</p>
+                    
+                    <h3>How the Meditation Game Works:</h3>
+                    <p>During meditation, your goal is to ensure that the mystical balls remain within a bounded arena. Your mastery of resources will determine how well you can maintain focus and balance. Here’s how each of your resources will help increase your chances of success:</p>
+                    
+                    <ul>
+                        <li><strong>Copium</strong> - Influences <strong>Ball Size</strong>. More Copium means smaller balls, making it easier to keep them in bounds.</li>
+                        <li><strong>Delusion</strong> - Impacts <strong>Turn Radius</strong>. A greater delusion will cause the balls to adjust their direction more quickly, pulling them back toward the center faster.</li>
+                        <li><strong>Yacht Money</strong> - <strong>Reduces Meditation Duration</strong>. The more you accumulate, the shorter the time needed to complete the meditation challenge.</li>
+                        <li><strong>Troll Points</strong> - Increases <strong>Respawn Time</strong>. This gives you more time before a ball that goes out of bounds reappears, offering brief relief.</li>
+                        <li><strong>Hopium</strong> - <strong>Reduces the Total Number of Balls</strong>. With more hopium, fewer balls need to be managed during meditation.</li>
+                        <li><strong>Knowledge</strong> - Affects <strong>Velocity</strong>. Higher knowledge will slow down the speed of the balls, making it easier to keep them within bounds.</li>
+                        <li><strong>Power</strong> - Affects <strong>Gravity</strong>. A stronger pull toward the center ensures that balls are less likely to stray too far from the boundary.</li>
+                        <li><strong>Serenity</strong> - Provides additional <strong>Lives</strong>. More serenity allows more balls to go out of bounds before you lose your focus and fail the meditation.</li>
+                    </ul>
+
+                    <p>Use your resources wisely, maintain your inner focus, and explore the vast array of perspectives unlocked through meditation. Each successful meditation brings you one step closer to deeper understanding and metaphysical mastery.</p>`,
+    },
+    {         
+        name: `Yin and Yang`,
+        cost: { copium: 1e97, delusion: 1e97, yachtMoney: 1e97, trollPoints: 1e97, hopium: 0, knowledge: 0, power: 0, serenity: 1 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 3e13, powerPerSecond: 0, serenityPerSecond: 0.0001 },
+        img: `imgs/yin_yang.png`,
+        isMeditation: true,
+        achievement: 'Focus Your Mind',
+    },
+    {         
+        name: `Ignoring Stereotypes`,
+        cost: { copium: 1e98, delusion: 1e98, yachtMoney: 1e98, trollPoints: 1e98, hopium: 0, knowledge: 0, power: 0, serenity: 0.5 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 2e12, powerPerSecond: 0, serenityPerSecond: 0.00005 },
+        img: `imgs/successful_black_guy.jpg`,
+    },
+    {         
+        name: `Attack The Day`,
+        cost: { copium: 1e99, delusion: 1e99, yachtMoney: 1e99, trollPoints: 1e99, hopium: 0, knowledge: 0, power: 0, serenity: 1.5 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 2e12, powerPerSecond: 0, serenityPerSecond: 0.00005 },
+        img: `imgs/attack_the_day.jpg`,
     },
 
 ];

@@ -79,10 +79,14 @@ function exportSave(fname='degens_idle_save.json') {
     URL.revokeObjectURL(url);
 }
 
-
 function importSave(event) {
-    // Backup the current save
-    exportSave('backup_degens_idle_save.json');
+    // Get the checkbox status
+    const createBackupOnImport = document.getElementById('createBackupOnImportCheckbox').checked;
+
+    // Create a backup if the checkbox is checked
+    if (createBackupOnImport) {
+        exportSave('backup_degens_idle_save.json');
+    }
 
     // Restart the game and chain the rest of the logic
     restartGame(false, true).then(() => {
@@ -112,6 +116,7 @@ function importSave(event) {
         reader.readAsText(file);
     });
 }
+
 
 
 

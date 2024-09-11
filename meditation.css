@@ -1,0 +1,98 @@
+/* Meditation Overlay */
+.meditation-overlay {
+    position: fixed;
+    top: 5%;
+    left: 5%;
+    width: 90%;
+    height: 90%;
+    background-color: rgba(211, 211, 211, 0.9); /* Light gray */
+    display: none; /* Initially hidden, will be shown by JS */
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    border-radius: 15px; /* Adding a slight rounding for aesthetic */
+}
+
+/* Meditation Arena */
+.arena {
+    width: 400px;
+    height: 400px;
+    background-color: lightgray; /* Set a neutral background color */
+    border: 5px solid red; /* Red boundary for clear visibility */
+    border-radius: 50%; /* To make the arena circular */
+    position: relative;
+    overflow: hidden; /* Ensure balls don't spill outside the arena */
+}
+
+/* Meditation Balls */
+.meditation-ball {
+    width: 30px; /* Example size for the balls */
+    height: 30px;
+    background-color: orange; /* Make the balls orange for visibility */
+    border-radius: 50%; /* Make them circular */
+    position: absolute;
+}
+
+/* Meditation Info */
+.meditation-info {
+    margin-top: 20px;
+    font-size: 18px; /* Make the font larger */
+    color: black; /* Text is now black for visibility */
+    text-align: center;
+}
+
+#meditationChallengeName {
+    font-size: 22px; /* Slightly larger for the title */
+    color: black;
+}
+
+/* Adjust the layout to display two stats per row */
+.meditation-info p {
+    display: inline-block;
+    width: 45%; /* Each stat takes up half of the row */
+    margin: 2px 0; /* Adjust spacing between rows */
+    font-size: 20px; /* Larger font for visibility */
+}
+
+.stat-value {
+    font-size: 20px; /* Values are larger than text for emphasis */
+    font-weight: bold;
+}
+
+.stat-row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 500px;
+    margin: 5px auto; /* Centering each row */
+}
+
+/* Stop Meditation Button */
+.meditation-stop-button {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: #ff4444;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px; /* Larger button text */
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.meditation-stop-button:hover {
+    background-color: #ffffff;
+    color: #ff4444; /* Text changes to red when hovering */
+}
+
+/* Add this to your CSS to scale the arena */
+.meditation-wrapper {
+    display: flex;
+    justify-content: center;  /* Centering horizontally */
+    align-items: center;      /* Centering vertically */
+    transform-origin: center; /* Ensure scaling centers */
+    width: 100%;
+    height: 100%;
+    position: relative;
+}

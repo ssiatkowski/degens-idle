@@ -968,32 +968,41 @@ button.disabled {
 #libraryButton {
     background-color: #8B4513; /* SaddleBrown */
     color: #fff;
-    font-family: 'Uncial Antiqua', 'Georgia', serif; /* Updated font */
-    font-size: 23px;
-    padding: 12px 24px;
-    border: 2px solid #291604; /* Darker brown for border */
-    border-radius: 8px;
+    font-family: 'Impact', 'Arial Black', sans-serif; /* Same font as Power Hall and Love Hall */
+    font-size: 28px; /* Increased font size to match other hall buttons */
+    padding: 0;
+    border: 3px solid #291604; /* Darker brown for border */
+    border-radius: 10px; /* Slightly rounder corners to match the other buttons */
     cursor: pointer;
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4); /* Larger shadow */
-    transition: all 0.4s ease; /* Smoother and slower transition */
-    text-shadow: 2px 2px 4px #000; /* Enhanced text shadow */
-    background-image: url('imgs/textures/rustic_wood.jpg'); /* Add a path to a rustic texture image */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6); /* Stronger shadow */
+    transition: all 0.4s ease; /* Smooth transition */
+    text-shadow: 3px 3px 6px #000; /* Intense text shadow to match */
+    background-image: url('imgs/textures/rustic_wood.jpg'); /* Keep the rustic wood texture */
     background-size: cover;
-    background-blend-mode: multiply;
-    text-shadow: 2px 2px 4px #000;
+    background-repeat: no-repeat;
+    background-position: center; /* Center the texture on the button */
+    aspect-ratio: 800 / 150; /* Maintain the aspect ratio like the other buttons */
+    width: 100%; /* Full-width like other buttons */
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase; /* Capitalize for uniformity */
+    background-blend-mode: multiply; /* Keep the rustic texture blend */
 }
 
 #libraryButton:hover {
     background-color: #A0522D; /* Sienna */
-    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.5); /* Even larger shadow on hover */
-    transform: translateY(-5px) scale(1.05); /* More noticeable lift and slight scaling */
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.7); /* Larger shadow on hover */
+    transform: translateY(-7px) scale(1.08); /* Lift and scale effect */
 }
 
 #libraryButton:active {
-    background-color: #8B4513; /* SaddleBrown */
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4); /* Slightly smaller shadow on click */
-    transform: translateY(2px) scale(0.98); /* Slight push down and minor scale down */
+    background-color: #8B4513; /* SaddleBrown on click */
+    box-shadow: 0 7px 12px rgba(0, 0, 0, 0.5); /* Slightly smaller shadow on click */
+    transform: translateY(3px) scale(0.96); /* Slight push down and scale down */
 }
+
 
 /* Power Hall button specific styles */
 #powerHallButton {
@@ -1029,6 +1038,45 @@ button.disabled {
 }
 
 #powerHallButton:active {
+    background-color: #1a1a1a; /* Return to dark gray on click */
+    box-shadow: 0 7px 12px rgba(0, 0, 0, 0.5); /* Slightly smaller shadow on click */
+    transform: translateY(3px) scale(0.96); /* Slight push down and scale down */
+}
+
+/* Love Hall button specific styles */
+#loveHallButton {
+    background-color: #1a1a1a; /* Dark gray */
+    color: #ff66b2; /* Pinkish love color */
+    font-family: 'Impact', 'Arial Black', sans-serif; /* Bold, powerful font */
+    font-size: 32px;
+    padding: 0;
+    border: 3px solid #660033; /* Dark pink for border */
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6); /* Stronger shadow */
+    transition: all 0.4s ease; /* Smooth transition */
+    text-shadow: 3px 3px 6px #000; /* Intense text shadow */
+    background-image: url('imgs/textures/love.jpg'); /* Use the love texture image */
+    background-size: cover; /* Ensure the texture covers the entire button */
+    background-repeat: no-repeat; /* Prevent the image from repeating */
+    background-position: center; /* Center the image on the button */
+    aspect-ratio: 800 / 150; /* Maintain the aspect ratio of the image */
+    width: 100%; /* Set width to 100% of the container */
+    text-align: center; /* Center the text */
+    display: flex; /* Use flexbox for centering */
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+    text-transform: uppercase; /* Make text uppercase for added impact */
+    background-blend-mode: overlay; /* Blend mode for better visibility */
+}
+
+#loveHallButton:hover {
+    background-color: #660033; /* Dark pink on hover */
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.7); /* Larger shadow on hover */
+    transform: translateY(-7px) scale(1.08); /* More noticeable lift and scaling */
+}
+
+#loveHallButton:active {
     background-color: #1a1a1a; /* Return to dark gray on click */
     box-shadow: 0 7px 12px rgba(0, 0, 0, 0.5); /* Slightly smaller shadow on click */
     transform: translateY(3px) scale(0.96); /* Slight push down and scale down */

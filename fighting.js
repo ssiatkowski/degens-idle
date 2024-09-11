@@ -1407,6 +1407,16 @@ function endFight(isForfeit = false) {
         const multiplier = celestialCollectorSkill ? 1.5: 1.3;
         const duration = celestialCollectorSkill ? 600000 : 180000; // 10 minutes (600,000 ms) or 3 minute (180,000 ms)
 
+        if (stellarHarvestMult == 1 && stellarCookieSkill){
+            clearInterval(cookieIntervalId);
+            const cookieButton = document.getElementById('cookieButton');
+            cookieButton.classList.remove('spinning');
+            cookieButton.classList.add('spinning');
+            cookieIntervalId = setInterval(() => {
+                cookieCollectAllResources();
+            }, 100); // 100 milliseconds = 0.1 seconds
+        }
+
         stellarHarvestMult *= multiplier;
         updateEffectiveMultipliers();
         updateStellarHarvestDisplay();
@@ -1421,6 +1431,12 @@ function endFight(isForfeit = false) {
             stellarHarvestMult = Math.max(stellarHarvestMult / multiplier, 1);
             updateEffectiveMultipliers();
             updateStellarHarvestDisplay();
+
+            if (stellarHarvestMult == 1 && stellarCookieSkill){
+                const cookieButton = document.getElementById('cookieButton');
+                cookieButton.classList.remove('spinning');
+                clearInterval(cookieIntervalId);
+            }
             //TODO: use global tooltip to show it decreased
         }, duration);
 

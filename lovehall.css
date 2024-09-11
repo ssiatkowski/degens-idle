@@ -1,0 +1,185 @@
+/* Overlay for the Hall of Love */
+.lovehall-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 3;
+    overflow: hidden;
+}
+
+.lovehall-overlay-content {
+    background-image: url('imgs/textures/hall_of_love.jpg'); /* Custom background image */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding: 20px;
+    border: 1px solid #333;
+    border-radius: 10px;
+    text-align: center;
+    color: #f0d0e0;
+    width: 80%;
+    max-height: 90%;
+    overflow-y: auto;
+}
+
+.lovehall-overlay-content h1,
+.lovehall-overlay-content h4 {
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #ff66b2;
+    padding: 10px;
+    font-size: 18px;
+    border-radius: 5px;
+    margin: 0 auto 15px auto;
+    display: block;
+    max-width: fit-content;
+}
+
+.lovehall-overlay-content h1 {
+    font-size: 32px;
+    font-family: 'Impact', 'Arial Black', sans-serif;
+}
+
+/* Skill Tree Container - Levels as Columns */
+#loveHallSkills {
+    display: flex; /* Flexbox to create columns for levels */
+    justify-content: space-around; /* Space the columns evenly */
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* Each Level (Column) */
+.lovehall-skill-column {
+    display: flex;
+    flex-direction: column; /* Stack skill pairs vertically within the column */
+    width: 30%; /* Set each column to take up 30% of the width */
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+    border: 8px solid #444;
+    margin: 0 10px;
+    border-radius: 10px;
+    position: relative;
+}
+
+/* Column Labels */
+.lovehall-skill-column-label {
+    position: absolute;
+    top: -15px;
+    left: 10px;
+    color: #ff66b2; /* Pinkish color to match the theme */
+    background-color: #1e1e1e;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Rows within each Column (Skill Pairs) */
+.lovehall-skill-row {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+    position: relative;
+    align-items: center;
+    --glowing-line-color: #ffffff; /* Default to white */
+}
+
+.lovehall-skill-row::before {
+    content: '';
+    position: absolute;
+    top: 50%; /* Center the line vertically */
+    left: 10%; /* Start the line slightly to the left */
+    right: 10%; /* End the line slightly to the right */
+    height: 10px; /* Thickness of the line */
+    background-color: var(--glowing-line-color); /* Use the dynamic color */
+    box-shadow: 0 0 20px 10px rgba(255, 255, 255, 0.6); /* Soft glow effect */
+    z-index: 1;
+}
+
+
+
+
+/* Ensure skill boxes are above the line */
+.lovepair-skill {
+    z-index: 2; /* This places the skills above the glowing line */
+    background-color: #333;
+    border: 1px solid #555;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 3px;
+    width: 45%; /* Skills take 45% of row space (side by side) */
+    text-align: center;
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.lovepair-skill:hover {
+    transform: translateY(-2px); /* Slight movement when hovered */
+}
+
+.lovepair-skill.locked {
+    background-color: #555; /* Locked skill color */
+}
+
+.lovepair-skill.affordable {
+    background-color: #4caf50; /* Green when skill is affordable */
+}
+
+.lovepair-skill.purchased {
+    background-color: #ff66b2; /* Pinkish color when purchased */
+    color: #1e1e1e;
+}
+
+.lovepair-skill .skill-cost {
+    display: block;
+}
+
+.lovepair-skill h3,
+.lovepair-skill p {
+    display: none; /* Hide the skill description by default */
+}
+
+.lovepair-skill.affordable h3,
+.lovepair-skill.affordable p,
+.lovepair-skill.purchased h3,
+.lovepair-skill.purchased p {
+    display: block; /* Show skill name and description when affordable or purchased */
+}
+
+/* Love Points Display */
+#lovePointsDisplay {
+    font-size: 24px; /* Make the font larger */
+    margin-bottom: 20px;
+    color: #ffffff; /* Change the text color to white for better contrast */
+    background-color: rgba(0, 0, 0, 0.7); /* Add a semi-transparent dark background */
+    padding: 10px 20px; /* Add some padding for readability */
+    border-radius: 10px; /* Soften the edges with a border radius */
+    text-align: center;
+    font-weight: bold; /* Make the text bold for extra emphasis */
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    #loveHallSkills {
+        flex-direction: column; /* Stack levels vertically on mobile */
+    }
+
+    .lovehall-skill-column {
+        width: 90%; /* Full width on mobile */
+        margin: 10px 0; /* Add margin between levels */
+    }
+
+    .lovepair-skill {
+        margin: 10px 0;
+        font-size: 0.7em; /* Smaller font for mobile */
+    }
+    .lovepair-skill {
+        width: 40%;
+    }
+}
