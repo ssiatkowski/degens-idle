@@ -325,8 +325,12 @@ function loadGameState() {
     serenityUnlocked = JSON.parse(localStorage.getItem('serenityUnlocked')) || false;
     document.getElementById('serenity-container').style.display = serenityUnlocked ? 'block' : 'none';
 
-    loveHallUnlocked = JSON.parse(localStorage.getItem('loveHallUnlocked')) || false;
-    document.getElementById('loveHallButton').style.display = loveHallUnlocked ? 'flex' : 'none';
+    let loveHallUnlocked = JSON.parse(localStorage.getItem('loveHallUnlocked')) || false;
+    // fix for some users experiencing error
+    let loveHallButton = document.getElementById('loveHallButton');
+    if (loveHallButton) {
+        loveHallButton.style.display = loveHallUnlocked ? 'flex' : 'none';
+    }
     
     // Retrieve and parse all upgrades with the isGodMode property from local storage
     const savedUpgrades = JSON.parse(localStorage.getItem('upgrades')) || [];
