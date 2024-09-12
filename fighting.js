@@ -927,10 +927,11 @@ function attackEnemy(resolve) {
             logFight(`<span style='color: #b3a125; font-weight: bold; font-size: 1.3em;'>Saitama gets serious! No tricks up his sleeve, just raw power. Brace yourself!</span>`);
             
             if (!purchasedUpgrades.some(upgrade => upgrade.name === "Training Dummy")) {
+                unlockAchievement('Dirty Trick');
                 enemyStunCount = 200;
-                logFight("<span style='color: green; font-size: 1.2em';>Can't believe the Training Dummy trick worked again! This time, it was rigged with a galactic paralyzer device, stunning Saitama for 200 turns.</span>");
+                logFight("<span style='color: green; font-size: 1.3em';>Can't believe the Training Dummy trick worked again! This time, it was rigged with a galactic paralyzer device, stunning Saitama for 200 turns.</span>");
             } else {
-                logFight("<span style='color: red; font-size: 1.2em';>Before you have time to process what just happened, Saitama charges towards you.</span>");
+                logFight("<span style='color: red; font-size: 1.3em';>Before you have time to process what just happened, Saitama charges towards you.</span>");
             } 
         
             // Update the enemy image to the serious version of Saitama
@@ -1403,7 +1404,7 @@ function endFight(isForfeit = false) {
         overlayWinnerLoserText("Winner", "Dead");
 
     // Stellar Harvest Skill effect
-    if (stellarHarvestSkill) {
+    if (stellarHarvestSkill && !purchasedUpgrades.some(upgrade => upgrade.name === `Cosmic Drought`)) {
         const multiplier = celestialCollectorSkill ? 1.5: 1.3;
         const duration = celestialCollectorSkill ? 600000 : 180000; // 10 minutes (600,000 ms) or 3 minute (180,000 ms)
 

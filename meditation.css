@@ -5,7 +5,7 @@
     left: 5%;
     width: 90%;
     height: 90%;
-    background-color: rgba(211, 211, 211, 0.9); /* Light gray */
+    background-color: rgba(85, 85, 85, 0.9); /* Light gray */
     display: none; /* Initially hidden, will be shown by JS */
     justify-content: center;
     align-items: center;
@@ -37,13 +37,13 @@
 .meditation-info {
     margin-top: 20px;
     font-size: 18px; /* Make the font larger */
-    color: black; /* Text is now black for visibility */
+    color: rgb(255, 255, 255);
     text-align: center;
 }
 
 #meditationChallengeName {
     font-size: 22px; /* Slightly larger for the title */
-    color: black;
+    color: rgb(255, 255, 255);
 }
 
 /* Adjust the layout to display two stats per row */

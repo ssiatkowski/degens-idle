@@ -420,10 +420,10 @@ const achievements = [
         img: 'imgs/achievements/uninitialized.jpg',
     },
     {
-        name: 'Does Not Exist 71',
+        name: 'Dirty Trick',
         isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
+        hoverText: 'stun Saitama for 200 turns',
+        img: 'imgs/achievements/trojan_horse.jpg',
     },
     {
         name: 'Hang Up Boxing Gloves',

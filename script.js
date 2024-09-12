@@ -2031,7 +2031,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
         }
 
         if (name === 'Attack The Day') {
-            showMessageModal('Sadly', "This marks the end of v0.91. Hope you enjoyed the Power Saga! Congratulations on your first successful meditation – hopefully, you're excited for what this new mechanic will unlock. There's no way to get Love Points just yet, and the Love Hall skills aren't implemented, but feel free to preview them as much as you like. The journey is only beginning, and feedback will continue shaping the future of this game. Stay active on Discord, share your thoughts, and together, something truly epic can be created!");
+            showMessageModal('Sadly', "This marks the end of v0.911. Hope you enjoyed the Power Saga! Congratulations on your first successful meditation – hopefully, you're excited for what this new mechanic will unlock. There's no way to get Love Points just yet, and the Love Hall skills aren't implemented, but feel free to preview them as much as you like. The journey is only beginning, and feedback will continue shaping the future of this game. Stay active on Discord, share your thoughts, and together, something truly epic can be created!");
         }        
 
         // Apply a mini prestige multiplier if the upgrade has one

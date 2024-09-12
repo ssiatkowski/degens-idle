@@ -12,7 +12,7 @@ let baseVelocity;
 let turnRadius;
 let ballSize;
 let ballSizeDelta;
-let respawnTime = 100;
+let respawnTime;
 let windSpeed = 0;
 
 // Define the meditation challenges
@@ -46,6 +46,7 @@ function startMeditationGame(challengeName, backgroundImage) {
         ballSizeDelta = challenge.ballSizeDelta;
         baseVelocity = challenge.velocity * calculateVelocityReduction();
         turnRadius = calculateTurnRadius();
+        respawnTime = 100;
         respawnTime = calculateRespawnTime();
         gravityStrength = calculateGravity();
         balls = []; // Reset balls array

@@ -258,6 +258,7 @@ h1, h2 {
     white-space: nowrap; /* Prevent any text wrapping */
     overflow-x: auto; /* Allow horizontal scrolling for overflow content */
     max-width: 100%; /* Ensure the tooltip doesn't overflow the screen */
+    pointer-events: none; /* Ensure no blocking when hidden or visible */
 }
 
 
@@ -470,6 +471,7 @@ button.disabled {
     font-size: 14px;
     max-width: 200px; /* Adjust width as needed */
     z-index: 1005;
+    pointer-events: none; /* Ensure no blocking when hidden or visible */
 }
 
 .upgradeTooltip p {

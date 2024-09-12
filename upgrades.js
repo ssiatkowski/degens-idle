@@ -1212,7 +1212,6 @@ const upgrades = [
         earnings: { copiumPerSecond: 7e33, delusionPerSecond: 7e33, yachtMoneyPerSecond: 7e33, trollPointsPerSecond: 7e33, hopiumPerSecond: -1e40, knowledgePerSecond: 8e11, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/saitama.jpg`,
         isFight: true,
-        hoverOverwrite: `WARNING: Not Balanced Yet`,
         message: `<p style="font-size: 1.2em; color: #b3a125;">
                         Saitama breathes heavily, sweat dripping from his brow, bruises marking his usually invulnerable body. His excitement is palpable, a faint smile tugging at the corners of his mouth. “You… you actually pushed me. I didn’t think it was possible,” he says, his voice carrying an unfamiliar edge of exhilaration. For the first time in years, he felt the rush of a real fight. You can see it in his eyes—a spark that wasn’t there before. “You gave me a real challenge... I haven’t felt this alive in so long.”
                     </p>
@@ -1275,7 +1274,7 @@ const upgrades = [
     },
     {         
         name: `Cosmic Drought`,
-        cost: { copium: 8e88, delusion: 8e88, yachtMoney: 8e88, trollPoints: 8e88, hopium: 0, knowledge: 1e69, power: 1e18, serenity: 0 },
+        cost: { copium: 8e88, delusion: 8e88, yachtMoney: 8e88, trollPoints: 8e88, hopium: 0, knowledge: 1e69, power: 1.6e18, serenity: 0 },
         earnings: { copiumPerSecond: 1e40, delusionPerSecond: 1e40, yachtMoneyPerSecond: 1e40, trollPointsPerSecond: 1e40, hopiumPerSecond: -1e48, knowledgePerSecond: 3e15, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/cosmic_drought.jpg`,
         message: `<p>The cosmic drought has brought an end to your Stellar Harvest. The star systems you once nurtured have faded, and your operations across the multiverse have halted.</p>
@@ -1285,7 +1284,7 @@ const upgrades = [
     {         
         name: `Search for Hope`,
         cost: { copium: 3e93, delusion: 0, yachtMoney: 0, trollPoints: 3e93, hopium: 0, knowledge: 1e70, power: 1e18, serenity: 0 },
-        earnings: { copiumPerSecond: 5e42, delusionPerSecond: 0, yachtMoneyPerSecond: 5e42, trollPointsPerSecond: 0, hopiumPerSecond: -1e47, knowledgePerSecond: 1e13, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 5e35, delusionPerSecond: 0, yachtMoneyPerSecond: 5e35, trollPointsPerSecond: 0, hopiumPerSecond: -1e47, knowledgePerSecond: 1e13, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/all_hope_lost.jpg`,
         message: `<p>You’ve scoured every corner of the universe, seeking answers, seeking hope. Time and again, your search has come up empty. The stars, once symbols of possibility, now feel distant, cold. Every path you’ve followed has led back to the same conclusion: there is nothing.</p>
                     <p>What else could you do? You’ve tried everything, reached further than anyone before you. Yet, the void remains, and with it, the weight of futility. Each attempt to grasp meaning slips away like stardust in the wind. Is this all there is?</p>
@@ -1294,7 +1293,7 @@ const upgrades = [
     {         
         name: `Perfection doesn't exi...`,
         cost: { copium: 2e96, delusion: 0, yachtMoney: 0, trollPoints: 2e96, hopium: 0, knowledge: 1e71, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 2e42, delusionPerSecond: 0, yachtMoneyPerSecond: 2e42, trollPointsPerSecond: 0, hopiumPerSecond: 2e47, knowledgePerSecond: 2e13, powerPerSecond: 0, serenityPerSecond: 0.00015 },
+        earnings: { copiumPerSecond: 2e36, delusionPerSecond: 0, yachtMoneyPerSecond: 2e36, trollPointsPerSecond: 0, hopiumPerSecond: 2e47, knowledgePerSecond: 2e13, powerPerSecond: 0, serenityPerSecond: 0.00015 },
         img: `imgs/perfection.jpg`,
         message: `<p>And then, you meet her — someone so radiant, so breathtaking, that the very fabric of your reality shifts. Her presence is like nothing you’ve ever encountered, a beauty that transcends anything you've known. It's not just her flawless appearance — the perfect harmony of grace and strength — but something deeper, something that resonates with the very core of who you are.</p>
                 <p>The way she moves, effortless and serene, fills the space with an aura of peace. Her eyes hold entire galaxies, infinite and warm, drawing you into a sense of calm you didn't know you could feel. Every word she speaks feels like a melody, each glance a quiet promise of something greater. She is perfection in form and spirit, radiating a love and understanding that you've long searched for.</p>
@@ -1304,7 +1303,7 @@ const upgrades = [
     {         
         name: `Puppy Love`,
         cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0.025 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 4e42, hopiumPerSecond: 2e47, knowledgePerSecond: 2e13, powerPerSecond: 0, serenityPerSecond: 0.0001 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 4e36, hopiumPerSecond: 2e47, knowledgePerSecond: 2e13, powerPerSecond: 0, serenityPerSecond: 0.0001 },
         img: `imgs/puppy_love.jpg`,
     },
     {         

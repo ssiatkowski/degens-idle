@@ -148,7 +148,7 @@ function playMiniGame(gameType) {
                 copium += reward;
 
                 if (softCapReached) {
-                    resultMessage += '<br><span style="color: orange;">Soft cap reached: Maximum reward of 8 hours effective Copium applied.</span>';
+                    resultMessage += '<br><span style="color: orange;">Soft cap reached: Maximum reward of 10 hours effective Copium applied.</span>';
                 }
 
                 resultMessage += cooldownMessage;
@@ -307,7 +307,7 @@ function playMiniGame(gameType) {
                     : `You failed to match the pattern and lost <span style="color: red;">${formatNumber(Math.abs(reward))}</span> delusion!`;
 
                 if (softCapReached) {
-                    resultMessage += '<br><span style="color: orange;">Soft cap reached: Maximum reward of 8 hours effective Delusion applied.</span>';
+                    resultMessage += '<br><span style="color: orange;">Soft cap reached: Maximum reward of 10 hours effective Delusion applied.</span>';
                 }
 
                 resultMessage += cooldownMessage;
@@ -560,7 +560,7 @@ function playMiniGame(gameType) {
 
                 // Add the soft cap message in orange if applicable
                 if (softCapReached) {
-                    resultMessage += '<br><span style="color: orange;">Soft cap reached: Maximum reward of 8 hours effective Yacht Money applied.</span>';
+                    resultMessage += '<br><span style="color: orange;">Soft cap reached: Maximum reward of 10 hours effective Yacht Money applied.</span>';
                 }
 
                 resultMessage += cooldownMessage;
@@ -732,7 +732,7 @@ function playMiniGame(gameType) {
 
                         // Add the soft cap message in orange if applicable
                         if (softCapReached) {
-                            resultMessage += '<br><span style="color: orange;">Soft cap reached: Maximum reward of 8 hours effective Troll Points applied.</span>';
+                            resultMessage += '<br><span style="color: orange;">Soft cap reached: Maximum reward of 10 hours effective Troll Points applied.</span>';
                         }
 
                         resultMessage += cooldownMessage;
