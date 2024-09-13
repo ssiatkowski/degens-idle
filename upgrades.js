@@ -1128,13 +1128,13 @@ const upgrades = [
     },
     {         
         name: `Healthy Choices`,
-        cost: { copium: 9e72, delusion: 1e71, yachtMoney: 0, trollPoints: 9e72, hopium: 0, knowledge: 5e58, power: 1.8e13, serenity: 0 },
+        cost: { copium: 9e72, delusion: 1e71, yachtMoney: 0, trollPoints: 9e72, hopium: 0, knowledge: 5e56, power: 1.8e13, serenity: 0 },
         earnings: { copiumPerSecond: 3e28, delusionPerSecond: 0, yachtMoneyPerSecond: 1.2e28, trollPointsPerSecond: 3e28, hopiumPerSecond: 0, knowledgePerSecond: 1.3e9, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/training_for_kaguya.jpg`
     },
     {         
         name: `Unprecedented`,
-        cost: { copium: 1e73, delusion: 2e72, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 3e55, power: 2.3e14, serenity: 0 },
+        cost: { copium: 1e73, delusion: 2e72, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 3e59, power: 2.3e14, serenity: 0 },
         earnings: { copiumPerSecond: 2e28, delusionPerSecond: 2e28, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 1.6e9, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/unprecedented_overlap.jpg`
     },
@@ -1146,7 +1146,7 @@ const upgrades = [
     },
     {
         name: `Kaguya`,
-        cost: { copium: 6e79, delusion: 6e79, yachtMoney: 6e79, trollPoints: 6e79, hopium: 0, knowledge: 6e60, power: 6e14, serenity: 0 },
+        cost: { copium: 6e79, delusion: 6e79, yachtMoney: 6e79, trollPoints: 6e79, hopium: 0, knowledge: 6e60, power: 1e14, serenity: 0 },
         earnings: { copiumPerSecond: 5e30, delusionPerSecond: 5e30, yachtMoneyPerSecond: 5e30, trollPointsPerSecond: 5e30, hopiumPerSecond: -1e35, knowledgePerSecond: 5e11, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/kaguya.jpg`,
         isFight: true,
@@ -1190,7 +1190,7 @@ const upgrades = [
     {         
         name: `How Unoriginal!`,
         cost: { copium: 6e81, delusion: 0, yachtMoney: 7e81, trollPoints: 0, hopium: 0, knowledge: 6e62, power: 5e15, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 5e30, yachtMoneyPerSecond: 0, trollPointsPerSecond: 5e30, hopiumPerSecond: 0, knowledgePerSecond: 1.2e10, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 5e30, yachtMoneyPerSecond: 0, trollPointsPerSecond: 5e30, hopiumPerSecond: 0, knowledgePerSecond: 1.2e11, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/too_long_didnt_read.jpg`,        
     },
     {         
@@ -1275,7 +1275,7 @@ const upgrades = [
     {         
         name: `Cosmic Drought`,
         cost: { copium: 8e88, delusion: 8e88, yachtMoney: 8e88, trollPoints: 8e88, hopium: 0, knowledge: 1e69, power: 1.6e18, serenity: 0 },
-        earnings: { copiumPerSecond: 1e40, delusionPerSecond: 1e40, yachtMoneyPerSecond: 1e40, trollPointsPerSecond: 1e40, hopiumPerSecond: -1e48, knowledgePerSecond: 3e15, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 1e40, delusionPerSecond: 1e40, yachtMoneyPerSecond: 1e40, trollPointsPerSecond: 1e40, hopiumPerSecond: -1e48, knowledgePerSecond: 2.5e15, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/cosmic_drought.jpg`,
         message: `<p>The cosmic drought has brought an end to your Stellar Harvest. The star systems you once nurtured have faded, and your operations across the multiverse have halted.</p>
                 <p>But your heroic efforts in saving the multiverse haven’t gone unnoticed. Word has reached the galactic federation, and in recognition of your valor and the financial burdens you've faced, they've granted you an allowance.</p>
@@ -1317,12 +1317,9 @@ const upgrades = [
         cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 1e72, power: 1e19, serenity: 0.1 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 3e13, powerPerSecond: 0, serenityPerSecond: 0.0001 },
         img: `imgs/meditation.jpg`,
-        message: `<h2>Meditation Unlocked: The Path Beyond the Physical</h2>
-                    <p>After pushing past all physical limits, you’ve discovered that the true answers lie beyond the material world. You have unlocked <strong>Meditation</strong>, a metaphysical realm where the deepest questions can be answered. In this state, you will be guided through an abstract challenge: keep a set of mystical <strong>balls</strong> within the boundaries of a meditative space for a certain duration. Succeeding in your meditation will reveal powerful upgrades, each related to different belief systems, philosophies, religions, and worldviews.</p>
-                    
+        message: ` <p>After pushing past all physical limits, you’ve discovered that the true answers lie beyond the material world. You have unlocked <strong>Meditation</strong>, a metaphysical realm where the deepest questions can be answered. In this state, you will be guided through an abstract challenge: keep a set of mystical <strong>balls</strong> within the boundaries of a meditative space for a certain duration. Succeeding in your meditation will reveal powerful upgrades, each related to different belief systems, philosophies, religions, and worldviews.</p>
                     <h3>How the Meditation Game Works:</h3>
                     <p>During meditation, your goal is to ensure that the mystical balls remain within a bounded arena. Your mastery of resources will determine how well you can maintain focus and balance. Here’s how each of your resources will help increase your chances of success:</p>
-                    
                     <ul>
                         <li><strong>Copium</strong> - Influences <strong>Ball Size</strong>. More Copium means smaller balls, making it easier to keep them in bounds.</li>
                         <li><strong>Delusion</strong> - Impacts <strong>Turn Radius</strong>. A greater delusion will cause the balls to adjust their direction more quickly, pulling them back toward the center faster.</li>
@@ -1331,10 +1328,10 @@ const upgrades = [
                         <li><strong>Hopium</strong> - <strong>Reduces the Total Number of Balls</strong>. With more hopium, fewer balls need to be managed during meditation.</li>
                         <li><strong>Knowledge</strong> - Affects <strong>Velocity</strong>. Higher knowledge will slow down the speed of the balls, making it easier to keep them within bounds.</li>
                         <li><strong>Power</strong> - Affects <strong>Gravity</strong>. A stronger pull toward the center ensures that balls are less likely to stray too far from the boundary.</li>
-                        <li><strong>Serenity</strong> - Provides additional <strong>Lives</strong>. More serenity allows more balls to go out of bounds before you lose your focus and fail the meditation.</li>
+                        <li><strong>Serenity</strong> - Provides additional <strong>Focus</strong>. More serenity allows more balls to go out of bounds before you lose focus and fail the meditation.</li>
                     </ul>
-
                     <p>Use your resources wisely, maintain your inner focus, and explore the vast array of perspectives unlocked through meditation. Each successful meditation brings you one step closer to deeper understanding and metaphysical mastery.</p>`,
+        
     },
     {         
         name: `Yin and Yang`,
@@ -1347,13 +1344,13 @@ const upgrades = [
     {         
         name: `Ignoring Stereotypes`,
         cost: { copium: 1e98, delusion: 1e98, yachtMoney: 1e98, trollPoints: 1e98, hopium: 0, knowledge: 0, power: 0, serenity: 0.5 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 2e12, powerPerSecond: 0, serenityPerSecond: 0.00005 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 2e14, powerPerSecond: 0, serenityPerSecond: 0.00005 },
         img: `imgs/successful_black_guy.jpg`,
     },
     {         
         name: `Attack The Day`,
         cost: { copium: 1e99, delusion: 1e99, yachtMoney: 1e99, trollPoints: 1e99, hopium: 0, knowledge: 0, power: 0, serenity: 1.5 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 2e12, powerPerSecond: 0, serenityPerSecond: 0.00005 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 3e14, powerPerSecond: 0, serenityPerSecond: 0.00006 },
         img: `imgs/attack_the_day.jpg`,
     },
 

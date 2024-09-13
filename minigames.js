@@ -550,7 +550,7 @@ function playMiniGame(gameType) {
                     if (numMathSolves > 314) {
                         unlockAchievement('Pie Guy');
                     }
-                    resultMessage = `You found the correct sum and earned <span style="color: green;">${formatNumber(reward)}</span> yachtMoney!`;
+                    resultMessage = `You found the correct sum and earned <span style="color: green;">${formatNumber(reward)}</span> yachtMoney! That was your ${numMathSolves}${getOrdinalSuffix(numMathSolves)} solve.`;
                 } else {
                     reward = -Math.max(Math.floor(Math.abs(yachtMoney) * 0.2), 20);
                     resultMessage = `You didn't find the correct sum. You lost <span style="color: red;">${formatNumber(Math.abs(reward))}</span> yachtMoney.`;

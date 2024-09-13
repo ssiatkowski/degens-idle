@@ -1264,6 +1264,11 @@ function formatNumber(num) {
     }
 }
 
+function getOrdinalSuffix(n) {
+    const s = ["th", "st", "nd", "rd"],
+          v = n % 100;
+    return s[(v - 20) % 10] || s[v] || s[0];
+}
 
 // function NumberMixedScientific(Num,Fixed = 2, EXPONENT_LIMIT = 3) {
 //     if (Num < 1e36) {
@@ -1935,7 +1940,6 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
 
             if (!fightResult) {
                 showMessageModal('You Lost', `Defeat isn’t the end, ${name} just tested your limits. Get back up and come back stronger!`);
-                unlockAchievement('Get Up and Try Again');
                 saveGameState();
                 return;
             }
@@ -2031,7 +2035,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
         }
 
         if (name === 'Attack The Day') {
-            showMessageModal('Sadly', "This marks the end of v0.911. Hope you enjoyed the Power Saga! Congratulations on your first successful meditation – hopefully, you're excited for what this new mechanic will unlock. There's no way to get Love Points just yet, and the Love Hall skills aren't implemented, but feel free to preview them as much as you like. The journey is only beginning, and feedback will continue shaping the future of this game. Stay active on Discord, share your thoughts, and together, something truly epic can be created!");
+            showMessageModal('Sadly', "This marks the end of v0.912. Hope you enjoyed the Power Saga! Congratulations on your first successful meditation – hopefully, you're excited for what this new mechanic will unlock. There's no way to get Love Points just yet, and the Love Hall skills aren't implemented, but feel free to preview them as much as you like. The journey is only beginning, and feedback will continue shaping the future of this game. Stay active on Discord, share your thoughts, and together, something truly epic can be created!");
         }        
 
         // Apply a mini prestige multiplier if the upgrade has one
@@ -3028,11 +3032,17 @@ switch (resourceId) {
         return 'Gain calculation based on upgrades and boosts.';
 }
 
-// Base gain display
-tooltip += `<b>${formatNumber(basePerSecond)}</b> (Base ${baseValue} Gain)</b><br>`;
+if (resourceId !== 'power'){
+    // Base gain display
+    tooltip += `<b>${formatNumber(basePerSecond)}</b> (Base ${baseValue} Gain)</b><br>`;
+}
 
 // Power-specific multipliers
 if (resourceId === 'power') {
+
+    // Base gain display
+    tooltip += `<b>${formatNumber(basePerSecond)}</b> (${baseValue} Gain from Knowledge)</b><br>`;
+
     // Money is Power multiplier
     if (moneyIsPowerTooSkill) {
         let moneyIsPowerMultiplier = (1 + (Math.max(yachtMoney, 0) ** (1 / 30)) / 100);

@@ -1,40 +1,49 @@
 
 const loveHallSkills = [
     // 2.828x Level - Bell's Inequality for quantum entangled particle correlation
-    { name: 'Delusion Echo', cost: 0.25, description: '5x Delusion gain.', unlocked: false, level: '10x Level', pair: 1 },
-    { name: 'Copium Surge', cost: 0.25, description: '5x Copium gain.', unlocked: false, level: '10x Level', pair: 1 },
+    { name: 'Delusion Echo', cost: 0.25, description: '5x Delusion gain.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 1 },
+    { name: 'Copium Surge', cost: 0.25, description: '5x Copium gain.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 1 },
 
-    { name: '???', cost: 1, description: '???', unlocked: false, level: '10x Level', pair: 2 },
-    { name: 'Cosmic Embrace', cost: 1, description: 'Gain +1 Love Point every embrace.', unlocked: false, level: '10x Level', pair: 2 },
+    { name: 'Twenty-Fivefold Ascension', cost: 2, description: 'Gain up to 25 God-Mode levels per Ascension.', unlocked: false, level: 'Quantum Harmony (2.8x)',  pair: 2 },
+    { name: 'Twenty-Fivefold Transcendence', cost: 2, description: 'Gain up to 25 PU God-Mode levels per Transcendence.', unlocked: false, level: 'Quantum Harmony (2.8x)',  pair: 2 },
 
-    { name: 'Serenity Flow', cost: 5, description: 'Hopium gain is multiplied by square root of Serenity.', unlocked: false, level: '10x Level', pair: 3 },
-    { name: 'Serene Boost', cost: 5, description: '2x Serenity gain.', unlocked: false, level: '10x Level', pair: 3 },
+    { name: 'Achievement Boost', cost: 3, description: 'Achievement Multiplier increases to 1.5% per achievement.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 3 },
+    { name: 'Cosmic Embrace', cost: 3, description: 'Gain +1 Love Point every embrace.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 3 },
 
-    { name: 'Power Infusion', cost: 15, description: '2x Power gain.', unlocked: false, level: '10x Level', pair: 4 },
-    { name: 'Love Surge', cost: 15, description: 'Gain +2 Love Points every embrace.', unlocked: false, level: '10x Level', pair: 4 },
+    { name: 'Serenity Flow', cost: 5, description: 'Hopium gain is multiplied by square root of Serenity.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 4 },
+    { name: 'Serene Boost', cost: 5, description: '2x Serenity gain.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 4 },
 
+    { name: 'Power Infusion', cost: 15, description: '3x Power gain.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 5 },
+    { name: 'Love Surge', cost: 15, description: 'Gain +2 Love Points every embrace.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 5 },
 
-    //25x gm, 25x pugm
+    { name: 'Achievement Multiplier Boost', cost: 50, description: 'Achievement multiplier becomes multiplicative instead of additive.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 6 },
+    { name: 'Perfect PU God-Mode', cost: 50, description: 'Make PU God-Mode perfect with diminishing returns at 99.2%.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 6 },
 
     // 27x Level - dimensions in string theory
-    { name: 'Knowledge Infusion', cost: 0.25, description: '8x Knowledge gain.', unlocked: false, level: '100x Level', pair: 21 },
-    { name: 'Resource Boost', cost: 0.25, description: '8x gain to first 4 resources.', unlocked: false, level: '100x Level', pair: 21 },
+    { name: 'Knowledge Infusion', cost: 1, description: '8x Knowledge gain.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 21 },
+    { name: 'Resource Boost', cost: 1, description: '8x gain to first 4 resources.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 21 },
 
-    { name: 'Hall of Knowledge Auto-Buy', cost: 1, description: 'Automatically buy upgrades from the Hall of Knowledge.', unlocked: false, level: '100x Level', pair: 22 },
-    { name: 'Hall of Power Auto-Buy', cost: 1, description: 'Automatically buy upgrades from the Hall of Power.', unlocked: false, level: '100x Level', pair: 22 },
+    { name: 'Hall of Knowledge Auto-Buy', cost: 1.5, description: 'Automatically buy upgrades from the Hall of Knowledge.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 22 },
+    { name: 'Hall of Power Auto-Buy', cost: 1.5, description: 'Automatically buy upgrades from the Hall of Power.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 22 },
 
-    { name: 'Auto Fight', cost: 5, description: 'Spare opponents how are far weaker than you and auto unlock the upgrades.', unlocked: false, level: '100x Level', pair: 23 },
-    { name: 'Hopium Fix', cost: 5, description: 'Fix Hopium in the same way Delusion is fixed.', unlocked: false, level: '100x Level', pair: 23 },
+    { name: 'Auto Fight', cost: 5, description: 'Spare opponents who are far weaker than you and auto unlock the upgrades.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 23 },
+    { name: 'Hopium Fix', cost: 5, description: 'Fix Hopium in the same way Delusion is fixed.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 23 },
+
+    { name: 'Serenity Gain (Copium)', cost: 10, description: 'Serenity gain is multiplied by log(Copium)/10.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 24 },
+    { name: 'Serenity Gain (Delusion)', cost: 10, description: 'Serenity gain is multiplied by log(Delusion)/10.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 24 },
+
+    { name: 'Serenity Gain (Yacht Money)', cost: 10, description: 'Serenity gain is multiplied by log(Yacht Money)/10.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 25 },
+    { name: 'Serenity Gain (Troll Points)', cost: 10, description: 'Serenity gain is multiplied by log(Troll Points)/10.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 25 },
 
     // 42x Level - the meaning of life
-    { name: 'Hopium Trade', cost: 3, description: 'Trade Hopium for any of the first 4 resources at a 1:1 ratio.', unlocked: false, level: '1000x Level', pair: 31 },
-    { name: 'Auto Prestige', cost: 3, description: 'Automatically apply Prestige Mult without resetting.', unlocked: false, level: '1000x Level', pair: 31 },
+    { name: 'Hopium Trade', cost: 1.5, description: 'Trade Hopium for any of the first 4 resources at a 1:1 ratio.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 41 },
+    { name: 'Auto Prestige', cost: 1.5, description: 'Automatically apply Prestige Mult without resetting.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 41 },
 
-    { name: 'Serenity Multiplier', cost: 8, description: 'Multiply Serenity by log10 of Love Points.', unlocked: false, level: '1000x Level', pair: 32 },
-    { name: 'Auto Hopium Trade', cost: 8, description: 'Automatically trade Hopium for any resource that is lacking.', unlocked: false, level: '1000x Level', pair: 32 },
+    { name: 'Serenity Multiplier', cost: 8, description: 'Multiply Serenity by log10 of Love Points.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 42 },
+    { name: 'Auto Hopium Trade', cost: 8, description: 'Every second, automatically trade Hopium for all lower resources.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 42 },
 
-    { name: 'Knowledge Exchange', cost: 25, description: 'Trade Hopium for Knowledge at a 1e20:1 ratio.', unlocked: false, level: '1000x Level', pair: 33 },
-    { name: 'Big Crunch Factor Boost', cost: 25, description: 'Increase Big Crunch factor from 2 to 2.1.', unlocked: false, level: '1000x Level', pair: 33 }
+    { name: 'Knowledge Exchange', cost: 15, description: 'Trade Hopium for Knowledge at a 1e20:1 ratio.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 43 },
+    { name: 'Big Crunch Factor Boost', cost: 15, description: 'Increase Big Crunch factor from 2 to 2.1.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 43 }
 ];
 
 
@@ -85,9 +94,9 @@ function unlockLoveHallSkill(skill) {
 
 function getLevelMultiplier(level) {
     switch (level) {
-        case '10x Level': return 10;
-        case '100x Level': return 100;
-        case '1000x Level': return 1000;
+        case 'Quantum Harmony (2.8x)': return 2.8;
+        case 'Dimensional Shift (27x)': return 27;
+        case 'Cosmic Truth (42x)': return 42;
         default: return 1;
     }
 }
@@ -198,17 +207,31 @@ function initializeLoveHallSkills() {
     });
 }
 
+function outsideLoveHallClickListener(event) {
+    const loveHallContent = document.querySelector('.lovehall-overlay-content');
+
+    if (!loveHallContent.contains(event.target)) {
+        closeLoveHall();
+    }
+}
+
 function openLoveHall() {
     const loveHallOverlay = document.getElementById('loveHallOverlay');
     loveHallOverlay.style.display = 'flex';
 
     initializeLoveHallSkills();
     updateLoveHallSkillDisplay();
+
+    // Add a temporary event listener to close the overlay when clicking outside of it
+    setTimeout(() => {
+        document.addEventListener('click', outsideLoveHallClickListener);
+    }, 0);
 }
 
 function closeLoveHall() {
     const loveHallOverlay = document.getElementById('loveHallOverlay');
     loveHallOverlay.style.display = 'none';
+    document.removeEventListener('click', outsideLoveHallClickListener);
 }
 
 document.addEventListener('DOMContentLoaded', () => {

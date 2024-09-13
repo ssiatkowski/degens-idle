@@ -2,7 +2,7 @@ let meditationInterval;
 let resolveFunction;
 
 let meditationTimer;
-let meditationLives;
+let meditationFocus;
 let ballCount;
 let arenaSize;
 let currentChallengeName;
@@ -19,7 +19,7 @@ let windSpeed = 0;
 const meditationChallenges = {
     "Yin and Yang": {
         duration: 15,
-        lives: 1,
+        focus: 1,
         ballCount: 2,
         arenaSize: 600,
         ballSize: 30,
@@ -38,7 +38,7 @@ function startMeditationGame(challengeName, backgroundImage) {
         // Use the calculateTimerReduction function to adjust the duration
         meditationTimer = challenge.duration * calculateTimerReduction(yachtMoney);
         
-        meditationLives = challenge.lives + Math.max(0, Math.floor(Math.log10(serenity))); // Serenity gives additional lives (log10)
+        meditationFocus = challenge.focus + Math.max(0, Math.floor(Math.log10(serenity))); // Serenity gives additional focus (log10)
         ballCount = Math.max(1, challenge.ballCount - calculateBallCountReduction()); // Hopium reduces ball count
         arenaSize = challenge.arenaSize;
         ballSize = challenge.ballSize;
@@ -89,7 +89,7 @@ function setupMeditationArena() {
         createBall(i);
     }
 
-    // Update meditation info (e.g., challenge name, timer, lives)
+    // Update meditation info (e.g., challenge name, timer, focus)
     updateMeditationInfo();
 
     scaleArena();
@@ -135,7 +135,7 @@ function createBall(index) {
 function updateMeditationInfo() {
     document.getElementById('meditationChallengeName').innerText = currentChallengeName;
     document.getElementById('meditationTimer').innerText = meditationTimer.toFixed(1);
-    document.getElementById('meditationLives').innerText = meditationLives;
+    document.getElementById('meditationFocus').innerText = meditationFocus;
     document.getElementById('meditationBallCount').innerText = ballCount;
     document.getElementById('meditationBallSize').innerText = ballSize; // Ball size (diameter)
     document.getElementById('meditationArenaSize').innerText = arenaSize;
@@ -153,14 +153,14 @@ function updateMeditationGame(resolve) {
     document.getElementById('meditationTimer').innerText = meditationTimer.toFixed(1); // Update the timer display
 
     // Check for end conditions
-    if (meditationTimer <= 0 && meditationLives > 0) {
+    if (meditationTimer <= 0 && meditationFocus > 0) {
         clearInterval(meditationInterval);
         resolve(true); // Player wins the challenge
         stopMeditationGame();
         return;
     }
 
-    if (meditationLives <= 0) {
+    if (meditationFocus <= 0) {
         clearInterval(meditationInterval);
         resolve(false); // Player loses the challenge
         stopMeditationGame();
@@ -221,8 +221,8 @@ function moveBalls() {
 
 // Function to check if a ball leaves the arena and decrement a life if so, with a respawn delay
 function checkOutOfBounds() {
-    // If game has ended (lives are zero or below), do nothing
-    if (meditationLives <= 0) return;
+    // If game has ended (focus are zero or below), do nothing
+    if (meditationFocus <= 0) return;
 
     balls.forEach((ball) => {
         // Skip the ball if it is currently respawning
@@ -239,8 +239,8 @@ function checkOutOfBounds() {
             ball.isRespawning = true;
 
             // Decrement a life when out of bounds
-            meditationLives--;
-            document.getElementById('meditationLives').innerText = meditationLives; // Update lives display
+            meditationFocus--;
+            document.getElementById('meditationFocus').innerText = meditationFocus; // Update focus display
 
             // Hide the ball temporarily and reset after the respawn delay
             ball.element.style.display = 'none'; // Hide the ball
@@ -248,7 +248,7 @@ function checkOutOfBounds() {
             // Delay the respawn by respawnTime
             setTimeout(() => {
                 // If the game has ended during the respawn delay, do nothing
-                if (meditationLives <= 0) return;
+                if (meditationFocus <= 0) return;
 
                 // Reset the ball to a new position close to the center, avoiding overlap
                 let newX, newY;
@@ -277,8 +277,8 @@ function checkOutOfBounds() {
                 ball.element.style.left = `${ball.x - ball.radius}px`; // Center the ball
                 ball.element.style.top = `${ball.y - ball.radius}px`; // Center the ball
 
-                // Check if lives are zero and stop the game
-                if (meditationLives <= 0) {
+                // Check if focus are zero and stop the game
+                if (meditationFocus <= 0) {
                     clearInterval(meditationInterval);
                     stopMeditationGame(); // End the game
                 }
@@ -368,8 +368,8 @@ function stopMeditationGame() {
 
 
 document.getElementById('meditationStopButton').addEventListener('click', () => {
-    // Treat the "Stop Meditation" action as if the player lost all lives
-    meditationLives = 0; // Set lives to 0 to trigger loss condition
+    // Treat the "Stop Meditation" action as if the player lost all focus
+    meditationFocus = 0; // Set focus to 0 to trigger loss condition
     clearInterval(meditationInterval); // Stop the meditation loop
     stopMeditationGame(); // End the game and hide the overlay
     resolveFunction(false); // Resolve the promise to indicate a loss

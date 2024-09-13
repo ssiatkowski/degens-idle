@@ -398,7 +398,7 @@ const achievements = [
     {
         name: 'Pie Guy',
         isUnlocked: false,
-        hoverText: 'solve &pi;&times;100 math problems',
+        hoverText: `solve &pi;&times;100 math problems`,
         img: 'imgs/achievements/pie_guy.jpg',
     },
     {

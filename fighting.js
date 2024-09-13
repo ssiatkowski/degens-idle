@@ -27,10 +27,10 @@ const enemyStats = {
     },
     "Shao Kahn": {
         health: 600,
-        minDamage: 5,
+        minDamage: 10,
         maxDamage: 25,
         attackSpeed: 3,
-        defense: 25,
+        defense: 30,
         critChance: 0.2,
         critDamage: 2,
         dodge: 0,
@@ -552,6 +552,7 @@ function fightLoop(resolve) {
         if (playerHealth <= 0) {
             fightEnded = true; // Set flag to true to indicate the fight has ended
             clearAttackIntervals(); // Stop both intervals
+            unlockAchievement('Get Up and Try Again');
             resolve(false); // Resolve the promise with a loss
             endFight(); // End the fight visuals
         }
@@ -925,13 +926,14 @@ function attackEnemy(resolve) {
             enemyDefense = enemyDefense * 10;
             
             logFight(`<span style='color: #b3a125; font-weight: bold; font-size: 1.3em;'>Saitama gets serious! No tricks up his sleeve, just raw power. Brace yourself!</span>`);
-            
+
             if (!purchasedUpgrades.some(upgrade => upgrade.name === "Training Dummy")) {
                 unlockAchievement('Dirty Trick');
-                enemyStunCount = 200;
-                logFight("<span style='color: green; font-size: 1.3em';>Can't believe the Training Dummy trick worked again! This time, it was rigged with a galactic paralyzer device, stunning Saitama for 200 turns.</span>");
+                enemyStunCount += 200;
+                logFight("<span style='color: green; font-size: 1.3em';>Can't believe the Training Dummy trick worked again! This time, it was rigged with a galactic paralyzer device, stunning Saitama for 200 turns. You didn't even need to pull that dirty trick—just having a bit of fun with him!</span>");
             } else {
-                logFight("<span style='color: red; font-size: 1.3em';>Before you have time to process what just happened, Saitama charges towards you.</span>");
+                logFight("<span style='color: red; font-size: 1.3em';>Before you have time to process what just happened, Saitama charges towards you. His sudden transformation catches you off guard, and you're stunned for 10 turns!</span>");
+                playerStunCount += 10;
             } 
         
             // Update the enemy image to the serious version of Saitama
@@ -1091,8 +1093,8 @@ function attackPlayer(resolve) {
         // Independent chance for each attack
         const randChakraAbsorption = Math.random() < 0.015;
         const randTruthSeekerBall = Math.random() < 0.025;
-        const randByakugan64Palms = Math.random() < 0.13;
-        const randPlanetaryDevastation = Math.random() < 0.01;
+        const randByakugan64Palms = Math.random() < 0.133;
+        const randPlanetaryDevastation = Math.random() < 0.012;
         const randAmaterasu = Math.random() < 0.15;
         const randTsukuyomi = Math.random() < 0.04;
         const randSusanoo = Math.random() < 0.18;
@@ -1165,8 +1167,8 @@ function attackPlayer(resolve) {
         const rand = Math.random() * 100;
     
         if (rand < 10) { // 10% chance for Jumping Jacks
-            enemyCritDamage += 0.15;
-            logFight(`<span style='color: #d4af37;'>Saitama does Jumping Jacks! His critical damage increases by 15%.</span>`);
+            enemyCritDamage += 0.17;
+            logFight(`<span style='color: #d4af37;'>Saitama does Jumping Jacks! His critical damage increases by 17%.</span>`);
         } else if (rand < 20) { // 10% chance for Push Ups
             enemyMinDamage += 100;
             enemyMaxDamage += 200;
@@ -1180,10 +1182,10 @@ function attackPlayer(resolve) {
             enemyCritChance = Math.min(enemyCritChance + critIncrease, 1); // Ensure it doesn't exceed 1
             logFight(`<span style='color: #cd853f;'>Saitama cracks his knuckles! His critical chance increases by ${formatNumber(critIncrease * 100)}%.</span>`);
         } else if (rand < 50) { // 10% chance for Squats
-            enemyDefense += 5e15; // Increases defense by 5 Qa
-            logFight(`<span style='color: #b22222;'>Saitama does Squats! His defense increases by 2 quadrilion.</span>`);
+            enemyDefense += 8e15; // Increases defense by 8 Qa
+            logFight(`<span style='color: #b22222;'>Saitama does Squats! His defense increases by 8 quadrilion.</span>`);
         } else if (rand < 60) { // 10% chance for Sit Ups
-            const absorbIncrease = 0.02 * (1 - enemyAbsorb); // Diminishing absorb increase based on remaining potential
+            const absorbIncrease = 0.025 * (1 - enemyAbsorb); // Diminishing absorb increase based on remaining potential
             enemyAbsorb = Math.min(enemyAbsorb + absorbIncrease, 0.9999); // Ensure it doesn't exceed 1
             if (enemyAbsorb > 0.9){
                 unlockAchievement('More than Sauron');

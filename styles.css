@@ -1146,6 +1146,7 @@ input:checked + .slider:before {
     z-index: 1000; /* Ensure it appears above other elements */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     max-width: 80%; /* Ensure it doesn't overflow on small screens */
+    pointer-events: none; /* Ensure no blocking when hidden or visible */
 }
 
 .status-overlay.success {
