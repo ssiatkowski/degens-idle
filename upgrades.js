@@ -1301,7 +1301,7 @@ const upgrades = [
     {         
         name: `Cosmic Drought`,
         cost: { copium: 8e88, delusion: 8e88, yachtMoney: 8e88, trollPoints: 8e88, hopium: 0, knowledge: 1e69, power: 1.6e18, serenity: 0 },
-        earnings: { copiumPerSecond: 1e40, delusionPerSecond: 1e40, yachtMoneyPerSecond: 1e40, trollPointsPerSecond: 1e40, hopiumPerSecond: -1e48, knowledgePerSecond: 2.5e15, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 4e40, delusionPerSecond: 4e40, yachtMoneyPerSecond: 4e40, trollPointsPerSecond: 4e40, hopiumPerSecond: -1e48, knowledgePerSecond: 2.5e15, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/cosmic_drought.jpg`,
         message: `<p>The cosmic drought has brought an end to your Stellar Harvest. The star systems you once nurtured have faded, and your operations across the multiverse have halted.</p>
                 <p>But your heroic efforts in saving the multiverse haven’t gone unnoticed. Word has reached the galactic federation, and in recognition of your valor and the financial burdens you've faced, they've granted you an allowance.</p>
@@ -1378,13 +1378,13 @@ const upgrades = [
     },
     {         
         name: `Attack The Day`,
-        cost: { copium: 1e99, delusion: 1e99, yachtMoney: 1e99, trollPoints: 1e99, hopium: 0, knowledge: 0, power: 0, serenity: 1.5 },
+        cost: { copium: 2e98, delusion: 2e98, yachtMoney: 2e98, trollPoints: 2e98, hopium: 0, knowledge: 0, power: 0, serenity: 2 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 3e14, powerPerSecond: 0, serenityPerSecond: 0.00006 },
         img: `imgs/attack_the_day.jpg`,
     },
     {         
         name: `Infinite Embrace`,
-        cost: { copium: 1e100, delusion: 1e100, yachtMoney: 1e100, trollPoints: 1e100, hopium: 0, knowledge: 0, power: 0, serenity: 100 },
+        cost: { copium: 1e99, delusion: 1e99, yachtMoney: 1e99, trollPoints: 1e99, hopium: 0, knowledge: 0, power: 0, serenity: 100 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 1e47, knowledgePerSecond: 1e14, powerPerSecond: 0, serenityPerSecond: 0.001 },
         img: `imgs/infinite_embrace.jpg`,
         message: `<p>Once you reach 1000 serenity, the Infinite Embrace will become available, offering you the chance to perform a sacred act that will resonate throughout the multiverse.</p>
