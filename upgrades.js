@@ -437,7 +437,7 @@ const upgrades = [
     {
         name: `Cybertruck`,
         cost: { copium: 0, delusion: 0, yachtMoney: 3e14, trollPoints: 0, hopium: 10000000, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 1.05e7, delusionPerSecond: 1.65e6, yachtMoneyPerSecond: -100000, trollPointsPerSecond: 1.2e6, hopiumPerSecond: 0, knowledgePerSecond: 0.0000035, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 1.05e7, delusionPerSecond: 1.65e6, yachtMoneyPerSecond: -100000, trollPointsPerSecond: 1.2e6, hopiumPerSecond: 0, knowledgePerSecond: 0.0000037, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/cybertruck.jpg`,
     },
     {
@@ -447,11 +447,12 @@ const upgrades = [
         img: `imgs/rick_roll.jpg`,
         hoverOverwrite: `Thank you for playing...`,
         achievement: 'Get Rick Rolled',
+        isKey: true,
     },
     {
         name: `Plot Twist?`,
         cost: { copium: 1e15, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 1e8, knowledge: 8000, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 5.9e6, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 6.5, knowledgePerSecond: 0.000012, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 5.9e6, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 6.5, knowledgePerSecond: 0.000013, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/wait_theres_more.jpg`,
         message: `<p>You're less than 1% into this epic journey—what lies ahead will truly challenge you!</p>
                 <p>Beyond this point, new prestige layers, intricate skill trees, powerful automations, and strategic puzzles await your brilliance. But that's not all—epic boss fights will test your strength, and you’ll uncover that this entire game is, at its core, a story of love.</p>
@@ -466,7 +467,7 @@ const upgrades = [
     {
         name: `Free Trial`,
         cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 2e11, knowledge: 25000, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 9.7e6, delusionPerSecond: 0, yachtMoneyPerSecond: 1.77e6, trollPointsPerSecond: 0, hopiumPerSecond: 2.5, knowledgePerSecond: 0.000016, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 9.7e6, delusionPerSecond: 0, yachtMoneyPerSecond: 1.77e6, trollPointsPerSecond: 0, hopiumPerSecond: 2.5, knowledgePerSecond: 0.000017, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/free_trial.jpg`,
     },
     {
@@ -481,7 +482,7 @@ const upgrades = [
     {
         name: `Shooter Dad`,
         cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 5e11, knowledge: 100000, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 1.56e7, trollPointsPerSecond: 0, hopiumPerSecond: 125, knowledgePerSecond: 0.000165, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 1.56e7, trollPointsPerSecond: 0, hopiumPerSecond: 125, knowledgePerSecond: 0.000168, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/shooter_swag.jpg`,
     },
     {
@@ -508,7 +509,7 @@ const upgrades = [
     {
         name: `Unlimited Power`,
         cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 3.3e-9, serenity: 0 },
-        earnings: { copiumPerSecond: 2.5e6, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1.55e7, hopiumPerSecond: 2.9, knowledgePerSecond: 0.000028, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 2.5e6, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1.55e7, hopiumPerSecond: 2.9, knowledgePerSecond: 0.000029, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/unlimited_power.jpg`,
         message: `<p>As the gears of progress click into place, you feel a surge of energy coursing through your veins. The very essence of the universe seems to hum in harmony with your newfound abilities. "All you know for now is that power is unlocked," echoes a distant voice in your mind, as if whispered by the ancients who have tread this path before you.</p>
                 <p>Gaining power feels good—no, it feels exhilarating. You sense the weight of the world lifting, replaced by a tantalizing promise of untapped potential. This isn't just strength; it's an awakening, a key to doors that were previously hidden in the shadows of your ignorance.</p>
@@ -766,7 +767,8 @@ const upgrades = [
                 `,
         isFight: true,
         achievement: 'Begin Training',
-        hoverOverwrite: 'Beware 3 power will be consumed. Remaining power will be converted to Damage.'
+        hoverOverwrite: 'Beware 3 power will be consumed. Remaining power will be converted to Damage.',
+        autoBattlePower: 1000,
     },
     {
         name: `Agent Smith`,
@@ -774,6 +776,8 @@ const upgrades = [
         earnings: { copiumPerSecond: 6e15, delusionPerSecond: 0, yachtMoneyPerSecond: 6e15, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 15000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/agent_smith.jpg`,
         isFight: true,
+        isKey: true,
+        autoBattlePower: 8000,
     },
     {
         name: `Feel the Pump`,
@@ -794,7 +798,9 @@ const upgrades = [
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 9e15, trollPointsPerSecond: 0, hopiumPerSecond: -1e8, knowledgePerSecond: 48000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/shao_kahn.jpg`,
         isFight: true,
-        achievement: 'Mortal Kombat'
+        achievement: 'Mortal Kombat',
+        isKey: true,
+        autoBattlePower: 60000,
     },
     {
         name: `Small Wins`,
@@ -814,6 +820,8 @@ const upgrades = [
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 4.5e16, trollPointsPerSecond: 0, hopiumPerSecond: -5e8, knowledgePerSecond: 88000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/darth_vader.jpg`,
         isFight: true,
+        isKey: true,
+        autoBattlePower: 150000,
     },
     {
         name: `Burn the House Down`,
@@ -831,9 +839,11 @@ const upgrades = [
     {
         name: `Isshin`,
         cost: { copium: 1e43, delusion: 9e42, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 1e32, power: 250, serenity: 0 },
-        earnings: { copiumPerSecond: 1e17, delusionPerSecond: 1e17, yachtMoneyPerSecond: 1e17, trollPointsPerSecond: 0, hopiumPerSecond: -1.2e10, knowledgePerSecond: 145000, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 1e17, delusionPerSecond: 1e17, yachtMoneyPerSecond: 1e17, trollPointsPerSecond: 0, hopiumPerSecond: -1.2e10, knowledgePerSecond: 185000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/isshin.jpg`,
         isFight: true,
+        isKey: true,
+        autoBattlePower: 800000,
     },
     {
         name: `Work do be like that`,
@@ -862,14 +872,16 @@ const upgrades = [
     {
         name: `Sauron`,
         cost: { copium: 5e48, delusion: 5e48, yachtMoney: 5e48, trollPoints: 5e48, hopium: 0, knowledge: 5e38, power: 13000, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 8e18, trollPointsPerSecond: 0, hopiumPerSecond: -9e12, knowledgePerSecond: 565000, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 8e18, trollPointsPerSecond: 0, hopiumPerSecond: -9e12, knowledgePerSecond: 625000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/sauron.jpg`,
         isFight: true,
+        isKey: true,
+        autoBattlePower: 2e8,
     },
     {
         name: `Avoid Temptations`,
         cost: { copium: 2e52, delusion: 0, yachtMoney: 2e52, trollPoints: 0, hopium: 0, knowledge: 1e40, power: 1300, serenity: 0 },
-        earnings: { copiumPerSecond: 2e18, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 5e18, hopiumPerSecond: 0, knowledgePerSecond: 25000, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 2e18, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 5e18, hopiumPerSecond: 0, knowledgePerSecond: 26000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/the_temptations.jpg`,        
     },
     {
@@ -881,7 +893,7 @@ const upgrades = [
     {
         name: `Still Mediocre`,
         cost: { copium: 0, delusion: 1e52, yachtMoney: 0, trollPoints: 5e52, hopium: 0, knowledge: 1e41, power: 35000, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 8e18, yachtMoneyPerSecond: 0, trollPointsPerSecond: 7e18, hopiumPerSecond: 0, knowledgePerSecond: 35000, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 8e18, yachtMoneyPerSecond: 0, trollPointsPerSecond: 7e18, hopiumPerSecond: 0, knowledgePerSecond: 37000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/3rd_place_upvotes.jpg`,        
     },
     {
@@ -897,6 +909,9 @@ const upgrades = [
         earnings: { copiumPerSecond: 1e19, delusionPerSecond: 1e19, yachtMoneyPerSecond: 1e19, trollPointsPerSecond: 1e19, hopiumPerSecond: -6e14, knowledgePerSecond: 980000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/kratos.jpg`,
         isFight: true,
+        isKey: true,
+        autoBattlePower: 6.7e12,
+
     },
     {
         name: `Complex Skill Trees`,
@@ -929,6 +944,7 @@ const upgrades = [
         earnings: { copiumPerSecond: 2e18, delusionPerSecond: 3e18, yachtMoneyPerSecond: 0, trollPointsPerSecond: 3e19, hopiumPerSecond: 0, knowledgePerSecond: 87000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/the_rock_photo.jpg`,                
         message: `Don't worry, you never have to fight The Rock. He would beat you to a pulp.`,
+        isKey: true,
 
     },
     {
@@ -943,6 +959,8 @@ const upgrades = [
         earnings: { copiumPerSecond: 0, delusionPerSecond: 6.9e20, yachtMoneyPerSecond: 0, trollPointsPerSecond: 6.9e20, hopiumPerSecond: -6.9e15, knowledgePerSecond: 1.69e6, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/deadpool.jpg`,
         isFight: true,
+        isKey: true,
+        autoBattlePower: 6.9e22,
     },
     {
         name: `What The`,
@@ -1006,6 +1024,8 @@ const upgrades = [
         earnings: { copiumPerSecond: 1.5e24, delusionPerSecond: 0, yachtMoneyPerSecond: 1.5e24, trollPointsPerSecond: 0, hopiumPerSecond: -1e20, knowledgePerSecond: 1e7, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/chuck_norris.jpg`,
         isFight: true,
+        isKey: true,
+        autoBattlePower: 5e16,
     },
     {
         name: `Surprise Package`,
@@ -1047,6 +1067,8 @@ const upgrades = [
                 <p>Each battle, every struggle—it was all to forge you into the warrior you’ve become today. Not for my sake, but for the fate of the multiverse. There’s a darkness far greater than anything you’ve faced—a force that threatens all of existence. And now…</p>
                 <p><strong>Vegeta:</strong> You’re ready. My goal was for you to grow strong enough to stop her. Now, go do it. Save the multiverse!</p>
                 <p>With those words, Vegeta collapses, a proud but weary smile on his face, knowing his mission is complete.</p>`,
+        isKey: true,
+        autoBattlePower: 1e18,
     },
     {
         name: `Oedipus`,
@@ -1156,6 +1178,8 @@ const upgrades = [
                 <p><strong>Kaguya:</strong> Power alone was never the answer. You sought satisfaction, but all you found was more longing. What is it that you truly seek, if not the ultimate satisfaction? Why does the light of your triumph feel so dim?</p>
                 <p>With these words, Kaguya fades away, leaving you alone with your thoughts, victorious but unfulfilled, questioning the true meaning of the path you've chosen.</p>`,
         achievement: 'Save the Multiverse',
+        isKey: true,
+        autoBattlePower: 6.66e23,
     },
     {         
         name: `Not the final boss?`,
@@ -1237,6 +1261,8 @@ const upgrades = [
                         Saitama walks away, still smiling, while you remain motionless. You have everything... and yet nothing. The fight is over, and with it, the purpose you had built your life around. What’s left? What can possibly come next? 
                     </p>`,
         achievement: 'Hang Up Boxing Gloves',
+        isKey: true,
+        autoBattlePower: 1e25,
     },
     {         
         name: `Smash That Like Button`,
@@ -1303,13 +1329,13 @@ const upgrades = [
     {         
         name: `Puppy Love`,
         cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0.025 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 4e36, hopiumPerSecond: 2e47, knowledgePerSecond: 2e13, powerPerSecond: 0, serenityPerSecond: 0.0001 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 4e36, hopiumPerSecond: 1e47, knowledgePerSecond: 2e13, powerPerSecond: 0, serenityPerSecond: 0.0001 },
         img: `imgs/puppy_love.jpg`,
     },
     {         
         name: `Love Shop`,
         cost: { copium: 0, delusion: 0, yachtMoney: 3e96, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0.1 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 2e47, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0.00002 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 1e47, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0.00002 },
         img: `imgs/love_shop.jpg`,
     },
     {         
@@ -1331,20 +1357,23 @@ const upgrades = [
                         <li><strong>Serenity</strong> - Provides additional <strong>Focus</strong>. More serenity allows more balls to go out of bounds before you lose focus and fail the meditation.</li>
                     </ul>
                     <p>Use your resources wisely, maintain your inner focus, and explore the vast array of perspectives unlocked through meditation. Each successful meditation brings you one step closer to deeper understanding and metaphysical mastery.</p>`,
+        isKey: true,
         
     },
     {         
         name: `Yin and Yang`,
         cost: { copium: 1e97, delusion: 1e97, yachtMoney: 1e97, trollPoints: 1e97, hopium: 0, knowledge: 0, power: 0, serenity: 1 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 3e13, powerPerSecond: 0, serenityPerSecond: 0.0001 },
-        img: `imgs/yin_yang.png`,
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 1e47, knowledgePerSecond: 3e13, powerPerSecond: 0, serenityPerSecond: 0.0003 },
+        img: `imgs/arena_yin_yang.png`,
         isMeditation: true,
         achievement: 'Focus Your Mind',
+        isKey: true,
+        message: `Congratulations on your first successful meditation! Through this meditation, you have gained a deeper understanding of Yin and Yang, the dual forces that create balance and harmony in the universe. You have learned that <strong>opposites are interconnected</strong>, and each one gives rise to the other. There is no light without darkness, no strength without softness, and no action without stillness. By embracing both sides, you now understand that balance is the key to living in harmony with yourself and the world around you. Continue to seek balance in all things, and you will find peace.`,
     },
     {         
         name: `Ignoring Stereotypes`,
         cost: { copium: 1e98, delusion: 1e98, yachtMoney: 1e98, trollPoints: 1e98, hopium: 0, knowledge: 0, power: 0, serenity: 0.5 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 2e14, powerPerSecond: 0, serenityPerSecond: 0.00005 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 2e14, powerPerSecond: 0, serenityPerSecond: 0.0001 },
         img: `imgs/successful_black_guy.jpg`,
     },
     {         
@@ -1353,5 +1382,42 @@ const upgrades = [
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 3e14, powerPerSecond: 0, serenityPerSecond: 0.00006 },
         img: `imgs/attack_the_day.jpg`,
     },
-
+    {         
+        name: `Infinite Embrace`,
+        cost: { copium: 1e100, delusion: 1e100, yachtMoney: 1e100, trollPoints: 1e100, hopium: 0, knowledge: 0, power: 0, serenity: 100 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 1e47, knowledgePerSecond: 1e14, powerPerSecond: 0, serenityPerSecond: 0.001 },
+        img: `imgs/infinite_embrace.jpg`,
+        message: `<p>Once you reach 1000 serenity, the Infinite Embrace will become available, offering you the chance to perform a sacred act that will resonate throughout the multiverse.</p>
+                <p>Physically, the Infinite Embrace resets all of your progress—prestiges, god modes, big crunches, the Hall of Knowledge, and the Hall of Power. But metaphysically, it is an infusion of boundless love into the fabric of existence. Each time you perform this ritual, you strengthen the universe, spreading warmth, harmony, and love to every future incarnation.</p>
+                <p><strong>The more serenity you accumulate in this multiverse, the more Love Points will be injected during the embrace.</strong> These Love Points are permanent, ensuring that your connection to the multiverse grows with each cycle, and they can be spent in the Hall of Love, which remains unlocked across all Infinite Embraces.</p>
+                <p>Through this act, the multiverse is shaped by your love and serenity, enriching all future cycles. Your achievements and Love Points will remain intact, continuing to grow as you transcend each cycle. The embrace is a cosmic renewal, where love fuels the multiverse and your journey within it.</p>`,
+    },
+    {         
+        name: `Existentialism`,
+        cost: { copium: 1e100, delusion: 1e100, yachtMoney: 1e100, trollPoints: 1e100, hopium: 0, knowledge: 0, power: 0, serenity: 5 },
+        earnings: { copiumPerSecond: 1e41, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 1e47, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0.0009 },
+        img: `imgs/arena_existentialism.png`,
+        isMeditation: true,
+        isKey: true,
+        message: `You've uncovered the truth that <strong>meaning in life is not preordained</strong>—it is something you must create for yourself. In a vast and indifferent universe, you alone have the freedom to choose your purpose. Through this meditation, you’ve learned that the path to fulfillment is in embracing your freedom and accepting responsibility for your choices. Seek meaning in your actions, and the universe will respond.`,
+    },
+    {         
+        name: `Altruism`,
+        cost: { copium: 1e100, delusion: 1e100, yachtMoney: 1e100, trollPoints: 1e100, hopium: 0, knowledge: 0, power: 0, serenity: 15 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 1e41, trollPointsPerSecond: 0, hopiumPerSecond: 2e47, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0.003 },
+        img: `imgs/arena_altruism.png`,
+        isMeditation: true,
+        isKey: true,
+        message: `Through this meditation, you’ve learned that <strong>true fulfillment comes from selfless acts</strong> and putting the well-being of others above your own. Altruism teaches that by lifting others up, we create a better world for everyone. Compassion, generosity, and kindness ripple through the world, leaving a lasting positive impact. Continue to give without expectation, and you’ll find the world gives back in ways you never imagined.`,
+    },
+    {         
+        name: `Rastafarianism`,
+        cost: { copium: 1e102, delusion: 1e102, yachtMoney: 1e102, trollPoints: 1e102, hopium: 0, knowledge: 0, power: 0, serenity: 15 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1e41, hopiumPerSecond: 4.2e47, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0.0042 },
+        img: `imgs/arena_rastafarianism.png`,
+        isMeditation: true,
+        isKey: true,
+        message: `In this meditation, you’ve connected with the <strong>spiritual power of unity, peace, and respect for all living things</strong>. Rastafarianism teaches the importance of freedom, self-awareness, and living in harmony with nature. By embracing these values, you have strengthened your bond with the earth and your community. Walk in the light of peace and continue to cultivate a deep respect for life in all its forms.`,
+    },
+    
 ];

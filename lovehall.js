@@ -1,49 +1,64 @@
 
 const loveHallSkills = [
     // 2.828x Level - Bell's Inequality for quantum entangled particle correlation
-    { name: 'Delusion Echo', cost: 0.25, description: '5x Delusion gain.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 1 },
-    { name: 'Copium Surge', cost: 0.25, description: '5x Copium gain.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 1 },
+    { name: 'Delusion Surge', cost: 0.2, description: '18x Delusion gain.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 1 },
+    { name: 'Copium Surge', cost: 0.2, description: '18x Copium gain.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 1 },
 
-    { name: 'Twenty-Fivefold Ascension', cost: 2, description: 'Gain up to 25 God-Mode levels per Ascension.', unlocked: false, level: 'Quantum Harmony (2.8x)',  pair: 2 },
-    { name: 'Twenty-Fivefold Transcendence', cost: 2, description: 'Gain up to 25 PU God-Mode levels per Transcendence.', unlocked: false, level: 'Quantum Harmony (2.8x)',  pair: 2 },
+    { name: 'Twenty-Fivefold Ascension', cost: 1.2, description: 'Gain up to 25 God-Mode levels per Ascension.', unlocked: false, level: 'Quantum Harmony (2.8x)',  pair: 2 },
+    { name: 'Twenty-Fivefold Transcendence', cost: 1.2, description: 'Gain up to 25 PU God-Mode levels per Transcendence.', unlocked: false, level: 'Quantum Harmony (2.8x)',  pair: 2 },
 
-    { name: 'Achievement Boost', cost: 3, description: 'Achievement Multiplier increases to 1.5% per achievement.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 3 },
-    { name: 'Cosmic Embrace', cost: 3, description: 'Gain +1 Love Point every embrace.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 3 },
+    { name: 'Achievement Boost', cost: 1.7, description: 'Achievement Multiplier increased to 1.5% per achievement.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 3 },
+    { name: 'Cosmic Embrace', cost: 1.7, description: 'Gain +1 Love Point every embrace.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 3 },
 
     { name: 'Serenity Flow', cost: 5, description: 'Hopium gain is multiplied by square root of Serenity.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 4 },
-    { name: 'Serene Boost', cost: 5, description: '2x Serenity gain.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 4 },
+    { name: 'Serene Boost', cost: 5, description: '3x Serenity gain.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 4 },
 
     { name: 'Power Infusion', cost: 15, description: '3x Power gain.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 5 },
-    { name: 'Love Surge', cost: 15, description: 'Gain +2 Love Points every embrace.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 5 },
+    { name: 'Soulbound Embrace', cost: 15, description: 'Gain +2 Love Points every embrace.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 5 },
 
-    { name: 'Achievement Multiplier Boost', cost: 50, description: 'Achievement multiplier becomes multiplicative instead of additive.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 6 },
+    { name: 'Achievement Hypercharge', cost: 50, description: 'Achievement multiplier becomes multiplicative instead of additive.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 6 },
     { name: 'Perfect PU God-Mode', cost: 50, description: 'Make PU God-Mode perfect with diminishing returns at 99.2%.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 6 },
 
     // 27x Level - dimensions in string theory
-    { name: 'Knowledge Infusion', cost: 1, description: '8x Knowledge gain.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 21 },
-    { name: 'Resource Boost', cost: 1, description: '8x gain to first 4 resources.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 21 },
+    { name: 'Yacht Money Surge', cost: 0.05, description: '12x Yacht Money gain.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 20 },
+    { name: 'Troll Points Surge', cost: 0.05, description: '12x Troll Points gain.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 20 },
+
+    { name: 'Knowledge Infusion', cost: 0.6, description: '10x Knowledge gain.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 21 },
+    { name: 'Basic Resource Boost', cost: 0.6, description: '8x gain to first 4 resources.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 21 },
 
     { name: 'Hall of Knowledge Auto-Buy', cost: 1.5, description: 'Automatically buy upgrades from the Hall of Knowledge.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 22 },
     { name: 'Hall of Power Auto-Buy', cost: 1.5, description: 'Automatically buy upgrades from the Hall of Power.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 22 },
 
-    { name: 'Auto Fight', cost: 5, description: 'Spare opponents who are far weaker than you and auto unlock the upgrades.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 23 },
-    { name: 'Hopium Fix', cost: 5, description: 'Fix Hopium in the same way Delusion is fixed.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 23 },
+    { name: 'Overwhelming Mercy', cost: 8, description: 'Spare opponents who are far weaker than you and auto unlock the upgrades.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 23 },
+    { name: 'Hopium Fix', cost: 8, description: 'Fix Hopium in the same way Delusion is cured.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 23 },
 
-    { name: 'Serenity Gain (Copium)', cost: 10, description: 'Serenity gain is multiplied by log(Copium)/10.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 24 },
-    { name: 'Serenity Gain (Delusion)', cost: 10, description: 'Serenity gain is multiplied by log(Delusion)/10.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 24 },
+    { name: 'Serenity Gain (Copium)', cost: 10, description: 'Serenity gain is multiplied by log2(Copium)/100.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 24 },
+    { name: 'Serenity Gain (Delusion)', cost: 10, description: 'Serenity gain is multiplied by log2(Delusion)/100.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 24 },
 
-    { name: 'Serenity Gain (Yacht Money)', cost: 10, description: 'Serenity gain is multiplied by log(Yacht Money)/10.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 25 },
-    { name: 'Serenity Gain (Troll Points)', cost: 10, description: 'Serenity gain is multiplied by log(Troll Points)/10.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 25 },
+    { name: 'Serenity Gain (Yacht Money)', cost: 10, description: 'Serenity gain is multiplied by log2(Yacht Money)/100.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 25 },
+    { name: 'Serenity Gain (Troll Points)', cost: 10, description: 'Serenity gain is multiplied by log2(Troll Points)/100.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 25 },
 
     // 42x Level - the meaning of life
-    { name: 'Hopium Trade', cost: 1.5, description: 'Trade Hopium for any of the first 4 resources at a 1:1 ratio.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 41 },
-    { name: 'Auto Prestige', cost: 1.5, description: 'Automatically apply Prestige Mult without resetting.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 41 },
+    { name: 'Deadpool Embrace', cost: 0.1, description: 'Deadpool revives do not reset on Infinite Embrace.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 41 },
+    { name: 'Rewarding Victories', cost: 0.1, description: 'Battle upgrades give +40% rewards.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 41 },
 
-    { name: 'Serenity Multiplier', cost: 8, description: 'Multiply Serenity by log10 of Love Points.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 42 },
-    { name: 'Auto Hopium Trade', cost: 8, description: 'Every second, automatically trade Hopium for all lower resources.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 42 },
+    { name: 'Crunch Knowledge', cost: 0.3, description: 'Big Crunch extra knowledge mult is now ^(2/3) instead of ^(1/2).', unlocked: false, level: 'Cosmic Truth (42x)', pair: 42 },
+    { name: 'Stellar Meditation', cost: 0.3, description: 'Increase all resource generation by 10% after each successful meditation.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 42 },
 
-    { name: 'Knowledge Exchange', cost: 15, description: 'Trade Hopium for Knowledge at a 1e20:1 ratio.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 43 },
-    { name: 'Big Crunch Factor Boost', cost: 15, description: 'Increase Big Crunch factor from 2 to 2.1.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 43 }
+    { name: 'Raise That Soft Cap', cost: 1.19, description: 'Increase mini games soft cap to 24 hours', unlocked: false, level: 'Cosmic Truth (42x)', pair: 43 },
+    { name: 'Rewarding Meditations', cost: 1.19, description: 'Meditations give +40% rewards', unlocked: false, level: 'Cosmic Truth (42x)', pair: 43 },
+
+    { name: 'Hopium Trade', cost: 4.2, description: 'Trade Hopium for any of the first 4 resources at a 1:1 ratio.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 44 },
+    { name: 'Infinite Prestige', cost: 4.2, description: 'Automatically apply Prestige Mult without resetting. (Recommended)', unlocked: false, level: 'Cosmic Truth (42x)', pair: 44 },
+
+    // { name: 'Resonance of Love', cost: 8, description: 'Multiply Serenity by log10 of current Love Points.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 45 },
+    // { name: 'Auto Hopium Trade', cost: 8, description: 'Every second, automatically trade 1% Hopium for each lower resource.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 45 },
+
+    // { name: 'Knowledge Exchange', cost: 15, description: 'Trade Hopium for Knowledge at a 1e20:1 ratio.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 46 },
+    // { name: 'Big Crunch Factor Boost', cost: 15, description: 'Increase Big Crunch factor from 2 to 2.1.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 46 },
+
+    // { name: 'Temporal Drag', cost: 16, description: 'During meditation, decrease ball velocity by 25%.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 47 },
+    // { name: 'Look Past Distractions', cost: 16, description: 'During meditation, decrease # of balls by 1.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 47 },
 ];
 
 
@@ -51,7 +66,7 @@ const loveHallSkills = [
 const loveHallSkillsContainer = document.getElementById('loveHallSkills');
 const lovePointsDisplay = document.getElementById('lovePointsDisplay'); // Placeholder for Love Points display
 
-function unlockLoveHallSkill(skill) {
+function unlockLoveHallSkill(skill, duringLoad = false) {
     skill.unlocked = true;
     const skillDiv = document.querySelector(`.lovepair-skill[data-skill-name="${skill.name}"]`);
 
@@ -89,6 +104,234 @@ function unlockLoveHallSkill(skill) {
                 skillRow.style.setProperty('--glowing-line-color', '#ff66b2'); // Pink glow
             }
         }
+
+
+        
+        switch (skill.name) {
+            case 'Delusion Surge':
+                delusionSurgeMultiplier = 18;
+                if(!duringLoad){
+                    updateEffectiveMultipliers();
+                }
+                break;
+                
+            case 'Copium Surge':
+                copiumSurgeMultiplier = 18;
+                if(!duringLoad){
+                    updateEffectiveMultipliers();
+                }
+                break;
+        
+            case 'Twenty-Fivefold Ascension':
+                numAscensionUpgrades = Math.max(numAscensionUpgrades, 25);
+                break;
+        
+            case 'Twenty-Fivefold Transcendence':
+                numPUAscensionUpgrades = Math.max(numPUAscensionUpgrades, 25);
+                break;
+        
+            case 'Achievement Boost':
+                achievementBoostValue = 0.015; // Example: 1.5% achievement boost
+                calculateAchievementMultiplier();
+                if(!duringLoad){
+                    updateEffectiveMultipliers();
+                }
+                break;
+        
+            case 'Cosmic Embrace':
+                embraceExtraLovePoints += 1;
+                break;
+        
+            case 'Serenity Flow':
+                serenityFlowSkill = true;
+                if(!duringLoad){
+                    updateEffectiveMultipliers();
+                }
+                break;
+        
+            case 'Serene Boost':
+                serenityBoostMultiplier = 3; // Example: 3x Serenity gain
+                if(!duringLoad){
+                    updateEffectiveMultipliers();
+                }
+                break;
+        
+            case 'Power Infusion':
+                powerInfusionMultiplier = 3;
+                if(!duringLoad){
+                    updateEffectiveMultipliers();
+                }
+                break;
+        
+            case 'Soulbound Embrace':
+                embraceExtraLovePoints += 2;
+                break;
+        
+            case 'Achievement Hypercharge':
+                achievementHyperchargeSkill = true;
+                calculateAchievementMultiplier();
+                if(!duringLoad){
+                    updateEffectiveMultipliers();
+                }
+                break;
+
+            case 'Perfect PU God-Mode':
+                perfectPUGodModeSkill = true;
+                puGodMultiplier = calculatePUGodModeMultiplier(puGodLevel);
+                if (!duringLoad) {
+                    updateMultipliersDisplay();
+                    updateEffectiveMultipliers();
+                }
+                break;
+
+            case 'Yacht Money Surge':
+                yachtMoneySurgeMultiplier = 12;
+                if(!duringLoad){
+                    updateEffectiveMultipliers();
+                }
+                break;
+                
+            case 'Troll Points Surge':
+                trollPointsSurgeMultiplier = 12;
+                if(!duringLoad){
+                    updateEffectiveMultipliers();
+                }
+                break;
+        
+            case 'Knowledge Infusion':
+                knowledgeInfusionMultiplier = 10;
+                if(!duringLoad){
+                    updateEffectiveMultipliers();
+                }
+                break;
+        
+            case 'Basic Resource Boost':
+                basicResourceBoost = 8;
+                if(!duringLoad){
+                    updateEffectiveMultipliers();
+                }
+                break;
+        
+            case 'Hall of Knowledge Auto-Buy':
+                purchaseLibrarySkillsInterval = setInterval(purchaseLibrarySkills, 1000);
+                break;
+        
+            case 'Hall of Power Auto-Buy':
+                purchasePowerHallSkillsInterval = setInterval(purchasePowerHallSkills, 1000);
+                break;
+        
+            case 'Overwhelming Mercy':
+                autoFightSkill = true;
+                break;
+        
+            case 'Hopium Fix':
+                document.getElementById('toggleHopiumLabel').classList.remove('hidden');
+                // Check the state of hopium and update the switch position accordingly
+                const toggleHopium = document.getElementById('toggleHopium');
+                toggleHopium.checked = hopiumPerSecond >= 0;
+                break;
+        
+            case 'Serenity Gain (Copium)':
+                serenityGainCopium = true;
+                if(!duringLoad){
+                    updateEffectiveMultipliers();
+                }
+                break;
+        
+            case 'Serenity Gain (Delusion)':
+                serenityGainDelusion = true;
+                if(!duringLoad){
+                    updateEffectiveMultipliers();
+                }
+                break;
+        
+            case 'Serenity Gain (Yacht Money)':
+                serenityGainYachtMoney = true;
+                if(!duringLoad){
+                    updateEffectiveMultipliers();
+                }
+                break;
+        
+            case 'Serenity Gain (Troll Points)':
+                serenityGainTrollPoints = true;
+                if(!duringLoad){
+                    updateEffectiveMultipliers();
+                }
+                break;
+
+            case 'Deadpool Embrace':
+                deadpoolRevivesSkill = true;
+                break;
+
+            case 'Rewarding Victories':
+                rewardingVictoriesSkill = true;
+                break;
+
+
+            case 'Crunch Knowledge':
+                crunchKnowledgeSkill = true;
+                if(!duringLoad){
+                    updateEffectiveMultipliers();
+                }
+                break;
+
+            case 'Stellar Meditation':
+                stellarMeditationSkill = true;
+                break;
+
+            case 'Raise That Soft Cap':
+                miniGamesSoftCapHrs = Math.max(miniGamesSoftCapHrs, 24);
+                break;
+
+            case 'Rewarding Meditations':
+                rewardingMeditationsSkill = true;
+                break;
+        
+            case 'Hopium Trade':
+                addHopiumToFromResource();
+                break;
+        
+            case 'Infinite Prestige':
+                infinitePrestigeSkill = true;
+                break;
+        
+            case 'Resonance of Love':
+                resonanceOfLoveSkill = true;
+                if(!duringLoad){
+                    updateEffectiveMultipliers();
+                }
+                break;
+        
+            case 'Auto Hopium Trade':
+                // Logic for Auto Hopium Trade skill
+                //enableAutoHopiumTrade(); // Example: Automatically trade Hopium for all lower resources
+                break;
+        
+            case 'Knowledge Exchange':
+                // Logic for Knowledge Exchange skill
+                //tradeHopiumForKnowledge(1e20); // Example: Trade Hopium for Knowledge at 1e20:1 ratio
+                break;
+        
+            case 'Big Crunch Factor Boost':
+                // Logic for Big Crunch Factor Boost skill
+                //increaseBigCrunchFactor(2.1); // Example: Increase Big Crunch factor from 2 to 2.1
+                break;
+        
+
+            case 'Temporal Drag':
+                // 'During meditation, decrease ball velocity by 25%.'
+                //tradeHopiumForKnowledge(1e20); // Example: Trade Hopium for Knowledge at 1e20:1 ratio
+                break;
+        
+            case 'Look Past Distractions':
+                // Decrease # of balls by 1
+                break;
+                
+            default:
+                console.log('Unknown skill:', skill.name);
+                break;
+        }
+        
     }
 }
 
@@ -187,12 +430,21 @@ function initializeLoveHallSkills() {
                     skillDiv.classList.add('purchased');
                 }
 
-                skillDiv.addEventListener('click', () => {
+                skillDiv.addEventListener('click', async () => {
                     if (!skill.unlocked && lovePoints >= skill.cost) {
-                        lovePoints -= skill.cost;
-                        unlockLoveHallSkill(skill);
-                        saveGameState(); // Assuming this saves the game state
-                        updateLoveHallSkillDisplay(); // Update after unlocking
+                        // Only show the confirmation modal if loveHallUnlocked is false
+                        const result = await showMessageModal(
+                            'Confirm Love Skill Unlock',
+                            `Do you want to unlock ${skill.name} for ${formatNumber(skill.cost)} Love Points? Remember - the paired skill will increase in cost!`,
+                            true,
+                            false
+                        );
+                        if (result) {
+                            lovePoints -= skill.cost;
+                            unlockLoveHallSkill(skill);
+                            saveGameState(); // Assuming this saves the game state
+                            updateLoveHallSkillDisplay(); // Update after unlocking
+                        }
                     } else if (lovePoints < skill.cost) {
                         showStatusMessage(skillDiv, 'Insufficient Love Points to unlock this skill.', false);
                     }
@@ -218,6 +470,10 @@ function outsideLoveHallClickListener(event) {
 function openLoveHall() {
     const loveHallOverlay = document.getElementById('loveHallOverlay');
     loveHallOverlay.style.display = 'flex';
+
+    if(crunchTimer < 3.1){
+        unlockAchievement('Eager to Love');
+    }
 
     initializeLoveHallSkills();
     updateLoveHallSkillDisplay();
@@ -247,3 +503,106 @@ document.addEventListener('DOMContentLoaded', () => {
         closeLoveHall();
     });
 });
+
+let purchaseLibrarySkillsInterval;
+
+function purchaseLibrarySkills() {
+    let allSkillsUnlocked = true; // Track if all skills are unlocked
+
+    librarySkills.forEach(skill => {
+        // If the skill is not yet unlocked and we can afford it
+        if (!skill.unlocked && knowledge >= skill.cost) {
+            // Subtract the cost from knowledge
+            knowledge -= skill.cost;
+
+            // Unlock the skill by calling the provided function
+            unlockLibrarySkill(skill, true);
+            console.log(`Purchased: ${skill.name}`);
+
+            // Show popup notification for the auto-purchased skill with light brown color
+            showPopupTooltip(`Auto-Purchased Library Skill: ${skill.name}`, '#6F4E37'); // Light brown (tan)
+
+            // Mark the skill as unlocked after purchasing
+            skill.unlocked = true;
+        }
+
+        // If any skill is not yet unlocked, set allSkillsUnlocked to false
+        if (!skill.unlocked) {
+            allSkillsUnlocked = false;
+        }
+    });
+
+    // If all skills are unlocked, clear the interval to stop checking
+    if (allSkillsUnlocked) {
+        clearInterval(purchaseLibrarySkillsInterval);
+        console.log("All skills unlocked! Stopping the purchase loop.");
+    }
+}
+
+let purchasePowerHallSkillsInterval;
+
+function purchasePowerHallSkills() {
+    let allSkillsUnlocked = true; // Track if all skills are unlocked
+
+    powerHallSkills.forEach(skill => {
+        // If the skill is not yet unlocked and we can afford it
+        if (!skill.unlocked && power >= skill.cost) {
+            // Subtract the cost from knowledge
+            power -= skill.cost;
+
+            // Unlock the skill by calling the provided function
+            unlockPowerHallSkill(skill, true);
+            console.log(`Purchased: ${skill.name}`);
+
+            showPopupTooltip(`Auto-Purchased Power Hall Skill: ${skill.name}`, '#FFBF00');
+
+            // Mark the skill as unlocked after purchasing
+            skill.unlocked = true;
+        }
+
+        // If any skill is not yet unlocked, set allSkillsUnlocked to false
+        if (!skill.unlocked) {
+            allSkillsUnlocked = false;
+        }
+    });
+
+    // If all skills are unlocked, clear the interval to stop checking
+    if (allSkillsUnlocked) {
+        clearInterval(purchasePowerHallSkillsInterval);
+        console.log("All Power Hall skills unlocked! Stopping the purchase loop.");
+    }
+}
+
+// Function to dynamically add 'Hopium' as an option to the 'fromResource' dropdown
+function addHopiumToFromResource() {
+    const fromResourceDropdown = document.getElementById('fromResource');
+    
+    // Check if 'Hopium' is already in the dropdown to avoid duplicates
+    let hopiumOptionExists = false;
+    for (let i = 0; i < fromResourceDropdown.options.length; i++) {
+        if (fromResourceDropdown.options[i].value === 'hopium') {
+            hopiumOptionExists = true;
+            break;
+        }
+    }
+    
+    // If 'Hopium' is not present, add it as an option
+    if (!hopiumOptionExists) {
+        const hopiumOption = document.createElement('option');
+        hopiumOption.value = 'hopium';
+        hopiumOption.text = 'Hopium';
+        fromResourceDropdown.appendChild(hopiumOption); // Add Hopium to the dropdown
+        console.log('Hopium added to From Resource options.');
+    }
+}
+
+// Function to remove 'Hopium' from the 'fromResource' dropdown if needed
+function removeHopiumFromFromResource() {
+    const fromResourceDropdown = document.getElementById('fromResource');
+    const hopiumOption = Array.from(fromResourceDropdown.options).find(option => option.value === 'hopium');
+    
+    if (hopiumOption) {
+        fromResourceDropdown.removeChild(hopiumOption);
+        console.log('Hopium removed from From Resource options.');
+    }
+}

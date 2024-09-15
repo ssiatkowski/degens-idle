@@ -24,7 +24,7 @@ const librarySkills = [
     { name: 'Double Ascension', cost: 20, description: 'Gain up to 2 God-Mode levels per Ascension. Also select up to 2 upgrades to enhance to God Mode.', unlocked: false, level: 'Artificial Intelligence' },
     { name: 'Cookie Clicker Clicker', cost: 350, description: 'After Prestiging or Ascending, automatically click the cookie 10 times per second for 15 seconds.', unlocked: false, level: 'Artificial Intelligence' },
     { name: 'Quadruple Ascension', cost: 4e6, description: 'Gain up to 4 God-Mode levels per Ascension. Also select up to 4 upgrades to enhance to God Mode.', unlocked: false, level: 'Artificial Intelligence' },
-    { name: 'Septuple Transendence', cost: 7e19, description: 'Gain up to 7 Parallel Universe God-Mode levels per Transendence. Also select up to 7 upgrades to enhance to PU God Mode.', unlocked: false, level: 'Artificial Intelligence' },
+    { name: 'Septuple Transcendence', cost: 7e19, description: 'Gain up to 7 Parallel Universe God-Mode levels per Transcendence. Also select up to 7 upgrades to enhance to PU God Mode.', unlocked: false, level: 'Artificial Intelligence' },
     { name: 'Tenfold Ascension', cost: 1e25, description: 'Gain up to 10 God-Mode levels per Ascension. Also select up to 10 upgrades to enhance to God Mode.', unlocked: false, level: 'Artificial Intelligence' },
 
     { name: 'Autobuy Upgrades', cost: 3e21, description: `Will purchase affordable Marked upgrades (even unseen) every 1.5 seconds. (Can toggle in Automation Settings)`, unlocked: false, level: 'Robotics' },
@@ -158,12 +158,12 @@ function unlockLibrarySkill(skill, duringLoad = false) {
 
             case 'Much Less Diminishing Parallel God-Mode':
                 lessDiminishingPUGodModeSkill = true;
+                puGodMultiplier = calculatePUGodModeMultiplier(puGodLevel);
                 if (!duringLoad) {
                     showMessageModal('Much Less Diminishing Parallel God-Mode', 'Parallel God-Mode uses the same equation: <strong>GodModeMultiplier = &prod;<sub>i=0</sub><sup>gmLevel - 1</sup> &#40;1 + 0.25 &times; diminishFactor<sup>i</sup>&#41</strong><br><br>In the quantum entangled universe, you discover that there is less interference, allowing you to scale the diminishing returns much more effectively. Graph shows the Parallel Universe God-Mode Multiplier scaling when diminishing at 97.5% (original) vs 98.5% (Optimized God-Mode) vs 99.0% (Optimized Parallel God-Mode). As you can see, at higher Parallel Universe God-Mode levels this is quite insane! The multiplier is almost 6 orders of magnitude greater at PU God-Mode Level 250.', false, false, 'imgs/graphs/pugm_diminishing.png')
+                    updateMultipliersDisplay();
+                    updateEffectiveMultipliers();
                 }
-                puGodMultiplier = calculatePUGodModeMultiplier(puGodLevel);
-                updateMultipliersDisplay();
-                updateEffectiveMultipliers();
                 break;
 
             case 'Linear Ascension':
@@ -213,7 +213,7 @@ function unlockLibrarySkill(skill, duringLoad = false) {
                 numAscensionUpgrades = Math.max(numAscensionUpgrades, 4);
                 break;
 
-            case 'Septuple Transendence':
+            case 'Septuple Transcendence':
                 numPUAscensionUpgrades = Math.max(numPUAscensionUpgrades, 7);
                 break;
                 
@@ -371,12 +371,16 @@ function initializeSkills() {
             }
             skillDiv.addEventListener('click', async () => {
                 if (!skill.unlocked && knowledge >= skill.cost) {
-                    const result = await showMessageModal(
-                        'Confirm Unlock',
-                        `Do you want to unlock ${skill.name} for ${formatNumber(skill.cost)} Knowledge?`,
-                        true,
-                        false
-                    );
+                    let result = true;  // Default to true if loveHallUnlocked is true
+                    if (!loveHallUnlocked) {
+                        // Only show the confirmation modal if loveHallUnlocked is false
+                        result = await showMessageModal(
+                            'Confirm Unlock',
+                            `Do you want to unlock ${skill.name} for ${formatNumber(skill.cost)} Knowledge?`,
+                            true,
+                            false
+                        );
+                    }
                     if (result) {
                         knowledge -= skill.cost;
                         unlockLibrarySkill(skill);

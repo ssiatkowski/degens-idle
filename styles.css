@@ -49,6 +49,14 @@ html, body {
     color: #330000; /* Dark red text color */
 }
 
+/* Modal for Infinite Embrace (subtle pink) */
+.modal-embrace {
+    background-color: #1e1e1e; /* Same dark background as original */
+    border: 1px solid #cc6699; /* Subtle pink border */
+    color: #e0e0e0; /* Same light text color as original */
+}
+
+
 /* The Close Button */
 .close-button {
     color: #e0e0e0;
@@ -910,6 +918,22 @@ button.disabled {
     box-shadow: 0px 0px 7px 5px #a4421e, 0px 0px 7px 3px #a73c15 inset;
 }
 
+/* Infinite Embrace Button Styling */
+#infiniteEmbraceButton.custom-button {
+    color: #ff6fae; /* Pink color */
+    border-color: #ff9fc5;
+    font-size: 0.9em;
+    background: rgb(13,5,12);
+    background: linear-gradient(180deg, rgba(13,5,12,1) 0%, rgba(89,46,87,1) 77%, rgba(153,82,149,1) 100%);
+}
+
+#infiniteEmbraceButton.custom-button:hover {
+    border-color: #ffa7d0;
+    color: #ffc1e1;
+    box-shadow: 0px 0px 7px 5px #ff76b5, 0px 0px 7px 3px #ff85c2 inset;
+}
+
+
 
 
 .god-mode-text {
@@ -1195,3 +1219,25 @@ input:checked + .slider:before {
     opacity: 0;
 }
 
+
+.heart-mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(255, 255, 255, 0);
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.heart-mask img {
+    width: 100vw;  /* Start with the width filling the viewport */
+    height: auto;  /* Keep the aspect ratio */
+    transform: scale(50);  /* Start much larger than the viewport */
+    transform-origin: center;  /* Ensure the heart scales from its center */
+    transition: transform 3s ease-in-out;  /* Smooth transition for shrinking and expanding */
+}

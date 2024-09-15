@@ -231,12 +231,16 @@ function initializePowerHallSkills() {
             }
             skillDiv.addEventListener('click', async () => {
                 if (!skill.unlocked && power >= skill.cost) {
-                    const result = await showMessageModal(
-                        'Confirm Unlock',
-                        `Do you want to unlock ${skill.name} for ${formatNumber(skill.cost)} Power?`,
-                        true,
-                        false
-                    );
+                    let result = true;  // Default to true if loveHallUnlocked is true
+
+                    if (!loveHallUnlocked) {
+                        result = await showMessageModal(
+                            'Confirm Unlock',
+                            `Do you want to unlock ${skill.name} for ${formatNumber(skill.cost)} Power?`,
+                            true,
+                            false
+                        );
+                    }
                     if (result) {
                         power -= skill.cost;
                         unlockPowerHallSkill(skill);

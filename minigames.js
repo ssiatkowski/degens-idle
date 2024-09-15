@@ -19,9 +19,13 @@ const miniGameTimeouts = {
 const miniGameIntervals = {};
 
 let numMathSolves = 0;
+let numSpeedTaps = 0;
+let numMemorizedDots = 0;
 
 let lastClickedBoxIndex = null;
 let consecutiveClicks = 0;
+
+let miniGamesSoftCapHrs = 10;
 
 // Function to play a mini-game of a given type
 function playMiniGame(gameType) {
@@ -42,10 +46,10 @@ function playMiniGame(gameType) {
 
     // Define the soft cap for each mini-game
     const softCaps = {
-        speed: Math.max(Math.abs(effectiveCopiumPerSecond) * 10 * 60 * 60, 100),  // 10 hours of copium per second
-        memory: Math.max(Math.abs(effectiveDelusionPerSecond) * 10 * 60 * 60, 100),  // 10 hours of delusion per second
-        math: Math.max(Math.abs(effectiveYachtMoneyPerSecond) * 10 * 60 * 60, 100),  // 10 hours of yacht money per second
-        luck: Math.max(Math.abs(effectiveTrollPointsPerSecond) * 10 * 60 * 60, 100)  // 10 hours of troll points per second
+        speed: Math.max(Math.abs(effectiveCopiumPerSecond) * miniGamesSoftCapHrs * 60 * 60, 100),  // 10 hours of copium per second
+        memory: Math.max(Math.abs(effectiveDelusionPerSecond) * miniGamesSoftCapHrs * 60 * 60, 100),  // 10 hours of delusion per second
+        math: Math.max(Math.abs(effectiveYachtMoneyPerSecond) * miniGamesSoftCapHrs * 60 * 60, 100),  // 10 hours of yacht money per second
+        luck: Math.max(Math.abs(effectiveTrollPointsPerSecond) * miniGamesSoftCapHrs * 60 * 60, 100)  // 10 hours of troll points per second
     };
 
     let softCapReached = false;  // Variable to check if the soft cap is reached
@@ -139,7 +143,13 @@ function playMiniGame(gameType) {
                         unlockAchievement('Speed Demon');
                     }
 
-                    resultMessage = `You tapped ${points} dots with ${misclicks} misclicks in ${duration} seconds (${effectiveClicksPerSecond.toFixed(2)} points per second). Your reward is <span style="color: green;">${formatNumber(reward)}</span> copium!`;
+                    numSpeedTaps += Math.max(0, points - misclicks);
+                    localStorage.setItem('numSpeedTaps', numSpeedTaps);
+                    if (numSpeedTaps > 1500) {
+                        unlockAchievement('Pathological Speedster');
+                    }
+
+                    resultMessage = `You tapped ${points} dots with ${misclicks} misclicks in ${duration} seconds (${effectiveClicksPerSecond.toFixed(2)} points per second). Your reward is <span style="color: green;">${formatNumber(reward)}</span> copium! You have now tapped ${numSpeedTaps} times in winning games.`;
                 } else {
                     reward = -Math.max(Math.floor(Math.abs(copium) * 0.25), 25);
                     resultMessage = `You were too slow, managing only ${points} taps on dots with ${misclicks} misclicks in ${duration} seconds (${effectiveClicksPerSecond.toFixed(2)} points per second). You lose <span style="color: red;">${formatNumber(reward)}</span> copium. Try again later!`;
@@ -148,7 +158,7 @@ function playMiniGame(gameType) {
                 copium += reward;
 
                 if (softCapReached) {
-                    resultMessage += '<br><span style="color: orange;">Soft cap reached: Maximum reward of 10 hours effective Copium applied.</span>';
+                    resultMessage += `<br><span style="color: orange;">Soft cap reached: Maximum reward of ${miniGamesSoftCapHrs} hours effective Copium applied.</span>`;
                 }
 
                 resultMessage += cooldownMessage;
@@ -302,12 +312,20 @@ function playMiniGame(gameType) {
 
                 delusion += reward;
 
+                if (correct) {
+                    numMemorizedDots += sequenceLength;
+                    localStorage.setItem('numMemorizedDots', numMemorizedDots);
+                    if (numMemorizedDots > 500) {
+                        unlockAchievement('Pattern Prodigy');
+                    }
+                }
+
                 let resultMessage = correct
-                    ? `You successfully matched the pattern and earned <span style="color: green;">${formatNumber(reward)}</span> delusion!`
+                    ? `You successfully matched the pattern and earned <span style="color: green;">${formatNumber(reward)}</span> delusion! You now have memorized ${numMemorizedDots} dots in winning games!`
                     : `You failed to match the pattern and lost <span style="color: red;">${formatNumber(Math.abs(reward))}</span> delusion!`;
 
                 if (softCapReached) {
-                    resultMessage += '<br><span style="color: orange;">Soft cap reached: Maximum reward of 10 hours effective Delusion applied.</span>';
+                    resultMessage += `<br><span style="color: orange;">Soft cap reached: Maximum reward of ${miniGamesSoftCapHrs} hours effective Delusion applied.</span>`;
                 }
 
                 resultMessage += cooldownMessage;
@@ -560,7 +578,7 @@ function playMiniGame(gameType) {
 
                 // Add the soft cap message in orange if applicable
                 if (softCapReached) {
-                    resultMessage += '<br><span style="color: orange;">Soft cap reached: Maximum reward of 10 hours effective Yacht Money applied.</span>';
+                    resultMessage += `<br><span style="color: orange;">Soft cap reached: Maximum reward of ${miniGamesSoftCapHrs} hours effective Yacht Money applied.</span>`;
                 }
 
                 resultMessage += cooldownMessage;
@@ -732,7 +750,7 @@ function playMiniGame(gameType) {
 
                         // Add the soft cap message in orange if applicable
                         if (softCapReached) {
-                            resultMessage += '<br><span style="color: orange;">Soft cap reached: Maximum reward of 10 hours effective Troll Points applied.</span>';
+                            resultMessage += `<br><span style="color: orange;">Soft cap reached: Maximum reward of ${miniGamesSoftCapHrs} hours effective Troll Points applied.</span>`;
                         }
 
                         resultMessage += cooldownMessage;

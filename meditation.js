@@ -19,13 +19,40 @@ let windSpeed = 0;
 const meditationChallenges = {
     "Yin and Yang": {
         duration: 15,
-        focus: 1,
+        focus: 2,
         ballCount: 2,
         arenaSize: 600,
         ballSize: 30,
         ballSizeDelta: 3,
         velocity: 1,
-    }
+    },
+    "Existentialism": {
+        duration: 10,
+        focus: 3,
+        ballCount: 5,
+        arenaSize: 450,
+        ballSize: 50,
+        ballSizeDelta: 5,
+        velocity: 1.1,
+    },
+    "Altruism": {
+        duration: 16,
+        focus: 1,
+        ballCount: 15,
+        arenaSize: 600,
+        ballSize: 12,
+        ballSizeDelta: 2,
+        velocity: 0.85,
+    },
+    "Rastafarianism": {
+        duration: 12,
+        focus: 10,
+        ballCount: 5,
+        arenaSize: 420,
+        ballSize: 42,
+        ballSizeDelta: 5,
+        velocity: 3,
+    },
 };
 
 // Function to initialize the meditation game

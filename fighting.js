@@ -309,6 +309,10 @@ function startFightGame(enemyName, enemyImg) {
         playerCritChance = sebosLuck ? playerCritChance + 0.05 : playerCritChance;
         playerCritDamage = 1 + Math.min(Math.ceil(trollPoints ** (1/25)) / 100, 99);
 
+        if (playerCritChance == 0.95){
+            unlockAchievement('Guaranteed-ish');
+        }
+
         playerCurrentAttackSpeed = playerAttackSpeed;
 
         playerMinDamage = Math.floor(power * playerMinDamageMult);
@@ -1405,47 +1409,8 @@ function endFight(isForfeit = false) {
         logFight("<span style='color: green;'>You are the Winner!</span>");
         overlayWinnerLoserText("Winner", "Dead");
 
-    // Stellar Harvest Skill effect
-    if (stellarHarvestSkill && !purchasedUpgrades.some(upgrade => upgrade.name === `Cosmic Drought`)) {
-        const multiplier = celestialCollectorSkill ? 1.5: 1.3;
-        const duration = celestialCollectorSkill ? 600000 : 180000; // 10 minutes (600,000 ms) or 3 minute (180,000 ms)
+        incrementStellarHarvest();
 
-        if (stellarHarvestMult == 1 && stellarCookieSkill){
-            clearInterval(cookieIntervalId);
-            const cookieButton = document.getElementById('cookieButton');
-            cookieButton.classList.remove('spinning');
-            cookieButton.classList.add('spinning');
-            cookieIntervalId = setInterval(() => {
-                cookieCollectAllResources();
-            }, 100); // 100 milliseconds = 0.1 seconds
-        }
-
-        stellarHarvestMult *= multiplier;
-        updateEffectiveMultipliers();
-        updateStellarHarvestDisplay();
-        //TODO: use global tooltip instead
-
-        if(stellarHarvestMult > 50){
-            unlockAchievement('Stellar Harvester');
-        }
-
-        // Set a timeout to reset the multiplier after the specified duration
-        const timeoutId = setTimeout(() => {
-            stellarHarvestMult = Math.max(stellarHarvestMult / multiplier, 1);
-            updateEffectiveMultipliers();
-            updateStellarHarvestDisplay();
-
-            if (stellarHarvestMult == 1 && stellarCookieSkill){
-                const cookieButton = document.getElementById('cookieButton');
-                cookieButton.classList.remove('spinning');
-                clearInterval(cookieIntervalId);
-            }
-            //TODO: use global tooltip to show it decreased
-        }, duration);
-
-        // Store the timeout ID in the array
-        currentTimeouts.push(timeoutId);
-    }
     } else {
         logFight(`<span style='color: red;'>${currEnemyName} is the Winner!</span>`);
         overlayWinnerLoserText("Loser", "Taunting");
