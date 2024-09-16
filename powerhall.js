@@ -266,6 +266,15 @@ function openPowerHall() {
 
         unlockAchievement('Enter Hall of Power');
 
+        openPowerHallTimestamp = crunchTimer; 
+        checkFastCommuter();
+
+        // Prevent overlay from closing when clicking inside the content
+        const powerHallContent = document.querySelector('.powerhall-overlay-content');
+        powerHallContent.addEventListener('click', function(event) {
+            event.stopPropagation();  // Stop event propagation when clicking inside the library content
+        });
+
         if(!purchasedUpgrades.some(upgrade => upgrade.name === "Helpful Vegeta")){
             unlockAchievement('How did you know you could enter?');
         }
@@ -306,3 +315,17 @@ document.addEventListener('DOMContentLoaded', () => {
         closePowerHall();
     });
 });
+
+function resetPowerHallSkills() {
+    // Iterate over all power hall skills and reset their unlocked state
+    powerHallSkills.forEach(skill => {
+        skill.unlocked = false; // Set all skills to locked/unpurchased state
+    });
+
+    // Clear the display and reinitialize skills
+    powerHallSkillsContainer.innerHTML = ''; // Clear current skill elements
+    initializePowerHallSkills(); // Reinitialize the skills in the UI
+
+    // Update the skill display to reflect the reset state
+    updatePowerHallSkillDisplay();
+}

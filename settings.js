@@ -368,6 +368,25 @@ document.getElementById('automationButton').addEventListener('click', function()
             }
         }, 0); // Ensure the inputs are rendered first
 
+        // Dynamically add Auto-Fighting setting if autoFightSkill is unlocked
+        if (autoFightSkill) {
+            const autoFightHtml = `
+                <div style="margin-bottom: 15px;">
+                    <label for="autoFightSwitch" style="margin-right: 10px;">Enable Auto-Fighting</label>
+                    <label class="switch">
+                        <input type="checkbox" id="autoFightSwitch">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            `;
+            automationContent.innerHTML += autoFightHtml;
+
+            // Use a timeout to ensure the checkbox is fully rendered before setting its state
+            setTimeout(() => {
+                const autoFightSwitch = document.getElementById('autoFightSwitch');
+                autoFightSwitch.checked = autoFightEnabled; // Assume autoFightIntervalId manages auto-fighting
+            }, 0); // Adjust timeout if necessary
+        }
 
         // Check if any feature is missing and at least one is unlocked
         const someFeaturesMissing = !autobuyUpgradesSkill || autoPrestigeThreshold === null || !buyMarkersSkill || autoAscendThreshold === null || autoTranscendThreshold === null;
@@ -457,6 +476,18 @@ document.getElementById('saveAutomationSettingsButton').addEventListener('click'
         } else if (toggleBuyMarkersOn) {
             toggleAllBuyMarkers(true);
         } // Neutral does nothing, so no action needed
+    }
+
+    // Handle auto-fighting only if the skill is unlocked
+    if (autoFightSkill) {
+        const autoFightSwitch = document.getElementById('autoFightSwitch');
+        console.log("Auto-fight switch state at save:", autoFightSwitch.checked); // Debug log
+
+        if (autoFightSwitch.checked) {
+            autoFightEnabled = true;
+        } else {
+            autoFightEnabled = false;
+        }
     }
 
     // Close the overlay

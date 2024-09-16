@@ -276,10 +276,10 @@ const achievements = [
         img: 'imgs/achievements/trading.jpg',
     },
     {
-        name: 'Does Not Exist 46',
+        name: 'Correcting Mistakes',
         isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
+        hoverText: 'win speed game with at least 7 misclicks',
+        img: 'imgs/achievements/correcting_mistakes.jpg',
     },
     {
         name: 'Take Out a Loan',
@@ -426,6 +426,12 @@ const achievements = [
         img: 'imgs/achievements/pie_guy.jpg',
     },
     {
+        name: 'Consolation Prize',
+        isUnlocked: false,
+        hoverText: `open 100 unlucky boxes`,
+        img: 'imgs/achievements/consolation_prize.jpg',
+    },
+    {
         name: 'Dirty Trick',
         isUnlocked: false,
         hoverText: 'stun Saitama for 200 turns',
@@ -486,16 +492,16 @@ const achievements = [
         img: 'imgs/achievements/uninitialized.jpg',
     },
     {
-        name: 'Does Not Exist 81',
+        name: 'Gentle Embrace',
         isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
+        hoverText: 'infinite embrace for < 3.3 base LP',
+        img: 'imgs/achievements/mini_embrace.jpg',
     },
     {
-        name: 'Does Not Exist 82',
+        name: 'Massive Embrace',
         isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
+        hoverText: 'infinite embrace for > 25 LP',
+        img: 'imgs/achievements/massive_embrace.jpg',
     },
     {
         name: 'Does Not Exist 83',
@@ -558,10 +564,10 @@ const achievements = [
         img: 'imgs/achievements/tiniest_crunch.jpg',
     },
     {
-        name: 'Does Not Exist 93',
+        name: '42 Misclicks',
         isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
+        hoverText: '???',
+        img: 'imgs/achievements/misfire.jpg',
     },
     {
         name: 'Rasta Deadpool',
@@ -570,10 +576,10 @@ const achievements = [
         img: 'imgs/achievements/rasta_deadpool.jpg',
     },
     {
-        name: 'Does Not Exist 95',
+        name: 'Fast Commuter',
         isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
+        hoverText: '???',
+        img: 'imgs/achievements/fast_commuter.jpg',
     },
     {
         name: 'PigeonPost',
@@ -592,18 +598,6 @@ const achievements = [
         isUnlocked: false,
         hoverText: '???',
         img: 'imgs/achievements/fidget_clicks.jpg',
-    },
-    {
-        name: 'Does Not Exist 99',
-        isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
-    },
-    {
-        name: 'Does Not Exist 100',
-        isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
     },
 ];
 

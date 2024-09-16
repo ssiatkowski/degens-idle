@@ -21,6 +21,7 @@ const miniGameIntervals = {};
 let numMathSolves = 0;
 let numSpeedTaps = 0;
 let numMemorizedDots = 0;
+let numUnluckyBoxes = 0;
 
 let lastClickedBoxIndex = null;
 let consecutiveClicks = 0;
@@ -143,6 +144,10 @@ function playMiniGame(gameType) {
                         unlockAchievement('Speed Demon');
                     }
 
+                    if (misclicks >= 7){
+                        unlockAchievement('Correcting Mistakes');
+                    }
+
                     numSpeedTaps += Math.max(0, points - misclicks);
                     localStorage.setItem('numSpeedTaps', numSpeedTaps);
                     if (numSpeedTaps > 1500) {
@@ -151,6 +156,9 @@ function playMiniGame(gameType) {
 
                     resultMessage = `You tapped ${points} dots with ${misclicks} misclicks in ${duration} seconds (${effectiveClicksPerSecond.toFixed(2)} points per second). Your reward is <span style="color: green;">${formatNumber(reward)}</span> copium! You have now tapped ${numSpeedTaps} times in winning games.`;
                 } else {
+                    if (misclicks == 42) {
+                        unlockAchievement('42 Misclicks');
+                    }
                     reward = -Math.max(Math.floor(Math.abs(copium) * 0.25), 25);
                     resultMessage = `You were too slow, managing only ${points} taps on dots with ${misclicks} misclicks in ${duration} seconds (${effectiveClicksPerSecond.toFixed(2)} points per second). You lose <span style="color: red;">${formatNumber(reward)}</span> copium. Try again later!`;
                 }
@@ -742,9 +750,18 @@ function playMiniGame(gameType) {
                             reward = softCaps.luck;
                             softCapReached = true;
                         }
+
+                        if (boxValue < 0) {
+                            numUnluckyBoxes ++;
+                            localStorage.setItem('numUnluckyBoxes', numUnluckyBoxes);
+                            if (numUnluckyBoxes > 100) {
+                                unlockAchievement('Consolation Prize');
+                            }
+                        }
+
                         resultMessage = boxValue >= 0 ?
                             `You chose a lucky box and gained <span style="color: green;">${formatNumber(reward)}</span> troll points!` :
-                            `You chose an unlucky box and lost <span style="color: red;">${formatNumber(Math.abs(reward))}</span> troll points.`;
+                            `You chose an unlucky box and lost <span style="color: red;">${formatNumber(Math.abs(reward))}</span> troll points. You have now opened ${numUnluckyBoxes} unlucky boxes.`;
 
                         trollPoints += reward;
 

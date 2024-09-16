@@ -415,6 +415,15 @@ function openLibrary() {
             unlockAchievement('Skipping Grades');
         }
 
+        openLibraryHallTimestamp= crunchTimer; 
+        checkFastCommuter();
+
+        // Prevent overlay from closing when clicking inside the content
+        const libraryContent = document.querySelector('.library-overlay-content');
+        libraryContent.addEventListener('click', function(event) {
+            event.stopPropagation();  // Stop event propagation when clicking inside the library content
+        });
+
         // Add a temporary event listener to close the overlay when clicking outside of it
         setTimeout(() => {
             document.addEventListener('click', outsideLibraryClickListener);
@@ -437,7 +446,7 @@ function closeLibrary() {
 function outsideLibraryClickListener(event) {
     const libraryContent = document.querySelector('.library-overlay-content');
 
-    if (!libraryContent.contains(event.target)) {
+    if (!libraryContent.contains(event.target) && !event.target.closest('.libraryskill')) {
         closeLibrary();
     }
 }
@@ -455,3 +464,17 @@ document.addEventListener('DOMContentLoaded', () => {
         closeLibrary();
     });
 });
+
+function resetLibrarySkills() {
+    // Iterate over all library skills and reset their unlocked state
+    librarySkills.forEach(skill => {
+        skill.unlocked = false; // Set all skills to locked/unpurchased state
+    });
+
+    // Clear the display and reinitialize skills
+    librarySkillsContainer.innerHTML = ''; // Clear current skill elements
+    initializeSkills(); // Reinitialize the skills in the UI
+
+    // Update the skill display to reflect the reset state
+    updateSkillDisplay();
+}

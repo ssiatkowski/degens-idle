@@ -97,6 +97,7 @@ let rewardingVictoriesSkill = false;
 let rewardingMeditationsSkill = false;
 let deadpoolRevivesSkill = false;
 let autoFightSkill = false;
+let autoFightEnabled = false;
 let infinitePrestigeSkill = false;
 let crunchKnowledgeSkill = false;
 let stellarMeditationSkill = false;
@@ -248,7 +249,7 @@ function updateEffectiveMultipliers() {
     // Loop through each resource and apply the multiplier if the gain flag is true
     serenityGainResources.forEach(resource => {
         if (resource.gainFlag) {
-            effectiveSerenityPerSecond *= Math.max(1, Math.log2(resource.value) / 100);
+            effectiveSerenityPerSecond *= Math.max(1, Math.log2(resource.value) / 33);
         }
     });
 
@@ -377,6 +378,7 @@ function loadGameState() {
     numMathSolves = parseFloat(localStorage.getItem('numMathSolves')) || 0;
     numSpeedTaps = parseFloat(localStorage.getItem('numSpeedTaps')) || 0;
     numMemorizedDots = parseFloat(localStorage.getItem('numMemorizedDots')) || 0;
+    numUnluckyBoxes = parseFloat(localStorage.getItem('numUnluckyBoxes')) || 0;
 
     consecutiveClicks = parseInt(localStorage.getItem('consecutiveClicks')) || 0;
     lastClickedBoxIndex = parseInt(localStorage.getItem('lastClickedBoxIndex')) || 0;
@@ -852,6 +854,7 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
                 rewardingMeditationsSkill = false;
                 deadpoolRevivesSkill = false;
                 autoFightSkill = false;
+                autoFightEnabled = false;
                 infinitePrestigeSkill = false;
                 crunchKnowledgeSkill = false;
                 stellarMeditationSkill = false;
@@ -921,15 +924,8 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
             document.getElementById('power-container').style.display = 'none';
             document.getElementById('serenity-container').style.display = 'none';
 
-            // Reset library skills
-            librarySkills.forEach(skill => {
-                skill.unlocked = false;
-            });
-            
-            // Reset power hall skills
-            powerHallSkills.forEach(skill => {
-                skill.unlocked = false;
-            });
+            resetLibrarySkills();
+            resetPowerHallSkills();
 
             cookieClickMultiplier = 10;
             // Hide the delusion toggle switch
@@ -1915,9 +1911,9 @@ async function infiniteEmbrace() {
             await animateInfiniteEmbraceEffect();
 
             lovePoints += calculateLovePointsGained();
-            // if (calculateLovePointsGained() < 3.5) {
-            //     unlockAchievement('The Gentle Embrace');
-            // }
+            if (serenity < 2000) {
+                unlockAchievement('Gentle Embrace');
+            }
 
             // Call restartGame with isPrestige flag set to true
             restartGame(true, false, true);
@@ -1926,10 +1922,9 @@ async function infiniteEmbrace() {
 
             unlockAchievement('Infinite Embrace');
 
-            // unlockAchievement('Infinite Embrace');
-            // if (lovePoints > 100) {
-            //     unlockAchievement('Eternal Love');
-            // }
+            if (lovePoints > 25) {
+                unlockAchievement('Massive Embrace');
+            }
 
             // Save game state after prestige
             updateMultipliersDisplay();
@@ -2084,7 +2079,7 @@ function generateIdleResources(elapsedSeconds) {
 
     const basePowerPerSecond = calculateBasePower();
 
-    if (basePowerPerSecond > 0) {
+    if (powerUnlocked && basePowerPerSecond > 0) {
 
         const powerGeneratedIn2Hours = basePowerPerSecond * 2 * 3600;  // Power generated in 2 hours (2 * 3600 seconds)
 
@@ -2167,7 +2162,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
                 return;
             }
 
-            if (!autoFightSkill || power < upgrade.autoBattlePower) {
+            if (!(autoFightSkill && autoFightEnabled) || power < upgrade.autoBattlePower) {
 
                 isEventInProgress = true; // Set the flag to prevent multiple fight triggers
 
@@ -2284,7 +2279,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
         }
 
         if (name === 'Attack The Day') {
-            showMessageModal('Sadly', "This marks the end of v0.913. Hope you enjoyed the Power Saga! Congratulations on your first successful meditation – hopefully, you're excited for what this new mechanic will unlock. There's no way to get Love Points just yet, and the Love Hall skills aren't implemented, but feel free to preview them as much as you like. The journey is only beginning, and feedback will continue shaping the future of this game. Stay active on Discord, share your thoughts, and together, something truly epic can be created!");
+            showMessageModal('Sadly', "This marks the end of v0.914. Hope you enjoyed the Power Saga! Congratulations on your first successful meditation – hopefully, you're excited for what this new mechanic will unlock. There's no way to get Love Points just yet, and the Love Hall skills aren't implemented, but feel free to preview them as much as you like. The journey is only beginning, and feedback will continue shaping the future of this game. Stay active on Discord, share your thoughts, and together, something truly epic can be created!");
         }        
 
         // Apply a mini prestige multiplier if the upgrade has one
@@ -2372,7 +2367,7 @@ function buyAllUpgrades(limit, pressedButton) {
         if (buyMarkersSkill) {
             const switchState = JSON.parse(localStorage.getItem(`switchState-${upgrade.name}`));
             const isAffordableUpgrade = isAffordable(upgrade.cost);
-            const autoFightCondition = autoFightSkill && power > upgrade.autoBattlePower;
+            const autoFightCondition = autoFightSkill && autoFightEnabled && power > upgrade.autoBattlePower;
     
             if (isAffordableUpgrade && autoFightCondition) {
                 buyUpgrade(encodeName(upgrade.name), false);
@@ -2628,7 +2623,7 @@ function autobuyUpgrades() {
         const upgrade = topUpgrades[i];
         const switchState = JSON.parse(localStorage.getItem(`switchState-${upgrade.name}`));
         const isAffordableUpgrade = isAffordable(upgrade.cost);
-        const autoFightCondition = autoFightSkill && power > upgrade.autoBattlePower;
+        const autoFightCondition = autoFightSkill && autoFightEnabled && power > upgrade.autoBattlePower;
 
         // Buy the upgrade if either condition is met:
         // 1. It is affordable and switchState is true
@@ -3485,7 +3480,7 @@ function calculateTooltip(resourceId) {
 
         // Loop through each resource and add tooltips for the ones that apply
         serenityGainResources.forEach(resource => {
-            const multiplier = Math.max(1, Math.log2(resource.value) / 100);
+            const multiplier = Math.max(1, Math.log2(resource.value) / 33);
             if (resource.gainFlag && multiplier > 1) {
                 tooltip += `<span style="color:#E97451">x${formatNumber(multiplier)} (Serenity Gain from ${resource.label})</span><br>`;
             }

@@ -1,30 +1,30 @@
 
 const loveHallSkills = [
     // 2.828x Level - Bell's Inequality for quantum entangled particle correlation
-    { name: 'Delusion Surge', cost: 0.2, description: '18x Delusion gain.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 1 },
-    { name: 'Copium Surge', cost: 0.2, description: '18x Copium gain.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 1 },
+    { name: 'Delusion Surge', cost: 0.2, description: '36x Delusion gain.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 1 },
+    { name: 'Copium Surge', cost: 0.2, description: '36x Copium gain.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 1 },
 
     { name: 'Twenty-Fivefold Ascension', cost: 1.2, description: 'Gain up to 25 God-Mode levels per Ascension.', unlocked: false, level: 'Quantum Harmony (2.8x)',  pair: 2 },
     { name: 'Twenty-Fivefold Transcendence', cost: 1.2, description: 'Gain up to 25 PU God-Mode levels per Transcendence.', unlocked: false, level: 'Quantum Harmony (2.8x)',  pair: 2 },
 
-    { name: 'Achievement Boost', cost: 1.7, description: 'Achievement Multiplier increased to 1.5% per achievement.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 3 },
-    { name: 'Cosmic Embrace', cost: 1.7, description: 'Gain +1 Love Point every embrace.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 3 },
+    { name: 'Achievement Boost', cost: 1.9, description: 'Achievement Multiplier increased to 2% per achievement.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 3 },
+    { name: 'Cosmic Embrace', cost: 1.9, description: 'Gain +1 Love Point every embrace.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 3 },
 
     { name: 'Serenity Flow', cost: 5, description: 'Hopium gain is multiplied by square root of Serenity.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 4 },
     { name: 'Serene Boost', cost: 5, description: '3x Serenity gain.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 4 },
 
-    { name: 'Power Infusion', cost: 15, description: '3x Power gain.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 5 },
-    { name: 'Soulbound Embrace', cost: 15, description: 'Gain +2 Love Points every embrace.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 5 },
+    { name: 'Power Infusion', cost: 15, description: '4x Power gain.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 5 },
+    { name: 'Soulbound Embrace', cost: 15, description: 'Gain +2.5 Love Points every embrace.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 5 },
 
     { name: 'Achievement Hypercharge', cost: 50, description: 'Achievement multiplier becomes multiplicative instead of additive.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 6 },
     { name: 'Perfect PU God-Mode', cost: 50, description: 'Make PU God-Mode perfect with diminishing returns at 99.2%.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 6 },
 
     // 27x Level - dimensions in string theory
-    { name: 'Yacht Money Surge', cost: 0.05, description: '12x Yacht Money gain.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 20 },
-    { name: 'Troll Points Surge', cost: 0.05, description: '12x Troll Points gain.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 20 },
+    { name: 'Yacht Money Surge', cost: 0.05, description: '24x Yacht Money gain.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 20 },
+    { name: 'Troll Points Surge', cost: 0.05, description: '24x Troll Points gain.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 20 },
 
-    { name: 'Knowledge Infusion', cost: 0.6, description: '10x Knowledge gain.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 21 },
-    { name: 'Basic Resource Boost', cost: 0.6, description: '8x gain to first 4 resources.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 21 },
+    { name: 'Knowledge Infusion', cost: 0.6, description: '12x Knowledge gain.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 21 },
+    { name: 'Basic Resource Boost', cost: 0.6, description: '9x gain to first 4 resources.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 21 },
 
     { name: 'Hall of Knowledge Auto-Buy', cost: 1.5, description: 'Automatically buy upgrades from the Hall of Knowledge.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 22 },
     { name: 'Hall of Power Auto-Buy', cost: 1.5, description: 'Automatically buy upgrades from the Hall of Power.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 22 },
@@ -32,11 +32,11 @@ const loveHallSkills = [
     { name: 'Overwhelming Mercy', cost: 8, description: 'Spare opponents who are far weaker than you and auto unlock the upgrades.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 23 },
     { name: 'Hopium Fix', cost: 8, description: 'Fix Hopium in the same way Delusion is cured.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 23 },
 
-    { name: 'Serenity Gain (Copium)', cost: 10, description: 'Serenity gain is multiplied by log2(Copium)/100.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 24 },
-    { name: 'Serenity Gain (Delusion)', cost: 10, description: 'Serenity gain is multiplied by log2(Delusion)/100.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 24 },
+    { name: 'Serenity Gain (Copium)', cost: 10, description: 'Serenity gain is multiplied by log2(Copium)/33.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 24 },
+    { name: 'Serenity Gain (Delusion)', cost: 10, description: 'Serenity gain is multiplied by log2(Delusion)/33.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 24 },
 
-    { name: 'Serenity Gain (Yacht Money)', cost: 10, description: 'Serenity gain is multiplied by log2(Yacht Money)/100.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 25 },
-    { name: 'Serenity Gain (Troll Points)', cost: 10, description: 'Serenity gain is multiplied by log2(Troll Points)/100.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 25 },
+    { name: 'Serenity Gain (Yacht Money)', cost: 10, description: 'Serenity gain is multiplied by log2(Yacht Money)/33.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 25 },
+    { name: 'Serenity Gain (Troll Points)', cost: 10, description: 'Serenity gain is multiplied by log2(Troll Points)/33.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 25 },
 
     // 42x Level - the meaning of life
     { name: 'Deadpool Embrace', cost: 0.1, description: 'Deadpool revives do not reset on Infinite Embrace.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 41 },
@@ -109,14 +109,14 @@ function unlockLoveHallSkill(skill, duringLoad = false) {
         
         switch (skill.name) {
             case 'Delusion Surge':
-                delusionSurgeMultiplier = 18;
+                delusionSurgeMultiplier = 36;
                 if(!duringLoad){
                     updateEffectiveMultipliers();
                 }
                 break;
                 
             case 'Copium Surge':
-                copiumSurgeMultiplier = 18;
+                copiumSurgeMultiplier = 36;
                 if(!duringLoad){
                     updateEffectiveMultipliers();
                 }
@@ -131,7 +131,7 @@ function unlockLoveHallSkill(skill, duringLoad = false) {
                 break;
         
             case 'Achievement Boost':
-                achievementBoostValue = 0.015; // Example: 1.5% achievement boost
+                achievementBoostValue = 0.02; // Example: 2% achievement boost
                 calculateAchievementMultiplier();
                 if(!duringLoad){
                     updateEffectiveMultipliers();
@@ -150,21 +150,21 @@ function unlockLoveHallSkill(skill, duringLoad = false) {
                 break;
         
             case 'Serene Boost':
-                serenityBoostMultiplier = 3; // Example: 3x Serenity gain
+                serenityBoostMultiplier = 3;
                 if(!duringLoad){
                     updateEffectiveMultipliers();
                 }
                 break;
         
             case 'Power Infusion':
-                powerInfusionMultiplier = 3;
+                powerInfusionMultiplier = 4;
                 if(!duringLoad){
                     updateEffectiveMultipliers();
                 }
                 break;
         
             case 'Soulbound Embrace':
-                embraceExtraLovePoints += 2;
+                embraceExtraLovePoints += 2.5;
                 break;
         
             case 'Achievement Hypercharge':
@@ -185,28 +185,28 @@ function unlockLoveHallSkill(skill, duringLoad = false) {
                 break;
 
             case 'Yacht Money Surge':
-                yachtMoneySurgeMultiplier = 12;
+                yachtMoneySurgeMultiplier = 24;
                 if(!duringLoad){
                     updateEffectiveMultipliers();
                 }
                 break;
                 
             case 'Troll Points Surge':
-                trollPointsSurgeMultiplier = 12;
+                trollPointsSurgeMultiplier = 24;
                 if(!duringLoad){
                     updateEffectiveMultipliers();
                 }
                 break;
         
             case 'Knowledge Infusion':
-                knowledgeInfusionMultiplier = 10;
+                knowledgeInfusionMultiplier = 12;
                 if(!duringLoad){
                     updateEffectiveMultipliers();
                 }
                 break;
         
             case 'Basic Resource Boost':
-                basicResourceBoost = 8;
+                basicResourceBoost = 9;
                 if(!duringLoad){
                     updateEffectiveMultipliers();
                 }
@@ -425,6 +425,8 @@ function initializeLoveHallSkills() {
                     skillDiv.classList.add('locked');
                     if (lovePoints >= skill.cost) {
                         skillDiv.classList.add('affordable');
+                    } else if (lovePoints + calculateLovePointsGained() >= skill.cost) {
+                        skillDiv.classList.add('potentiallyAffordable');
                     }
                 } else {
                     skillDiv.classList.add('purchased');
@@ -467,6 +469,23 @@ function outsideLoveHallClickListener(event) {
     }
 }
 
+let openLoveHallTimestamp = 0;
+let openPowerHallTimestamp = 0;
+let openLibraryHallTimestamp = 0;
+
+function checkFastCommuter() {
+    if (openLoveHallTimestamp > 0 && openPowerHallTimestamp > 0 && openLibraryHallTimestamp > 0) {
+        // Get the maximum and minimum timestamps
+        let earliestTimestamp = Math.min(openLoveHallTimestamp, openPowerHallTimestamp, openLibraryHallTimestamp);
+        let latestTimestamp = Math.max(openLoveHallTimestamp, openPowerHallTimestamp, openLibraryHallTimestamp);
+        
+        // Check if the difference is within 6 seconds
+        if ((latestTimestamp - earliestTimestamp) <= 6) {
+            unlockAchievement('Fast Commuter');
+        }
+    }
+}
+
 function openLoveHall() {
     const loveHallOverlay = document.getElementById('loveHallOverlay');
     loveHallOverlay.style.display = 'flex';
@@ -474,6 +493,9 @@ function openLoveHall() {
     if(crunchTimer < 3.1){
         unlockAchievement('Eager to Love');
     }
+
+    openLoveHallTimestamp = crunchTimer; 
+    checkFastCommuter();
 
     initializeLoveHallSkills();
     updateLoveHallSkillDisplay();

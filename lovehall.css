@@ -131,6 +131,10 @@
     background-color: #4caf50; /* Green when skill is affordable */
 }
 
+.lovepair-skill.potentiallyAffordable {
+    background-color: #555; /* Green when skill is affordable */
+}
+
 .lovepair-skill.purchased {
     background-color: #ff66b2; /* Pinkish color when purchased */
     color: #1e1e1e;
@@ -138,6 +142,10 @@
 
 .lovepair-skill .skill-cost {
     display: block;
+}
+
+.lovepair-skill.purchased .skill-cost {
+    display: none;
 }
 
 .lovepair-skill h3,
@@ -148,7 +156,9 @@
 .lovepair-skill.affordable h3,
 .lovepair-skill.affordable p,
 .lovepair-skill.purchased h3,
-.lovepair-skill.purchased p {
+.lovepair-skill.purchased p,
+.lovepair-skill.potentiallyAffordable h3,
+.lovepair-skill.potentiallyAffordable p {
     display: block; /* Show skill name and description when affordable or purchased */
 }
 
