@@ -484,8 +484,8 @@ function checkFastCommuter() {
         let earliestTimestamp = Math.min(openLoveHallTimestamp, openPowerHallTimestamp, openLibraryHallTimestamp);
         let latestTimestamp = Math.max(openLoveHallTimestamp, openPowerHallTimestamp, openLibraryHallTimestamp);
         
-        // Check if the difference is within 6 seconds
-        if ((latestTimestamp - earliestTimestamp) <= 6) {
+        // Check if the difference is within 4 seconds
+        if ((latestTimestamp - earliestTimestamp) <= 4) {
             unlockAchievement('Fast Commuter');
         }
     }

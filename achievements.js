@@ -528,28 +528,16 @@ const achievements = [
         img: 'imgs/achievements/developer_options.jpg',
     },
     {
-        name: 'Does Not Exist 87',
+        name: 'Zero-Sum Game',
         isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
+        hoverText: 'give hope / take hope',
+        img: 'imgs/achievements/zero_sum_game.jpg',
     },
     {
         name: 'One Hit KO',
         isUnlocked: false,
         hoverText: 'one punch the man',
         img: 'imgs/achievements/one_punch_the_man.jpg',
-    },
-    {
-        name: 'Does Not Exist 89',
-        isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
-    },
-    {
-        name: 'Zero-Sum Game',
-        isUnlocked: false,
-        hoverText: 'give hope / take hope',
-        img: 'imgs/achievements/zero_sum_game.jpg',
     },
     {
         name: 'More than Sauron',
@@ -598,6 +586,18 @@ const achievements = [
         isUnlocked: false,
         hoverText: '???',
         img: 'imgs/achievements/fidget_clicks.jpg',
+    },
+    {
+        name: 'Does Not Exist 99',
+        isUnlocked: false,
+        hoverText: 'Does not exist yet',
+        img: 'imgs/achievements/uninitialized.jpg',
+    },
+    {
+        name: 'Does Not Exist 100',
+        isUnlocked: false,
+        hoverText: 'Does not exist yet',
+        img: 'imgs/achievements/uninitialized.jpg',
     },
 ];
 
