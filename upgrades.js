@@ -1402,9 +1402,21 @@ const upgrades = [
         message: `You've uncovered the truth that <strong>meaning in life is not preordained</strong>—it is something you must create for yourself. In a vast and indifferent universe, you alone have the freedom to choose your purpose. Through this meditation, you’ve learned that the path to fulfillment is in embracing your freedom and accepting responsibility for your choices. Seek meaning in your actions, and the universe will respond.`,
     },
     {         
+        name: `Classic Science`,
+        cost: { copium: 0, delusion: 0, yachtMoney: 5e100, trollPoints: 8e100, hopium: 0, knowledge: 1e76, power: 0, serenity: 10 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1e41, hopiumPerSecond: 1e47, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0.0003 },
+        img: `imgs/classic_science.jpg`,
+    },
+    {         
+        name: `Humorless Resolve`,
+        cost: { copium: 5e100, delusion: 5e100, yachtMoney: 0, trollPoints: 5e100, hopium: 0, knowledge: 1e76, power: 0, serenity: 10 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 1e47, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0.0005 },
+        img: `imgs/cant_take_a_joke.jpg`,
+    },
+    {         
         name: `Altruism`,
         cost: { copium: 1e100, delusion: 1e100, yachtMoney: 1e100, trollPoints: 1e100, hopium: 0, knowledge: 0, power: 0, serenity: 15 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 1e41, trollPointsPerSecond: 0, hopiumPerSecond: 2e47, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0.003 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 3e41, trollPointsPerSecond: 0, hopiumPerSecond: 2e47, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0.003 },
         img: `imgs/arena_altruism.png`,
         isMeditation: true,
         isKey: true,
@@ -1413,7 +1425,7 @@ const upgrades = [
     {         
         name: `Rastafarianism`,
         cost: { copium: 1e102, delusion: 1e102, yachtMoney: 1e102, trollPoints: 1e102, hopium: 0, knowledge: 0, power: 0, serenity: 15 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1e41, hopiumPerSecond: 4.2e47, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0.0042 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 3e42, hopiumPerSecond: 4.2e47, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0.0042 },
         img: `imgs/arena_rastafarianism.png`,
         isMeditation: true,
         isKey: true,

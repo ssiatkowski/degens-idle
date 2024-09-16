@@ -107,6 +107,9 @@ let serenityGainDelusion = false;
 let serenityGainYachtMoney = false;
 let serenityGainTrollPoints = false;
 let resonanceOfLoveSkill = false;
+let hopiumTradeSkill = false;
+let autoTradeHopiumIntervalId = null;
+let equilibriumOfHopeSkill = false;
 
 let serenityUnlocked = false;
 let loveHallUnlocked = false;
@@ -864,6 +867,8 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
                 serenityGainYachtMoney = false;
                 serenityGainTrollPoints = false;
                 resonanceOfLoveSkill = false;
+                hopiumTradeSkill = false;
+                equilibriumOfHopeSkill = false;
                     
                 loveHallUnlocked = false;
                 document.getElementById('loveHallButton').style.display = 'none';
@@ -1004,6 +1009,9 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
 
             clearInterval(autobuyIntervalId);
             autobuyIntervalId = null;
+
+            clearInterval(autoTradeHopiumIntervalId);
+            autoTradeHopiumIntervalId = null;
         }
 
         clearAllTimeouts();
@@ -1295,55 +1303,37 @@ function tradeTenPercent() {
     tradeResources("10%"); // Pass "10%" to the tradeResources function
 }
 
+function autoTradeHopium() {
+    if (hopiumTradeSkill && equilibriumOfHopeSkill && autoTradeHopiumIntervalId === null) {
+        autoTradeHopiumIntervalId = setInterval(() => {
+            // Get 1% of the current hopium
+            const hopiumTradeAmount = hopium * 0.01;
 
+            // Check each resource and trade 1% hopium if it is lower
+            if (copium < hopium) {
+                copium += hopiumTradeAmount;
+                hopium -= hopiumTradeAmount;
+            }
+            if (delusion < hopium) {
+                delusion += hopiumTradeAmount;
+                hopium -= hopiumTradeAmount;
+            }
+            if (yachtMoney < hopium) {
+                yachtMoney += hopiumTradeAmount;
+                hopium -= hopiumTradeAmount;
+            }
+            if (trollPoints < hopium) {
+                trollPoints += hopiumTradeAmount;
+                hopium -= hopiumTradeAmount;
+            }
 
-// function Bound(LOWER_BOUND = -Infinity, UPPER_BOUND = Infinity, DEFAULT_VALUE = 0, DATA = 0) {
-//     if (LOWER_BOUND > UPPER_BOUND) {throw new Error(`UPPER_BOUND is ${UPPER_BOUND} which is less than LOWER_BOUND which is ${LOWER_BOUND}`)}
-//     if (DEFAULT_VALUE < LOWER_BOUND || DEFAULT_VALUE > UPPER_BOUND) {
-//       throw new Error(`Math ain't mathing`)
-//     }
-//     if (DATA >= LOWER_BOUND && DATA <= UPPER_BOUND) return DATA
-//     return DEFAULT_VALUE
-//   }
-//   function Rounding(Num) {
-//     return String(Number(Num))
-//   }
-//   function NumberScientific(Num, Fixed = 2, EXPONENT_LIMIT = 3) {
-//       let limitTillexpo = Bound(0, 9 , 4, EXPONENT_LIMIT), Exponent = Math.abs(Math.floor(Math.log10(Math.abs(Num)))), x = 0
-//       if (Math.abs(Num) < 1 && Math.abs(Num) > 0) {
-//         x = Num
-//         return Exponent <= limitTillexpo ? Rounding(x.toPrecision(Bound(1,4,2,4-Exponent))) : `${Rounding((Num*(10**Exponent)).toPrecision(Fixed+1))}e${-Exponent}`
-//     }
-//     if (Math.abs(Num) < 10**limitTillexpo) {
-//       x = Num
-//       return Rounding(x.toPrecision(Bound(1,4,Fixed,Fixed+Exponent-2)))
-//   }
-//       return `${Rounding((Num/(10**Exponent)).toPrecision(Fixed+1))}e${Exponent}`
-//   }
-//   function NumberStandard(Num, Fixed = 2, EXPONENT_LIMIT = 3) {
-//     let limitTillexpo = Bound(0, 9, 3,EXPONENT_LIMIT), 
-//         x = 0,
-//         Exponent = Math.floor(Math.log10(Math.abs(Num))/3),
-//         True_Exponent = Math.abs(Math.floor(Math.log10(Math.abs(Num))))
-//     let PREFIXES = ["", "K", "M", "B", "T", "Qa", "Qt", "Sx", "Sp", "Oc", "No", "Dc", "UDc", "DDc",
-//       "TDc", "QaDc", "QtDc", "SxDc", "SpDc", "ODc", "NDc", "Vg", "UVg", "DVg", "TVg",
-//       "QaVg", "QtVg", "SxVg", "SpVg", "OVg", "NVg", "Tg", "UTg", "DTg", "TTg", "QaTg",
-//       "QtTg", "SxTg", "SpTg", "OTg", "NTg", "Qd", "UQd", "DQd", "TQd", "QaQd", "QtQd",
-//       "SxQd", "SpQd", "OQd", "NQd", "Qi", "UQi", "DQi", "TQi", "QaQi", "QtQi", "SxQi",
-//       "SpQi", "OQi", "NQi", "Se", "USe", "DSe", "TSe", "QaSe", "QtSe", "SxSe", "SpSe",
-//       "OSe", "NSe", "St", "USt", "DSt", "TSt", "QaSt", "QtSt", "SxSt", "SpSt", "OSt",
-//       "NSt", "Og", "UOg", "DOg", "TOg", "QaOg", "QtOg", "SxOg", "SpOg", "OOg", "NOg",
-//       "Nn", "UNn", "DNn", "TNn", "QaNn", "QtNn", "SxNn", "SpNn", "ONn", "NNn", "Ce"]
-//     if (Math.abs(Num) < 1 && Math.abs(Num) > 0) {
-//         x = Num
-//         return True_Exponent <= limitTillexpo ? Rounding(x.toPrecision(Bound(1,4,2,4-True_Exponent))) : `${Rounding((Num*(10**True_Exponent)).toPrecision(Fixed+1))}e${-True_Exponent}`
-//     }
-//     if (Math.abs(Num) < 10**limitTillexpo) {
-//         x = Num
-//         return Rounding(x.toPrecision(Bound(1,6,Fixed,Fixed+True_Exponent-2)))
-//     }
-//     return `${Rounding((Num/(1000**Exponent)).toPrecision(Fixed+1))}${PREFIXES[Exponent]}`
-//   }
+            // Update the display or any other relevant functions
+            updateDisplay();
+
+        }, 2000); // Every 2 seconds
+    }
+}
+
 
 const formatSignificant = new Intl.NumberFormat("en-US", { maximumFractionDigits: 3 });
 const formatFraction = new Intl.NumberFormat("en-US", { maximumSignificantDigits: 4 });
@@ -2278,8 +2268,11 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
             localStorage.setItem('messageShownUpgrades', JSON.stringify(messageShownUpgrades));
         }
 
-        if (name === 'Attack The Day') {
-            showMessageModal('Sadly', "This marks the end of v0.914. Hope you enjoyed the Power Saga! Congratulations on your first successful meditation – hopefully, you're excited for what this new mechanic will unlock. There's no way to get Love Points just yet, and the Love Hall skills aren't implemented, but feel free to preview them as much as you like. The journey is only beginning, and feedback will continue shaping the future of this game. Stay active on Discord, share your thoughts, and together, something truly epic can be created!");
+        if (name === 'Altruism') {
+            showMessageModal('The Journey Continues', 
+                "This marks the end of v0.915. Hope you enjoyed the Power Saga and congratulations on completing your first successful meditation! With the Hall of Love now open, a whole new mechanic has been introduced, and Love Points are now part of your journey. While the Hall of Love skills are implemented, expect plenty of balancing to come as the game evolves. Feel free to explore the skills and prepare for even more content with future meditations. "
+                + "Stay active on Discord, share your feedback, and help shape the future of this game. With your input, something truly epic can be created!"
+            );
         }        
 
         // Apply a mini prestige multiplier if the upgrade has one

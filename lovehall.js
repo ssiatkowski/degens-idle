@@ -16,6 +16,9 @@ const loveHallSkills = [
     { name: 'Power Infusion', cost: 15, description: '4x Power gain.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 5 },
     { name: 'Soulbound Embrace', cost: 15, description: 'Gain +2.5 Love Points every embrace.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 5 },
 
+    // (cost 13?) mini games soft cap applies to either resource or hopium gain
+    // (cost 13?) cosmic drought sets stellar harvest to 250x
+
     { name: 'Achievement Hypercharge', cost: 50, description: 'Achievement multiplier becomes multiplicative instead of additive.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 6 },
     { name: 'Perfect PU God-Mode', cost: 50, description: 'Make PU God-Mode perfect with diminishing returns at 99.2%.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 6 },
 
@@ -23,7 +26,7 @@ const loveHallSkills = [
     { name: 'Yacht Money Surge', cost: 0.05, description: '24x Yacht Money gain.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 20 },
     { name: 'Troll Points Surge', cost: 0.05, description: '24x Troll Points gain.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 20 },
 
-    { name: 'Knowledge Infusion', cost: 0.6, description: '12x Knowledge gain.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 21 },
+    { name: 'Knowledge Infusion', cost: 0.6, description: '8x Knowledge gain.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 21 },
     { name: 'Basic Resource Boost', cost: 0.6, description: '9x gain to first 4 resources.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 21 },
 
     { name: 'Hall of Knowledge Auto-Buy', cost: 1.5, description: 'Automatically buy upgrades from the Hall of Knowledge.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 22 },
@@ -38,6 +41,7 @@ const loveHallSkills = [
     { name: 'Serenity Gain (Yacht Money)', cost: 10, description: 'Serenity gain is multiplied by log2(Yacht Money)/33.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 25 },
     { name: 'Serenity Gain (Troll Points)', cost: 10, description: 'Serenity gain is multiplied by log2(Troll Points)/33.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 25 },
 
+
     // 42x Level - the meaning of life
     { name: 'Deadpool Embrace', cost: 0.1, description: 'Deadpool revives do not reset on Infinite Embrace.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 41 },
     { name: 'Rewarding Victories', cost: 0.1, description: 'Battle upgrades give +40% rewards.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 41 },
@@ -49,10 +53,10 @@ const loveHallSkills = [
     { name: 'Rewarding Meditations', cost: 1.19, description: 'Meditations give +40% rewards', unlocked: false, level: 'Cosmic Truth (42x)', pair: 43 },
 
     { name: 'Hopium Trade', cost: 4.2, description: 'Trade Hopium for any of the first 4 resources at a 1:1 ratio.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 44 },
-    { name: 'Infinite Prestige', cost: 4.2, description: 'Automatically apply Prestige Mult without resetting. (Recommended)', unlocked: false, level: 'Cosmic Truth (42x)', pair: 44 },
+    { name: 'Infinite Prestige', cost: 4.2, description: 'Automatically apply Prestige Mult without resetting.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 44 },
 
-    // { name: 'Resonance of Love', cost: 8, description: 'Multiply Serenity by log10 of current Love Points.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 45 },
-    // { name: 'Auto Hopium Trade', cost: 8, description: 'Every second, automatically trade 1% Hopium for each lower resource.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 45 },
+    { name: 'Resonance of Love', cost: 8, description: 'Multiply Serenity by log10 of current Love Points.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 45 },
+    { name: 'Equilibrium of Hope', cost: 8, description: '(Does not work without Hopium Trade) Automatically trade 1% Hopium for each lower resource.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 45 },
 
     // { name: 'Knowledge Exchange', cost: 15, description: 'Trade Hopium for Knowledge at a 1e20:1 ratio.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 46 },
     // { name: 'Big Crunch Factor Boost', cost: 15, description: 'Increase Big Crunch factor from 2 to 2.1.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 46 },
@@ -199,7 +203,7 @@ function unlockLoveHallSkill(skill, duringLoad = false) {
                 break;
         
             case 'Knowledge Infusion':
-                knowledgeInfusionMultiplier = 12;
+                knowledgeInfusionMultiplier = 8;
                 if(!duringLoad){
                     updateEffectiveMultipliers();
                 }
@@ -288,6 +292,7 @@ function unlockLoveHallSkill(skill, duringLoad = false) {
                 break;
         
             case 'Hopium Trade':
+                hopiumTradeSkill = true;
                 addHopiumToFromResource();
                 break;
         
@@ -302,9 +307,9 @@ function unlockLoveHallSkill(skill, duringLoad = false) {
                 }
                 break;
         
-            case 'Auto Hopium Trade':
-                // Logic for Auto Hopium Trade skill
-                //enableAutoHopiumTrade(); // Example: Automatically trade Hopium for all lower resources
+            case 'Equilibrium of Hope':
+                equilibriumOfHopeSkill = true;
+                autoTradeHopium();
                 break;
         
             case 'Knowledge Exchange':
