@@ -11,20 +11,23 @@ const loveHallSkills = [
     { name: 'Cosmic Embrace', cost: 1.9, description: 'Gain +1 Love Point every embrace.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 3 },
 
     { name: 'Serenity Flow', cost: 5, description: 'Hopium gain is multiplied by square root of Serenity.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 4 },
-    { name: 'Serene Boost', cost: 5, description: '3x Serenity gain.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 4 },
+    { name: 'Serene Boost 2', cost: 5, description: '3x Serenity gain. (Serenity Boosts stack)', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 4 },
 
     { name: 'Power Infusion', cost: 15, description: '4x Power gain.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 5 },
     { name: 'Soulbound Embrace', cost: 15, description: 'Gain +2.5 Love Points every embrace.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 5 },
 
-    // (cost 13?) mini games soft cap applies to either resource or hopium gain
-    // (cost 13?) cosmic drought sets stellar harvest to 250x
+    { name: 'Hopeful Soft Cap', cost: 17, description: 'Mini Games Soft Cap uses resource or Hopium (greater)', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 6 },
+    { name: 'Fertile Scarcity', cost: 17, description: 'Cosmic Drought sets Stellar Harvest to 250x (instead of 1x)', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 6 },
 
-    { name: 'Achievement Hypercharge', cost: 50, description: 'Achievement multiplier becomes multiplicative instead of additive.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 6 },
-    { name: 'Perfect PU God-Mode', cost: 50, description: 'Make PU God-Mode perfect with diminishing returns at 99.2%.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 6 },
+    { name: 'Achievement Hypercharge', cost: 50, description: 'Achievement multiplier becomes multiplicative instead of additive.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 7 },
+    { name: 'Perfect PU God-Mode', cost: 50, description: 'Make PU God-Mode perfect with diminishing returns at 99.2%.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 7 },
 
     // 27x Level - dimensions in string theory
-    { name: 'Yacht Money Surge', cost: 0.05, description: '24x Yacht Money gain.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 20 },
-    { name: 'Troll Points Surge', cost: 0.05, description: '24x Troll Points gain.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 20 },
+    { name: 'Yacht Money Surge', cost: 0.05, description: '24x Yacht Money gain.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 19 },
+    { name: 'Troll Points Surge', cost: 0.05, description: '24x Troll Points gain.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 19 },
+
+    { name: 'Serene Boost 1', cost: 0.1, description: '2x Serenity gain. (Serene Boosts stack)', unlocked: false, level: 'Dimensional Shift (27x)', pair: 20 },
+    { name: 'Celestial Precision', cost: 0.1, description: 'Improves Astral Precision to power+50%', unlocked: false, level: 'Dimensional Shift (27x)', pair: 20 },
 
     { name: 'Knowledge Infusion', cost: 0.6, description: '8x Knowledge gain.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 21 },
     { name: 'Basic Resource Boost', cost: 0.6, description: '9x gain to first 4 resources.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 21 },
@@ -49,20 +52,23 @@ const loveHallSkills = [
     { name: 'Crunch Knowledge', cost: 0.3, description: 'Big Crunch extra knowledge mult is now ^(2/3) instead of ^(1/2).', unlocked: false, level: 'Cosmic Truth (42x)', pair: 42 },
     { name: 'Stellar Meditation', cost: 0.3, description: 'Increase all resource generation by 10% after each successful meditation.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 42 },
 
-    { name: 'Raise That Soft Cap', cost: 1.19, description: 'Increase mini games soft cap to 24 hours', unlocked: false, level: 'Cosmic Truth (42x)', pair: 43 },
-    { name: 'Rewarding Meditations', cost: 1.19, description: 'Meditations give +40% rewards', unlocked: false, level: 'Cosmic Truth (42x)', pair: 43 },
+    { name: 'Oversurged Power', cost: 0.5, description: 'Power Surge Skill is 2x as powerful.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 43 },
+    { name: 'Overcompressed Power', cost: 0.5, description: 'Compressed/Condensed Power Skills are 3x as powerful.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 43 },
 
-    { name: 'Hopium Trade', cost: 4.2, description: 'Trade Hopium for any of the first 4 resources at a 1:1 ratio.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 44 },
-    { name: 'Infinite Prestige', cost: 4.2, description: 'Automatically apply Prestige Mult without resetting.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 44 },
+    { name: 'Raise That Soft Cap', cost: 1.19, description: 'Increase mini games soft cap to 24 hours', unlocked: false, level: 'Cosmic Truth (42x)', pair: 44 },
+    { name: 'Rewarding Meditations', cost: 1.19, description: 'Meditations give +40% rewards', unlocked: false, level: 'Cosmic Truth (42x)', pair: 44 },
 
-    { name: 'Resonance of Love', cost: 8, description: 'Multiply Serenity by log10 of current Love Points.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 45 },
-    { name: 'Equilibrium of Hope', cost: 8, description: '(Does not work without Hopium Trade) Automatically trade 1% Hopium for each lower resource.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 45 },
+    { name: 'Hopium Trade', cost: 4.2, description: 'Trade Hopium for any of the first 4 resources at a 1:1 ratio.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 45 },
+    { name: 'Infinite Prestige', cost: 4.2, description: 'Automatically apply Prestige Mult without resetting.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 45 },
+
+    { name: 'Resonance of Love', cost: 8, description: 'Multiply Serenity by log10 of current Love Points.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 46 },
+    { name: 'Equilibrium of Hope', cost: 8, description: '(Does not work without Hopium Trade) Automatically trade 1% Hopium for each lower resource.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 46 },
 
     // { name: 'Knowledge Exchange', cost: 15, description: 'Trade Hopium for Knowledge at a 1e20:1 ratio.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 46 },
     // { name: 'Big Crunch Factor Boost', cost: 15, description: 'Increase Big Crunch factor from 2 to 2.1.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 46 },
 
-    // { name: 'Temporal Drag', cost: 16, description: 'During meditation, decrease ball velocity by 25%.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 47 },
-    // { name: 'Look Past Distractions', cost: 16, description: 'During meditation, decrease # of balls by 1.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 47 },
+    { name: 'Temporal Drag', cost: 12, description: 'During meditation, decrease ball velocity by 25%.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 47 },
+    { name: 'Look Past Distractions', cost: 12, description: 'During meditation, decrease # of balls by 1.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 47 },
 ];
 
 
@@ -153,8 +159,8 @@ function unlockLoveHallSkill(skill, duringLoad = false) {
                 }
                 break;
         
-            case 'Serene Boost':
-                serenityBoostMultiplier = 3;
+            case 'Serene Boost 2':
+                serenityBoostMultiplier *= 3;
                 if(!duringLoad){
                     updateEffectiveMultipliers();
                 }
@@ -170,7 +176,15 @@ function unlockLoveHallSkill(skill, duringLoad = false) {
             case 'Soulbound Embrace':
                 embraceExtraLovePoints += 2.5;
                 break;
-        
+
+            case 'Hopeful Soft Cap':
+                hopefulSoftCapSkill = true;
+                break;
+                    
+            case 'Fertile Scarcity':
+                fertileScarcitySkill = true;
+                break;
+                
             case 'Achievement Hypercharge':
                 achievementHyperchargeSkill = true;
                 calculateAchievementMultiplier();
@@ -200,6 +214,18 @@ function unlockLoveHallSkill(skill, duringLoad = false) {
                 if(!duringLoad){
                     updateEffectiveMultipliers();
                 }
+                break;
+
+
+            case 'Serene Boost 1':
+                serenityBoostMultiplier *= 2;
+                if(!duringLoad){
+                    updateEffectiveMultipliers();
+                }
+                break;
+        
+            case 'Celestial Precision':
+                celestialPrecisionSkill = true;
                 break;
         
             case 'Knowledge Infusion':
@@ -283,6 +309,14 @@ function unlockLoveHallSkill(skill, duringLoad = false) {
                 stellarMeditationSkill = true;
                 break;
 
+            case 'Oversurged Power':
+                oversurgedPower = 2;
+                break;
+                    
+            case 'Overcompressed Power':
+                overcompressedPower = 3;
+                break;
+
             case 'Raise That Soft Cap':
                 miniGamesSoftCapHrs = Math.max(miniGamesSoftCapHrs, 24);
                 break;
@@ -324,12 +358,11 @@ function unlockLoveHallSkill(skill, duringLoad = false) {
         
 
             case 'Temporal Drag':
-                // 'During meditation, decrease ball velocity by 25%.'
-                //tradeHopiumForKnowledge(1e20); // Example: Trade Hopium for Knowledge at 1e20:1 ratio
+                temporalDragReduction = 0.75;
                 break;
         
             case 'Look Past Distractions':
-                // Decrease # of balls by 1
+                lookPastDistractions = 1;
                 break;
                 
             default:

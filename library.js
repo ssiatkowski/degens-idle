@@ -260,11 +260,11 @@ function unlockLibrarySkill(skill, duringLoad = false) {
                 break;
 
             case 'Compressed Power':
-                compressedBigCrunchMult = Math.max(compressedBigCrunchMult, 3);
+                compressedBigCrunchMult = Math.max(compressedBigCrunchMult, 3 * overcompressedPower);
                 break;
 
             case 'Condensed Power':
-                compressedBigCrunchMult = 30;
+                compressedBigCrunchMult = 30 * overcompressedPower;
                 break;
                 
 

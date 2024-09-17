@@ -48,7 +48,7 @@ function unlockPowerHallSkill(skill, duringLoad = false) {
         switch (skill.name) {
 
             case 'Power Surge':
-                powerSurgeMultiplier = Math.max(powerSurgeMultiplier, 1.5);
+                powerSurgeMultiplier = Math.max(powerSurgeMultiplier, 1 + (0.5 * oversurgedPower));
                 break;
 
             case 'Temporal Flux':
@@ -75,7 +75,7 @@ function unlockPowerHallSkill(skill, duringLoad = false) {
     
 
             case 'Astral Precision':
-                playerMinDamageMult = 0.75;
+                playerMinDamageMult = celestialPrecisionSkill ? 1.5 : 0.75;
                 break;
 
             case 'Void Stabilizer':

@@ -96,11 +96,16 @@ let perfectPUGodModeSkill = false;
 let rewardingVictoriesSkill = false;
 let rewardingMeditationsSkill = false;
 let deadpoolRevivesSkill = false;
+let celestialPrecisionSkill = false;
 let autoFightSkill = false;
 let autoFightEnabled = false;
 let infinitePrestigeSkill = false;
 let crunchKnowledgeSkill = false;
 let stellarMeditationSkill = false;
+let oversurgedPower = 1;
+let overcompressedPower = 1;
+let hopefulSoftCapSkill = false;
+let fertileScarcitySkill = false;
 
 let serenityGainCopium = false;
 let serenityGainDelusion = false;
@@ -110,6 +115,8 @@ let resonanceOfLoveSkill = false;
 let hopiumTradeSkill = false;
 let autoTradeHopiumIntervalId = null;
 let equilibriumOfHopeSkill = false;
+let temporalDragReduction = 1;
+let lookPastDistractions = 0;
 
 let serenityUnlocked = false;
 let loveHallUnlocked = false;
@@ -436,6 +443,19 @@ function loadGameState() {
         });
     }
 
+    const savedLoveHallSkills = JSON.parse(localStorage.getItem('loveHallSkills')) || [];
+    if (Array.isArray(savedLoveHallSkills)) {
+        savedLoveHallSkills.forEach(savedSkill => {
+            const skill = loveHallSkills.find(s => s.name === savedSkill.name);
+            if (skill) {
+                skill.unlocked = savedSkill.unlocked;
+                if (skill.unlocked) {
+                    unlockLoveHallSkill(skill, true); // Call with duringLoad set to true
+                    console.log(`unlockLoveHallSkill(${skill.name})`);
+                }
+            }
+        });
+    }
     // Load unlocked skills
     const savedLibrarySkills = JSON.parse(localStorage.getItem('librarySkills')) || [];
     if (Array.isArray(savedLibrarySkills)) {
@@ -459,19 +479,6 @@ function loadGameState() {
                 if (skill.unlocked) {
                     unlockPowerHallSkill(skill, true); // Call with duringLoad set to true
                     console.log(`unlockPowerHallSkill(${skill.name})`);
-                }
-            }
-        });
-    }
-    const savedLoveHallSkills = JSON.parse(localStorage.getItem('loveHallSkills')) || [];
-    if (Array.isArray(savedLoveHallSkills)) {
-        savedLoveHallSkills.forEach(savedSkill => {
-            const skill = loveHallSkills.find(s => s.name === savedSkill.name);
-            if (skill) {
-                skill.unlocked = savedSkill.unlocked;
-                if (skill.unlocked) {
-                    unlockLoveHallSkill(skill, true); // Call with duringLoad set to true
-                    console.log(`unlockLoveHallSkill(${skill.name})`);
                 }
             }
         });
@@ -856,11 +863,16 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
                 rewardingVictoriesSkill = false;
                 rewardingMeditationsSkill = false;
                 deadpoolRevivesSkill = false;
+                celestialPrecisionSkill = false;
                 autoFightSkill = false;
                 autoFightEnabled = false;
                 infinitePrestigeSkill = false;
                 crunchKnowledgeSkill = false;
                 stellarMeditationSkill = false;
+                oversurgedPower = 1;
+                overcompressedPower = 1;
+                hopefulSoftCapSkill = false;
+                fertileScarcitySkill = false;
 
                 serenityGainCopium = false;
                 serenityGainDelusion = false;
@@ -869,6 +881,8 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
                 resonanceOfLoveSkill = false;
                 hopiumTradeSkill = false;
                 equilibriumOfHopeSkill = false;
+                temporalDragReduction = 1;
+                lookPastDistractions = 0;
                     
                 loveHallUnlocked = false;
                 document.getElementById('loveHallButton').style.display = 'none';
@@ -2248,7 +2262,8 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
                 document.getElementById('cookieButton');
                 cookieButton.classList.remove('spinning');
             }
-            stellarHarvestMult = 1;
+            clearAllTimeouts();
+            stellarHarvestMult = fertileScarcitySkill ? 250 : 1;
             updateMultipliersDisplay();
             unlockAchievement('Cosmic Drought');
         }
@@ -2270,7 +2285,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
 
         if (name === 'Altruism') {
             showMessageModal('The Journey Continues', 
-                "This marks the end of v0.915. Hope you enjoyed the Power Saga and congratulations on completing your first successful meditation! With the Hall of Love now open, a whole new mechanic has been introduced, and Love Points are now part of your journey. While the Hall of Love skills are implemented, expect plenty of balancing to come as the game evolves. Feel free to explore the skills and prepare for even more content with future meditations. "
+                "This marks the end of v0.916. Hope you enjoyed the Power Saga and congratulations on completing your first successful meditation! With the Hall of Love now open, a whole new mechanic has been introduced, and Love Points are now part of your journey. While the Hall of Love skills are implemented, expect plenty of balancing to come as the game evolves. Feel free to explore the skills and prepare for even more content with future meditations. "
                 + "Stay active on Discord, share your feedback, and help shape the future of this game. With your input, something truly epic can be created!"
             );
         }        
@@ -3417,7 +3432,7 @@ function calculateTooltip(resourceId) {
     // Only show the amplifier multiplier if it's not Hopium, Knowledge, Power, or Serenity
     if (resourceId !== 'hopium' && resourceId !== 'knowledge' && resourceId !== 'power' && resourceId !== 'serenity') {
         if (upgradeAmplifierSkill) {
-            tooltip += `<span style="color:#CD853F">x${formatNumber(purchasedUpgrades.length)} (# Upgrades)</span><br>`;
+            tooltip += `<span style="color:#CD853F">x${formatNumber(purchasedUpgrades.length)} (Upgrade Amplifier)</span><br>`;
         }        
         if (basicResourceBoost !== 1) {
             tooltip += `<span style="color:#FF00FF">x${formatNumber(basicResourceBoost)} (Basic Resource Boost)</span><br>`;

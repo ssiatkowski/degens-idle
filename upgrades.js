@@ -960,7 +960,7 @@ const upgrades = [
         img: `imgs/deadpool.jpg`,
         isFight: true,
         isKey: true,
-        autoBattlePower: 6.9e22,
+        autoBattlePower: 6.9e24,
     },
     {
         name: `What The`,
@@ -1179,7 +1179,7 @@ const upgrades = [
                 <p>With these words, Kaguya fades away, leaving you alone with your thoughts, victorious but unfulfilled, questioning the true meaning of the path you've chosen.</p>`,
         achievement: 'Save the Multiverse',
         isKey: true,
-        autoBattlePower: 6.66e23,
+        autoBattlePower: 6.66e20,
     },
     {         
         name: `Not the final boss?`,
@@ -1262,7 +1262,7 @@ const upgrades = [
                     </p>`,
         achievement: 'Hang Up Boxing Gloves',
         isKey: true,
-        autoBattlePower: 1e25,
+        autoBattlePower: 1e23,
     },
     {         
         name: `Smash That Like Button`,
@@ -1301,7 +1301,7 @@ const upgrades = [
     {         
         name: `Cosmic Drought`,
         cost: { copium: 8e88, delusion: 8e88, yachtMoney: 8e88, trollPoints: 8e88, hopium: 0, knowledge: 1e69, power: 1.6e18, serenity: 0 },
-        earnings: { copiumPerSecond: 4e40, delusionPerSecond: 4e40, yachtMoneyPerSecond: 4e40, trollPointsPerSecond: 4e40, hopiumPerSecond: -1e48, knowledgePerSecond: 2.5e15, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 5e40, delusionPerSecond: 5e40, yachtMoneyPerSecond: 5e40, trollPointsPerSecond: 5e40, hopiumPerSecond: -1e48, knowledgePerSecond: 2.5e15, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/cosmic_drought.jpg`,
         message: `<p>The cosmic drought has brought an end to your Stellar Harvest. The star systems you once nurtured have faded, and your operations across the multiverse have halted.</p>
                 <p>But your heroic efforts in saving the multiverse haven’t gone unnoticed. Word has reached the galactic federation, and in recognition of your valor and the financial burdens you've faced, they've granted you an allowance.</p>
@@ -1363,7 +1363,7 @@ const upgrades = [
     {         
         name: `Yin and Yang`,
         cost: { copium: 1e97, delusion: 1e97, yachtMoney: 1e97, trollPoints: 1e97, hopium: 0, knowledge: 0, power: 0, serenity: 1 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 1e47, knowledgePerSecond: 3e13, powerPerSecond: 0, serenityPerSecond: 0.0003 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 7e40, trollPointsPerSecond: 0, hopiumPerSecond: 1e47, knowledgePerSecond: 3e13, powerPerSecond: 0, serenityPerSecond: 0.0004 },
         img: `imgs/arena_yin_yang.png`,
         isMeditation: true,
         achievement: 'Focus Your Mind',
@@ -1373,19 +1373,19 @@ const upgrades = [
     {         
         name: `Ignoring Stereotypes`,
         cost: { copium: 1e98, delusion: 1e98, yachtMoney: 1e98, trollPoints: 1e98, hopium: 0, knowledge: 0, power: 0, serenity: 0.5 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 2e14, powerPerSecond: 0, serenityPerSecond: 0.0001 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 2e40, hopiumPerSecond: 0, knowledgePerSecond: 2e14, powerPerSecond: 0, serenityPerSecond: 0.0001 },
         img: `imgs/successful_black_guy.jpg`,
     },
     {         
         name: `Attack The Day`,
         cost: { copium: 2e98, delusion: 2e98, yachtMoney: 2e98, trollPoints: 2e98, hopium: 0, knowledge: 0, power: 0, serenity: 2 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 3e14, powerPerSecond: 0, serenityPerSecond: 0.00006 },
+        earnings: { copiumPerSecond: 3e40, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 3e14, powerPerSecond: 0, serenityPerSecond: 0.00006 },
         img: `imgs/attack_the_day.jpg`,
     },
     {         
         name: `Infinite Embrace`,
         cost: { copium: 1e99, delusion: 1e99, yachtMoney: 1e99, trollPoints: 1e99, hopium: 0, knowledge: 0, power: 0, serenity: 100 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 1e47, knowledgePerSecond: 1e14, powerPerSecond: 0, serenityPerSecond: 0.001 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 2e40, trollPointsPerSecond: 0, hopiumPerSecond: 1e47, knowledgePerSecond: 1e14, powerPerSecond: 0, serenityPerSecond: 0.001 },
         img: `imgs/infinite_embrace.jpg`,
         message: `<p>Once you reach 1000 serenity, the Infinite Embrace will become available, offering you the chance to perform a sacred act that will resonate throughout the multiverse.</p>
                 <p>Physically, the Infinite Embrace resets all of your progress—prestiges, god modes, big crunches, the Hall of Knowledge, and the Hall of Power. But metaphysically, it is an infusion of boundless love into the fabric of existence. Each time you perform this ritual, you strengthen the universe, spreading warmth, harmony, and love to every future incarnation.</p>
@@ -1394,8 +1394,8 @@ const upgrades = [
     },
     {         
         name: `Existentialism`,
-        cost: { copium: 1e100, delusion: 1e100, yachtMoney: 1e100, trollPoints: 1e100, hopium: 0, knowledge: 0, power: 0, serenity: 5 },
-        earnings: { copiumPerSecond: 1e41, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 1e47, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0.0009 },
+        cost: { copium: 1.5e100, delusion: 1.5e100, yachtMoney: 1.5e100, trollPoints: 1.5e100, hopium: 0, knowledge: 0, power: 0, serenity: 5 },
+        earnings: { copiumPerSecond: 2.2e41, delusionPerSecond: 1.6e41, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 1e47, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0.002 },
         img: `imgs/arena_existentialism.png`,
         isMeditation: true,
         isKey: true,
@@ -1410,22 +1410,28 @@ const upgrades = [
     {         
         name: `Humorless Resolve`,
         cost: { copium: 5e100, delusion: 5e100, yachtMoney: 0, trollPoints: 5e100, hopium: 0, knowledge: 1e76, power: 0, serenity: 10 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 1e47, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0.0005 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1e41, hopiumPerSecond: 1e47, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0.0005 },
         img: `imgs/cant_take_a_joke.jpg`,
     },
     {         
         name: `Altruism`,
         cost: { copium: 1e100, delusion: 1e100, yachtMoney: 1e100, trollPoints: 1e100, hopium: 0, knowledge: 0, power: 0, serenity: 15 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 3e41, trollPointsPerSecond: 0, hopiumPerSecond: 2e47, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0.003 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 3e41, trollPointsPerSecond: 0, hopiumPerSecond: 2e47, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0.009 },
         img: `imgs/arena_altruism.png`,
         isMeditation: true,
         isKey: true,
         message: `Through this meditation, you’ve learned that <strong>true fulfillment comes from selfless acts</strong> and putting the well-being of others above your own. Altruism teaches that by lifting others up, we create a better world for everyone. Compassion, generosity, and kindness ripple through the world, leaving a lasting positive impact. Continue to give without expectation, and you’ll find the world gives back in ways you never imagined.`,
     },
     {         
+        name: `One in a Million`,
+        cost: { copium: 1.8e101, delusion: 0, yachtMoney: 2.5e101, trollPoints: 5e100, hopium: 0, knowledge: 1e76, power: 0, serenity: 10 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 1e47, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0.002 },
+        img: `imgs/doesnt_go_through_phone.jpg`,
+    },
+    {         
         name: `Rastafarianism`,
         cost: { copium: 1e102, delusion: 1e102, yachtMoney: 1e102, trollPoints: 1e102, hopium: 0, knowledge: 0, power: 0, serenity: 15 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 3e42, hopiumPerSecond: 4.2e47, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0.0042 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 4.2e42, hopiumPerSecond: 4.2e47, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0.042 },
         img: `imgs/arena_rastafarianism.png`,
         isMeditation: true,
         isKey: true,

@@ -47,10 +47,18 @@ function playMiniGame(gameType) {
 
     // Define the soft cap for each mini-game
     const softCaps = {
-        speed: Math.max(Math.abs(effectiveCopiumPerSecond) * miniGamesSoftCapHrs * 60 * 60, 100),  // 10 hours of copium per second
-        memory: Math.max(Math.abs(effectiveDelusionPerSecond) * miniGamesSoftCapHrs * 60 * 60, 100),  // 10 hours of delusion per second
-        math: Math.max(Math.abs(effectiveYachtMoneyPerSecond) * miniGamesSoftCapHrs * 60 * 60, 100),  // 10 hours of yacht money per second
-        luck: Math.max(Math.abs(effectiveTrollPointsPerSecond) * miniGamesSoftCapHrs * 60 * 60, 100)  // 10 hours of troll points per second
+        speed: hopefulSoftCapSkill 
+            ? Math.max(Math.abs(effectiveCopiumPerSecond) * miniGamesSoftCapHrs * 60 * 60, Math.abs(effectiveHopiumPerSecond) * miniGamesSoftCapHrs * 60 * 60)
+            : Math.max(Math.abs(effectiveCopiumPerSecond) * miniGamesSoftCapHrs * 60 * 60, 100),
+        memory: hopefulSoftCapSkill 
+            ? Math.max(Math.abs(effectiveDelusionPerSecond) * miniGamesSoftCapHrs * 60 * 60, Math.abs(effectiveHopiumPerSecond) * miniGamesSoftCapHrs * 60 * 60)
+            : Math.max(Math.abs(effectiveDelusionPerSecond) * miniGamesSoftCapHrs * 60 * 60, 100),
+        math: hopefulSoftCapSkill 
+            ? Math.max(Math.abs(effectiveYachtMoneyPerSecond) * miniGamesSoftCapHrs * 60 * 60, Math.abs(effectiveHopiumPerSecond) * miniGamesSoftCapHrs * 60 * 60)
+            : Math.max(Math.abs(effectiveYachtMoneyPerSecond) * miniGamesSoftCapHrs * 60 * 60, 100),
+        luck: hopefulSoftCapSkill 
+            ? Math.max(Math.abs(effectiveTrollPointsPerSecond) * miniGamesSoftCapHrs * 60 * 60, Math.abs(effectiveHopiumPerSecond) * miniGamesSoftCapHrs * 60 * 60)
+            : Math.max(Math.abs(effectiveTrollPointsPerSecond) * miniGamesSoftCapHrs * 60 * 60, 100) 
     };
 
     let softCapReached = false;  // Variable to check if the soft cap is reached

@@ -28,12 +28,12 @@ const meditationChallenges = {
     },
     "Existentialism": {
         duration: 10,
-        focus: 3,
+        focus: 4,
         ballCount: 5,
         arenaSize: 450,
         ballSize: 50,
         ballSizeDelta: 5,
-        velocity: 1.1,
+        velocity: 1.05,
     },
     "Altruism": {
         duration: 16,
@@ -46,11 +46,11 @@ const meditationChallenges = {
     },
     "Rastafarianism": {
         duration: 12,
-        focus: 10,
+        focus: 12,
         ballCount: 5,
         arenaSize: 420,
         ballSize: 42,
-        ballSizeDelta: 5,
+        ballSizeDelta: 4.2,
         velocity: 3,
     },
 };
@@ -450,9 +450,9 @@ function calculateRespawnTime() {
 function calculateBallCountReduction() {
     if (hopium > 1e100) {
         // Calculate reduction based on hopium, starting from 1e100, with steps of 1 for every 10 orders of magnitude
-        return Math.floor((Math.log10(hopium) - 100) / 10);
+        return Math.floor((Math.log10(hopium) - 100) / 10) + lookPastDistractions;
     }
-    return 0; // No reduction if hopium is <= 1e100
+    return lookPastDistractions; // No reduction if hopium is <= 1e100
 }
 
 // Function to calculate velocity based on knowledge
@@ -464,7 +464,7 @@ function calculateVelocityReduction() {
         let reductionFactor = Math.pow(0.5, (Math.log10(knowledge) - 100) / 25);
         
         // Ensure velocity doesn't exceed 1
-        return Math.max(0.5 * reductionFactor, 0);
+        return Math.max(0.5 * reductionFactor * temporalDragReduction, 0);
     }
 }
 
