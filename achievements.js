@@ -258,6 +258,12 @@ const achievements = [
         img: 'imgs/achievements/hall_of_power.jpg',
     },
     {
+        name: 'Avoid the Crit',
+        isUnlocked: false,
+        hoverText: 'this one is a progression freebie (defeat Sauron)',
+        img: 'imgs/achievements/avoid_the_crit.jpg',
+    },
+    {
         name: 'Skip Leg Day',
         isUnlocked: false,
         hoverText: 'spare the training dummy',
@@ -510,16 +516,10 @@ const achievements = [
         img: 'imgs/achievements/massive_embrace.jpg',
     },
     {
-        name: 'Does Not Exist 83',
+        name: 'Hotkey Master',
         isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
-    },
-    {
-        name: 'Does Not Exist 84',
-        isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
+        hoverText: 'must unlock all hotkey functions first',
+        img: 'imgs/achievements/hotkey_master.jpg',
     },
     {
         name: 'Developer Options',

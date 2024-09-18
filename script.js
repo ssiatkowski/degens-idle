@@ -1723,10 +1723,9 @@ async function transcend() {
     ascendInProgress = true;
 
     const upgradeText = `select up to ${numPUAscensionUpgrades} upgrades to enhance and increase your Parallel Universe God-Mode multiplier accordingly`;
-    const firstTranscendText = (puGodLevel < 1 && bigCrunchMultiplier < 12) ? `<span style="color: #FFD700;">Hey it's your intuition again. Transcending does not reset Big Crunch. But Big Crunch resets Transcends. It is recommended to get Big Crunch Multiplier at minimum above 10 (~0.00021 Big Crunch Power) before going down this path.</span><br><br>` : '';
     const selectedUpgrades = await showMessageModal(
         'Parallel Universe God-Mode Ascension',
-        `Are you sure you want to ascend to increase your Parallel Universe God-Mode level?<br><br>${firstTranscendText}
+        `Are you sure you want to ascend to increase your Parallel Universe God-Mode level?<br><br>
         Accessing this new dimension requires temporarily aligning your universe with a parallel one, which will unfortunately reduce your Prestige multiplier the same way that Ascending in your Universe would. Your Prestige multiplier will change from <strong>x${formatNumber(epsMultiplier)}</strong> to <strong>x${formatNumber(calculateAscensionEpsMult())}</strong><br><br>
         On the bright side, your Parallel Universe God-Mode multiplier will increase from <strong>x${formatNumber(puGodMultiplier)}</strong> to at least <strong>x${formatNumber(calculatePUGodModeMultiplier(puGodLevel+2))}</strong>!<br><br>
         Additionally, you can ${upgradeText}.`,
@@ -2139,9 +2138,9 @@ let isEventInProgress = false; // Flag to prevent multiple fight triggers
 let forgetfulnessCounter = 0;
 
 // Function to handle the purchase of an upgrade
-async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
+async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true, skipEventCheck = false) {
     // If a fight is in progress, don't allow buying another upgrade
-    if (isEventInProgress) return;
+    if (isEventInProgress && !skipEventCheck) return;
 
     // Decode the upgrade name
     const upgradeName = decodeName(encodedUpgradeName);
@@ -2304,8 +2303,10 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
 
         if (name === 'Altruism') {
             showMessageModal('The Journey Continues', 
-                "This marks the end of v0.917. Hope you enjoyed the Power Saga and congratulations on completing your first successful meditation! With the Hall of Love now open, a whole new mechanic has been introduced, and Love Points are now part of your journey. While the Hall of Love skills are implemented, expect plenty of balancing to come as the game evolves. Feel free to explore the skills and prepare for even more content with future meditations. "
-                + "Stay active on Discord, share your feedback, and help shape the future of this game. With your input, something truly epic can be created!"
+                "This marks the end of v0.918. You've not only completed the Power Saga, but you're also getting the hang of Infinite Embraces and Meditations! Congratulations on your progress, and welcome to the next stage of your journey. "
+                + "With the Hall of Love now open, Love Points are becoming a key part of your experience, alongside the skills you unlock there. While these new mechanics are taking shape, expect ongoing balancing as the game evolves. "
+                + "Feel free to dive deeper into the skills and explore what's possible. The journey is far from over—more meditations and epic content are on the way! "
+                + "Stay connected on Discord, share your feedback, and together, let's create something truly unforgettable!"
             );
         }        
 
@@ -3005,9 +3006,22 @@ function toggleDevMode(intervalTime) {
     }
 }
 
+let prevPrestigeThreshold = 100;
+
+// Global object to track key presses
+let keysPressed = {
+    m: false,
+    s: false,
+    a: false,
+    t: false,
+    b: false,
+    p: false,
+    f: false // Add 'f' for autoFightSkill
+};
+
 // Define the hotkey handler function
 function hotkeyHandler(event) {
-    if (event.shiftKey && event.altKey) {
+    if (event.shiftKey && event.altKey && false) {
         switch (event.key) {
             case '!':
                 toggleDevMultiplier(10);
@@ -3038,18 +3052,93 @@ function hotkeyHandler(event) {
                 break;
         }
     } else {
-        switch (event.key) {
+        switch (event.key.toLowerCase()) {
             case 'm':
                 if (multibuyUpgradesButtonsUnlocked) {
                     buyAllUpgrades(100, document.getElementById('buyMaxButton'));
+                    keysPressed.m = true; // Mark 'm' key as pressed
                 }
                 break;
             case 's':
                 if (multibuyUpgradesButtonsUnlocked) {
                     buyAllUpgrades(8, document.getElementById('buyMaxButton'));
+                    keysPressed.s = true; // Mark 's' key as pressed
+                }
+                break;
+            case 'a':
+                if (autoAscendThreshold !== null) {
+                    if (autoAscendThreshold > 0) {
+                        autoAscendThreshold = 0;
+                        showPopupTooltip('Auto Ascend Disabled');
+                    } else {
+                        autoAscendThreshold = numAscensionUpgrades;
+                        showPopupTooltip('Auto Ascend Set to Max');
+                    }
+                    keysPressed.a = true; // Mark 'a' key as pressed
+                }
+                break;
+            case 't':
+                if (autoTranscendThreshold !== null) {
+                    if (autoTranscendThreshold > 0) {
+                        autoTranscendThreshold = 0;
+                        showPopupTooltip('Auto Transcend Disabled');
+                    } else {
+                        autoTranscendThreshold = numPUAscensionUpgrades;
+                        showPopupTooltip('Auto Transcend Set to Max');
+                    }
+                    keysPressed.t = true; // Mark 't' key as pressed
+                }
+                break;
+            case 'b':
+                if (autobuyUpgradesSkill) {
+                    if (autobuyIntervalId !== null) {
+                        clearInterval(autobuyIntervalId);
+                        autobuyIntervalId = null;
+                        showPopupTooltip('Auto Buy Upgrades Disabled');
+                    } else {
+                        autobuyIntervalId = setInterval(autobuyUpgrades, fasterAutobuyerskill ? 250 : 1500);
+                        showPopupTooltip('Auto Buy Upgrades Enabled');
+                    }
+                    keysPressed.b = true; // Mark 'b' key as pressed
+                }
+                break;
+            case 'p':
+                if (prevPrestigeThreshold !== null) {
+                    if (autoPrestigeThreshold == 1e300) {
+                        autoPrestigeThreshold = prevPrestigeThreshold;
+                        showPopupTooltip(`Auto Prestige Enabled (${formatNumber(autoPrestigeThreshold)})`);
+                    } else {
+                        prevPrestigeThreshold = autoPrestigeThreshold;
+                        autoPrestigeThreshold = 1e300;
+                        showPopupTooltip('Auto Prestige Disabled (1e300)');
+                    }
+                    keysPressed.p = true; // Mark 'p' key as pressed
+                }
+                break;
+            case 'f':
+                if (autoFightSkill) {
+                    if (autoFightEnabled) {
+                        autoFightEnabled = false;
+                        showPopupTooltip('Auto Fight Disabled');
+                    } else {
+                        autoFightEnabled = true;
+                        showPopupTooltip('Auto Fight Enabled');
+                    }
+                    localStorage.setItem('autoFightEnabled', autoFightEnabled);
+                    keysPressed.f = true; // Mark 'f' key as pressed
                 }
                 break;
         }
+
+        checkHotkeyAchievement();
+    }
+}
+
+function checkHotkeyAchievement() {
+    // Check if all keys have been pressed and are enabled
+    const allKeysPressed = Object.values(keysPressed).every(value => value === true);
+    if (allKeysPressed) {
+        unlockAchievement('Hotkey Master');
     }
 }
 

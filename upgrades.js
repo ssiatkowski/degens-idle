@@ -482,7 +482,7 @@ const upgrades = [
     {
         name: `Shooter Dad`,
         cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 5e11, knowledge: 100000, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 1.56e7, trollPointsPerSecond: 0, hopiumPerSecond: 125, knowledgePerSecond: 0.000168, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 1.66e7, trollPointsPerSecond: 0, hopiumPerSecond: 135, knowledgePerSecond: 0.000178, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/shooter_swag.jpg`,
     },
     {
@@ -877,6 +877,7 @@ const upgrades = [
         isFight: true,
         isKey: true,
         autoBattlePower: 2e8,
+        achievement: 'Avoid the Crit',
     },
     {
         name: `Avoid Temptations`,
@@ -1435,6 +1436,26 @@ const upgrades = [
         img: `imgs/must_be_patient.jpg`,
     },
     {         
+        name: `Hotkeys`,
+        cost: { copium: 8e101, delusion: 0, yachtMoney: 0, trollPoints: 2e102, hopium: 0, knowledge: 5e77, power: 0, serenity: 250 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1e42, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0.011 },
+        img: `imgs/hotkeys.jpg`,
+        message: `<p>What the hell? Have these hotkeys been in the game all along? Yes, they have!</p>
+                <p>Here’s a quick rundown of the powerful hotkeys you can use to streamline your gameplay:</p>
+
+                <ul>
+                    <li><strong>M Key:</strong> Same as <strong>Buy Max</strong> button (you should have already known about this one)</li>
+                    <li><strong>S Key:</strong> Same as above but for <strong>Buy Seen</strong>.</li>
+                    <li><strong>B Key:</strong> Toggle <strong>Auto Buy Upgrades</strong>.</li>
+                    <li><strong>P Key:</strong> Toggle <strong>Auto Prestige</strong>. Activate Auto Prestige at the last threshold or disable it to 1e300.</li>
+                    <li><strong>A Key:</strong> Toggle <strong>Auto Ascend</strong>. Pressing this will either set Auto Ascend to the maximum or disable it altogether.</li>
+                    <li><strong>T Key:</strong> Toggle <strong>Auto Transcend</strong>. Same as above for Transcend.</li>
+                    <li><strong>F Key:</strong> Toggle <strong>Auto Fight</strong>.</li>
+                </ul>
+
+                <p>Now you know! Use these hotkeys to gain an edge and automate your progress in ways you never imagined.</p>`,
+    },
+    {         
         name: `Rastafarianism`,
         cost: { copium: 1e102, delusion: 1e102, yachtMoney: 1e102, trollPoints: 1e102, hopium: 0, knowledge: 0, power: 0, serenity: 150 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 4.2e42, hopiumPerSecond: 4.2e47, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0.042 },
@@ -1451,6 +1472,15 @@ const upgrades = [
         isMeditation: true,
         isKey: true,
         message: `In this meditation, you’ve learned that <strong>existence is shaped by the interplay between two fundamental forces</strong>: body and soul, mind and matter. Dualism shows us that both the physical and spiritual worlds are essential and interconnected. By recognizing and balancing these opposing yet complementary forces, you gain deeper insight into yourself and the universe. Embrace both sides to live in harmony and reach your full potential.`,
+    },
+    {         
+        name: `Libertarianism`,
+        cost: { copium: 1e110, delusion: 0, yachtMoney: 1e110, trollPoints: 0, hopium: 0, knowledge: 0, power: 1e21, serenity: 30000 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 2e43, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 3 },
+        img: `imgs/arena_libertarianism.png`,
+        isMeditation: true,
+        isKey: true,
+        message: `You’ve discovered that <strong>true freedom lies in the ability to live independently and make your own choices</strong>, without unnecessary constraints. Libertarianism teaches the importance of personal liberty and responsibility, where individuals thrive when allowed to pursue their own paths. Through this meditation, you’ve embraced the value of autonomy, and with it, the power to shape your own destiny.`,
     },
     
 ];

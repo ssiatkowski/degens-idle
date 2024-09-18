@@ -396,22 +396,22 @@ function startFightGame(enemyName, enemyImg) {
                 logFight("<span style='color: red; font-weight: bold; font-size: 1.3em';>Chuck Norris has no distractions and is ready to fight you at full power.</span>");
             }
         } else if (currEnemyName === "Kaguya") {
+            if (!purchasedUpgrades.some(upgrade => upgrade.name === "Kung Fu Bunny")) {
+                unlockAchievement('Wrong Sidekick');
+                numCookedRabbits++;
+                if (numCookedRabbits >= 25) {
+                    unlockAchievement('The Great American Cookout');
+                }
+                localStorage.setItem('numCookedRabbits', numCookedRabbits);
+                logFight(`<span style='color: yellow; font-size: 1.2em';>Kaguya notices the bunny beside you, clumsily performing kung fu moves. With a single glance, she pulverizes it, leaving nothing behind. That is ${numCookedRabbits} poor bunn${numCookedRabbits > 1 ? 'ies' : 'y'} you have caused to get fried.</span>`);
+
+                buyUpgrade(encodeName("Kung Fu Bunny"), true, true);
+            }
             if (!purchasedUpgrades.some(upgrade => upgrade.name === "Good Guy Sasuke")) {
                 sasukeIsHelping = true; // Set Sasuke's help flag to true
                 unlockAchievement('Sidekick');
                 logFight("<span style='color: green; font-weight: bold; font-size: 1.3em';>Sasuke joins your side to stop Kaguya and save the multiverse. Although he is leagues below her, Sasuke will assist by partially countering some of her Sharingan powers with his own.</span>");
             } else {
-                
-                if (!purchasedUpgrades.some(upgrade => upgrade.name === "Kung Fu Bunny")) {
-                    unlockAchievement('Wrong Sidekick');
-                    numCookedRabbits++;
-                    if (numCookedRabbits >= 25) {
-                        unlockAchievement('The Great American Cookout');
-                    }
-                    localStorage.setItem('numCookedRabbits', numCookedRabbits);
-                    logFight(`<span style='color: yellow; font-size: 1.2em';>Kaguya notices the bunny beside you, clumsily performing kung fu moves. With a single glance, she pulverizes it, leaving nothing behind. That is ${numCookedRabbits} poor bunn${numCookedRabbits > 1 ? 'ies' : 'y'} you have caused to get fried.</span>`);
-                }
-
                 sasukeIsHelping = false;
                 logFight("<span style='color: red; font-weight: bold; font-size: 1.3em';>You stand alone against the biggest evil the world has ever seen.</span>");
             }

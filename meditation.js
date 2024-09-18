@@ -14,6 +14,9 @@ let ballSize;
 let ballSizeDelta;
 let respawnTime;
 let windSpeed = 0;
+let windDirection = 'N';
+
+const windDirections = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
 
 // Define the meditation challenges
 const meditationChallenges = {
@@ -25,6 +28,7 @@ const meditationChallenges = {
         ballSize: 30,
         ballSizeDelta: 3,
         velocity: 1,
+        wind: 0,
     },
     "Existentialism": {
         duration: 10,
@@ -34,6 +38,7 @@ const meditationChallenges = {
         ballSize: 50,
         ballSizeDelta: 5,
         velocity: 1.05,
+        wind: 0,
     },
     "Altruism": {
         duration: 16,
@@ -43,6 +48,7 @@ const meditationChallenges = {
         ballSize: 12,
         ballSizeDelta: 2,
         velocity: 0.85,
+        wind: 0,
     },
     "Rastafarianism": {
         duration: 12,
@@ -52,6 +58,7 @@ const meditationChallenges = {
         ballSize: 42,
         ballSizeDelta: 4.2,
         velocity: 3,
+        wind: 0,
     },
     "Dualism": {
         duration: 11,
@@ -61,6 +68,17 @@ const meditationChallenges = {
         ballSize: 100,
         ballSizeDelta: 10,
         velocity: 1.5,
+        wind: 0,
+    },
+    "Libertarianism": {
+        duration: 20,
+        focus: 7,
+        ballCount: 5,
+        arenaSize: 520,
+        ballSize: 60,
+        ballSizeDelta: 40,
+        velocity: 12,
+        wind: 5,
     },
 };
 
@@ -86,6 +104,8 @@ function startMeditationGame(challengeName, backgroundImage) {
         respawnTime = calculateRespawnTime();
         gravityStrength = calculateGravity();
         balls = []; // Reset balls array
+        windSpeed = challenge.wind; // Set wind speed from the challenge
+        windDirection = windDirections[Math.floor(Math.random() * windDirections.length)]; // Pick a random direction
 
         // Show the meditation overlay
         const meditationOverlay = document.getElementById('meditationOverlay');
@@ -179,7 +199,7 @@ function updateMeditationInfo() {
     document.getElementById('meditationTurnRadius').innerText = turnRadius.toFixed(2);
     document.getElementById('meditationGravity').innerText = gravityStrength.toFixed(2); // Display current gravity value
     document.getElementById('meditationRespawnTime').innerText = (respawnTime/1000).toFixed(3); // Display respawn time
-    document.getElementById('meditationWind').innerText = windSpeed.toFixed(2) + ' m/s'; // Display wind speed
+    document.getElementById('meditationWind').innerText = `${windSpeed.toFixed(2)} m/s, ${windDirection}`; // Display wind speed and direction
 }
 
 // Function to update the meditation game state
@@ -210,8 +230,23 @@ function updateMeditationGame(resolve) {
     checkOutOfBounds();
 }
 
-// Function to move the balls according to their velocity, direction, and gravity towards the center
+// Function to move the balls according to their velocity, direction, wind, and gravity towards the center
 function moveBalls() {
+    // Convert wind direction to x and y components
+    let windX = 0;
+    let windY = 0;
+
+    switch (windDirection) {
+        case 'N': windY = -1; break;
+        case 'NE': windX = 1; windY = -1; break;
+        case 'E': windX = 1; break;
+        case 'SE': windX = 1; windY = 1; break;
+        case 'S': windY = 1; break;
+        case 'SW': windX = -1; windY = 1; break;
+        case 'W': windX = -1; break;
+        case 'NW': windX = -1; windY = -1; break;
+    }
+
     balls.forEach((ball) => {
         // Calculate the angle toward the center of the arena
         const angleToCenter = Math.atan2((arenaSize / 2) - ball.y, (arenaSize / 2) - ball.x);
@@ -240,8 +275,8 @@ function moveBalls() {
         const pullY = gravityStrength * (deltaYToCenter / arenaSize);
         
         // Adjust ball velocity based on the gravitational pull
-        const deltaX = ball.velocity * Math.cos(ball.direction) + pullX;
-        const deltaY = ball.velocity * Math.sin(ball.direction) + pullY;
+        const deltaX = ball.velocity * Math.cos(ball.direction) + pullX + windSpeed * windX;
+        const deltaY = ball.velocity * Math.sin(ball.direction) + pullY + windSpeed * windY;
 
         // Update ball's position
         ball.x += deltaX;
@@ -252,6 +287,7 @@ function moveBalls() {
         ball.element.style.top = `${ball.y - ball.radius}px`; // Subtract radius to center ball
     });
 }
+
 
 
 
