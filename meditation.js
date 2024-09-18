@@ -54,8 +54,8 @@ const meditationChallenges = {
         velocity: 3,
     },
     "Dualism": {
-        duration: 10,
-        focus: 2,
+        duration: 11,
+        focus: 1,
         ballCount: 5,
         arenaSize: 350,
         ballSize: 100,
