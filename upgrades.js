@@ -991,7 +991,7 @@ const upgrades = [
     {
         name: `Spend That Money`,
         cost: { copium: 0, delusion: 0, yachtMoney: 2.5e64, trollPoints: 0, hopium: 0, knowledge: 5e44, power: 5e7, serenity: 0 },
-        earnings: { copiumPerSecond: 9e20, delusionPerSecond: 8e20, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 200000, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 9e20, delusionPerSecond: 8e20, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 220000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/treat_yo_self.jpg`,        
     },
     {
@@ -1003,19 +1003,19 @@ const upgrades = [
     {
         name: `Don't split hairs`,
         cost: { copium: 2.3e62, delusion: 2.1e62, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 4e45, power: 9.9e7, serenity: 0 },
-        earnings: { copiumPerSecond: 6.5e20, delusionPerSecond: 6.5e20, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1e21, hopiumPerSecond: 0, knowledgePerSecond: 310000, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 6.5e20, delusionPerSecond: 6.5e20, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1e21, hopiumPerSecond: 0, knowledgePerSecond: 360000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/comb_over.jpg`,        
     },
     {
         name: `Kung Fu Bunny`,
         cost: { copium: 0, delusion: 2.3e62, yachtMoney: 0, trollPoints: 5e62, hopium: 0, knowledge: 8e45, power: 1.1e8, serenity: 0 },
-        earnings: { copiumPerSecond: 1.5e21, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 580000, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 1.5e21, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 640000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/bunny_martial_arts.jpg`,        
     },
     {
         name: `Biggest Conspiracy`,
         cost: { copium: 0, delusion: 0, yachtMoney: 1.8e64, trollPoints: 2.5e63, hopium: 0, knowledge: 1e46, power: 1.5e8, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 1.9e21, yachtMoneyPerSecond: 0, trollPointsPerSecond: 2.4e21, hopiumPerSecond: 0, knowledgePerSecond: 450000, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 1.9e21, yachtMoneyPerSecond: 0, trollPointsPerSecond: 2.4e21, hopiumPerSecond: 0, knowledgePerSecond: 460000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/dank_memes_steel_beams.jpg`,        
     },
     {
@@ -1424,18 +1424,33 @@ const upgrades = [
     },
     {         
         name: `One in a Million`,
-        cost: { copium: 1.8e101, delusion: 0, yachtMoney: 2.5e101, trollPoints: 5e100, hopium: 0, knowledge: 1e76, power: 0, serenity: 10 },
+        cost: { copium: 1.8e101, delusion: 0, yachtMoney: 2.5e101, trollPoints: 5e100, hopium: 0, knowledge: 1e76, power: 0, serenity: 94 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 1e47, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0.002 },
         img: `imgs/doesnt_go_through_phone.jpg`,
     },
     {         
+        name: `Must be patient`,
+        cost: { copium: 3.8e101, delusion: 4.1e101, yachtMoney: 0, trollPoints: 3e101, hopium: 0, knowledge: 1e77, power: 1e20, serenity: 25 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0.008 },
+        img: `imgs/must_be_patient.jpg`,
+    },
+    {         
         name: `Rastafarianism`,
-        cost: { copium: 1e102, delusion: 1e102, yachtMoney: 1e102, trollPoints: 1e102, hopium: 0, knowledge: 0, power: 0, serenity: 15 },
+        cost: { copium: 1e102, delusion: 1e102, yachtMoney: 1e102, trollPoints: 1e102, hopium: 0, knowledge: 0, power: 0, serenity: 150 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 4.2e42, hopiumPerSecond: 4.2e47, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0.042 },
         img: `imgs/arena_rastafarianism.png`,
         isMeditation: true,
         isKey: true,
         message: `In this meditation, you’ve connected with the <strong>spiritual power of unity, peace, and respect for all living things</strong>. Rastafarianism teaches the importance of freedom, self-awareness, and living in harmony with nature. By embracing these values, you have strengthened your bond with the earth and your community. Walk in the light of peace and continue to cultivate a deep respect for life in all its forms.`,
+    },
+    {         
+        name: `Dualism`,
+        cost: { copium: 1e104, delusion: 1e104, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 2000 },
+        earnings: { copiumPerSecond: 1e42, delusionPerSecond: 1e42, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0.2 },
+        img: `imgs/arena_dualism.png`,
+        isMeditation: true,
+        isKey: true,
+        message: `In this meditation, you’ve learned that <strong>existence is shaped by the interplay between two fundamental forces</strong>: body and soul, mind and matter. Dualism shows us that both the physical and spiritual worlds are essential and interconnected. By recognizing and balancing these opposing yet complementary forces, you gain deeper insight into yourself and the universe. Embrace both sides to live in harmony and reach your full potential.`,
     },
     
 ];

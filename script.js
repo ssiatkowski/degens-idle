@@ -387,6 +387,7 @@ function loadGameState() {
 
     numMathSolves = parseFloat(localStorage.getItem('numMathSolves')) || 0;
     numSpeedTaps = parseFloat(localStorage.getItem('numSpeedTaps')) || 0;
+    numCookedRabbits = parseFloat(localStorage.getItem('numCookedRabbits')) || 0;
     numMemorizedDots = parseFloat(localStorage.getItem('numMemorizedDots')) || 0;
     numUnluckyBoxes = parseFloat(localStorage.getItem('numUnluckyBoxes')) || 0;
 
@@ -511,6 +512,14 @@ function loadGameState() {
     updateTradeButtonText();
 
     if(buyMarkersSkill){ enableAllBuyMarkers() };
+
+    stellarMeditationMult = calculateStellarMeditationMultiplier();
+    autoFightEnabled = JSON.parse(localStorage.getItem('autoFightEnabled')) || false;
+
+    if(fertileScarcitySkill && purchasedUpgrades.some(upgrade => upgrade.name === `Cosmic Drought`)){
+        stellarHarvestMult = 250;
+        updateMultipliersDisplay();
+    }
 
     // Retrieve the last interaction time, defaulting to the current time if not found
     const lastInteraction = parseInt(localStorage.getItem('lastInteraction')) || Date.now();
@@ -1318,6 +1327,8 @@ function tradeTenPercent() {
 }
 
 function autoTradeHopium() {
+    if (isEventInProgress) return;
+    
     if (hopiumTradeSkill && equilibriumOfHopeSkill && autoTradeHopiumIntervalId === null) {
         autoTradeHopiumIntervalId = setInterval(() => {
             // Get 1% of the current hopium
@@ -1883,6 +1894,7 @@ function animateInfiniteEmbraceExpansion() {
         setTimeout(() => {
             // Remove the mask element after the expansion is complete
             heartImage.parentElement.remove();
+            window.location.reload();
         }, 3000);  // 1.5-second duration for the expansion effect
     }
 }
@@ -1926,7 +1938,7 @@ async function infiniteEmbrace() {
 
             unlockAchievement('Infinite Embrace');
 
-            if (lovePoints > 25) {
+            if (calculateLovePointsGained() > 25) {
                 unlockAchievement('Massive Embrace');
             }
 
@@ -2108,6 +2120,11 @@ function generateIdleResources(elapsedSeconds) {
 
 }
 
+function calculateStellarMeditationMultiplier() {
+    return 1.1 ** purchasedUpgrades.filter(upgrade => upgrade.isMeditation).length;
+}
+
+
 // Function to encode a name for safe usage in URLs or storage
 function encodeName(name) {
     return encodeURIComponent(name);
@@ -2194,7 +2211,9 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
                 return;
             }
 
-            stellarMeditationMult *= 1.1;
+            if (stellarMeditationSkill) {
+                stellarMeditationMult *= 1.1;
+            }
         }
 
         // Increase the per second earnings for each resource, apply God Mode multiplier if applicable
@@ -2285,7 +2304,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
 
         if (name === 'Altruism') {
             showMessageModal('The Journey Continues', 
-                "This marks the end of v0.916. Hope you enjoyed the Power Saga and congratulations on completing your first successful meditation! With the Hall of Love now open, a whole new mechanic has been introduced, and Love Points are now part of your journey. While the Hall of Love skills are implemented, expect plenty of balancing to come as the game evolves. Feel free to explore the skills and prepare for even more content with future meditations. "
+                "This marks the end of v0.917. Hope you enjoyed the Power Saga and congratulations on completing your first successful meditation! With the Hall of Love now open, a whole new mechanic has been introduced, and Love Points are now part of your journey. While the Hall of Love skills are implemented, expect plenty of balancing to come as the game evolves. Feel free to explore the skills and prepare for even more content with future meditations. "
                 + "Stay active on Discord, share your feedback, and help shape the future of this game. With your input, something truly epic can be created!"
             );
         }        
@@ -2359,6 +2378,8 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true) {
 
 // Function to handle the purchase of multiple upgrades
 function buyAllUpgrades(limit, pressedButton) {
+    if (isEventInProgress) return;
+
     let purchasedCount = 0; // Initialize a counter for the purchased upgrades
     
     let topUpgrades = availableUpgrades.slice(0, limit);
@@ -2626,6 +2647,7 @@ function autobuyUpgrades() {
 
     let topUpgrades = availableUpgrades.slice(0, 10);
     let upgradeBought = false;
+    let firstFightUpgrade = true;
 
     for (let i = 0; i < topUpgrades.length; i++) {
         const upgrade = topUpgrades[i];
@@ -2636,7 +2658,7 @@ function autobuyUpgrades() {
         // Buy the upgrade if either condition is met:
         // 1. It is affordable and switchState is true
         // 2. It is affordable and autoFightSkill is true with sufficient power
-        if (isAffordableUpgrade && autoFightCondition) {
+        if (isAffordableUpgrade && autoFightCondition && firstFightUpgrade) {
             buyUpgrade(encodeName(upgrade.name), false);
             upgradeBought = true;
             incrementStellarHarvest();
@@ -2645,6 +2667,8 @@ function autobuyUpgrades() {
             buyUpgrade(encodeName(upgrade.name), false);
             upgradeBought = true;
         }
+
+        if (upgrade.isFight) {firstFightUpgrade = false;}
 
         // Check if it's a key upgrade and stop further key upgrade processing if buyMarkersSkill is false
         if (!buyMarkersSkill && upgrade.isKey) {
@@ -2658,7 +2682,6 @@ function autobuyUpgrades() {
         updateMultipliersDisplay();
         updateEffectiveMultipliers();
         updateDisplay();
-        saveGameState();
     }
 }
 
@@ -3496,7 +3519,7 @@ function calculateTooltip(resourceId) {
 
         const loveMult = Math.max(1, Math.log10(lovePoints))
         if (resonanceOfLoveSkill && loveMult > 1){
-            tooltip += `<span style="color:#E97451">x${formatNumber(loveMult)} (Resonance of Love)</span><br>`;
+            tooltip += `<span style="color:#DE3163">x${formatNumber(loveMult)} (Resonance of Love)</span><br>`;
         }
     }    
 

@@ -111,6 +111,9 @@ function importSave(event) {
 
             // Call loadGameState to apply the imported game state
             loadGameState();
+
+            // refreshing page to prevent love points from multiplying again (bug workaround)
+            window.location.reload();
         };
 
         reader.readAsText(file);
@@ -499,7 +502,7 @@ document.getElementById('saveAutomationSettingsButton').addEventListener('click'
         } // Neutral does nothing, so no action needed
     }
 
-    // Handle auto-fighting only if the skill is unlocked
+    // Handle auto-fighting only if the skill is unlocked and write autoFightEnabled to localstorage
     if (autoFightSkill) {
         const autoFightSwitch = document.getElementById('autoFightSwitch');
         console.log("Auto-fight switch state at save:", autoFightSwitch.checked); // Debug log
@@ -509,6 +512,7 @@ document.getElementById('saveAutomationSettingsButton').addEventListener('click'
         } else {
             autoFightEnabled = false;
         }
+        localStorage.setItem('autoFightEnabled', autoFightEnabled);
     }
 
     // Handle auto-buy upgrades only if the skill is unlocked

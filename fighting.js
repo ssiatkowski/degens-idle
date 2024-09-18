@@ -268,6 +268,7 @@ let sasukeIsHelping = false;
 
 let mysticReboundCount = 0;
 
+let numCookedRabbits = 0;
 
 // Function to initialize and start the mini-game
 function startFightGame(enemyName, enemyImg) {
@@ -377,8 +378,6 @@ function startFightGame(enemyName, enemyImg) {
         forfeitButton.onclick = (event) => {
             event.stopPropagation(); // Prevent the click from propagating to the document
             logFight("<span style='color: red;'>You forfeited the fight!</span>");
-            fightEnded = true; // Set the flag to true when forfeiting
-            clearAttackIntervals(); // Stop the game intervals
             forfeitButton.disabled = true; // Disable the forfeit button to prevent multiple clicks
             resolve(false); // Resolve the promise with a loss
             endFight(true); // Pass true to indicate the player forfeited
@@ -402,6 +401,18 @@ function startFightGame(enemyName, enemyImg) {
                 unlockAchievement('Sidekick');
                 logFight("<span style='color: green; font-weight: bold; font-size: 1.3em';>Sasuke joins your side to stop Kaguya and save the multiverse. Although he is leagues below her, Sasuke will assist by partially countering some of her Sharingan powers with his own.</span>");
             } else {
+                
+                if (!purchasedUpgrades.some(upgrade => upgrade.name === "Kung Fu Bunny")) {
+                    unlockAchievement('Wrong Sidekick');
+                    numCookedRabbits++;
+                    if (numCookedRabbits >= 25) {
+                        unlockAchievement('The Great American Cookout');
+                    }
+                    localStorage.setItem('numCookedRabbits', numCookedRabbits);
+                    logFight(`<span style='color: yellow; font-size: 1.2em';>Kaguya notices the bunny beside you, clumsily performing kung fu moves. With a single glance, she pulverizes it, leaving nothing behind. That is ${numCookedRabbits} poor bunn${numCookedRabbits > 1 ? 'ies' : 'y'} you have caused to get fried.</span>`);
+                }
+
+                sasukeIsHelping = false;
                 logFight("<span style='color: red; font-weight: bold; font-size: 1.3em';>You stand alone against the biggest evil the world has ever seen.</span>");
             }
         }
@@ -528,6 +539,8 @@ function toggleStatDisplay(containerId, shouldDisplay) {
 
 
 function fightLoop(resolve) {
+    if (fightEnded) return; // Stop if the fight has ended
+
     const playerAttackInterval = 5000 / playerCurrentAttackSpeed ; // Player attacks every 2 seconds (fixed)
     const enemyAttackInterval = 5000 / enemyAttackSpeed; // Calculate interval from attack speed
 
@@ -539,8 +552,6 @@ function fightLoop(resolve) {
 
         // Check if the enemy is defeated
         if (enemyHealth <= 0) {
-            fightEnded = true; // Set flag to true to indicate the fight has ended
-            clearAttackIntervals(); // Stop both intervals
             resolve(true); // Resolve the promise with a win
             endFight(); // End the fight visuals
         }
@@ -554,8 +565,6 @@ function fightLoop(resolve) {
 
         // Check if the player is defeated
         if (playerHealth <= 0) {
-            fightEnded = true; // Set flag to true to indicate the fight has ended
-            clearAttackIntervals(); // Stop both intervals
             unlockAchievement('Get Up and Try Again');
             resolve(false); // Resolve the promise with a loss
             endFight(); // End the fight visuals
@@ -1356,7 +1365,6 @@ function logFight(message) {
 
 // Function to handle the end of the fight
 function endFight(isForfeit = false) {
-    fightEnded = true; // Set the flag to true when the fight ends
     clearAttackIntervals(); // Ensure the intervals are stopped
 
     // Disable the forfeit button
@@ -1406,15 +1414,17 @@ function endFight(isForfeit = false) {
         }
         overlayWinnerLoserText("Loser", "Taunting");
     } else if (playerHealth > 0) {
-        logFight("<span style='color: green;'>You are the Winner!</span>");
+        logFight("<span style='color: green;'>You Win!</span>");
         overlayWinnerLoserText("Winner", "Dead");
 
         incrementStellarHarvest();
 
     } else {
-        logFight(`<span style='color: red;'>${currEnemyName} is the Winner!</span>`);
+        logFight(`<span style='color: red;'>${currEnemyName} defeated you!</span>`);
         overlayWinnerLoserText("Loser", "Taunting");
     }
+
+    fightEnded = true; // Set the flag to true when the fight ends
 }
 
 

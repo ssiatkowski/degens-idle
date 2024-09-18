@@ -11,7 +11,7 @@ const loveHallSkills = [
     { name: 'Cosmic Embrace', cost: 1.9, description: 'Gain +1 Love Point every embrace.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 3 },
 
     { name: 'Serenity Flow', cost: 5, description: 'Hopium gain is multiplied by square root of Serenity.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 4 },
-    { name: 'Serene Boost 2', cost: 5, description: '3x Serenity gain. (Serenity Boosts stack)', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 4 },
+    { name: 'Serene Boost 2', cost: 5, description: '5x Serenity gain. (Serenity Boosts stack)', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 4 },
 
     { name: 'Power Infusion', cost: 15, description: '4x Power gain.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 5 },
     { name: 'Soulbound Embrace', cost: 15, description: 'Gain +2.5 Love Points every embrace.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 5 },
@@ -29,7 +29,7 @@ const loveHallSkills = [
     { name: 'Serene Boost 1', cost: 0.1, description: '2x Serenity gain. (Serene Boosts stack)', unlocked: false, level: 'Dimensional Shift (27x)', pair: 20 },
     { name: 'Celestial Precision', cost: 0.1, description: 'Improves Astral Precision to power+50%', unlocked: false, level: 'Dimensional Shift (27x)', pair: 20 },
 
-    { name: 'Knowledge Infusion', cost: 0.6, description: '8x Knowledge gain.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 21 },
+    { name: 'Knowledge Infusion', cost: 0.6, description: '9x Knowledge gain.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 21 },
     { name: 'Basic Resource Boost', cost: 0.6, description: '9x gain to first 4 resources.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 21 },
 
     { name: 'Hall of Knowledge Auto-Buy', cost: 1.5, description: 'Automatically buy upgrades from the Hall of Knowledge.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 22 },
@@ -160,7 +160,7 @@ function unlockLoveHallSkill(skill, duringLoad = false) {
                 break;
         
             case 'Serene Boost 2':
-                serenityBoostMultiplier *= 3;
+                serenityBoostMultiplier *= 5;
                 if(!duringLoad){
                     updateEffectiveMultipliers();
                 }
@@ -614,7 +614,7 @@ function purchasePowerHallSkills() {
             unlockPowerHallSkill(skill, true);
             console.log(`Purchased: ${skill.name}`);
 
-            showPopupTooltip(`Auto-Purchased Power Hall Skill: ${skill.name}`, '#FFBF00');
+            showPopupTooltip(`Auto-Purchased Power Hall Skill: ${skill.name}`, '#8B8000');
 
             // Mark the skill as unlocked after purchasing
             skill.unlocked = true;

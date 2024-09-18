@@ -366,6 +366,12 @@ const achievements = [
         img: 'imgs/achievements/condensed_crunch.jpg',
     },
     {
+        name: 'Wrong Sidekick',
+        isUnlocked: false,
+        hoverText: `oh no, what have you done?`,
+        img: 'imgs/achievements/wrong_sidekick.jpg',
+    },
+    {
         name: 'Sidekick',
         isUnlocked: false,
         hoverText: `don't fight alone`,
@@ -516,12 +522,6 @@ const achievements = [
         img: 'imgs/achievements/uninitialized.jpg',
     },
     {
-        name: 'Does Not Exist 85',
-        isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
-    },
-    {
         name: 'Developer Options',
         isUnlocked: false,
         hoverText: '1←2←1→1←1→ 2→2←1←2→1→',
@@ -588,10 +588,10 @@ const achievements = [
         img: 'imgs/achievements/fidget_clicks.jpg',
     },
     {
-        name: 'Does Not Exist 99',
+        name: 'The Great American Cookout',
         isUnlocked: false,
-        hoverText: 'Does not exist yet',
-        img: 'imgs/achievements/uninitialized.jpg',
+        hoverText: '???',
+        img: 'imgs/achievements/great_american_cookout.jpg',
     },
     {
         name: 'Does Not Exist 100',

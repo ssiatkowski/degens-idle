@@ -53,6 +53,15 @@ const meditationChallenges = {
         ballSizeDelta: 4.2,
         velocity: 3,
     },
+    "Dualism": {
+        duration: 10,
+        focus: 2,
+        ballCount: 5,
+        arenaSize: 350,
+        ballSize: 100,
+        ballSizeDelta: 10,
+        velocity: 1.5,
+    },
 };
 
 // Function to initialize the meditation game
@@ -184,6 +193,7 @@ function updateMeditationGame(resolve) {
         clearInterval(meditationInterval);
         resolve(true); // Player wins the challenge
         stopMeditationGame();
+        showPopupTooltip(`Successful Meditation: ${currentChallengeName}`, color='#4682B4', 2)
         return;
     }
 
@@ -248,7 +258,7 @@ function moveBalls() {
 
 // Function to check if a ball leaves the arena and decrement a life if so, with a respawn delay
 function checkOutOfBounds() {
-    // If game has ended (focus are zero or below), do nothing
+    // If game has ended (focus is zero or below), do nothing
     if (meditationFocus <= 0) return;
 
     balls.forEach((ball) => {
@@ -265,53 +275,70 @@ function checkOutOfBounds() {
             // Set the ball as respawning to avoid further out-of-bounds checks
             ball.isRespawning = true;
 
-            // Decrement a life when out of bounds
-            meditationFocus--;
-            document.getElementById('meditationFocus').innerText = meditationFocus; // Update focus display
-
-            // Hide the ball temporarily and reset after the respawn delay
-            ball.element.style.display = 'none'; // Hide the ball
-
-            // Delay the respawn by respawnTime
-            setTimeout(() => {
-                // If the game has ended during the respawn delay, do nothing
-                if (meditationFocus <= 0) return;
-
-                // Reset the ball to a new position close to the center, avoiding overlap
-                let newX, newY;
-                let overlap;
-                do {
-                    const angle = Math.random() * 2 * Math.PI; // Random angle
-                    const radius = 30 + Math.random() * 50; // Respawn close to the center (radius between 30px and 80px)
-                    newX = arenaSize / 2 + radius * Math.cos(angle);
-                    newY = arenaSize / 2 + radius * Math.sin(angle);
-
-                    overlap = balls.some(
-                        (otherBall) =>
-                            otherBall !== ball &&
-                            Math.sqrt(Math.pow(newX - otherBall.x, 2) + Math.pow(newY - otherBall.y, 2)) < ball.radius * 2
-                    );
-                } while (overlap); // Ensure no overlap with other balls
-
-                ball.x = newX;
-                ball.y = newY;
-                ball.direction = Math.random() * 2 * Math.PI; // New random direction
-                ball.velocity = baseVelocity; // Reset velocity to the starting value
-                ball.isRespawning = false; // Reset the respawning flag
-
-                // Show the ball again and update its position
-                ball.element.style.display = 'block'; // Show the ball
-                ball.element.style.left = `${ball.x - ball.radius}px`; // Center the ball
-                ball.element.style.top = `${ball.y - ball.radius}px`; // Center the ball
-
-                // Check if focus are zero and stop the game
-                if (meditationFocus <= 0) {
-                    clearInterval(meditationInterval);
-                    stopMeditationGame(); // End the game
-                }
-            }, respawnTime); // 0.1-second respawn delay
+            // Decrement focus when out of bounds
+            handleOutOfBounds(ball);
         }
     });
+}
+
+// Function to handle what happens when a ball goes out of bounds (or can't be placed)
+function handleOutOfBounds(ball) {
+    // Decrement a life when out of bounds
+    meditationFocus--;
+    document.getElementById('meditationFocus').innerText = meditationFocus; // Update focus display
+
+    // Hide the ball temporarily and reset after the respawn delay
+    ball.element.style.display = 'none'; // Hide the ball
+
+    // Delay the respawn by respawnTime
+    setTimeout(() => {
+        // If the game has ended during the respawn delay, do nothing
+        if (meditationFocus <= 0) return;
+
+        // Add a limit to the number of attempts to place the ball
+        let attempts = 0;
+        const maxAttempts = 200; // Limit the number of placement attempts
+
+        let newX, newY;
+        let overlap;
+        do {
+            const angle = Math.random() * 2 * Math.PI; // Random angle
+            const radius = ballSize/4 + Math.random() * arenaSize/5; // Respawn close to the center (radius between 30px and 80px)
+            newX = arenaSize / 2 + radius * Math.cos(angle);
+            newY = arenaSize / 2 + radius * Math.sin(angle);
+
+            overlap = balls.some(
+                (otherBall) =>
+                    otherBall !== ball &&
+                    Math.sqrt(Math.pow(newX - otherBall.x, 2) + Math.pow(newY - otherBall.y, 2)) < ball.radius * 2
+            );
+            attempts++;
+        } while (overlap && attempts < maxAttempts); // Ensure no overlap with other balls, but limit attempts
+
+        if (attempts >= maxAttempts) {
+            showPopupTooltip(`No Space For Ball - Losing Focus`, color='#FF5733', 1.5);
+            // Treat as out of bounds, reduce focus, and restart respawn
+            handleOutOfBounds(ball);
+            return;
+        }
+
+        ball.x = newX;
+        ball.y = newY;
+        ball.direction = Math.random() * 2 * Math.PI; // New random direction
+        ball.velocity = baseVelocity; // Reset velocity to the starting value
+        ball.isRespawning = false; // Reset the respawning flag
+
+        // Show the ball again and update its position
+        ball.element.style.display = 'block'; // Show the ball
+        ball.element.style.left = `${ball.x - ball.radius}px`; // Center the ball
+        ball.element.style.top = `${ball.y - ball.radius}px`; // Center the ball
+
+        // Check if focus is zero and stop the game
+        if (meditationFocus <= 0) {
+            clearInterval(meditationInterval);
+            stopMeditationGame(); // End the game
+        }
+    }, respawnTime); // 0.1-second respawn delay
 }
 
 
