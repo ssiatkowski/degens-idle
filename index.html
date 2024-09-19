@@ -69,7 +69,7 @@
                 <button id="modalCancelButton">Cancel</button>
             </div>
             <div id="ascendUpgradeSelection">
-                <h3>Choose the upgrade you want to use as your ascension focal point - this will permanently enhance it to be 10x as strong:</h3>
+                <h3>Select your upgrade(s):</h3>
                 <div id="ascendUpgradeList"></div>
                 <button id="upgradeConfirmButton" style="display:none;">Confirm Selection</button>
             </div>
@@ -383,7 +383,7 @@
         <div class="settings-overlay-content">
             <span class="close-button" id="closeSettingsOverlay">&times;</span>
             <h1>Settings</h1>
-            <h4>Degens Idle v0.918</h4>
+            <h4>Degens Idle v0.919</h4>
             
             <div class="settings-section">
                 <h3>Save Management</h3>
@@ -465,12 +465,27 @@
             <span class="close-button" id="closeAchievementsOverlay">&times;</span>
             <h1>Achievements</h1>
             <div id="achievements-info">Achievements Unlocked: 0/100 | Multiplier: 1.00x (to ALL RESOURCES)</div>
+            
+            <!-- Tabs for Achievement Categories -->
+            <div id="achievementTabs" class="achievement-tabs">
+                <button class="tab-button active" data-type="all">All</button>
+                <button class="tab-button" data-type="progression">Progression</button>
+                <button class="tab-button" data-type="freebie">Freebie</button>
+                <button class="tab-button" data-type="puzzle">Puzzle</button>
+                <button class="tab-button" data-type="skill">Skill</button>
+            </div>
+            
+            <!-- Info box to display count of unlocked achievements in current tab -->
+            <div id="achievementCount" class="achievement-count">Unlocked: 0/0</div>
+            
             <div id="achievements-grid">
                 <!-- Achievements will be dynamically added here -->
             </div>
             <button id="closeAchievementsButton">Exit</button>
         </div>
     </div>
+
+
 
     <!-- Donation Overlay -->
     <div id="donationOverlay" class="donation-overlay" style="display: none;">

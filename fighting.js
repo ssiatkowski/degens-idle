@@ -760,6 +760,7 @@ function attackEnemy(resolve) {
             }, 150); // Slightly longer delay to ensure the flash is visible
 
         } else {
+            unlockAchievement('WHY IS HE ALIVE?');
             // After 69 revives, calculate the revival chance
             const revivalChance = 0.99 * Math.pow(0.99, deadpoolRevives - 69);
             if (Math.random() < revivalChance) {

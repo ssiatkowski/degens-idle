@@ -328,6 +328,34 @@ function updateSkillDisplay() {
     });
 }
 
+function divideLibrarySkillCost(skillName, quotient) {
+    // Find the skill in the librarySkills array
+    const skill = librarySkills.find(s => s.name === skillName);
+
+    if (skill) {
+        // Update the skill cost
+        skill.cost = skill.cost / quotient;
+
+        // Update the displayed cost
+        const skillDiv = document.querySelector(`.libraryskill[data-skill-name="${skill.name}"]`);
+        if (skillDiv) {
+            const skillCost = skillDiv.querySelector('.skill-cost');
+            if (skillCost) {
+                skillCost.textContent = `Cost: ${formatNumber(skill.cost)} Knowledge`; // Update displayed cost
+            }
+
+            // Update the affordable status based on new cost
+            if (knowledge >= skill.cost) {
+                skillDiv.classList.add('affordable');
+            } else {
+                skillDiv.classList.remove('affordable');
+            }
+        }
+    } else {
+        console.warn(`Skill ${skillName} not found in librarySkills.`);
+    }
+}
+
 
 function initializeSkills() {
     const skillLevels = {};

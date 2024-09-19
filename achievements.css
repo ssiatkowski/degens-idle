@@ -7,24 +7,23 @@
     background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start; /* Align content to the top */
     z-index: 3;
-    overflow: hidden; /* Prevent scrolling on both axes */
+    overflow-y: auto; /* Enable vertical scrolling if needed */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
 .achievements-overlay-content {
     background-color: #1e1e1e;
-    padding: 20px; /* Adjust padding */
+    padding: 20px;
     border: 1px solid #333;
     border-radius: 10px;
     text-align: center;
     color: #e0e0e0;
     max-width: 1000px;
     width: 100%;
-    max-height: 90%; /* Ensure content fits within the screen */
-    overflow-y: auto; /* Enable vertical scrolling */
-    overflow-x: hidden; /* Disable horizontal scrolling */
-    box-sizing: border-box; /* Include padding in width calculation */
+    margin-top: 5%; /* Add some space from the top */
+    box-sizing: border-box;
 }
 
 #achievements-grid {
@@ -32,9 +31,9 @@
     grid-template-columns: repeat(10, 1fr); /* 10 columns */
     gap: 5px;
     width: 100%; /* Set width to 100% to prevent overflow */
-    margin: 0 auto; /* Center the grid */
+    margin: 0 auto;
     margin-top: 20px;
-    box-sizing: border-box; /* Ensure padding doesn't cause overflow */
+    box-sizing: border-box;
 }
 
 .achievement {
@@ -113,6 +112,42 @@
     transform: translateY(1px); /* Slight press down on click */
 }
 
+/* Styling for achievement tabs */
+.achievement-tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.tab-button {
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px 5px 0 0;
+    margin-right: 5px;
+    transition: background-color 0.3s;
+}
+
+.tab-button.active {
+    background-color: #1B4D3E;
+}
+
+.tab-button:hover {
+    background-color: #444;
+}
+
+/* Styling for the achievement count display */
+.achievement-count {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #e0e0e0;
+    text-align: center;
+}
+
 
 /* Responsive adjustments for smaller screens */
 @media (max-width: 768px) {
@@ -123,5 +158,17 @@
     .achievement {
         width: 70px; /* Slightly smaller images on mobile */
         height: 70px;
+    }
+
+    .tab-button {
+        padding: 8px 12px; /* Reduce padding for smaller screens */
+        font-size: 14px; /* Reduce font size for smaller screens */
+        margin-right: 3px; /* Reduce margin between buttons */
+        flex-grow: 1; /* Allow buttons to grow equally to fill the space */
+        text-align: center; /* Ensure text is centered */
+    }
+
+    .achievement-tabs {
+        justify-content: space-between; /* Distribute space evenly on mobile */
     }
 }

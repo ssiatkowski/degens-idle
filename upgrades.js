@@ -1394,6 +1394,12 @@ const upgrades = [
                 <p>Through this act, the multiverse is shaped by your love and serenity, enriching all future cycles. Your achievements and Love Points will remain intact, continuing to grow as you transcend each cycle. The embrace is a cosmic renewal, where love fuels the multiverse and your journey within it.</p>`,
     },
     {         
+        name: `Is it worth it?`,
+        cost: { copium: 0, delusion: 1e100, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 1e76, power: 0, serenity: 90 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 3e40, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0.008 },
+        img: `imgs/to_crunch_or_not_to_crunch.jpg`,
+    },
+    {         
         name: `Existentialism`,
         cost: { copium: 1.5e100, delusion: 1.5e100, yachtMoney: 1.5e100, trollPoints: 1.5e100, hopium: 0, knowledge: 0, power: 0, serenity: 5 },
         earnings: { copiumPerSecond: 2.2e41, delusionPerSecond: 1.6e41, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 1e47, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0.002 },
@@ -1482,5 +1488,31 @@ const upgrades = [
         isKey: true,
         message: `You’ve discovered that <strong>true freedom lies in the ability to live independently and make your own choices</strong>, without unnecessary constraints. Libertarianism teaches the importance of personal liberty and responsibility, where individuals thrive when allowed to pursue their own paths. Through this meditation, you’ve embraced the value of autonomy, and with it, the power to shape your own destiny.`,
     },
-    
+    {         
+        name: `Hinduism`,
+        cost: { copium: 1e115, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 1e22, serenity: 100000 },
+        earnings: { copiumPerSecond: 5e45, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 1e48, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 50 },
+        img: `imgs/arena_hinduism.png`,
+        isMeditation: true,
+        isKey: true,
+        message: `Through this meditation, you’ve gained insight into the <strong>cycle of life, karma, and spiritual growth</strong>. Hinduism teaches that every action shapes your journey toward enlightenment, and by aligning with your dharma (righteous path), you move closer to your true purpose. You’ve learned the importance of inner peace, self-awareness, and respect for the interconnectedness of all life. Continue on your path with an open heart, and the universe will guide you.`,
+    },
+    {         
+        name: `Shinto`,
+        cost: { copium: 1e120, delusion: 1e120, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 1e23, serenity: 1000000 },
+        earnings: { copiumPerSecond: 2e46, delusionPerSecond: 2e46, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 1e48, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 750 },
+        img: `imgs/arena_shinto.png`,
+        isMeditation: true,
+        isKey: true,
+        message: `Through this meditation, you’ve deepened your <strong>connection to the kami (spirits) that reside in nature and all things</strong>. Shinto teaches that harmony with the natural world brings clarity, peace, and spiritual balance. By honoring the sacredness of life, you’ve learned that everything around you is alive with spiritual energy. Continue to respect and live in harmony with nature, and it will nurture your spirit in return.`,
+    },
+    {         
+        name: `Stoicism`,
+        cost: { copium: 1e125, delusion: 0, yachtMoney: 1e125, trollPoints: 0, hopium: 0, knowledge: 0, power: 1e24, serenity: 2e7 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 1e50, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 5000 },
+        img: `imgs/arena_stoicism.png`,
+        isMeditation: true,
+        isKey: true,
+        message: ` Through this meditation, you’ve embraced the <strong>strength of inner calm and resilience</strong> in the face of life’s challenges. Stoicism teaches that while you cannot control external events, you can control your response to them. By mastering your emotions and focusing on virtue, you’ve gained the power to face any hardship with grace and wisdom. Continue to cultivate this inner strength, and you will find peace in all circumstances.`,
+    },
 ];

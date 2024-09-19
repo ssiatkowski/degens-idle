@@ -13,8 +13,11 @@ let turnRadius;
 let ballSize;
 let ballSizeDelta;
 let respawnTime;
-let windSpeed = 0;
-let windDirection = 'N';
+let windSpeed;
+let windDirection;
+
+let respawnFactor;
+let livesPerBall;
 
 const windDirections = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
 
@@ -29,6 +32,8 @@ const meditationChallenges = {
         ballSizeDelta: 3,
         velocity: 1,
         wind: 0,
+        respawnFactor: 1,
+        livesPerBall: 1,
     },
     "Existentialism": {
         duration: 10,
@@ -39,6 +44,8 @@ const meditationChallenges = {
         ballSizeDelta: 5,
         velocity: 1.05,
         wind: 0,
+        respawnFactor: 1,
+        livesPerBall: 1,
     },
     "Altruism": {
         duration: 16,
@@ -49,6 +56,8 @@ const meditationChallenges = {
         ballSizeDelta: 2,
         velocity: 0.85,
         wind: 0,
+        respawnFactor: 1,
+        livesPerBall: 1,
     },
     "Rastafarianism": {
         duration: 12,
@@ -59,6 +68,8 @@ const meditationChallenges = {
         ballSizeDelta: 4.2,
         velocity: 3,
         wind: 0,
+        respawnFactor: 1,
+        livesPerBall: 1,
     },
     "Dualism": {
         duration: 11,
@@ -69,6 +80,8 @@ const meditationChallenges = {
         ballSizeDelta: 10,
         velocity: 1.5,
         wind: 0,
+        respawnFactor: 1,
+        livesPerBall: 1,
     },
     "Libertarianism": {
         duration: 20,
@@ -79,6 +92,44 @@ const meditationChallenges = {
         ballSizeDelta: 40,
         velocity: 12,
         wind: 5,
+        respawnFactor: 1,
+        livesPerBall: 1,
+    },
+    "Hinduism": {
+        duration: 20,
+        focus: 1,
+        ballCount: 25,
+        arenaSize: 400,
+        ballSize: 30,
+        ballSizeDelta: 15,
+        velocity: 3.5,
+        wind: 2,
+        respawnFactor: 1,
+        livesPerBall: 1,
+    },
+    "Shinto": {
+        duration: 9,
+        focus: 1,
+        ballCount: 1,
+        arenaSize: 300,
+        ballSize: 50,
+        ballSizeDelta: 0,
+        velocity: 3,
+        wind: 25,
+        respawnFactor: 0.5,
+        livesPerBall: 1,
+    },
+    "Stoicism": {
+        duration: 25,
+        focus: 10,
+        ballCount: 18,
+        arenaSize: 600,
+        ballSize: 50,
+        ballSizeDelta: 20,
+        velocity: 7,
+        wind: 3,
+        respawnFactor: 1,
+        livesPerBall: 5,
     },
 };
 
@@ -101,11 +152,14 @@ function startMeditationGame(challengeName, backgroundImage) {
         baseVelocity = challenge.velocity * calculateVelocityReduction();
         turnRadius = calculateTurnRadius();
         respawnTime = 100;
+        respawnFactor = challenge.respawnFactor;
         respawnTime = calculateRespawnTime();
         gravityStrength = calculateGravity();
         balls = []; // Reset balls array
         windSpeed = challenge.wind; // Set wind speed from the challenge
         windDirection = windDirections[Math.floor(Math.random() * windDirections.length)]; // Pick a random direction
+
+        livesPerBall = challenge.livesPerBall;
 
         // Show the meditation overlay
         const meditationOverlay = document.getElementById('meditationOverlay');
@@ -320,7 +374,7 @@ function checkOutOfBounds() {
 // Function to handle what happens when a ball goes out of bounds (or can't be placed)
 function handleOutOfBounds(ball) {
     // Decrement a life when out of bounds
-    meditationFocus--;
+    meditationFocus -= livesPerBall;
     document.getElementById('meditationFocus').innerText = meditationFocus; // Update focus display
 
     // Hide the ball temporarily and reset after the respawn delay
@@ -504,7 +558,7 @@ function calculateRespawnTime() {
     let scalingFactor = 1 + (Math.max(0, Math.log10(trollPoints) - 100) / 10);
 
     // Calculate the new respawn time by applying the scaling factor
-    let newRespawnTime = respawnTime * scalingFactor;
+    let newRespawnTime = respawnTime * scalingFactor * respawnFactor;
 
     return newRespawnTime;
 }

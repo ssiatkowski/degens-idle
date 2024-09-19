@@ -10,7 +10,7 @@ let cooldowns = {
 // Mini-game timeouts in milliseconds
 const miniGameTimeouts = {
     speed:  6 * 60 * 1000,  // 6 minutes
-    memory: 10 * 60 * 1000, // 10 minutes
+    memory:  1000, // 10 minutes
     math:   8 * 60 * 1000,  // 8 minutes
     luck:   4 * 60 *1000,   // 4 minutes
 };
@@ -40,7 +40,8 @@ function playMiniGame(gameType) {
     button.classList.add('disabled'); // Add the 'disabled' class to change its appearance
 
     // Convert mini-game timeouts from milliseconds to minutes for the message
-    const cooldownMinutes = (miniGamerSkill ? miniGameTimeouts[gameType] * 0.5 : miniGameTimeouts[gameType]) / (60 * 1000);
+    const cooldownMultiplier = miniGamerSkill ? (gamingAddictSkill ? 0.25 : 0.5) : 1;
+    const cooldownMinutes = (miniGameTimeouts[gameType] * cooldownMultiplier) / (60 * 1000);
     const cooldownMessage = (gameType === 'memory' || gameType === 'math') ? 
         `<br>In ${cooldownMinutes} minutes, you get to test your ${gameType} skills again.` : 
         `<br>In ${cooldownMinutes} minutes, you get to test your ${gameType} again.`;
@@ -196,6 +197,8 @@ function playMiniGame(gameType) {
         let playerSequence = [];
         let isSequencePlaying = true; // Flag to prevent clicking during the sequence playback
 
+        const memoryGameStartTime = crunchTimer;
+
         // Show the modal with instructions and start the game when the modal is closed
         showMessageModal(
             'Memory Game', 
@@ -322,8 +325,13 @@ function playMiniGame(gameType) {
                     softCapReached = true;
                 }
 
-                if(correct && gridSize >= 6 && sequenceLength >= 6){
-                    unlockAchievement('Memory Master');
+                if(correct && sequenceLength >= 6){
+                    if (gridSize >= 6) {
+                        unlockAchievement('Memory Master');
+                    }
+                    if (crunchTimer - memoryGameStartTime >= 180) {
+                        unlockAchievement('Long Term Memory');
+                    }
                 }
 
                 delusion += reward;
@@ -807,7 +815,8 @@ function playMiniGame(gameType) {
 function startCooldown(gameType) {
     const button = document.getElementById(`${gameType}Game`);
     const startTime = Date.now();
-    const cooldownDuration = miniGamerSkill ? miniGameTimeouts[gameType] * 0.75 : miniGameTimeouts[gameType];
+    const cooldownMultiplier = miniGamerSkill ? (gamingAddictSkill ? 0.25 : 0.5) : 1;
+    const cooldownDuration = (miniGameTimeouts[gameType] * cooldownMultiplier);
 
     localStorage.setItem(`${gameType}CooldownStart`, startTime);
 
@@ -867,7 +876,8 @@ function unlockMiniGames() {
 
         if (startTime) {
             const elapsed = now - parseInt(startTime, 10);
-            const cooldownDuration = miniGamerSkill ? miniGameTimeouts[gameType] * 0.75 : miniGameTimeouts[gameType];
+            const cooldownMultiplier = miniGamerSkill ? (gamingAddictSkill ? 0.25 : 0.5) : 1;
+            const cooldownDuration = (miniGameTimeouts[gameType] * cooldownMultiplier);
 
             if (elapsed >= cooldownDuration) {
                 cooldowns[gameType] = false;

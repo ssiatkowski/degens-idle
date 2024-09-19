@@ -97,6 +97,7 @@ let rewardingVictoriesSkill = false;
 let rewardingMeditationsSkill = false;
 let deadpoolRevivesSkill = false;
 let celestialPrecisionSkill = false;
+let gamingAddictSkill = false;
 let autoFightSkill = false;
 let autoFightEnabled = false;
 let infinitePrestigeSkill = false;
@@ -306,6 +307,13 @@ let fidgetClicks = {
     trollPoints: false
 };
 
+let collectClicks = {
+    copium: 0,
+    delusion: 0,
+    yachtMoney: 0,
+    trollPoints: 0
+};
+
 // Function to collect a specific resource and update the game state
 function collectResource(resource) {
     // Increase the appropriate resource by the totalMultiplier
@@ -320,6 +328,11 @@ function collectResource(resource) {
         if (fidgetClicks.copium && fidgetClicks.delusion && fidgetClicks.yachtMoney && fidgetClicks.trollPoints) {
             unlockAchievement('Fidget Clicks');
         }
+    }
+
+    collectClicks[resource]++;
+    if (collectClicks.copium > 9 && collectClicks.delusion > 9 && collectClicks.yachtMoney > 9 && collectClicks.trollPoints > 9) {
+        unlockAchievement('Collect Clicks');
     }
     
     // Update the display to reflect the new resource values
@@ -513,7 +526,9 @@ function loadGameState() {
 
     if(buyMarkersSkill){ enableAllBuyMarkers() };
 
-    stellarMeditationMult = calculateStellarMeditationMultiplier();
+    if (stellarMeditationSkill) {
+        stellarMeditationMult = calculateStellarMeditationMultiplier();
+    }
     autoFightEnabled = JSON.parse(localStorage.getItem('autoFightEnabled')) || false;
 
     if(fertileScarcitySkill && purchasedUpgrades.some(upgrade => upgrade.name === `Cosmic Drought`)){
@@ -873,6 +888,7 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
                 rewardingMeditationsSkill = false;
                 deadpoolRevivesSkill = false;
                 celestialPrecisionSkill = false;
+                gamingAddictSkill = false;
                 autoFightSkill = false;
                 autoFightEnabled = false;
                 infinitePrestigeSkill = false;
@@ -1316,6 +1332,8 @@ function tradeResources(tradeAmountInput = null) {
     trollPoints = resourceAmount.trollPoints;
     hopium = resourceAmount.hopium;
 
+    unlockAchievement('Trade Resources');
+
     // Update the display to reflect the new resource values
     updateDisplay();
 }
@@ -1676,14 +1694,12 @@ async function ascend() {
     ascendInProgress = true;
 
     const upgradeText = numAscensionUpgrades > 1
-        ? `select up to ${numAscensionUpgrades} upgrades to enhance and increase your god mode multiplier accordingly`
-        : "select an upgrade to enhance and increase your god mode multiplier";
+        ? `select up to ${numAscensionUpgrades} upgrades to enhance and increase your God-Mode multiplier proportionally to how many upgrades you select`
+        : "select an upgrade to enhance which will make its gains 10x stronger and also increase your God-Mode multiplier (global 1.25x stacking but diminishing multiplier)";
     const selectedUpgrades = await showMessageModal(
         'God-Mode Ascension',
-        `Are you sure you want to ascend to increase your God-Mode level?<br><br>
-        Raising the level of God-Mode requires temporarily folding three dimensions in the space around you to a single point, which will unfortunately reduce your Prestige multiplier to its cube root. Your Prestige multiplier will change from <strong>x${formatNumber(epsMultiplier)}</strong> to <strong>x${formatNumber(calculateAscensionEpsMult())}</strong><br><br>
-        On the bright side, your God-Mode multiplier will increase from <strong>x${formatNumber(godModeMultiplier)}</strong> to at least <strong>x${formatNumber(calculateGodModeMultiplier(godModeLevel+1))}</strong>!<br><br>
-        Additionally, you can ${upgradeText}.`,
+        `Raising your God-Mode level requires temporarily folding three dimensions in the space around you to a single point, which will unfortunately reduce your Prestige multiplier to its cube root.<br><br>
+        You can ${upgradeText}.`,
         true,
         true
     );
@@ -1725,9 +1741,8 @@ async function transcend() {
     const upgradeText = `select up to ${numPUAscensionUpgrades} upgrades to enhance and increase your Parallel Universe God-Mode multiplier accordingly`;
     const selectedUpgrades = await showMessageModal(
         'Parallel Universe God-Mode Ascension',
-        `Are you sure you want to ascend to increase your Parallel Universe God-Mode level?<br><br>
-        Accessing this new dimension requires temporarily aligning your universe with a parallel one, which will unfortunately reduce your Prestige multiplier the same way that Ascending in your Universe would. Your Prestige multiplier will change from <strong>x${formatNumber(epsMultiplier)}</strong> to <strong>x${formatNumber(calculateAscensionEpsMult())}</strong><br><br>
-        On the bright side, your Parallel Universe God-Mode multiplier will increase from <strong>x${formatNumber(puGodMultiplier)}</strong> to at least <strong>x${formatNumber(calculatePUGodModeMultiplier(puGodLevel+2))}</strong>!<br><br>
+        `Accessing this new dimension requires temporarily aligning your universe with a parallel one, which will unfortunately reduce your Prestige multiplier the same way that Ascending in your Universe would.<br><br>
+        On the bright side, your Parallel Universe God-Mode multiplier will increase - and it works multiplicatively with your God-Mode multiplie!<br><br>
         Additionally, you can ${upgradeText}.`,
         true,
         true,
@@ -2357,6 +2372,8 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true, ski
                 unlockHallofLove();
             } else if (name == 'Training Dummy' && crunchTimer < 15.1){
                 unlockAchievement('Eager to Train');
+            } else if (name == 'Hotkeys' && window.innerWidth <= 768 && autoFightSkill){
+                unlockAchievement('Hotkey Master');
             }
 
             // Update the upgrade list and display
@@ -3274,14 +3291,62 @@ function displayNextModal() {
 
         let selectedUpgrades = [];
 
+        const maxSelectableUpgrades = isTranscend ? numPUAscensionUpgrades : numAscensionUpgrades;
+
+        // Calculate the number of valid upgrades to select
+        const validUpgradesCount = purchasedUpgrades.filter(upgrade => {
+            return isTranscend ? !upgrade.isPUGodMode : !upgrade.isGodMode;
+        }).length;
+
+        const numToSelect = Math.min(maxSelectableUpgrades, validUpgradesCount);
+
+        // Remove the existing button if it already exists
+        const existingButton = document.querySelector('.select-first-button');
+        if (existingButton) {
+            existingButton.remove();
+        }
+
+        if (numToSelect > 1) {
+            // Create the new button
+            const selectFirstButton = document.createElement('button');
+            selectFirstButton.textContent = `Select First ${numToSelect}`;
+            selectFirstButton.className = 'modal-button select-first-button';
+
+            // Handle clicking the new button
+            selectFirstButton.onclick = () => {
+                // Deselect all previously selected upgrades
+                selectedUpgrades = [];
+                document.querySelectorAll('.ascend-upgrade-item.selected').forEach(item => {
+                    item.classList.remove('selected');
+                });
+
+                // Select the first `numToSelect` valid upgrades
+                let count = 0;
+                purchasedUpgrades.forEach((upgrade) => {
+                    const condition = isTranscend ? !upgrade.isPUGodMode : !upgrade.isGodMode;
+                    if (condition && count < numToSelect) {
+                        const upgradeItem = document.querySelector(`.ascend-upgrade-item[data-upgrade-name="${upgrade.name}"]`);
+                        if (upgradeItem) {
+                            upgradeItem.classList.add('selected');
+                            selectedUpgrades.push(upgrade);
+                            count++;
+                        }
+                    }
+                });
+            };
+
+            // Insert the new button above the upgrade list
+            ascendUpgradeSelection.insertBefore(selectFirstButton, ascendUpgradeList);
+        }
+
         purchasedUpgrades.forEach((upgrade) => {
             const condition = isTranscend ? !upgrade.isPUGodMode : !upgrade.isGodMode;
-            const maxSelectableUpgrades = isTranscend ? numPUAscensionUpgrades : numAscensionUpgrades;
             if (condition) {
                 const upgradeItem = document.createElement('div');
                 upgradeItem.className = 'ascend-upgrade-item';
                 upgradeItem.textContent = upgrade.name;
                 upgradeItem.upgrade = upgrade;
+                upgradeItem.setAttribute('data-upgrade-name', upgrade.name);
                 if (upgrade.isGodMode) {
                     upgradeItem.classList.add('is-godmode');
                 } else if (upgrade.isPUGodMode) {
@@ -3315,6 +3380,8 @@ function displayNextModal() {
         modalConfirmButton.onclick = () => {
             if (selectedUpgrades.length > 0) {
                 closeModal(selectedUpgrades);
+            } else {
+                showStatusMessage(modalConfirmButton, `Select at least 1 upgrade`, false, timeout=1000);
             }
         };
 
