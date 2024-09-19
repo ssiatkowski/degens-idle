@@ -4,7 +4,7 @@ const upgrades = [
         cost: { copium: 2, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 1.4, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0.8, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/john_travolta.jpg`,
-        message: `imgs/modal_imgs/howtoplay.png`,
+        message: `imgs/modal_imgs/howtoplay.jpg`,
     },
     {
         name: `You made it`,
@@ -37,8 +37,8 @@ const upgrades = [
         name: `What is DEGENS?`,
         cost: { copium: 100, delusion: 90, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 2.5, delusionPerSecond: 5.3, yachtMoneyPerSecond: 2.4, trollPointsPerSecond: 3.2, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },   
-        img: `imgs/modal_imgs/DEGENS_IDLE.png`,
-        message: `imgs/modal_imgs/DEGENS_IDLE.png`,
+        img: `imgs/modal_imgs/DEGENS_IDLE.jpg`,
+        message: `imgs/modal_imgs/DEGENS_IDLE.jpg`,
     },
     {
         name: `Not All Trolls Are Bad`,
