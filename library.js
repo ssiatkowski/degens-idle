@@ -40,12 +40,6 @@ const librarySkills = [
     { name: 'Condensed Power', cost: 1e63, description: 'Current power counts as 30x more for Big Crunch Power.', unlocked: false, level: 'Celestial Bodies' },
 
 
-    // { name: 'Void of Non-Existence', cost: 1e55, description: 'Auto-Big Crunch', unlocked: false, level: '???' },
-    // { name: 'Infinite Fractal', cost: 1e33, description: '', unlocked: false, level: '???' },
-
-    // { name: 'Serenity', cost: 1e25, description: '', unlocked: false, level: '???' },
-
-
     // Add more skills as needed
 ];
 

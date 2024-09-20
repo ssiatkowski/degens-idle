@@ -264,8 +264,10 @@ function initializePowerHallSkills() {
                         unlockPowerHallSkill(skill);
                         saveGameState();
                     }
-                } else if (power < skill.cost) {
+                } else if (!skill.unlocked && power < skill.cost) {
                     showStatusMessage(skillDiv, 'Insufficient Power to unlock this skill.', false);
+                }  else if (skill.unlocked && skill.name == 'Cosmic Gamekeeper') {
+                    unlockPowerHallSkill(skill);  //only to show message again
                 }
             });
             skillRow.appendChild(skillDiv);
