@@ -2405,7 +2405,10 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true, ski
                 console.log('Found Cat');
                 unlockAchievement('Feed the Cat');
             }
-        }
+        } else if (name == `Perfection doesn't exi...`){
+            unhideSerenity();
+            unlockAchievement('Serenity');
+        } 
 
         if (callUpdatesAfterBuying) {
             if (name == 'Degens Idle Dev') {
@@ -2420,9 +2423,6 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true, ski
                 if (power >= 1e11){
                     unlockAchievement('Overkill Much?');
                 }
-            } else if (name == `Perfection doesn't exi...`){
-                unhideSerenity();
-                unlockAchievement('Serenity');
             } else if (name == 'Love Shop'){
                 unlockHallofLove();
             } else if (name == 'Training Dummy' && crunchTimer < 15.1){
