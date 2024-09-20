@@ -164,6 +164,7 @@ document.getElementById('discordButton').addEventListener('click', function() {
 
 // Add event listeners for donation buttons
 document.getElementById('donateSmallButton').addEventListener('click', function() {
+    unlockAchievement('Buy Me a Coffee');
     window.open('https://buymeacoffee.com/ssiatkowski', '_blank'); 
 });
 document.getElementById('donateMediumButton').addEventListener('click', function() {

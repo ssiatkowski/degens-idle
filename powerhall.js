@@ -18,15 +18,15 @@ const powerHallSkills = [
     { name: 'Astral Disruption', cost: 200000, description: 'Your attacks have a 5% chance to stun the enemy for 1 attack.', unlocked: false, level: 'Cosmic Dynamics' },
     { name: 'Supersonic Fury', cost: 1.5e8, description: 'Your attacks become even 2x faster!', unlocked: false, level: 'Cosmic Dynamics' },
     { name: 'Prime Impact', cost: 1e9, description: 'First attack always hits for full power (ignore enemy dodge rate and defense).', unlocked: false, level: 'Cosmic Dynamics' },
-    { name: 'Graviton Burst', cost: 6e16, description: 'Your attacks are imperceptible to average beings. You now attack 5x faster!', unlocked: false, level: 'Cosmic Dynamics' },
+    { name: 'Stellar Cookie', cost: 5e12, description: `Auto click the cookie 10 times per second while Stellar Harvest is active.`, unlocked: false, level: 'Cosmic Dynamics'},
+    { name: 'Graviton Burst', cost: 8e16, description: 'Your attacks are imperceptible to average beings. You now attack 5x faster!', unlocked: false, level: 'Cosmic Dynamics' },
     
+    { name: 'Nebula Overdrive', cost: 7e5, description: `Purchasing non-boss upgrades no longer consumes power. Power cost still applies.`, unlocked: false, level: 'Celestial Manipulation' },
     { name: 'Stellar Harvest', cost: 3e7, description: `Increase generation of all first 7 resources by 30% for 3 minutes after defeating a boss. (multiplicative)`, unlocked: false, level: 'Celestial Manipulation' },
     { name: 'POWER is Power!', cost: 3e8, description: `Power generation increased by 10% for each purchased Power Hall skill (multiplicative).`, unlocked: false, level: 'Celestial Manipulation' },
-    { name: 'Upgrade Amplifier', cost: 5e8, description: `First 4 resources gain a flat multiplier based on number of purchased upgrades.`, unlocked: false, level: 'Celestial Manipulation' },
+    { name: 'Upgrade Amplifier', cost: 5.5e8, description: `First 4 resources gain a flat multiplier based on number of purchased upgrades.`, unlocked: false, level: 'Celestial Manipulation' },
     { name: 'Celestial Collector', cost: 7e10, description: `Stellar Harvest buff is extended to 50% power and lasts for 10 minutes.`, unlocked: false, level: 'Celestial Manipulation' },
-
-    { name: 'Nebula Overdrive', cost: 7e5, description: `Purchasing non-boss upgrades no longer consumes power. Power cost still applies.`, unlocked: false, level: 'Nebular Command' },
-    { name: 'Stellar Cookie', cost: 5e12, description: `Auto click the cookie 10 times per second while Stellar Harvest is active.`, unlocked: false, level: 'Nebular Command'},
+    { name: 'Cosmic Gamekeeper', cost: 1e18, description: `Unlock multiplier to all resources based on mini game successes.`, unlocked: false, level: 'Celestial Manipulation' },
 
 ];
 
@@ -147,6 +147,24 @@ function unlockPowerHallSkill(skill, duringLoad = false) {
             case 'Stellar Cookie':
                 stellarCookieSkill = true;
                 break;
+
+            case 'Cosmic Gamekeeper':
+                cosmicGamekeeperSkill = true;
+                calculateMiniGamesMultiplier();
+                if (!duringLoad) {
+                    showMessageModal(`Cosmic Gamekeeper Unlocked!`, `<p>You’ve unlocked the power of the Cosmic Gamekeeper, a multiplier that enhances all your resources based on your mini-game performance. While the growth is slow and shouldn't be your main progression strategy, the multiplier has no cap and counts retroactively. Even if this skill is ever reset, your mini-game success counts persist across everything.</p>
+                                                                    <p>The multiplier increases only in winning games with:</p>
+                                                                    <ul>
+                                                                        <li>0.0001 per Speed Tap in Speed Game</li>
+                                                                        <li>0.0003 per Memorized Dot in Memory Game</li>
+                                                                        <li>0.0005 per Portal in Math Game</li>
+                                                                        <li>0.0007 per Lucky Box in Luck Game</li>
+                                                                    </ul>
+                                                                    <p>Though the gains may seem small, they will accumulate over time, ensuring that every mini-game contributes to your overall power. Just remember, its strength lies in persistence, not speed.</p>`);
+                }
+                break;
+
+                
                 
 
             default:

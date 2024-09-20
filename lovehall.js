@@ -35,7 +35,7 @@ const loveHallSkills = [
     { name: 'Serene Boost 1', cost: 0.1, description: '2x Serenity gain. (Serene Boosts stack)', unlocked: false, level: 'Dimensional Shift (27x)', pair: 22 },
     { name: 'Celestial Precision', cost: 0.1, description: 'Improves Astral Precision to power+50%', unlocked: false, level: 'Dimensional Shift (27x)', pair: 22 },
 
-    { name: 'Knowledge Infusion', cost: 0.4, description: '9x Knowledge gain.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 23 },
+    { name: 'Knowledge Infusion', cost: 0.4, description: '8x Knowledge gain.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 23 },
     { name: 'Basic Resource Boost', cost: 0.4, description: '9x gain to first 4 resources.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 23 },
 
     // { name: '', cost: 1, description: '', unlocked: false, level: 'Dimensional Shift (27x)', pair: 24 },

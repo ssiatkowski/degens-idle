@@ -1199,7 +1199,7 @@ function attackPlayer(resolve) {
             enemyDefense += 8e15; // Increases defense by 8 Qa
             logFight(`<span style='color: #b22222;'>Saitama does Squats! His defense increases by 8 quadrilion.</span>`);
         } else if (rand < 60) { // 10% chance for Sit Ups
-            const absorbIncrease = 0.025 * (1 - enemyAbsorb); // Diminishing absorb increase based on remaining potential
+            const absorbIncrease = 0.0275 * (1 - enemyAbsorb); // Diminishing absorb increase based on remaining potential
             enemyAbsorb = Math.min(enemyAbsorb + absorbIncrease, 0.9999); // Ensure it doesn't exceed 1
             if (enemyAbsorb > 0.9){
                 unlockAchievement('More than Sauron');

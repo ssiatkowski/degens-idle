@@ -166,6 +166,8 @@ function playMiniGame(gameType) {
                         unlockAchievement('Pathological Speedster');
                     }
 
+                    calculateMiniGamesMultiplier();
+
                     resultMessage = `You tapped ${points} dots with ${misclicks} misclicks in ${duration} seconds (${effectiveClicksPerSecond.toFixed(2)} points per second). Your reward is <span style="color: green;">${formatNumber(reward)}</span> copium! You have now tapped ${numSpeedTaps} times in winning games.`;
                 } else {
                     if (misclicks == 42) {
@@ -350,6 +352,7 @@ function playMiniGame(gameType) {
                     if (numMemorizedDots >= 500) {
                         unlockAchievement('Pattern Prodigy');
                     }
+                    calculateMiniGamesMultiplier();
                 }
 
                 let resultMessage = correct
@@ -605,6 +608,7 @@ function playMiniGame(gameType) {
                     if (numMathPortals > 314) {
                         unlockAchievement('Pie Guy');
                     }
+                    calculateMiniGamesMultiplier();
                     resultMessage = `You found the correct sum and earned <span style="color: green;">${formatNumber(reward)}</span> yachtMoney! You now have selected ${numMathPortals} correct math portals.`;
                 } else {
                     reward = -Math.max(Math.floor(Math.abs(yachtMoney) * 0.2), 20);
@@ -797,6 +801,7 @@ function playMiniGame(gameType) {
                             if (numLuckyBoxes >= 777) {
                                 unlockAchievement('Luck of the Irish');
                             }
+                            calculateMiniGamesMultiplier();
                         }
 
                         resultMessage = boxValue >= 0 ?
@@ -891,7 +896,11 @@ function startCooldown(gameType) {
 }
 
 
-
+function calculateMiniGamesMultiplier() {
+    if (cosmicGamekeeperSkill){
+        cosmicGamekeeperMultiplier = 1 + (numSpeedTaps * 0.0001) + (numMemorizedDots * 0.0003) + (numMathPortals * 0.0005) * (numLuckyBoxes * 0.0007);
+    }
+}
 
 function unlockMiniGames() {
     const now = Date.now();

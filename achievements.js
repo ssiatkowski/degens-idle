@@ -651,6 +651,13 @@ const achievements = [
         type: 'puzzle',
     },
     {
+        name: 'Buy Me a Coffee',
+        isUnlocked: false,
+        hoverText: 'no purchase necessary - just click the link',
+        img: 'imgs/achievements/buy_me_a_coffee.jpg',
+        type: 'freebie',
+    },
+    {
         name: 'Zero-Sum Game',
         isUnlocked: false,
         hoverText: 'give hope / take hope',

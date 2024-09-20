@@ -22,6 +22,9 @@ let lovePoints = 0;
 let numUnlockedAchievements = 0;
 let achievementMultiplier = 1;
 
+let cosmicGamekeeperMultiplier = 1;
+let cosmicGamekeeperSkill = false;
+
 let achievementBoostValue = 0.01;
 let achievementHyperchargeSkill = false;
 
@@ -202,7 +205,7 @@ function calculateBasePower() {
     let basePower = (moneyIsPowerTooSkill ?
         (Math.max(knowledge, 0) ** (1/3) / 1e12) * (1 + (Math.max(yachtMoney, 0) ** (1/30) / 100)) 
         : Math.max(knowledge, 0) ** (1/3) / 1e12) 
-        * powerSurgeMultiplier * devMultiplier * stellarHarvestMult * stellarMeditationMult * achievementMultiplier * powerInfusionMultiplier;
+        * powerSurgeMultiplier * devMultiplier * stellarHarvestMult * stellarMeditationMult * achievementMultiplier * powerInfusionMultiplier * cosmicGamekeeperMultiplier;
 
     if (powerIsPowerSkill) {
         basePower *= 1.1 ** (powerHallSkills.filter(skill => skill.unlocked).length);
@@ -252,7 +255,7 @@ function updateEffectiveMultipliers() {
         effectivePowerPerSecond = calculateEffectivePower();
     }
 
-    effectiveSerenityPerSecond = serenityPerSecond * achievementMultiplier * serenityBoostMultiplier;
+    effectiveSerenityPerSecond = serenityPerSecond * achievementMultiplier * serenityBoostMultiplier * cosmicGamekeeperMultiplier;
 
     // Define an array of objects for the resources and their corresponding flags
     const serenityGainResources = [
@@ -945,6 +948,9 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
                 achievementBoostValue = 0.01;
                 achievementHyperchargeSkill = false;
 
+                cosmicGamekeeperMultiplier = 1;
+                cosmicGamekeeperSkill = false;
+
                 embraceExtraLovePoints = 0;
 
                 deadpoolRevives = 0;
@@ -1500,7 +1506,7 @@ function updateDisplay() {
 
 function updateMultipliersDisplay() {
 
-    totalMultiplier = epsMultiplier * godModeMultiplier * puGodMultiplier * bigCrunchMultiplier * achievementMultiplier * devMultiplier * stellarHarvestMult * stellarMeditationMult
+    totalMultiplier = epsMultiplier * godModeMultiplier * puGodMultiplier * bigCrunchMultiplier * achievementMultiplier * devMultiplier * stellarHarvestMult * stellarMeditationMult * cosmicGamekeeperMultiplier
 
     document.getElementById('prestige-multiplier').textContent = `Prestige: x${formatNumber(epsMultiplier)} mult`;
     document.getElementById('god-mode-display').textContent = `God-Mode Level ${godModeLevel} (x${formatNumber(godModeMultiplier)} mult)`;
@@ -2367,7 +2373,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true, ski
 
         if (name === 'Shinto') {
             showMessageModal('The Journey Continues', 
-                "This marks the end of v0.920. You've not only completed the Power Saga, but you're also getting the hang of Infinite Embraces and Meditations! Congratulations on your progress, and welcome to the next stage of your journey. "
+                "This marks the end of v0.921. You've not only completed the Power Saga, but you're also getting the hang of Infinite Embraces and Meditations! Congratulations on your progress, and welcome to the next stage of your journey. "
                 + "With the Hall of Love now open, Love Points are becoming a key part of your experience, alongside the skills you unlock there. While these new mechanics are taking shape, expect ongoing balancing as the game evolves. "
                 + "Feel free to dive deeper into the skills and explore what's possible. The journey is far from over—more meditations and epic content are on the way! "
                 + "Stay connected on Discord, share your feedback, and together, let's create something truly unforgettable!"
@@ -3657,6 +3663,12 @@ function calculateTooltip(resourceId) {
     if (achievementMultiplier !== 1) {
         tooltip += `<span style="color:#008080">x${formatNumber(achievementMultiplier)} (Achievements)</span><br>`;
     }
+    
+    // Mini Game Multiplier
+    if (cosmicGamekeeperMultiplier !== 1) {
+        tooltip += `<span style="color:#90EE90">x${formatNumber(cosmicGamekeeperMultiplier)} (Mini Games)</span><br>`;
+    }
+
 
     // Stellar Harvest Multiplier (for all resources, including Power, but not Serenity)
     if (resourceId !== 'serenity' && stellarHarvestMult !== 1) {
