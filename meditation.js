@@ -141,7 +141,7 @@ function startMeditationGame(challengeName, backgroundImage) {
         const challenge = meditationChallenges[challengeName];
         currentChallengeName = challengeName;
         // Use the calculateTimerReduction function to adjust the duration
-        meditationTimer = challenge.duration * calculateTimerReduction(yachtMoney);
+        meditationTimer = (challenge.duration - studyAcceleratorReduction) * calculateTimerReduction(yachtMoney);
         
         meditationFocus = challenge.focus + Math.max(0, Math.floor(Math.log10(serenity))); // Serenity gives additional focus (log10)
         ballCount = Math.max(1, challenge.ballCount - calculateBallCountReduction()); // Hopium reduces ball count
@@ -550,7 +550,7 @@ function calculateTimerReduction() {
     const logValue = Math.log10(yachtMoney); // Get the logarithmic value of yachtMoney
     const baseLogValue = 100; // Base log value corresponding to 100
     const reductionFactor = Math.pow(2, -(logValue - baseLogValue) / 25); // Scales the reduction by 50% for every increase of 25 in log value
-    return Math.max(0.01, Math.min(1, reductionFactor)); // Ensure the reduction factor is between 0.01 and 1
+    return Math.max(0.000001, Math.min(1, reductionFactor)); // Ensure the reduction factor is between 0.000001 and 1
 }
 
 // Function to calculate respawn time based on trollPoints

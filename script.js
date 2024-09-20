@@ -98,6 +98,8 @@ let serenityFlowSkill = false;
 let perfectPUGodModeSkill = false;
 let rewardingVictoriesSkill = false;
 let rewardingMeditationsSkill = false;
+let fortifiedDefensesSkill = false;
+let studyAcceleratorReduction = 0;
 let deadpoolRevivesSkill = false;
 let celestialPrecisionSkill = false;
 let gamingAddictSkill = false;
@@ -898,6 +900,8 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
                 perfectPUGodModeSkill = false;
                 rewardingVictoriesSkill = false;
                 rewardingMeditationsSkill = false;
+                fortifiedDefensesSkill = false;
+                studyAcceleratorReduction = 0;
                 deadpoolRevivesSkill = false;
                 celestialPrecisionSkill = false;
                 gamingAddictSkill = false;
@@ -2373,7 +2377,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true, ski
 
         if (name === 'Shinto') {
             showMessageModal('The Journey Continues', 
-                "This marks the end of v0.921. You've not only completed the Power Saga, but you're also getting the hang of Infinite Embraces and Meditations! Congratulations on your progress, and welcome to the next stage of your journey. "
+                "This marks the end of v0.922. You've not only completed the Power Saga, but you're also getting the hang of Infinite Embraces and Meditations! Congratulations on your progress, and welcome to the next stage of your journey. "
                 + "With the Hall of Love now open, Love Points are becoming a key part of your experience, alongside the skills you unlock there. While these new mechanics are taking shape, expect ongoing balancing as the game evolves. "
                 + "Feel free to dive deeper into the skills and explore what's possible. The journey is far from over—more meditations and epic content are on the way! "
                 + "Stay connected on Discord, share your feedback, and together, let's create something truly unforgettable!"

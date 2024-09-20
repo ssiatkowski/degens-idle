@@ -99,7 +99,7 @@ function unlockPowerHallSkill(skill, duringLoad = false) {
                 break;
 
             case 'Vitality Matrix':
-                playerHealthMult = 1.5;
+                playerHealthMult = fortifiedDefensesSkill ? 6 :1.5;
                 break;
 
             case 'Lightning Reflexes':

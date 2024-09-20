@@ -58,8 +58,8 @@ const loveHallSkills = [
 
 
     // 42x Level - the meaning of life
-    //{ name: 'Deadpool Embrace', cost: 0.02, description: 'Deadpool revives do not reset on Infinite Embrace.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 41 },
-    //{ name: 'Rewarding Victories', cost: 0.02, description: 'Battle upgrades give +40% rewards.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 41 },
+    { name: 'Fortified Defenses', cost: 0.04, description: 'Vitality Matrix is now 10x stronger.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 40 },
+    { name: 'Study Accelerator', cost: 0.04, description: 'Meditation duration decreased by 0.2 seconds.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 40 },
 
     { name: 'Deadpool Embrace', cost: 0.1, description: 'Deadpool revives do not reset on Infinite Embrace.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 41 },
     { name: 'Rewarding Victories', cost: 0.1, description: 'Battle upgrades give +40% rewards.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 41 },
@@ -333,6 +333,14 @@ function unlockLoveHallSkill(skill, duringLoad = false) {
                 if(!duringLoad){
                     updateEffectiveMultipliers();
                 }
+                break;
+
+            case 'Fortified Defenses':
+                fortifiedDefensesSkill = true;
+                break;
+
+            case 'Rewarding Victories':
+                studyAcceleratorReduction = 0.2;
                 break;
 
             case 'Deadpool Embrace':
