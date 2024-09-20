@@ -42,7 +42,7 @@ const meditationChallenges = {
         arenaSize: 450,
         ballSize: 50,
         ballSizeDelta: 5,
-        velocity: 1.05,
+        velocity: 1.07,
         wind: 0,
         respawnFactor: 1,
         livesPerBall: 1,
@@ -52,9 +52,9 @@ const meditationChallenges = {
         focus: 1,
         ballCount: 15,
         arenaSize: 600,
-        ballSize: 12,
-        ballSizeDelta: 2,
-        velocity: 0.85,
+        ballSize: 13,
+        ballSizeDelta: 3,
+        velocity: 0.86,
         wind: 0,
         respawnFactor: 1,
         livesPerBall: 1,
@@ -66,7 +66,7 @@ const meditationChallenges = {
         arenaSize: 420,
         ballSize: 42,
         ballSizeDelta: 4.2,
-        velocity: 3,
+        velocity: 2.98,
         wind: 0,
         respawnFactor: 1,
         livesPerBall: 1,
@@ -84,8 +84,8 @@ const meditationChallenges = {
         livesPerBall: 1,
     },
     "Libertarianism": {
-        duration: 20,
-        focus: 7,
+        duration: 18,
+        focus: 8,
         ballCount: 5,
         arenaSize: 520,
         ballSize: 60,
@@ -96,8 +96,8 @@ const meditationChallenges = {
         livesPerBall: 1,
     },
     "Hinduism": {
-        duration: 20,
-        focus: 1,
+        duration: 25,
+        focus: 50,
         ballCount: 25,
         arenaSize: 400,
         ballSize: 30,
@@ -108,14 +108,14 @@ const meditationChallenges = {
         livesPerBall: 1,
     },
     "Shinto": {
-        duration: 9,
+        duration: 17,
         focus: 1,
         ballCount: 1,
-        arenaSize: 300,
+        arenaSize: 275,
         ballSize: 50,
         ballSizeDelta: 0,
         velocity: 3,
-        wind: 25,
+        wind: 14,
         respawnFactor: 0.5,
         livesPerBall: 1,
     },
@@ -253,7 +253,7 @@ function updateMeditationInfo() {
     document.getElementById('meditationTurnRadius').innerText = turnRadius.toFixed(2);
     document.getElementById('meditationGravity').innerText = gravityStrength.toFixed(2); // Display current gravity value
     document.getElementById('meditationRespawnTime').innerText = (respawnTime/1000).toFixed(3); // Display respawn time
-    document.getElementById('meditationWind').innerText = `${windSpeed.toFixed(2)} m/s, ${windDirection}`; // Display wind speed and direction
+    document.getElementById('meditationWind').innerText = `${windSpeed.toFixed(2)} ${windSpeed != 0 ? windDirection : ''}`; // Display wind speed and direction
 }
 
 // Function to update the meditation game state
@@ -548,8 +548,9 @@ function calculateTurnRadius() {
 // Calculate the reduction factor based on yachtMoney
 function calculateTimerReduction() {
     const logValue = Math.log10(yachtMoney); // Get the logarithmic value of yachtMoney
-    const reductionFactor = Math.max(0.01, Math.min(1, 1 - ((logValue - 100) / 200)));
-    return reductionFactor;
+    const baseLogValue = 100; // Base log value corresponding to 100
+    const reductionFactor = Math.pow(2, -(logValue - baseLogValue) / 25); // Scales the reduction by 50% for every increase of 25 in log value
+    return Math.max(0.01, Math.min(1, reductionFactor)); // Ensure the reduction factor is between 0.01 and 1
 }
 
 // Function to calculate respawn time based on trollPoints
@@ -587,11 +588,11 @@ function calculateVelocityReduction() {
 
 // Function to calculate gravity based on power
 function calculateGravity() {
-    if (power <= 1e20) {
+    if (power <= 1e17) {
         return 0; // Gravity is 0 if power is <= 1e20
     } else {
-        // Calculate gravity based on power, increasing by 1 for every 20 orders of magnitude starting from 1e40
-        return (Math.log10(power) - 40) / 20 + 1;
+        // Calculate gravity based on power, increasing by 1 for every 17 orders of magnitude starting from 1e34
+        return Math.max(0, (Math.log10(power) - 34) / 17 + 1);
     }
 }
 

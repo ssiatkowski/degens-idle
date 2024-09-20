@@ -19,9 +19,12 @@ const miniGameTimeouts = {
 const miniGameIntervals = {};
 
 let numMathSolves = 0;
+let numMathPortals = 0;
 let numSpeedTaps = 0;
 let numMemorizedDots = 0;
 let numUnluckyBoxes = 0;
+let numLuckyBoxes = 0;
+let numSoftCaps = 0;
 
 let lastClickedBoxIndex = null;
 let consecutiveClicks = 0;
@@ -159,7 +162,7 @@ function playMiniGame(gameType) {
 
                     numSpeedTaps += Math.max(0, points - misclicks);
                     localStorage.setItem('numSpeedTaps', numSpeedTaps);
-                    if (numSpeedTaps > 1500) {
+                    if (numSpeedTaps >= 1500) {
                         unlockAchievement('Pathological Speedster');
                     }
 
@@ -175,7 +178,12 @@ function playMiniGame(gameType) {
                 copium += reward;
 
                 if (softCapReached) {
-                    resultMessage += `<br><span style="color: orange;">Soft cap reached: Maximum reward of ${miniGamesSoftCapHrs} hours effective Copium applied.</span>`;
+                    numSoftCaps++;
+                    localStorage.setItem('numSoftCaps', numSoftCaps);
+                    if (numSoftCaps >= 50) {
+                        unlockAchievement(`Can't Hold Me Back`);
+                    }
+                    resultMessage += `<br><span style="color: orange;">Soft cap reached: Maximum reward of ${miniGamesSoftCapHrs} hours effective Copium applied. This was your ${numSoftCaps}${getOrdinalSuffix(numSoftCaps)} soft cap.</span>`;
                 }
 
                 resultMessage += cooldownMessage;
@@ -339,7 +347,7 @@ function playMiniGame(gameType) {
                 if (correct) {
                     numMemorizedDots += sequenceLength;
                     localStorage.setItem('numMemorizedDots', numMemorizedDots);
-                    if (numMemorizedDots > 500) {
+                    if (numMemorizedDots >= 500) {
                         unlockAchievement('Pattern Prodigy');
                     }
                 }
@@ -349,7 +357,12 @@ function playMiniGame(gameType) {
                     : `You failed to match the pattern and lost <span style="color: red;">${formatNumber(Math.abs(reward))}</span> delusion!`;
 
                 if (softCapReached) {
-                    resultMessage += `<br><span style="color: orange;">Soft cap reached: Maximum reward of ${miniGamesSoftCapHrs} hours effective Delusion applied.</span>`;
+                    numSoftCaps++;
+                    localStorage.setItem('numSoftCaps', numSoftCaps);
+                    if (numSoftCaps >= 50) {
+                        unlockAchievement(`Can't Hold Me Back`);
+                    }
+                    resultMessage += `<br><span style="color: orange;">Soft cap reached: Maximum reward of ${miniGamesSoftCapHrs} hours effective Delusion applied. This was your ${numSoftCaps}${getOrdinalSuffix(numSoftCaps)} soft cap.</span>`;
                 }
 
                 resultMessage += cooldownMessage;
@@ -587,12 +600,12 @@ function playMiniGame(gameType) {
                     if (selectedPortals.length >= 5) {
                         unlockAchievement('When Math Maths');
                     }
-                    numMathSolves++;
-                    localStorage.setItem('numMathSolves', numMathSolves);
-                    if (numMathSolves > 314) {
+                    numMathPortals += selectedPortals.length;
+                    localStorage.setItem('numMathPortals', numMathPortals);
+                    if (numMathPortals > 314) {
                         unlockAchievement('Pie Guy');
                     }
-                    resultMessage = `You found the correct sum and earned <span style="color: green;">${formatNumber(reward)}</span> yachtMoney! That was your ${numMathSolves}${getOrdinalSuffix(numMathSolves)} solve.`;
+                    resultMessage = `You found the correct sum and earned <span style="color: green;">${formatNumber(reward)}</span> yachtMoney! You now have selected ${numMathPortals} correct math portals.`;
                 } else {
                     reward = -Math.max(Math.floor(Math.abs(yachtMoney) * 0.2), 20);
                     resultMessage = `You didn't find the correct sum. You lost <span style="color: red;">${formatNumber(Math.abs(reward))}</span> yachtMoney.`;
@@ -602,7 +615,12 @@ function playMiniGame(gameType) {
 
                 // Add the soft cap message in orange if applicable
                 if (softCapReached) {
-                    resultMessage += `<br><span style="color: orange;">Soft cap reached: Maximum reward of ${miniGamesSoftCapHrs} hours effective Yacht Money applied.</span>`;
+                    numSoftCaps++;
+                    localStorage.setItem('numSoftCaps', numSoftCaps);
+                    if (numSoftCaps >= 50) {
+                        unlockAchievement(`Can't Hold Me Back`);
+                    }
+                    resultMessage += `<br><span style="color: orange;">Soft cap reached: Maximum reward of ${miniGamesSoftCapHrs} hours effective Yacht Money applied. This was your ${numSoftCaps}${getOrdinalSuffix(numSoftCaps)} soft cap.</span>`;
                 }
 
                 resultMessage += cooldownMessage;
@@ -770,20 +788,31 @@ function playMiniGame(gameType) {
                         if (boxValue < 0) {
                             numUnluckyBoxes ++;
                             localStorage.setItem('numUnluckyBoxes', numUnluckyBoxes);
-                            if (numUnluckyBoxes > 100) {
+                            if (numUnluckyBoxes >= 100) {
                                 unlockAchievement('Consolation Prize');
+                            }
+                        } else {
+                            numLuckyBoxes ++;
+                            localStorage.setItem('numLuckyBoxes', numLuckyBoxes);
+                            if (numLuckyBoxes >= 777) {
+                                unlockAchievement('Luck of the Irish');
                             }
                         }
 
                         resultMessage = boxValue >= 0 ?
-                            `You chose a lucky box and gained <span style="color: green;">${formatNumber(reward)}</span> troll points!` :
-                            `You chose an unlucky box and lost <span style="color: red;">${formatNumber(Math.abs(reward))}</span> troll points. You have now opened ${numUnluckyBoxes} unlucky boxes.`;
+                            `You chose a lucky box and gained <span style="color: green;">${formatNumber(reward)}</span> troll points! That was your ${numLuckyBoxes}${getOrdinalSuffix(numLuckyBoxes)} lucky box.` :
+                            `You chose an unlucky box and lost <span style="color: red;">${formatNumber(Math.abs(reward))}</span> troll points. That was your ${numUnluckyBoxes}${getOrdinalSuffix(numUnluckyBoxes)} unlucky box.`;
 
                         trollPoints += reward;
 
                         // Add the soft cap message in orange if applicable
                         if (softCapReached) {
-                            resultMessage += `<br><span style="color: orange;">Soft cap reached: Maximum reward of ${miniGamesSoftCapHrs} hours effective Troll Points applied.</span>`;
+                            numSoftCaps++;
+                            localStorage.setItem('numSoftCaps', numSoftCaps);
+                            if (numSoftCaps >= 50) {
+                                unlockAchievement(`Can't Hold Me Back`);
+                            }
+                            resultMessage += `<br><span style="color: orange;">Soft cap reached: Maximum reward of ${miniGamesSoftCapHrs} hours effective Troll Points applied. This was your ${numSoftCaps}${getOrdinalSuffix(numSoftCaps)} soft cap.</span>`;
                         }
 
                         resultMessage += cooldownMessage;

@@ -184,7 +184,7 @@ function toggleAllBuyMarkers(targetState) {
         const name = upgrade.name;
         const toggleSwitch = document.getElementById(`toggle-${name}`);
         
-        if (!upgrade.isFight) {
+        if (!upgrade.isFight && !upgrade.isMeditation) {
             if (toggleSwitch) {
                 toggleSwitch.checked = targetState;
                 toggleSwitch.parentElement.style.display = 'block'; // Make the switch visible

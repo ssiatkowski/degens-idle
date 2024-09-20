@@ -259,6 +259,13 @@ const achievements = [
         type: 'puzzle',
     },
     {
+        name: 'Feed the Cat',
+        isUnlocked: false,
+        hoverText: `i don't know. maybe try pancakes?`,
+        img: 'imgs/achievements/fed_cat.jpg',
+        type: 'puzzle',
+    },
+    {
         name: 'Max Automation',
         isUnlocked: false,
         hoverText: 'turn up your automation setting',
@@ -534,7 +541,7 @@ const achievements = [
     {
         name: 'Pie Guy',
         isUnlocked: false,
-        hoverText: `solve &pi;&times;100 math problems`,
+        hoverText: `use &pi;&times;100 correct math portals`,
         img: 'imgs/achievements/pie_guy.jpg',
         type: 'skill',
     },
@@ -572,6 +579,20 @@ const achievements = [
         hoverText: 'reach max crit chance',
         img: 'imgs/achievements/guaranteed_ish.jpg',
         type: 'puzzle',
+    },
+    {
+        name: `Can't Hold Me Back`,
+        isUnlocked: false,
+        hoverText: 'hit mini game soft cap 50 times',
+        img: 'imgs/achievements/cant_hold_me_back.jpg',
+        type: 'skill',
+    },
+    {
+        name: 'Luck of the Irish',
+        isUnlocked: false,
+        hoverText: `open 777 lucky boxes`,
+        img: 'imgs/achievements/luck_of_the_irish.jpg',
+        type: 'skill',
     },
     {
         name: 'Serenity',
@@ -644,6 +665,13 @@ const achievements = [
         type: 'puzzle',
     },
     {
+        name: 'Make Love, Not War',
+        isUnlocked: false,
+        hoverText: `why can't we all just be friends?`,
+        img: 'imgs/achievements/make_love_not_war.jpg',
+        type: 'progression',
+    },
+    {
         name: 'More than Sauron',
         isUnlocked: false,
         hoverText: '???',
@@ -697,6 +725,13 @@ const achievements = [
         isUnlocked: false,
         hoverText: '???',
         img: 'imgs/achievements/great_american_cookout.jpg',
+        type: 'puzzle',
+    },
+    {
+        name: 'Just Shy of Longest Tunnel',
+        isUnlocked: false,
+        hoverText: '???',
+        img: 'imgs/achievements/longest_tunnel.jpg',
         type: 'puzzle',
     },
 ];

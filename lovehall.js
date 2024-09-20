@@ -7,7 +7,7 @@ const loveHallSkills = [
     { name: 'Twenty-Fivefold Ascension', cost: 1.2, description: 'Gain up to 25 God-Mode levels per Ascension.', unlocked: false, level: 'Quantum Harmony (2.8x)',  pair: 2 },
     { name: 'Twenty-Fivefold Transcendence', cost: 1.2, description: 'Gain up to 25 PU God-Mode levels per Transcendence.', unlocked: false, level: 'Quantum Harmony (2.8x)',  pair: 2 },
 
-    { name: 'Achievement Boost', cost: 1.9, description: 'Achievement Multiplier increased to 2% per achievement.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 3 },
+    { name: 'Achievement Boost', cost: 1.9, description: 'Achievement Multiplier x2. (Achievement Boosts stack)', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 3 },
     { name: 'Cosmic Embrace', cost: 1.9, description: 'Gain +1 Love Point every embrace.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 3 },
 
     { name: 'Serenity Flow', cost: 5, description: 'Hopium gain is multiplied by square root of Serenity.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 4 },
@@ -18,9 +18,15 @@ const loveHallSkills = [
 
     { name: 'Hopeful Soft Cap', cost: 17, description: 'Mini Games Soft Cap uses resource or Hopium (greater)', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 6 },
     { name: 'Fertile Scarcity', cost: 17, description: 'Cosmic Drought sets Stellar Harvest to 250x (instead of 1x)', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 6 },
+    
+    { name: 'Inverse Prestige', cost: 21, description: 'Prestige is now based on the highest of your first four resources', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 7 },
+    { name: 'Positive Markers', cost: 21, description: 'Buy markers stay turned on through Infinite Embrace', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 7 },
 
-    { name: 'Achievement Hypercharge', cost: 50, description: 'Achievement multiplier becomes multiplicative instead of additive.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 7 },
-    { name: 'Perfect PU God-Mode', cost: 50, description: 'Make PU God-Mode perfect with diminishing returns at 99.2%.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 7 },
+    { name: 'Achievement Boost 2', cost: 32, description: 'Achievement Multiplier x3. (Achievement Boosts stack)', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 8 },
+    { name: 'Tunneled Ascension', cost: 32, description: 'Transcending an upgrade also Ascends it.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 8 },
+
+    { name: 'Achievement Hypercharge', cost: 50, description: 'Achievement multiplier becomes multiplicative instead of additive.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 9 },
+    { name: 'Perfect PU God-Mode', cost: 50, description: 'Make PU God-Mode perfect with diminishing returns at 99.2%.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 9 },
 
     // 27x Level - dimensions in string theory
     { name: 'Yacht Money Surge', cost: 0.05, description: '24x Yacht Money gain.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 21 },
@@ -29,23 +35,26 @@ const loveHallSkills = [
     { name: 'Serene Boost 1', cost: 0.1, description: '2x Serenity gain. (Serene Boosts stack)', unlocked: false, level: 'Dimensional Shift (27x)', pair: 22 },
     { name: 'Celestial Precision', cost: 0.1, description: 'Improves Astral Precision to power+50%', unlocked: false, level: 'Dimensional Shift (27x)', pair: 22 },
 
-    { name: 'Knowledge Infusion', cost: 0.6, description: '9x Knowledge gain.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 23 },
-    { name: 'Basic Resource Boost', cost: 0.6, description: '9x gain to first 4 resources.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 23 },
+    { name: 'Knowledge Infusion', cost: 0.4, description: '9x Knowledge gain.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 23 },
+    { name: 'Basic Resource Boost', cost: 0.4, description: '9x gain to first 4 resources.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 23 },
 
-    { name: 'Hall of Knowledge Auto-Buy', cost: 1.5, description: 'Automatically buy upgrades from the Hall of Knowledge.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 24 },
-    { name: 'Hall of Power Auto-Buy', cost: 1.5, description: 'Automatically buy upgrades from the Hall of Power.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 24 },
+    // { name: '', cost: 1, description: '', unlocked: false, level: 'Dimensional Shift (27x)', pair: 24 },
+    // { name: '', cost: 1, description: '', unlocked: false, level: 'Dimensional Shift (27x)', pair: 24 },
 
-    { name: 'Gaming Addict', cost: 2, description: 'Improves Mini Gamer skill to reduce cooldowns reduced by 75%.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 25 },
-    { name: 'First-Wave Automation', cost: 2, description: `Hall of Knowledge automation features are ${formatNumber(1e10)}x cheaper`, unlocked: false, level: 'Dimensional Shift (27x)', pair: 25 },
+    { name: 'Hall of Knowledge Auto-Buy', cost: 1.5, description: 'Automatically buy upgrades from the Hall of Knowledge.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 25 },
+    { name: 'Hall of Power Auto-Buy', cost: 1.5, description: 'Automatically buy upgrades from the Hall of Power.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 25 },
 
-    { name: 'Overwhelming Mercy', cost: 8, description: 'Spare opponents who are far weaker than you and auto unlock the upgrades.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 26 },
-    { name: 'Hopium Fix', cost: 8, description: 'Fix Hopium in the same way Delusion is cured.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 26 },
+    { name: 'Gaming Addict', cost: 2, description: 'Improves Mini Gamer skill to reduce cooldowns by 75%.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 26 },
+    { name: 'First-Wave Automation', cost: 2, description: `Hall of Knowledge automation features are ${formatNumber(1e10)}x cheaper`, unlocked: false, level: 'Dimensional Shift (27x)', pair: 26 },
 
-    { name: 'Serenity Gain (Copium)', cost: 10, description: 'Serenity gain is multiplied by log2(Copium)/33.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 27 },
-    { name: 'Serenity Gain (Delusion)', cost: 10, description: 'Serenity gain is multiplied by log2(Delusion)/33.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 27 },
+    { name: 'Overwhelming Mercy', cost: 8, description: 'Spare opponents who are far weaker than you and auto unlock the upgrades.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 27 },
+    { name: 'Hopium Fix', cost: 8, description: 'Fix Hopium in the same way Delusion is cured.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 27 },
 
-    { name: 'Serenity Gain (Yacht Money)', cost: 10, description: 'Serenity gain is multiplied by log2(Yacht Money)/33.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 28 },
-    { name: 'Serenity Gain (Troll Points)', cost: 10, description: 'Serenity gain is multiplied by log2(Troll Points)/33.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 28 },
+    { name: 'Serenity Gain (Copium)', cost: 10, description: 'Serenity gain is multiplied by log2(Copium)/33.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 28 },
+    { name: 'Serenity Gain (Delusion)', cost: 10, description: 'Serenity gain is multiplied by log2(Delusion)/33.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 28 },
+
+    { name: 'Serenity Gain (Yacht Money)', cost: 10, description: 'Serenity gain is multiplied by log2(Yacht Money)/33.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 29 },
+    { name: 'Serenity Gain (Troll Points)', cost: 10, description: 'Serenity gain is multiplied by log2(Troll Points)/33.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 29 },
 
 
     // 42x Level - the meaning of life
@@ -64,7 +73,7 @@ const loveHallSkills = [
     { name: 'Hopium Trade', cost: 4.2, description: 'Trade Hopium for any of the first 4 resources at a 1:1 ratio.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 45 },
     { name: 'Infinite Prestige', cost: 4.2, description: 'Automatically apply Prestige Mult without resetting.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 45 },
 
-    { name: 'Resonance of Love', cost: 8, description: 'Multiply Serenity by log10 of current Love Points.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 46 },
+    { name: 'Resonance of Love', cost: 8, description: 'Multiply Serenity by log2 of current Love Points.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 46 },
     { name: 'Equilibrium of Hope', cost: 8, description: '(Does not work without Hopium Trade) Automatically trade 1% Hopium for each lower resource.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 46 },
 
     // { name: 'Knowledge Exchange', cost: 15, description: 'Trade Hopium for Knowledge at a 1e20:1 ratio.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 46 },
@@ -144,7 +153,7 @@ function unlockLoveHallSkill(skill, duringLoad = false) {
                 break;
         
             case 'Achievement Boost':
-                achievementBoostValue = 0.02; // Example: 2% achievement boost
+                achievementBoostValue *= 2;
                 calculateAchievementMultiplier();
                 if(!duringLoad){
                     updateEffectiveMultipliers();
@@ -187,7 +196,27 @@ function unlockLoveHallSkill(skill, duringLoad = false) {
             case 'Fertile Scarcity':
                 fertileScarcitySkill = true;
                 break;
+
+            case 'Inverse Prestige':
+                inversePrestigeSkill = true;
+                break;
+                    
+            case 'Positive Markers':
+                positiveMarkersSkill = true;
+                break;
                 
+            case 'Achievement Boost 2':
+                achievementBoostValue *= 3;
+                calculateAchievementMultiplier();
+                if(!duringLoad){
+                    updateEffectiveMultipliers();
+                }
+                break;
+        
+            case 'Tunneled Ascension':
+                tunneledAscensionSkill = true;
+                break;
+
             case 'Achievement Hypercharge':
                 achievementHyperchargeSkill = true;
                 calculateAchievementMultiplier();
@@ -581,69 +610,77 @@ document.addEventListener('DOMContentLoaded', () => {
 let purchaseLibrarySkillsInterval;
 
 function purchaseLibrarySkills() {
-    let allSkillsUnlocked = true; // Track if all skills are unlocked
+    if (purchasedUpgrades.some(upgrade => upgrade.name === `The Library`)) {
 
-    librarySkills.forEach(skill => {
-        // If the skill is not yet unlocked and we can afford it
-        if (!skill.unlocked && knowledge >= skill.cost) {
-            // Subtract the cost from knowledge
-            knowledge -= skill.cost;
+        let allSkillsUnlocked = true; // Track if all skills are unlocked
 
-            // Unlock the skill by calling the provided function
-            unlockLibrarySkill(skill, true);
-            console.log(`Purchased: ${skill.name}`);
+        librarySkills.forEach(skill => {
+            // If the skill is not yet unlocked and we can afford it
+            if (!skill.unlocked && knowledge >= skill.cost) {
+                // Subtract the cost from knowledge
+                knowledge -= skill.cost;
 
-            // Show popup notification for the auto-purchased skill with light brown color
-            showPopupTooltip(`Auto-Purchased Library Skill: ${skill.name}`, '#6F4E37'); // Light brown (tan)
+                // Unlock the skill by calling the provided function
+                unlockLibrarySkill(skill, true);
+                console.log(`Purchased: ${skill.name}`);
 
-            // Mark the skill as unlocked after purchasing
-            skill.unlocked = true;
+                // Show popup notification for the auto-purchased skill with light brown color
+                showPopupTooltip(`Auto-Purchased Library Skill: ${skill.name}`, '#6F4E37'); // Light brown (tan)
+
+                // Mark the skill as unlocked after purchasing
+                skill.unlocked = true;
+            }
+
+            // If any skill is not yet unlocked, set allSkillsUnlocked to false
+            if (!skill.unlocked) {
+                allSkillsUnlocked = false;
+            }
+        });
+
+        // If all skills are unlocked, clear the interval to stop checking
+        if (allSkillsUnlocked) {
+            clearInterval(purchaseLibrarySkillsInterval);
+            console.log("All skills unlocked! Stopping the purchase loop.");
         }
-
-        // If any skill is not yet unlocked, set allSkillsUnlocked to false
-        if (!skill.unlocked) {
-            allSkillsUnlocked = false;
-        }
-    });
-
-    // If all skills are unlocked, clear the interval to stop checking
-    if (allSkillsUnlocked) {
-        clearInterval(purchaseLibrarySkillsInterval);
-        console.log("All skills unlocked! Stopping the purchase loop.");
     }
 }
 
 let purchasePowerHallSkillsInterval;
 
 function purchasePowerHallSkills() {
-    let allSkillsUnlocked = true; // Track if all skills are unlocked
+    
+    
+    if (librarySkills.find(skill => skill.name === 'Map to Hall of Power')) {
+        
+        let allSkillsUnlocked = true; // Track if all skills are unlocked
 
-    powerHallSkills.forEach(skill => {
-        // If the skill is not yet unlocked and we can afford it
-        if (!skill.unlocked && power >= skill.cost) {
-            // Subtract the cost from knowledge
-            power -= skill.cost;
+        powerHallSkills.forEach(skill => {
+            // If the skill is not yet unlocked and we can afford it
+            if (!skill.unlocked && power >= skill.cost) {
+                // Subtract the cost from knowledge
+                power -= skill.cost;
 
-            // Unlock the skill by calling the provided function
-            unlockPowerHallSkill(skill, true);
-            console.log(`Purchased: ${skill.name}`);
+                // Unlock the skill by calling the provided function
+                unlockPowerHallSkill(skill, true);
+                console.log(`Purchased: ${skill.name}`);
 
-            showPopupTooltip(`Auto-Purchased Power Hall Skill: ${skill.name}`, '#8B8000');
+                showPopupTooltip(`Auto-Purchased Power Hall Skill: ${skill.name}`, '#8B8000');
 
-            // Mark the skill as unlocked after purchasing
-            skill.unlocked = true;
+                // Mark the skill as unlocked after purchasing
+                skill.unlocked = true;
+            }
+
+            // If any skill is not yet unlocked, set allSkillsUnlocked to false
+            if (!skill.unlocked) {
+                allSkillsUnlocked = false;
+            }
+        });
+
+        // If all skills are unlocked, clear the interval to stop checking
+        if (allSkillsUnlocked) {
+            clearInterval(purchasePowerHallSkillsInterval);
+            console.log("All Power Hall skills unlocked! Stopping the purchase loop.");
         }
-
-        // If any skill is not yet unlocked, set allSkillsUnlocked to false
-        if (!skill.unlocked) {
-            allSkillsUnlocked = false;
-        }
-    });
-
-    // If all skills are unlocked, clear the interval to stop checking
-    if (allSkillsUnlocked) {
-        clearInterval(purchasePowerHallSkillsInterval);
-        console.log("All Power Hall skills unlocked! Stopping the purchase loop.");
     }
 }
 

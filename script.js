@@ -107,6 +107,9 @@ let oversurgedPower = 1;
 let overcompressedPower = 1;
 let hopefulSoftCapSkill = false;
 let fertileScarcitySkill = false;
+let inversePrestigeSkill = false;
+let positiveMarkersSkill = false;
+let tunneledAscensionSkill = false;
 
 let serenityGainCopium = false;
 let serenityGainDelusion = false;
@@ -154,6 +157,8 @@ let temporalGuardSkill = false;
 let astralEdgeSkill = false;
 let mysticReboundSkill = false;
 let quantumBastionSkill = false;
+
+let makeLoveNotWar = true;
 
 let nebulaOverdriveSkill = false;
 let stellarHarvestSkill = false;
@@ -265,7 +270,7 @@ function updateEffectiveMultipliers() {
     });
 
     if (resonanceOfLoveSkill){
-        effectiveSerenityPerSecond *= Math.max(1, Math.log10(lovePoints));
+        effectiveSerenityPerSecond *= Math.max(1, Math.log2(lovePoints));
     }
 
 }
@@ -399,10 +404,14 @@ function loadGameState() {
     forgetfulnessCounter = parseFloat(localStorage.getItem('forgetfulnessCounter')) || 0;
 
     numMathSolves = parseFloat(localStorage.getItem('numMathSolves')) || 0;
+    numMathPortals = parseFloat(localStorage.getItem('numMathPortals')) || 0;
+    numMathPortals = Math.max(numMathSolves, numMathPortals);
     numSpeedTaps = parseFloat(localStorage.getItem('numSpeedTaps')) || 0;
     numCookedRabbits = parseFloat(localStorage.getItem('numCookedRabbits')) || 0;
     numMemorizedDots = parseFloat(localStorage.getItem('numMemorizedDots')) || 0;
     numUnluckyBoxes = parseFloat(localStorage.getItem('numUnluckyBoxes')) || 0;
+    numLuckyBoxes = parseFloat(localStorage.getItem('numLuckyBoxes')) || 0;
+    numSoftCaps = parseFloat(localStorage.getItem('numSoftCaps')) || 0;
 
     consecutiveClicks = parseInt(localStorage.getItem('consecutiveClicks')) || 0;
     lastClickedBoxIndex = parseInt(localStorage.getItem('lastClickedBoxIndex')) || 0;
@@ -898,6 +907,9 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
                 overcompressedPower = 1;
                 hopefulSoftCapSkill = false;
                 fertileScarcitySkill = false;
+                inversePrestigeSkill = false;
+                positiveMarkersSkill = false;
+                tunneledAscensionSkill = false;
 
                 serenityGainCopium = false;
                 serenityGainDelusion = false;
@@ -1040,7 +1052,7 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
             document.getElementById('serenity-container').style.display = 'none';
             localStorage.setItem('serenityUnlocked', 'false');
             
-            toggleAllBuyMarkers(false);
+            if (!positiveMarkersSkill) { toggleAllBuyMarkers(false); }
 
             document.getElementById('pu-god-display').style.display = 'none';
             document.getElementById('big-crunch-display').style.display = 'none';
@@ -1089,6 +1101,8 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
 
         // Restore all upgrades
         availableUpgrades = upgrades.slice(); // Reset available upgrades to the original state
+
+        makeLoveNotWar = true;
 
         stellarHarvestMult = 1;
         stellarMeditationMult = 1;
@@ -1533,7 +1547,9 @@ function unlockHallofLove() {
 // Function to calculate the prestige multiplier based on the lowest of the first four resources
 function calculatePrestigeMultiplier() {
     const base = prestigeBaseSkill ? 1.75 : 1.5;
-    const minResource = Math.min(copium, delusion, yachtMoney, trollPoints);
+    const minResource = inversePrestigeSkill 
+                        ? Math.max(copium, delusion, yachtMoney, trollPoints) 
+                        : Math.min(copium, delusion, yachtMoney, trollPoints);
     return base ** (Math.log10(minResource / 1000) + 1);
 }
 
@@ -1545,15 +1561,18 @@ function calculateMinResource() {
 
 // Check if the player can prestige
 function canPrestige() {
-    const minResource = Math.min(copium, delusion, yachtMoney, trollPoints);
+    const minResource = inversePrestigeSkill 
+                        ? Math.max(copium, delusion, yachtMoney, trollPoints) 
+                        : Math.min(copium, delusion, yachtMoney, trollPoints);
     return minResource > prestigeRequirement;
 }
 
 async function prestige(skipConfirms = false) {
     if (canPrestige()) {
         const newPrestigeMult = calculatePrestigeMultiplier();
-        const newPrestigeReq = Math.min(copium, delusion, yachtMoney, trollPoints);
-
+        const newPrestigeReq = inversePrestigeSkill 
+                                ? Math.max(copium, delusion, yachtMoney, trollPoints) 
+                                : Math.min(copium, delusion, yachtMoney, trollPoints);
         let confirmed = true; // Assume confirmation is true by default
 
         // If skipConfirms is false, show the confirmation modal
@@ -1599,7 +1618,10 @@ function updatePrestigeButton() {
     if (canPrestige()) {
         if (infinitePrestigeSkill) {
             const newPrestigeMult = calculatePrestigeMultiplier();
-            const newPrestigeReq = Math.min(copium, delusion, yachtMoney, trollPoints);
+            const newPrestigeReq = inversePrestigeSkill 
+                                    ? Math.max(copium, delusion, yachtMoney, trollPoints) 
+                                    : Math.min(copium, delusion, yachtMoney, trollPoints);
+            
             epsMultiplier = newPrestigeMult;
             prestigeRequirement = newPrestigeReq;
             prestigeButton.style.display = 'none';
@@ -1754,10 +1776,23 @@ async function transcend() {
 
         selectedUpgrades.forEach(upgrade => {
             upgrade.isPUGodMode = true;
+            if(tunneledAscensionSkill){
+                upgrade.isGodMode = true;
+            }
         });
 
         puGodLevel = upgrades.filter(upgrade => upgrade.isPUGodMode).length;
         puGodMultiplier = calculatePUGodModeMultiplier(puGodLevel);
+
+        
+        if(tunneledAscensionSkill){
+            const gmLevelsGained = upgrades.filter(upgrade => upgrade.isGodMode).length - godModeLevel;
+            if (gmLevelsGained == 24 && selectedUpgrades.length == 24){
+                unlockAchievement('Just Shy of Longest Tunnel');
+            }
+            godModeLevel = upgrades.filter(upgrade => upgrade.isGodMode).length;
+            godModeMultiplier = calculateGodModeMultiplier(godModeLevel);
+        }
 
         epsMultiplier = calculateAscensionEpsMult();
         prestigeRequirement = calculateMinResource();
@@ -2023,10 +2058,22 @@ function updateTranscendButton() {
 
                 selectedUpgrades.forEach(upgrade => {
                     upgrade.isPUGodMode = true;
+                    if(tunneledAscensionSkill){
+                        upgrade.isGodMode = true;
+                    }
                 });
 
                 puGodLevel = upgrades.filter(upgrade => upgrade.isPUGodMode).length;
                 puGodMultiplier = calculatePUGodModeMultiplier(puGodLevel);
+
+                if(tunneledAscensionSkill){
+                    const gmLevelsGained = upgrades.filter(upgrade => upgrade.isGodMode).length - godModeLevel;
+                    if (gmLevelsGained == 24 && selectedUpgrades.length == 24){
+                        unlockAchievement('Just Shy of Longest Tunnel');
+                    }
+                    godModeLevel = upgrades.filter(upgrade => upgrade.isGodMode).length;
+                    godModeMultiplier = calculateGodModeMultiplier(godModeLevel);
+                }
 
                 epsMultiplier = calculateAscensionEpsMult();
                 prestigeRequirement = calculateMinResource();
@@ -2201,6 +2248,8 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true, ski
 
                 isEventInProgress = true; // Set the flag to prevent multiple fight triggers
 
+                makeLoveNotWar = false;
+
                 const fightResult = await startFightGame(name, img);
                 isEventInProgress = false; // Reset the flag after the fight ends
 
@@ -2316,9 +2365,9 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true, ski
             localStorage.setItem('messageShownUpgrades', JSON.stringify(messageShownUpgrades));
         }
 
-        if (name === 'Altruism') {
+        if (name === 'Shinto') {
             showMessageModal('The Journey Continues', 
-                "This marks the end of v0.919. You've not only completed the Power Saga, but you're also getting the hang of Infinite Embraces and Meditations! Congratulations on your progress, and welcome to the next stage of your journey. "
+                "This marks the end of v0.920. You've not only completed the Power Saga, but you're also getting the hang of Infinite Embraces and Meditations! Congratulations on your progress, and welcome to the next stage of your journey. "
                 + "With the Hall of Love now open, Love Points are becoming a key part of your experience, alongside the skills you unlock there. While these new mechanics are taking shape, expect ongoing balancing as the game evolves. "
                 + "Feel free to dive deeper into the skills and explore what's possible. The journey is far from over—more meditations and epic content are on the way! "
                 + "Stay connected on Discord, share your feedback, and together, let's create something truly unforgettable!"
@@ -2349,6 +2398,12 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true, ski
         } else if (name == 'Spend That Money'){
             if (!purchasedUpgrades.some(upgrade => upgrade.name === `Sebo's Luck`)){
                 unlockAchievement('Take Out a Loan');
+            }
+        } else if (name == `Ok to be selfish?`){
+            console.log('Checking for Cat');
+            if (purchasedUpgrades[purchasedUpgrades.length - 2].name == `Food + Cats = Profit?`){
+                console.log('Found Cat');
+                unlockAchievement('Feed the Cat');
             }
         }
 
@@ -2420,6 +2475,9 @@ function buyAllUpgrades(limit, pressedButton) {
                 buyUpgrade(encodeName(upgrade.name), false);
                 purchasedCount++;
                 incrementStellarHarvest();
+                if(upgrade.name == 'Saitama' && makeLoveNotWar){
+                    unlockAchievement('Make Love, Not War');
+                }
             }
             else if ((isAffordableUpgrade && switchState)) {
                 buyUpgrade(encodeName(upgrade.name), false);
@@ -2680,6 +2738,9 @@ function autobuyUpgrades() {
             buyUpgrade(encodeName(upgrade.name), false);
             upgradeBought = true;
             incrementStellarHarvest();
+            if(upgrade.name == 'Saitama' && makeLoveNotWar){
+                unlockAchievement('Make Love, Not War');
+            }
         }
         else if ((isAffordableUpgrade && switchState)) {
             buyUpgrade(encodeName(upgrade.name), false);
@@ -2937,7 +2998,7 @@ function toggleDevMultiplier(factor) {
 // Function to ascend and select a random upgrade to set to godmode
 async function devAscend() {
     const top100AvailableUpgrades = availableUpgrades
-        .slice(0, 200)
+        .slice(0, 400)
         .filter(up => !up.isGodMode);
 
         const nextUpgrade = top100AvailableUpgrades[0];
@@ -3673,7 +3734,7 @@ function calculateTooltip(resourceId) {
             }
         });
 
-        const loveMult = Math.max(1, Math.log10(lovePoints))
+        const loveMult = Math.max(1, Math.log2(lovePoints))
         if (resonanceOfLoveSkill && loveMult > 1){
             tooltip += `<span style="color:#DE3163">x${formatNumber(loveMult)} (Resonance of Love)</span><br>`;
         }

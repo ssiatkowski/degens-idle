@@ -482,7 +482,7 @@ const upgrades = [
     {
         name: `Shooter Dad`,
         cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 5e11, knowledge: 100000, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 1.66e7, trollPointsPerSecond: 0, hopiumPerSecond: 135, knowledgePerSecond: 0.000178, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 2.66e7, trollPointsPerSecond: 0, hopiumPerSecond: 135, knowledgePerSecond: 0.000278, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/shooter_swag.jpg`,
     },
     {
@@ -494,7 +494,7 @@ const upgrades = [
     {
         name: `Build a Base`,
         cost: { copium: 8e17, delusion: 4e17, yachtMoney: 4e17, trollPoints: 8e17, hopium: 1e12, knowledge: 1, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: -2.5e7, delusionPerSecond: 0, yachtMoneyPerSecond: -1.3e7, trollPointsPerSecond: -4e7, hopiumPerSecond: -75, knowledgePerSecond: 0.0025, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: -2.5e7, delusionPerSecond: 0, yachtMoneyPerSecond: -1.3e7, trollPointsPerSecond: -4e7, hopiumPerSecond: -75, knowledgePerSecond: 0.0026, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/all_your_base.jpg`,
         hoverOverwrite: `Xy'løth Q'värk, F'näürg zxÿl-gørh'tha! Z'qúol b'zhåk vi'krêth, nx'tuöl j'dä!`,
         achievement: 'Build a Base',
@@ -502,7 +502,7 @@ const upgrades = [
     {
         name: `NGU Idle`,
         cost: { copium: 8e17, delusion: 3.5e17, yachtMoney: 3.5e17, trollPoints: 8e17, hopium: 1e12, knowledge: 6e7, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 9.8e7, delusionPerSecond: 6.8e7, yachtMoneyPerSecond: 8.8e7, trollPointsPerSecond: 1.8e8, hopiumPerSecond: 800, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 9.9e7, delusionPerSecond: 6.9e7, yachtMoneyPerSecond: 8.9e7, trollPointsPerSecond: 1.9e8, hopiumPerSecond: 800, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/ngu_idle.jpg`,
         message: `Congratulations on unlocking the "NGU Idle" upgrade! This upgrade is a tribute to one of the greatest idle games ever. NGU Idle, known for its deep mechanics and quirky humor, has set a high standard in the idle game genre.<br><br>Here's to celebrating a game that has set a high bar for idle games everywhere. Enjoy the nostalgia and the boost it brings to your Degens Idle journey -- you may now watch all your Numbers Go Up!`,
     },
@@ -695,7 +695,7 @@ const upgrades = [
     },
     {
         name: `Ok to be selfish?`,
-        cost: { copium: 7e32, delusion: 0, yachtMoney: 0, trollPoints: 5e34, hopium: 0, knowledge: 0, power: 2e-3, serenity: 0 },
+        cost: { copium: 4e32, delusion: 0, yachtMoney: 0, trollPoints: 5e34, hopium: 0, knowledge: 0, power: 2e-3, serenity: 0 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 1.3e13, trollPointsPerSecond: 5e12, hopiumPerSecond: 0, knowledgePerSecond: 145, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/selfish_food.jpg`,
     },
@@ -714,7 +714,7 @@ const upgrades = [
     },
     {
         name: `Food + Cats = Profit?`,
-        cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 3e36, hopium: 0, knowledge: 0, power: 1e-1, serenity: 0 },
+        cost: { copium: 4e33, delusion: 0, yachtMoney: 0, trollPoints: 3e36, hopium: 0, knowledge: 0, power: 1e-1, serenity: 0 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 2e13, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 400, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/food_plus_cats.jpg`,
     },
@@ -917,7 +917,7 @@ const upgrades = [
     {
         name: `Complex Skill Trees`,
         cost: { copium: 2e52, delusion: 0, yachtMoney: 0, trollPoints: 2e52, hopium: 2e48, knowledge: 2e41, power: 600000, serenity: 0 },
-        earnings: { copiumPerSecond: 6e18, delusionPerSecond: 4e18, yachtMoneyPerSecond: 0, trollPointsPerSecond: 7e18, hopiumPerSecond: 0, knowledgePerSecond: 75000, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 8e18, delusionPerSecond: 5e18, yachtMoneyPerSecond: 0, trollPointsPerSecond: 8e18, hopiumPerSecond: 0, knowledgePerSecond: 95000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/path_of_exile_skill_tree.jpg`,
         message: `Huge shoutout to Path of Exile—the greatest game of all time! No other ARPG, or any game for that matter, has ever managed to replicate the sheer complexity and depth of its legendary skill trees. It’s a masterpiece of design, offering limitless possibilities for those daring enough to explore its vast network of nodes. Every decision shapes your journey, making each build a unique adventure.<br><br>Path of Exile has set a standard that’s unmatched, and we can only hope that Path of Exile 2 will continue to raise the bar even higher.`,
     },
@@ -1016,7 +1016,7 @@ const upgrades = [
     {
         name: `Biggest Conspiracy`,
         cost: { copium: 0, delusion: 0, yachtMoney: 1.8e64, trollPoints: 2.5e63, hopium: 0, knowledge: 1e46, power: 1.5e8, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 1.9e21, yachtMoneyPerSecond: 0, trollPointsPerSecond: 2.4e21, hopiumPerSecond: 0, knowledgePerSecond: 460000, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 1.9e21, yachtMoneyPerSecond: 0, trollPointsPerSecond: 2.4e21, hopiumPerSecond: 0, knowledgePerSecond: 480000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/dank_memes_steel_beams.jpg`,        
     },
     {
@@ -1307,6 +1307,7 @@ const upgrades = [
         message: `<p>The cosmic drought has brought an end to your Stellar Harvest. The star systems you once nurtured have faded, and your operations across the multiverse have halted.</p>
                 <p>But your heroic efforts in saving the multiverse haven’t gone unnoticed. Word has reached the galactic federation, and in recognition of your valor and the financial burdens you've faced, they've granted you an allowance.</p>
                 <p>Though the road ahead is uncertain, with the federation's support, new possibilities await. The multiverse may still need you.</p>`,
+        isKey: true,
     },
     {         
         name: `Search for Hope`,
@@ -1364,7 +1365,7 @@ const upgrades = [
     {         
         name: `Yin and Yang`,
         cost: { copium: 1e97, delusion: 1e97, yachtMoney: 1e97, trollPoints: 1e97, hopium: 0, knowledge: 0, power: 0, serenity: 1 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 7e40, trollPointsPerSecond: 0, hopiumPerSecond: 1e47, knowledgePerSecond: 3e13, powerPerSecond: 0, serenityPerSecond: 0.0004 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 7e42, trollPointsPerSecond: 0, hopiumPerSecond: 1e47, knowledgePerSecond: 3e13, powerPerSecond: 0, serenityPerSecond: 0.008 },
         img: `imgs/arena_yin_yang.png`,
         isMeditation: true,
         achievement: 'Focus Your Mind',
@@ -1386,7 +1387,7 @@ const upgrades = [
     {         
         name: `Infinite Embrace`,
         cost: { copium: 1e99, delusion: 1e99, yachtMoney: 1e99, trollPoints: 1e99, hopium: 0, knowledge: 0, power: 0, serenity: 100 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 2e40, trollPointsPerSecond: 0, hopiumPerSecond: 1e47, knowledgePerSecond: 1e14, powerPerSecond: 0, serenityPerSecond: 0.001 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 2e43, trollPointsPerSecond: 0, hopiumPerSecond: 1e47, knowledgePerSecond: 1e14, powerPerSecond: 0, serenityPerSecond: 0.001 },
         img: `imgs/infinite_embrace.jpg`,
         message: `<p>Once you reach 1000 serenity, the Infinite Embrace will become available, offering you the chance to perform a sacred act that will resonate throughout the multiverse.</p>
                 <p>Physically, the Infinite Embrace resets all of your progress—prestiges, god modes, big crunches, the Hall of Knowledge, and the Hall of Power. But metaphysically, it is an infusion of boundless love into the fabric of existence. Each time you perform this ritual, you strengthen the universe, spreading warmth, harmony, and love to every future incarnation.</p>
@@ -1396,13 +1397,13 @@ const upgrades = [
     {         
         name: `Is it worth it?`,
         cost: { copium: 0, delusion: 1e100, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 1e76, power: 0, serenity: 90 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 3e40, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0.008 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 3e40, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0.002 },
         img: `imgs/to_crunch_or_not_to_crunch.jpg`,
     },
     {         
         name: `Existentialism`,
         cost: { copium: 1.5e100, delusion: 1.5e100, yachtMoney: 1.5e100, trollPoints: 1.5e100, hopium: 0, knowledge: 0, power: 0, serenity: 5 },
-        earnings: { copiumPerSecond: 2.2e41, delusionPerSecond: 1.6e41, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 1e47, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0.002 },
+        earnings: { copiumPerSecond: 2.2e45, delusionPerSecond: 1.6e45, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 1e47, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0.05 },
         img: `imgs/arena_existentialism.png`,
         isMeditation: true,
         isKey: true,
@@ -1410,20 +1411,26 @@ const upgrades = [
     },
     {         
         name: `Classic Science`,
-        cost: { copium: 0, delusion: 0, yachtMoney: 5e100, trollPoints: 8e100, hopium: 0, knowledge: 1e76, power: 0, serenity: 10 },
+        cost: { copium: 0, delusion: 0, yachtMoney: 5e100, trollPoints: 8e100, hopium: 0, knowledge: 1e76, power: 0, serenity: 50 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1e41, hopiumPerSecond: 1e47, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0.0003 },
         img: `imgs/classic_science.jpg`,
     },
     {         
         name: `Humorless Resolve`,
-        cost: { copium: 5e100, delusion: 5e100, yachtMoney: 0, trollPoints: 5e100, hopium: 0, knowledge: 1e76, power: 0, serenity: 10 },
+        cost: { copium: 5e100, delusion: 5e100, yachtMoney: 0, trollPoints: 5e100, hopium: 0, knowledge: 1e76, power: 0, serenity: 500 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1e41, hopiumPerSecond: 1e47, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0.0005 },
         img: `imgs/cant_take_a_joke.jpg`,
     },
     {         
+        name: `The Best Revenge`,
+        cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 1e103, knowledge: 0, power: 0, serenity: 500 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 1e47, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0.1 },
+        img: `imgs/best_revenge.jpg`,
+    },
+    {         
         name: `Altruism`,
-        cost: { copium: 1e100, delusion: 1e100, yachtMoney: 1e100, trollPoints: 1e100, hopium: 0, knowledge: 0, power: 0, serenity: 15 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 3e41, trollPointsPerSecond: 0, hopiumPerSecond: 2e47, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0.009 },
+        cost: { copium: 1e102, delusion: 1e102, yachtMoney: 1e102, trollPoints: 1e102, hopium: 0, knowledge: 0, power: 0, serenity: 7500 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 3e46, trollPointsPerSecond: 0, hopiumPerSecond: 1e47, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0.9 },
         img: `imgs/arena_altruism.png`,
         isMeditation: true,
         isKey: true,
@@ -1431,20 +1438,20 @@ const upgrades = [
     },
     {         
         name: `One in a Million`,
-        cost: { copium: 1.8e101, delusion: 0, yachtMoney: 2.5e101, trollPoints: 5e100, hopium: 0, knowledge: 1e76, power: 0, serenity: 94 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 1e47, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0.002 },
+        cost: { copium: 1.8e104, delusion: 0, yachtMoney: 2.5e104, trollPoints: 5e103, hopium: 0, knowledge: 1e76, power: 0, serenity: 9400 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 2e15, powerPerSecond: 0, serenityPerSecond: 0.02 },
         img: `imgs/doesnt_go_through_phone.jpg`,
     },
     {         
         name: `Must be patient`,
-        cost: { copium: 3.8e101, delusion: 4.1e101, yachtMoney: 0, trollPoints: 3e101, hopium: 0, knowledge: 1e77, power: 1e20, serenity: 25 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0.008 },
+        cost: { copium: 3.8e105, delusion: 4.1e104, yachtMoney: 0, trollPoints: 3e104, hopium: 0, knowledge: 1e77, power: 1e20, serenity: 3500 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 3e41, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0.08 },
         img: `imgs/must_be_patient.jpg`,
     },
     {         
         name: `Hotkeys`,
-        cost: { copium: 8e101, delusion: 0, yachtMoney: 0, trollPoints: 2e102, hopium: 0, knowledge: 5e77, power: 0, serenity: 250 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1e42, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0.011 },
+        cost: { copium: 8e106, delusion: 0, yachtMoney: 0, trollPoints: 2e104, hopium: 0, knowledge: 5e79, power: 0, serenity: 25000 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1e42, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0.11 },
         img: `imgs/hotkeys.jpg`,
         message: `<p>What the hell? Have these hotkeys been in the game all along? Yes, they have!</p>
                 <p>Here’s a quick rundown of the powerful hotkeys you can use to streamline your gameplay:</p>
@@ -1463,8 +1470,8 @@ const upgrades = [
     },
     {         
         name: `Rastafarianism`,
-        cost: { copium: 1e102, delusion: 1e102, yachtMoney: 1e102, trollPoints: 1e102, hopium: 0, knowledge: 0, power: 0, serenity: 150 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 4.2e42, hopiumPerSecond: 4.2e47, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0.042 },
+        cost: { copium: 1e105, delusion: 1e105, yachtMoney: 1e105, trollPoints: 1e104, hopium: 0, knowledge: 0, power: 0, serenity: 4200 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 4.2e47, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 4.2 },
         img: `imgs/arena_rastafarianism.png`,
         isMeditation: true,
         isKey: true,
@@ -1472,8 +1479,8 @@ const upgrades = [
     },
     {         
         name: `Dualism`,
-        cost: { copium: 1e104, delusion: 1e104, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 2000 },
-        earnings: { copiumPerSecond: 1e42, delusionPerSecond: 1e42, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0.2 },
+        cost: { copium: 1e108, delusion: 1e108, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 200000 },
+        earnings: { copiumPerSecond: 1e48, delusionPerSecond: 1e48, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 12 },
         img: `imgs/arena_dualism.png`,
         isMeditation: true,
         isKey: true,
@@ -1481,8 +1488,8 @@ const upgrades = [
     },
     {         
         name: `Libertarianism`,
-        cost: { copium: 1e110, delusion: 0, yachtMoney: 1e110, trollPoints: 0, hopium: 0, knowledge: 0, power: 1e21, serenity: 30000 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 2e43, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 3 },
+        cost: { copium: 1e115, delusion: 0, yachtMoney: 1e115, trollPoints: 0, hopium: 0, knowledge: 0, power: 2e24, serenity: 1e8 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 2e50, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 199 },
         img: `imgs/arena_libertarianism.png`,
         isMeditation: true,
         isKey: true,
@@ -1490,8 +1497,8 @@ const upgrades = [
     },
     {         
         name: `Hinduism`,
-        cost: { copium: 1e115, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 1e22, serenity: 100000 },
-        earnings: { copiumPerSecond: 5e45, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 1e48, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 50 },
+        cost: { copium: 1e122, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 1e27, serenity: 2e9 },
+        earnings: { copiumPerSecond: 5e52, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 1e52, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 3250 },
         img: `imgs/arena_hinduism.png`,
         isMeditation: true,
         isKey: true,
@@ -1499,8 +1506,8 @@ const upgrades = [
     },
     {         
         name: `Shinto`,
-        cost: { copium: 1e120, delusion: 1e120, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 1e23, serenity: 1000000 },
-        earnings: { copiumPerSecond: 2e46, delusionPerSecond: 2e46, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 1e48, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 750 },
+        cost: { copium: 1e128, delusion: 1e128, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 2e31, serenity: 1e10 },
+        earnings: { copiumPerSecond: 2e54, delusionPerSecond: 2e54, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 1e48, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 47000 },
         img: `imgs/arena_shinto.png`,
         isMeditation: true,
         isKey: true,
@@ -1508,8 +1515,8 @@ const upgrades = [
     },
     {         
         name: `Stoicism`,
-        cost: { copium: 1e125, delusion: 0, yachtMoney: 1e125, trollPoints: 0, hopium: 0, knowledge: 0, power: 1e24, serenity: 2e7 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 1e50, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 5000 },
+        cost: { copium: 1e135, delusion: 0, yachtMoney: 1e135, trollPoints: 0, hopium: 0, knowledge: 0, power: 2e34, serenity: 2e11 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 1e56, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 500000 },
         img: `imgs/arena_stoicism.png`,
         isMeditation: true,
         isKey: true,

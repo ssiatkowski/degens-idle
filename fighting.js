@@ -78,7 +78,7 @@ const enemyStats = {
         absorb: 0.9
     },
     "Kratos": {
-        health: 6.7e8,
+        health: 6.5e8,
         minDamage: 1,
         maxDamage: 2,
         attackSpeed: 30,
