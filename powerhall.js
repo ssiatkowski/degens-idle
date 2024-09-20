@@ -21,12 +21,12 @@ const powerHallSkills = [
     { name: 'Stellar Cookie', cost: 5e12, description: `Auto click the cookie 10 times per second while Stellar Harvest is active.`, unlocked: false, level: 'Cosmic Dynamics'},
     { name: 'Graviton Burst', cost: 8e16, description: 'Your attacks are imperceptible to average beings. You now attack 5x faster!', unlocked: false, level: 'Cosmic Dynamics' },
     
+    { name: 'Cosmic Gamekeeper', cost: 1.25e5, description: `Unlock a small multiplier to all resources based on mini game successes.`, unlocked: false, level: 'Celestial Manipulation' },
     { name: 'Nebula Overdrive', cost: 7e5, description: `Purchasing non-boss upgrades no longer consumes power. Power cost still applies.`, unlocked: false, level: 'Celestial Manipulation' },
     { name: 'Stellar Harvest', cost: 3e7, description: `Increase generation of all first 7 resources by 30% for 3 minutes after defeating a boss. (multiplicative)`, unlocked: false, level: 'Celestial Manipulation' },
     { name: 'POWER is Power!', cost: 3e8, description: `Power generation increased by 10% for each purchased Power Hall skill (multiplicative).`, unlocked: false, level: 'Celestial Manipulation' },
     { name: 'Upgrade Amplifier', cost: 5.5e8, description: `First 4 resources gain a flat multiplier based on number of purchased upgrades.`, unlocked: false, level: 'Celestial Manipulation' },
     { name: 'Celestial Collector', cost: 7e10, description: `Stellar Harvest buff is extended to 50% power and lasts for 10 minutes.`, unlocked: false, level: 'Celestial Manipulation' },
-    { name: 'Cosmic Gamekeeper', cost: 1e18, description: `Unlock multiplier to all resources based on mini game successes.`, unlocked: false, level: 'Celestial Manipulation' },
 
 ];
 
