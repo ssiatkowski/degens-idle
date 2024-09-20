@@ -58,6 +58,9 @@ const loveHallSkills = [
 
 
     // 42x Level - the meaning of life
+    //{ name: 'Deadpool Embrace', cost: 0.02, description: 'Deadpool revives do not reset on Infinite Embrace.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 41 },
+    //{ name: 'Rewarding Victories', cost: 0.02, description: 'Battle upgrades give +40% rewards.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 41 },
+
     { name: 'Deadpool Embrace', cost: 0.1, description: 'Deadpool revives do not reset on Infinite Embrace.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 41 },
     { name: 'Rewarding Victories', cost: 0.1, description: 'Battle upgrades give +40% rewards.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 41 },
 
