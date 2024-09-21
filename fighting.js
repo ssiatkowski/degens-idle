@@ -235,7 +235,7 @@ let playerHealthMult = 1;
 
 let playerDodge = 0;
 let playerDodgeBase = 0;
-let playerNonCritDodge = 0;
+let playerNonCritDodge = 0; // not used
 let playerStunChance = 0;
 let playerAbsorb = 0;
 let playerAbsorbBase = 0;
@@ -1256,6 +1256,10 @@ function attackPlayer(resolve) {
 
     // Apply damage to player health
     playerHealth -= Math.max(damage, 0);
+
+    if(damage > 0 && isCritical && currEnemyName === "Sauron") {
+        unlockAchievement('Tank the Crit');
+    }
 
     // Handle Mystic Rebound skill activation
     if (isCritical && mysticReboundSkill) {

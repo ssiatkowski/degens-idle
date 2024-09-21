@@ -106,7 +106,7 @@
 }
 
 /* Media query for mobile devices */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
     .skill-row {
         justify-content: space-around;
     }
@@ -117,5 +117,8 @@
     }
     .skill-level-label {
         font-size: 14px; /* Smaller label font size */
+    }
+    h4 {
+        font-size: 0.75em; /* Smaller font size for mobile */
     }
 }

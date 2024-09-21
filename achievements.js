@@ -574,6 +574,13 @@ const achievements = [
         type: 'progression',
     },
     {
+        name: 'Tank the Crit',
+        isUnlocked: false,
+        hoverText: 'live to tell the tale of getting crit by Sauron',
+        img: 'imgs/achievements/survive_crit.jpg',
+        type: 'puzzle',
+    },
+    {
         name: 'Guaranteed-ish',
         isUnlocked: false,
         hoverText: 'reach max crit chance',

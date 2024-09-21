@@ -15,6 +15,7 @@ let ballSizeDelta;
 let respawnTime;
 let windSpeed;
 let windDirection;
+let deismDoubled = false;
 
 let respawnFactor;
 let livesPerBall;
@@ -122,19 +123,31 @@ const meditationChallenges = {
     "Stoicism": {
         duration: 25,
         focus: 10,
-        ballCount: 18,
-        arenaSize: 600,
+        ballCount: 12,
+        arenaSize: 700,
         ballSize: 50,
         ballSizeDelta: 20,
-        velocity: 7,
-        wind: 3,
+        velocity: 3,
+        wind: 1.5,
         respawnFactor: 1,
         livesPerBall: 5,
+    },
+    "Deism": {
+        duration: 40,
+        focus: 1,
+        ballCount: 7,
+        arenaSize: 500,
+        ballSize: 80,
+        ballSizeDelta: 0,
+        velocity: 10,
+        wind: 0,
+        respawnFactor: 1,
+        livesPerBall: 2,
     },
 };
 
 // Function to initialize the meditation game
-function startMeditationGame(challengeName, backgroundImage) {
+function startMeditationGame(challengeName, backgroundImage, stageNumber = 1, preservedFocus = null) {
     return new Promise((resolve) => {
         resolveFunction = resolve; // Store the resolve function
         // Set the current challenge based on the challengeName
@@ -143,13 +156,16 @@ function startMeditationGame(challengeName, backgroundImage) {
         // Use the calculateTimerReduction function to adjust the duration
         meditationTimer = (challenge.duration - studyAcceleratorReduction) * calculateTimerReduction(yachtMoney);
         
-        meditationFocus = challenge.focus + Math.max(0, Math.floor(Math.log10(serenity))); // Serenity gives additional focus (log10)
+        meditationFocus = preservedFocus !== null ? preservedFocus : challenge.focus + Math.max(0, Math.floor(Math.log10(serenity))); // Preserve focus if passed
         ballCount = Math.max(1, challenge.ballCount - calculateBallCountReduction()); // Hopium reduces ball count
         arenaSize = challenge.arenaSize;
         ballSize = challenge.ballSize;
         ballSize = calculateBallSize();
         ballSizeDelta = challenge.ballSizeDelta;
         baseVelocity = challenge.velocity * calculateVelocityReduction();
+        if (stageNumber === 2) {
+            baseVelocity *= 2;
+        }
         turnRadius = calculateTurnRadius();
         respawnTime = 100;
         respawnFactor = challenge.respawnFactor;
@@ -175,17 +191,19 @@ function startMeditationGame(challengeName, backgroundImage) {
         }
 
         // Initialize the meditation arena and balls
-        setupMeditationArena();
+        setupMeditationArena(stageNumber);
 
         // Start the meditation game loop, updating every 25ms
         meditationInterval = setInterval(() => {
-            updateMeditationGame(resolve);
+            updateMeditationGame(resolve, stageNumber);
         }, 25); // Update every 25ms for smooth animation
     });
 }
 
+
+
 // Function to set up the meditation arena
-function setupMeditationArena() {
+function setupMeditationArena(stageNumber) {
     // Clear the arena
     const arena = document.getElementById('arena');
     if (arena) {
@@ -196,7 +214,7 @@ function setupMeditationArena() {
 
     // Create balls in the arena, spaced near the center
     for (let i = 0; i < ballCount; i++) {
-        createBall(i);
+        createBall(i, stageNumber);
     }
 
     // Update meditation info (e.g., challenge name, timer, focus)
@@ -205,8 +223,9 @@ function setupMeditationArena() {
     scaleArena();
 }
 
+
 // Function to create a ball with no overlap and random velocity/direction
-function createBall(index) {
+function createBall(index, stageNumber) {
     const ball = document.createElement('div');
     ball.classList.add('meditation-ball');
  
@@ -225,6 +244,13 @@ function createBall(index) {
     ball.style.left = `${centerX - thisBallSize / 2}px`; // Adjust for ball size
     ball.style.top = `${centerY - thisBallSize / 2}px`;
 
+    // Set the color of the balls based on the stage
+    if (stageNumber === 2) {
+        ball.style.backgroundColor = 'red';
+    } else {
+        ball.style.backgroundColor = 'orange'; // Assuming blue or any other color for stage 1
+    }
+
     // Set initial direction (random angle) and velocity
     const direction = Math.random() * 2 * Math.PI; // Random angle in radians
 
@@ -241,6 +267,7 @@ function createBall(index) {
     document.getElementById('arena').appendChild(ball);
 }
 
+
 // Function to update meditation info
 function updateMeditationInfo() {
     document.getElementById('meditationChallengeName').innerText = currentChallengeName;
@@ -256,19 +283,28 @@ function updateMeditationInfo() {
     document.getElementById('meditationWind').innerText = `${windSpeed.toFixed(2)} ${windSpeed != 0 ? windDirection : ''}`; // Display wind speed and direction
 }
 
-// Function to update the meditation game state
-function updateMeditationGame(resolve) {
+
+function updateMeditationGame(resolve, stageNumber) {
     // Update the timer
     meditationTimer -= 0.025; // Reduce time every 25ms
     document.getElementById('meditationTimer').innerText = meditationTimer.toFixed(1); // Update the timer display
 
     // Check for end conditions
     if (meditationTimer <= 0 && meditationFocus > 0) {
-        clearInterval(meditationInterval);
-        resolve(true); // Player wins the challenge
-        stopMeditationGame();
-        showPopupTooltip(`Successful Meditation: ${currentChallengeName}`, color='#4682B4', 2)
-        return;
+        if (currentChallengeName === 'Deism' && stageNumber === 1) {
+            // Flash "Not So Fast" message and then restart the game
+            clearInterval(meditationInterval); // Stop the current game loop
+            showNotSoFastMessage().then(() => {
+                startMeditationGame(currentChallengeName, document.getElementById('arena').style.backgroundImage, 2, meditationFocus).then(resolve);
+            });
+            return;
+        } else {
+            clearInterval(meditationInterval);
+            resolve(true); // Player wins the challenge
+            stopMeditationGame();
+            showPopupTooltip(`Successful Meditation: ${currentChallengeName}`, color='#4682B4', 2);
+            return;
+        }
     }
 
     if (meditationFocus <= 0) {
@@ -283,6 +319,8 @@ function updateMeditationGame(resolve) {
     checkBallCollisions();
     checkOutOfBounds();
 }
+
+
 
 // Function to move the balls according to their velocity, direction, wind, and gravity towards the center
 function moveBalls() {
@@ -623,4 +661,28 @@ function scaleArena() {
         // Optional: You can still apply `transformOrigin` if needed
         // meditationWrapper.style.transformOrigin = 'top left';
     }
+}
+
+function showNotSoFastMessage() {
+    return new Promise((resolve) => {
+        const arena = document.getElementById('arena');
+        const message = document.createElement('div');
+        message.innerText = "Not So Fast";
+        message.style.position = 'absolute';
+        message.style.top = '50%';
+        message.style.left = '50%';
+        message.style.transform = 'translate(-50%, -50%)';
+        message.style.color = 'red';
+        message.style.fontSize = '48px';
+        message.style.fontWeight = 'bold';
+        message.style.zIndex = '1000'; // Make sure it appears on top
+        message.style.textAlign = 'center';
+
+        arena.appendChild(message);
+
+        setTimeout(() => {
+            arena.removeChild(message);
+            resolve();
+        }, 1000); // Display message for 1 second
+    });
 }

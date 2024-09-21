@@ -47,14 +47,17 @@ const loveHallSkills = [
     { name: 'Gaming Addict', cost: 2, description: 'Improves Mini Gamer skill to reduce cooldowns by 75%.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 26 },
     { name: 'First-Wave Automation', cost: 2, description: `Hall of Knowledge automation features are ${formatNumber(1e10)}x cheaper`, unlocked: false, level: 'Dimensional Shift (27x)', pair: 26 },
 
-    { name: 'Overwhelming Mercy', cost: 8, description: 'Spare opponents who are far weaker than you and auto unlock the upgrades.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 27 },
-    { name: 'Hopium Fix', cost: 8, description: 'Fix Hopium in the same way Delusion is cured.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 27 },
+    // { name: 'Master of Elements', cost: 5, description: 'Reduce Meditation Wind Speed by 50%', unlocked: false, level: 'Dimensional Shift (27x)', pair: 27 },
+    // { name: 'Space Continuum Stretch', cost: 5, description: 'Increase Meditation Arena Size by 10%', unlocked: false, level: 'Dimensional Shift (27x)', pair: 27 },
 
-    { name: 'Serenity Gain (Copium)', cost: 10, description: 'Serenity gain is multiplied by log2(Copium)/33.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 28 },
-    { name: 'Serenity Gain (Delusion)', cost: 10, description: 'Serenity gain is multiplied by log2(Delusion)/33.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 28 },
+    { name: 'Overwhelming Mercy', cost: 8, description: 'Spare opponents who are far weaker than you and auto unlock the upgrades.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 28 },
+    { name: 'Hopium Fix', cost: 8, description: 'Fix Hopium in the same way Delusion is cured.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 28 },
 
-    { name: 'Serenity Gain (Yacht Money)', cost: 10, description: 'Serenity gain is multiplied by log2(Yacht Money)/33.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 29 },
-    { name: 'Serenity Gain (Troll Points)', cost: 10, description: 'Serenity gain is multiplied by log2(Troll Points)/33.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 29 },
+    { name: 'Serenity Gain (Copium)', cost: 10, description: 'Serenity gain is multiplied by log2(Copium)/33.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 29 },
+    { name: 'Serenity Gain (Delusion)', cost: 10, description: 'Serenity gain is multiplied by log2(Delusion)/33.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 29 },
+
+    { name: 'Serenity Gain (Yacht Money)', cost: 10, description: 'Serenity gain is multiplied by log2(Yacht Money)/33.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 30 },
+    { name: 'Serenity Gain (Troll Points)', cost: 10, description: 'Serenity gain is multiplied by log2(Troll Points)/33.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 30 },
 
 
     // 42x Level - the meaning of life
@@ -80,7 +83,7 @@ const loveHallSkills = [
     { name: 'Equilibrium of Hope', cost: 8, description: '(Does not work without Hopium Trade) Automatically trade 1% Hopium for each lower resource.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 46 },
 
     // { name: 'Knowledge Exchange', cost: 15, description: 'Trade Hopium for Knowledge at a 1e20:1 ratio.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 46 },
-    // { name: 'Big Crunch Factor Boost', cost: 15, description: 'Increase Big Crunch factor from 2 to 2.1.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 46 },
+    // { name: 'Big Crunch Factor Boost', cost: 15, description: 'Increase Big Crunch base from 2 to 2.1.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 46 },
 
     { name: 'Temporal Drag', cost: 12, description: 'During meditation, decrease ball velocity by 25%.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 47 },
     { name: 'Look Past Distractions', cost: 12, description: 'During meditation, decrease # of balls by 1.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 47 },

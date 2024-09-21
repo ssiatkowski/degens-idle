@@ -468,7 +468,7 @@ function playMiniGame(gameType) {
                 portal.style.display = 'flex';
                 portal.style.alignItems = 'center';
                 portal.style.justifyContent = 'center';
-                portal.style.fontSize = '30px';
+                portal.style.fontSize = '28px';
                 portal.style.cursor = 'pointer';
                 portal.style.zIndex = '1000'; // Lower z-index than the target and timer displays
                 portal.textContent = num;

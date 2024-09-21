@@ -175,7 +175,7 @@
 }
 
 /* Responsive Design */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
     #loveHallSkills {
         flex-direction: column; /* Stack levels vertically on mobile */
     }
@@ -191,5 +191,8 @@
     }
     .lovepair-skill {
         width: 40%;
+    }
+    h4 {
+        font-size: 0.7em; /* Smaller font size for mobile */
     }
 }
