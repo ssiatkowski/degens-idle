@@ -1257,7 +1257,7 @@ function attackPlayer(resolve) {
     // Apply damage to player health
     playerHealth -= Math.max(damage, 0);
 
-    if(damage > 0 && isCritical && currEnemyName === "Sauron") {
+    if(damage > 0 && isCritical && currEnemyName === "Sauron" && playerHealth > 0) {
         unlockAchievement('Tank the Crit');
     }
 
