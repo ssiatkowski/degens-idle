@@ -531,10 +531,3 @@ input[type="radio"]#toggleBuyMarkersNeutral:checked ~ .slider {
 #importFileInput {
     display: none;
 }
-
-/* Media query for mobile devices */
-@media (max-width: 768px) {
-    p {
-        font-size: 0.8em; /* Smaller font size for mobile */
-    }
-}
