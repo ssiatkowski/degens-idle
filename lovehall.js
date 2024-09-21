@@ -339,7 +339,7 @@ function unlockLoveHallSkill(skill, duringLoad = false) {
                 fortifiedDefensesSkill = true;
                 break;
 
-            case 'Rewarding Victories':
+            case 'Study Accelerator':
                 studyAcceleratorReduction = 0.2;
                 break;
 
