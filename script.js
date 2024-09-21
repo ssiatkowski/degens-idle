@@ -3109,7 +3109,7 @@ let keysPressed = {
 
 // Define the hotkey handler function
 function hotkeyHandler(event) {
-    if (event.shiftKey && event.altKey && true) {
+    if (event.shiftKey && event.altKey && false) {
         switch (event.key) {
             case '!':
                 toggleDevMultiplier(10);
