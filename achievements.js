@@ -266,6 +266,13 @@ const achievements = [
         type: 'puzzle',
     },
     {
+        name: 'Tongue Twister',
+        isUnlocked: false,
+        hoverText: 'TT AT TA AA',
+        img: 'imgs/achievements/tongue_twister.jpg',
+        type: 'puzzle',
+    },
+    {
         name: 'Max Automation',
         isUnlocked: false,
         hoverText: 'turn up your automation setting',
@@ -320,6 +327,13 @@ const achievements = [
         hoverText: 'so there is more than one Hall',
         img: 'imgs/achievements/hall_of_power.jpg',
         type: 'progression',
+    },
+    {
+        name: 'Sheev vs Anakin',
+        isUnlocked: false,
+        hoverText: 'SPOILER ALERT',
+        img: 'imgs/achievements/sidious_stun.jpg',
+        type: 'puzzle',
     },
     {
         name: 'Avoid the Crit',
@@ -574,7 +588,7 @@ const achievements = [
         type: 'progression',
     },
     {
-        name: 'Tank the Crit ',
+        name: 'Tank the Crit',
         isUnlocked: false,
         hoverText: 'live to tell the tale of getting crit by Sauron',
         img: 'imgs/achievements/survive_crit.jpg',
@@ -746,6 +760,13 @@ const achievements = [
         isUnlocked: false,
         hoverText: '???',
         img: 'imgs/achievements/longest_tunnel.jpg',
+        type: 'puzzle',
+    },
+    {
+        name: 'Decisively Indecisive',
+        isUnlocked: false,
+        hoverText: '???',
+        img: 'imgs/achievements/decisively_indecisive.jpg',
         type: 'puzzle',
     },
 ];

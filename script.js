@@ -408,9 +408,7 @@ function loadGameState() {
 
     forgetfulnessCounter = parseFloat(localStorage.getItem('forgetfulnessCounter')) || 0;
 
-    numMathSolves = parseFloat(localStorage.getItem('numMathSolves')) || 0;
     numMathPortals = parseFloat(localStorage.getItem('numMathPortals')) || 0;
-    numMathPortals = Math.max(numMathSolves, numMathPortals);
     numSpeedTaps = parseFloat(localStorage.getItem('numSpeedTaps')) || 0;
     numCookedRabbits = parseFloat(localStorage.getItem('numCookedRabbits')) || 0;
     numMemorizedDots = parseFloat(localStorage.getItem('numMemorizedDots')) || 0;
@@ -958,6 +956,8 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
                 embraceExtraLovePoints = 0;
 
                 deadpoolRevives = 0;
+
+                tongueTwisterState = 0;
 
                 document.getElementById('buySeenButton').classList.add('hidden');
                 document.getElementById('buyMaxButton').classList.add('hidden');
@@ -1719,6 +1719,7 @@ function calculateAscensionEpsMult() {
 
 
 let ascendInProgress = false;
+let tongueTwisterState = 0;
 
 async function ascend() {
 
@@ -1748,6 +1749,14 @@ async function ascend() {
         epsMultiplier = calculateAscensionEpsMult();
         prestigeRequirement = calculateMinResource();
         
+        if (tongueTwisterState === 3 && selectedUpgrades.some(upgrade => upgrade.name === 'Ascension')) {
+            unlockAchievement('Tongue Twister');
+        }
+        if (tongueTwisterState === 1 && selectedUpgrades.some(upgrade => upgrade.name === 'Transcendence')) {
+            tongueTwisterState = 2;
+        }
+
+
         showMessageModal('Ascension Successful!', `<strong>You have entered God-Mode Level ${godModeLevel}.</strong><br> Your multiplier God-Mode is now x${formatNumber(godModeMultiplier)}, your prestige multiplier is x${formatNumber(epsMultiplier)}, and your chosen upgrades are 10x stronger.`);        
 
         unlockAchievement('First Ascension');
@@ -1794,6 +1803,18 @@ async function transcend() {
         puGodLevel = upgrades.filter(upgrade => upgrade.isPUGodMode).length;
         puGodMultiplier = calculatePUGodModeMultiplier(puGodLevel);
 
+        if (tongueTwisterState === 0 && selectedUpgrades.some(upgrade => upgrade.name === 'Transcendence')) {
+            tongueTwisterState = 1;
+            if (tunneledAscensionSkill) {
+                tongueTwisterState = 2;
+            }
+        }
+        if (tongueTwisterState === 2 && selectedUpgrades.some(upgrade => upgrade.name === 'Ascension')) {
+            tongueTwisterState = 3;
+            if (tunneledAscensionSkill) {
+                unlockAchievement('Tongue Twister');
+            }
+        }
         
         if(tunneledAscensionSkill){
             const gmLevelsGained = upgrades.filter(upgrade => upgrade.isGodMode).length - godModeLevel;
@@ -1841,6 +1862,7 @@ async function bigCrunch() {
 
         if (confirmed && canBigCrunch()) {
 
+            isEventInProgress = true;
             // Capture the screen and animate the compression
             await animateBigCrunchEffect();
 
@@ -1866,6 +1888,8 @@ async function bigCrunch() {
                 upgrade.isGodMode = false;
                 upgrade.isPUGodMode = false;
             });
+            
+            tongueTwisterState = 0;
 
             unlockAchievement('Big Crunch');
             if(compressedBigCrunchMult == 30){
@@ -1878,6 +1902,8 @@ async function bigCrunch() {
 
             // Animate the expansion back to full screen
             animateBigCrunchExpansion();
+            
+            isEventInProgress = false;
         }
     }
 }
@@ -1982,6 +2008,7 @@ async function infiniteEmbrace() {
 
         if (confirmed) {
 
+            isEventInProgress = true;
             // Capture the screen and animate the Infinite Embrace effect
             await animateInfiniteEmbraceEffect();
 
@@ -2007,6 +2034,7 @@ async function infiniteEmbrace() {
 
             // Animate the expansion back to full screen
             animateInfiniteEmbraceExpansion();
+            isEventInProgress = false;
         }
     }
 }
@@ -2377,7 +2405,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true, ski
 
         if (name === 'Shinto') {
             showMessageModal('The Journey Continues', 
-                "This marks the end of v0.923. You've not only completed the Power Saga, but you're also getting the hang of Infinite Embraces and Meditations! Congratulations on your progress, and welcome to the next stage of your journey. "
+                "This marks the end of v0.924. You've not only completed the Power Saga, but you're also getting the hang of Infinite Embraces and Meditations! Congratulations on your progress, and welcome to the next stage of your journey. "
                 + "With the Hall of Love now open, Love Points are becoming a key part of your experience, alongside the skills you unlock there. While these new mechanics are taking shape, expect ongoing balancing as the game evolves. "
                 + "Feel free to dive deeper into the skills and explore what's possible. The journey is far from over—more meditations and epic content are on the way! "
                 + "Stay connected on Discord, share your feedback, and together, let's create something truly unforgettable!"
@@ -2410,7 +2438,6 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true, ski
                 unlockAchievement('Take Out a Loan');
             }
         } else if (name == `Ok to be selfish?`){
-            console.log('Checking for Cat');
             if (purchasedUpgrades[purchasedUpgrades.length - 2].name == `Food + Cats = Profit?`){
                 console.log('Found Cat');
                 unlockAchievement('Feed the Cat');
@@ -2774,6 +2801,7 @@ function autobuyUpgrades() {
     }
 }
 
+let decisionTimerId = null;
 
 // Function to update the upgrade list display
 function updateUpgradeList() {
@@ -2817,6 +2845,25 @@ function updateUpgradeList() {
 
     // Update the upgrade buttons to highlight affordable ones
     updateUpgradeButtons();
+
+
+    // Check if both 'Decisions, decisions...' and 'More Decisions...' are in the topUpgrades
+    if (topUpgrades.some(upgrade => upgrade.name === 'More Decisions...') && topUpgrades.some(upgrade => upgrade.name === 'Decisions, decisions...')) {
+        if (decisionTimerId === null) { // Only start the timer if it hasn't started yet
+            decisionTimerId = setTimeout(() => {
+                // Check if both upgrades are still in the list after 5 minutes
+                const currentUpgrades = availableUpgrades.slice(0, 8);
+                const stillHasDecisions = currentUpgrades.some(upgrade => upgrade.name === 'Decisions, decisions...');
+                const stillHasMoreDecisions = currentUpgrades.some(upgrade => upgrade.name === 'More Decisions...');
+                
+                if (stillHasDecisions && stillHasMoreDecisions) {
+                    unlockAchievement('Decisively Indecisive'); // Unlock the achievement
+                }
+
+                decisionTimerId = null; // Reset the timer ID
+            }, 5 * 60 * 1000); // 5 minutes in milliseconds
+        }
+    } 
 }
 
 // Function to handle touch and mouse events for tooltips
@@ -3316,6 +3363,7 @@ function displayNextModal() {
     }
 
     const closeModal = (result) => {
+        isEventInProgress = false;
         modal.style.display = 'none';
         document.removeEventListener('keydown', keydownHandler);
         window.removeEventListener('click', outsideClickHandler);
@@ -3336,9 +3384,7 @@ function displayNextModal() {
             } else {
                 closeModal(true);
             }
-        } else if (event.key === 'Enter' && (message.includes('Enter the sequence:') || message.includes('What is '))) {
-            closeModal(gameInput.value);
-        }
+        } 
     };
 
     document.addEventListener('keydown', keydownHandler);
@@ -3355,6 +3401,8 @@ function displayNextModal() {
 
     // Handle the rest of the modal types without adding additional `window.onclick` listeners
     if (isConfirm && isUpgradeSelection) {
+        isEventInProgress = true;
+
         modalCloseButton.style.display = 'none';
         modalConfirmButtons.style.display = 'flex';
         ascendUpgradeSelection.style.display = 'block';
@@ -3450,6 +3498,7 @@ function displayNextModal() {
 
         modalConfirmButton.onclick = () => {
             if (selectedUpgrades.length > 0) {
+                isEventInProgress = false;
                 closeModal(selectedUpgrades);
             } else {
                 showStatusMessage(modalConfirmButton, `Select at least 1 upgrade`, false, timeout=1000);

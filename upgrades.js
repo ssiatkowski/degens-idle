@@ -800,7 +800,7 @@ const upgrades = [
         isFight: true,
         achievement: 'Mortal Kombat',
         isKey: true,
-        autoBattlePower: 60000,
+        autoBattlePower: 40000,
     },
     {
         name: `Small Wins`,
@@ -872,11 +872,11 @@ const upgrades = [
     {
         name: `Sauron`,
         cost: { copium: 5e48, delusion: 5e48, yachtMoney: 5e48, trollPoints: 5e48, hopium: 0, knowledge: 5e38, power: 13000, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 8e18, trollPointsPerSecond: 0, hopiumPerSecond: -9e12, knowledgePerSecond: 625000, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 8e18, trollPointsPerSecond: 0, hopiumPerSecond: -9e12, knowledgePerSecond: 645000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/sauron.jpg`,
         isFight: true,
         isKey: true,
-        autoBattlePower: 2e8,
+        autoBattlePower: 5e7,
         achievement: 'Avoid the Crit',
     },
     {
@@ -911,7 +911,7 @@ const upgrades = [
         img: `imgs/kratos.jpg`,
         isFight: true,
         isKey: true,
-        autoBattlePower: 6.7e12,
+        autoBattlePower: 6.7e11,
 
     },
     {
@@ -961,7 +961,7 @@ const upgrades = [
         img: `imgs/deadpool.jpg`,
         isFight: true,
         isKey: true,
-        autoBattlePower: 6.9e24,
+        autoBattlePower: 6.9e22,
     },
     {
         name: `What The`,
@@ -1026,7 +1026,7 @@ const upgrades = [
         img: `imgs/chuck_norris.jpg`,
         isFight: true,
         isKey: true,
-        autoBattlePower: 5e16,
+        autoBattlePower: 5e15,
     },
     {
         name: `Surprise Package`,
@@ -1463,7 +1463,7 @@ const upgrades = [
                     <li><strong>P Key:</strong> Toggle <strong>Auto Prestige</strong>. Activate Auto Prestige at the last threshold or disable it to 1e300.</li>
                     <li><strong>A Key:</strong> Toggle <strong>Auto Ascend</strong>. Pressing this will either set Auto Ascend to the maximum or disable it altogether.</li>
                     <li><strong>T Key:</strong> Toggle <strong>Auto Transcend</strong>. Same as above for Transcend.</li>
-                    <li><strong>F Key:</strong> Toggle <strong>Auto Fight</strong>.</li>
+                    <li><strong>F Key:</strong> Toggle <strong>Auto Fight</strong> (unlockable in Hall of Love).</li>
                 </ul>
 
                 <p>Now you know! Use these hotkeys to gain an edge and automate your progress in ways you never imagined.</p>`,
@@ -1503,6 +1503,12 @@ const upgrades = [
         cost: { copium: 3e108, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 150000 },
         earnings: { copiumPerSecond: 5e47, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0.5 },
         img: `imgs/trying_my_best.jpg`,
+    },
+    {
+        name: `More Decisions...`,
+        cost: { copium: 0, delusion: 1e114, yachtMoney: 0, trollPoints: 3e114, hopium: 0, knowledge: 0, power: 1e23, serenity: 2e7 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 3e47, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 2.4 },
+        img: `imgs/two_buttons_2.jpg`,     
     },
     {         
         name: `Libertarianism`,

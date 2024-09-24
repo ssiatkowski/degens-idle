@@ -41,18 +41,18 @@ const enemyStats = {
     "Darth Vader": {
         health: 3000,
         minDamage: 8,
-        maxDamage: 48,
+        maxDamage: 88,
         attackSpeed: 4,
-        defense: 80,
+        defense: 400,
         critChance: 0,
         critDamage: 1,
         dodge: 0,
         nonCritDodge: 0,
         stun: 0,
-        absorb: 0.2
+        absorb: 0.4
     },
     "Isshin": {
-        health: 5000,
+        health: 5500,
         minDamage: 5,
         maxDamage: 12,
         attackSpeed: 45,
@@ -383,13 +383,24 @@ function startFightGame(enemyName, enemyImg) {
             endFight(true); // Pass true to indicate the player forfeited
         };
 
-        if (currEnemyName === "Chuck Norris") {
+        if (currEnemyName === "Darth Vader") {
+            if (!purchasedUpgrades.some(upgrade => upgrade.name === "Unlimited Power")) {
+                enemyStunCount = 5;
+                enemyAbsorb /= 2;
+                document.getElementById('enemyAbsorbStat').innerText = formatNumber(enemyAbsorb * 100) + '%';
+                unlockAchievement('Sheev vs Anakin');
+                logFight("<span style='color: green; font-weight: bold; font-size: 1.3em';>Darth Sidious protects you from the force. He also uses the force to stun Darth Vader for 5 turns and reduce his damage absorption by 50%.</span>");
+            } else {
+                playerStunCount = 5;
+                logFight("<span style='color: red; font-weight: bold; font-size: 1.3em';>Darth Vader uses the force to stun you for 5 turns.</span>");
+            }
+        } else if (currEnemyName === "Chuck Norris") {
             if (!purchasedUpgrades.some(upgrade => upgrade.name === "Training Dummy")) {
                 enemyDefense /= 2;
                 enemyHealth /= 2;
                 enemyAbsorb = 0;
                 document.getElementById('enemyDefenseStat').innerText = formatNumber(enemyDefense);
-                document.getElementById('playerAbsorbStat').innerText = formatNumber(playerAbsorb * 100) + '%';
+                document.getElementById('enemyAbsorbStat').innerText = formatNumber(enemyAbsorb * 100) + '%';
                 unlockAchievement('Chuck Norris Kidney');
                 logFight("<span style='color: green; font-weight: bold; font-size: 1.3em';>You catch Chuck Norris mid-session while he's pummeling the Training Dummy. Seizing the moment, you sneak up and deliver a wrenching gut shot right to his kidney. The impact is so brutal that it cuts his health and defense in half for the rest of the battle, and he is unable to absorb any damage.</span>");
             } else {
@@ -465,7 +476,7 @@ function startFightGame(enemyName, enemyImg) {
             }, 5000); // 250 milliseconds = 0.25 seconds
         } else{
             // Start the fight loop
-            if (currEnemyName === "Chuck Norris" || currEnemyName === "Kaguya" || (currEnemyName === "Training Dummy" && !achievementsMap.get('Skip Leg Day').isUnlocked)){
+            if (currEnemyName === "Chuck Norris" || currEnemyName === "Kaguya" || currEnemyName === "Darth Vader" || (currEnemyName === "Training Dummy" && !achievementsMap.get('Skip Leg Day').isUnlocked)){
                 // Add a 1-second delay before starting the fight loop
                 setTimeout(() => {
                     fightLoop(resolve);
