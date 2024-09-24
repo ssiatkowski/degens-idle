@@ -385,14 +385,14 @@ function startFightGame(enemyName, enemyImg) {
 
         if (currEnemyName === "Darth Vader") {
             if (!purchasedUpgrades.some(upgrade => upgrade.name === "Unlimited Power")) {
-                enemyStunCount = 5;
+                enemyStunCount = 3;
                 enemyAbsorb /= 2;
                 document.getElementById('enemyAbsorbStat').innerText = formatNumber(enemyAbsorb * 100) + '%';
                 unlockAchievement('Sheev vs Anakin');
-                logFight("<span style='color: green; font-weight: bold; font-size: 1.3em';>Darth Sidious protects you from the force. He also uses the force to stun Darth Vader for 5 turns and reduce his damage absorption by 50%.</span>");
+                logFight("<span style='color: green; font-weight: bold; font-size: 1.3em';>Darth Sidious protects you from the force. He also uses the force to stun Darth Vader for 3 turns and reduce his damage absorption by 50%.</span>");
             } else {
-                playerStunCount = 5;
-                logFight("<span style='color: red; font-weight: bold; font-size: 1.3em';>Darth Vader uses the force to stun you for 5 turns. (if only you could get someone who could use the force to protect you) </span>");
+                playerStunCount = 3;
+                logFight("<span style='color: red; font-weight: bold; font-size: 1.3em';>Darth Vader uses the force to stun you for 3 turns. (if only you could get someone who could use the force to protect you) </span>");
             }
         } else if (currEnemyName === "Chuck Norris") {
             if (!purchasedUpgrades.some(upgrade => upgrade.name === "Training Dummy")) {
