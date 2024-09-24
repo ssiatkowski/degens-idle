@@ -392,7 +392,7 @@ function startFightGame(enemyName, enemyImg) {
                 logFight("<span style='color: green; font-weight: bold; font-size: 1.3em';>Darth Sidious protects you from the force. He also uses the force to stun Darth Vader for 5 turns and reduce his damage absorption by 50%.</span>");
             } else {
                 playerStunCount = 5;
-                logFight("<span style='color: red; font-weight: bold; font-size: 1.3em';>Darth Vader uses the force to stun you for 5 turns.</span>");
+                logFight("<span style='color: red; font-weight: bold; font-size: 1.3em';>Darth Vader uses the force to stun you for 5 turns. (if only you could get someone who could use the force to protect you) </span>");
             }
         } else if (currEnemyName === "Chuck Norris") {
             if (!purchasedUpgrades.some(upgrade => upgrade.name === "Training Dummy")) {
@@ -477,10 +477,9 @@ function startFightGame(enemyName, enemyImg) {
         } else{
             // Start the fight loop
             if (currEnemyName === "Chuck Norris" || currEnemyName === "Kaguya" || currEnemyName === "Darth Vader" || (currEnemyName === "Training Dummy" && !achievementsMap.get('Skip Leg Day').isUnlocked)){
-                // Add a 1-second delay before starting the fight loop
                 setTimeout(() => {
                     fightLoop(resolve);
-                }, 1000); // 1000 milliseconds = 1 seconds
+                }, 750);
             } else {
                 // Add a 0.25-second delay before starting the fight loop
                 setTimeout(() => {
