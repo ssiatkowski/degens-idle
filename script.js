@@ -180,6 +180,12 @@ let crunchTimer = 0;
 
 let enableQuickMode = false;
 
+// Global object to manage prevent event occuring at the same time
+let eventProgression = {
+    inProgress: false,
+    startedBy: null
+}
+
 function calculateBaseKnowledge() {
     return knowledgePerSecond * totalMultiplier * (crunchKnowledgeSkill ? bigCrunchMultiplier**(2/3) : bigCrunchMultiplier**(1/2)) * knowledgeInfusionMultiplier;
 }
@@ -1376,7 +1382,7 @@ function tradeTenPercent() {
 }
 
 function autoTradeHopium() {
-    if (isEventInProgress) return;
+    if (isEventInProgress()) return;
     
     if (hopiumTradeSkill && equilibriumOfHopeSkill && autoTradeHopiumIntervalId === null) {
         autoTradeHopiumIntervalId = setInterval(() => {
@@ -1636,7 +1642,7 @@ async function prestige(skipConfirms = false) {
 function updatePrestigeButton() {
     
     const prestigeButton = document.getElementById('prestigeButton');
-    if (canPrestige()) {
+    if (canPrestige() && !isEventInProgress() && startEvent("updatePrestigeButton")) {
         if (infinitePrestigeSkill) {
             const newPrestigeMult = calculatePrestigeMultiplier();
             const newPrestigeReq = inversePrestigeSkill 
@@ -1659,11 +1665,12 @@ function updatePrestigeButton() {
             prestigeButton.textContent = `PRESTIGE (x${formatNumber(newMultiplier / epsMultiplier)} MULT)`;
             prestigeButton.style.display = 'block';
             // Check if auto-prestige should be triggered
-            if (autoPrestigeThreshold !== null && (newMultiplier / epsMultiplier) > autoPrestigeThreshold && !isEventInProgress) {
+            if (autoPrestigeThreshold !== null && (newMultiplier / epsMultiplier) > autoPrestigeThreshold) {
                 showPopupTooltip(`Auto-Prestiged for x${formatNumber(newMultiplier / epsMultiplier)}`, color='#DAA520')
                 prestige(true); // Trigger auto-prestige
             }
         }
+        stopEvent("updatePrestigeButton")
     } else {
         prestigeButton.style.display = 'none';
     }
@@ -1733,12 +1740,10 @@ let ascendInProgress = false;
 let tongueTwisterState = 0;
 
 async function ascend(skipConfirms = false) {
-
-    if (ascendInProgress) return; // Prevent additional clicks if ascend is already in progress
-    ascendInProgress = true;
-
     skipConfirms |= enableQuickMode;
-    if (canAscend()) {
+    
+    // If we can Ascend, and no other event is occuring and we successfully trigger a startEvent
+    if (canAscend() && !isEventInProgress() && startEvent("ascend")) {
         let confirmed = true;
         let selectedUpgrades = null;
         if (!skipConfirms) {
@@ -1786,24 +1791,21 @@ async function ascend(skipConfirms = false) {
             // Save game state after ascending
             saveGameState();
         }
-
+        
+        // Trigger stop event after process complete
+        setTimeout(() => {
+            stopEvent("ascend");
+        }, 300);
     }
-
-    // Re-enable after the function completes
-    setTimeout(() => {
-        ascendInProgress = false;
-    }, 300);
 }
 
 
 async function transcend(skipConfirms = false) {
-    
-    if (ascendInProgress) return; // Prevent additional clicks if ascend is already in progress
-    ascendInProgress = true;
-
     skipConfirms |= enableQuickMode;
 
-    if (canTranscend()) {
+    // If we can Transcend, and no other event is occuring and we successfully trigger a startEvent
+    if (canTranscend() && !isEventInProgress() && startEvent("transcend")) {
+
         let selectedUpgrades = null;
         if (!skipConfirms) {
             const upgradeText = `select up to ${numPUAscensionUpgrades} upgrades to enhance and increase your Parallel Universe God-Mode multiplier accordingly`;
@@ -1823,7 +1825,6 @@ async function transcend(skipConfirms = false) {
         }
 
         if (selectedUpgrades) {
-
             selectedUpgrades.forEach(upgrade => {
                 upgrade.isPUGodMode = true;
                 if(tunneledAscensionSkill){
@@ -1873,24 +1874,24 @@ async function transcend(skipConfirms = false) {
             restartGame(true); // Use the existing restartGame function with prestige mode
             // Save game state after transcending
             saveGameState();
-        }
-    }
 
-    // Re-enable after the function completes
-    setTimeout(() => {
-        ascendInProgress = false;
-    }, 300);
+        }
+        // Trigger stop event after process complete
+        setTimeout(() => {
+            stopEvent("transcend");
+        }, 300);
+    }
 }
 
 
 
 async function bigCrunch(skipConfirms = false) {
+    skipConfirms |= enableQuickMode;
 
-    if (canBigCrunch()) {
-
+    // If we can BigCrunch, and no other event is occuring and we successfully trigger a startEvent
+    if (canBigCrunch() && !isEventInProgress() && startEvent("bigcrunch")) {
         let confirmed = true;
         
-        skipConfirms |= enableQuickMode;
         // If skipConfirms is false, show the confirmation modal
         if (!skipConfirms) {
             confirmed = await showMessageModal(
@@ -1901,8 +1902,6 @@ async function bigCrunch(skipConfirms = false) {
         }
 
         if (confirmed && canBigCrunch()) {
-
-            isEventInProgress = true;
             // Capture the screen and animate the compression
             await animateBigCrunchEffect();
 
@@ -1942,9 +1941,11 @@ async function bigCrunch(skipConfirms = false) {
 
             // Animate the expansion back to full screen
             animateBigCrunchExpansion();
-            
-            isEventInProgress = false;
         }
+        // Trigger stop event after process complete (greater delay to match the crunch animation)
+        setTimeout(() => {
+            stopEvent("bigcrunch");
+        }, 2000);
     }
 }
 
@@ -2028,10 +2029,12 @@ function animateInfiniteEmbraceExpansion() {
 
 
 async function infiniteEmbrace(skipConfirms = false) {
-    if (canInfiniteEmbrace()) {
+    skipConfirms |= enableQuickMode;
+
+    // If we can Infinite Embrace, and no other event is occuring and we successfully trigger a startEvent
+    if (canInfiniteEmbrace() && !isEventInProgress() && startEvent("infiniteEmbrace")) {
         let confirmed = true;
 
-        skipConfirms |= enableQuickMode;
         if (!skipConfirms) {
             confirmed = await showMessageModal(
                 'Infinite Embrace Confirmation',
@@ -2050,10 +2053,7 @@ async function infiniteEmbrace(skipConfirms = false) {
             );
         }
         
-
         if (confirmed) {
-
-            isEventInProgress = true;
             // Capture the screen and animate the Infinite Embrace effect
             await animateInfiniteEmbraceEffect();
 
@@ -2081,8 +2081,12 @@ async function infiniteEmbrace(skipConfirms = false) {
 
             // Animate the expansion back to full screen
             animateInfiniteEmbraceExpansion();
-            isEventInProgress = false;
         }
+
+        // Trigger stop event after process complete (even greater delay to match the embrace animation)
+        setTimeout(() => {
+            stopEvent("infiniteEmbrace");
+        }, 3000);
     }
 }
 
@@ -2090,11 +2094,11 @@ async function infiniteEmbrace(skipConfirms = false) {
 
 function updateAscendButton() {
     const ascendButton = document.getElementById('ascendButton');
-    if (canAscend()) {
+    if (canAscend() && !isEventInProgress() && startEvent("updateAscendButton")) {
         ascendButton.style.display = 'block';
         // Check if autoAscendThreshold is set and not null
 
-        if (autoAscendThreshold !== null && autoAscendThreshold !== 0 && !isEventInProgress) {
+        if (autoAscendThreshold !== null && autoAscendThreshold !== 0) {
             // Count the number of purchased upgrades that do not have isGodMode
             const nonGodModeUpgrades = purchasedUpgrades.filter(upgrade => !upgrade.isGodMode).length;
 
@@ -2119,7 +2123,7 @@ function updateAscendButton() {
                 saveGameState(); // Save game state after ascending
             }
         }
-
+        stopEvent("updateAscendButton");
     } else {
         ascendButton.style.display = 'none';
     }
@@ -2128,11 +2132,11 @@ function updateAscendButton() {
 
 function updateTranscendButton() {
     const transcendButton = document.getElementById('transcendButton');
-    if (canTranscend()) {
+    if (canTranscend() && !isEventInProgress() && startEvent("updateTranscendButton")) {
         transcendButton.style.display = 'block';
 
         // Check if autoTranscendThreshold is set and not null
-        if (autoTranscendThreshold !== null && autoTranscendThreshold !== 0 && !isEventInProgress) {
+        if (autoTranscendThreshold !== null && autoTranscendThreshold !== 0) {
             // Count the number of purchased upgrades that do not have isPUGodMode
             const nonPUGodModeUpgrades = purchasedUpgrades.filter(upgrade => !upgrade.isPUGodMode).length;
 
@@ -2169,7 +2173,7 @@ function updateTranscendButton() {
                 saveGameState(); // Save game state after transcending
             }
         }
-
+        stopEvent("updateTranscendButton");
     } else {
         transcendButton.style.display = 'none';
     }
@@ -2281,13 +2285,12 @@ function decodeName(encodedName) {
     return decodeURIComponent(encodedName);
 }
 
-let isEventInProgress = false; // Flag to prevent multiple fight triggers
 let forgetfulnessCounter = 0;
 
 // Function to handle the purchase of an upgrade
 async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true, skipEventCheck = false) {
     // If a fight is in progress, don't allow buying another upgrade
-    if (isEventInProgress && !skipEventCheck) return;
+    if (isEventInProgress() && !skipEventCheck) return;
 
     // Decode the upgrade name
     const upgradeName = decodeName(encodedUpgradeName);
@@ -2329,14 +2332,14 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true, ski
                 return;
             }
 
-            if (!(autoFightSkill && autoFightEnabled) || power < upgrade.autoBattlePower) {
+            let canManualFight = !(autoFightSkill && autoFightEnabled) || power < upgrade.autoBattlePower;
 
-                isEventInProgress = true; // Set the flag to prevent multiple fight triggers
+            if (canManualFight && !isEventInProgress() && startEvent("bossfight")) {
 
                 makeLoveNotWar = false;
 
                 const fightResult = await startFightGame(name, img);
-                isEventInProgress = false; // Reset the flag after the fight ends
+                stopEvent("bossfight"); // Reset the flag after the fight ends
 
                 if (!fightResult) {
                     showMessageModal('You Lost', `Defeat isn’t the end, ${name} just tested your limits. Get back up and come back stronger!`);
@@ -2346,12 +2349,9 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true, ski
             }
         }
 
-        if (isMeditation) {
-
-            isEventInProgress = true; // Set the flag to prevent multiple fight triggers
-
+        if (isMeditation && !isEventInProgress() && startEvent("meditation")) {
             const meditationResult = await startMeditationGame(name, img);
-            isEventInProgress = false; // Reset the flag after the fight ends
+            stopEvent("meditation"); // Reset the flag after the fight ends
 
             if (!meditationResult) {
                 showMessageModal('You Lost', `Meditating on ${name} proved too challenging, and your concentration slipped. But deeper focus is within your grasp—return when your mind is at peace, and you'll surely overcome this challenge.`);
@@ -2535,57 +2535,58 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true, ski
 
 // Function to handle the purchase of multiple upgrades
 function buyAllUpgrades(limit, pressedButton) {
-    if (isEventInProgress) return;
+    if (!isEventInProgress() && startEvent("buyAllUpgrades")) {
+        let purchasedCount = 0; // Initialize a counter for the purchased upgrades
+        
+        let topUpgrades = availableUpgrades.slice(0, limit);
 
-    let purchasedCount = 0; // Initialize a counter for the purchased upgrades
-    
-    let topUpgrades = availableUpgrades.slice(0, limit);
-
-    if(limit === 8 || !buyMarkersSkill){
-        const truncateIndex = topUpgrades.findIndex(upgrade => upgrade.isKey);
-        // Truncate the list if any key upgrade is found
-        if (truncateIndex !== -1) {
-            topUpgrades = topUpgrades.slice(0, truncateIndex + 1);
+        if(limit === 8 || !buyMarkersSkill){
+            const truncateIndex = topUpgrades.findIndex(upgrade => upgrade.isKey);
+            // Truncate the list if any key upgrade is found
+            if (truncateIndex !== -1) {
+                topUpgrades = topUpgrades.slice(0, truncateIndex + 1);
+            }
         }
-    }
 
-    topUpgrades.forEach(upgrade => {
-        if (buyMarkersSkill) {
-            const switchState = JSON.parse(localStorage.getItem(`switchState-${upgrade.name}`));
-            const isAffordableUpgrade = isAffordable(upgrade.cost);
-            const autoFightCondition = autoFightSkill && autoFightEnabled && power > upgrade.autoBattlePower;
-    
-            if (isAffordableUpgrade && autoFightCondition) {
-                buyUpgrade(encodeName(upgrade.name), false);
-                purchasedCount++;
-                incrementStellarHarvest();
-                if(upgrade.name == 'Saitama' && makeLoveNotWar){
-                    unlockAchievement('Make Love, Not War');
+        topUpgrades.forEach(upgrade => {
+            if (buyMarkersSkill) {
+                const switchState = JSON.parse(localStorage.getItem(`switchState-${upgrade.name}`));
+                const isAffordableUpgrade = isAffordable(upgrade.cost);
+                const autoFightCondition = autoFightSkill && autoFightEnabled && power > upgrade.autoBattlePower;
+        
+                if (isAffordableUpgrade && autoFightCondition) {
+                    buyUpgrade(encodeName(upgrade.name), false);
+                    purchasedCount++;
+                    incrementStellarHarvest();
+                    if(upgrade.name == 'Saitama' && makeLoveNotWar){
+                        unlockAchievement('Make Love, Not War');
+                    }
+                }
+                else if ((isAffordableUpgrade && switchState)) {
+                    buyUpgrade(encodeName(upgrade.name), false);
+                    purchasedCount++;
+                }
+
+
+            } else {
+                if (isAffordable(upgrade.cost) && !upgrade.isFight && !upgrade.isMeditation) {
+                    buyUpgrade(encodeName(upgrade.name), false);
+                    purchasedCount++; // Increment counter when an upgrade is bought
                 }
             }
-            else if ((isAffordableUpgrade && switchState)) {
-                buyUpgrade(encodeName(upgrade.name), false);
-                purchasedCount++;
-            }
-
-
+        });
+        
+        if (purchasedCount > 0) {
+            updateUpgradeList();
+            updateMultipliersDisplay();
+            updateEffectiveMultipliers();
+            updateDisplay();
+            saveGameState();
+            showStatusMessage(pressedButton, `Purchased ${purchasedCount} upgrade(s).`, true, timeout=1000);
         } else {
-            if (isAffordable(upgrade.cost) && !upgrade.isFight && !upgrade.isMeditation) {
-                buyUpgrade(encodeName(upgrade.name), false);
-                purchasedCount++; // Increment counter when an upgrade is bought
-            }
+            showStatusMessage(pressedButton, 'No upgrades were purchased.', false, timeout=500);
         }
-    });
-    
-    if (purchasedCount > 0) {
-        updateUpgradeList();
-        updateMultipliersDisplay();
-        updateEffectiveMultipliers();
-        updateDisplay();
-        saveGameState();
-        showStatusMessage(pressedButton, `Purchased ${purchasedCount} upgrade(s).`, true, timeout=1000);
-    } else {
-        showStatusMessage(pressedButton, 'No upgrades were purchased.', false, timeout=500);
+        stopEvent("buyAllUpgrades");
     }
 }
 
@@ -2802,49 +2803,51 @@ function isAffordable(cost) {
 }
 
 function autobuyUpgrades() {
+    if (!isEventInProgress() && startEvent("autobuyUpgrades")) {
 
-    if (isEventInProgress) return;
+        let topUpgrades = availableUpgrades.slice(0, 10);
+        let upgradeBought = false;
+        let firstFightUpgrade = true;
 
-    let topUpgrades = availableUpgrades.slice(0, 10);
-    let upgradeBought = false;
-    let firstFightUpgrade = true;
+        for (let i = 0; i < topUpgrades.length; i++) {
+            const upgrade = topUpgrades[i];
+            const switchState = JSON.parse(localStorage.getItem(`switchState-${upgrade.name}`));
+            const isAffordableUpgrade = isAffordable(upgrade.cost);
+            const autoFightCondition = autoFightSkill && autoFightEnabled && power > upgrade.autoBattlePower;
 
-    for (let i = 0; i < topUpgrades.length; i++) {
-        const upgrade = topUpgrades[i];
-        const switchState = JSON.parse(localStorage.getItem(`switchState-${upgrade.name}`));
-        const isAffordableUpgrade = isAffordable(upgrade.cost);
-        const autoFightCondition = autoFightSkill && autoFightEnabled && power > upgrade.autoBattlePower;
+            // Buy the upgrade if either condition is met:
+            // 1. It is affordable and switchState is true
+            // 2. It is affordable and autoFightSkill is true with sufficient power
+            if (isAffordableUpgrade && autoFightCondition && firstFightUpgrade) {
+                buyUpgrade(encodeName(upgrade.name), false);
+                upgradeBought = true;
+                incrementStellarHarvest();
+                if(upgrade.name == 'Saitama' && makeLoveNotWar){
+                    unlockAchievement('Make Love, Not War');
+                }
+            }
+            else if ((isAffordableUpgrade && switchState)) {
+                buyUpgrade(encodeName(upgrade.name), false);
+                upgradeBought = true;
+            }
 
-        // Buy the upgrade if either condition is met:
-        // 1. It is affordable and switchState is true
-        // 2. It is affordable and autoFightSkill is true with sufficient power
-        if (isAffordableUpgrade && autoFightCondition && firstFightUpgrade) {
-            buyUpgrade(encodeName(upgrade.name), false);
-            upgradeBought = true;
-            incrementStellarHarvest();
-            if(upgrade.name == 'Saitama' && makeLoveNotWar){
-                unlockAchievement('Make Love, Not War');
+            if (upgrade.isFight) {firstFightUpgrade = false;}
+
+            // Check if it's a key upgrade and stop further key upgrade processing if buyMarkersSkill is false
+            if (!buyMarkersSkill && upgrade.isKey) {
+                break; // Break out of the loop after processing one key upgrade
             }
         }
-        else if ((isAffordableUpgrade && switchState)) {
-            buyUpgrade(encodeName(upgrade.name), false);
-            upgradeBought = true;
+
+        // If at least one upgrade was bought, update everything
+        if (upgradeBought) {
+            updateUpgradeList();
+            updateMultipliersDisplay();
+            updateEffectiveMultipliers();
+            updateDisplay();
         }
 
-        if (upgrade.isFight) {firstFightUpgrade = false;}
-
-        // Check if it's a key upgrade and stop further key upgrade processing if buyMarkersSkill is false
-        if (!buyMarkersSkill && upgrade.isKey) {
-            break; // Break out of the loop after processing one key upgrade
-        }
-    }
-
-    // If at least one upgrade was bought, update everything
-    if (upgradeBought) {
-        updateUpgradeList();
-        updateMultipliersDisplay();
-        updateEffectiveMultipliers();
-        updateDisplay();
+        stopEvent("autobuyUpgrades");
     }
 }
 
@@ -3509,7 +3512,6 @@ function displayNextModal() {
     }
 
     const closeModal = (result) => {
-        isEventInProgress = false;
         modal.style.display = 'none';
         document.removeEventListener('keydown', keydownHandler);
         window.removeEventListener('click', outsideClickHandler);
@@ -3547,8 +3549,6 @@ function displayNextModal() {
 
     // Handle the rest of the modal types without adding additional `window.onclick` listeners
     if (isConfirm && isUpgradeSelection) {
-        isEventInProgress = true;
-
         modalCloseButton.style.display = 'none';
         modalConfirmButtons.style.display = 'flex';
         ascendUpgradeSelection.style.display = 'block';
@@ -3644,7 +3644,6 @@ function displayNextModal() {
 
         modalConfirmButton.onclick = () => {
             if (selectedUpgrades.length > 0) {
-                isEventInProgress = false;
                 closeModal(selectedUpgrades);
             } else {
                 showStatusMessage(modalConfirmButton, `Select at least 1 upgrade`, false, timeout=1000);
@@ -3987,6 +3986,36 @@ function throttle(func, limit) {
             setTimeout(() => inThrottle = false, limit);
         }
     };
+}
+
+// Global function to start en event
+function startEvent(startedBy) {
+    // Guard to prevent starting multiple event
+    if (eventProgression.inProgress) {
+        console.error(`${startedBy} try to start an event but an event started by ${eventProgression.startedBy} was already in progress`);
+        return false;
+    }
+
+    eventProgression.inProgress = true;
+    eventProgression.startedBy = startedBy;
+    return true;
+}
+
+// Global function to stop en event
+function stopEvent(startedBy) {
+    // Guard to prevent another event ending en event it didn't triggered
+    if (eventProgression.startedBy != startedBy) {
+        console.error(`${startedBy} try to stop an event triggered by ${eventProgression.startedBy}`);
+        return false;
+    }
+
+    eventProgression.inProgress = false;
+    eventProgression.startedBy = null;
+    return true;
+}
+
+function isEventInProgress() {
+    return eventProgression.inProgress;
 }
 
 // Expose functions to the global scope for use in the HTML
