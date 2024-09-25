@@ -1464,6 +1464,12 @@ const upgrades = [
                     <li><strong>A Key:</strong> Toggle <strong>Auto Ascend</strong>. Pressing this will either set Auto Ascend to the maximum or disable it altogether.</li>
                     <li><strong>T Key:</strong> Toggle <strong>Auto Transcend</strong>. Same as above for Transcend.</li>
                     <li><strong>F Key:</strong> Toggle <strong>Auto Fight</strong> (unlockable in Hall of Love).</li>
+                    <li><strong>Z Key:</strong> Open <strong>Prestige</strong> (if prestige possible).</li>
+                    <li><strong>X Key:</strong> Open <strong>Ascend</strong> (if ascend possible).</li>
+                    <li><strong>C Key:</strong> Open <strong>Transcend</strong> Menu (if transcend possible).</li>
+                    <li><strong>V Key:</strong> Open <strong>Big Crunch</strong> Menu (if big crunch possible).</li>
+                    <li><strong>N Key:</strong> Open <strong>Embrace</strong> Menu (if embrace possible).</li>
+                    <li><strong>SPACE BAR Key:</strong> Toggle <strong>Select First X</strong> upgrades (only in Ascend / Transcend).</li>
                 </ul>
 
                 <p>Now you know! Use these hotkeys to gain an edge and automate your progress in ways you never imagined.</p>`,

@@ -178,6 +178,8 @@ let cookieIntervalId;
 
 let crunchTimer = 0;
 
+let enableQuickMode = false;
+
 function calculateBaseKnowledge() {
     return knowledgePerSecond * totalMultiplier * (crunchKnowledgeSkill ? bigCrunchMultiplier**(2/3) : bigCrunchMultiplier**(1/2)) * knowledgeInfusionMultiplier;
 }
@@ -398,6 +400,9 @@ function loadGameState() {
     autoAscendThreshold = !isNaN(parseFloat(localStorage.getItem('autoAscendThreshold'))) ? parseFloat(localStorage.getItem('autoAscendThreshold')) : null;
     autoTranscendThreshold = !isNaN(parseFloat(localStorage.getItem('autoTranscendThreshold'))) ? parseFloat(localStorage.getItem('autoTranscendThreshold')) : null;
     
+    // Retrieve quick mode
+    enableQuickMode = localStorage.getItem('enableQuickMode') === 'true';
+
     // read multibuyUpgradesButtonsUnlocked from localstorage
     multibuyUpgradesButtonsUnlocked = JSON.parse(localStorage.getItem('multibuyUpgradesButtonsUnlocked')) || false;
     if (multibuyUpgradesButtonsUnlocked){
@@ -629,6 +634,8 @@ function saveGameState() {
     localStorage.setItem('autoPrestigeThreshold', autoPrestigeThreshold);
     localStorage.setItem('autoAscendThreshold', autoAscendThreshold);
     localStorage.setItem('autoTranscendThreshold', autoTranscendThreshold);
+
+    localStorage.setItem('enableQuickMode', enableQuickMode);
 
     localStorage.setItem('deadpoolRevives', deadpoolRevives);
     
@@ -1506,6 +1513,7 @@ function updateDisplay() {
     updateBigCrunchButton();
     updateInfiniteEmbraceButton();
     updateUpgradeButtons();
+    updateNumUpgrades();
 }
 
 function updateMultipliersDisplay() {
@@ -1578,6 +1586,9 @@ function canPrestige() {
 }
 
 async function prestige(skipConfirms = false) {
+
+    // Either skipConfirms
+    skipConfirms |= enableQuickMode;
     if (canPrestige()) {
         const newPrestigeMult = calculatePrestigeMultiplier();
         const newPrestigeReq = inversePrestigeSkill 
@@ -1721,49 +1732,60 @@ function calculateAscensionEpsMult() {
 let ascendInProgress = false;
 let tongueTwisterState = 0;
 
-async function ascend() {
+async function ascend(skipConfirms = false) {
 
     if (ascendInProgress) return; // Prevent additional clicks if ascend is already in progress
     ascendInProgress = true;
 
-    const upgradeText = numAscensionUpgrades > 1
-        ? `select up to ${numAscensionUpgrades} upgrades to enhance and increase your God-Mode multiplier proportionally to how many upgrades you select`
-        : "select an upgrade to enhance which will make its gains 10x stronger and also increase your God-Mode multiplier (global 1.25x stacking but diminishing multiplier)";
-    const selectedUpgrades = await showMessageModal(
-        'God-Mode Ascension',
-        `Raising your God-Mode level requires temporarily folding three dimensions in the space around you to a single point, which will unfortunately reduce your Prestige multiplier to its cube root.<br><br>
-        You can ${upgradeText}.`,
-        true,
-        true
-    );
-
-    if (selectedUpgrades) {
-
-        selectedUpgrades.forEach(upgrade => {
-            upgrade.isGodMode = true;
-        });
-
-        godModeLevel = upgrades.filter(upgrade => upgrade.isGodMode).length;
-        godModeMultiplier = calculateGodModeMultiplier(godModeLevel);
-
-        epsMultiplier = calculateAscensionEpsMult();
-        prestigeRequirement = calculateMinResource();
-        
-        if (tongueTwisterState === 3 && selectedUpgrades.some(upgrade => upgrade.name === 'Ascension')) {
-            unlockAchievement('Tongue Twister');
-        }
-        if (tongueTwisterState === 1 && selectedUpgrades.some(upgrade => upgrade.name === 'Transcendence')) {
-            tongueTwisterState = 2;
+    skipConfirms |= enableQuickMode;
+    if (canAscend()) {
+        let confirmed = true;
+        let selectedUpgrades = null;
+        if (!skipConfirms) {
+            const upgradeText = numAscensionUpgrades > 1
+                ? `select up to ${numAscensionUpgrades} upgrades to enhance and increase your God-Mode multiplier proportionally to how many upgrades you select`
+                : "select an upgrade to enhance which will make its gains 10x stronger and also increase your God-Mode multiplier (global 1.25x stacking but diminishing multiplier)";
+            selectedUpgrades = await showMessageModal(
+                'God-Mode Ascension',
+                `Raising your God-Mode level requires temporarily folding three dimensions in the space around you to a single point, which will unfortunately reduce your Prestige multiplier to its cube root.<br><br>
+                You can ${upgradeText}.`,
+                true,
+                true
+            );
+        } else {
+            // Auto Select up to numAscensionUpgrades threshold
+            selectedUpgrades = purchasedUpgrades.filter(upgrade => !upgrade.isGodMode).slice(0, numAscensionUpgrades);
         }
 
+        if (selectedUpgrades) {
 
-        showMessageModal('Ascension Successful!', `<strong>You have entered God-Mode Level ${godModeLevel}.</strong><br> Your multiplier God-Mode is now x${formatNumber(godModeMultiplier)}, your prestige multiplier is x${formatNumber(epsMultiplier)}, and your chosen upgrades are 10x stronger.`);        
+            selectedUpgrades.forEach(upgrade => {
+                upgrade.isGodMode = true;
+            });
 
-        unlockAchievement('First Ascension');
+            godModeLevel = upgrades.filter(upgrade => upgrade.isGodMode).length;
+            godModeMultiplier = calculateGodModeMultiplier(godModeLevel);
 
-        restartGame(true); // Use the existing restartGame function with prestige mode
-        // Save game state after ascending
-        saveGameState();
+            epsMultiplier = calculateAscensionEpsMult();
+            prestigeRequirement = calculateMinResource();
+            
+            if (tongueTwisterState === 3 && selectedUpgrades.some(upgrade => upgrade.name === 'Ascension')) {
+                unlockAchievement('Tongue Twister');
+            }
+            if (tongueTwisterState === 1 && selectedUpgrades.some(upgrade => upgrade.name === 'Transcendence')) {
+                tongueTwisterState = 2;
+            }
+
+            if (!skipConfirms) {
+                showMessageModal('Ascension Successful!', `<strong>You have entered God-Mode Level ${godModeLevel}.</strong><br> Your multiplier God-Mode is now x${formatNumber(godModeMultiplier)}, your prestige multiplier is x${formatNumber(epsMultiplier)}, and your chosen upgrades are 10x stronger.`);        
+
+                unlockAchievement('First Ascension');
+            }
+
+            restartGame(true); // Use the existing restartGame function with prestige mode
+            // Save game state after ascending
+            saveGameState();
+        }
 
     }
 
@@ -1774,72 +1796,84 @@ async function ascend() {
 }
 
 
-async function transcend() {
+async function transcend(skipConfirms = false) {
     
     if (ascendInProgress) return; // Prevent additional clicks if ascend is already in progress
     ascendInProgress = true;
 
-    const upgradeText = `select up to ${numPUAscensionUpgrades} upgrades to enhance and increase your Parallel Universe God-Mode multiplier accordingly`;
-    const selectedUpgrades = await showMessageModal(
-        'Parallel Universe God-Mode Ascension',
-        `Accessing this new dimension requires temporarily aligning your universe with a parallel one, which will unfortunately reduce your Prestige multiplier the same way that Ascending in your Universe would.<br><br>
-        On the bright side, your Parallel Universe God-Mode multiplier will increase - and it works multiplicatively with your God-Mode multiplie!<br><br>
-        Additionally, you can ${upgradeText}.`,
-        true,
-        true,
-        false,
-        true
-    );
+    skipConfirms |= enableQuickMode;
 
-    if (selectedUpgrades) {
+    if (canTranscend()) {
+        let selectedUpgrades = null;
+        if (!skipConfirms) {
+            const upgradeText = `select up to ${numPUAscensionUpgrades} upgrades to enhance and increase your Parallel Universe God-Mode multiplier accordingly`;
+            selectedUpgrades = await showMessageModal(
+                'Parallel Universe God-Mode Ascension',
+                `Accessing this new dimension requires temporarily aligning your universe with a parallel one, which will unfortunately reduce your Prestige multiplier the same way that Ascending in your Universe would.<br><br>
+                On the bright side, your Parallel Universe God-Mode multiplier will increase - and it works multiplicatively with your God-Mode multiplie!<br><br>
+                Additionally, you can ${upgradeText}.`,
+                true,
+                true,
+                false,
+                true
+            );
+        } else {
+            // Auto Select up to numPUAscensionUpgrades threshold
+            selectedUpgrades = purchasedUpgrades.filter(upgrade => !upgrade.isPUGodMode).slice(0, numPUAscensionUpgrades);
+        }
 
-        selectedUpgrades.forEach(upgrade => {
-            upgrade.isPUGodMode = true;
+        if (selectedUpgrades) {
+
+            selectedUpgrades.forEach(upgrade => {
+                upgrade.isPUGodMode = true;
+                if(tunneledAscensionSkill){
+                    upgrade.isGodMode = true;
+                }
+            });
+
+            puGodLevel = upgrades.filter(upgrade => upgrade.isPUGodMode).length;
+            puGodMultiplier = calculatePUGodModeMultiplier(puGodLevel);
+
+            if (tongueTwisterState === 0 && selectedUpgrades.some(upgrade => upgrade.name === 'Transcendence')) {
+                tongueTwisterState = 1;
+                if (tunneledAscensionSkill) {
+                    tongueTwisterState = 2;
+                }
+            }
+            if (tongueTwisterState === 2 && selectedUpgrades.some(upgrade => upgrade.name === 'Ascension')) {
+                tongueTwisterState = 3;
+                if (tunneledAscensionSkill) {
+                    unlockAchievement('Tongue Twister');
+                }
+            }
+            
             if(tunneledAscensionSkill){
-                upgrade.isGodMode = true;
+                const gmLevelsGained = upgrades.filter(upgrade => upgrade.isGodMode).length - godModeLevel;
+                if (gmLevelsGained == 24 && selectedUpgrades.length == 24){
+                    unlockAchievement('Just Shy of Longest Tunnel');
+                }
+                godModeLevel = upgrades.filter(upgrade => upgrade.isGodMode).length;
+                godModeMultiplier = calculateGodModeMultiplier(godModeLevel);
             }
-        });
 
-        puGodLevel = upgrades.filter(upgrade => upgrade.isPUGodMode).length;
-        puGodMultiplier = calculatePUGodModeMultiplier(puGodLevel);
+            epsMultiplier = calculateAscensionEpsMult();
+            prestigeRequirement = calculateMinResource();
+            
+            if (!skipConfirms) {
+                showMessageModal('Transcendence Successful!', `<strong>You have entered Parallel Universe God-Mode Level ${puGodLevel}.</strong><br> Your Parallel Universe God-Mode multiplier is now x${formatNumber(puGodMultiplier)}, your prestige multiplier is x${formatNumber(epsMultiplier)}, and your chosen upgrades are 10x stronger.`);        
 
-        if (tongueTwisterState === 0 && selectedUpgrades.some(upgrade => upgrade.name === 'Transcendence')) {
-            tongueTwisterState = 1;
-            if (tunneledAscensionSkill) {
-                tongueTwisterState = 2;
+                unlockAchievement('Transcend');
+
+                //if length of selectedupgrades is 1
+                if (selectedUpgrades.length == 1) {
+                    unlockAchievement('Slow and Steady');
+                }
             }
-        }
-        if (tongueTwisterState === 2 && selectedUpgrades.some(upgrade => upgrade.name === 'Ascension')) {
-            tongueTwisterState = 3;
-            if (tunneledAscensionSkill) {
-                unlockAchievement('Tongue Twister');
-            }
-        }
-        
-        if(tunneledAscensionSkill){
-            const gmLevelsGained = upgrades.filter(upgrade => upgrade.isGodMode).length - godModeLevel;
-            if (gmLevelsGained == 24 && selectedUpgrades.length == 24){
-                unlockAchievement('Just Shy of Longest Tunnel');
-            }
-            godModeLevel = upgrades.filter(upgrade => upgrade.isGodMode).length;
-            godModeMultiplier = calculateGodModeMultiplier(godModeLevel);
-        }
 
-        epsMultiplier = calculateAscensionEpsMult();
-        prestigeRequirement = calculateMinResource();
-        
-        showMessageModal('Transcendence Successful!', `<strong>You have entered Parallel Universe God-Mode Level ${puGodLevel}.</strong><br> Your Parallel Universe God-Mode multiplier is now x${formatNumber(puGodMultiplier)}, your prestige multiplier is x${formatNumber(epsMultiplier)}, and your chosen upgrades are 10x stronger.`);        
-
-        unlockAchievement('Transcend');
-
-        //if length of selectedupgrades is 1
-        if (selectedUpgrades.length == 1) {
-            unlockAchievement('Slow and Steady');
+            restartGame(true); // Use the existing restartGame function with prestige mode
+            // Save game state after transcending
+            saveGameState();
         }
-
-        restartGame(true); // Use the existing restartGame function with prestige mode
-        // Save game state after transcending
-        saveGameState();
     }
 
     // Re-enable after the function completes
@@ -1850,15 +1884,21 @@ async function transcend() {
 
 
 
-async function bigCrunch() {
+async function bigCrunch(skipConfirms = false) {
 
     if (canBigCrunch()) {
 
-        const confirmed = await showMessageModal(
-            'Big Crunch Confirmation',
-            `Are you sure you want to prestige? You will reset all resources, prestiges, and god-mode levels, but your Big Crunch Multiplier will increase <strong>from ${formatNumber(bigCrunchMultiplier)} to ${formatNumber(calculateBigCrunchMultiplier(power * compressedBigCrunchMult))}</strong>.<br> Big crunch multiplier stacks with all your other multipliers, plus additionally affects your Knowledge generation! (Your Big Crunch Power will lock in at the current Power level)`,
-            true
-        );
+        let confirmed = true;
+        
+        skipConfirms |= enableQuickMode;
+        // If skipConfirms is false, show the confirmation modal
+        if (!skipConfirms) {
+            confirmed = await showMessageModal(
+                'Big Crunch Confirmation',
+                `Are you sure you want to prestige? You will reset all resources, prestiges, and god-mode levels, but your Big Crunch Multiplier will increase <strong>from ${formatNumber(bigCrunchMultiplier)} to ${formatNumber(calculateBigCrunchMultiplier(power * compressedBigCrunchMult))}</strong>.<br> Big crunch multiplier stacks with all your other multipliers, plus additionally affects your Knowledge generation! (Your Big Crunch Power will lock in at the current Power level)`,
+                true
+            );
+        }
 
         if (confirmed && canBigCrunch()) {
 
@@ -1987,23 +2027,28 @@ function animateInfiniteEmbraceExpansion() {
 
 
 
-async function infiniteEmbrace() {
+async function infiniteEmbrace(skipConfirms = false) {
     if (canInfiniteEmbrace()) {
-        const confirmed = await showMessageModal(
-            'Infinite Embrace Confirmation',
-            `
-            Infinite Embrace is a profound act of injecting more love into the multiverse, ensuring that your next incarnation will be more pleasant and harmonious. By embracing the universe with infinite love, you enhance the very fabric of existence, bringing more warmth and joy to every future cycle.
-            <br><br>
-            In order to complete this sacred ritual, all progress will be reset, including prestiges, god modes, big crunches, the Hall of Knowledge, and the Hall of Power. The only things that remain intact are your achievements and the everlasting Love Points you have gathered.
-            <br><br>
-            You will gain <strong>Love Points, increasing from ${formatNumber(lovePoints)} to ${formatNumber(lovePoints + calculateLovePointsGained())}</strong>. These Love Points can be spent at the Hall of Love, which will remain unlocked across all Infinite Embraces.
-            <br><br>
-            Remember: you never lose your Love Points. They will continue to accumulate across all cycles, fueling your journey through the multiverse.
-            <br><br>
-            Are you sure you want to activate Infinite Embrace and reset your progress to inject love into the multiverse?
-            `,
-            true
-        );
+        let confirmed = true;
+
+        skipConfirms |= enableQuickMode;
+        if (!skipConfirms) {
+            confirmed = await showMessageModal(
+                'Infinite Embrace Confirmation',
+                `
+                Infinite Embrace is a profound act of injecting more love into the multiverse, ensuring that your next incarnation will be more pleasant and harmonious. By embracing the universe with infinite love, you enhance the very fabric of existence, bringing more warmth and joy to every future cycle.
+                <br><br>
+                In order to complete this sacred ritual, all progress will be reset, including prestiges, god modes, big crunches, the Hall of Knowledge, and the Hall of Power. The only things that remain intact are your achievements and the everlasting Love Points you have gathered.
+                <br><br>
+                You will gain <strong>Love Points, increasing from ${formatNumber(lovePoints)} to ${formatNumber(lovePoints + calculateLovePointsGained())}</strong>. These Love Points can be spent at the Hall of Love, which will remain unlocked across all Infinite Embraces.
+                <br><br>
+                Remember: you never lose your Love Points. They will continue to accumulate across all cycles, fueling your journey through the multiverse.
+                <br><br>
+                Are you sure you want to activate Infinite Embrace and reset your progress to inject love into the multiverse?
+                `,
+                true
+            );
+        }
         
 
         if (confirmed) {
@@ -2022,10 +2067,12 @@ async function infiniteEmbrace() {
 
             crunchTimer = 0;
 
-            unlockAchievement('Infinite Embrace');
+            if (!skipConfirms) {
+                unlockAchievement('Infinite Embrace');
 
-            if (calculateLovePointsGained() > 25) {
-                unlockAchievement('Massive Embrace');
+                if (calculateLovePointsGained() > 25) {
+                    unlockAchievement('Massive Embrace');
+                }
             }
 
             // Save game state after prestige
@@ -2950,6 +2997,84 @@ function updateUpgradeButtons() {
     }
 }
 
+// Function to update the display of amount of upgrades boughts
+function updateNumUpgrades() {
+    let numNormalUpgrades = purchasedUpgrades.filter(up => !up.isGodMode && !up.isPUGodMode).length;
+    let numGodModeUpgrades = purchasedUpgrades.filter(up => up.isGodMode && !up.isPUGodMode).length;
+    let numPUGodModeUpgrades = purchasedUpgrades.filter(up => !up.isGodMode && up.isPUGodMode).length;
+    let numDoubleGodModeUpgrades = purchasedUpgrades.filter(up => up.isGodMode && up.isPUGodMode).length;
+
+    let numPurchaseDisplay = document.getElementById('numPurchasedNormalUpgrades');
+    let numGodModeDisplay = document.getElementById('numPurchasedGodModeUpgrades');
+    let numPUGodModeDisplay = document.getElementById('numPurchasedPUGodModeUpgrades');
+    let numDoubleGodModeDisplay = document.getElementById('numPurchasedDoubleGodModeUpgrades');
+
+    let numSepOne = document.getElementById('numPurchasedSepOne');
+    let numSepTwo = document.getElementById('numPurchasedSepTwo');
+    let numSepThree = document.getElementById('numPurchasedSepThree');
+
+    // Show parenthesis if any upgrade has been bought
+    if( numNormalUpgrades > 0 || numGodModeUpgrades > 0 || numPUGodModeUpgrades > 0 || numDoubleGodModeUpgrades > 0) {
+        document.getElementById('numPurchasedUpgradesStart').style.display = "block";
+        document.getElementById('numPurchasedUpgradesEnd').style.display = "block";
+    } else {
+        document.getElementById('numPurchasedUpgradesStart').style.display = "none";
+        document.getElementById('numPurchasedUpgradesEnd').style.display = "none";
+    }
+
+    // Upgrades separator handler
+    if (numNormalUpgrades > 0 && (numGodModeUpgrades > 0 || numPUGodModeUpgrades > 0 || numDoubleGodModeUpgrades > 0)) {
+        numSepOne.style.display = "block";
+    } else {
+        numSepOne.style.display = "none";
+    }
+
+    if (numGodModeUpgrades > 0 && (numPUGodModeUpgrades > 0 || numDoubleGodModeUpgrades > 0)) {
+        numSepTwo.style.display = "block";
+    } else {
+        numSepTwo.style.display = "none";
+    }
+
+    if (numPUGodModeUpgrades > 0 && numDoubleGodModeUpgrades > 0) {
+        numSepThree.style.display = "block";
+    } else {
+        numSepThree.style.display = "none";
+    }
+
+    // Show amount of normal purchased upgrades
+    if (numNormalUpgrades > 0) {
+        numPurchaseDisplay.textContent = numNormalUpgrades;
+        numPurchaseDisplay.style.display = "block";
+    } else {
+        numPurchaseDisplay.style.display = "none";
+    }
+
+    // Show amount of god mode purchased upgrades
+    if (numGodModeUpgrades > 0) {
+        numGodModeDisplay.textContent = numGodModeUpgrades;
+        numGodModeDisplay.style.display = "block";
+    } else {
+        numGodModeDisplay.style.display = "none";
+    }
+
+    // Show amount of pu god mode purchased upgrades
+    if (numPUGodModeUpgrades > 0) {
+        numPUGodModeDisplay.textContent = numPUGodModeUpgrades;
+        numPUGodModeDisplay.style.display = "block";
+    } else {
+        numPUGodModeDisplay.style.display = "none";
+    }
+
+    // Show amount of double god mode purchased upgrades
+    if (numDoubleGodModeUpgrades > 0) {
+        numDoubleGodModeDisplay.textContent = numDoubleGodModeUpgrades;
+        numDoubleGodModeDisplay.style.display = "block";
+    } else {
+        numDoubleGodModeDisplay.style.display = "none";
+    }
+
+}
+
 // Attach tooltip and touch events for buy buttons
 function initializeBuyButtons() {
     
@@ -3261,6 +3386,27 @@ function hotkeyHandler(event) {
                     }
                     localStorage.setItem('autoFightEnabled', autoFightEnabled);
                     keysPressed.f = true; // Mark 'f' key as pressed
+                }
+                break;
+            case 'z': // Open Prestige, if quick mode enable trigger it directly whithout confirmations
+                prestige();
+                break;
+            case 'x': // Open Ascend, if quick mode enable trick the game to perform an auto ascend even if automation not unlocked
+                ascend();
+                break;
+            case 'c': // Open Transcend, if quick mode enable trick the game to perform an auto transcend even if automation not unlocked
+                transcend();
+                break;
+            case 'v': // Open Big Crunch, if quick mode enable trigger it directly whithout confirmations
+                bigCrunch();
+                break;
+            case 'n': // Open Embrace
+                infiniteEmbrace();
+                break;
+            case ' ': // Select first x upgrades
+                if(document.getElementsByClassName("select-first-button").length == 1) {
+                    document.getElementsByClassName("select-first-button")[0].click();
+                    event.preventDefault();
                 }
                 break;
         }
@@ -3884,16 +4030,16 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('prestigeButton').addEventListener('click', () => throttle(prestige(), 500));
 
     // Add event listener for the ascend button with throttling
-    document.getElementById('ascendButton').addEventListener('click', throttle(ascend, 500));
+    document.getElementById('ascendButton').addEventListener('click', () => throttle(ascend(), 500));
 
     // Add event listener for the transcend button with throttling
-    document.getElementById('transcendButton').addEventListener('click', throttle(transcend, 500));
+    document.getElementById('transcendButton').addEventListener('click', () => throttle(transcend(), 500));
     
     // Add event listener for the transcend button with throttling
-    document.getElementById('bigCrunchButton').addEventListener('click', throttle(bigCrunch, 500));
+    document.getElementById('bigCrunchButton').addEventListener('click', () => throttle(bigCrunch(), 500));
     
     // Add event listener for the transcend button with throttling
-    document.getElementById('infiniteEmbraceButton').addEventListener('click', throttle(infiniteEmbrace, 500));
+    document.getElementById('infiniteEmbraceButton').addEventListener('click', () => throttle(infiniteEmbrace(), 500));
 
     // Add event listener for the buy all upgrades button
     document.getElementById('buySeenButton').addEventListener('click', function() { buyAllUpgrades(8, this);});
@@ -3926,6 +4072,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // but loadGameState has to be called after (to enable previously bought skills)
     currentNumberFormat = JSON.parse(localStorage.getItem('currentNumberFormat')) || 'Mixed';
     document.getElementById('numberFormatButton').textContent = `Number Format: ${currentNumberFormat}`;
+
+    document.getElementById('enableQuickMode').addEventListener('change', function() {
+        enableQuickMode = this.checked;
+    });
 
     // Library Skills -- has to happen before loadGameState!
     initializeSkills();
