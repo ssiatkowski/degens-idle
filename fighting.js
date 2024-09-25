@@ -951,13 +951,14 @@ function attackEnemy(resolve) {
             
             logFight(`<span style='color: #b3a125; font-weight: bold; font-size: 1.3em;'>Saitama gets serious! No tricks up his sleeve, just raw power. Brace yourself!</span>`);
 
-            if (!purchasedUpgrades.some(upgrade => upgrade.name === "Training Dummy")) {
+            if (!purchasedUpgrades.some(upgrade => upgrade.name === "Mosquito")) {
                 unlockAchievement('Dirty Trick');
-                enemyStunCount += 200;
-                logFight("<span style='color: green; font-size: 1.3em';>Can't believe the Training Dummy trick worked again! This time, it was rigged with a galactic paralyzer device, stunning Saitama for 200 turns. You didn't even need to pull that dirty trick—just having a bit of fun with him!</span>");
+                enemyStunCount += 250;
+                logFight("<span style='color: green; font-size: 1.3em';>Just as Saitama got serious, you pointed at a piñata and he couldn't resist. But when he punched it, a swarm of mosquitos burst out, fueling his mosquito hate. He spends 250 turns squashing them, leaving himself wide open to your attacks.</span>");
+
             } else {
-                logFight("<span style='color: red; font-size: 1.3em';>Before you have time to process what just happened, Saitama charges towards you. His sudden transformation catches you off guard, and you're stunned for 10 turns!</span>");
-                playerStunCount += 10;
+                logFight("<span style='color: red; font-size: 1.3em';>Before you have time to process what just happened, Saitama charges towards you. His sudden transformation catches you off guard, and you're stunned for 25 turns!</span>");
+                playerStunCount += 25;
             } 
         
             // Update the enemy image to the serious version of Saitama
@@ -1301,7 +1302,7 @@ function attackPlayer(resolve) {
     }
     
     if (currEnemyName === 'Serious Saitama'){
-        enemyMaxDamage *= 1.001;
+        enemyMaxDamage *= 1.0025;
         document.getElementById('enemyDamageStat').innerText = `${formatNumber(enemyMinDamage)} - ${formatNumber(enemyMaxDamage)}`;
         logFight(`<span style='color: #b3a125; '>Saitama gets slightly more serious!</span>`);
     }

@@ -1573,4 +1573,13 @@ const upgrades = [
         isKey: true,
         message: `Through this meditation, you’ve understood that the <strong>universe operates under the natural laws set in motion by a higher power</strong>, yet it is up to you to seek truth and purpose. Deism teaches that reason, observation, and understanding of the world around you lead to enlightenment. With this knowledge, you’ve realized that your journey is shaped by your actions and understanding of the universe's order.`,
     },
+    {         
+        name: `Skepticism`,
+        cost: { copium: 0, delusion: 1e145, yachtMoney: 0, trollPoints: 1e145, hopium: 0, knowledge: 0, power: 5e42, serenity: 1e20 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 1e30, powerPerSecond: 0, serenityPerSecond: 8e7 },
+        img: `imgs/arena_skepticism.png`,
+        isMeditation: true,
+        isKey: true,
+        message: `In this meditation, you’ve learned the <strong>value of questioning and seeking truth</strong>. Skepticism teaches that through doubt, we grow closer to understanding, as every idea must be examined and tested. By embracing a mindset of curiosity and critical thinking, you’ve unlocked the path to deeper knowledge. Continue to question, explore, and refine your beliefs, and truth will reveal itself in time.`,
+    },
 ];

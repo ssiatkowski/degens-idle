@@ -144,6 +144,18 @@ const meditationChallenges = {
         respawnFactor: 1,
         livesPerBall: 2,
     },
+    "Skepticism": {
+        duration: 100,
+        focus: 1,
+        ballCount: 3,
+        arenaSize: 450,
+        ballSize: 40,
+        ballSizeDelta: 10,
+        velocity: 5,
+        wind: 2,
+        respawnFactor: 1,
+        livesPerBall: 1,
+    },
 };
 
 // Function to initialize the meditation game
@@ -211,6 +223,7 @@ function setupMeditationArena(stageNumber) {
         arena.style.width = `${arenaSize}px`;
         arena.style.height = `${arenaSize}px`;
     }
+
 
     // Create balls in the arena, spaced near the center
     for (let i = 0; i < ballCount; i++) {
