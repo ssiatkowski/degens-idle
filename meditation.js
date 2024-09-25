@@ -49,11 +49,11 @@ const meditationChallenges = {
         livesPerBall: 1,
     },
     "Altruism": {
-        duration: 16,
+        duration: 17,
         focus: 1,
         ballCount: 15,
         arenaSize: 600,
-        ballSize: 13,
+        ballSize: 18,
         ballSizeDelta: 3,
         velocity: 0.86,
         wind: 0,
@@ -61,7 +61,7 @@ const meditationChallenges = {
         livesPerBall: 1,
     },
     "Rastafarianism": {
-        duration: 12,
+        duration: 13,
         focus: 12,
         ballCount: 5,
         arenaSize: 420,
@@ -73,11 +73,11 @@ const meditationChallenges = {
         livesPerBall: 1,
     },
     "Dualism": {
-        duration: 11,
+        duration: 12,
         focus: 1,
         ballCount: 5,
         arenaSize: 350,
-        ballSize: 100,
+        ballSize: 150,
         ballSizeDelta: 10,
         velocity: 1.5,
         wind: 0,
@@ -85,11 +85,11 @@ const meditationChallenges = {
         livesPerBall: 1,
     },
     "Libertarianism": {
-        duration: 18,
+        duration: 20,
         focus: 8,
         ballCount: 5,
         arenaSize: 520,
-        ballSize: 60,
+        ballSize: 90,
         ballSizeDelta: 40,
         velocity: 12,
         wind: 5,
@@ -97,11 +97,11 @@ const meditationChallenges = {
         livesPerBall: 1,
     },
     "Hinduism": {
-        duration: 25,
+        duration: 33,
         focus: 50,
         ballCount: 25,
         arenaSize: 400,
-        ballSize: 30,
+        ballSize: 50,
         ballSizeDelta: 15,
         velocity: 3.5,
         wind: 2,
@@ -109,11 +109,11 @@ const meditationChallenges = {
         livesPerBall: 1,
     },
     "Shinto": {
-        duration: 17,
+        duration: 22,
         focus: 1,
         ballCount: 1,
         arenaSize: 275,
-        ballSize: 50,
+        ballSize: 90,
         ballSizeDelta: 0,
         velocity: 3,
         wind: 14,
@@ -121,11 +121,11 @@ const meditationChallenges = {
         livesPerBall: 1,
     },
     "Stoicism": {
-        duration: 25,
+        duration: 32,
         focus: 10,
         ballCount: 12,
         arenaSize: 700,
-        ballSize: 50,
+        ballSize: 150,
         ballSizeDelta: 20,
         velocity: 3,
         wind: 1.5,
@@ -133,11 +133,11 @@ const meditationChallenges = {
         livesPerBall: 5,
     },
     "Deism": {
-        duration: 40,
+        duration: 57,
         focus: 1,
         ballCount: 7,
         arenaSize: 500,
-        ballSize: 80,
+        ballSize: 300,
         ballSizeDelta: 0,
         velocity: 10,
         wind: 0,
@@ -145,11 +145,11 @@ const meditationChallenges = {
         livesPerBall: 2,
     },
     "Skepticism": {
-        duration: 200,
+        duration: 230,
         focus: 1,
         ballCount: 3,
         arenaSize: 450,
-        ballSize: 40,
+        ballSize: 200,
         ballSizeDelta: 10,
         velocity: 25,
         wind: 2,
@@ -572,22 +572,15 @@ document.getElementById('meditationStopButton').addEventListener('click', () => 
 
 // Function to calculate ball size based on Copium
 function calculateBallSize() {
-    // Calculate the scaling factor based on Copium, starting at 1e100
-    let scalingFactor = 1 - (Math.max(0, Math.log10(copium) - 100) / 200);
-
-    // Apply the scaling factor to the base ball size
-    let newBallSize = Math.round(ballSize * scalingFactor);
-
-    // Ensure the ball size is at least 5 (to avoid balls being too small)
-    newBallSize = Math.max(newBallSize, 5);
-
+    let intervals = Math.max(0, (Math.log10(copium) - 100) / 20);
+    let newBallSize = Math.max(Math.round(ballSize * Math.pow(0.5, intervals)), 5);
     return newBallSize;
 }
 
 // Function to calculate turn radius based on Delusion
 function calculateTurnRadius() {
     // Calculate the scaling factor based on Delusion, starting at 1e100
-    let scalingFactor = 1 + (Math.max(0, Math.log10(delusion) - 100) * 0.05);
+    let scalingFactor = 1 + (Math.max(0, Math.log10(delusion) - 100) * 0.1);
 
     // Apply the scaling factor to the base turn radius
     let newTurnRadius = 0.25 * scalingFactor;
@@ -600,14 +593,14 @@ function calculateTurnRadius() {
 function calculateTimerReduction() {
     const logValue = Math.log10(yachtMoney); // Get the logarithmic value of yachtMoney
     const baseLogValue = 100; // Base log value corresponding to 100
-    const reductionFactor = Math.pow(2, -(logValue - baseLogValue) / 25); // Scales the reduction by 50% for every increase of 25 in log value
+    const reductionFactor = Math.pow(2, -(logValue - baseLogValue) / 15); // Scales the reduction by 50% for every increase of 15 in log value
     return Math.max(0.000001, Math.min(1, reductionFactor)); // Ensure the reduction factor is between 0.000001 and 1
 }
 
 // Function to calculate respawn time based on trollPoints
 function calculateRespawnTime() {
-    // Calculate the scaling factor based on trollPoints, starting at 1e100
-    let scalingFactor = 1 + (Math.max(0, Math.log10(trollPoints) - 100) / 10);
+    // Calculate the scaling factor: double the respawn time for every 20-log interval after 100
+    let scalingFactor = Math.pow(2, Math.max(0, (Math.log10(trollPoints) - 100) / 20));
 
     // Calculate the new respawn time by applying the scaling factor
     let newRespawnTime = respawnTime * scalingFactor * respawnFactor;
