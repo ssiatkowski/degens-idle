@@ -12,6 +12,12 @@ function openSettings() {
     setTimeout(() => {
         document.addEventListener('click', outsideClickListener);
     }, 0);
+
+    // EnableQuickMode : Use a timeout to ensure the checkbox is fully rendered before setting its state
+    setTimeout(() => {
+        const enableQuickModeSwitch = document.getElementById('enableQuickMode');
+        enableQuickModeSwitch.checked = enableQuickMode;
+    }, 0); // Adjust timeout if necessary
 }
 
 // Function to close the settings overlay

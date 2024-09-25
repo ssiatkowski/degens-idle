@@ -224,7 +224,18 @@
                 <button id="tradeTenPercentButton">Trade 10%</button>
             </div>
             <div id="purchasedUpgrades">
-                <h2>Purchased Upgrades</h2>
+                <div id="purchasedUpgradesHeader" class="multibuy-buttons-container">
+                    <h2>Purchased Upgrades </h2>
+                    <h2 id="numPurchasedUpgradesStart" style="display: none;">(</h2>
+                    <h2 id="numPurchasedNormalUpgrades" style="display: none;">123</h2>
+                    <h2 id="numPurchasedSepOne" style="display: none;">|</h2>
+                    <h2 id="numPurchasedGodModeUpgrades" style="display: none;">123</h2>
+                    <h2 id="numPurchasedSepTwo"style="display: none;">|</h2>
+                    <h2 id="numPurchasedPUGodModeUpgrades" style="display: none;">123</h2>
+                    <h2 id="numPurchasedSepThree"style="display: none;">|</h2>
+                    <h2 id="numPurchasedDoubleGodModeUpgrades" style="display: none;">123</h2>
+                    <h2 id="numPurchasedUpgradesEnd" style="display: none;">)</h2>
+                </div>
                 <div id="purchasedList" class="grid">
                     <!-- Purchased upgrades will be shown here with images -->
                 </div>
@@ -424,6 +435,13 @@
                     </button>
                     <button id="howToPlayButton"><i class="icon-info"></i> How to Play?</button>
                     <button id="numberFormatButton" class="full-width-button">Number Format: Mixed</button>
+                </div>
+                <div class="settings-switch">
+                    <label for="enableQuickMode">Quick mode : Skip all confirmation pop-up</label>
+                    <label class="switch">
+                        <input type="checkbox" id="enableQuickMode">
+                        <span class="slider"></span>
+                    </label>
                 </div>
             </div>
             
