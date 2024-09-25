@@ -1642,7 +1642,7 @@ async function prestige(skipConfirms = false) {
 function updatePrestigeButton() {
     
     const prestigeButton = document.getElementById('prestigeButton');
-    if (canPrestige() && !isEventInProgress() && startEvent("updatePrestigeButton")) {
+    if (canPrestige()) {
         if (infinitePrestigeSkill) {
             const newPrestigeMult = calculatePrestigeMultiplier();
             const newPrestigeReq = inversePrestigeSkill 
@@ -1670,7 +1670,6 @@ function updatePrestigeButton() {
                 prestige(true); // Trigger auto-prestige
             }
         }
-        stopEvent("updatePrestigeButton")
     } else {
         prestigeButton.style.display = 'none';
     }
@@ -1758,8 +1757,8 @@ async function ascend(skipConfirms = false) {
                 true
             );
         } else {
-            // Auto Select up to numAscensionUpgrades threshold
-            selectedUpgrades = purchasedUpgrades.filter(upgrade => !upgrade.isGodMode).slice(0, numAscensionUpgrades);
+            // Auto Select up to numAscensionUpgrades or autoAscendThreshold
+            selectedUpgrades = purchasedUpgrades.filter(upgrade => !upgrade.isGodMode).slice(0, autoAscendThreshold > 0 ? autoAscendThreshold : numAscensionUpgrades);
         }
 
         if (selectedUpgrades) {
@@ -1790,6 +1789,9 @@ async function ascend(skipConfirms = false) {
             restartGame(true); // Use the existing restartGame function with prestige mode
             // Save game state after ascending
             saveGameState();
+
+            showPopupTooltip(`Ascended ${selectedUpgrades.length} Upgrades`, color='#00008B')
+                    
         }
         
         // Trigger stop event after process complete
@@ -1820,8 +1822,8 @@ async function transcend(skipConfirms = false) {
                 true
             );
         } else {
-            // Auto Select up to numPUAscensionUpgrades threshold
-            selectedUpgrades = purchasedUpgrades.filter(upgrade => !upgrade.isPUGodMode).slice(0, numPUAscensionUpgrades);
+            // Auto Select up to numPUAscensionUpgrades or autoTranscendThreshold
+            selectedUpgrades = purchasedUpgrades.filter(upgrade => !upgrade.isPUGodMode).slice(0, autoTranscendThreshold > 0 ? autoTranscendThreshold : numPUAscensionUpgrades);
         }
 
         if (selectedUpgrades) {
@@ -1874,6 +1876,8 @@ async function transcend(skipConfirms = false) {
             restartGame(true); // Use the existing restartGame function with prestige mode
             // Save game state after transcending
             saveGameState();
+
+            showPopupTooltip(`Transcended ${selectedUpgrades.length} Upgrades`, color='#702963')
 
         }
         // Trigger stop event after process complete
@@ -2094,7 +2098,7 @@ async function infiniteEmbrace(skipConfirms = false) {
 
 function updateAscendButton() {
     const ascendButton = document.getElementById('ascendButton');
-    if (canAscend() && !isEventInProgress() && startEvent("updateAscendButton")) {
+    if (canAscend()) {
         ascendButton.style.display = 'block';
         // Check if autoAscendThreshold is set and not null
 
@@ -2104,26 +2108,9 @@ function updateAscendButton() {
 
             // If the number of non-GodMode upgrades meets or exceeds the threshold, auto-ascend
             if (nonGodModeUpgrades >= autoAscendThreshold) {
-                // Get the upgrades to ascend with
-                const selectedUpgrades = purchasedUpgrades.filter(upgrade => !upgrade.isGodMode).slice(0, autoAscendThreshold);
-
-                selectedUpgrades.forEach(upgrade => {
-                    upgrade.isGodMode = true;
-                });
-
-                godModeLevel = upgrades.filter(upgrade => upgrade.isGodMode).length;
-                godModeMultiplier = calculateGodModeMultiplier(godModeLevel);
-
-                epsMultiplier = calculateAscensionEpsMult();
-                prestigeRequirement = calculateMinResource();
-
-                showPopupTooltip(`Auto-Ascended ${autoAscendThreshold} Upgrades`, color='#00008B')
-                
-                restartGame(true); // Use the existing restartGame function with prestige mode
-                saveGameState(); // Save game state after ascending
+                ascend(true);
             }
         }
-        stopEvent("updateAscendButton");
     } else {
         ascendButton.style.display = 'none';
     }
@@ -2132,7 +2119,7 @@ function updateAscendButton() {
 
 function updateTranscendButton() {
     const transcendButton = document.getElementById('transcendButton');
-    if (canTranscend() && !isEventInProgress() && startEvent("updateTranscendButton")) {
+    if (canTranscend()) {
         transcendButton.style.display = 'block';
 
         // Check if autoTranscendThreshold is set and not null
@@ -2142,38 +2129,9 @@ function updateTranscendButton() {
 
             // If the number of non-PUGodMode upgrades meets or exceeds the threshold, auto-transcend
             if (nonPUGodModeUpgrades >= autoTranscendThreshold) {
-                // Get the upgrades to transcend with
-                const selectedUpgrades = purchasedUpgrades.filter(upgrade => !upgrade.isPUGodMode).slice(0, autoTranscendThreshold);
-
-                selectedUpgrades.forEach(upgrade => {
-                    upgrade.isPUGodMode = true;
-                    if(tunneledAscensionSkill){
-                        upgrade.isGodMode = true;
-                    }
-                });
-
-                puGodLevel = upgrades.filter(upgrade => upgrade.isPUGodMode).length;
-                puGodMultiplier = calculatePUGodModeMultiplier(puGodLevel);
-
-                if(tunneledAscensionSkill){
-                    const gmLevelsGained = upgrades.filter(upgrade => upgrade.isGodMode).length - godModeLevel;
-                    if (gmLevelsGained == 24 && selectedUpgrades.length == 24){
-                        unlockAchievement('Just Shy of Longest Tunnel');
-                    }
-                    godModeLevel = upgrades.filter(upgrade => upgrade.isGodMode).length;
-                    godModeMultiplier = calculateGodModeMultiplier(godModeLevel);
-                }
-
-                epsMultiplier = calculateAscensionEpsMult();
-                prestigeRequirement = calculateMinResource();
-                
-                showPopupTooltip(`Auto-Transcended ${autoTranscendThreshold} Upgrades`, color='#702963')
-                
-                restartGame(true); // Use the existing restartGame function with prestige mode
-                saveGameState(); // Save game state after transcending
+                transcend(true);
             }
         }
-        stopEvent("updateTranscendButton");
     } else {
         transcendButton.style.display = 'none';
     }
@@ -2555,7 +2513,7 @@ function buyAllUpgrades(limit, pressedButton) {
                 const autoFightCondition = autoFightSkill && autoFightEnabled && power > upgrade.autoBattlePower;
         
                 if (isAffordableUpgrade && autoFightCondition) {
-                    buyUpgrade(encodeName(upgrade.name), false);
+                    buyUpgrade(encodeName(upgrade.name), false, true);
                     purchasedCount++;
                     incrementStellarHarvest();
                     if(upgrade.name == 'Saitama' && makeLoveNotWar){
@@ -2563,14 +2521,14 @@ function buyAllUpgrades(limit, pressedButton) {
                     }
                 }
                 else if ((isAffordableUpgrade && switchState)) {
-                    buyUpgrade(encodeName(upgrade.name), false);
+                    buyUpgrade(encodeName(upgrade.name), false, true);
                     purchasedCount++;
                 }
 
 
             } else {
                 if (isAffordable(upgrade.cost) && !upgrade.isFight && !upgrade.isMeditation) {
-                    buyUpgrade(encodeName(upgrade.name), false);
+                    buyUpgrade(encodeName(upgrade.name), false, true);
                     purchasedCount++; // Increment counter when an upgrade is bought
                 }
             }
