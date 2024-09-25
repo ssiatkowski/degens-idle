@@ -134,7 +134,6 @@ let compressedBigCrunchMult = 1;
 
 let transcendenceUnlocked = false;
 
-let quickButtonEnabled = false;
 let autoPrestigeThreshold = null;
 let autoAscendThreshold = null;
 let autoTranscendThreshold = null;
