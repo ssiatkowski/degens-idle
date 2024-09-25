@@ -2777,7 +2777,7 @@ function autobuyUpgrades() {
             // 1. It is affordable and switchState is true
             // 2. It is affordable and autoFightSkill is true with sufficient power
             if (isAffordableUpgrade && autoFightCondition && firstFightUpgrade) {
-                buyUpgrade(encodeName(upgrade.name), false);
+                buyUpgrade(encodeName(upgrade.name), false, true);
                 upgradeBought = true;
                 incrementStellarHarvest();
                 if(upgrade.name == 'Saitama' && makeLoveNotWar){
@@ -2785,7 +2785,7 @@ function autobuyUpgrades() {
                 }
             }
             else if ((isAffordableUpgrade && switchState)) {
-                buyUpgrade(encodeName(upgrade.name), false);
+                buyUpgrade(encodeName(upgrade.name), false, true);
                 upgradeBought = true;
             }
 
