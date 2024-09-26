@@ -1,3 +1,7 @@
+:root {
+    --glowing-animation-duration: 2s;
+}
+
 html, body {
     overflow-x: hidden;
     overscroll-behavior-x: none; /* Disable horizontal overscroll */
@@ -340,7 +344,7 @@ button.affordable-double-godmode {
     border: 2px solid #4b6cb7; /* A mix between blue and purple for the border */
     box-shadow: 0 0 20px #1e90ff, 0 0 20px #8e44ad, 0 0 30px #4b6cb7; /* Blue and Purple shadow for glow effect */
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    animation: waveGlow 2s infinite linear; /* Wave-like glow animation */
+    animation: waveGlow var(--glowing-animation-duration) infinite linear; /* Wave-like glow animation */
 }
 
 button.affordable-double-godmode:hover {
@@ -591,14 +595,14 @@ button.disabled {
 /* Half Purple, Half Blue Glow for Double God Mode Purchased Upgrades */
 .purchased-upgrade-double-godmode img {
     box-shadow: 
-        0 0 40px #8e44ad, /* Purple glow */
-        0 0 40px #1e90ff, /* Blue glow */
-        0 0 80px #b565c8, /* Light purple glow */
-        0 0 80px #00bfff; /* Light blue glow */
+        10px 0 20px #8e44ad, /* Purple glow */
+        -5px 0 20px #1e90ff, /* Blue glow */
+        0 0 20px #b565c8,    /* Light purple glow */
+        -5px 0 20px #00bfff; /* Light blue glow */
     border: 5px solid;
     border-image: linear-gradient(45deg, #8e44ad, #1e90ff);
     border-image-slice: 1; /* To apply the gradient to the border */
-    animation: waveGlow 2s infinite linear; /* Wave-like glow animation */
+    animation: waveGlow var(--glowing-animation-duration) infinite linear; /* Wave-like glow animation */
 }
 
 /* Container for the multibuy buttons */

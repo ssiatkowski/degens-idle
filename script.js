@@ -181,6 +181,7 @@ let cookieIntervalId;
 let crunchTimer = 0;
 
 let enableQuickMode = false;
+let enableButtonAnimations = true;
 
 // Global object to manage prevent event occuring at the same time
 let eventProgression = {
@@ -410,6 +411,9 @@ function loadGameState() {
     
     // Retrieve quick mode
     enableQuickMode = localStorage.getItem('enableQuickMode') === 'true';
+
+    // Retrieve animation preferences
+    manageButtonAnimations(localStorage.getItem('enableButtonAnimations') == null ? true : localStorage.getItem('enableButtonAnimations') === 'true');
 
     // read multibuyUpgradesButtonsUnlocked from localstorage
     multibuyUpgradesButtonsUnlocked = JSON.parse(localStorage.getItem('multibuyUpgradesButtonsUnlocked')) || false;
@@ -644,6 +648,7 @@ function saveGameState() {
     localStorage.setItem('autoTranscendThreshold', autoTranscendThreshold);
 
     localStorage.setItem('enableQuickMode', enableQuickMode);
+    localStorage.setItem('enableButtonAnimations', enableButtonAnimations);
 
     localStorage.setItem('deadpoolRevives', deadpoolRevives);
     
@@ -3977,6 +3982,11 @@ function isEventInProgress() {
     return eventProgression.inProgress;
 }
 
+function manageButtonAnimations(enabled) {
+    enableButtonAnimations = enabled;
+    document.querySelector(':root').style.setProperty("--glowing-animation-duration", enabled ? "2s" : "0s")
+}
+
 // Expose functions to the global scope for use in the HTML
 window.prestige = prestige;
 window.updateDisplay = updateDisplay;
@@ -4063,6 +4073,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('enableQuickMode').addEventListener('change', function() {
         enableQuickMode = this.checked;
+    });
+
+    document.getElementById('enableButtonAnimations').addEventListener('change', function() {
+        manageButtonAnimations(this.checked);
     });
 
     // Library Skills -- has to happen before loadGameState!

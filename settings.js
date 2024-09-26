@@ -18,6 +18,12 @@ function openSettings() {
         const enableQuickModeSwitch = document.getElementById('enableQuickMode');
         enableQuickModeSwitch.checked = enableQuickMode;
     }, 0); // Adjust timeout if necessary
+
+    // EnableButtonAnimations : Use a timeout to ensure the checkbox is fully rendered before setting its state
+    setTimeout(() => {
+        const enableButtonAnimationsSwitch = document.getElementById('enableButtonAnimations');
+        enableButtonAnimationsSwitch.checked = enableButtonAnimations;
+    }, 0); // Adjust timeout if necessary
 }
 
 // Function to close the settings overlay
