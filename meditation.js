@@ -43,7 +43,7 @@ const meditationChallenges = {
         arenaSize: 450,
         ballSize: 50,
         ballSizeDelta: 5,
-        velocity: 1.07,
+        velocity: 1.15,
         wind: 0,
         respawnFactor: 1,
         livesPerBall: 1,
@@ -55,19 +55,19 @@ const meditationChallenges = {
         arenaSize: 600,
         ballSize: 18,
         ballSizeDelta: 3,
-        velocity: 0.86,
+        velocity: 0.96,
         wind: 0,
         respawnFactor: 1,
         livesPerBall: 1,
     },
     "Rastafarianism": {
         duration: 13,
-        focus: 12,
+        focus: 13,
         ballCount: 5,
         arenaSize: 420,
-        ballSize: 42,
+        ballSize: 50,
         ballSizeDelta: 4.2,
-        velocity: 2.98,
+        velocity: 3.3,
         wind: 0,
         respawnFactor: 1,
         livesPerBall: 1,
@@ -75,9 +75,9 @@ const meditationChallenges = {
     "Dualism": {
         duration: 12,
         focus: 1,
-        ballCount: 5,
+        ballCount: 4,
         arenaSize: 350,
-        ballSize: 150,
+        ballSize: 140,
         ballSizeDelta: 10,
         velocity: 1.5,
         wind: 0,
@@ -617,16 +617,18 @@ function calculateBallCountReduction() {
     return lookPastDistractions; // No reduction if hopium is <= 1e100
 }
 
-// Function to calculate velocity based on knowledge
+// Function to calculate velocity reduction based on knowledge
 function calculateVelocityReduction() {
     if (knowledge <= 1e75) {
         return 1; // Base velocity for knowledge <= 1e75
     } else {
-        // Calculate the reduction factor based on knowledge (halves every 25 orders of magnitude starting at 1e100)
-        let reductionFactor = Math.pow(0.5, (Math.log10(knowledge) - 100) / 25);
+        // Calculate the number of 20-OOM intervals past 1e75
+        let intervals = (Math.log10(knowledge) - 75) / 20;
         
-        // Ensure velocity doesn't exceed 1
-        return Math.max(0.5 * reductionFactor * temporalDragReduction, 0);
+        // Calculate the reduction factor by halving for each 20-OOM interval
+        let reductionFactor = Math.pow(0.5, intervals);
+        
+        return reductionFactor * temporalDragReduction;
     }
 }
 

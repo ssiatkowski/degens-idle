@@ -127,7 +127,7 @@ function unlockLibrarySkill(skill, duringLoad = false) {
                 break;
 
             case 'Prestige Base':
-                prestigeBaseSkill = true;
+                prestigeBaseValue = enlightenedPrestigeSkill ? 1.775 : 1.75;
                 if (!duringLoad) {
                     showMessageModal('Prestige Base', 'For you math nerds out there, the formula for prestige multiplier is <strong>base^(log10(minResource/1000)+1)</strong>.<br><br>Graph shows the Prestige Multiplier scaling with 1.5 base vs 1.75 base. This difference becomes huge later in the game. When your min resource is at 1Qi that is already 10x difference and only increases exponentially form there!', false, false, 'imgs/graphs/prestige_base.png')
                 }

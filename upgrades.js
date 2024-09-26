@@ -1476,7 +1476,7 @@ const upgrades = [
     },
     {         
         name: `Rastafarianism`,
-        cost: { copium: 1e105, delusion: 1e105, yachtMoney: 1e105, trollPoints: 1e104, hopium: 0, knowledge: 0, power: 0, serenity: 4200 },
+        cost: { copium: 1e105, delusion: 1e105, yachtMoney: 1e105, trollPoints: 1e104, hopium: 0, knowledge: 0, power: 0, serenity: 10420 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 4.2e47, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 4.2 },
         img: `imgs/arena_rastafarianism.png`,
         isMeditation: true,
@@ -1518,7 +1518,7 @@ const upgrades = [
     },
     {         
         name: `Libertarianism`,
-        cost: { copium: 1e115, delusion: 0, yachtMoney: 1e115, trollPoints: 0, hopium: 0, knowledge: 0, power: 2e24, serenity: 1e8 },
+        cost: { copium: 5e114, delusion: 0, yachtMoney: 5e114, trollPoints: 0, hopium: 0, knowledge: 0, power: 2e24, serenity: 1e8 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 2e50, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 2e17, powerPerSecond: 0, serenityPerSecond: 199 },
         img: `imgs/arena_libertarianism.png`,
         isMeditation: true,

@@ -77,7 +77,7 @@ let isModalOpen = false;
 let cookieClickMultiplier = 10;
 let cookieAutoClicker = false;
 let knowledgeGenerationSkill = false;
-let prestigeBaseSkill = false;
+let prestigeBaseValue = 1.5;
 let twoDimensionalAscensionSkill = false;
 let linearAscensionSkill = false;
 let multibuyUpgradesButtonsUnlocked = false;
@@ -103,6 +103,8 @@ let studyAcceleratorReduction = 0;
 let deadpoolRevivesSkill = false;
 let celestialPrecisionSkill = false;
 let gamingAddictSkill = false;
+let enlightenedPrestigeSkill = false;
+let hopefulBeginningSkill = false;
 let autoFightSkill = false;
 let autoFightEnabled = false;
 let infinitePrestigeSkill = false;
@@ -871,7 +873,7 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
         yachtMoneyPerSecond = 0;
         trollPoints = 0;
         trollPointsPerSecond = 0;
-        hopium = 0;
+        hopium = hopefulBeginningSkill ? 1000000 : 0;
         hopiumPerSecond = 0;
         knowledge = 0;
         knowledgePerSecond = 0;
@@ -916,6 +918,8 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
                 deadpoolRevivesSkill = false;
                 celestialPrecisionSkill = false;
                 gamingAddictSkill = false;
+                enlightenedPrestigeSkill = false;
+                hopefulBeginningSkill = false;
                 autoFightSkill = false;
                 autoFightEnabled = false;
                 infinitePrestigeSkill = false;
@@ -1012,7 +1016,7 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
 
             cookieAutoClicker = false;
             knowledgeGenerationSkill = false;
-            prestigeBaseSkill = false;
+            prestigeBaseValue = 1.5;
             twoDimensionalAscensionSkill = false;
             linearAscensionSkill = false;
             multibuyUpgradesButtonsUnlocked = false;
@@ -1570,17 +1574,15 @@ function unlockHallofLove() {
 
 // Function to calculate the prestige multiplier based on the lowest of the first four resources
 function calculatePrestigeMultiplier() {
-    const base = prestigeBaseSkill ? 1.75 : 1.5;
     const minResource = inversePrestigeSkill 
                         ? Math.max(copium, delusion, yachtMoney, trollPoints) 
                         : Math.min(copium, delusion, yachtMoney, trollPoints);
-    return base ** (Math.log10(minResource / 1000) + 1);
+    return prestigeBaseValue ** (Math.log10(minResource / 1000) + 1);
 }
 
 // Inverse of calculatePrestigeMultiplier
 function calculateMinResource() {
-    const base = prestigeBaseSkill ? 1.75 : 1.5;
-    return Math.max(1000 * 10 ** ((Math.log10(epsMultiplier) / Math.log10(base)) - 1), 1000);
+    return Math.max(1000 * 10 ** ((Math.log10(epsMultiplier) / Math.log10(prestigeBaseValue)) - 1), 1000);
 }
 
 // Check if the player can prestige
@@ -1842,8 +1844,7 @@ async function transcend(skipConfirms = false) {
                 if (tunneledAscensionSkill) {
                     tongueTwisterState = 2;
                 }
-            }
-            if (tongueTwisterState === 2 && selectedUpgrades.some(upgrade => upgrade.name === 'Ascension')) {
+            } else if (tongueTwisterState === 2 && selectedUpgrades.some(upgrade => upgrade.name === 'Ascension')) {
                 tongueTwisterState = 3;
                 if (tunneledAscensionSkill) {
                     unlockAchievement('Tongue Twister');
@@ -2078,7 +2079,7 @@ async function infiniteEmbrace(skipConfirms = false) {
                     unlockAchievement('Massive Embrace');
                 }
             }
-
+            
             // Save game state after prestige
             updateMultipliersDisplay();
             saveGameState();
@@ -2410,7 +2411,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true, ski
 
         if (name === 'Shinto') {
             showMessageModal('The Journey Continues', 
-                "This marks the end of v0.924. You've not only completed the Power Saga, but you're also getting the hang of Infinite Embraces and Meditations! Congratulations on your progress, and welcome to the next stage of your journey. "
+                "This marks the end of v0.926. You've not only completed the Power Saga, but you're also getting the hang of Infinite Embraces and Meditations! Congratulations on your progress, and welcome to the next stage of your journey. "
                 + "With the Hall of Love now open, Love Points are becoming a key part of your experience, alongside the skills you unlock there. While these new mechanics are taking shape, expect ongoing balancing as the game evolves. "
                 + "Feel free to dive deeper into the skills and explore what's possible. The journey is far from over—more meditations and epic content are on the way! "
                 + "Stay connected on Discord, share your feedback, and together, let's create something truly unforgettable!"
@@ -3242,7 +3243,7 @@ let keysPressed = {
 
 // Define the hotkey handler function
 function hotkeyHandler(event) {
-    if (event.shiftKey && event.altKey && false) {
+    if (event.shiftKey && event.altKey && true) {
         switch (event.key) {
             case '!':
                 toggleDevMultiplier(10);

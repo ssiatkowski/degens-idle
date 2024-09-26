@@ -11,10 +11,10 @@ const loveHallSkills = [
     { name: 'Cosmic Embrace', cost: 1.9, description: 'Gain +1 Love Point every embrace.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 3 },
 
     { name: 'Serenity Flow', cost: 5, description: 'Hopium gain is multiplied by square root of Serenity.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 4 },
-    { name: 'Serene Boost 2', cost: 5, description: '5x Serenity gain. (Serenity Boosts stack)', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 4 },
+    { name: 'Serene Boost 2', cost: 5, description: '5x Serenity gain. (Serenity Boosts stack)', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 4, requirement: 'Serene Boost 1' },
 
     { name: 'Power Infusion', cost: 15, description: '4x Power gain.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 5 },
-    { name: 'Soulbound Embrace', cost: 15, description: 'Gain +2.5 Love Points every embrace.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 5 },
+    { name: 'Soulbound Embrace', cost: 15, description: 'Gain +2.5 Love Points every embrace.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 5, requirement: 'Cosmic Embrace' },
 
     { name: 'Hopeful Soft Cap', cost: 17, description: 'Mini Games Soft Cap uses resource or Hopium (greater)', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 6 },
     { name: 'Fertile Scarcity', cost: 17, description: 'Cosmic Drought sets Stellar Harvest to 250x (instead of 1x)', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 6 },
@@ -22,7 +22,7 @@ const loveHallSkills = [
     { name: 'Inverse Prestige', cost: 21, description: 'Prestige is now based on the highest of your first four resources', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 7 },
     { name: 'Positive Markers', cost: 21, description: 'Buy markers stay turned on through Infinite Embrace', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 7 },
 
-    { name: 'Achievement Boost 2', cost: 32, description: 'Achievement Multiplier x3. (Achievement Boosts stack)', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 8 },
+    { name: 'Achievement Boost 2', cost: 32, description: 'Achievement Multiplier x3. (Achievement Boosts stack)', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 8, requirement: 'Achievement Boost' },
     { name: 'Tunneled Ascension', cost: 32, description: 'Transcending an upgrade also Ascends it.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 8 },
 
     { name: 'Achievement Hypercharge', cost: 50, description: 'Achievement multiplier becomes multiplicative instead of additive.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 9 },
@@ -38,8 +38,6 @@ const loveHallSkills = [
     { name: 'Knowledge Infusion', cost: 0.4, description: '8x Knowledge gain.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 23 },
     { name: 'Basic Resource Boost', cost: 0.4, description: '9x gain to first 4 resources.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 23 },
 
-    // { name: '', cost: 1, description: '', unlocked: false, level: 'Dimensional Shift (27x)', pair: 24 },
-    // { name: '', cost: 1, description: '', unlocked: false, level: 'Dimensional Shift (27x)', pair: 24 },
 
     { name: 'Hall of Knowledge Auto-Buy', cost: 1.5, description: 'Automatically buy upgrades from the Hall of Knowledge.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 25 },
     { name: 'Hall of Power Auto-Buy', cost: 1.5, description: 'Automatically buy upgrades from the Hall of Power.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 25 },
@@ -47,17 +45,22 @@ const loveHallSkills = [
     { name: 'Gaming Addict', cost: 2, description: 'Improves Mini Gamer skill to reduce cooldowns by 75%.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 26 },
     { name: 'First-Wave Automation', cost: 2, description: `Hall of Knowledge automation features are ${formatNumber(1e10)}x cheaper`, unlocked: false, level: 'Dimensional Shift (27x)', pair: 26 },
 
+    //second-wave automation with requirement: 'First-Wave Automation'
+
     // { name: 'Master of Elements', cost: 5, description: 'Reduce Meditation Wind Speed by 50%', unlocked: false, level: 'Dimensional Shift (27x)', pair: 27 },
     // { name: 'Space Continuum Stretch', cost: 5, description: 'Increase Meditation Arena Size by 10%', unlocked: false, level: 'Dimensional Shift (27x)', pair: 27 },
 
-    { name: 'Overwhelming Mercy', cost: 8, description: 'Spare opponents who are far weaker than you and auto unlock the upgrades.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 28 },
-    { name: 'Hopium Fix', cost: 8, description: 'Fix Hopium in the same way Delusion is cured.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 28 },
+    { name: 'Enlightened Prestige', cost: 7, description: 'Prestige Base skill increases from 1.75 base to 1.775 base.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 28 },
+    { name: 'Hopeful Beginning', cost: 7, description: 'Start with 1M Hopium after any prestige layer.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 28 },
 
-    { name: 'Serenity Gain (Copium)', cost: 10, description: 'Serenity gain is multiplied by log2(Copium)/33.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 29 },
-    { name: 'Serenity Gain (Delusion)', cost: 10, description: 'Serenity gain is multiplied by log2(Delusion)/33.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 29 },
+    { name: 'Overwhelming Mercy', cost: 8, description: 'Spare opponents who are far weaker than you and auto unlock the upgrades.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 29, requirement: 'Celestial Precision' },
+    { name: 'Hopium Fix', cost: 8, description: 'Fix Hopium in the same way Delusion is cured.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 29 },
 
-    { name: 'Serenity Gain (Yacht Money)', cost: 10, description: 'Serenity gain is multiplied by log2(Yacht Money)/33.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 30 },
-    { name: 'Serenity Gain (Troll Points)', cost: 10, description: 'Serenity gain is multiplied by log2(Troll Points)/33.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 30 },
+    { name: 'Serenity Gain (Copium)', cost: 10, description: 'Serenity gain is multiplied by log2(Copium)/33.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 30 },
+    { name: 'Serenity Gain (Delusion)', cost: 10, description: 'Serenity gain is multiplied by log2(Delusion)/33.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 30 },
+
+    { name: 'Serenity Gain (Yacht Money)', cost: 10, description: 'Serenity gain is multiplied by log2(Yacht Money)/33.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 31 },
+    { name: 'Serenity Gain (Troll Points)', cost: 10, description: 'Serenity gain is multiplied by log2(Troll Points)/33.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 31 },
 
 
     // 42x Level - the meaning of life
@@ -74,13 +77,13 @@ const loveHallSkills = [
     { name: 'Overcompressed Power', cost: 0.5, description: 'Compressed/Condensed Power Skills are 3x as powerful.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 43 },
 
     { name: 'Raise That Soft Cap', cost: 1.19, description: 'Increase mini games soft cap to 24 hours', unlocked: false, level: 'Cosmic Truth (42x)', pair: 44 },
-    { name: 'Rewarding Meditations', cost: 1.19, description: 'Meditations give +40% rewards', unlocked: false, level: 'Cosmic Truth (42x)', pair: 44 },
+    { name: 'Rewarding Meditations', cost: 1.19, description: 'Meditations give +40% rewards', unlocked: false, level: 'Cosmic Truth (42x)', pair: 44, requirement: 'Rewarding Victories' },
 
-    { name: 'Hopium Trade', cost: 4.2, description: 'Trade Hopium for any of the first 4 resources at a 1:1 ratio.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 45 },
     { name: 'Infinite Prestige', cost: 4.2, description: 'Automatically apply Prestige Mult without resetting.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 45 },
+    { name: 'Hopium Trade', cost: 4.2, description: 'Trade Hopium for any of the first 4 resources at a 1:1 ratio.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 45 },
 
     { name: 'Resonance of Love', cost: 8, description: 'Multiply Serenity by log2 of current Love Points.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 46 },
-    { name: 'Equilibrium of Hope', cost: 8, description: '(Does not work without Hopium Trade) Automatically trade 1% Hopium for each lower resource.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 46 },
+    { name: 'Equilibrium of Hope', cost: 8, description: 'Automatically trade 1% Hopium for each lower resource.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 46, requirement: 'Hopium Trade' },
 
     { name: 'Temporal Drag', cost: 12, description: 'During meditation, decrease ball velocity by 25%.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 47 },
     { name: 'Look Past Distractions', cost: 12, description: 'During meditation, decrease # of balls by 1.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 47 },
@@ -300,6 +303,14 @@ function unlockLoveHallSkill(skill, duringLoad = false) {
                 divideLibrarySkillCost('Quantum Symphony', 1e10);
                 break;
 
+            case 'Enlightened Prestige':
+                enlightenedPrestigeSkill = true;
+                break;
+
+            case 'Hopeful Beginning':
+                hopefulBeginningSkill = true;
+                break;
+                
             case 'Overwhelming Mercy':
                 autoFightSkill = true;
                 break;
@@ -449,32 +460,48 @@ function updateLoveHallSkillDisplay() {
             const skillRow = skillDiv.closest('.lovehall-skill-row');
 
             // Set the link color based on the number of unlocked skills in the pair
-            if (pairUnlockedCount === 0) {
-                skillRow.style.setProperty('--glowing-line-color', '#ffffff'); // White if none are purchased
-            } else if (pairUnlockedCount === 1) {
-                skillRow.style.setProperty('--glowing-line-color', '#ff3333'); // Red if one is purchased
-            } else if (pairUnlockedCount === 2) {
-                skillRow.style.setProperty('--glowing-line-color', '#ff66b2'); // Pink if both are purchased
+            if (skillRow) {
+                if (pairUnlockedCount === 0) {
+                    skillRow.style.setProperty('--glowing-line-color', '#ffffff'); // White if none are purchased
+                } else if (pairUnlockedCount === 1) {
+                    skillRow.style.setProperty('--glowing-line-color', '#ff3333'); // Red if one is purchased
+                } else if (pairUnlockedCount === 2) {
+                    skillRow.style.setProperty('--glowing-line-color', '#ff66b2'); // Pink if both are purchased
+                }
             }
 
-            if (!skill.unlocked) {
-                skillDiv.classList.add('locked');
-                skillDiv.classList.remove('purchased');
-                if (lovePoints >= skill.cost) {
-                    skillDiv.classList.add('affordable');
+            let descriptionText = skill.description;
+            if (skill.requirement && !loveHallSkills.find(s => s.name === skill.requirement).unlocked) {
+                descriptionText = `<span style="color: #B22222;">Requires: ${skill.requirement}</span>`;
+            }
+
+            const descriptionParagraph = skillDiv.querySelector('p:nth-of-type(2)');
+            if (descriptionParagraph) {
+                if (!skill.unlocked) {
+                    skillDiv.classList.add('locked');
+                    skillDiv.classList.remove('purchased');
+                    if (lovePoints >= skill.cost) {
+                        skillDiv.classList.add('affordable');
+                    } else {
+                        skillDiv.classList.remove('affordable');
+                    }
+                    descriptionParagraph.innerHTML = descriptionText;
                 } else {
-                    skillDiv.classList.remove('affordable');
+                    skillDiv.classList.add('purchased');
+                    skillDiv.classList.remove('locked', 'affordable');
+                    descriptionParagraph.textContent = skill.description;
                 }
-            } else {
-                skillDiv.classList.add('purchased');
-                skillDiv.classList.remove('locked', 'affordable');
             }
         }
     });
 
     // Update Love Points display
-    lovePointsDisplay.textContent = `Love Points: ${formatNumber(lovePoints)}`;
+    if (lovePointsDisplay) {
+        lovePointsDisplay.textContent = `Love Points: ${formatNumber(lovePoints)}`;
+    }
 }
+
+
 
 function initializeLoveHallSkills() {
     const skillLevels = {};
@@ -512,11 +539,18 @@ function initializeLoveHallSkills() {
                 const skillDiv = document.createElement('div');
                 skillDiv.classList.add('lovepair-skill');
                 skillDiv.setAttribute('data-skill-name', skill.name);
+
+                let descriptionText = skill.description;
+                if (skill.requirement && !loveHallSkills.find(s => s.name === skill.requirement).unlocked) {
+                    descriptionText = `<strong>Requires ${skill.requirement}</strong>`;
+                }
+
                 skillDiv.innerHTML = `
                     <p class="skill-cost">Cost: ${formatNumber(skill.cost)} Love Points</p>
                     <h3>${skill.name}</h3>
-                    <p>${skill.description}</p>
+                    <p>${descriptionText}</p>
                 `;
+
                 if (!skill.unlocked) {
                     skillDiv.classList.add('locked');
                     if (lovePoints >= skill.cost) {
@@ -529,8 +563,14 @@ function initializeLoveHallSkills() {
                 }
 
                 skillDiv.addEventListener('click', async () => {
+                    // Check if the skill has a requirement and if that requirement is unlocked
+                    if (skill.requirement && !loveHallSkills.find(s => s.name === skill.requirement).unlocked) {
+                        showStatusMessage(skillDiv, 'Missing Prerequisite Skill', false);
+                        return;
+                    }
+
                     if (!skill.unlocked && lovePoints >= skill.cost) {
-                        // Only show the confirmation modal if loveHallUnlocked is false
+                        // Show the confirmation modal only if the requirement is met
                         const result = await showMessageModal(
                             'Confirm Love Skill Unlock',
                             `Do you want to unlock ${skill.name} for ${formatNumber(skill.cost)} Love Points? Remember - the paired skill will increase in cost!`,
@@ -547,6 +587,7 @@ function initializeLoveHallSkills() {
                         showStatusMessage(skillDiv, 'Insufficient Love Points to unlock this skill.', false);
                     }
                 });
+
                 skillRow.appendChild(skillDiv);
             });
 
@@ -556,6 +597,8 @@ function initializeLoveHallSkills() {
         loveHallSkillsContainer.appendChild(skillColumnDiv);
     });
 }
+
+
 
 function outsideLoveHallClickListener(event) {
     const loveHallContent = document.querySelector('.lovehall-overlay-content');
