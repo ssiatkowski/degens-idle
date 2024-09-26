@@ -53,9 +53,9 @@ const meditationChallenges = {
         focus: 1,
         ballCount: 15,
         arenaSize: 600,
-        ballSize: 18,
+        ballSize: 20,
         ballSizeDelta: 3,
-        velocity: 0.96,
+        velocity: 0.975,
         wind: 0,
         respawnFactor: 1,
         livesPerBall: 1,
@@ -91,7 +91,7 @@ const meditationChallenges = {
         arenaSize: 520,
         ballSize: 90,
         ballSizeDelta: 40,
-        velocity: 12,
+        velocity: 10,
         wind: 5,
         respawnFactor: 1,
         livesPerBall: 1,
@@ -634,11 +634,11 @@ function calculateVelocityReduction() {
 
 // Function to calculate gravity based on power
 function calculateGravity() {
-    if (power <= 1e17) {
-        return 0; // Gravity is 0 if power is <= 1e20
+    if (power <= 1e18) {
+        return 0; // Gravity is 0 if power is <= 1e18
     } else {
-        // Calculate gravity based on power, increasing by 1 for every 17 orders of magnitude starting from 1e34
-        return Math.max(0, (Math.log10(power) - 34) / 17 + 1);
+        // Calculate gravity based on power, increasing by 1 for every 15 orders of magnitude starting from 1e18
+        return Math.max(0, (Math.log10(power) - 33) / 15 + 1);
     }
 }
 

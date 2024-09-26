@@ -1510,10 +1510,16 @@ const upgrades = [
         earnings: { copiumPerSecond: 5e47, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0.5 },
         img: `imgs/trying_my_best.jpg`,
     },
+    {         
+        name: `Ship Has Sailed`,
+        cost: { copium: 1e110, delusion: 0, yachtMoney: 0, trollPoints: 1e111, hopium: 2e113, knowledge: 0, power: 0, serenity: 500000 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: -5e47, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 2.5 },
+        img: `imgs/ship_has_sailed.jpg`,
+    },
     {
         name: `More Decisions...`,
         cost: { copium: 0, delusion: 1e114, yachtMoney: 0, trollPoints: 3e114, hopium: 0, knowledge: 0, power: 1e23, serenity: 2e7 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 3e47, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 2.4 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 3e47, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 3.4 },
         img: `imgs/two_buttons_2.jpg`,     
     },
     {         
@@ -1524,6 +1530,12 @@ const upgrades = [
         isMeditation: true,
         isKey: true,
         message: `You’ve discovered that <strong>true freedom lies in the ability to live independently and make your own choices</strong>, without unnecessary constraints. Libertarianism teaches the importance of personal liberty and responsibility, where individuals thrive when allowed to pursue their own paths. Through this meditation, you’ve embraced the value of autonomy, and with it, the power to shape your own destiny.`,
+    },
+    {         
+        name: `Different Tastes`,
+        cost: { copium: 0, delusion: 2e116, yachtMoney: 0, trollPoints: 1e116, hopium: 0, knowledge: 0, power: 0, serenity: 1e9 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 1e50, yachtMoneyPerSecond: 0, trollPointsPerSecond: 2e49, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 24 },
+        img: `imgs/different_tastes.jpg`,
     },
     {         
         name: `One Drink`,
