@@ -13,20 +13,23 @@ const loveHallSkills = [
     { name: 'Serenity Flow', cost: 5, description: 'Hopium gain is multiplied by square root of Serenity.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 4 },
     { name: 'Serene Boost 2', cost: 5, description: '5x Serenity gain. (Serenity Boosts stack)', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 4, requirement: 'Serene Boost 1' },
 
-    { name: 'Power Infusion', cost: 15, description: '4x Power gain.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 5 },
-    { name: 'Soulbound Embrace', cost: 15, description: 'Gain +2.5 Love Points every embrace.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 5, requirement: 'Cosmic Embrace' },
+    { name: 'Illusion of Power', cost: 9, description: 'Lower auto-fight power threshold by 10x each for ascended/trasncended upgrades.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 5, requirement: 'Overwhelming Mercy' },
+    { name: 'Early Accelerant', cost: 9, description: '10x multiplier to first 6 resources, degrades by 3% with each purchased upgrade.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 5 },
 
-    { name: 'Hopeful Soft Cap', cost: 17, description: 'Mini Games Soft Cap uses resource or Hopium (greater)', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 6 },
-    { name: 'Fertile Scarcity', cost: 17, description: 'Cosmic Drought sets Stellar Harvest to 250x (instead of 1x)', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 6 },
+    { name: 'Power Infusion', cost: 15, description: '4x Power gain.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 6 },
+    { name: 'Soulbound Embrace', cost: 15, description: 'Gain +2.5 Love Points every embrace.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 6, requirement: 'Cosmic Embrace' },
+
+    { name: 'Hopeful Soft Cap', cost: 17, description: 'Mini Games Soft Cap uses resource or Hopium (greater)', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 7 },
+    { name: 'Fertile Scarcity', cost: 17, description: 'Cosmic Drought sets Stellar Harvest to 250x (instead of 1x)', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 7 },
     
-    { name: 'Inverse Prestige', cost: 21, description: 'Prestige is now based on the highest of your first four resources', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 7 },
-    { name: 'Positive Markers', cost: 21, description: 'Buy markers stay turned on through Infinite Embrace', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 7 },
+    { name: 'Inverse Prestige', cost: 21, description: 'Prestige is now based on the highest of your first four resources', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 8 },
+    { name: 'Positive Markers', cost: 21, description: 'Buy markers stay turned on through Infinite Embrace', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 8 },
 
-    { name: 'Achievement Boost 2', cost: 32, description: 'Achievement Multiplier x3. (Achievement Boosts stack)', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 8, requirement: 'Achievement Boost' },
-    { name: 'Tunneled Ascension', cost: 32, description: 'Transcending an upgrade also Ascends it.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 8 },
+    { name: 'Achievement Boost 2', cost: 32, description: 'Achievement Multiplier x3. (Achievement Boosts stack)', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 9, requirement: 'Achievement Boost' },
+    { name: 'Tunneled Ascension', cost: 32, description: 'Transcending an upgrade also Ascends it.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 9 },
 
-    { name: 'Achievement Hypercharge', cost: 50, description: 'Achievement multiplier becomes multiplicative instead of additive.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 9 },
-    { name: 'Perfect PU God-Mode', cost: 50, description: 'Make PU God-Mode perfect with diminishing returns at 99.2%.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 9 },
+    { name: 'Achievement Hypercharge', cost: 50, description: 'Achievement multiplier becomes multiplicative instead of additive.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 10 },
+    { name: 'Perfect PU God-Mode', cost: 50, description: 'Make PU God-Mode perfect with diminishing returns at 99.2%.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 10 },
 
     // 27x Level - dimensions in string theory
     { name: 'Yacht Money Surge', cost: 0.05, description: '24x Yacht Money gain.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 21 },
@@ -44,8 +47,9 @@ const loveHallSkills = [
 
     { name: 'Gaming Addict', cost: 2, description: 'Improves Mini Gamer skill to reduce cooldowns by 75%.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 26 },
     { name: 'First-Wave Automation', cost: 2, description: `Hall of Knowledge automation features are ${formatNumber(1e10)}x cheaper`, unlocked: false, level: 'Dimensional Shift (27x)', pair: 26 },
-
-    //second-wave automation with requirement: 'First-Wave Automation'
+    
+    // { name: '', cost: 4, description: '', unlocked: false, level: 'Dimensional Shift (27x)', pair: 27 },
+    // { name: 'Second-Wave Automation', cost: 4, description: `Keep Hall of Knowledge automation features unlocked`, unlocked: false, level: 'Dimensional Shift (27x)', pair: 27, requirement: 'First-Wave Automation' },
 
     // { name: 'Master of Elements', cost: 5, description: 'Reduce Meditation Wind Speed by 50%', unlocked: false, level: 'Dimensional Shift (27x)', pair: 27 },
     // { name: 'Space Continuum Stretch', cost: 5, description: 'Increase Meditation Arena Size by 10%', unlocked: false, level: 'Dimensional Shift (27x)', pair: 27 },
@@ -88,8 +92,12 @@ const loveHallSkills = [
     { name: 'Temporal Drag', cost: 12, description: 'During meditation, decrease ball velocity by 25%.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 47 },
     { name: 'Look Past Distractions', cost: 12, description: 'During meditation, decrease # of balls by 1.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 47 },
 
-    // { name: 'Knowledge Exchange', cost: 14, description: 'Trade Hopium for Knowledge at a 1e20:1 ratio.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 46 },
-    // { name: 'Big Crunch Factor Boost', cost: 14, description: 'Increase Big Crunch base from 2 to 2.1.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 46 },
+    // { name: 'Knowledge Exchange', cost: 14, description: 'Trade Hopium for Knowledge at a 1e20:1 ratio.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 48 },
+    // { name: 'Big Crunch Factor Boost', cost: 14, description: 'Increase Big Crunch base from 2 to 2.1.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 48 },
+
+    // { name: 'Intrinsic Meditation', cost: 42, description: 'Auto complete meditations that are ascended & transcended.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 49 },
+    // { name: 'The Ultimate Fix', cost: 42, description: 'Fix all remaining resources.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 49, requirement: 'Hopium Fix' },
+
 
 ];
 
@@ -187,7 +195,15 @@ function unlockLoveHallSkill(skill, duringLoad = false) {
                     updateEffectiveMultipliers();
                 }
                 break;
-        
+
+            case 'Illusion of Power':
+                illusionOfPowerSkill = true;
+                break;
+                    
+            case 'Early Accelerant':
+                earlyAccelerantSkill = true;
+                break;
+
             case 'Power Infusion':
                 powerInfusionMultiplier = 4;
                 if(!duringLoad){

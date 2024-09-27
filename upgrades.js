@@ -768,7 +768,7 @@ const upgrades = [
         isFight: true,
         achievement: 'Begin Training',
         hoverOverwrite: 'Beware 3 power will be consumed. Remaining power will be converted to Damage.',
-        autoBattlePower: 1000,
+        autoBattlePower: 10000,
     },
     {
         name: `Agent Smith`,
@@ -777,7 +777,7 @@ const upgrades = [
         img: `imgs/agent_smith.jpg`,
         isFight: true,
         isKey: true,
-        autoBattlePower: 8000,
+        autoBattlePower: 50000,
     },
     {
         name: `Feel the Pump`,
@@ -800,7 +800,7 @@ const upgrades = [
         isFight: true,
         achievement: 'Mortal Kombat',
         isKey: true,
-        autoBattlePower: 40000,
+        autoBattlePower: 200000,
     },
     {
         name: `Small Wins`,
@@ -821,7 +821,7 @@ const upgrades = [
         img: `imgs/darth_vader.jpg`,
         isFight: true,
         isKey: true,
-        autoBattlePower: 150000,
+        autoBattlePower: 600000,
     },
     {
         name: `Burn the House Down`,
@@ -876,7 +876,7 @@ const upgrades = [
         img: `imgs/sauron.jpg`,
         isFight: true,
         isKey: true,
-        autoBattlePower: 5e7,
+        autoBattlePower: 1e8,
         achievement: 'Avoid the Crit',
     },
     {
@@ -911,7 +911,7 @@ const upgrades = [
         img: `imgs/kratos.jpg`,
         isFight: true,
         isKey: true,
-        autoBattlePower: 6.7e11,
+        autoBattlePower: 6.5e10,
 
     },
     {
@@ -1026,7 +1026,7 @@ const upgrades = [
         img: `imgs/chuck_norris.jpg`,
         isFight: true,
         isKey: true,
-        autoBattlePower: 5e15,
+        autoBattlePower: 2e15,
     },
     {
         name: `Surprise Package`,
@@ -1069,7 +1069,7 @@ const upgrades = [
                 <p><strong>Vegeta:</strong> You’re ready. My goal was for you to grow strong enough to stop her. Now, go do it. Save the multiverse!</p>
                 <p>With those words, Vegeta collapses, a proud but weary smile on his face, knowing his mission is complete.</p>`,
         isKey: true,
-        autoBattlePower: 1e18,
+        autoBattlePower: 1e17,
     },
     {
         name: `Oedipus`,
@@ -1545,13 +1545,13 @@ const upgrades = [
     },
     {         
         name: `They Whatevered`,
-        cost: { copium: 1e122, delusion: 0, yachtMoney: 2e122, trollPoints: 3e123, hopium: 0, knowledge: 0, power: 0, serenity: 5e9 },
+        cost: { copium: 1e121, delusion: 0, yachtMoney: 2e121, trollPoints: 3e122, hopium: 0, knowledge: 0, power: 0, serenity: 5e9 },
         earnings: { copiumPerSecond: 1e50, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 8e49, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 79 },
         img: `imgs/whatever_bitches.jpg`,
     },
     {         
         name: `Hinduism`,
-        cost: { copium: 1e122, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 1e27, serenity: 2e9 },
+        cost: { copium: 1e121, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 1e27, serenity: 2e9 },
         earnings: { copiumPerSecond: 5e52, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 1e52, knowledgePerSecond: 3e20, powerPerSecond: 0, serenityPerSecond: 3250 },
         img: `imgs/arena_hinduism.png`,
         isMeditation: true,
@@ -1559,19 +1559,43 @@ const upgrades = [
         message: `Through this meditation, you’ve gained insight into the <strong>cycle of life, karma, and spiritual growth</strong>. Hinduism teaches that every action shapes your journey toward enlightenment, and by aligning with your dharma (righteous path), you move closer to your true purpose. You’ve learned the importance of inner peace, self-awareness, and respect for the interconnectedness of all life. Continue on your path with an open heart, and the universe will guide you.`,
     },
     {         
+        name: `We All Deserve Breaks`,
+        cost: { copium: 0, delusion: 1e122, yachtMoney: 0, trollPoints: 2e123, hopium: 0, knowledge: 0, power: 0, serenity: 2e10 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 2e52, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 280 },
+        img: `imgs/not_adulting.jpg`,
+    },
+    {         
         name: `Overdue Xzibit Cameo`,
-        cost: { copium: 1e127, delusion: 0, yachtMoney: 1e128, trollPoints: 4.2e127, hopium: 0, knowledge: 0, power: 0, serenity: 9e9 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 4.2e52, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 420 },
+        cost: { copium: 1e127, delusion: 0, yachtMoney: 1e128, trollPoints: 4.2e127, hopium: 0, knowledge: 0, power: 0, serenity: 9e10 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 4.2e53, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 420 },
         img: `imgs/xzibit.jpg`,
     },
     {         
         name: `Shinto`,
-        cost: { copium: 1e128, delusion: 1e128, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 2e31, serenity: 1e10 },
-        earnings: { copiumPerSecond: 2e54, delusionPerSecond: 2e54, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 1e48, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 47000 },
+        cost: { copium: 1e128, delusion: 1e128, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 2e31, serenity: 1e12 },
+        earnings: { copiumPerSecond: 5e54, delusionPerSecond: 5e54, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 7e52, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 47000 },
         img: `imgs/arena_shinto.png`,
         isMeditation: true,
         isKey: true,
         message: `Through this meditation, you’ve deepened your <strong>connection to the kami (spirits) that reside in nature and all things</strong>. Shinto teaches that harmony with the natural world brings clarity, peace, and spiritual balance. By honoring the sacredness of life, you’ve learned that everything around you is alive with spiritual energy. Continue to respect and live in harmony with nature, and it will nurture your spirit in return.`,
+    },
+    {         
+        name: `Dad Joke #1`,
+        cost: { copium: 0, delusion: 0, yachtMoney: 4e128, trollPoints: 4e128, hopium: 0, knowledge: 0, power: 0, serenity: 1e13 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 4e54, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 4567 },
+        img: `imgs/dad_joke_1.jpg`,
+    },
+    {         
+        name: `Dad Joke #2`,
+        cost: { copium: 0, delusion: 0, yachtMoney: 8e128, trollPoints: 8e128, hopium: 0, knowledge: 0, power: 0, serenity: 3e13 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 8e54, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 5678 },
+        img: `imgs/dad_joke_2.jpg`,
+    },
+    {         
+        name: `Dad Joke #3`,
+        cost: { copium: 0, delusion: 0, yachtMoney: 1.6e129, trollPoints: 1.6e129, hopium: 0, knowledge: 0, power: 0, serenity: 9e13 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1.6e55, hopiumPerSecond: 1e52, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 6789 },
+        img: `imgs/dad_joke_3.jpg`,
     },
     {         
         name: `Stoicism`,

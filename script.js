@@ -117,6 +117,9 @@ let fertileScarcitySkill = false;
 let inversePrestigeSkill = false;
 let positiveMarkersSkill = false;
 let tunneledAscensionSkill = false;
+let illusionOfPowerSkill = false;
+let earlyAccelerantSkill = false;
+let earlyAccelerantMult = 1;
 
 let serenityGainCopium = false;
 let serenityGainDelusion = false;
@@ -937,6 +940,9 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
                 inversePrestigeSkill = false;
                 positiveMarkersSkill = false;
                 tunneledAscensionSkill = false;
+                illusionOfPowerSkill = false;
+                earlyAccelerantSkill = false;
+                earlyAccelerantMult = 1;
 
                 serenityGainCopium = false;
                 serenityGainDelusion = false;
@@ -1533,7 +1539,9 @@ function updateDisplay() {
 
 function updateMultipliersDisplay() {
 
-    totalMultiplier = epsMultiplier * godModeMultiplier * puGodMultiplier * bigCrunchMultiplier * achievementMultiplier * devMultiplier * stellarHarvestMult * stellarMeditationMult * cosmicGamekeeperMultiplier
+    earlyAccelerantMult = earlyAccelerantSkill ? 1 + (9 * Math.pow(0.97, purchasedUpgrades.length)) : 1;
+
+    totalMultiplier = epsMultiplier * godModeMultiplier * puGodMultiplier * bigCrunchMultiplier * achievementMultiplier * devMultiplier * stellarHarvestMult * stellarMeditationMult * cosmicGamekeeperMultiplier * earlyAccelerantMult
 
     document.getElementById('prestige-multiplier').textContent = `Prestige: x${formatNumber(epsMultiplier)} mult`;
     document.getElementById('god-mode-display').textContent = `God-Mode Level ${godModeLevel} (x${formatNumber(godModeMultiplier)} mult)`;
@@ -1780,8 +1788,11 @@ async function ascend(skipConfirms = false) {
             epsMultiplier = calculateAscensionEpsMult();
             prestigeRequirement = calculateMinResource();
             
+            let suppressAscendPopup = false;
+
             if (tongueTwisterState === 3 && selectedUpgrades.some(upgrade => upgrade.name === 'Ascension')) {
                 unlockAchievement('Tongue Twister');
+                suppressAscendPopup = true;
             }
             if (tongueTwisterState === 1 && selectedUpgrades.some(upgrade => upgrade.name === 'Transcendence')) {
                 tongueTwisterState = 2;
@@ -1790,14 +1801,19 @@ async function ascend(skipConfirms = false) {
             if (!skipConfirms) {
                 showMessageModal('Ascension Successful!', `<strong>You have entered God-Mode Level ${godModeLevel}.</strong><br> Your multiplier God-Mode is now x${formatNumber(godModeMultiplier)}, your prestige multiplier is x${formatNumber(epsMultiplier)}, and your chosen upgrades are 10x stronger.`);        
 
-                unlockAchievement('First Ascension');
+                if (!achievementsMap.get('First Ascension').isUnlocked) {
+                    unlockAchievement('First Ascension');
+                    suppressAscendPopup = true;
+                }
             }
 
             restartGame(true); // Use the existing restartGame function with prestige mode
             // Save game state after ascending
             saveGameState();
 
-            showPopupTooltip(`Ascended ${selectedUpgrades.length} Upgrades`, color='#00008B')
+            if (!suppressAscendPopup) {
+                showPopupTooltip(`Ascended ${selectedUpgrades.length} Upgrades`, color='#00008B')  
+            }
                     
         }
         
@@ -1844,6 +1860,8 @@ async function transcend(skipConfirms = false) {
             puGodLevel = upgrades.filter(upgrade => upgrade.isPUGodMode).length;
             puGodMultiplier = calculatePUGodModeMultiplier(puGodLevel);
 
+            let suppressAscendPopup = false;
+
             if (tongueTwisterState === 0 && selectedUpgrades.some(upgrade => upgrade.name === 'Transcendence')) {
                 tongueTwisterState = 1;
                 if (tunneledAscensionSkill) {
@@ -1853,13 +1871,15 @@ async function transcend(skipConfirms = false) {
                 tongueTwisterState = 3;
                 if (tunneledAscensionSkill) {
                     unlockAchievement('Tongue Twister');
+                    suppressAscendPopup = true;
                 }
             }
             
             if(tunneledAscensionSkill){
                 const gmLevelsGained = upgrades.filter(upgrade => upgrade.isGodMode).length - godModeLevel;
-                if (gmLevelsGained == 24 && selectedUpgrades.length == 24){
-                    unlockAchievement('Just Shy of Longest Tunnel');
+                if (gmLevelsGained == 5 && selectedUpgrades.length == 24){
+                    unlockAchievement('Laerdal Tunnel');
+                    suppressAscendPopup = true;
                 }
                 godModeLevel = upgrades.filter(upgrade => upgrade.isGodMode).length;
                 godModeMultiplier = calculateGodModeMultiplier(godModeLevel);
@@ -1883,7 +1903,9 @@ async function transcend(skipConfirms = false) {
             // Save game state after transcending
             saveGameState();
 
-            showPopupTooltip(`Transcended ${selectedUpgrades.length} Upgrades`, color='#702963')
+            if(!suppressAscendPopup) {
+                showPopupTooltip(`Transcended ${selectedUpgrades.length} Upgrades`, color='#702963')
+            }
 
         }
         // Trigger stop event after process complete
@@ -2295,8 +2317,8 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true, ski
                 }
                 return;
             }
-
-            let canManualFight = !(autoFightSkill && autoFightEnabled) || power < upgrade.autoBattlePower;
+            
+            let canManualFight = !(autoFightSkill && autoFightEnabled) || power < (illusionOfPowerSkill ? (upgrade.isGodMode && upgrade.isPUGodMode ? upgrade.autoBattlePower / 100 : (upgrade.isGodMode || upgrade.isPUGodMode ? upgrade.autoBattlePower / 10 : upgrade.autoBattlePower)) : upgrade.autoBattlePower);
 
             if (canManualFight && !isEventInProgress() && startEvent("bossfight")) {
 
@@ -2414,9 +2436,9 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true, ski
             localStorage.setItem('messageShownUpgrades', JSON.stringify(messageShownUpgrades));
         }
 
-        if (name === 'Shinto') {
+        if (name === 'Stoicism') {
             showMessageModal('The Journey Continues', 
-                "This marks the end of v0.9262. You've not only completed the Power Saga, but you're also getting the hang of Infinite Embraces and Meditations! Congratulations on your progress, and welcome to the next stage of your journey. "
+                "This marks the end of v0.927. You've not only completed the Power Saga, but you're also getting the hang of Infinite Embraces and Meditations! Congratulations on your progress, and welcome to the next stage of your journey. "
                 + "With the Hall of Love now open, Love Points are becoming a key part of your experience, alongside the skills you unlock there. While these new mechanics are taking shape, expect ongoing balancing as the game evolves. "
                 + "Feel free to dive deeper into the skills and explore what's possible. The journey is far from over—more meditations and epic content are on the way! "
                 + "Stay connected on Discord, share your feedback, and together, let's create something truly unforgettable!"
@@ -2515,8 +2537,9 @@ function buyAllUpgrades(limit, pressedButton) {
         topUpgrades.forEach(upgrade => {
             if (buyMarkersSkill) {
                 const switchState = JSON.parse(localStorage.getItem(`switchState-${upgrade.name}`));
-                const isAffordableUpgrade = isAffordable(upgrade.cost);
-                const autoFightCondition = autoFightSkill && autoFightEnabled && power > upgrade.autoBattlePower;
+                const isAffordableUpgrade = isAffordable(upgrade.cost);      
+                const autoFightCondition = autoFightSkill && autoFightEnabled && power > (illusionOfPowerSkill ? (upgrade.isGodMode && upgrade.isPUGodMode ? upgrade.autoBattlePower / 100 : (upgrade.isGodMode || upgrade.isPUGodMode ? upgrade.autoBattlePower / 10 : upgrade.autoBattlePower)) : upgrade.autoBattlePower);
+
         
                 if (isAffordableUpgrade && autoFightCondition) {
                     buyUpgrade(encodeName(upgrade.name), false, true);
@@ -2777,7 +2800,8 @@ function autobuyUpgrades() {
             const upgrade = topUpgrades[i];
             const switchState = JSON.parse(localStorage.getItem(`switchState-${upgrade.name}`));
             const isAffordableUpgrade = isAffordable(upgrade.cost);
-            const autoFightCondition = autoFightSkill && autoFightEnabled && power > upgrade.autoBattlePower;
+            const autoFightCondition = autoFightSkill && autoFightEnabled && power > (illusionOfPowerSkill ? (upgrade.isGodMode && upgrade.isPUGodMode ? upgrade.autoBattlePower / 100 : (upgrade.isGodMode || upgrade.isPUGodMode ? upgrade.autoBattlePower / 10 : upgrade.autoBattlePower)) : upgrade.autoBattlePower);
+
 
             // Buy the upgrade if either condition is met:
             // 1. It is affordable and switchState is true
@@ -3812,6 +3836,9 @@ function calculateTooltip(resourceId) {
         }
         if (bigCrunchMultiplier !== 1) {
             tooltip += `<span style="color:#FF6347">x${formatNumber(bigCrunchMultiplier)} (Big Crunch)</span><br>`;
+        }
+        if (earlyAccelerantMult !== 1) {
+            tooltip += `<span style="color:#F8C8DC">x${formatNumber(earlyAccelerantMult)} (Early Accelerant)</span><br>`;
         }
     }
 

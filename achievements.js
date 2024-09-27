@@ -700,6 +700,34 @@ const achievements = [
         type: 'progression',
     },
     {
+        name: 'The Giver',
+        isUnlocked: false,
+        hoverText: `complete certain meditation without losing any focus`,
+        img: 'imgs/achievements/the_giver.jpg',
+        type: 'puzzle',
+    },
+    {
+        name: 'Tamed Lion',
+        isUnlocked: false,
+        hoverText: `complete certain meditation without losing any focus`,
+        img: 'imgs/achievements/tamed_lion.jpg',
+        type: 'puzzle',
+    },
+    {
+        name: 'Out of Body Experience',
+        isUnlocked: false,
+        hoverText: `lose focus in Dualism meditation with exactly 2 balls`,
+        img: 'imgs/achievements/body_and_soul.jpg',
+        type: 'puzzle',
+    },
+    {
+        name: 'Laerdal Tunnel',
+        isUnlocked: false,
+        hoverText: 'TT.A km',
+        img: 'imgs/achievements/longest_tunnel.jpg',
+        type: 'puzzle',
+    },
+    {
         name: 'More than Sauron',
         isUnlocked: false,
         hoverText: '???',
@@ -753,13 +781,6 @@ const achievements = [
         isUnlocked: false,
         hoverText: '???',
         img: 'imgs/achievements/great_american_cookout.jpg',
-        type: 'puzzle',
-    },
-    {
-        name: 'Just Shy of Longest Tunnel',
-        isUnlocked: false,
-        hoverText: '???',
-        img: 'imgs/achievements/longest_tunnel.jpg',
         type: 'puzzle',
     },
     {

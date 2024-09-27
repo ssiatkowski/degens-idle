@@ -17,6 +17,8 @@ let windSpeed;
 let windDirection;
 let deismDoubled = false;
 
+let fullFocusPreserved = true;
+
 let respawnFactor;
 let livesPerBall;
 
@@ -79,7 +81,7 @@ const meditationChallenges = {
         arenaSize: 350,
         ballSize: 140,
         ballSizeDelta: 10,
-        velocity: 1.5,
+        velocity: 1.55,
         wind: 0,
         respawnFactor: 1,
         livesPerBall: 1,
@@ -90,7 +92,7 @@ const meditationChallenges = {
         ballCount: 5,
         arenaSize: 520,
         ballSize: 90,
-        ballSizeDelta: 40,
+        ballSizeDelta: 50,
         velocity: 10,
         wind: 5,
         respawnFactor: 1,
@@ -109,7 +111,7 @@ const meditationChallenges = {
         livesPerBall: 1,
     },
     "Shinto": {
-        duration: 22,
+        duration: 21.5,
         focus: 1,
         ballCount: 1,
         arenaSize: 275,
@@ -121,13 +123,13 @@ const meditationChallenges = {
         livesPerBall: 1,
     },
     "Stoicism": {
-        duration: 32,
+        duration: 33,
         focus: 10,
         ballCount: 12,
         arenaSize: 700,
         ballSize: 150,
         ballSizeDelta: 20,
-        velocity: 3,
+        velocity: 3.2,
         wind: 1.5,
         respawnFactor: 1,
         livesPerBall: 5,
@@ -145,9 +147,9 @@ const meditationChallenges = {
         livesPerBall: 2,
     },
     "Skepticism": {
-        duration: 230,
+        duration: 300,
         focus: 1,
-        ballCount: 3,
+        ballCount: 8,
         arenaSize: 450,
         ballSize: 200,
         ballSizeDelta: 10,
@@ -187,6 +189,7 @@ function startMeditationGame(challengeName, backgroundImage, stageNumber = 1, pr
         windSpeed = challenge.wind; // Set wind speed from the challenge
         windDirection = windDirections[Math.floor(Math.random() * windDirections.length)]; // Pick a random direction
 
+        fullFocusPreserved = true;
         livesPerBall = challenge.livesPerBall;
 
         // Show the meditation overlay
@@ -316,6 +319,10 @@ function updateMeditationGame(resolve, stageNumber) {
             resolve(true); // Player wins the challenge
             stopMeditationGame();
             showPopupTooltip(`Successful Meditation: ${currentChallengeName}`, color='#4682B4', 2);
+            if (fullFocusPreserved ) {
+                if (currentChallengeName === 'Altruism') { unlockAchievement('The Giver'); }
+                else if (currentChallengeName === 'Rastafarianism') { unlockAchievement('Tamed Lion'); }
+            }
             return;
         }
     }
@@ -376,8 +383,8 @@ function moveBalls() {
         const deltaYToCenter = (arenaSize / 2) - ball.y;
         
         // Normalize the pull to be small and proportional
-        const pullX = gravityStrength * (deltaXToCenter / arenaSize);
-        const pullY = gravityStrength * (deltaYToCenter / arenaSize);
+        const pullX = gravityStrength * (deltaXToCenter / arenaSize / 2);
+        const pullY = gravityStrength * (deltaYToCenter / arenaSize / 2);
         
         // Adjust ball velocity based on the gravitational pull
         const deltaX = ball.velocity * Math.cos(ball.direction) + pullX + windSpeed * windX;
@@ -426,6 +433,10 @@ function checkOutOfBounds() {
 function handleOutOfBounds(ball) {
     // Decrement a life when out of bounds
     meditationFocus -= livesPerBall;
+    fullFocusPreserved = false;
+    if (currentChallengeName === 'Dualism' && ballCount == 2){
+        unlockAchievement('Out of Body Experience');
+    }
     document.getElementById('meditationFocus').innerText = meditationFocus; // Update focus display
 
     // Hide the ball temporarily and reset after the respawn delay

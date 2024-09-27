@@ -19,7 +19,7 @@ const powerHallSkills = [
     { name: 'Supersonic Fury', cost: 1.5e8, description: 'Your attacks become even 2x faster!', unlocked: false, level: 'Cosmic Dynamics' },
     { name: 'Prime Impact', cost: 1e9, description: 'First attack always hits for full power (ignore enemy dodge rate and defense).', unlocked: false, level: 'Cosmic Dynamics' },
     { name: 'Stellar Cookie', cost: 5e12, description: `Auto click the cookie 10 times per second while Stellar Harvest is active.`, unlocked: false, level: 'Cosmic Dynamics'},
-    { name: 'Graviton Burst', cost: 8e16, description: 'Your attacks are imperceptible to average beings. You now attack 5x faster!', unlocked: false, level: 'Cosmic Dynamics' },
+    { name: 'Graviton Burst', cost: 8e16, description: 'Your attacks are imperceptible to average beings. You now attack another 2.5x faster!', unlocked: false, level: 'Cosmic Dynamics' },
     
     { name: 'Cosmic Gamekeeper', cost: 1.25e5, description: `Unlock a small multiplier to all resources based on mini game successes.`, unlocked: false, level: 'Celestial Manipulation' },
     { name: 'Nebula Overdrive', cost: 7e5, description: `Purchasing non-boss upgrades no longer consumes power. Power cost still applies.`, unlocked: false, level: 'Celestial Manipulation' },
