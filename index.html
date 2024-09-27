@@ -11,7 +11,7 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Degens Testing</title>
+    <title>Degens Active</title>
     <meta name="description" content="Immerse yourself in Degens Idle, the ultimate strategy-based idle game with deep and unique progression systems. Unlock powerful upgrades, navigate intricate prestige layers, and make challenging decisions that shape your journey. No ads, no paywalls—just pure strategic gameplay.">
     <meta name="keywords" content="Degens Idle, idle game, incremental game, free idle game, no ads game, prestige layers, simulation, strategy, deep progression, unique challenges, strategic gameplay, resource management, RPG elements, upgrade systems, skill tree, incremental strategy, browser game, no paywalls, strategic decision-making, idle RPG, challenging gameplay">
     <!-- Include the JSON-LD structured data -->
@@ -261,18 +261,48 @@
         <div class="fighting-overlay-content">
             <!-- Player Stats and Image -->
             <div class="player-section">
-                <div class="stats">
-                    <p>Max Health: <span id="playerHealthStat"></span></p>
-                    <p>Dmg: <span id="playerDamageStat"></span></p>
-                    <p>Speed: <span id="playerAttackSpeedStat"></span></p>
-                    <p>Defense: <span id="playerDefenseStat"></span></p>
-                    <p id="playerCritChanceContainer">Crit: <span id="playerCritChanceStat"></span></p>
-                    <p id="playerCritDamageContainer">Crit Dmg: <span id="playerCritDamageStat"></span></p>
-                    <p id="playerDodgeContainer">Dodge: <span id="playerDodgeStat"></span></p>
-                    <p id="playerNonCritDodgeContainer">Non-Crit Dodge: <span id="playerNonCritDodgeStat"></span></p>
-                    <p id="playerStunContainer">Stun: <span id="playerStunStat"></span></p>
-                    <p id="playerAbsorbContainer">Absorb: <span id="playerAbsorbStat"></span></p>
-                </div>
+                <table class="stats">
+                    <tr>
+                        <th>Max Health:</th>
+                        <th id="playerHealthStat"></th>
+                    </tr>
+                    <tr>
+                        <th>Damage:</th> 
+                        <th id="playerDamageStat"></th>
+                    </tr>
+                    <tr>
+                        <th>Speed:</th> 
+                        <th id="playerAttackSpeedStat"></th>
+                    </tr>
+                    <tr>
+                        <th>Defense:</th> 
+                        <th id="playerDefenseStat"></th>
+                    </tr>
+                    <tr id="playerCritChanceContainer">
+                        <th>Crit Chances:</th> 
+                        <th id="playerCritChanceStat"></th>
+                    </tr>
+                    <tr id="playerCritDamageContainer">
+                        <th>Crit Damage:</th> 
+                        <th id="playerCritDamageStat"></th>
+                    </tr>
+                    <tr id="playerDodgeContainer">
+                        <th>Dodge Chances:</th> 
+                        <th id="playerDodgeStat"></th>
+                    </tr>
+                    <tr id="playerNonCritDodgeContainer">
+                        <th>Non-Crit Dodge:</th> 
+                        <th id="playerNonCritDodgeStat"></th>
+                    </tr>
+                    <tr id="playerStunContainer">
+                        <th>Stun Chances:</th>
+                        <th id="playerStunStat"></th>
+                    </tr>
+                    <tr id="playerAbsorbContainer">
+                        <th>Absorb Chances:</th> 
+                        <th id="playerAbsorbStat"></th>
+                    </tr>
+                </table>
                 <div id="playerImageContainer"></div>
                 <div class="health-bar">
                     <div id="playerHealthBar" class="health-fill"></div>
@@ -286,18 +316,48 @@
 
             <!-- Enemy Stats and Image -->
             <div class="enemy-section">
-                <div class="stats">
-                    <p>Health: <span id="enemyHealthStat"></span></p>
-                    <p>Dmg: <span id="enemyDamageStat"></span></p>
-                    <p>Speed: <span id="enemyAttackSpeedStat"></span></p>
-                    <p>Defense: <span id="enemyDefenseStat"></span></p>
-                    <p id="enemyCritChanceContainer">Crit: <span id="enemyCritChanceStat"></span></p>
-                    <p id="enemyCritDamageContainer">Crit Dmg: <span id="enemyCritDamageStat"></span></p>
-                    <p id="enemyDodgeContainer">Dodge: <span id="enemyDodgeStat"></span></p>
-                    <p id="enemyNonCritDodgeContainer">Non-Crit Dodge: <span id="enemyNonCritDodgeStat"></span></p>
-                    <p id="enemyStunContainer">Stun: <span id="enemyStunStat"></span></p>
-                    <p id="enemyAbsorbContainer">Absorb: <span id="enemyAbsorbStat"></span></p>
-                </div>
+                <table class="stats">
+                    <tr>
+                        <th>Health:</th> 
+                        <th id="enemyHealthStat"></th>
+                    </th>
+                    <tr>
+                        <th>Damage:</th> 
+                        <th id="enemyDamageStat"></th>
+                    </th>
+                    <tr>
+                        <th>Speed:</th> 
+                        <th id="enemyAttackSpeedStat"></th>
+                    </th>
+                    <tr>
+                        <th>Defense:</th> 
+                        <th id="enemyDefenseStat"></th>
+                    </tr>
+                    <tr id="enemyCritChanceContainer">
+                        <th>Crit Chances:</th> 
+                        <th id="enemyCritChanceStat"></th>
+                    </tr>
+                    <tr id="enemyCritDamageContainer">
+                        <th>Crit Damage:</th> 
+                        <th id="enemyCritDamageStat"></th>
+                    </tr>
+                    <tr id="enemyDodgeContainer">
+                        <th>Dodge Chances:</th>
+                        <th id="enemyDodgeStat"></th>
+                    </tr>
+                    <tr id="enemyNonCritDodgeContainer">
+                        <th>Non-Crit Dodge:</th> 
+                        <th id="enemyNonCritDodgeStat"></th>
+                    </tr>
+                    <tr id="enemyStunContainer">
+                        <th>Stun Chances:</th> 
+                        <th id="enemyStunStat"></th>
+                    </tr>
+                    <tr id="enemyAbsorbContainer">
+                        <th>Absorb Chances:</th> 
+                        <th id="enemyAbsorbStat"></th>
+                    </tr>
+                </table>
                 <div id="enemyImageContainer"></div>
                 <div class="health-bar">
                     <div id="enemyHealthBar" class="health-fill"></div>
