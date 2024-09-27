@@ -123,14 +123,14 @@ const meditationChallenges = {
         livesPerBall: 1,
     },
     "Stoicism": {
-        duration: 33,
+        duration: 35,
         focus: 10,
         ballCount: 12,
         arenaSize: 700,
         ballSize: 150,
         ballSizeDelta: 20,
-        velocity: 3.2,
-        wind: 1.5,
+        velocity: 4.1,
+        wind: 2,
         respawnFactor: 1,
         livesPerBall: 5,
     },
@@ -141,10 +141,10 @@ const meditationChallenges = {
         arenaSize: 500,
         ballSize: 300,
         ballSizeDelta: 0,
-        velocity: 10,
+        velocity: 13,
         wind: 0,
         respawnFactor: 1,
-        livesPerBall: 2,
+        livesPerBall: 2.5,
     },
     "Skepticism": {
         duration: 300,
@@ -172,7 +172,7 @@ function startMeditationGame(challengeName, backgroundImage, stageNumber = 1, pr
         
         meditationFocus = preservedFocus !== null ? preservedFocus : challenge.focus + Math.max(0, Math.floor(Math.log10(serenity))); // Preserve focus if passed
         ballCount = Math.max(1, challenge.ballCount - calculateBallCountReduction()); // Hopium reduces ball count
-        arenaSize = challenge.arenaSize;
+        arenaSize = spaceContinuumStretchSkill ? Math.floor(challenge.arenaSize * 1.1) : challenge.arenaSize;
         ballSize = challenge.ballSize;
         ballSize = calculateBallSize();
         ballSizeDelta = challenge.ballSizeDelta;
@@ -186,7 +186,7 @@ function startMeditationGame(challengeName, backgroundImage, stageNumber = 1, pr
         respawnTime = calculateRespawnTime();
         gravityStrength = calculateGravity();
         balls = []; // Reset balls array
-        windSpeed = challenge.wind; // Set wind speed from the challenge
+        windSpeed = masterOfElementsSkill ? challenge.wind / 2 : challenge.wind; // Set wind speed from the challenge
         windDirection = windDirections[Math.floor(Math.random() * windDirections.length)]; // Pick a random direction
 
         fullFocusPreserved = true;
@@ -295,8 +295,32 @@ function updateMeditationInfo() {
     document.getElementById('meditationVelocity').innerText = baseVelocity.toFixed(2);
     document.getElementById('meditationTurnRadius').innerText = turnRadius.toFixed(2);
     document.getElementById('meditationGravity').innerText = gravityStrength.toFixed(2); // Display current gravity value
-    document.getElementById('meditationRespawnTime').innerText = (respawnTime/1000).toFixed(3); // Display respawn time
-    document.getElementById('meditationWind').innerText = `${windSpeed.toFixed(2)} ${windSpeed != 0 ? windDirection : ''}`; // Display wind speed and direction
+    document.getElementById('meditationRespawnTime').innerText = (respawnTime / 1000).toFixed(3); // Display respawn time
+
+    // Conditionally display Wind, Respawn Factor, and Lives Per Ball
+    const windDisplay = document.getElementById('meditationWindRow');
+    if (windSpeed !== 0) {
+        windDisplay.style.display = 'block';
+        document.getElementById('meditationWind').innerText = `${formatNumber(windSpeed)} ${windDirection}`;
+    } else {
+        windDisplay.style.display = 'none';
+    }
+
+    const respawnFactorDisplay = document.getElementById('meditationRespawnFactorRow');
+    if (respawnFactor !== 1) {
+        respawnFactorDisplay.style.display = 'block';
+        document.getElementById('meditationRespawnFactor').innerText = formatNumber(respawnFactor.toFixed(2));
+    } else {
+        respawnFactorDisplay.style.display = 'none';
+    }
+
+    const livesPerBallDisplay = document.getElementById('meditationLivesPerBallRow');
+    if (livesPerBall !== 1) {
+        livesPerBallDisplay.style.display = 'block';
+        document.getElementById('meditationLivesPerBall').innerText = formatNumber(livesPerBall);
+    } else {
+        livesPerBallDisplay.style.display = 'none';
+    }
 }
 
 
@@ -383,8 +407,8 @@ function moveBalls() {
         const deltaYToCenter = (arenaSize / 2) - ball.y;
         
         // Normalize the pull to be small and proportional
-        const pullX = gravityStrength * (deltaXToCenter / arenaSize / 2);
-        const pullY = gravityStrength * (deltaYToCenter / arenaSize / 2);
+        const pullX = gravityStrength * (deltaXToCenter / arenaSize / 4);
+        const pullY = gravityStrength * (deltaYToCenter / arenaSize / 4);
         
         // Adjust ball velocity based on the gravitational pull
         const deltaX = ball.velocity * Math.cos(ball.direction) + pullX + windSpeed * windX;
@@ -602,9 +626,9 @@ function calculateTurnRadius() {
 
 // Calculate the reduction factor based on yachtMoney
 function calculateTimerReduction() {
+    if (yachtMoney <= 10) {return 1;}
     const logValue = Math.log10(yachtMoney); // Get the logarithmic value of yachtMoney
-    const baseLogValue = 100; // Base log value corresponding to 100
-    const reductionFactor = Math.pow(2, -(logValue - baseLogValue) / 15); // Scales the reduction by 50% for every increase of 15 in log value
+    const reductionFactor = Math.pow(2, -(logValue - 100) / 15); // Scales the reduction by 50% for every increase of 15 in log value
     return Math.max(0.000001, Math.min(1, reductionFactor)); // Ensure the reduction factor is between 0.000001 and 1
 }
 

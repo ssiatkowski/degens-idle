@@ -244,8 +244,8 @@ document.getElementById('automationButton').addEventListener('click', function()
                     <label for="toggleBuyMarkersSwitch" class="three-way-toggle-label">Toggle All Purchased Upgrades Buy Markers</label>
                     <div class="three-way-toggle">
                         <input type="radio" name="toggleBuyMarkers" id="toggleBuyMarkersNeutral" value="neutral" checked style="display: none;">
-                        <input type="radio" name="toggleBuyMarkers" id="toggleBuyMarkersOff" value="off" style="display: none;">
                         <input type="radio" name="toggleBuyMarkers" id="toggleBuyMarkersOn" value="on" style="display: none;">
+                        <input type="radio" name="toggleBuyMarkers" id="toggleBuyMarkersOff" value="off" style="display: none;">
                         <div class="slider"></div>
                     </div>
                 </div>
@@ -263,17 +263,17 @@ document.getElementById('automationButton').addEventListener('click', function()
                 // Add click listener to the entire toggle container
                 toggleContainer.addEventListener('click', function() {
                     if (toggleNeutral.checked) {
-                        toggleOff.checked = true;
-                        slider.style.transform = 'translateX(0%)';
-                        slider.style.backgroundColor = '#dc3545'; // Red color for off
-                    } else if (toggleOff.checked) {
                         toggleOn.checked = true;
                         slider.style.transform = 'translateX(100%)';
                         slider.style.backgroundColor = '#28a745'; // Green color for on
-                    } else if (toggleOn.checked) {
+                    } else if (toggleOff.checked) {
                         toggleNeutral.checked = true;
                         slider.style.transform = 'translateX(50%)';
                         slider.style.backgroundColor = 'white'; // Neutral color
+                    } else if (toggleOn.checked) {
+                        toggleOff.checked = true;
+                        slider.style.transform = 'translateX(0%)';
+                        slider.style.backgroundColor = '#dc3545'; // Red color for off
                     }
                 });
 
@@ -314,6 +314,17 @@ document.getElementById('automationButton').addEventListener('click', function()
                 </div>
             `;
             automationContent.innerHTML += autoPrestigeHtml;
+        }
+
+        // Dynamically add Auto-Prestige Threshold setting if available
+        if (autoBigCrunchThreshold !== null) {
+            const autoBigCrunchHtml = `
+                <div style="margin-bottom: 15px;">
+                    <label for="autoBigCrunchThresholdInput">Auto Big Crunch Threshold:</label>
+                    <input type="number" id="autoBigCrunchThresholdInput" value="${autoBigCrunchThreshold}" step="0.1" style="font-size: 16px;">
+                </div>
+            `;
+            automationContent.innerHTML += autoBigCrunchHtml;
         }
 
         // Dynamically add Auto-Ascend Threshold setting if available
@@ -449,6 +460,17 @@ document.getElementById('saveAutomationSettingsButton').addEventListener('click'
 
         if (isNaN(autoPrestigeThreshold) || autoPrestigeThreshold <= 0) {
             showImmediateMessageModal('Invalid Number', 'Please enter a valid positive number for the Auto Prestige Threshold.');
+            return; // Prevent closing if there's an error
+        }
+    }
+
+    // Auto Prestige Threshold
+    if (autoBigCrunchThreshold !== null) {
+        const thresholdInput = document.getElementById('autoBigCrunchThresholdInput').value;
+        autoBigCrunchThreshold = parseFloat(thresholdInput);
+
+        if (isNaN(autoBigCrunchThreshold) || autoBigCrunchThreshold <= 0) {
+            showImmediateMessageModal('Invalid Number', 'Please enter a valid positive number for the Auto Big Crunch Threshold.');
             return; // Prevent closing if there's an error
         }
     }

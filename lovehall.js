@@ -25,11 +25,14 @@ const loveHallSkills = [
     { name: 'Inverse Prestige', cost: 21, description: 'Prestige is now based on the highest of your first four resources', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 8 },
     { name: 'Positive Markers', cost: 21, description: 'Buy markers stay turned on through Infinite Embrace', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 8 },
 
-    { name: 'Achievement Boost 2', cost: 32, description: 'Achievement Multiplier x3. (Achievement Boosts stack)', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 9, requirement: 'Achievement Boost' },
+    { name: 'Achievement Boost 2', cost: 32, description: 'Achievement Multiplier x2.5. (Achievement Boosts stack)', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 9, requirement: 'Achievement Boost' },
     { name: 'Tunneled Ascension', cost: 32, description: 'Transcending an upgrade also Ascends it.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 9 },
 
     { name: 'Achievement Hypercharge', cost: 50, description: 'Achievement multiplier becomes multiplicative instead of additive.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 10 },
     { name: 'Perfect PU God-Mode', cost: 50, description: 'Make PU God-Mode perfect with diminishing returns at 99.2%.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 10 },
+
+    // { name: 'Infinite Collapse', cost: 308, description: 'Automatically apply Big Crunch mult without resetting.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 11, requirement: 'Perpetual Collapse' },
+    // { name: '', cost: 308, description: '', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 11 },
 
     // 27x Level - dimensions in string theory
     { name: 'Yacht Money Surge', cost: 0.05, description: '24x Yacht Money gain.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 21 },
@@ -49,10 +52,10 @@ const loveHallSkills = [
     { name: 'First-Wave Automation', cost: 2, description: `Hall of Knowledge automation features are ${formatNumber(1e10)}x cheaper`, unlocked: false, level: 'Dimensional Shift (27x)', pair: 26 },
     
     // { name: '', cost: 4, description: '', unlocked: false, level: 'Dimensional Shift (27x)', pair: 27 },
-    // { name: 'Second-Wave Automation', cost: 4, description: `Keep Hall of Knowledge automation features unlocked`, unlocked: false, level: 'Dimensional Shift (27x)', pair: 27, requirement: 'First-Wave Automation' },
+    // { name: 'Second-Wave Automation', cost: 4, description: `Keep Hall of Knowledge automation unlocked and preserve settings`, unlocked: false, level: 'Dimensional Shift (27x)', pair: 27, requirement: 'First-Wave Automation' },
 
-    // { name: 'Master of Elements', cost: 5, description: 'Reduce Meditation Wind Speed by 50%', unlocked: false, level: 'Dimensional Shift (27x)', pair: 27 },
-    // { name: 'Space Continuum Stretch', cost: 5, description: 'Increase Meditation Arena Size by 10%', unlocked: false, level: 'Dimensional Shift (27x)', pair: 27 },
+    { name: 'Master of Elements', cost: 5, description: 'Reduce Meditation Wind Speed by 50%', unlocked: false, level: 'Dimensional Shift (27x)', pair: 27 },
+    { name: 'Space Continuum Stretch', cost: 5, description: 'Increase Meditation Arena Size by 10%', unlocked: false, level: 'Dimensional Shift (27x)', pair: 27 },
 
     { name: 'Enlightened Prestige', cost: 7, description: 'Prestige Base skill increases from 1.75 base to 1.775 base.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 28 },
     { name: 'Hopeful Beginning', cost: 7, description: 'Start with 1M Hopium after any prestige layer.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 28 },
@@ -86,17 +89,20 @@ const loveHallSkills = [
     { name: 'Infinite Prestige', cost: 4.2, description: 'Automatically apply Prestige Mult without resetting.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 45 },
     { name: 'Hopium Trade', cost: 4.2, description: 'Trade Hopium for any of the first 4 resources at a 1:1 ratio.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 45 },
 
-    { name: 'Resonance of Love', cost: 8, description: 'Multiply Serenity by log2 of current Love Points.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 46 },
-    { name: 'Equilibrium of Hope', cost: 8, description: 'Automatically trade 1% Hopium for each lower resource.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 46, requirement: 'Hopium Trade' },
+    { name: 'Perpetual Collapse', cost: 7, description: 'Auto Big Crunch (default 25x)', unlocked: false, level: 'Cosmic Truth (42x)', pair: 46 },
+    { name: 'Beacon of Seven Suns', cost: 7, description: 'Stacking 7% mutliplier to Copium and Hopium for every Hall of Love skill.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 46 },
 
-    { name: 'Temporal Drag', cost: 12, description: 'During meditation, decrease ball velocity by 25%.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 47 },
-    { name: 'Look Past Distractions', cost: 12, description: 'During meditation, decrease # of balls by 1.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 47 },
+    { name: 'Resonance of Love', cost: 8, description: 'Multiply Serenity by log2 of current Love Points.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 47 },
+    { name: 'Equilibrium of Hope', cost: 8, description: 'Automatically trade 1% Hopium for each lower resource.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 47, requirement: 'Hopium Trade' },
 
-    // { name: 'Knowledge Exchange', cost: 14, description: 'Trade Hopium for Knowledge at a 1e20:1 ratio.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 48 },
-    // { name: 'Big Crunch Factor Boost', cost: 14, description: 'Increase Big Crunch base from 2 to 2.1.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 48 },
+    { name: 'Temporal Drag', cost: 12, description: 'During meditation, decrease ball velocity by 25%.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 48 },
+    { name: 'Look Past Distractions', cost: 12, description: 'During meditation, decrease # of balls by 1.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 48 },
 
-    // { name: 'Intrinsic Meditation', cost: 42, description: 'Auto complete meditations that are ascended & transcended.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 49 },
-    // { name: 'The Ultimate Fix', cost: 42, description: 'Fix all remaining resources.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 49, requirement: 'Hopium Fix' },
+    // { name: 'Knowledge Exchange', cost: 14, description: 'Trade Hopium for Knowledge at a 1e20:1 ratio.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 49 },
+    // { name: 'Big Crunch Factor Boost', cost: 14, description: 'Increase Big Crunch base from 2 to 2.1.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 49 },
+
+    // { name: 'Intrinsic Meditation', cost: 42, description: 'Auto complete meditations that are ascended & transcended.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 50 },
+    // { name: 'The Ultimate Fix', cost: 42, description: 'Fix all remaining resources.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 50, requirement: 'Hopium Fix' },
 
 
 ];
@@ -232,7 +238,7 @@ function unlockLoveHallSkill(skill, duringLoad = false) {
                 break;
                 
             case 'Achievement Boost 2':
-                achievementBoostValue *= 3;
+                achievementBoostValue *= 2.5;
                 calculateAchievementMultiplier();
                 if(!duringLoad){
                     updateEffectiveMultipliers();
@@ -317,6 +323,15 @@ function unlockLoveHallSkill(skill, duringLoad = false) {
                 divideLibrarySkillCost('Perpetual Prestige', 1e10);
                 divideLibrarySkillCost('Eternal Ascension', 1e10);
                 divideLibrarySkillCost('Quantum Symphony', 1e10);
+                break;
+
+
+            case 'Master of Elements':
+                masterOfElementsSkill = true;
+                break;
+                    
+            case 'Space Continuum Stretch':
+                spaceContinuumStretchSkill = true;
                 break;
 
             case 'Enlightened Prestige':
@@ -414,7 +429,17 @@ function unlockLoveHallSkill(skill, duringLoad = false) {
                 hopiumTradeSkill = true;
                 addHopiumToFromResource();
                 break;
-        
+
+            case 'Perpetual Collapse':
+                if(autoBigCrunchThreshold === null){
+                    autoBigCrunchThreshold = 25;
+                }
+                break;
+
+            case 'Beacon of Seven Suns':
+                beaconOfSevenSunsSkill = true;
+                break;
+
             case 'Infinite Prestige':
                 infinitePrestigeSkill = true;
                 break;
@@ -453,6 +478,11 @@ function unlockLoveHallSkill(skill, duringLoad = false) {
             default:
                 console.log('Unknown skill:', skill.name);
                 break;
+        }
+        
+        
+        if (beaconOfSevenSunsSkill) {
+            beaconOfSevenSunsMult = 1.07 ** (loveHallSkills.filter(skill => skill.unlocked).length);
         }
         
     }

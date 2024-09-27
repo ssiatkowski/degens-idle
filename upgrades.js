@@ -1418,7 +1418,7 @@ const upgrades = [
     {         
         name: `Humorless Resolve`,
         cost: { copium: 5e100, delusion: 5e100, yachtMoney: 0, trollPoints: 5e100, hopium: 0, knowledge: 1e76, power: 0, serenity: 500 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1e41, hopiumPerSecond: 1e47, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0.0005 },
+        earnings: { copiumPerSecond: -1e40, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1e41, hopiumPerSecond: 1e47, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0.0005 },
         img: `imgs/cant_take_a_joke.jpg`,
     },
     {         
@@ -1486,7 +1486,7 @@ const upgrades = [
     {         
         name: `One Coffee, Extra Sass`,
         cost: { copium: 2e105, delusion: 0, yachtMoney: 0, trollPoints: 5e106, hopium: 0, knowledge: 0, power: 0, serenity: 50000 },
-        earnings: { copiumPerSecond: 1e47, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1e47, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0.3 },
+        earnings: { copiumPerSecond: 1e47, delusionPerSecond: 0, yachtMoneyPerSecond: -2e46, trollPointsPerSecond: 1e47, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0.3 },
         img: `imgs/coffee_opinion.jpg`,
     },
     {         
@@ -1534,13 +1534,13 @@ const upgrades = [
     {         
         name: `Different Tastes`,
         cost: { copium: 0, delusion: 2e116, yachtMoney: 0, trollPoints: 1e116, hopium: 0, knowledge: 0, power: 0, serenity: 1e9 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 1e50, yachtMoneyPerSecond: 0, trollPointsPerSecond: 2e49, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 24 },
+        earnings: { copiumPerSecond: -1e49, delusionPerSecond: 1e50, yachtMoneyPerSecond: 0, trollPointsPerSecond: 2e49, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 24 },
         img: `imgs/different_tastes.jpg`,
     },
     {         
         name: `One Drink`,
         cost: { copium: 1e120, delusion: 5e120, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 1e9 },
-        earnings: { copiumPerSecond: 1e50, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 8e49, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 35 },
+        earnings: { copiumPerSecond: 1e50, delusionPerSecond: 0, yachtMoneyPerSecond: -3e49, trollPointsPerSecond: 8e49, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 35 },
         img: `imgs/one_drink.jpg`,
     },
     {         
@@ -1561,7 +1561,7 @@ const upgrades = [
     {         
         name: `We All Deserve Breaks`,
         cost: { copium: 0, delusion: 1e122, yachtMoney: 0, trollPoints: 2e123, hopium: 0, knowledge: 0, power: 0, serenity: 2e10 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 2e52, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 280 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 2e52, yachtMoneyPerSecond: -2e51, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 280 },
         img: `imgs/not_adulting.jpg`,
     },
     {         
@@ -1582,34 +1582,46 @@ const upgrades = [
     {         
         name: `Dad Joke #1`,
         cost: { copium: 0, delusion: 0, yachtMoney: 4e128, trollPoints: 4e128, hopium: 0, knowledge: 0, power: 0, serenity: 1e13 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 4e54, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 4567 },
+        earnings: { copiumPerSecond: -1e53, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 4e54, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 4567 },
         img: `imgs/dad_joke_1.jpg`,
     },
     {         
         name: `Dad Joke #2`,
         cost: { copium: 0, delusion: 0, yachtMoney: 8e128, trollPoints: 8e128, hopium: 0, knowledge: 0, power: 0, serenity: 3e13 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 8e54, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 5678 },
+        earnings: { copiumPerSecond: -2e53, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 8e54, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 5678 },
         img: `imgs/dad_joke_2.jpg`,
     },
     {         
         name: `Dad Joke #3`,
         cost: { copium: 0, delusion: 0, yachtMoney: 1.6e129, trollPoints: 1.6e129, hopium: 0, knowledge: 0, power: 0, serenity: 9e13 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1.6e55, hopiumPerSecond: 1e52, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 6789 },
+        earnings: { copiumPerSecond: -3e53, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1.6e55, hopiumPerSecond: 1e52, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 6789 },
         img: `imgs/dad_joke_3.jpg`,
     },
     {         
         name: `Stoicism`,
-        cost: { copium: 1e135, delusion: 0, yachtMoney: 1e135, trollPoints: 0, hopium: 0, knowledge: 0, power: 2e34, serenity: 2e11 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 1e56, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 8e25, powerPerSecond: 0, serenityPerSecond: 500000 },
+        cost: { copium: 1e135, delusion: 0, yachtMoney: 1e135, trollPoints: 0, hopium: 0, knowledge: 0, power: 2e34, serenity: 2e13 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 1e56, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 8e25, powerPerSecond: 0, serenityPerSecond: 600000 },
         img: `imgs/arena_stoicism.png`,
         isMeditation: true,
         isKey: true,
         message: `Through this meditation, you’ve embraced the <strong>strength of inner calm and resilience</strong> in the face of life’s challenges. Stoicism teaches that while you cannot control external events, you can control your response to them. By mastering your emotions and focusing on virtue, you’ve gained the power to face any hardship with grace and wisdom. Continue to cultivate this inner strength, and you will find peace in all circumstances.`,
     },
+    {
+        name: `Second Pizza Meme`,
+        cost: { copium: 2.5e136, delusion: 0, yachtMoney: 2.5e136, trollPoints: 5e136, hopium: 2e136, knowledge: 0, power: 0, serenity: 1e14 },
+        earnings: { copiumPerSecond: 7.5e55, delusionPerSecond: 0, yachtMoneyPerSecond: -1e55, trollPointsPerSecond: 7e55, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 15000 },
+        img: `imgs/pizza_like.jpg`,
+    },
+    {
+        name: `Schrodinger's Cat`,
+        cost: { copium: 2e138, delusion: 2e138, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 1e15 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 5e55, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1e56, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 65000 },
+        img: `imgs/schrodingers_cat.jpg`,
+    },
     {         
         name: `Deism`,
-        cost: { copium: 1e140, delusion: 0, yachtMoney: 0, trollPoints: 1e140, hopium: 0, knowledge: 0, power: 5e40, serenity: 1e18 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 7e57, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 6e6 },
+        cost: { copium: 1e140, delusion: 0, yachtMoney: 0, trollPoints: 1e140, hopium: 0, knowledge: 0, power: 1e39, serenity: 1e17 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 7e57, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 9e6 },
         img: `imgs/arena_deism.png`,
         isMeditation: true,
         isKey: true,
@@ -1618,7 +1630,7 @@ const upgrades = [
     {         
         name: `Skepticism`,
         cost: { copium: 0, delusion: 1e145, yachtMoney: 0, trollPoints: 1e145, hopium: 0, knowledge: 0, power: 5e42, serenity: 1e20 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 1e30, powerPerSecond: 0, serenityPerSecond: 8e7 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 1e30, powerPerSecond: 0, serenityPerSecond: 1.3e8 },
         img: `imgs/arena_skepticism.png`,
         isMeditation: true,
         isKey: true,

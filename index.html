@@ -332,16 +332,21 @@
                     </div>
                     <div class="stat-row">
                         <p>Respawn Time: <span id="meditationRespawnTime" class="stat-value"></span>s</p>
-                        <p>Wind: <span id="meditationWind" class="stat-value"></span></p>
+                        <p id="meditationWindRow" style="display: none;">Wind: <span id="meditationWind" class="stat-value"></span></p>
+                    </div>
+                    <div class="stat-row">
+                        <p id="meditationRespawnFactorRow" style="display: none;">Respawn Factor: <span id="meditationRespawnFactor" class="stat-value"></span></p>
+                        <p id="meditationLivesPerBallRow" style="display: none;">Focus Per Ball: <span id="meditationLivesPerBall" class="stat-value"></span></p>
                     </div>
                 </div>
-                
     
                 <!-- Stop Meditation Button -->
                 <button id="meditationStopButton" class="meditation-stop-button">Stop Meditation</button>
             </div>
         </div>
     </div>
+    
+    
     
       
     <!-- Include the Library overlay HTML -->
@@ -394,7 +399,7 @@
         <div class="settings-overlay-content">
             <span class="close-button" id="closeSettingsOverlay">&times;</span>
             <h1>Settings</h1>
-            <h4>Degens Idle v0.927</h4>
+            <h4>Degens Idle v0.928</h4>
             
             <div class="settings-section">
                 <h3>Save Management</h3>
