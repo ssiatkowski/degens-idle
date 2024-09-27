@@ -13,7 +13,7 @@ const loveHallSkills = [
     { name: 'Serenity Flow', cost: 5, description: 'Hopium gain is multiplied by square root of Serenity.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 4 },
     { name: 'Serene Boost 2', cost: 5, description: '5x Serenity gain. (Serenity Boosts stack)', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 4, requirement: 'Serene Boost 1' },
 
-    { name: 'Illusion of Power', cost: 9, description: 'Lower auto-fight power threshold by 10x each for ascended/trasncended upgrades.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 5, requirement: 'Overwhelming Mercy' },
+    { name: 'Illusion of Power', cost: 9, description: 'Lower auto-fight power threshold by 10x each for ascended/transcended upgrades.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 5, requirement: 'Overwhelming Mercy' },
     { name: 'Early Accelerant', cost: 9, description: '10x multiplier to first 6 resources, degrades by 3% with each purchased upgrade.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 5 },
 
     { name: 'Power Infusion', cost: 15, description: '4x Power gain.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 6 },
