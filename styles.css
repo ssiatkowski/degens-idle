@@ -382,7 +382,7 @@ button:disabled {
 }
 
 /* Styles for the collect buttons */
-button.collect-button {
+.collect-button {
     background-color: #28a745; /* Green background */
     color: white;
     border: none;
@@ -395,18 +395,17 @@ button.collect-button {
     transition: background-color 0.3s ease, transform 0.3s ease;
     touch-action: manipulation;
 }
-
-button.collect-button:not(.disabled):hover {
+.collect-button:not(.disabled):hover {
     background-color: #218838; /* Darker green on hover */
     transform: scale(1.1); /* Slightly larger on hover */
 }
 
-button.collect-button:active {
+.collect-button:active {
     background-color: #1e7e34; /* Even darker green on click */
     transform: scale(1.05); /* Slightly smaller on click */
 }
 
-button.game-button {
+.game-button {
     background-color: #4caf50; /* Initial background */
     color: white;
     border: none;
@@ -421,7 +420,7 @@ button.game-button {
     transition: background-color 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
 }
 
-button.game-button .progress {
+.game-button .progress {
     background-color: rgba(40, 167, 69, 0.7); /* Semi-transparent green */
     height: 100%; /* Make sure the progress bar fills the button height */
     position: absolute; /* Position it over the button */
@@ -430,18 +429,17 @@ button.game-button .progress {
     z-index: 1; /* Ensure it's above the button content */
     transition: width 0.1s linear; /* Smooth progress bar increase */
 }
-
-button.game-button .button-content {
+.game-button .button-content {
     position: relative; /* Ensure the button content is above the progress bar */
     z-index: 2;
 }
 
-button.game-button:not(.disabled):hover {
+.game-button:not(.disabled):hover {
     background-color: #218838; /* Darker green on hover */
     transform: scale(1.1); /* Slightly larger on hover */
 }
 
-button.game-button:active {
+.game-button:active {
     background-color: #1e7e34; /* Even darker green on click */
     transform: scale(1.05); /* Slightly smaller on click */
 }
@@ -460,7 +458,7 @@ button.game-button:active {
     text-align: center;
 }
 
-button.disabled {
+.disabled {
     background-color: #333; /* Darker gray */
     color: #666; /* Darker text */
     cursor: not-allowed;
@@ -512,6 +510,7 @@ button.disabled {
     margin-top: 10px;
     flex-direction: column;
     text-align: left;
+    width: 100%;
 }
 
 .upgrade .upgrade-cost p {
