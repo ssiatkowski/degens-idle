@@ -290,7 +290,7 @@ function updateEffectiveMultipliers() {
     // Loop through each resource and apply the multiplier if the gain flag is true
     serenityGainResources.forEach(resource => {
         if (resource.gainFlag) {
-            effectiveSerenityPerSecond *= Math.max(1, Math.log2(resource.value) / 33);
+            effectiveSerenityPerSecond *= resource.value <= 0 ? 1 : Math.max(1, Math.log2(resource.value) / 33);
         }
     });
 
@@ -1624,7 +1624,7 @@ async function prestige(skipConfirms = false) {
 
     // Either skipConfirms
     skipConfirms |= enableQuickMode;
-    if (canPrestige()) {
+    if (canPrestige()  && !isEventInProgress()) {
         const newPrestigeMult = calculatePrestigeMultiplier();
         const newPrestigeReq = inversePrestigeSkill 
                                 ? Math.max(copium, delusion, yachtMoney, trollPoints) 
@@ -1694,7 +1694,7 @@ function updatePrestigeButton() {
             prestigeButton.textContent = `PRESTIGE (x${formatNumber(newMultiplier / epsMultiplier)} MULT)`;
             prestigeButton.style.display = 'block';
             // Check if auto-prestige should be triggered
-            if (autoPrestigeThreshold !== null && (newMultiplier / epsMultiplier) > autoPrestigeThreshold) {
+            if (autoPrestigeThreshold !== null && (newMultiplier / epsMultiplier) > autoPrestigeThreshold  && !isEventInProgress()) {
                 showPopupTooltip(`Auto-Prestiged for x${formatNumber(newMultiplier / epsMultiplier)}`, color='#DAA520')
                 prestige(true); // Trigger auto-prestige
             }
@@ -2328,13 +2328,17 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true, ski
         if (isFight) {
 
             if (name === 'Vegeta' && !purchasedUpgrades.some(upgrade => upgrade.name === "Cosmetic Surgery")){
-                showMessageModal('Hmph', `After all your time and effort tracking down Vegeta, you finally confront him, only to hear, "Hmph, you're too ugly to fight," as he flies off without a second thought. Frustrated and defeated, you realize you might need to find another way to make yourself more visually impressive—something that even Vegeta can't ignore.`);
-                forgetfulnessCounter++;
-                localStorage.setItem('forgetfulnessCounter', forgetfulnessCounter);
-                if (forgetfulnessCounter >= 15) {
-                    unlockAchievement('Delusion Causes Forgetfulness');
+                if (autoFightConditionCheck(upgrade)){
+                    unlockAchievement('Ugly by Choice')
+                } else {
+                    throttle(() => showMessageModal('Hmph', `After all your time and effort tracking down Vegeta, you finally confront him, only to hear, "Hmph, you're too ugly to fight," as he flies off without a second thought. Frustrated and defeated, you realize you might need to find another way to make yourself more visually impressive—something that even Vegeta can't ignore.`), 2000)();
+                    forgetfulnessCounter++;
+                    localStorage.setItem('forgetfulnessCounter', forgetfulnessCounter);
+                    if (forgetfulnessCounter >= 15) {
+                        unlockAchievement('Delusion Causes Forgetfulness');
+                    }
+                    return;
                 }
-                return;
             }
             
             let canManualFight = !(autoFightSkill && autoFightEnabled) || power < (illusionOfPowerSkill ? (upgrade.isGodMode && upgrade.isPUGodMode ? upgrade.autoBattlePower / 100 : (upgrade.isGodMode || upgrade.isPUGodMode ? upgrade.autoBattlePower / 10 : upgrade.autoBattlePower)) : upgrade.autoBattlePower);
@@ -2457,7 +2461,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true, ski
 
         if (name === 'Stoicism') {
             showMessageModal('The Journey Continues', 
-                "This marks the end of v0.9281. You've not only completed the Power Saga, but you're also getting the hang of Infinite Embraces and Meditations! Congratulations on your progress, and welcome to the next stage of your journey. "
+                "This marks the end of v0.9282. You've not only completed the Power Saga, but you're also getting the hang of Infinite Embraces and Meditations! Congratulations on your progress, and welcome to the next stage of your journey. "
                 + "With the Hall of Love now open, Love Points are becoming a key part of your experience, alongside the skills you unlock there. While these new mechanics are taking shape, expect ongoing balancing as the game evolves. "
                 + "Feel free to dive deeper into the skills and explore what's possible. The journey is far from over—more meditations and epic content are on the way! "
                 + "Stay connected on Discord, share your feedback, and together, let's create something truly unforgettable!"
@@ -2553,14 +2557,14 @@ function buyAllUpgrades(limit, pressedButton) {
             }
         }
 
+        let firstFightUpgrade = true;
+
         topUpgrades.forEach(upgrade => {
             if (buyMarkersSkill) {
                 const switchState = JSON.parse(localStorage.getItem(`switchState-${upgrade.name}`));
                 const isAffordableUpgrade = isAffordable(upgrade.cost);      
-                const autoFightCondition = autoFightSkill && autoFightEnabled && power > (illusionOfPowerSkill ? (upgrade.isGodMode && upgrade.isPUGodMode ? upgrade.autoBattlePower / 100 : (upgrade.isGodMode || upgrade.isPUGodMode ? upgrade.autoBattlePower / 10 : upgrade.autoBattlePower)) : upgrade.autoBattlePower);
 
-        
-                if (isAffordableUpgrade && autoFightCondition) {
+                if (isAffordableUpgrade && autoFightConditionCheck(upgrade) && firstFightUpgrade) {
                     buyUpgrade(encodeName(upgrade.name), false, true);
                     purchasedCount++;
                     incrementStellarHarvest();
@@ -2573,13 +2577,15 @@ function buyAllUpgrades(limit, pressedButton) {
                     purchasedCount++;
                 }
 
-
             } else {
                 if (isAffordable(upgrade.cost) && !upgrade.isFight && !upgrade.isMeditation) {
                     buyUpgrade(encodeName(upgrade.name), false, true);
                     purchasedCount++; // Increment counter when an upgrade is bought
                 }
             }
+            
+            if (upgrade.isFight) {firstFightUpgrade = false;}
+
         });
         
         if (purchasedCount > 0) {
@@ -2597,7 +2603,9 @@ function buyAllUpgrades(limit, pressedButton) {
 }
 
 
-
+function autoFightConditionCheck(upgrade) {
+    return autoFightSkill && autoFightEnabled && power > (illusionOfPowerSkill ? (upgrade.isGodMode && upgrade.isPUGodMode ? upgrade.autoBattlePower / 100 : (upgrade.isGodMode || upgrade.isPUGodMode ? upgrade.autoBattlePower / 10 : upgrade.autoBattlePower)) : upgrade.autoBattlePower);
+}
 
 
 // Function to format the cost or earnings of an upgrade for display
@@ -2819,13 +2827,11 @@ function autobuyUpgrades() {
             const upgrade = topUpgrades[i];
             const switchState = JSON.parse(localStorage.getItem(`switchState-${upgrade.name}`));
             const isAffordableUpgrade = isAffordable(upgrade.cost);
-            const autoFightCondition = autoFightSkill && autoFightEnabled && power > (illusionOfPowerSkill ? (upgrade.isGodMode && upgrade.isPUGodMode ? upgrade.autoBattlePower / 100 : (upgrade.isGodMode || upgrade.isPUGodMode ? upgrade.autoBattlePower / 10 : upgrade.autoBattlePower)) : upgrade.autoBattlePower);
-
 
             // Buy the upgrade if either condition is met:
             // 1. It is affordable and switchState is true
             // 2. It is affordable and autoFightSkill is true with sufficient power
-            if (isAffordableUpgrade && autoFightCondition && firstFightUpgrade) {
+            if (isAffordableUpgrade && autoFightConditionCheck(upgrade) && firstFightUpgrade) {
                 buyUpgrade(encodeName(upgrade.name), false, true);
                 upgradeBought = true;
                 incrementStellarHarvest();

@@ -714,6 +714,13 @@ const achievements = [
         type: 'puzzle',
     },
     {
+        name: 'Ugly by Choice',
+        isUnlocked: false,
+        hoverText: `where there's a will, there's a way`,
+        img: 'imgs/achievements/ugly_by_choice.jpg',
+        type: 'puzzle',
+    },
+    {
         name: 'Out of Body Experience',
         isUnlocked: false,
         hoverText: `lose focus in Dualism meditation with exactly 2 balls`,
