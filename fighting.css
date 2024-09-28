@@ -120,6 +120,7 @@
     grid-template-columns: 45% 55%;
     font-size: 14.5px;
     justify-content: space-between;
+    align-items: center;
 }
 /* Stats styling */
 .stats p {
@@ -179,6 +180,7 @@
         grid-template-columns: 50% 50%;
         font-size: 13px;
         justify-content: space-between;
+        align-items: center;
     }
     /* Ensure that the text does not wrap and uses the full width */
     .stats p {
