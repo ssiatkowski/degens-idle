@@ -103,6 +103,8 @@ let studyAcceleratorReduction = 0;
 let deadpoolRevivesSkill = false;
 let celestialPrecisionSkill = false;
 let gamingAddictSkill = false;
+let masterOfElementsSkill = false;
+let spaceContinuumStretchSkill = false;
 let enlightenedPrestigeSkill = false;
 let hopefulBeginningSkill = false;
 let autoFightSkill = false;
@@ -131,6 +133,10 @@ let autoTradeHopiumIntervalId = null;
 let equilibriumOfHopeSkill = false;
 let temporalDragReduction = 1;
 let lookPastDistractions = 0;
+
+let autoBigCrunchThreshold = null
+let beaconOfSevenSunsSkill = false;
+let beaconOfSevenSunsMult = 1;
 
 let serenityUnlocked = false;
 let loveHallUnlocked = false;
@@ -255,12 +261,12 @@ function calculateEffectivePower() {
 function updateEffectiveMultipliers() {
     const amplifierMultiplier = upgradeAmplifierSkill ? purchasedUpgrades.length : 1;
 
-    effectiveCopiumPerSecond = copiumPerSecond * totalMultiplier * amplifierMultiplier * copiumSurgeMultiplier * basicResourceBoost;
+    effectiveCopiumPerSecond = copiumPerSecond * totalMultiplier * amplifierMultiplier * copiumSurgeMultiplier * basicResourceBoost * beaconOfSevenSunsMult;
     effectiveDelusionPerSecond = delusionPerSecond * totalMultiplier * amplifierMultiplier * delusionSurgeMultiplier * basicResourceBoost;
     effectiveYachtMoneyPerSecond = yachtMoneyPerSecond * totalMultiplier * amplifierMultiplier * yachtMoneySurgeMultiplier * basicResourceBoost;
     effectiveTrollPointsPerSecond = trollPointsPerSecond * totalMultiplier * amplifierMultiplier * trollPointsSurgeMultiplier * basicResourceBoost;
 
-    effectiveHopiumPerSecond = hopiumPerSecond * totalMultiplier;
+    effectiveHopiumPerSecond = hopiumPerSecond * totalMultiplier * beaconOfSevenSunsMult;
     if (serenityFlowSkill && serenity > 1) {
         effectiveHopiumPerSecond *= Math.sqrt(serenity);
     }
@@ -284,7 +290,7 @@ function updateEffectiveMultipliers() {
     // Loop through each resource and apply the multiplier if the gain flag is true
     serenityGainResources.forEach(resource => {
         if (resource.gainFlag) {
-            effectiveSerenityPerSecond *= Math.max(1, Math.log2(resource.value) / 33);
+            effectiveSerenityPerSecond *= resource.value <= 0 ? 1 : Math.max(1, Math.log2(resource.value) / 33);
         }
     });
 
@@ -411,7 +417,8 @@ function loadGameState() {
     autoPrestigeThreshold = !isNaN(parseFloat(localStorage.getItem('autoPrestigeThreshold'))) ? parseFloat(localStorage.getItem('autoPrestigeThreshold')) : null;
     autoAscendThreshold = !isNaN(parseFloat(localStorage.getItem('autoAscendThreshold'))) ? parseFloat(localStorage.getItem('autoAscendThreshold')) : null;
     autoTranscendThreshold = !isNaN(parseFloat(localStorage.getItem('autoTranscendThreshold'))) ? parseFloat(localStorage.getItem('autoTranscendThreshold')) : null;
-    
+    autoBigCrunchThreshold = !isNaN(parseFloat(localStorage.getItem('autoBigCrunchThreshold'))) ? parseFloat(localStorage.getItem('autoBigCrunchThreshold')) : null;
+
     // Retrieve quick mode
     enableQuickMode = localStorage.getItem('enableQuickMode') === 'true';
 
@@ -649,6 +656,7 @@ function saveGameState() {
     localStorage.setItem('autoPrestigeThreshold', autoPrestigeThreshold);
     localStorage.setItem('autoAscendThreshold', autoAscendThreshold);
     localStorage.setItem('autoTranscendThreshold', autoTranscendThreshold);
+    localStorage.setItem('autoBigCrunchThreshold', autoBigCrunchThreshold);
 
     localStorage.setItem('enableQuickMode', enableQuickMode);
     localStorage.setItem('enableButtonAnimations', enableButtonAnimations);
@@ -926,6 +934,8 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
                 deadpoolRevivesSkill = false;
                 celestialPrecisionSkill = false;
                 gamingAddictSkill = false;
+                masterOfElementsSkill = false;
+                spaceContinuumStretchSkill = false;
                 enlightenedPrestigeSkill = false;
                 hopefulBeginningSkill = false;
                 autoFightSkill = false;
@@ -953,6 +963,10 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
                 equilibriumOfHopeSkill = false;
                 temporalDragReduction = 1;
                 lookPastDistractions = 0;
+
+                autoBigCrunchThreshold = null
+                beaconOfSevenSunsSkill = false;
+                beaconOfSevenSunsMult = 1;
                     
                 loveHallUnlocked = false;
                 document.getElementById('loveHallButton').style.display = 'none';
@@ -1610,7 +1624,7 @@ async function prestige(skipConfirms = false) {
 
     // Either skipConfirms
     skipConfirms |= enableQuickMode;
-    if (canPrestige()) {
+    if (canPrestige()  && !isEventInProgress()) {
         const newPrestigeMult = calculatePrestigeMultiplier();
         const newPrestigeReq = inversePrestigeSkill 
                                 ? Math.max(copium, delusion, yachtMoney, trollPoints) 
@@ -1680,7 +1694,7 @@ function updatePrestigeButton() {
             prestigeButton.textContent = `PRESTIGE (x${formatNumber(newMultiplier / epsMultiplier)} MULT)`;
             prestigeButton.style.display = 'block';
             // Check if auto-prestige should be triggered
-            if (autoPrestigeThreshold !== null && (newMultiplier / epsMultiplier) > autoPrestigeThreshold) {
+            if (autoPrestigeThreshold !== null && (newMultiplier / epsMultiplier) > autoPrestigeThreshold  && !isEventInProgress()) {
                 showPopupTooltip(`Auto-Prestiged for x${formatNumber(newMultiplier / epsMultiplier)}`, color='#DAA520')
                 prestige(true); // Trigger auto-prestige
             }
@@ -2172,6 +2186,11 @@ function updateBigCrunchButton() {
         const newMultiplier = calculateBigCrunchMultiplier(power*compressedBigCrunchMult);
         bigCrunchButton.textContent = `BIG CRUNCH (x${formatNumber((newMultiplier / bigCrunchMultiplier))} MULT)`;
         bigCrunchButton.style.display = 'block';
+        // Check if auto-crunch should be triggered
+        if (autoBigCrunchThreshold !== null && (newMultiplier / bigCrunchMultiplier) > autoBigCrunchThreshold && !isEventInProgress()) {
+            showPopupTooltip(`Auto-Crunched for x${formatNumber(newMultiplier / bigCrunchMultiplier)}`, color='#FF4433')
+            bigCrunch(true); // Trigger auto-prestige
+        }
     } else {
         bigCrunchButton.style.display = 'none';
     }
@@ -2309,13 +2328,17 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true, ski
         if (isFight) {
 
             if (name === 'Vegeta' && !purchasedUpgrades.some(upgrade => upgrade.name === "Cosmetic Surgery")){
-                showMessageModal('Hmph', `After all your time and effort tracking down Vegeta, you finally confront him, only to hear, "Hmph, you're too ugly to fight," as he flies off without a second thought. Frustrated and defeated, you realize you might need to find another way to make yourself more visually impressive—something that even Vegeta can't ignore.`);
-                forgetfulnessCounter++;
-                localStorage.setItem('forgetfulnessCounter', forgetfulnessCounter);
-                if (forgetfulnessCounter >= 15) {
-                    unlockAchievement('Delusion Causes Forgetfulness');
+                if (autoFightConditionCheck(upgrade)){
+                    unlockAchievement('Ugly by Choice')
+                } else {
+                    throttle(() => showMessageModal('Hmph', `After all your time and effort tracking down Vegeta, you finally confront him, only to hear, "Hmph, you're too ugly to fight," as he flies off without a second thought. Frustrated and defeated, you realize you might need to find another way to make yourself more visually impressive—something that even Vegeta can't ignore.`), 2000)();
+                    forgetfulnessCounter++;
+                    localStorage.setItem('forgetfulnessCounter', forgetfulnessCounter);
+                    if (forgetfulnessCounter >= 15) {
+                        unlockAchievement('Delusion Causes Forgetfulness');
+                    }
+                    return;
                 }
-                return;
             }
             
             let canManualFight = !(autoFightSkill && autoFightEnabled) || power < (illusionOfPowerSkill ? (upgrade.isGodMode && upgrade.isPUGodMode ? upgrade.autoBattlePower / 100 : (upgrade.isGodMode || upgrade.isPUGodMode ? upgrade.autoBattlePower / 10 : upgrade.autoBattlePower)) : upgrade.autoBattlePower);
@@ -2438,7 +2461,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true, ski
 
         if (name === 'Stoicism') {
             showMessageModal('The Journey Continues', 
-                "This marks the end of v0.927. You've not only completed the Power Saga, but you're also getting the hang of Infinite Embraces and Meditations! Congratulations on your progress, and welcome to the next stage of your journey. "
+                "This marks the end of v0.9282. You've not only completed the Power Saga, but you're also getting the hang of Infinite Embraces and Meditations! Congratulations on your progress, and welcome to the next stage of your journey. "
                 + "With the Hall of Love now open, Love Points are becoming a key part of your experience, alongside the skills you unlock there. While these new mechanics are taking shape, expect ongoing balancing as the game evolves. "
                 + "Feel free to dive deeper into the skills and explore what's possible. The journey is far from over—more meditations and epic content are on the way! "
                 + "Stay connected on Discord, share your feedback, and together, let's create something truly unforgettable!"
@@ -2534,14 +2557,14 @@ function buyAllUpgrades(limit, pressedButton) {
             }
         }
 
+        let firstFightUpgrade = true;
+
         topUpgrades.forEach(upgrade => {
             if (buyMarkersSkill) {
                 const switchState = JSON.parse(localStorage.getItem(`switchState-${upgrade.name}`));
                 const isAffordableUpgrade = isAffordable(upgrade.cost);      
-                const autoFightCondition = autoFightSkill && autoFightEnabled && power > (illusionOfPowerSkill ? (upgrade.isGodMode && upgrade.isPUGodMode ? upgrade.autoBattlePower / 100 : (upgrade.isGodMode || upgrade.isPUGodMode ? upgrade.autoBattlePower / 10 : upgrade.autoBattlePower)) : upgrade.autoBattlePower);
 
-        
-                if (isAffordableUpgrade && autoFightCondition) {
+                if (isAffordableUpgrade && autoFightConditionCheck(upgrade) && firstFightUpgrade) {
                     buyUpgrade(encodeName(upgrade.name), false, true);
                     purchasedCount++;
                     incrementStellarHarvest();
@@ -2554,13 +2577,15 @@ function buyAllUpgrades(limit, pressedButton) {
                     purchasedCount++;
                 }
 
-
             } else {
                 if (isAffordable(upgrade.cost) && !upgrade.isFight && !upgrade.isMeditation) {
                     buyUpgrade(encodeName(upgrade.name), false, true);
                     purchasedCount++; // Increment counter when an upgrade is bought
                 }
             }
+            
+            if (upgrade.isFight) {firstFightUpgrade = false;}
+
         });
         
         if (purchasedCount > 0) {
@@ -2578,7 +2603,9 @@ function buyAllUpgrades(limit, pressedButton) {
 }
 
 
-
+function autoFightConditionCheck(upgrade) {
+    return autoFightSkill && autoFightEnabled && power > (illusionOfPowerSkill ? (upgrade.isGodMode && upgrade.isPUGodMode ? upgrade.autoBattlePower / 100 : (upgrade.isGodMode || upgrade.isPUGodMode ? upgrade.autoBattlePower / 10 : upgrade.autoBattlePower)) : upgrade.autoBattlePower);
+}
 
 
 // Function to format the cost or earnings of an upgrade for display
@@ -2800,13 +2827,11 @@ function autobuyUpgrades() {
             const upgrade = topUpgrades[i];
             const switchState = JSON.parse(localStorage.getItem(`switchState-${upgrade.name}`));
             const isAffordableUpgrade = isAffordable(upgrade.cost);
-            const autoFightCondition = autoFightSkill && autoFightEnabled && power > (illusionOfPowerSkill ? (upgrade.isGodMode && upgrade.isPUGodMode ? upgrade.autoBattlePower / 100 : (upgrade.isGodMode || upgrade.isPUGodMode ? upgrade.autoBattlePower / 10 : upgrade.autoBattlePower)) : upgrade.autoBattlePower);
-
 
             // Buy the upgrade if either condition is met:
             // 1. It is affordable and switchState is true
             // 2. It is affordable and autoFightSkill is true with sufficient power
-            if (isAffordableUpgrade && autoFightCondition && firstFightUpgrade) {
+            if (isAffordableUpgrade && autoFightConditionCheck(upgrade) && firstFightUpgrade) {
                 buyUpgrade(encodeName(upgrade.name), false, true);
                 upgradeBought = true;
                 incrementStellarHarvest();
@@ -3885,6 +3910,9 @@ function calculateTooltip(resourceId) {
         if (copiumSurgeMultiplier !== 1) {
             tooltip += `<span style="color:#9F2B68">x${formatNumber(copiumSurgeMultiplier)} (Copium Surge)</span><br>`;
         }
+        if (beaconOfSevenSunsSkill) {
+            tooltip += `<span style="color:#FFA500">x${formatNumber(beaconOfSevenSunsMult)} (Beacon of Seven Suns)</span><br>`;
+        }
     }
 
     // Delusion-specific multiplier
@@ -3909,6 +3937,9 @@ function calculateTooltip(resourceId) {
     }
 
     if (resourceId === 'hopium') {
+        if (beaconOfSevenSunsSkill) {
+            tooltip += `<span style="color:#FFA500">x${formatNumber(beaconOfSevenSunsMult)} (Beacon of Seven Suns)</span><br>`;
+        }
         if (serenityFlowSkill && serenity > 1) {
             tooltip += `<span style="color:#00BFFF">x${formatNumber(Math.sqrt(serenity))} (Serenity Flow)</span><br>`;
         }

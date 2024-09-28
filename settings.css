@@ -436,8 +436,6 @@ input[type="radio"]#toggleBuyMarkersNeutral:checked ~ .slider {
     cursor: pointer;
     overflow: hidden;
     z-index: 1;
-    text-transform: uppercase;
-    letter-spacing: 1px;
     transition: background-color 0.3s ease;
 }
 

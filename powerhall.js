@@ -10,7 +10,7 @@ const powerHallSkills = [
     { name: 'Vitality Matrix', cost: 60000, description: 'Maximum Health is increased by 50%!', unlocked: false, level: 'Quantum Nexus' },
     { name: 'Nexus Lifeline', cost: 7e6, description: 'With every attack, heal yourself for 2% max health. Overheal is possible.', unlocked: false, level: 'Quantum Nexus' },
     { name: 'Astral Precision', cost: 4e7, description: 'Hone your accuracy. Minimum damage rescaled from power-75% to power-25%.', unlocked: false, level: 'Quantum Nexus' },
-    { name: 'Void Stabilizer', cost: 2e8, description: 'Reduce damage taken from attacks by 50% until your health drops below 80%', unlocked: false, level: 'Quantum Nexus' },
+    { name: 'Void Stabilizer', cost: 3e8, description: 'Reduce damage taken from attacks by 50% until your health drops below 80%', unlocked: false, level: 'Quantum Nexus' },
     { name: 'Astral Edge', cost: 2e11, description: 'Increase your maximum damage by 1% for each 2% of your health missing.', unlocked: false, level: 'Quantum Nexus' },
     { name: 'Quantum Bastion', cost: 1.5e15, description: 'Resistant to stuns - reduce 2 turns of stun count per turn.', unlocked: false, level: 'Quantum Nexus' },
 
@@ -24,7 +24,7 @@ const powerHallSkills = [
     { name: 'Cosmic Gamekeeper', cost: 1.25e5, description: `Unlock a small multiplier to all resources based on mini game successes.`, unlocked: false, level: 'Celestial Manipulation' },
     { name: 'Nebula Overdrive', cost: 7e5, description: `Purchasing non-boss upgrades no longer consumes power. Power cost still applies.`, unlocked: false, level: 'Celestial Manipulation' },
     { name: 'Stellar Harvest', cost: 3e7, description: `Increase generation of all first 7 resources by 30% for 3 minutes after defeating a boss. (multiplicative)`, unlocked: false, level: 'Celestial Manipulation' },
-    { name: 'POWER is Power!', cost: 3e8, description: `Power generation increased by 10% for each purchased Power Hall skill (multiplicative).`, unlocked: false, level: 'Celestial Manipulation' },
+    { name: 'POWER is Power!', cost: 2e8, description: `Power generation increased by 10% for each purchased Power Hall skill (multiplicative).`, unlocked: false, level: 'Celestial Manipulation' },
     { name: 'Upgrade Amplifier', cost: 5.5e8, description: `First 4 resources gain a flat multiplier based on number of purchased upgrades.`, unlocked: false, level: 'Celestial Manipulation' },
     { name: 'Celestial Collector', cost: 7e10, description: `Stellar Harvest buff is extended to 50% power and lasts for 10 minutes.`, unlocked: false, level: 'Celestial Manipulation' },
 

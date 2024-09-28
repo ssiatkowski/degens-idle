@@ -206,8 +206,6 @@ function playMiniGame(gameType) {
         let playerSequence = [];
         let isSequencePlaying = true; // Flag to prevent clicking during the sequence playback
 
-        const memoryGameStartTime = crunchTimer;
-
         // Show the modal with instructions and start the game when the modal is closed
         showMessageModal(
             'Memory Game', 
@@ -217,6 +215,8 @@ function playMiniGame(gameType) {
             false, 
             false
         ).then(() => {
+
+            const memoryGameStartTime = crunchTimer;
 
             // Create a game area
             const gameArea = document.createElement('div');
@@ -390,7 +390,9 @@ function playMiniGame(gameType) {
         let portalValues = []; // Store all portal values
         let selectedPortals = []; // Store selected portals for checking
         let targetSum = Math.floor(Math.random() * 71) + 10; // Random target sum between 10 and 80
-        let startTime = Date.now(); // Track the start time
+        if (targetSum >= 50) {
+            duration += 5;
+        }
 
         // Show the modal with instructions and start the game when the modal is closed
         showMessageModal(
@@ -436,9 +438,11 @@ function playMiniGame(gameType) {
             timerDisplay.style.zIndex = '1100'; // Set z-index higher than portals
             gameArea.appendChild(timerDisplay);
 
+            const mathStartTime = Date.now(); // Track the start time
+
             // Function to update the timer display with 2 decimal places
             const updateTimer = () => {
-                const elapsed = (Date.now() - startTime) / 1000;
+                const elapsed = (Date.now() - mathStartTime) / 1000;
                 const timeLeft = Math.max(0, duration - elapsed);
                 timerDisplay.textContent = `Time Left: ${timeLeft.toFixed(2)}`;
                 return timeLeft;
@@ -451,7 +455,7 @@ function playMiniGame(gameType) {
                     clearInterval(timerInterval); // Stop the timer when it reaches 0
                     endGame(false); // Time ran out, player loses
                 }
-            }, 100);
+            }, 20);
 
             // Function to create a portal with better collision detection
             function createPortal(num) {
