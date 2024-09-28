@@ -261,48 +261,48 @@
         <div class="fighting-overlay-content">
             <!-- Player Stats and Image -->
             <div class="player-section">
-                <table class="stats">
-                    <tr>
-                        <th>Max Health:</th>
-                        <th id="playerHealthStat"></th>
-                    </tr>
-                    <tr>
-                        <th>Damage:</th> 
-                        <th id="playerDamageStat"></th>
-                    </tr>
-                    <tr>
-                        <th>Speed:</th> 
-                        <th id="playerAttackSpeedStat"></th>
-                    </tr>
-                    <tr>
-                        <th>Defense:</th> 
-                        <th id="playerDefenseStat"></th>
-                    </tr>
-                    <tr id="playerCritChanceContainer">
-                        <th>Crit Chances:</th> 
-                        <th id="playerCritChanceStat"></th>
-                    </tr>
-                    <tr id="playerCritDamageContainer">
-                        <th>Crit Damage:</th> 
-                        <th id="playerCritDamageStat"></th>
-                    </tr>
-                    <tr id="playerDodgeContainer">
-                        <th>Dodge Chances:</th> 
-                        <th id="playerDodgeStat"></th>
-                    </tr>
-                    <tr id="playerNonCritDodgeContainer">
-                        <th>Non-Crit Dodge:</th> 
-                        <th id="playerNonCritDodgeStat"></th>
-                    </tr>
-                    <tr id="playerStunContainer">
-                        <th>Stun Chances:</th>
-                        <th id="playerStunStat"></th>
-                    </tr>
-                    <tr id="playerAbsorbContainer">
-                        <th>Absorb Chances:</th> 
-                        <th id="playerAbsorbStat"></th>
-                    </tr>
-                </table>
+                <div class="stats">
+                    <div class="STAT">
+                        <div>MAX HP:</div>
+                        <div id="playerHealthStat"></div>
+                    </div>
+                    <div class="STAT">
+                        <span>ATK:</span> 
+                        <span id="playerDamageStat"></span>
+                    </div>
+                    <div class="STAT">
+                        <span>SPD:</span> 
+                        <span id="playerAttackSpeedStat"></span>
+                    </div>
+                    <div class="STAT">
+                        <span>DEF:</span> 
+                        <span id="playerDefenseStat"></span>
+                    </div>
+                    <div id="playerCritChanceContainer" class="STAT">
+                        <span>CRIT:</span> 
+                        <span id="playerCritChanceStat"></span>
+                    </div>
+                    <div id="playerCritDamageContainer" class="STAT">
+                        <span>CRIT ATK:</span> 
+                        <span id="playerCritDamageStat"></span>
+                    </div>
+                    <div id="playerDodgeContainer" class="STAT">
+                        <span>DODGE:</span> 
+                        <span id="playerDodgeStat"></span>
+                    </div>
+                    <div id="playerNonCritDodgeContainer" class="STAT">
+                        <span>NON-CRIT DODGE:</span> 
+                        <span id="playerNonCritDodgeStat"></span>
+                    </div>
+                    <div id="playerStunContainer" class="STAT">
+                        <span>STUN:</span>
+                        <span id="playerStunStat"></span>
+                    </div>
+                    <div id="playerAbsorbContainer" class="STAT">
+                        <span>ABSORB:</span> 
+                        <span id="playerAbsorbStat"></span>
+                    </div>
+                </div>
                 <div id="playerImageContainer"></div>
                 <div class="health-bar">
                     <div id="playerHealthBar" class="health-fill"></div>
@@ -316,48 +316,48 @@
 
             <!-- Enemy Stats and Image -->
             <div class="enemy-section">
-                <table class="stats">
-                    <tr>
-                        <th>Health:</th> 
-                        <th id="enemyHealthStat"></th>
-                    </th>
-                    <tr>
-                        <th>Damage:</th> 
-                        <th id="enemyDamageStat"></th>
-                    </th>
-                    <tr>
-                        <th>Speed:</th> 
-                        <th id="enemyAttackSpeedStat"></th>
-                    </th>
-                    <tr>
-                        <th>Defense:</th> 
-                        <th id="enemyDefenseStat"></th>
-                    </tr>
-                    <tr id="enemyCritChanceContainer">
-                        <th>Crit Chances:</th> 
-                        <th id="enemyCritChanceStat"></th>
-                    </tr>
-                    <tr id="enemyCritDamageContainer">
-                        <th>Crit Damage:</th> 
-                        <th id="enemyCritDamageStat"></th>
-                    </tr>
-                    <tr id="enemyDodgeContainer">
-                        <th>Dodge Chances:</th>
-                        <th id="enemyDodgeStat"></th>
-                    </tr>
-                    <tr id="enemyNonCritDodgeContainer">
-                        <th>Non-Crit Dodge:</th> 
-                        <th id="enemyNonCritDodgeStat"></th>
-                    </tr>
-                    <tr id="enemyStunContainer">
-                        <th>Stun Chances:</th> 
-                        <th id="enemyStunStat"></th>
-                    </tr>
-                    <tr id="enemyAbsorbContainer">
-                        <th>Absorb Chances:</th> 
-                        <th id="enemyAbsorbStat"></th>
-                    </tr>
-                </table>
+                <div class="stats">
+                    <div class="STAT">
+                        <div>HP:</div> 
+                        <div id="enemyHealthStat"></div>
+                    </div>
+                    <div class="STAT">
+                        <div>ATK:</div> 
+                        <div id="enemyDamageStat"></div>
+                    </div>
+                    <div class="STAT">
+                        <div>SPD:</div> 
+                        <div id="enemyAttackSpeedStat"></div>
+                    </div>
+                    <div class="STAT">
+                        <div>DEF:</div> 
+                        <div id="enemyDefenseStat"></div>
+                    </div>
+                    <div id="enemyCritChanceContainer" class="STAT">
+                        <div>CRIT:</div> 
+                        <div id="enemyCritChanceStat"></div>
+                    </div>
+                    <div id="enemyCritDamageContainer" class="STAT">
+                        <div>CRIT ATK:</div> 
+                        <div id="enemyCritDamageStat"></div>
+                    </div>
+                    <div id="enemyDodgeContainer" class="STAT">
+                        <div>DODGE:</div>
+                        <div id="enemyDodgeStat"></div>
+                    </div>
+                    <div id="enemyNonCritDodgeContainer" class="STAT">
+                        <div>NON-CRIT DODGE:</div> 
+                        <div id="enemyNonCritDodgeStat"></div>
+                    </div>
+                    <div id="enemyStunContainer" class="STAT">
+                        <div>STUN:</div> 
+                        <div id="enemyStunStat"></div>
+                    </div>
+                    <div id="enemyAbsorbContainer" class="STAT">
+                        <div>ASBORD:</div> 
+                        <div id="enemyAbsorbStat"></div>
+                    </div>
+                </div>
                 <div id="enemyImageContainer"></div>
                 <div class="health-bar">
                     <div id="enemyHealthBar" class="health-fill"></div>

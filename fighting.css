@@ -115,7 +115,12 @@
     width: 100%;
     flex: 1; /* Allow stats to grow and fill space */
 }
-
+.STAT {
+    display: grid;
+    grid-template-columns: 45% 55%;
+    font-size: 14.5px;
+    justify-content: space-between;
+}
 /* Stats styling */
 .stats p {
     margin: 2px 0; /* Reduce the top and bottom margin */
@@ -169,7 +174,12 @@
         width: 100%; /* Ensure the image takes up the full width of the section */
         height: auto; /* Maintain aspect ratio */
     }
-
+    .STAT {
+        display: grid;
+        grid-template-columns: 50% 50%;
+        font-size: 13px;
+        justify-content: space-between;
+    }
     /* Ensure that the text does not wrap and uses the full width */
     .stats p {
         white-space: nowrap; /* Prevent text wrapping */
@@ -177,7 +187,6 @@
         text-overflow: ellipsis; /* Add ellipsis (...) to overflow text */
         font-size: 10px; /* Smaller font size for mobile devices */
     }
-
     /* Adjust the flex layout to avoid wrapping */
     .fighting-overlay-content {
         flex-wrap: nowrap; /* Prevent sections from wrapping to the next line */

@@ -1,0 +1,42 @@
+                <div class="stats">
+                    <div class="STAT>
+                        <div>HP:</div> 
+                        <div id="enemyHealdivStat"></div>
+                    </div>
+                    <div class="STAT>
+                        <div>ATK:</div> 
+                        <div id="enemyDamageStat"></div>
+                    </div>
+                    <div class="STAT>
+                        <div>SPD:</div> 
+                        <div id="enemyAttackSpeedStat"></div>
+                    </div>
+                    <div class="STAT>
+                        <div>DEF:</div> 
+                        <div id="enemyDefenseStat"></div>
+                    </div>
+                    <div id="enemyCritChanceContainer" class="STAT>
+                        <div>CRIT:</div> 
+                        <div id="enemyCritChanceStat"></div>
+                    </div>
+                    <div id="enemyCritDamageContainer" class="STAT>
+                        <div>CRIT ATK:</div> 
+                        <div id="enemyCritDamageStat"></div>
+                    </div>
+                    <div id="enemyDodgeContainer" class="STAT>
+                        <div>DODGE:</div>
+                        <div id="enemyDodgeStat"></div>
+                    </div>
+                    <div id="enemyNonCritDodgeContainer" class="STAT>
+                        <div>NON-CRIT DODGE:</div> 
+                        <div id="enemyNonCritDodgeStat"></div>
+                    </div>
+                    <div id="enemyStunContainer" class="STAT>
+                        <div>STUN:</div> 
+                        <div id="enemyStunStat"></div>
+                    </div>
+                    <div id="enemyAbsorbContainer" class="STAT>
+                        <div>ASBORD:</div> 
+                        <div id="enemyAbsorbStat"></div>
+                    </div>
+                </div>
