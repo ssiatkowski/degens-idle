@@ -135,7 +135,7 @@ const meditationChallenges = {
         livesPerBall: 5,
     },
     "Deism": {
-        duration: 57,
+        duration: 60,
         focus: 1,
         ballCount: 7,
         arenaSize: 500,
@@ -144,7 +144,7 @@ const meditationChallenges = {
         velocity: 13,
         wind: 0,
         respawnFactor: 1,
-        livesPerBall: 2.5,
+        livesPerBall: 2,
     },
     "Skepticism": {
         duration: 300,

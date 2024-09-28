@@ -427,9 +427,11 @@ input[type="radio"]#toggleBuyMarkersNeutral:checked ~ .slider {
 .automation-button {
     position: relative;
     display: inline-block;
-    padding: 15px 30px;
-    font-size: 18px;
-    font-weight: bold;
+    padding: 10px 20px;
+    font-size: 16px;
+    letter-spacing: 1px;
+    white-space: nowrap;
+    width: 100%;
     color: #ffffff;
     background-color: #a09f9f;
     border: none;
@@ -437,8 +439,6 @@ input[type="radio"]#toggleBuyMarkersNeutral:checked ~ .slider {
     cursor: pointer;
     overflow: hidden;
     z-index: 1;
-    text-transform: uppercase;
-    letter-spacing: 1px;
     transition: background-color 0.3s ease;
 }
 
