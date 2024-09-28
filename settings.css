@@ -426,9 +426,9 @@ input[type="radio"]#toggleBuyMarkersNeutral:checked ~ .slider {
     display: inline-block;
     padding: 10px 20px;
     font-size: 16px;
+    letter-spacing: 1px;
     white-space: nowrap;
     width: 100%;
-    font-weight: bold;
     color: #ffffff;
     background-color: #a09f9f;
     border: none;
