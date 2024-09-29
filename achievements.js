@@ -700,6 +700,13 @@ const achievements = [
         type: 'progression',
     },
     {
+        name: 'Make Love, Not War',
+        isUnlocked: false,
+        hoverText: `why can't we all just be friends?`,
+        img: 'imgs/achievements/make_love_not_war.jpg',
+        type: 'progression',
+    },
+    {
         name: 'The Giver',
         isUnlocked: false,
         hoverText: `complete certain meditation without losing any focus`,
