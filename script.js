@@ -2979,20 +2979,29 @@ function updateUpgradeButtons() {
             if (isAffordable(upgrade.cost)) {
                 foundAffordableUpgrade = true;
                 if (upgrade.isPUGodMode && upgrade.isGodMode) {
-                    button.classList.add('affordable-double-godmode');
-                    button.classList.remove('affordable', 'affordable-godmode', 'affordable-pu-godmode');
+                    button.className = 'double-godmode'
+                    //button.classList.remove('upgrade-affordable', 'affordable-godmode', 'affordable-pu-godmode', 'upgrade-unaffordable');
                 } else if (upgrade.isPUGodMode) {
-                    button.classList.add('affordable-pu-godmode');
-                    button.classList.remove('affordable', 'affordable-godmode', 'affordable-double-godmode');
+                    button.className = 'pu-godmode'
+                    //button.classList.remove('upgrade-affordable', 'affordable-godmode', 'affordable-double-godmode');
                 } else if (upgrade.isGodMode) {
-                    button.classList.add('affordable-godmode');
-                    button.classList.remove('affordable', 'affordable-pu-godmode', 'affordable-double-godmode');
+                    button.className = 'godmode';
+                    //button.classList.remove('affordable', 'affordable-pu-godmode', 'affordable-double-godmode', 'upgrade-unaffordable');
                 } else {
-                    button.classList.add('affordable');
-                    button.classList.remove('affordable-godmode', 'affordable-pu-godmode', 'affordable-double-godmode');
+                    button.className =  'upgrade-affordable';
+                    //button.classList.remove('affordable-godmode', 'affordable-pu-godmode', 'affordable-double-godmode', 'upgrade-unaffordable');
                 }
             } else {
-                button.classList.remove('affordable', 'affordable-godmode', 'affordable-pu-godmode', 'affordable-double-godmode');
+                if (upgrade.isPUGodMode && upgrade.isGodMode) {
+                    button.className = 'special2state'
+                } else if (upgrade.isPUGodMode) {
+                    button.className = 'specialtranscend'
+                } else if (upgrade.isGodMode) {
+                    button.className = 'specialgodmode'
+                } else {
+                    button.className = 'upgrade-unaffordable-unobtainable'
+                }
+                //button.classList.remove('upgrade-affordable', 'affordable-godmode', 'affordable-pu-godmode', 'affordable-double-godmode');
             }
             
 
