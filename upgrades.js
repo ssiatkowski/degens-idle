@@ -1345,20 +1345,20 @@ const upgrades = [
         cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 1e72, power: 1e19, serenity: 0.1 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 3e13, powerPerSecond: 0, serenityPerSecond: 0.0001 },
         img: `imgs/meditation.jpg`,
-        message: ` <p>After pushing past all physical limits, you’ve discovered that the true answers lie beyond the material world. You have unlocked <strong>Meditation</strong>, a metaphysical realm where the deepest questions can be answered. In this state, you will be guided through an abstract challenge: keep a set of mystical <strong>balls</strong> within the boundaries of a meditative space for a certain duration. Succeeding in your meditation will reveal powerful upgrades, each related to different belief systems, philosophies, religions, and worldviews.</p>
-                    <h3>How the Meditation Game Works:</h3>
-                    <p>During meditation, your goal is to ensure that the mystical balls remain within a bounded arena. Your mastery of resources will determine how well you can maintain focus and balance. Here’s how each of your resources will help increase your chances of success:</p>
-                    <ul>
-                        <li><strong>Copium</strong> - Influences <strong>Ball Size</strong>. More Copium means smaller balls, making it easier to keep them in bounds.</li>
-                        <li><strong>Delusion</strong> - Impacts <strong>Turn Radius</strong>. A greater delusion will cause the balls to adjust their direction more quickly, pulling them back toward the center faster.</li>
-                        <li><strong>Yacht Money</strong> - <strong>Reduces Meditation Duration</strong>. The more you accumulate, the shorter the time needed to complete the meditation challenge.</li>
-                        <li><strong>Troll Points</strong> - Increases <strong>Respawn Time</strong>. This gives you more time before a ball that goes out of bounds reappears, offering brief relief.</li>
-                        <li><strong>Hopium</strong> - <strong>Reduces the Total Number of Balls</strong>. With more hopium, fewer balls need to be managed during meditation.</li>
-                        <li><strong>Knowledge</strong> - Affects <strong>Velocity</strong>. Higher knowledge will slow down the speed of the balls, making it easier to keep them within bounds.</li>
-                        <li><strong>Power</strong> - Affects <strong>Gravity</strong>. A stronger pull toward the center ensures that balls are less likely to stray too far from the boundary.</li>
-                        <li><strong>Serenity</strong> - Provides additional <strong>Focus</strong>. More serenity allows more balls to go out of bounds before you lose focus and fail the meditation.</li>
-                    </ul>
-                    <p>Use your resources wisely, maintain your inner focus, and explore the vast array of perspectives unlocked through meditation. Each successful meditation brings you one step closer to deeper understanding and metaphysical mastery.</p>`,
+        message: `<p>Congratulations! You’ve reached a new level of enlightenment, unlocking a powerful new type of upgrade: <strong>Meditations</strong>. These meditations are similar to battles in that they play out passively, but they tap into a different kind of challenge—one that is driven by all 8 of your resources. In meditation, you’ll explore the metaphysical realm, where the ultimate truths await.</p>
+                <h3>How the Meditation Upgrades Work:</h3>
+                <p>In each meditation, your goal is to maintain a set of mystical <strong>elements</strong> within a meditative space. Just like battles, meditations unfold automatically, but here, the outcome is determined by your mastery of all 8 resources:</p>
+                <ul>
+                    <li><strong>Copium</strong> - Influences <strong>Element Size</strong>. More Copium results in smaller elements, making them easier to keep within bounds.</li>
+                    <li><strong>Delusion</strong> - Affects <strong>Turn Speed</strong>. A greater delusion allows the elements to adjust their direction more quickly, pulling them back toward the center faster.</li>
+                    <li><strong>Yacht Money</strong> - <strong>Reduces Meditation Duration</strong>. Accumulating more shortens the time required to complete the meditation challenge.</li>
+                    <li><strong>Troll Points</strong> - Increases <strong>Respawn Delay</strong>. Higher Troll Points give you more time before an element that leaves the bounds reappears, offering brief respite.</li>
+                    <li><strong>Hopium</strong> - <strong>Reduces the Number of Elements</strong>. With more Hopium, fewer elements must be managed during meditation.</li>
+                    <li><strong>Knowledge</strong> - Affects <strong>Speed</strong>. Greater Knowledge slows down the elements, making it easier to keep them in the meditative space.</li>
+                    <li><strong>Power</strong> - Affects <strong>Gravity</strong>. A stronger gravitational pull towards the center keeps the elements from straying too far from the boundary.</li>
+                    <li><strong>Serenity</strong> - Enhances <strong>Focus</strong>. More Serenity allows more elements to exit the boundary before you lose focus and fail the meditation.</li>
+                </ul>
+                <p>As you master each meditation, you’ll unlock upgrades tied to diverse belief systems, philosophies, and worldviews. Use your resources strategically to navigate these metaphysical challenges and achieve deeper understanding and metaphysical mastery.</p>`,
         isKey: true,
         
     },
@@ -1530,6 +1530,7 @@ const upgrades = [
         isMeditation: true,
         isKey: true,
         message: `You’ve discovered that <strong>true freedom lies in the ability to live independently and make your own choices</strong>, without unnecessary constraints. Libertarianism teaches the importance of personal liberty and responsibility, where individuals thrive when allowed to pursue their own paths. Through this meditation, you’ve embraced the value of autonomy, and with it, the power to shape your own destiny.`,
+        achievement: 'Study Libertarianism',
     },
     {         
         name: `Different Tastes`,
@@ -1561,7 +1562,7 @@ const upgrades = [
     {         
         name: `We All Deserve Breaks`,
         cost: { copium: 0, delusion: 1e122, yachtMoney: 0, trollPoints: 2e123, hopium: 0, knowledge: 0, power: 0, serenity: 2e10 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 2e52, yachtMoneyPerSecond: -2e51, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 280 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 2e52, yachtMoneyPerSecond: -1e51, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 280 },
         img: `imgs/not_adulting.jpg`,
     },
     {         
@@ -1578,6 +1579,7 @@ const upgrades = [
         isMeditation: true,
         isKey: true,
         message: `Through this meditation, you’ve deepened your <strong>connection to the kami (spirits) that reside in nature and all things</strong>. Shinto teaches that harmony with the natural world brings clarity, peace, and spiritual balance. By honoring the sacredness of life, you’ve learned that everything around you is alive with spiritual energy. Continue to respect and live in harmony with nature, and it will nurture your spirit in return.`,
+        achievement: 'Study Shinto',
     },
     {         
         name: `Dad Joke #1`,
@@ -1635,5 +1637,6 @@ const upgrades = [
         isMeditation: true,
         isKey: true,
         message: `In this meditation, you’ve learned the <strong>value of questioning and seeking truth</strong>. Skepticism teaches that through doubt, we grow closer to understanding, as every idea must be examined and tested. By embracing a mindset of curiosity and critical thinking, you’ve unlocked the path to deeper knowledge. Continue to question, explore, and refine your beliefs, and truth will reveal itself in time.`,
+        achievement: 'Study Skepticism',
     },
 ];

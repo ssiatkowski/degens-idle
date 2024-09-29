@@ -693,10 +693,10 @@ const achievements = [
         type: 'puzzle',
     },
     {
-        name: 'Make Love, Not War',
+        name: 'Study Libertarianism',
         isUnlocked: false,
-        hoverText: `why can't we all just be friends?`,
-        img: 'imgs/achievements/make_love_not_war.jpg',
+        hoverText: `complete the Libertarianism meditation`,
+        img: 'imgs/achievements/libertarianism.jpg',
         type: 'progression',
     },
     {
@@ -712,6 +712,13 @@ const achievements = [
         hoverText: `complete certain meditation without losing any focus`,
         img: 'imgs/achievements/tamed_lion.jpg',
         type: 'puzzle',
+    },
+    {
+        name: 'Study Shinto',
+        isUnlocked: false,
+        hoverText: `complete the Shinto meditation`,
+        img: 'imgs/achievements/shinto.jpg',
+        type: 'progression',
     },
     {
         name: 'Ugly by Choice',
@@ -733,6 +740,13 @@ const achievements = [
         hoverText: 'TT.A km',
         img: 'imgs/achievements/longest_tunnel.jpg',
         type: 'puzzle',
+    },
+    {
+        name: 'Study Skepticism',
+        isUnlocked: false,
+        hoverText: `complete the Skepticism meditation`,
+        img: 'imgs/achievements/skepticism.jpg',
+        type: 'progression',
     },
     {
         name: 'More than Sauron',
