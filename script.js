@@ -2999,7 +2999,7 @@ function updateUpgradeButtons() {
                 } else if (upgrade.isGodMode) {
                     button.className = 'specialgodmode'
                 } else {
-                    button.className = 'upgrade-unaffordable-unobtainable'
+                    button.className = 'upgrade-unaffordable unobtainable'
                 }
                 //button.classList.remove('upgrade-affordable', 'affordable-godmode', 'affordable-pu-godmode', 'affordable-double-godmode');
             }
