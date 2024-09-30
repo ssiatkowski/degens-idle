@@ -677,7 +677,11 @@ function playMiniGame(gameType) {
         }
 
         // Shuffle the box values to randomize the order
-        boxValues = boxValues.sort(() => Math.random() - 0.5);
+        for (let i = boxValues.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [boxValues[i], boxValues[j]] = [boxValues[j], boxValues[i]];
+        }
+    
 
         // Show the modal with instructions and start the game when the modal is closed
         showMessageModal(

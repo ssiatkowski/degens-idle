@@ -66,6 +66,7 @@ let serenityBoostMultiplier = 1;
 let powerInfusionMultiplier = 1;
 let knowledgeInfusionMultiplier = 1;
 let basicResourceBoost = 1;
+let lovePointsHallMultiplier = 1;
 
 let currentNumberFormat = 'Mixed';
 
@@ -103,6 +104,8 @@ let studyAcceleratorReduction = 0;
 let deadpoolRevivesSkill = false;
 let celestialPrecisionSkill = false;
 let gamingAddictSkill = false;
+let secondWaveAutomationSkill = false;
+let steadyFocusSkill = false;
 let masterOfElementsSkill = false;
 let spaceContinuumStretchSkill = false;
 let enlightenedPrestigeSkill = false;
@@ -924,6 +927,7 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
                 powerInfusionMultiplier = 1;
                 knowledgeInfusionMultiplier = 1;
                 basicResourceBoost = 1;
+                lovePointsHallMultiplier = 1;
 
                 serenityFlowSkill = false;
                 perfectPUGodModeSkill = false;
@@ -934,6 +938,8 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
                 deadpoolRevivesSkill = false;
                 celestialPrecisionSkill = false;
                 gamingAddictSkill = false;
+                secondWaveAutomationSkill = false;
+                steadyFocusSkill = false;
                 masterOfElementsSkill = false;
                 spaceContinuumStretchSkill = false;
                 enlightenedPrestigeSkill = false;
@@ -1061,10 +1067,13 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
             lessDiminishingGodModeSkill = false;
             lessDiminishingPUGodModeSkill = false;
             perfectGodModeSkill = false;
-            autoPrestigeThreshold = null;
-            autoAscendThreshold = null;
-            autoTranscendThreshold = null;
-            autobuyUpgradesSkill = false;
+
+            if (!secondWaveAutomationSkill){
+                autoPrestigeThreshold = null;
+                autoAscendThreshold = null;
+                autoTranscendThreshold = null;
+                autobuyUpgradesSkill = false;
+            }
 
             compressedBigCrunchMult = 1;
 
@@ -1461,7 +1470,7 @@ const PREFIXES = ["", "K", "M", "B", "T", "Qa", "Qi", "Sx", "Sp", "Oc", "No", "D
 function formatNumIntl(num, isScientific = false) {
     const absNum = Math.abs(num);
     if (num === 0) return "0";
-    else if (absNum >= 1 && absNum < 1000) return formatSignificant.format(num);
+    else if (absNum >= 0.001 && absNum < 1000) return formatSignificant.format(num);
     else if (isScientific) return formatScientific.format(num).toLowerCase();
     else if (absNum < 1) return formatFraction.format(num);
     
@@ -1543,8 +1552,8 @@ function updateDisplay() {
     document.getElementById('sps').innerHTML = formatNumber(effectiveSerenityPerSecond);
 
     updatePrestigeButton();
-    updateAscendButton();
     updateTranscendButton();
+    updateAscendButton();
     updateBigCrunchButton();
     updateInfiniteEmbraceButton();
     updateUpgradeButtons();
@@ -1749,7 +1758,7 @@ function calculateBigCrunchMultiplier(bcPower = bigCrunchPower) {
 }
 
 function calculateLovePointsGained() {
-    return Math.max(0, Math.log10(serenity)) + embraceExtraLovePoints;
+    return Math.max(0, Math.log10(serenity) * lovePointsHallMultiplier) + embraceExtraLovePoints;
 }
 
 
@@ -2461,7 +2470,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true, ski
 
         if (name === 'Stoicism') {
             showMessageModal('The Journey Continues', 
-                "This marks the end of v0.9283. You've not only completed the Power Saga, but you're also getting the hang of Infinite Embraces and Meditations! Congratulations on your progress, and welcome to the next stage of your journey. "
+                "This marks the end of v0.9284. You've not only completed the Power Saga, but you're also getting the hang of Infinite Embraces and Meditations! Congratulations on your progress, and welcome to the next stage of your journey. "
                 + "With the Hall of Love now open, Love Points are becoming a key part of your experience, alongside the skills you unlock there. While these new mechanics are taking shape, expect ongoing balancing as the game evolves. "
                 + "Feel free to dive deeper into the skills and explore what's possible. The journey is far from over—more meditations and epic content are on the way! "
                 + "Stay connected on Discord, share your feedback, and together, let's create something truly unforgettable!"

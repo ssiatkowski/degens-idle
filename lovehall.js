@@ -10,26 +10,29 @@ const loveHallSkills = [
     { name: 'Achievement Boost', cost: 1.9, description: 'Achievement Multiplier x2. (Achievement Boosts stack)', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 3 },
     { name: 'Cosmic Embrace', cost: 1.9, description: 'Gain +1 Love Point every embrace.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 3 },
 
-    { name: 'Serenity Flow', cost: 5, description: 'Hopium gain is multiplied by square root of Serenity.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 4 },
-    { name: 'Serene Boost 2', cost: 5, description: '5x Serenity gain. (Serenity Boosts stack)', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 4, requirement: 'Serene Boost 1' },
+    { name: 'Epistemic Engine', cost: 3.3, description: 'Start Embrace with Knowledge Generation skill unlocked. ', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 4 },
+    { name: 'Pulse of Affection', cost: 3.3, description: 'Gain 3.3% more base Love Points per embrace.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 4 },
 
-    { name: 'Illusion of Power', cost: 9, description: 'Lower auto-fight power threshold by 10x each for ascended/transcended upgrades.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 5, requirement: 'Overwhelming Mercy' },
-    { name: 'Early Accelerant', cost: 9, description: '10x multiplier to first 6 resources, degrades by 3% with each purchased upgrade.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 5 },
+    { name: 'Serenity Flow', cost: 5, description: 'Hopium gain is multiplied by square root of Serenity.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 5 },
+    { name: 'Serene Boost 2', cost: 5, description: '5x Serenity gain. (Serenity Boosts stack)', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 5, requirement: 'Serene Boost 1' },
 
-    { name: 'Power Infusion', cost: 15, description: '4x Power gain.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 6 },
-    { name: 'Soulbound Embrace', cost: 15, description: 'Gain +2.5 Love Points every embrace.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 6, requirement: 'Cosmic Embrace' },
+    { name: 'Illusion of Power', cost: 9, description: 'Lower auto-fight power threshold by 10x each for ascended/transcended upgrades.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 6, requirement: 'Overwhelming Mercy' },
+    { name: 'Early Accelerant', cost: 9, description: '10x multiplier to first 6 resources, degrades by 3% with each purchased upgrade.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 6 },
 
-    { name: 'Hopeful Soft Cap', cost: 17, description: 'Mini Games Soft Cap uses resource or Hopium (greater)', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 7 },
-    { name: 'Fertile Scarcity', cost: 17, description: 'Cosmic Drought sets Stellar Harvest to 250x (instead of 1x)', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 7 },
+    { name: 'Power Infusion', cost: 15, description: '4x Power gain.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 7 },
+    { name: 'Soulbound Embrace', cost: 15, description: 'Gain +2.5 Love Points every embrace.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 7, requirement: 'Cosmic Embrace' },
+
+    { name: 'Hopeful Soft Cap', cost: 17, description: 'Mini Games Soft Cap uses resource or Hopium (greater)', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 8 },
+    { name: 'Fertile Scarcity', cost: 17, description: 'Cosmic Drought sets Stellar Harvest to 250x (instead of 1x)', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 8 },
     
-    { name: 'Inverse Prestige', cost: 21, description: 'Prestige is now based on the highest of your first four resources', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 8 },
-    { name: 'Positive Markers', cost: 21, description: 'Buy markers stay turned on through Infinite Embrace', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 8 },
+    { name: 'Inverse Prestige', cost: 21, description: 'Prestige is now based on the highest of your first four resources', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 9 },
+    { name: 'Positive Markers', cost: 21, description: 'Buy markers stay turned on through Infinite Embrace', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 9 },
 
-    { name: 'Achievement Boost 2', cost: 32, description: 'Achievement Multiplier x2.5. (Achievement Boosts stack)', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 9, requirement: 'Achievement Boost' },
-    { name: 'Tunneled Ascension', cost: 32, description: 'Transcending an upgrade also Ascends it.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 9 },
+    { name: 'Achievement Boost 2', cost: 32, description: 'Achievement Multiplier x2.5. (Achievement Boosts stack)', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 10, requirement: 'Achievement Boost' },
+    { name: 'Tunneled Ascension', cost: 32, description: 'Transcending an upgrade also Ascends it.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 10 },
 
-    { name: 'Achievement Hypercharge', cost: 50, description: 'Achievement multiplier becomes multiplicative instead of additive.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 10 },
-    { name: 'Perfect PU God-Mode', cost: 50, description: 'Make PU God-Mode perfect with diminishing returns at 99.2%.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 10 },
+    { name: 'Achievement Hypercharge', cost: 50, description: 'Achievement multiplier becomes multiplicative instead of additive.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 11 },
+    { name: 'Perfect PU God-Mode', cost: 50, description: 'Make PU God-Mode perfect with diminishing returns at 99.2%.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 11 },
 
     // { name: 'Infinite Collapse', cost: 308, description: 'Automatically apply Big Crunch mult without resetting.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 11, requirement: 'Perpetual Collapse' },
     // { name: '', cost: 308, description: '', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 11 },
@@ -44,30 +47,29 @@ const loveHallSkills = [
     { name: 'Knowledge Infusion', cost: 0.4, description: '8x Knowledge gain.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 23 },
     { name: 'Basic Resource Boost', cost: 0.4, description: '9x gain to first 4 resources.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 23 },
 
-
     { name: 'Hall of Knowledge Auto-Buy', cost: 1.5, description: 'Automatically buy upgrades from the Hall of Knowledge.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 25 },
     { name: 'Hall of Power Auto-Buy', cost: 1.5, description: 'Automatically buy upgrades from the Hall of Power.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 25 },
 
     { name: 'Gaming Addict', cost: 2, description: 'Improves Mini Gamer skill to reduce cooldowns by 75%.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 26 },
-    { name: 'First-Wave Automation', cost: 2, description: `Hall of Knowledge automation features are ${formatNumber(1e10)}x cheaper`, unlocked: false, level: 'Dimensional Shift (27x)', pair: 26 },
+    { name: 'First-Wave Automation', cost: 2, description: `Hall of Knowledge automation skills are ${formatNumber(1e10)}x cheaper`, unlocked: false, level: 'Dimensional Shift (27x)', pair: 26 },
     
-    // { name: '', cost: 4, description: '', unlocked: false, level: 'Dimensional Shift (27x)', pair: 27 },
-    // { name: 'Second-Wave Automation', cost: 4, description: `Keep Hall of Knowledge automation unlocked and preserve settings`, unlocked: false, level: 'Dimensional Shift (27x)', pair: 27, requirement: 'First-Wave Automation' },
+    { name: 'Steady Focus', cost: 4, description: 'Reduce meditation focus lost per ball by 1. (min 1)', unlocked: false, level: 'Dimensional Shift (27x)', pair: 27 },
+    { name: 'Second-Wave Automation', cost: 4, description: `Keep Hall of Knowledge automation skills unlocked and preserve settings on Embrace.`, unlocked: false, level: 'Dimensional Shift (27x)', pair: 27, requirement: 'First-Wave Automation' },
 
-    { name: 'Master of Elements', cost: 5, description: 'Reduce Meditation Wind Speed by 50%', unlocked: false, level: 'Dimensional Shift (27x)', pair: 27 },
-    { name: 'Space Continuum Stretch', cost: 5, description: 'Increase Meditation Arena Size by 10%', unlocked: false, level: 'Dimensional Shift (27x)', pair: 27 },
+    { name: 'Master of Elements', cost: 5, description: 'Reduce Meditation Wind Speed by 50%', unlocked: false, level: 'Dimensional Shift (27x)', pair: 28 },
+    { name: 'Space Continuum Stretch', cost: 5, description: 'Increase Meditation Arena Size by 10%', unlocked: false, level: 'Dimensional Shift (27x)', pair: 28 },
 
-    { name: 'Enlightened Prestige', cost: 7, description: 'Prestige Base skill increases from 1.75 base to 1.775 base.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 28 },
-    { name: 'Hopeful Beginning', cost: 7, description: 'Start with 1M Hopium after any prestige layer.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 28 },
+    { name: 'Enlightened Prestige', cost: 7, description: 'Prestige Base skill increases from 1.75 base to 1.775 base.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 29 },
+    { name: 'Hopeful Beginning', cost: 7, description: 'Start with 1M Hopium after any prestige layer.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 29 },
 
-    { name: 'Overwhelming Mercy', cost: 8, description: 'Spare opponents who are far weaker than you and auto unlock the upgrades.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 29, requirement: 'Celestial Precision' },
-    { name: 'Hopium Fix', cost: 8, description: 'Fix Hopium in the same way Delusion is cured.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 29 },
+    { name: 'Overwhelming Mercy', cost: 8, description: 'Spare opponents who are far weaker than you and auto unlock the upgrades.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 30, requirement: 'Celestial Precision' },
+    { name: 'Hopium Fix', cost: 8, description: 'Fix Hopium in the same way Delusion is cured.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 30 },
 
-    { name: 'Serenity Gain (Copium)', cost: 10, description: 'Serenity gain is multiplied by log2(Copium)/33.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 30 },
-    { name: 'Serenity Gain (Delusion)', cost: 10, description: 'Serenity gain is multiplied by log2(Delusion)/33.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 30 },
+    { name: 'Serenity Gain (Copium)', cost: 10, description: 'Serenity gain is multiplied by log2(Copium)/33.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 31 },
+    { name: 'Serenity Gain (Delusion)', cost: 10, description: 'Serenity gain is multiplied by log2(Delusion)/33.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 31 },
 
-    { name: 'Serenity Gain (Yacht Money)', cost: 10, description: 'Serenity gain is multiplied by log2(Yacht Money)/33.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 31 },
-    { name: 'Serenity Gain (Troll Points)', cost: 10, description: 'Serenity gain is multiplied by log2(Troll Points)/33.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 31 },
+    { name: 'Serenity Gain (Yacht Money)', cost: 10, description: 'Serenity gain is multiplied by log2(Yacht Money)/33.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 32 },
+    { name: 'Serenity Gain (Troll Points)', cost: 10, description: 'Serenity gain is multiplied by log2(Troll Points)/33.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 32 },
 
 
     // 42x Level - the meaning of life
@@ -98,7 +100,7 @@ const loveHallSkills = [
     { name: 'Temporal Drag', cost: 12, description: 'During meditation, decrease ball velocity by 25%.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 48 },
     { name: 'Look Past Distractions', cost: 12, description: 'During meditation, decrease # of balls by 1.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 48 },
 
-    // { name: 'Knowledge Exchange', cost: 14, description: 'Trade Hopium for Knowledge at a 1e20:1 ratio.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 49 },
+    // { name: 'Faith-Fueled Knowledge', cost: 14, description: 'Multiplier to knowledge based on log10 of current Hopium / 10.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 49 },
     // { name: 'Big Crunch Factor Boost', cost: 14, description: 'Increase Big Crunch base from 2 to 2.1.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 49 },
 
     // { name: 'Intrinsic Meditation', cost: 42, description: 'Auto complete meditations that are ascended & transcended.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 50 },
@@ -188,6 +190,14 @@ function unlockLoveHallSkill(skill, duringLoad = false) {
                 embraceExtraLovePoints += 1;
                 break;
         
+            case 'Epistemic Engine':
+                unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Knowledge Generation'), duringLoad);
+                break;
+
+            case 'Pulse of Affection':
+                lovePointsHallMultiplier *= 1.033;
+                break;
+
             case 'Serenity Flow':
                 serenityFlowSkill = true;
                 if(!duringLoad){
@@ -323,6 +333,18 @@ function unlockLoveHallSkill(skill, duringLoad = false) {
                 divideLibrarySkillCost('Perpetual Prestige', 1e10);
                 divideLibrarySkillCost('Eternal Ascension', 1e10);
                 divideLibrarySkillCost('Quantum Symphony', 1e10);
+                break;
+
+            case 'Steady Focus':
+                steadyFocusSkill = true;
+                break;
+        
+            case 'Second-Wave Automation':
+                secondWaveAutomationSkill = true;
+                unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Autobuy Upgrades'), duringLoad);
+                unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Perpetual Prestige'), duringLoad);
+                unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Eternal Ascension'), duringLoad);
+                unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Quantum Symphony'), duringLoad);
                 break;
 
 

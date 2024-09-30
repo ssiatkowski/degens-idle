@@ -47,6 +47,8 @@ const librarySkills = [
 const librarySkillsContainer = document.getElementById('librarySkills');
 
 function unlockLibrarySkill(skill, duringLoad = false) {
+
+    console.log('unlocking skill: ' + skill.name);
     skill.unlocked = true;
     const skillDiv = document.querySelector(`.libraryskill[data-skill-name="${skill.name}"]`);
 

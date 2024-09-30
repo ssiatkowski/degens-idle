@@ -93,13 +93,13 @@ const meditationChallenges = {
         arenaSize: 520,
         ballSize: 90,
         ballSizeDelta: 50,
-        velocity: 10,
+        velocity: 9,
         wind: 5,
         respawnFactor: 1,
         livesPerBall: 1,
     },
     "Hinduism": {
-        duration: 33,
+        duration: 32,
         focus: 50,
         ballCount: 25,
         arenaSize: 400,
@@ -108,10 +108,10 @@ const meditationChallenges = {
         velocity: 3.5,
         wind: 2,
         respawnFactor: 1,
-        livesPerBall: 1,
+        livesPerBall: 1.2,
     },
     "Shinto": {
-        duration: 21.5,
+        duration: 21,
         focus: 1,
         ballCount: 1,
         arenaSize: 275,
@@ -129,13 +129,13 @@ const meditationChallenges = {
         arenaSize: 700,
         ballSize: 150,
         ballSizeDelta: 20,
-        velocity: 4.4,
+        velocity: 4.5,
         wind: 2,
         respawnFactor: 1,
         livesPerBall: 5,
     },
     "Deism": {
-        duration: 58,
+        duration: 65,
         focus: 1,
         ballCount: 7,
         arenaSize: 500,
@@ -144,16 +144,16 @@ const meditationChallenges = {
         velocity: 13,
         wind: 0,
         respawnFactor: 1,
-        livesPerBall: 2,
+        livesPerBall: 2.5,
     },
     "Skepticism": {
-        duration: 300,
+        duration: 150,
         focus: 1,
         ballCount: 8,
         arenaSize: 450,
         ballSize: 200,
         ballSizeDelta: 10,
-        velocity: 25,
+        velocity: 15,
         wind: 2,
         respawnFactor: 1,
         livesPerBall: 1,
@@ -161,7 +161,7 @@ const meditationChallenges = {
 };
 
 // Function to initialize the meditation game
-function startMeditationGame(challengeName, backgroundImage, stageNumber = 1, preservedFocus = null) {
+function startMeditationGame(challengeName, backgroundImage, stageNumber = 1, preservedFocus = null, stageVelocityIncrease = 1) {
     return new Promise((resolve) => {
         resolveFunction = resolve; // Store the resolve function
         // Set the current challenge based on the challengeName
@@ -177,8 +177,8 @@ function startMeditationGame(challengeName, backgroundImage, stageNumber = 1, pr
         ballSize = calculateBallSize();
         ballSizeDelta = challenge.ballSizeDelta;
         baseVelocity = challenge.velocity * calculateVelocityReduction();
-        if (stageNumber === 2) {
-            baseVelocity *= 2;
+        if (stageNumber > 1) {
+            baseVelocity *= stageVelocityIncrease;
         }
         turnRadius = calculateTurnRadius();
         respawnTime = 100;
@@ -190,7 +190,7 @@ function startMeditationGame(challengeName, backgroundImage, stageNumber = 1, pr
         windDirection = windDirections[Math.floor(Math.random() * windDirections.length)]; // Pick a random direction
 
         fullFocusPreserved = true;
-        livesPerBall = challenge.livesPerBall;
+        livesPerBall = Math.max(challenge.livesPerBall - (steadyFocusSkill ? 1 : 0), 1);
 
         // Show the meditation overlay
         const meditationOverlay = document.getElementById('meditationOverlay');
@@ -246,7 +246,7 @@ function createBall(index, stageNumber) {
     ball.classList.add('meditation-ball');
  
     // Add random variation within the delta range
-    const thisBallSize = Math.max(Math.round(ballSize + (Math.random() * 2 * ballSizeDelta - ballSizeDelta)), 5);
+    const thisBallSize = Math.max(Math.round(ballSize + (Math.random() * 2 * ballSizeDelta - ballSizeDelta)), 10);
 
     // Calculate position for each ball in a circular pattern around the center
     const angle = (index / ballCount) * 2 * Math.PI; // Evenly space balls around a circle
@@ -309,7 +309,7 @@ function updateMeditationInfo() {
     const respawnFactorDisplay = document.getElementById('meditationRespawnFactorRow');
     if (respawnFactor !== 1) {
         respawnFactorDisplay.style.display = 'block';
-        document.getElementById('meditationRespawnFactor').innerText = formatNumber(respawnFactor.toFixed(2));
+        document.getElementById('meditationRespawnFactor').innerText = formatNumber(respawnFactor);
     } else {
         respawnFactorDisplay.style.display = 'none';
     }
@@ -334,8 +334,15 @@ function updateMeditationGame(resolve, stageNumber) {
         if (currentChallengeName === 'Deism' && stageNumber === 1) {
             // Flash "Not So Fast" message and then restart the game
             clearInterval(meditationInterval); // Stop the current game loop
-            showNotSoFastMessage().then(() => {
-                startMeditationGame(currentChallengeName, document.getElementById('arena').style.backgroundImage, 2, meditationFocus).then(resolve);
+            showArenaMessage('Not So Fast').then(() => {
+                startMeditationGame(currentChallengeName, document.getElementById('arena').style.backgroundImage, 2, meditationFocus, 2).then(resolve);
+            });
+            return;
+        } else if (currentChallengeName === 'Skepticism' && stageNumber === 1) {
+            // Flash "Not So Fast" message and then restart the game
+            clearInterval(meditationInterval); // Stop the current game loop
+            showArenaMessage('Experience Randomness').then(() => {
+                startMeditationGame(currentChallengeName, document.getElementById('arena').style.backgroundImage, 2, meditationFocus, 1 + (Math.random() * 5)).then(resolve);
             });
             return;
         } else {
@@ -608,7 +615,7 @@ document.getElementById('meditationStopButton').addEventListener('click', () => 
 // Function to calculate ball size based on Copium
 function calculateBallSize() {
     let intervals = Math.max(0, (Math.log10(copium) - 100) / 20);
-    let newBallSize = Math.max(Math.round(ballSize * Math.pow(0.5, intervals)), 5);
+    let newBallSize = Math.max(Math.round(ballSize * Math.pow(0.5, intervals)), 10);
     return newBallSize;
 }
 
@@ -706,11 +713,11 @@ function scaleArena() {
     }
 }
 
-function showNotSoFastMessage() {
+function showArenaMessage(messageContent) {
     return new Promise((resolve) => {
         const arena = document.getElementById('arena');
         const message = document.createElement('div');
-        message.innerText = "Not So Fast";
+        message.innerText = messageContent;
         message.style.position = 'absolute';
         message.style.top = '50%';
         message.style.left = '50%';
