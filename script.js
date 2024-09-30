@@ -2938,16 +2938,42 @@ function updateUpgradeList() {
     } 
 }
 
+const knownEventListeners = new WeakMap();
+
+/**
+ * cleans up known event listeners for a given element to prevent memory leaks
+ *
+ * @param {HTMLElement} element
+ */
+function cleanupEventListeners(element) {
+    const events = knownEventListeners.get(element)
+    if (events) {
+        for (const [eventName, handler] of Object.entries(events)) {
+            element.removeEventListener(eventName, handler);
+        }
+        knownEventListeners.delete(element);
+    }
+}
+
+/**
+ * adds event listeners to an element, tracking them to help prevent memory leaks
+ * @param {HTMLElement} element
+ * @param {Record<string, Function>} events
+ */
+function addEventListeners(element, events) {
+    cleanupEventListeners(element);
+    for (const [eventName, handler] of Object.entries(events)) {
+        element.addEventListener(eventName, handler);
+    }
+    knownEventListeners.set(element, events);
+}
+
 // Function to handle touch and mouse events for tooltips
 function attachTooltipEvents(button, upgrade) {
     const showTooltipEvent = (event) => {
         event.preventDefault(); // Prevent default behavior (like text selection)
         showTooltip(event, upgrade.earnings, upgrade.isGodMode, upgrade.isPUGodMode, upgrade.isFight, upgrade.isMeditation, upgrade.hoverOverwrite);
-    };
-    const hideTooltipEvent = (event) => {
-        event.preventDefault(); // Prevent default behavior (like text selection)
-        hideTooltip();
-    };
+    }
     const moveTooltipEvent = (event) => {
         event.preventDefault(); // Prevent default behavior (like text selection)
         const tooltip = document.getElementById('upgradeTooltip');
@@ -2955,22 +2981,27 @@ function attachTooltipEvents(button, upgrade) {
         tooltip.style.top = `${event.pageY + 10}px`;
     };
 
-    button.addEventListener('mouseover', showTooltipEvent);
-    button.addEventListener('mousemove', moveTooltipEvent);
-    button.addEventListener('mouseout', hideTooltipEvent);
-    button.addEventListener('touchstart', (event) => {
-        showTooltipEvent(event);
-        button.touchStartX = event.touches[0].clientX;
-        button.touchStartY = event.touches[0].clientY;
-    });
-    button.addEventListener('touchmove', moveTooltipEvent);
-    button.addEventListener('touchend', (event) => {
-        hideTooltip();
-        const touchEndX = event.changedTouches[0].clientX;
-        const touchEndY = event.changedTouches[0].clientY;
-        const rect = button.getBoundingClientRect();
-        if (touchEndX >= rect.left && touchEndX <= rect.right && touchEndY >= rect.top && touchEndY <= rect.bottom) {
-            button.click(); // Simulate a click event if touchend is within the button
+    addEventListeners(button, {
+        mouseover: showTooltipEvent,
+        mousemove: moveTooltipEvent,
+        mouseout: (event) => {
+            event.preventDefault(); // Prevent default behavior (like text selection)
+            hideTooltip();
+        },
+        touchstart: (event) => {
+            showTooltipEvent(event);
+            button.touchStartX = event.touches[0].clientX;
+            button.touchStartY = event.touches[0].clientY;
+        },
+        touchmove: moveTooltipEvent,
+        touchend: (event) => {
+            hideTooltip();
+            const touchEndX = event.changedTouches[0].clientX;
+            const touchEndY = event.changedTouches[0].clientY;
+            const rect = button.getBoundingClientRect();
+            if (touchEndX >= rect.left && touchEndX <= rect.right && touchEndY >= rect.top && touchEndY <= rect.bottom) {
+                button.click(); // Simulate a click event if touchend is within the button
+            }
         }
     });
 }
