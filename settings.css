@@ -421,9 +421,6 @@ input[type="radio"]#toggleBuyMarkersNeutral:checked ~ .slider {
     background-color: transparent; /* Make it invisible */
     border-radius: 50%;
 }
-
-
-
 .automation-button {
     position: relative;
     display: inline-block;

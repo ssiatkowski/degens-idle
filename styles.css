@@ -303,54 +303,120 @@ button {
 button:hover {
     background-color: #616161; /* Lighter on hover */
 }
-
+button.upgrade-unaffordable {
+    width: 100%;
+    background-color: #4caf50; /* Green */
+    border-color: #93ffc0;
+    border-style: solid;
+    border-width: 1.5px;
+    color: white;
+    touch-action: manipulation;
+    background-image: url("./imgs/textures/normal-state.png");
+    background-size: contain;
+    transition: 0.5s;
+    filter: saturate(0);
+}
+button.unobtainable {
+    width: 100%;
+    filter: saturate(0);
+    color: rgb(255, 255, 255);
+    border-color: rgb(255, 255, 255);
+}
+button.specialgodmode {
+    width: 100%;
+    color: #dadada;
+    border: 2px solid #ffffff; /* DeepSkyBlue */
+    box-shadow: 0 0 10px #ffffff, 0 0 20px #c0c0c0; /* Blue shadow for glow effect */
+    background-image: url("./imgs//textures/ascended-state.png");
+    background-size: contain;
+    transition: 0.5s;
+    filter: saturate(0);
+}
+button.specialtranscend {
+    width: 100%;
+    color: #dadada;
+    filter: saturate(0);
+    border: 2px solid #ffffff; /* Light Purple */
+    box-shadow: 0 0 10px #ffffff, 0 0 20px #b0b0b0; /* Purple shadow for glow effect */
+    background-image: url("./imgs//textures/transcended-state.png");
+    background-size: contain;
+    transition: 0.5s;
+}
+button.special2state {
+    width: 100%;
+    color: #dadada;
+    border: 2px solid #ffffff; /* A mix between blue and purple for the border */
+    box-shadow: 0 0 20px #b4b4b4, 0 0 20px #cccccc, 0 0 30px #979797; /* Blue and Purple shadow for glow effect */
+    background: url("./imgs//textures/double-state.png"), linear-gradient(0deg, #c1c1c1, #Fff); /* Slightly darker gradient on hover */
+    background-size: contain;
+    transition: 0.5s;
+    filter: saturate(0);
+}
 button.affordable {
     background-color: #4caf50; /* Green */
     color: white;
     touch-action: manipulation;
 }
-
+button.upgrade-affordable {
+    width: 100%;
+    background-color: #4caf50; /* Green */
+    border-color: #93ffc0;
+    border-style: solid;
+    border-width: 1.5px;
+    color: rgb(119, 255, 165);
+    touch-action: manipulation;
+    background-image: url("./imgs/textures/normal-state.png");
+    background-size: contain;
+    transition: 0.5s;
+}
 /* God Mode Affordable Button */
-button.affordable-godmode {
+button.godmode {
+    width: 100%;
     background-color: #1e90ff; /* DodgerBlue */
-    color: white;
+    color: rgb(0, 136, 255);
     border: 2px solid #00bfff; /* DeepSkyBlue */
     box-shadow: 0 0 10px #1e90ff, 0 0 20px #00bfff; /* Blue shadow for glow effect */
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    background-image: url("./imgs//textures/ascended-state.png");
+    background-size: contain;
+    transition: 0.5s;
 }
 
-button.affordable-godmode:hover {
+button.godmode:hover {
     background-color: #1c86ee; /* Slightly darker DodgerBlue */
     box-shadow: 0 0 15px #1e90ff, 0 0 30px #00bfff; /* Brighter blue shadow on hover */
 }
 
 /* Purple God Mode Affordable Button */
-button.affordable-pu-godmode {
-    background-color: #8e44ad; /* Purple */
-    color: white;
-    border: 2px solid #b565c8; /* Light Purple */
+button.pu-godmode {
+    width: 100%;
+    color: #c110ee;
+    filter: brightness(100%);
+    border: 2px solid #882a9f; /* Light Purple */
     box-shadow: 0 0 10px #8e44ad, 0 0 20px #b565c8; /* Purple shadow for glow effect */
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    background-image: url("./imgs//textures/transcended-state.png");
+    background-size: contain;
+    transition: 0.5s;
 }
 
-button.affordable-pu-godmode:hover {
+button.pu-godmode:hover {
+    filter: brightness(120%);
     background-color: #7d3c98; /* Slightly darker Purple */
     box-shadow: 0 0 15px #8e44ad, 0 0 30px #b565c8; /* Brighter purple shadow on hover */
 }
 
 /* Blue and Purple God Mode Affordable Button with Animated Wave Glow */
-button.affordable-double-godmode {
-    background: linear-gradient(45deg, #1e90ff, #8e44ad); /* Gradient from Blue to Purple */
-    color: white;
+button.double-godmode {
+    width: 100%;
+    color: #86a3e5;
     border: 2px solid #4b6cb7; /* A mix between blue and purple for the border */
     box-shadow: 0 0 20px #1e90ff, 0 0 20px #8e44ad, 0 0 30px #4b6cb7; /* Blue and Purple shadow for glow effect */
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    animation: waveGlow var(--glowing-animation-duration) infinite linear; /* Wave-like glow animation */
-}
-
-button.affordable-double-godmode:hover {
-    background: linear-gradient(45deg, #1c86ee, #7d3c98); /* Slightly darker gradient on hover */
-    box-shadow: 0 0 25px #1e90ff, 0 0 25px #8e44ad, 0 0 40px #4b6cb7; /* Brighter blue and purple shadow on hover */
+    animation: colorChange var(--glowing-animation-duration) infinite ease-in-out alternate; /* Wave-like glow animation */
+    background: url("./imgs//textures/double-state.png"), linear-gradient(90deg, #1c86ee , #7d3c98 65%); /* Slightly darker gradient on hover */
+    background-size: contain;
+    transition: 0.5s;
 }
 
 /* Keyframes for Wave-Like Glow Animation */
@@ -371,7 +437,19 @@ button.affordable-double-godmode:hover {
         box-shadow: -10px 0 20px #1e90ff, 10px 0 20px #8e44ad, 0 0 30px #4b6cb7;
     }
 }
-
+@keyframes colorChange {
+    from {
+        color: #53a9ff;
+        border-color: #1c86ee;
+        box-shadow: 0px 0px 15px 4px #1c86ee;
+    }
+    to {
+        color: #bf68e3;
+        border-color: #9728c6;
+        box-shadow: 0px 0px 15px 4px #9728c6;
+    }
+    
+}
 #upgrades {
     text-align: center; /* Centers the h2 text */
 }

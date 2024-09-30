@@ -11,7 +11,7 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Degens Idle: An Incremental Strategy Game with Unique Challenges and Deep Progression</title>
+    <title>Degens Active</title>
     <meta name="description" content="Immerse yourself in Degens Idle, the ultimate strategy-based idle game with deep and unique progression systems. Unlock powerful upgrades, navigate intricate prestige layers, and make challenging decisions that shape your journey. No ads, no paywalls—just pure strategic gameplay.">
     <meta name="keywords" content="Degens Idle, idle game, incremental game, free idle game, no ads game, prestige layers, simulation, strategy, deep progression, unique challenges, strategic gameplay, resource management, RPG elements, upgrade systems, skill tree, incremental strategy, browser game, no paywalls, strategic decision-making, idle RPG, challenging gameplay">
     <!-- Include the JSON-LD structured data -->
@@ -262,16 +262,46 @@
             <!-- Player Stats and Image -->
             <div class="player-section">
                 <div class="stats">
-                    <p>Max Health: <span id="playerHealthStat"></span></p>
-                    <p>Dmg: <span id="playerDamageStat"></span></p>
-                    <p>Speed: <span id="playerAttackSpeedStat"></span></p>
-                    <p>Defense: <span id="playerDefenseStat"></span></p>
-                    <p id="playerCritChanceContainer">Crit: <span id="playerCritChanceStat"></span></p>
-                    <p id="playerCritDamageContainer">Crit Dmg: <span id="playerCritDamageStat"></span></p>
-                    <p id="playerDodgeContainer">Dodge: <span id="playerDodgeStat"></span></p>
-                    <p id="playerNonCritDodgeContainer">Non-Crit Dodge: <span id="playerNonCritDodgeStat"></span></p>
-                    <p id="playerStunContainer">Stun: <span id="playerStunStat"></span></p>
-                    <p id="playerAbsorbContainer">Absorb: <span id="playerAbsorbStat"></span></p>
+                    <div class="STAT">
+                        <div>MAX HP:</div>
+                        <div id="playerHealthStat"></div>
+                    </div>
+                    <div class="STAT">
+                        <span>ATK:</span> 
+                        <span id="playerDamageStat"></span>
+                    </div>
+                    <div class="STAT">
+                        <span>SPD:</span> 
+                        <span id="playerAttackSpeedStat"></span>
+                    </div>
+                    <div class="STAT">
+                        <span>DEF:</span> 
+                        <span id="playerDefenseStat"></span>
+                    </div>
+                    <div id="playerCritChanceContainer" class="STAT">
+                        <span>CRIT:</span> 
+                        <span id="playerCritChanceStat"></span>
+                    </div>
+                    <div id="playerCritDamageContainer" class="STAT">
+                        <span>CRIT ATK:</span> 
+                        <span id="playerCritDamageStat"></span>
+                    </div>
+                    <div id="playerDodgeContainer" class="STAT">
+                        <span>DODGE:</span> 
+                        <span id="playerDodgeStat"></span>
+                    </div>
+                    <div id="playerNonCritDodgeContainer" class="STAT">
+                        <span>NON-CRIT DODGE:</span> 
+                        <span id="playerNonCritDodgeStat"></span>
+                    </div>
+                    <div id="playerStunContainer" class="STAT">
+                        <span>STUN:</span>
+                        <span id="playerStunStat"></span>
+                    </div>
+                    <div id="playerAbsorbContainer" class="STAT">
+                        <span>ABSORB:</span> 
+                        <span id="playerAbsorbStat"></span>
+                    </div>
                 </div>
                 <div id="playerImageContainer"></div>
                 <div class="health-bar">
@@ -287,16 +317,46 @@
             <!-- Enemy Stats and Image -->
             <div class="enemy-section">
                 <div class="stats">
-                    <p>Health: <span id="enemyHealthStat"></span></p>
-                    <p>Dmg: <span id="enemyDamageStat"></span></p>
-                    <p>Speed: <span id="enemyAttackSpeedStat"></span></p>
-                    <p>Defense: <span id="enemyDefenseStat"></span></p>
-                    <p id="enemyCritChanceContainer">Crit: <span id="enemyCritChanceStat"></span></p>
-                    <p id="enemyCritDamageContainer">Crit Dmg: <span id="enemyCritDamageStat"></span></p>
-                    <p id="enemyDodgeContainer">Dodge: <span id="enemyDodgeStat"></span></p>
-                    <p id="enemyNonCritDodgeContainer">Non-Crit Dodge: <span id="enemyNonCritDodgeStat"></span></p>
-                    <p id="enemyStunContainer">Stun: <span id="enemyStunStat"></span></p>
-                    <p id="enemyAbsorbContainer">Absorb: <span id="enemyAbsorbStat"></span></p>
+                    <div class="STAT">
+                        <div>HP:</div> 
+                        <div id="enemyHealthStat"></div>
+                    </div>
+                    <div class="STAT">
+                        <div>ATK:</div> 
+                        <div id="enemyDamageStat"></div>
+                    </div>
+                    <div class="STAT">
+                        <div>SPD:</div> 
+                        <div id="enemyAttackSpeedStat"></div>
+                    </div>
+                    <div class="STAT">
+                        <div>DEF:</div> 
+                        <div id="enemyDefenseStat"></div>
+                    </div>
+                    <div id="enemyCritChanceContainer" class="STAT">
+                        <div>CRIT:</div> 
+                        <div id="enemyCritChanceStat"></div>
+                    </div>
+                    <div id="enemyCritDamageContainer" class="STAT">
+                        <div>CRIT ATK:</div> 
+                        <div id="enemyCritDamageStat"></div>
+                    </div>
+                    <div id="enemyDodgeContainer" class="STAT">
+                        <div>DODGE:</div>
+                        <div id="enemyDodgeStat"></div>
+                    </div>
+                    <div id="enemyNonCritDodgeContainer" class="STAT">
+                        <div>NON-CRIT DODGE:</div> 
+                        <div id="enemyNonCritDodgeStat"></div>
+                    </div>
+                    <div id="enemyStunContainer" class="STAT">
+                        <div>STUN:</div> 
+                        <div id="enemyStunStat"></div>
+                    </div>
+                    <div id="enemyAbsorbContainer" class="STAT">
+                        <div>ASBORD:</div> 
+                        <div id="enemyAbsorbStat"></div>
+                    </div>
                 </div>
                 <div id="enemyImageContainer"></div>
                 <div class="health-bar">
@@ -484,7 +544,6 @@
             <div id="automationContent">
                 <!-- Placeholder content, will be replaced by JS -->
             </div>
-
             <button id="saveAutomationSettingsButton" class="green-button">Save Settings</button>
             <button id="exitAutomationOverlayButton" class="red-button">Cancel</button>
         </div>
