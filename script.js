@@ -190,7 +190,8 @@ let stellarMeditationMult = 1;
 let currentTimeouts = [];  // Array to store all active timeout IDs
 let cookieIntervalId;
 
-let crunchTimer = 0;
+let crunchTimer = 9999;
+let embraceTimer = 9999;
 
 let enableQuickMode = false;
 let enableButtonAnimations = true;
@@ -408,7 +409,8 @@ function loadGameState() {
     bigCrunchPower = parseFloat(localStorage.getItem('bigCrunchPower')) || 1e-7;
     bigCrunchMultiplier = parseFloat(localStorage.getItem('bigCrunchMultiplier')) || 1;
 
-    crunchTimer = parseFloat(localStorage.getItem('crunchTimer')) || 0;
+    crunchTimer = parseFloat(localStorage.getItem('crunchTimer')) || 9999;
+    embraceTimer = parseFloat(localStorage.getItem('embraceTimer')) || 9999;
     
     // Load the first time prestige button available flag
     firstTimePrestigeButtonAvailable = JSON.parse(localStorage.getItem('firstTimePrestigeButtonAvailable')) || true;
@@ -636,6 +638,7 @@ function saveGameState() {
 
     // Save current crunch timer
     localStorage.setItem('crunchTimer', crunchTimer);
+    localStorage.setItem('embraceTimer', embraceTimer);
     
     // Save all upgrades with the isGodMode property
     localStorage.setItem('upgrades', JSON.stringify(upgrades.map(upgrade => ({
@@ -812,6 +815,7 @@ function generateResources() {
     }
 
     crunchTimer += 0.5;
+    embraceTimer += 0.5;
 
     updateDisplay();
 }
@@ -1976,6 +1980,10 @@ async function bigCrunch(skipConfirms = false) {
             puGodLevel = 0;
             puGodMultiplier = 1;
 
+            if (crunchTimer < 120) {
+                unlockAchievement('Fast Cruncher');
+            }
+
             crunchTimer = 0;
 
             upgrades.forEach(upgrade => {
@@ -2115,19 +2123,18 @@ async function infiniteEmbrace(skipConfirms = false) {
             lovePoints += calculateLovePointsGained();
             if (serenity < 2000) {
                 unlockAchievement('Gentle Embrace');
+            } else if (calculateLovePointsGained() > 25) {
+                unlockAchievement('Massive Embrace');
             }
 
             // Call restartGame with isPrestige flag set to true
             restartGame(true, false, true);
 
-            crunchTimer = 0;
+            embraceTimer = 0;
 
             if (!skipConfirms) {
                 unlockAchievement('Infinite Embrace');
 
-                if (calculateLovePointsGained() > 25) {
-                    unlockAchievement('Massive Embrace');
-                }
             }
             
             // Save game state after prestige
@@ -2232,6 +2239,7 @@ function generateIdleResources(elapsedSeconds) {
     }
 
     crunchTimer += elapsedSeconds;
+    embraceTimer += elapsedSeconds;
 
     const baseKnowledgePerSecond = calculateBaseKnowledge();
 
@@ -2470,7 +2478,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true, ski
 
         if (name === 'Stoicism') {
             showMessageModal('The Journey Continues', 
-                "This marks the end of v0.9286. You've not only completed the Power Saga, but you're also getting the hang of Infinite Embraces and Meditations! Congratulations on your progress, and welcome to the next stage of your journey. "
+                "This marks the end of v0.9287. You've not only completed the Power Saga, but you're also getting the hang of Infinite Embraces and Meditations! Congratulations on your progress, and welcome to the next stage of your journey. "
                 + "With the Hall of Love now open, Love Points are becoming a key part of your experience, alongside the skills you unlock there. While these new mechanics are taking shape, expect ongoing balancing as the game evolves. "
                 + "Feel free to dive deeper into the skills and explore what's possible. The journey is far from over—more meditations and epic content are on the way! "
                 + "Stay connected on Discord, share your feedback, and together, let's create something truly unforgettable!"

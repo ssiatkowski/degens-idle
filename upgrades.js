@@ -1512,7 +1512,7 @@ const upgrades = [
     },
     {         
         name: `Ship Has Sailed`,
-        cost: { copium: 1e110, delusion: 0, yachtMoney: 0, trollPoints: 1e111, hopium: 2e113, knowledge: 0, power: 0, serenity: 500000 },
+        cost: { copium: 1e110, delusion: 0, yachtMoney: 0, trollPoints: 1e111, hopium: 2e111, knowledge: 0, power: 0, serenity: 500000 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: -5e47, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 2.5 },
         img: `imgs/ship_has_sailed.jpg`,
     },

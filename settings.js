@@ -449,7 +449,24 @@ document.getElementById('automationButton').addEventListener('click', function()
     }
 
     document.getElementById('automationOverlay').style.display = 'flex';
+
+    // Add a listener for clicking outside the overlay to close it
+    setTimeout(() => {
+        document.addEventListener('click', outsideAutomationClickListener);
+    }, 0);
 });
+
+// Function to handle clicks outside the automation overlay
+function outsideAutomationClickListener(event) {
+    const automationContent = document.getElementById('automationContent');
+    const automationOverlay = document.getElementById('automationOverlay');
+    
+    // Close the overlay if the click is outside the automation content
+    if (!automationContent.contains(event.target)) {
+        automationOverlay.style.display = 'none';
+        document.removeEventListener('click', outsideAutomationClickListener); // Remove listener after closing
+    }
+}
 
 // Save the automation settings and close the overlay
 document.getElementById('saveAutomationSettingsButton').addEventListener('click', function() {

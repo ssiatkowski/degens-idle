@@ -408,21 +408,21 @@ const achievements = [
     {
         name: 'Skipping Grades',
         isUnlocked: false,
-        hoverText: 'enter Hall of Knowledge in less than 10 seconds',
+        hoverText: 'enter Hall of Knowledge in less than 10 seconds after Big Crunch',
         img: 'imgs/achievements/skipping_grades.jpg',
         type: 'skill',
     },
     {
         name: 'Eager to Train',
         isUnlocked: false,
-        hoverText: 'defeat Training Dummy in less than 15 seconds',
+        hoverText: 'defeat Training Dummy in less than 15 seconds after Big Crunch',
         img: 'imgs/achievements/training_hard.jpg',
         type: 'skill',
     },
     {
         name: 'Eager to Love',
         isUnlocked: false,
-        hoverText: 'enter Hall of Love in less than 3 seconds',
+        hoverText: 'enter Hall of Love in less than 3 seconds after Big Crunch',
         img: 'imgs/achievements/eager_to_love.jpg',
         type: 'skill',
     },
@@ -495,6 +495,13 @@ const achievements = [
         hoverText: 'send him flying out of the matrix',
         img: 'imgs/achievements/out_of_the_matrix.jpg',
         type: 'puzzle',
+    },
+    {
+        name: 'Fast Cruncher',
+        isUnlocked: false,
+        hoverText: 'perform two Big Crunches within 2 minutes',
+        img: 'imgs/achievements/fast_cruncher.jpg',
+        type: 'skill',
     },
     {
         name: 'Save the Multiverse',

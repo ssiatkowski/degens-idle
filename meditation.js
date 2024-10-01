@@ -288,7 +288,7 @@ function createBall(index, stageNumber) {
 function updateMeditationInfo() {
     document.getElementById('meditationChallengeName').innerText = currentChallengeName;
     document.getElementById('meditationTimer').innerText = meditationTimer.toFixed(1);
-    document.getElementById('meditationFocus').innerText = meditationFocus;
+    document.getElementById('meditationFocus').innerText = formatNumber(meditationFocus);
     document.getElementById('meditationBallCount').innerText = ballCount;
     document.getElementById('meditationBallSize').innerText = ballSize; // Ball size (diameter)
     document.getElementById('meditationArenaSize').innerText = arenaSize;
@@ -468,7 +468,7 @@ function handleOutOfBounds(ball) {
     if (currentChallengeName === 'Dualism' && ballCount == 2){
         unlockAchievement('Out of Body Experience');
     }
-    document.getElementById('meditationFocus').innerText = meditationFocus; // Update focus display
+    document.getElementById('meditationFocus').innerText = formatNumber(meditationFocus); // Update focus display
 
     // Hide the ball temporarily and reset after the respawn delay
     ball.element.style.display = 'none'; // Hide the ball

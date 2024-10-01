@@ -148,18 +148,18 @@
     display: none;
 }
 
-.lovepair-skill h3,
-.lovepair-skill p {
-    display: none; /* Hide the skill description by default */
+.lovepair-skill h3 {
+    display: block; /* Always show the skill name */
 }
 
-.lovepair-skill.affordable h3,
+.lovepair-skill p {
+    display: none; /* Keep the description hidden by default */
+}
+
 .lovepair-skill.affordable p,
-.lovepair-skill.purchased h3,
 .lovepair-skill.purchased p,
-.lovepair-skill.potentiallyAffordable h3,
 .lovepair-skill.potentiallyAffordable p {
-    display: block; /* Show skill name and description when affordable or purchased */
+    display: block; /* Only show the description when affordable or purchased */
 }
 
 /* Love Points Display */

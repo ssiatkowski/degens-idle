@@ -11,7 +11,7 @@ const loveHallSkills = [
     { name: 'Cosmic Embrace', cost: 1.9, description: 'Gain +1 Love Point every embrace.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 3 },
 
     { name: 'Epistemic Engine', cost: 3.3, description: 'Start Embrace with Knowledge Generation skill unlocked. ', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 4 },
-    { name: 'Pulse of Affection', cost: 3.3, description: 'Gain 3.3% more base Love Points per embrace.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 4 },
+    { name: 'Pulse of Affection', cost: 3.3, description: 'Gain 3.3% extra base Love Points every embrace.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 4 },
 
     { name: 'Serenity Flow', cost: 5, description: 'Hopium gain is multiplied by square root of Serenity.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 5 },
     { name: 'Serene Boost 2', cost: 5, description: '5x Serenity gain. (Serenity Boosts stack)', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 5, requirement: 'Serene Boost 1' },
@@ -565,8 +565,18 @@ function updateLoveHallSkillDisplay() {
 
     // Update Love Points display
     if (lovePointsDisplay) {
-        lovePointsDisplay.textContent = `Love Points: ${formatNumber(lovePoints)}`;
+        const lovePointsGained = calculateLovePointsGained(); // Get the love points gained value
+        const lovePointsDisplayText = `Love Points: ${formatNumber(lovePoints)}`;
+
+        // Check if canInfiniteEmbrace() and show (+Y = (sum(X+Y)) if true
+        if (canInfiniteEmbrace()) {
+            const totalLovePoints = lovePoints + lovePointsGained; // Calculate the sum of X and Y
+            lovePointsDisplay.innerHTML = `${lovePointsDisplayText} <span style="color: gray;">(+${formatNumber(lovePointsGained)} = ${formatNumber(totalLovePoints)})</span>`;
+        } else {
+            lovePointsDisplay.textContent = lovePointsDisplayText;
+        }
     }
+
 }
 
 
@@ -614,8 +624,8 @@ function initializeLoveHallSkills() {
                 }
 
                 skillDiv.innerHTML = `
+                    <h3>${skill.name}</h3>  <!-- Name always visible -->
                     <p class="skill-cost">Cost: ${formatNumber(skill.cost)} Love Points</p>
-                    <h3>${skill.name}</h3>
                     <p>${descriptionText}</p>
                 `;
 
