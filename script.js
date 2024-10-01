@@ -4115,9 +4115,6 @@ function isEventInProgress() {
 }
 
 function manageButtonAnimations(enabled) {
-    // if(enabled){
-    //     unlockAchievement('Animation Aficionado');
-    // }
     enableButtonAnimations = enabled;
     document.querySelector(':root').style.setProperty("--glowing-animation-duration", enabled ? "2s" : "0s")
 }
@@ -4241,6 +4238,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.getElementById('enableButtonAnimations').addEventListener('change', function() {
+        if(this.checked){
+            unlockAchievement('Animation Aficionado');
+        }
         manageButtonAnimations(this.checked);
     });
 
