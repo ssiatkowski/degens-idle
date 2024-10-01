@@ -297,7 +297,7 @@ function startFightGame(enemyName, enemyImg) {
         enemyImage.alt = "Enemy Image";
         enemyImageContainer.appendChild(enemyImage);
 
-        const sebosLuck = purchasedUpgrades.some(upgrade => upgrade.name === "Sebo's Luck");
+        const sebosLuck = purchasedUpgradesSet.has("Sebo's Luck");
 
         firstAttackOfBattle = primeImpactSkill ? true : false;
 
@@ -384,7 +384,7 @@ function startFightGame(enemyName, enemyImg) {
         };
 
         if (currEnemyName === "Darth Vader") {
-            if (!purchasedUpgrades.some(upgrade => upgrade.name === "Unlimited Power")) {
+            if (!purchasedUpgradesSet.has("Unlimited Power")) {
                 enemyStunCount = 4;
                 enemyAbsorb = 0.1;
                 document.getElementById('enemyAbsorbStat').innerText = formatNumber(enemyAbsorb * 100) + '%';
@@ -395,7 +395,7 @@ function startFightGame(enemyName, enemyImg) {
                 logFight("<span style='color: red; font-weight: bold; font-size: 1.3em';>Darth Vader uses the force to stun you for 4 turns. (if only you could get someone who could use the force to protect you) </span>");
             }
         } else if (currEnemyName === "Chuck Norris") {
-            if (!purchasedUpgrades.some(upgrade => upgrade.name === "Training Dummy")) {
+            if (!purchasedUpgradesSet.has("Training Dummy")) {
                 enemyDefense /= 2;
                 enemyHealth /= 2;
                 enemyAbsorb = 0;
@@ -407,7 +407,7 @@ function startFightGame(enemyName, enemyImg) {
                 logFight("<span style='color: red; font-weight: bold; font-size: 1.3em';>Chuck Norris has no distractions and is ready to fight you at full power.</span>");
             }
         } else if (currEnemyName === "Kaguya") {
-            if (!purchasedUpgrades.some(upgrade => upgrade.name === "Kung Fu Bunny")) {
+            if (!purchasedUpgradesSet.has("Kung Fu Bunny")) {
                 unlockAchievement('Wrong Sidekick');
                 numCookedRabbits++;
                 if (numCookedRabbits >= 25) {
@@ -418,7 +418,7 @@ function startFightGame(enemyName, enemyImg) {
 
                 buyUpgrade(encodeName("Kung Fu Bunny"), true, true);
             }
-            if (!purchasedUpgrades.some(upgrade => upgrade.name === "Good Guy Sasuke")) {
+            if (!purchasedUpgradesSet.has("Good Guy Sasuke")) {
                 sasukeIsHelping = true; // Set Sasuke's help flag to true
                 unlockAchievement('Sidekick');
                 logFight("<span style='color: green; font-weight: bold; font-size: 1.3em';>Sasuke joins your side to stop Kaguya and save the multiverse. Although he is leagues below her, Sasuke will assist by partially countering some of her Sharingan powers with his own.</span>");
@@ -951,7 +951,7 @@ function attackEnemy(resolve) {
             
             logFight(`<span style='color: #b3a125; font-weight: bold; font-size: 1.3em;'>Saitama gets serious! No tricks up his sleeve, just raw power. Brace yourself!</span>`);
 
-            if (!purchasedUpgrades.some(upgrade => upgrade.name === "Mosquito")) {
+            if (!purchasedUpgradesSet.has("Mosquito")) {
                 unlockAchievement('Dirty Trick');
                 enemyStunCount += 250;
                 logFight("<span style='color: green; font-size: 1.3em';>Just as Saitama got serious, you pointed at a piñata and he couldn't resist. But when he punched it, a swarm of mosquitos burst out, fueling his mosquito hate. He spends 250 turns squashing them, leaving himself wide open to your attacks.</span>");

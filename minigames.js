@@ -643,7 +643,7 @@ function playMiniGame(gameType) {
     // Luck mini-game logic
     else if (gameType === 'luck') {
         let boxValues = [];
-        const sebosLuck = purchasedUpgrades.some(upgrade => upgrade.name === "Sebo's Luck");
+        const sebosLuck = purchasedUpgradesSet.has("Sebo's Luck");
         let totalBoxes = sebosLuck ? 4 : (luckGameSkill ? 5 : 6);
 
         // Adjust the value ranges based on luckGameSkill and Sebo's Luck

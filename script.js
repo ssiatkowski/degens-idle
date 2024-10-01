@@ -44,7 +44,8 @@ let effectiveSerenityPerSecond = 0;
 let prestiges = 0;
 let epsMultiplier = 1;
 let prestigeRequirement = 1000;
-let purchasedUpgrades = [];
+let purchasedUpgrades = []; // Array for maintaining order and accessing properties
+let purchasedUpgradesSet = new Set(); // Set for fast lookups
 let availableUpgrades = [];
 
 let godModeLevel = 0;
@@ -189,6 +190,10 @@ let stellarMeditationMult = 1;
 
 let currentTimeouts = [];  // Array to store all active timeout IDs
 let cookieIntervalId;
+
+// Initialize switchStates to false for every upgrade
+let switchStates = Object.fromEntries(upgrades.map(upgrade => [upgrade.name, null]));
+let defaultBuyMarkerState = false;
 
 let crunchTimer = 9999;
 let embraceTimer = 9999;
@@ -430,6 +435,8 @@ function loadGameState() {
     // Retrieve animation preferences
     manageButtonAnimations(localStorage.getItem('enableButtonAnimations') == null ? true : localStorage.getItem('enableButtonAnimations') === 'true');
 
+    defaultBuyMarkerState = localStorage.getItem('defaultBuyMarkerState') === 'true';
+
     // read multibuyUpgradesButtonsUnlocked from localstorage
     multibuyUpgradesButtonsUnlocked = JSON.parse(localStorage.getItem('multibuyUpgradesButtonsUnlocked')) || false;
     if (multibuyUpgradesButtonsUnlocked){
@@ -548,8 +555,17 @@ function loadGameState() {
     // Map the saved purchased upgrade names to the actual upgrade objects
     purchasedUpgrades = savedPurchasedUpgrades.map(savedUpgradeName => upgrades.find(up => up.name === savedUpgradeName)).filter(Boolean);
 
+    // Create a Set to track purchased upgrade names for fast lookups
+    purchasedUpgradesSet = new Set(savedPurchasedUpgrades);
+
     // Filter out the available upgrades that have been purchased
-    availableUpgrades = upgrades.filter(upgrade => !purchasedUpgrades.includes(upgrade));
+    availableUpgrades = upgrades.filter(upgrade => !purchasedUpgradesSet.has(upgrade.name));
+
+    upgrades.forEach(upgrade => {
+        const storedState = JSON.parse(localStorage.getItem(`switchState-${upgrade.name}`));
+        switchStates[upgrade.name] = storedState === null ? null : storedState; // Preserve true, false, or null
+    });
+    
 
     // Reapply the purchased upgrades and handle any special cases (e.g., "Cookie Clicker")
     purchasedUpgrades.forEach(upgrade => {
@@ -568,18 +584,18 @@ function loadGameState() {
     updateTradeRatio();
     updateTradeButtonText();
 
-    if(buyMarkersSkill){ enableAllBuyMarkers() };
+    //if(buyMarkersSkill){ enableAllBuyMarkers() };
 
     if (stellarMeditationSkill) {
         stellarMeditationMult = calculateStellarMeditationMultiplier();
     }
     autoFightEnabled = JSON.parse(localStorage.getItem('autoFightEnabled')) || false;
 
-    if(fertileScarcitySkill && purchasedUpgrades.some(upgrade => upgrade.name === `Cosmic Drought`)){
+    if (fertileScarcitySkill && purchasedUpgradesSet.has('Cosmic Drought')) {
         stellarHarvestMult = 250;
         updateMultipliersDisplay();
     }
-
+    
     // Retrieve the last interaction time, defaulting to the current time if not found
     const lastInteraction = parseInt(localStorage.getItem('lastInteraction')) || Date.now();
     // Calculate the elapsed time since the last interaction
@@ -667,6 +683,8 @@ function saveGameState() {
     localStorage.setItem('enableQuickMode', enableQuickMode);
     localStorage.setItem('enableButtonAnimations', enableButtonAnimations);
 
+    localStorage.setItem('defaultBuyMarkerState', defaultBuyMarkerState);
+
     localStorage.setItem('deadpoolRevives', deadpoolRevives);
     
     localStorage.setItem('currentNumberFormat', JSON.stringify(currentNumberFormat));
@@ -699,10 +717,8 @@ function saveGameState() {
     localStorage.setItem('achievements', JSON.stringify(unlockedAchievements));
 
 
-    // Save the state of each switch
-    purchasedUpgrades.forEach(upgrade => {
-        const switchState = document.getElementById(`toggle-${upgrade.name}`).checked;
-        localStorage.setItem(`switchState-${upgrade.name}`, JSON.stringify(switchState));
+    Object.keys(switchStates).forEach(upgradeName => {
+        localStorage.setItem(`switchState-${upgradeName}`, JSON.stringify(switchStates[upgradeName]));
     });
 
     //save the state of createBackupOnImportCheckbox checkbox
@@ -1117,7 +1133,10 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
             document.getElementById('serenity-container').style.display = 'none';
             localStorage.setItem('serenityUnlocked', 'false');
             
-            if (!positiveMarkersSkill) { toggleAllBuyMarkers(false); }
+            if (!positiveMarkersSkill) { 
+                switchStates = Object.fromEntries(upgrades.map(upgrade => [upgrade.name, null]));
+                defaultBuyMarkerState = false;
+            }
 
             document.getElementById('pu-god-display').style.display = 'none';
             document.getElementById('big-crunch-display').style.display = 'none';
@@ -1162,6 +1181,7 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
 
         // Clear purchased upgrades
         purchasedUpgrades = [];
+        purchasedUpgradesSet.clear();
         document.getElementById('purchasedList').innerHTML = '';
 
         // Restore all upgrades
@@ -1718,14 +1738,15 @@ function updatePrestigeButton() {
 }
 
 function canAscend() {
-    return purchasedUpgrades.some(upgrade => upgrade.name === "Ascension") &&
+    return purchasedUpgradesSet.has("Ascension") &&
            purchasedUpgrades.some(upgrade => !upgrade.isGodMode);
 }
 
 function canTranscend() {
-    return purchasedUpgrades.some(upgrade => upgrade.name === "Transcendence") &&
-            purchasedUpgrades.some(upgrade => !upgrade.isPUGodMode);
+    return purchasedUpgradesSet.has("Transcendence") &&
+           purchasedUpgrades.some(upgrade => !upgrade.isPUGodMode);
 }
+
 
 function canBigCrunch() {
     return power * compressedBigCrunchMult > bigCrunchPower;
@@ -2130,6 +2151,11 @@ async function infiniteEmbrace(skipConfirms = false) {
             // Call restartGame with isPrestige flag set to true
             restartGame(true, false, true);
 
+            if (embraceTimer < 180) {
+                unlockAchievement('Fast Embracer');
+            }
+
+
             embraceTimer = 0;
 
             if (!skipConfirms) {
@@ -2344,7 +2370,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true, ski
         // Special case for the "Antimatter Dimension" upgrade
         if (isFight) {
 
-            if (name === 'Vegeta' && !purchasedUpgrades.some(upgrade => upgrade.name === "Cosmetic Surgery")){
+            if (name === 'Vegeta' && !purchasedUpgradesSet.has("Cosmetic Surgery")) {
                 if (autoFightConditionCheck(upgrade)){
                     unlockAchievement('Ugly by Choice')
                 } else {
@@ -2426,8 +2452,11 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true, ski
         addPurchasedUpgrade(img, name, earnings, upgrade.isGodMode, upgrade.isPUGodMode, upgrade.message, upgrade.isFight, upgrade.isMeditation);
         // Remove the upgrade from the available upgrades list
         availableUpgrades.splice(availableUpgrades.indexOf(upgrade), 1);
+        
         // Add the upgrade to the purchased upgrades list
-        purchasedUpgrades.push(upgrade);
+        purchasedUpgrades.push(upgrade); // Add to array for order and property access
+        purchasedUpgradesSet.add(upgrade.name); // Add to set for fast lookups
+        
 
         // Check if the upgrade has an associated achievement and unlock it
         if (upgrade.achievement) {
@@ -2476,9 +2505,9 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true, ski
             localStorage.setItem('messageShownUpgrades', JSON.stringify(messageShownUpgrades));
         }
 
-        if (name === 'Stoicism') {
+        if (name === 'Skepticism') {
             showMessageModal('The Journey Continues', 
-                "This marks the end of v0.9287. You've not only completed the Power Saga, but you're also getting the hang of Infinite Embraces and Meditations! Congratulations on your progress, and welcome to the next stage of your journey. "
+                "This marks the end of v0.9288. You've not only completed the Power Saga, but you're also getting the hang of Infinite Embraces and Meditations! Congratulations on your progress, and welcome to the next stage of your journey. "
                 + "With the Hall of Love now open, Love Points are becoming a key part of your experience, alongside the skills you unlock there. While these new mechanics are taking shape, expect ongoing balancing as the game evolves. "
                 + "Feel free to dive deeper into the skills and explore what's possible. The journey is far from over—more meditations and epic content are on the way! "
                 + "Stay connected on Discord, share your feedback, and together, let's create something truly unforgettable!"
@@ -2491,53 +2520,53 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true, ski
         }
 
         if (name == 'Good Guy Sasuke') {
-            if (!purchasedUpgrades.some(upgrade => upgrade.name === "Cosmetic Surgery")){
+            if (!purchasedUpgradesSet.has("Cosmetic Surgery")) {
                 unlockAchievement('Stay Ugly');
             }
-        } else if (name == 'Channel inner Tyson'){
-            if (!purchasedUpgrades.some(upgrade => upgrade.name === `So what do I do here?`)){
+        } else if (name == 'Channel inner Tyson') {
+            if (!purchasedUpgradesSet.has('So what do I do here?')) {
                 unlockAchievement('Going in Blind');
             }
-        } else if (name == `Job Application #3`){
-            if (!purchasedUpgrades.some(upgrade => upgrade.name === `Job Application`) && !purchasedUpgrades.some(upgrade => upgrade.name === `Job Application #2`)){
+        } else if (name == 'Job Application #3') {
+            if (!purchasedUpgradesSet.has('Job Application') && !purchasedUpgradesSet.has('Job Application #2')) {
                 unlockAchievement('Reject Rejection');
             }
-        } else if (name == `Soothing Realization`){
-            if (!purchasedUpgrades.some(upgrade => upgrade.name === `Cookie Clicker`) && !purchasedUpgrades.some(upgrade => upgrade.name === `NGU Idle`) && !purchasedUpgrades.some(upgrade => upgrade.name === `Melvor Idle`) && !purchasedUpgrades.some(upgrade => upgrade.name === `Antimatter Dimensions`) && !purchasedUpgrades.some(upgrade => upgrade.name === `Increlution`)){
+        } else if (name == 'Soothing Realization') {
+            if (!purchasedUpgradesSet.has('Cookie Clicker') && !purchasedUpgradesSet.has('NGU Idle') && !purchasedUpgradesSet.has('Melvor Idle') && !purchasedUpgradesSet.has('Antimatter Dimensions') && !purchasedUpgradesSet.has('Increlution')) {
                 unlockAchievement('Degens Idle Purist');
             }
-        } else if (name == 'Spend That Money'){
-            if (!purchasedUpgrades.some(upgrade => upgrade.name === `Sebo's Luck`)){
+        } else if (name == 'Spend That Money') {
+            if (!purchasedUpgradesSet.has("Sebo's Luck")) {
                 unlockAchievement('Take Out a Loan');
             }
-        } else if (name == `Ok to be selfish?`){
-            if (purchasedUpgrades[purchasedUpgrades.length - 2].name == `Food + Cats = Profit?`){
+        } else if (name == 'Ok to be selfish?') {
+            if (purchasedUpgrades[purchasedUpgrades.length - 2].name == 'Food + Cats = Profit?') {
                 console.log('Found Cat');
                 unlockAchievement('Feed the Cat');
             }
-        } else if (name == `Perfection doesn't exi...`){
+        } else if (name == 'Perfection doesn\'t exi...') {
             unhideSerenity();
             unlockAchievement('Serenity');
-        } 
+        }
 
         if (callUpdatesAfterBuying) {
             if (name == 'Degens Idle Dev') {
-                if (!purchasedUpgrades.some(upgrade => upgrade.name === "Hunt for Hussein")){
+                if (!purchasedUpgradesSet.has("Hunt for Hussein")) {
                     unlockAchievement('Big Brain Move');
                 }
             } else if (name == 'Vegeta') {
-                if (delusion > 0 && hopium < 0){
+                if (delusion > 0 && hopium < 0) {
                     unlockAchievement('Raw Power');
                 }
-            } else if (name == 'Agent Smith'){
-                if (power >= 1e11){
+            } else if (name == 'Agent Smith') {
+                if (power >= 1e11) {
                     unlockAchievement('Overkill Much?');
                 }
-            } else if (name == 'Love Shop'){
+            } else if (name == 'Love Shop') {
                 unlockHallofLove();
-            } else if (name == 'Training Dummy' && crunchTimer < 15.1){
+            } else if (name == 'Training Dummy' && crunchTimer < 15.1) {
                 unlockAchievement('Eager to Train');
-            } else if (name == 'Hotkeys' && window.innerWidth <= 768 && autoFightSkill){
+            } else if (name == 'Hotkeys' && window.innerWidth <= 768 && autoFightSkill) {
                 unlockAchievement('Hotkey Master');
             }
 
@@ -2578,7 +2607,6 @@ function buyAllUpgrades(limit, pressedButton) {
 
         topUpgrades.forEach(upgrade => {
             if (buyMarkersSkill) {
-                const switchState = JSON.parse(localStorage.getItem(`switchState-${upgrade.name}`));
                 const isAffordableUpgrade = isAffordable(upgrade.cost);      
 
                 if (isAffordableUpgrade && autoFightConditionCheck(upgrade) && firstFightUpgrade) {
@@ -2589,7 +2617,7 @@ function buyAllUpgrades(limit, pressedButton) {
                         unlockAchievement('Make Love, Not War');
                     }
                 }
-                else if ((isAffordableUpgrade && switchState)) {
+                else if ((isAffordableUpgrade && switchStates[upgrade.name])) {
                     buyUpgrade(encodeName(upgrade.name), false, true);
                     purchasedCount++;
                 }
@@ -2739,8 +2767,8 @@ function addPurchasedUpgrade(img, name, earnings, isGodMode = false, isPUGodMode
                     currentCheatSequence = [];
                 }
             }
-            // Store the toggle state in localStorage
-            localStorage.setItem(`switchState-${name}`, JSON.stringify(event.target.checked));
+                // Update the toggle state in the global variable
+                switchStates[name] = event.target.checked;
         });
     }
 
@@ -2777,9 +2805,10 @@ function addPurchasedUpgrade(img, name, earnings, isGodMode = false, isPUGodMode
     }
 
     if (buyMarkersSkill && !isFight && !isMeditation) {
-        const savedSwitchState = JSON.parse(localStorage.getItem(`switchState-${name}`)) || false;
         if (toggleSwitch) {
-            toggleSwitch.checked = savedSwitchState;
+            // Use defaultBuyMarkerState if switchStates[name] is null
+            toggleSwitch.checked = switchStates[name] !== null ? switchStates[name] : defaultBuyMarkerState;
+            switchStates[name] = toggleSwitch.checked;
             toggleSwitch.parentElement.style.display = 'block';
         }
     } else {
@@ -2787,19 +2816,17 @@ function addPurchasedUpgrade(img, name, earnings, isGodMode = false, isPUGodMode
             toggleSwitch.parentElement.style.display = 'none';
         }
     }
+    
 }
 
 
-
-
-function enableAllBuyMarkers(firstUnlock=false) {
+function enableAllBuyMarkers() {
 
     purchasedUpgrades.forEach(upgrade => {
         const name = upgrade.name;
 
         // Load the switch state from local storage
-        let savedSwitchState = true;
-        if (!firstUnlock) { savedSwitchState = JSON.parse(localStorage.getItem(`switchState-${name}`)) || false;}
+        let savedSwitchState = switchStates[name] !== null ? switchStates[name] : defaultBuyMarkerState;
         const toggleSwitch = document.getElementById(`toggle-${name}`);
         if (toggleSwitch && !upgrade.isFight && !upgrade.isMeditation) {
             toggleSwitch.checked = savedSwitchState;
@@ -2809,8 +2836,8 @@ function enableAllBuyMarkers(firstUnlock=false) {
             toggleSwitch.addEventListener('change', (event) => {
                 const state = event.target.checked ? 'On' : 'Off';
                 console.log(`Switch for upgrade ${name} set to ${state}`);
-                // Save the switch state to local storage
-                localStorage.setItem(`switchState-${name}`, JSON.stringify(event.target.checked));
+                // Update the switch state in the global variable
+                switchStates[name] = event.target.checked;
             });
 
             toggleSwitch.addEventListener('click', (event) => {
@@ -2842,7 +2869,6 @@ function autobuyUpgrades() {
 
         for (let i = 0; i < topUpgrades.length; i++) {
             const upgrade = topUpgrades[i];
-            const switchState = JSON.parse(localStorage.getItem(`switchState-${upgrade.name}`));
             const isAffordableUpgrade = isAffordable(upgrade.cost);
 
             // Buy the upgrade if either condition is met:
@@ -2856,7 +2882,7 @@ function autobuyUpgrades() {
                     unlockAchievement('Make Love, Not War');
                 }
             }
-            else if ((isAffordableUpgrade && switchState)) {
+            else if ((isAffordableUpgrade && switchStates[upgrade.name])) {
                 buyUpgrade(encodeName(upgrade.name), false, true);
                 upgradeBought = true;
             }
@@ -3183,7 +3209,7 @@ function updateStellarHarvestDisplay() {
 
 function incrementStellarHarvest() {
     // Stellar Harvest Skill effect
-    if (stellarHarvestSkill && !purchasedUpgrades.some(upgrade => upgrade.name === `Cosmic Drought`)) {
+    if (stellarHarvestSkill && !purchasedUpgradesSet.has('Cosmic Drought')) {
         const multiplier = celestialCollectorSkill ? 1.5: 1.3;
         const duration = celestialCollectorSkill ? 600000 : 180000; // 10 minutes (600,000 ms) or 3 minute (180,000 ms)
 
@@ -4089,9 +4115,15 @@ function isEventInProgress() {
 }
 
 function manageButtonAnimations(enabled) {
+    if(enabled){
+        unlockAchievement('Animation Aficionado');
+    }
     enableButtonAnimations = enabled;
     document.querySelector(':root').style.setProperty("--glowing-animation-duration", enabled ? "2s" : "0s")
 }
+
+let delusionToggleTimes = [];
+let hopiumToggleTimes = [];
 
 // Expose functions to the global scope for use in the HTML
 window.prestige = prestige;
@@ -4157,6 +4189,20 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             delusionPerSecond = -Math.abs(delusionPerSecond);
         }
+        if (!achievementsMap.get(`Can't Fix Crazy`).isUnlocked){
+            // Remove timestamps that are older than 10 seconds
+            while (delusionToggleTimes.length > 0 && delusionToggleTimes[0] < crunchTimer - 10) {
+                delusionToggleTimes.shift(); // Remove the oldest timestamp
+            }
+            // Add the current execution timestamp
+            delusionToggleTimes.push(crunchTimer);
+            // Check if there are at least 10 executions within the last 10 seconds
+            if (delusionToggleTimes.length >= 10) {
+                unlockAchievement(`Can't Fix Crazy`);
+                delusionToggleTimes.length = 0;
+            }
+        }
+
         updateEffectiveMultipliers();
         updateDisplay(); // Update the display to reflect the change
     });
@@ -4167,6 +4213,19 @@ document.addEventListener('DOMContentLoaded', () => {
             hopiumPerSecond = Math.abs(hopiumPerSecond);
         } else {
             hopiumPerSecond = -Math.abs(hopiumPerSecond);
+        }
+        if (!achievementsMap.get(`Can't Fix Pessimism`).isUnlocked){
+            // Remove timestamps that are older than 10 seconds
+            while (hopiumToggleTimes.length > 0 && hopiumToggleTimes[0] < crunchTimer - 10) {
+                hopiumToggleTimes.shift(); // Remove the oldest timestamp
+            }
+            // Add the current execution timestamp
+            hopiumToggleTimes.push(crunchTimer);
+            // Check if there are at least 10 executions within the last 10 seconds
+            if (hopiumToggleTimes.length >= 10) {
+                unlockAchievement(`Can't Fix Pessimism`);
+                hopiumToggleTimes.length = 0;
+            }
         }
         updateEffectiveMultipliers();
         updateDisplay(); // Update the display to reflect the change

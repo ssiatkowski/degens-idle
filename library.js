@@ -200,7 +200,7 @@ function unlockLibrarySkill(skill, duringLoad = false) {
                 if (!duringLoad) {
                     showMessageModal(`Upgrade Markers`, `You’ve unlocked the highly anticipated Upgrade Markers! This breakthrough represents the pinnacle of artificial intelligence, pushing us a step closer toward true artificial sentience. Imagine the possibilities as your AI not only becomes smarter but also more discerning in its actions. This isn't just an upgrade; it's a revolution in AI capabilities.<br><br>Remember to toggle the setting that lets the AI know which upgrades to focus on. This meticulous control will maximize efficiency and performance. Trust your instincts—this feature will undoubtedly prove invaluable in the future. Embrace the future of AI!`);
                 }
-                enableAllBuyMarkers(true);
+                enableAllBuyMarkers();
                 break;
 
             case 'Quadruple Ascension':
@@ -428,7 +428,7 @@ function initializeSkills() {
 
 function openLibrary() {
     unlockAchievement('Hall of Knowledge');
-    if (purchasedUpgrades.find(up => up.name === 'The Library')) {
+    if (purchasedUpgradesSet.has('The Library')) {
         const libraryOverlay = document.getElementById('libraryOverlay');
         libraryOverlay.style.display = 'flex';
         updateSkillDisplay();
@@ -450,7 +450,7 @@ function openLibrary() {
         setTimeout(() => {
             document.addEventListener('click', outsideLibraryClickListener);
         }, 0);
-    } else if (purchasedUpgrades.some(upgrade => upgrade.name === "Antimatter Dimensions")){    
+    } else if (purchasedUpgradesSet.has("Antimatter Dimensions")) {
         showMessageModal('Access Denied', `You are not worthy to enter the Hall of Knowledge. The ancient tomes and secrets within remain beyond your reach. Perhaps it is time to look inwards and seek understanding within yourself first. Only through inner reflection and growth will you gain the wisdom needed to unlock the secrets of this sacred place.<br><br>
                                             <span style="color: #40E0D0;">You remember learning that to unlock <strong>Knowledge</strong>, one must first achieve the seemingly impossible feat of reaching 
                                             <strong>negative one Trillion delusion</strong></span>.`);

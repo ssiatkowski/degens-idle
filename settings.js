@@ -2,6 +2,7 @@
 function openSettings() {
     // First, call saveGameState to ensure everything is saved to localStorage
     saveGameState();
+    showPopupTooltip('Game Saved', 'gray', 0.5);
 
     const settingsOverlay = document.getElementById('settingsOverlay');
     settingsOverlay.style.display = 'flex';
@@ -201,17 +202,17 @@ function toggleAllBuyMarkers(targetState) {
             if (toggleSwitch) {
                 toggleSwitch.checked = targetState;
                 toggleSwitch.parentElement.style.display = 'block'; // Make the switch visible
-                
-                // Save the state to localStorage
-                localStorage.setItem(`switchState-${name}`, JSON.stringify(targetState));
+
+                // Update the switch state in the global variable
+                switchStates[name] = targetState;
             }
         } else {
             if (toggleSwitch) {
                 toggleSwitch.checked = false;
                 toggleSwitch.parentElement.style.display = 'none'; // Hide the switch for fight upgrades
                 
-                // Save the state as unchecked in localStorage for fight upgrades
-                localStorage.setItem(`switchState-${name}`, JSON.stringify(false));
+                // Update the switch state in the global variable for fight upgrades
+                switchStates[name] = false;
             }
         }
     });
@@ -280,6 +281,24 @@ document.getElementById('automationButton').addEventListener('click', function()
                 // Debug: Log to confirm event listener is attached
                 console.log("Three-way toggle event listener attached");
             }, 0); // You can adjust the timeout duration if needed
+
+            const defaultMarkerHtml = `
+                <div style="margin-bottom: 15px;">
+                    <label for="defaultBuyMarkerStateSwitch" style="margin-right: 10px;">Default Buy Marker State</label>
+                    <label class="switch">
+                        <input type="checkbox" id="defaultBuyMarkerStateSwitch">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            `;
+            automationContent.innerHTML += defaultMarkerHtml;
+
+            // Use a timeout to ensure the checkbox is fully rendered before setting its state
+            setTimeout(() => {
+                const defaultBuyMarkerStateSwitch = document.getElementById('defaultBuyMarkerStateSwitch');
+                defaultBuyMarkerStateSwitch.checked = defaultBuyMarkerState;
+            }, 0);
+
         }
 
         // Dynamically add Auto-Buy Upgrades setting if unlocked, with space and switch
@@ -552,6 +571,8 @@ document.getElementById('saveAutomationSettingsButton').addEventListener('click'
         } else if (toggleBuyMarkersOn) {
             toggleAllBuyMarkers(true);
         } // Neutral does nothing, so no action needed
+
+        defaultBuyMarkerState = document.getElementById('defaultBuyMarkerStateSwitch').checked;
     }
 
     // Handle auto-fighting only if the skill is unlocked and write autoFightEnabled to localstorage
@@ -591,6 +612,8 @@ document.getElementById('saveAutomationSettingsButton').addEventListener('click'
     // Close the overlay
     document.getElementById('automationOverlay').style.display = 'none';
     showImmediateMessageModal('Automation Settings Saved', 'Your automation settings have been saved successfully.');
+    
+    unlockAchievement('Automation Optimizer');
 });
 
 

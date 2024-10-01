@@ -28,7 +28,7 @@ const loveHallSkills = [
     { name: 'Inverse Prestige', cost: 21, description: 'Prestige is now based on the highest of your first four resources', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 9 },
     { name: 'Positive Markers', cost: 21, description: 'Buy markers stay turned on through Infinite Embrace', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 9 },
 
-    { name: 'Achievement Boost 2', cost: 32, description: 'Achievement Multiplier x2.5. (Achievement Boosts stack)', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 10, requirement: 'Achievement Boost' },
+    { name: 'Achievement Boost 2', cost: 32, description: 'Achievement Multiplier x2. (Achievement Boosts stack)', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 10, requirement: 'Achievement Boost' },
     { name: 'Tunneled Ascension', cost: 32, description: 'Transcending an upgrade also Ascends it.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 10 },
 
     { name: 'Achievement Hypercharge', cost: 50, description: 'Achievement multiplier becomes multiplicative instead of additive.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 11 },
@@ -248,7 +248,7 @@ function unlockLoveHallSkill(skill, duringLoad = false) {
                 break;
                 
             case 'Achievement Boost 2':
-                achievementBoostValue *= 2.5;
+                achievementBoostValue *= 2;
                 calculateAchievementMultiplier();
                 if(!duringLoad){
                     updateEffectiveMultipliers();
@@ -746,7 +746,7 @@ document.addEventListener('DOMContentLoaded', () => {
 let purchaseLibrarySkillsInterval;
 
 function purchaseLibrarySkills() {
-    if (purchasedUpgrades.some(upgrade => upgrade.name === `The Library`)) {
+    if (purchasedUpgradesSet.has('The Library')) {
 
         let allSkillsUnlocked = true; // Track if all skills are unlocked
 

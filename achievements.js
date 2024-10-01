@@ -147,6 +147,13 @@ const achievements = [
         type: 'puzzle',
     },
     {
+        name: `Can't Fix Crazy`,
+        isUnlocked: false,
+        hoverText: 'fast delusion toggles',
+        img: 'imgs/achievements/cant_fix_crazy.jpg',
+        type: 'puzzle',
+    },
+    {
         name: 'Build a Base',
         isUnlocked: false,
         hoverText: 'do what it says',
@@ -166,6 +173,13 @@ const achievements = [
         hoverText: 'keep clicking achievements button',
         img: 'imgs/achievements/number_5.jpg',
         type: 'puzzle',
+    },
+    {
+        name: 'Animation Aficionado',
+        isUnlocked: false,
+        hoverText: 'toggle animations off and back on',
+        img: 'imgs/achievements/animation_aficionado.jpg',
+        type: 'freebie',
     },
     {
         name: 'Burn the World',
@@ -201,6 +215,13 @@ const achievements = [
         hoverText: 'just another prestige layer',
         img: 'imgs/achievements/big_crunch.jpg',
         type: 'progression',
+    },
+    {
+        name: 'Automation Optimizer',
+        isUnlocked: false,
+        hoverText: 'tweak some automation settings',
+        img: 'imgs/achievements/automation_changes.jpg',
+        type: 'freebie',
     },
     {
         name: 'Do-Over',
@@ -658,13 +679,6 @@ const achievements = [
         type: 'puzzle',
     },
     {
-        name: 'Massive Embrace',
-        isUnlocked: false,
-        hoverText: 'infinite embrace for > 25 LP',
-        img: 'imgs/achievements/massive_embrace.jpg',
-        type: 'puzzle',
-    },
-    {
         name: 'Hotkey Master',
         isUnlocked: false,
         hoverText: 'must unlock all hotkey functions first',
@@ -691,6 +705,13 @@ const achievements = [
         hoverText: 'give hope / take hope',
         img: 'imgs/achievements/zero_sum_game.jpg',
         type: 'puzzle',
+    },
+    {
+        name: 'Fast Embracer',
+        isUnlocked: false,
+        hoverText: 'perform two Infinite Embraces within 3 minutes',
+        img: 'imgs/achievements/fast_embracer.jpg',
+        type: 'skill',
     },
     {
         name: 'One Hit KO',
@@ -733,6 +754,13 @@ const achievements = [
         hoverText: `complete the Shinto meditation`,
         img: 'imgs/achievements/shinto.jpg',
         type: 'progression',
+    },
+    {
+        name: 'Massive Embrace',
+        isUnlocked: false,
+        hoverText: 'infinite embrace for > 25 LP',
+        img: 'imgs/achievements/massive_embrace.jpg',
+        type: 'puzzle',
     },
     {
         name: 'Ugly by Choice',
@@ -823,6 +851,20 @@ const achievements = [
         isUnlocked: false,
         hoverText: '???',
         img: 'imgs/achievements/decisively_indecisive.jpg',
+        type: 'puzzle',
+    },
+    {
+        name: `Can't Fix Pessimism`,
+        isUnlocked: false,
+        hoverText: '???',
+        img: 'imgs/achievements/cant_fix_pessimism.jpg',
+        type: 'puzzle',
+    },
+    {
+        name: 'Buddhist Bunny',
+        isUnlocked: false,
+        hoverText: '???',
+        img: 'imgs/achievements/buddhist_bunny.jpg',
         type: 'puzzle',
     },
 ];

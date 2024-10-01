@@ -135,33 +135,45 @@ const meditationChallenges = {
         livesPerBall: 5,
     },
     "Deism": {
-        duration: 65,
+        duration: 66,
         focus: 1,
         ballCount: 7,
         arenaSize: 500,
         ballSize: 300,
         ballSizeDelta: 0,
-        velocity: 13,
+        velocity: 12.2,
         wind: 0,
         respawnFactor: 1,
         livesPerBall: 2.5,
     },
     "Skepticism": {
-        duration: 150,
-        focus: 1,
+        duration: 130,
+        focus: 10,
         ballCount: 8,
         arenaSize: 450,
         ballSize: 200,
         ballSizeDelta: 10,
-        velocity: 15,
+        velocity: 13,
         wind: 2,
         respawnFactor: 1,
         livesPerBall: 1,
     },
+    "Buddhism": {
+        duration: 360,
+        focus: 108,
+        ballCount: 12,
+        arenaSize: 800,
+        ballSize: 360,
+        ballSizeDelta: 0,
+        velocity: 50,
+        wind: 0,
+        respawnFactor: 1,
+        livesPerBall: 8,
+    },
 };
 
 // Function to initialize the meditation game
-function startMeditationGame(challengeName, backgroundImage, stageNumber = 1, preservedFocus = null, stageVelocityIncrease = 1) {
+function startMeditationGame(challengeName, backgroundImage, stageNumber = 1, preservedFocus = null, stageVelocityIncrease = 1, stageArenaSizeChange = 1, stageExtraLivesPerBall = 0) {
     return new Promise((resolve) => {
         resolveFunction = resolve; // Store the resolve function
         // Set the current challenge based on the challengeName
@@ -172,7 +184,7 @@ function startMeditationGame(challengeName, backgroundImage, stageNumber = 1, pr
         
         meditationFocus = preservedFocus !== null ? preservedFocus : challenge.focus + Math.max(0, Math.floor(Math.log10(serenity))); // Preserve focus if passed
         ballCount = Math.max(1, challenge.ballCount - calculateBallCountReduction()); // Hopium reduces ball count
-        arenaSize = spaceContinuumStretchSkill ? Math.floor(challenge.arenaSize * 1.1) : challenge.arenaSize;
+        arenaSize = Math.floor((spaceContinuumStretchSkill ? challenge.arenaSize * 1.1 : challenge.arenaSize) * stageArenaSizeChange);
         ballSize = challenge.ballSize;
         ballSize = calculateBallSize();
         ballSizeDelta = challenge.ballSizeDelta;
@@ -190,7 +202,13 @@ function startMeditationGame(challengeName, backgroundImage, stageNumber = 1, pr
         windDirection = windDirections[Math.floor(Math.random() * windDirections.length)]; // Pick a random direction
 
         fullFocusPreserved = true;
-        livesPerBall = Math.max(challenge.livesPerBall - (steadyFocusSkill ? 1 : 0), 1);
+        livesPerBall = Math.max(challenge.livesPerBall - (steadyFocusSkill ? 1 : 0) , 1) + stageExtraLivesPerBall;
+
+        if (currentChallengeName === 'Buddhism' && !purchasedUpgradesSet.has("Kung Fu Bunny")) {
+            unlockAchievement('Buddhist Bunny');
+            respawnTime += 500;
+            livesPerBall = Math.max(livesPerBall - 1, 1);
+        }
 
         // Show the meditation overlay
         const meditationOverlay = document.getElementById('meditationOverlay');
@@ -239,6 +257,18 @@ function setupMeditationArena(stageNumber) {
     scaleArena();
 }
 
+const pastelColors = [
+    '#FFB3BA', // Pastel pink
+    '#FFDFBA', // Pastel orange
+    '#FFFFBA', // Pastel yellow
+    '#BAFFB3', // Pastel green
+    '#BAE1FF', // Pastel blue
+    '#FFBAFF', // Pastel purple
+    '#FFC3A0', // Light peach
+    '#D5AAFF', // Lavender
+    '#C9D5B5', // Sage green
+    '#F6D6B2'  // Light tan
+];
 
 // Function to create a ball with no overlap and random velocity/direction
 function createBall(index, stageNumber) {
@@ -264,7 +294,13 @@ function createBall(index, stageNumber) {
     if (stageNumber === 2) {
         ball.style.backgroundColor = 'red';
     } else {
-        ball.style.backgroundColor = 'orange'; // Assuming blue or any other color for stage 1
+        if (currentChallengeName === 'Buddhism') {
+            // Choose a random color from the pastelColors array
+            const randomColor = pastelColors[Math.floor(Math.random() * pastelColors.length)];
+            ball.style.backgroundColor = randomColor; // Set the background color to the random pastel color          
+        } else{
+            ball.style.backgroundColor = 'orange'; // Assuming blue or any other color for stage 1
+        }
     }
 
     // Set initial direction (random angle) and velocity
@@ -342,7 +378,7 @@ function updateMeditationGame(resolve, stageNumber) {
             // Flash "Not So Fast" message and then restart the game
             clearInterval(meditationInterval); // Stop the current game loop
             showArenaMessage('Experience Randomness').then(() => {
-                startMeditationGame(currentChallengeName, document.getElementById('arena').style.backgroundImage, 2, meditationFocus, 1 + (Math.random() * 5)).then(resolve);
+                startMeditationGame(currentChallengeName, document.getElementById('arena').style.backgroundImage, 2, meditationFocus, 1 + (Math.random() * 3), parseFloat(((Math.floor(Math.random() * 60) + 40) / 100).toFixed(2)), parseFloat((Math.random() * (3 - 0.01) + 0.01).toFixed(2))).then(resolve);
             });
             return;
         } else {

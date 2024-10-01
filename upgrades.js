@@ -1601,7 +1601,7 @@ const upgrades = [
     },
     {         
         name: `Stoicism`,
-        cost: { copium: 1e134, delusion: 0, yachtMoney: 1e134, trollPoints: 0, hopium: 0, knowledge: 0, power: 2e34, serenity: 2e13 },
+        cost: { copium: 1e134, delusion: 0, yachtMoney: 1e134, trollPoints: 0, hopium: 0, knowledge: 0, power: 2e33, serenity: 2e13 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 1e57, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 8e26, powerPerSecond: 0, serenityPerSecond: 600000 },
         img: `imgs/arena_stoicism.png`,
         isMeditation: true,
@@ -1622,7 +1622,7 @@ const upgrades = [
     },
     {         
         name: `Deism`,
-        cost: { copium: 1e139, delusion: 0, yachtMoney: 0, trollPoints: 1e139, hopium: 0, knowledge: 0, power: 1e37, serenity: 1e17 },
+        cost: { copium: 1e139, delusion: 0, yachtMoney: 0, trollPoints: 1e139, hopium: 0, knowledge: 0, power: 3e36, serenity: 1e17 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 7e59, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 9e7 },
         img: `imgs/arena_deism.png`,
         isMeditation: true,
@@ -1638,5 +1638,15 @@ const upgrades = [
         isKey: true,
         message: `In this meditation, you’ve learned the <strong>value of questioning and seeking truth</strong>. Skepticism teaches that through doubt, we grow closer to understanding, as every idea must be examined and tested. By embracing a mindset of curiosity and critical thinking, you’ve unlocked the path to deeper knowledge. Continue to question, explore, and refine your beliefs, and truth will reveal itself in time.`,
         achievement: 'Study Skepticism',
+    },
+    {         
+        name: `Buddhism`,
+        cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 1e149, knowledge: 0, power: 1e42, serenity: 1e22 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 1e57, knowledgePerSecond: 1e31, powerPerSecond: 0, serenityPerSecond: 1e12 },
+        img: `imgs/arena_buddhism.png`,
+        isMeditation: true,
+        isKey: true,
+        message: `Through this meditation, you’ve discovered the <strong>path to inner peace and mindfulness</strong>. Buddhism teaches that by releasing attachment and practicing compassion, you can transcend suffering and find enlightenment. You’ve learned the power of living in the present moment, cultivating awareness and kindness toward yourself and others. Continue to walk the middle path, and you will find peace in all aspects of life.`,
+        hoverOverwrite: 'there is no such thing as a wrong sidekick',
     },
 ];
