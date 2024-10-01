@@ -240,9 +240,9 @@ const achievements = [
     {
         name: 'Better Safe Than Sorry',
         isUnlocked: false,
-        hoverText: 'do not lose your progress',
+        hoverText: 'export your save',
         img: 'imgs/achievements/better_safe_than_sorry.jpg',
-        type: 'puzzle',
+        type: 'freebie',
     },
     {
         name: 'Transcend',
@@ -782,6 +782,13 @@ const achievements = [
         hoverText: 'TT.A km',
         img: 'imgs/achievements/longest_tunnel.jpg',
         type: 'puzzle',
+    },
+    {
+        name: 'Fifty Days of Saving',
+        isUnlocked: false,
+        hoverText: 'export your save on 50 different days',
+        img: 'imgs/achievements/50_days_of_saving.jpg',
+        type: 'freebie',
     },
     {
         name: 'Study Skepticism',

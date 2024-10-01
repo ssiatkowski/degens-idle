@@ -68,8 +68,19 @@ function outsideDonationClickListener(event) {
     }
 }
 
+// Initialize a Set to store unique export dates
+let exportDates = new Set(JSON.parse(localStorage.getItem('exportDates')) || []); // Ensure it's a Set
 
 function exportSave(fname='degens_idle_save.json') {
+    const currentDate = new Date().toISOString().split('T')[0]; // Get current date in YYYY-MM-DD format
+    const previousNumExportDates = exportDates.size; // Store the previous size of the Set
+    exportDates.add(currentDate);
+    if (exportDates.size == 50) {
+        unlockAchievement('Fifty Days of Saving');
+    } else if (exportDates.size > previousNumExportDates) {
+        showPopupTooltip(`Days with save exports: ${exportDates.size}`);
+    }
+    localStorage.setItem('exportDates', JSON.stringify([...exportDates]));
 
     unlockAchievement('Better Safe Than Sorry');
 
