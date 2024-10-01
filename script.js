@@ -1586,7 +1586,7 @@ function updateDisplay() {
 
 function updateMultipliersDisplay() {
 
-    earlyAccelerantMult = earlyAccelerantSkill ? 1 + (9 * Math.pow(0.97, purchasedUpgrades.length)) : 1;
+    earlyAccelerantMult = earlyAccelerantSkill ? 1 + (9 * Math.pow(0.975, purchasedUpgrades.length)) : 1;
 
     totalMultiplier = epsMultiplier * godModeMultiplier * puGodMultiplier * bigCrunchMultiplier * achievementMultiplier * devMultiplier * stellarHarvestMult * stellarMeditationMult * cosmicGamekeeperMultiplier * earlyAccelerantMult
 
