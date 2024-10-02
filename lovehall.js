@@ -11,7 +11,7 @@ const loveHallSkills = [
     { name: 'Cosmic Embrace', cost: 1.9, description: 'Gain +1 Love Point every embrace.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 3 },
 
     { name: 'Epistemic Engine', cost: 3.3, description: 'Start Embrace with Knowledge Generation skill unlocked. ', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 4 },
-    { name: 'Pulse of Affection', cost: 3.3, description: 'Gain 3.3% extra base Love Points every embrace.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 4 },
+    { name: 'Pulse of Affection', cost: 3.3, description: 'Additive 0.33% extra base Love Points for every Hall of Love skill unlocked.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 4 },
 
     { name: 'Serenity Flow', cost: 5, description: 'Hopium gain is multiplied by square root of Serenity.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 5 },
     { name: 'Serene Boost 2', cost: 5, description: '5x Serenity gain. (Serenity Boosts stack)', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 5, requirement: 'Serene Boost 1' },
@@ -171,10 +171,14 @@ function unlockLoveHallSkill(skill, duringLoad = false) {
                 break;
         
             case 'Twenty-Fivefold Ascension':
+                unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Double Ascension'), true);
+                unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Quadruple Ascension'), true);
+                unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Tenfold Ascension'), true);
                 numAscensionUpgrades = Math.max(numAscensionUpgrades, 25);
                 break;
         
             case 'Twenty-Fivefold Transcendence':
+                unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Septuple Transcendence'), true);
                 numPUAscensionUpgrades = Math.max(numPUAscensionUpgrades, 25);
                 break;
         
@@ -191,11 +195,11 @@ function unlockLoveHallSkill(skill, duringLoad = false) {
                 break;
         
             case 'Epistemic Engine':
-                unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Knowledge Generation'), duringLoad);
+                unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Knowledge Generation'), true);
                 break;
 
             case 'Pulse of Affection':
-                lovePointsHallMultiplier *= 1.033;
+                pulseOfAffectionSkill = true;
                 break;
 
             case 'Serenity Flow':
@@ -269,6 +273,7 @@ function unlockLoveHallSkill(skill, duringLoad = false) {
 
             case 'Perfect PU God-Mode':
                 perfectPUGodModeSkill = true;
+                unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Much Less Diminishing Parallel God-Mode'), true);
                 puGodMultiplier = calculatePUGodModeMultiplier(puGodLevel);
                 if (!duringLoad) {
                     updateMultipliersDisplay();
@@ -341,10 +346,10 @@ function unlockLoveHallSkill(skill, duringLoad = false) {
         
             case 'Second-Wave Automation':
                 secondWaveAutomationSkill = true;
-                unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Autobuy Upgrades'), duringLoad);
-                unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Perpetual Prestige'), duringLoad);
-                unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Eternal Ascension'), duringLoad);
-                unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Quantum Symphony'), duringLoad);
+                unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Autobuy Upgrades'), true);
+                unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Perpetual Prestige'), true);
+                unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Eternal Ascension'), true);
+                unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Quantum Symphony'), true);
                 break;
 
 
@@ -463,6 +468,7 @@ function unlockLoveHallSkill(skill, duringLoad = false) {
                 break;
 
             case 'Infinite Prestige':
+                unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Perpetual Prestige'), true);
                 infinitePrestigeSkill = true;
                 break;
         
@@ -503,8 +509,10 @@ function unlockLoveHallSkill(skill, duringLoad = false) {
         }
         
         
-        if (beaconOfSevenSunsSkill) {
-            beaconOfSevenSunsMult = 1.07 ** (loveHallSkills.filter(skill => skill.unlocked).length);
+        if (beaconOfSevenSunsSkill || pulseOfAffectionSkill) {
+            const unlockedSkillsCount = loveHallSkills.filter(skill => skill.unlocked).length;
+            if(beaconOfSevenSunsSkill) beaconOfSevenSunsMult = 1.07 ** unlockedSkillsCount;
+            if(pulseOfAffectionSkill) pulseOfAffectionMult = 1 + (0.0033 * unlockedSkillsCount);
         }
         
     }

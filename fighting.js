@@ -544,7 +544,7 @@ function updateStatsUI() {
 
 function toggleStatDisplay(containerId, shouldDisplay) {
     const container = document.getElementById(containerId);
-    container.style.display = shouldDisplay ? 'content' : 'none';
+    container.style.display = shouldDisplay ? 'grid' : 'none';
 }
 
 

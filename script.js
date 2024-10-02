@@ -67,7 +67,8 @@ let serenityBoostMultiplier = 1;
 let powerInfusionMultiplier = 1;
 let knowledgeInfusionMultiplier = 1;
 let basicResourceBoost = 1;
-let lovePointsHallMultiplier = 1;
+let pulseOfAffectionSkill = false;
+let pulseOfAffectionMult = 1;
 
 let currentNumberFormat = 'Mixed';
 
@@ -947,7 +948,8 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
                 powerInfusionMultiplier = 1;
                 knowledgeInfusionMultiplier = 1;
                 basicResourceBoost = 1;
-                lovePointsHallMultiplier = 1;
+                pulseOfAffectionSkill = false;
+                pulseOfAffectionMult = 1;
 
                 serenityFlowSkill = false;
                 perfectPUGodModeSkill = false;
@@ -1727,7 +1729,7 @@ function updatePrestigeButton() {
             prestigeButton.textContent = `PRESTIGE (x${formatNumber(newMultiplier / epsMultiplier)} MULT)`;
             prestigeButton.style.display = 'block';
             // Check if auto-prestige should be triggered
-            if (autoPrestigeThreshold !== null && (newMultiplier / epsMultiplier) > autoPrestigeThreshold  && !isEventInProgress()) {
+            if (autoPrestigeThreshold !== null && autoPrestigeThreshold >= 1 && (newMultiplier / epsMultiplier) > autoPrestigeThreshold  && !isEventInProgress()) {
                 showPopupTooltip(`Auto-Prestiged for x${formatNumber(newMultiplier / epsMultiplier)}`, color='#DAA520')
                 prestige(true); // Trigger auto-prestige
             }
@@ -1783,7 +1785,7 @@ function calculateBigCrunchMultiplier(bcPower = bigCrunchPower) {
 }
 
 function calculateLovePointsGained() {
-    return Math.max(0, Math.log10(serenity) * lovePointsHallMultiplier) + embraceExtraLovePoints;
+    return Math.max(0, Math.log10(serenity) * pulseOfAffectionMult) + embraceExtraLovePoints;
 }
 
 
@@ -1944,6 +1946,7 @@ async function transcend(skipConfirms = false) {
                 //if length of selectedupgrades is 1
                 if (selectedUpgrades.length == 1) {
                     unlockAchievement('Slow and Steady');
+                    suppressAscendPopup = true;
                 }
             }
 
@@ -2229,7 +2232,7 @@ function updateBigCrunchButton() {
         bigCrunchButton.textContent = `BIG CRUNCH (x${formatNumber((newMultiplier / bigCrunchMultiplier))} MULT)`;
         bigCrunchButton.style.display = 'block';
         // Check if auto-crunch should be triggered
-        if (autoBigCrunchThreshold !== null && (newMultiplier / bigCrunchMultiplier) > autoBigCrunchThreshold && !isEventInProgress()) {
+        if (autoBigCrunchThreshold !== null && autoBigCrunchThreshold >= 1 && (newMultiplier / bigCrunchMultiplier) > autoBigCrunchThreshold && !isEventInProgress()) {
             showPopupTooltip(`Auto-Crunched for x${formatNumber(newMultiplier / bigCrunchMultiplier)}`, color='#FF4433')
             bigCrunch(true); // Trigger auto-prestige
         }
@@ -2507,7 +2510,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true, ski
 
         if (name === 'Skepticism') {
             showMessageModal('The Journey Continues', 
-                "This marks the end of v0.9288. You've not only completed the Power Saga, but you're also getting the hang of Infinite Embraces and Meditations! Congratulations on your progress, and welcome to the next stage of your journey. "
+                "This marks the end of v0.929. You've not only completed the Power Saga, but you're also getting the hang of Infinite Embraces and Meditations! Congratulations on your progress, and welcome to the next stage of your journey. "
                 + "With the Hall of Love now open, Love Points are becoming a key part of your experience, alongside the skills you unlock there. While these new mechanics are taking shape, expect ongoing balancing as the game evolves. "
                 + "Feel free to dive deeper into the skills and explore what's possible. The journey is far from over—more meditations and epic content are on the way! "
                 + "Stay connected on Discord, share your feedback, and together, let's create something truly unforgettable!"
@@ -3454,13 +3457,13 @@ function hotkeyHandler(event) {
                 break;
             case 'p':
                 if (prevPrestigeThreshold !== null) {
-                    if (autoPrestigeThreshold == 1e300) {
+                    if (autoPrestigeThreshold == 0) {
                         autoPrestigeThreshold = prevPrestigeThreshold;
                         showPopupTooltip(`Auto Prestige Enabled (${formatNumber(autoPrestigeThreshold)})`);
                     } else {
                         prevPrestigeThreshold = autoPrestigeThreshold;
-                        autoPrestigeThreshold = 1e300;
-                        showPopupTooltip('Auto Prestige Disabled (1e300)');
+                        autoPrestigeThreshold = 0;
+                        showPopupTooltip('Auto Prestige Disabled');
                     }
                     keysPressed.p = true; // Mark 'p' key as pressed
                 }

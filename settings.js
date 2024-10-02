@@ -341,21 +341,24 @@ document.getElementById('automationButton').addEventListener('click', function()
                 <div style="margin-bottom: 15px;">
                     <label for="autoPrestigeThresholdInput">Auto Prestige Threshold:</label>
                     <input type="number" id="autoPrestigeThresholdInput" value="${autoPrestigeThreshold}" step="0.1" style="font-size: 16px;">
+                    <span id="prestigeWarning" style="display: none; color: red;">Disable auto prestige</span> <!-- Add the red-line warning -->
                 </div>
             `;
             automationContent.innerHTML += autoPrestigeHtml;
         }
 
-        // Dynamically add Auto-Prestige Threshold setting if available
+        // Dynamically add Auto-Big Crunch Threshold setting if available
         if (autoBigCrunchThreshold !== null) {
             const autoBigCrunchHtml = `
                 <div style="margin-bottom: 15px;">
                     <label for="autoBigCrunchThresholdInput">Auto Big Crunch Threshold:</label>
                     <input type="number" id="autoBigCrunchThresholdInput" value="${autoBigCrunchThreshold}" step="0.1" style="font-size: 16px;">
+                    <span id="bigCrunchWarning" style="display: none; color: red;">Disable auto big crunch</span> <!-- Add the red-line warning -->
                 </div>
             `;
             automationContent.innerHTML += autoBigCrunchHtml;
         }
+
 
         // Dynamically add Auto-Ascend Threshold setting if available
         if (autoAscendThreshold !== null) {
@@ -424,6 +427,50 @@ document.getElementById('automationButton').addEventListener('click', function()
                 });
             }
         }, 0); // Ensure the inputs are rendered first
+
+        setTimeout(() => {
+            const autoPrestigeInput = document.getElementById('autoPrestigeThresholdInput');
+            const autoBigCrunchInput = document.getElementById('autoBigCrunchThresholdInput');
+            const prestigeWarning = document.getElementById('prestigeWarning');
+            const bigCrunchWarning = document.getElementById('bigCrunchWarning');
+
+            if (autoPrestigeInput) {
+                // Apply red color if autoPrestigeThreshold is 0 when reopening settings
+                if (parseInt(autoPrestigeInput.value) === 0) {
+                    autoPrestigeInput.style.color = 'red';
+                    prestigeWarning.style.display = 'inline';
+                }
+
+                autoPrestigeInput.addEventListener('input', function() {
+                    if (parseInt(autoPrestigeInput.value) === 0) {
+                        autoPrestigeInput.style.color = 'red';
+                        prestigeWarning.style.display = 'inline';
+                    } else {
+                        autoPrestigeInput.style.color = '';
+                        prestigeWarning.style.display = 'none';
+                    }
+                });
+            }
+
+            if (autoBigCrunchInput) {
+                // Apply red color if autoBigCrunchThreshold is 0 when reopening settings
+                if (parseInt(autoBigCrunchInput.value) === 0) {
+                    autoBigCrunchInput.style.color = 'red';
+                    bigCrunchWarning.style.display = 'inline';
+                }
+
+                autoBigCrunchInput.addEventListener('input', function() {
+                    if (parseInt(autoBigCrunchInput.value) === 0) {
+                        autoBigCrunchInput.style.color = 'red';
+                        bigCrunchWarning.style.display = 'inline';
+                    } else {
+                        autoBigCrunchInput.style.color = '';
+                        bigCrunchWarning.style.display = 'none';
+                    }
+                });
+            }
+        }, 0); // Ensure the inputs are rendered first
+
 
         // Dynamically add Auto-Fighting setting if autoFightSkill is unlocked
         if (autoFightSkill) {
@@ -505,7 +552,7 @@ document.getElementById('saveAutomationSettingsButton').addEventListener('click'
         const thresholdInput = document.getElementById('autoPrestigeThresholdInput').value;
         autoPrestigeThreshold = parseFloat(thresholdInput);
 
-        if (isNaN(autoPrestigeThreshold) || autoPrestigeThreshold <= 0) {
+        if (isNaN(autoPrestigeThreshold) || autoPrestigeThreshold < 0) {
             showImmediateMessageModal('Invalid Number', 'Please enter a valid positive number for the Auto Prestige Threshold.');
             return; // Prevent closing if there's an error
         }
@@ -516,7 +563,7 @@ document.getElementById('saveAutomationSettingsButton').addEventListener('click'
         const thresholdInput = document.getElementById('autoBigCrunchThresholdInput').value;
         autoBigCrunchThreshold = parseFloat(thresholdInput);
 
-        if (isNaN(autoBigCrunchThreshold) || autoBigCrunchThreshold <= 0) {
+        if (isNaN(autoBigCrunchThreshold) || autoBigCrunchThreshold < 0) {
             showImmediateMessageModal('Invalid Number', 'Please enter a valid positive number for the Auto Big Crunch Threshold.');
             return; // Prevent closing if there's an error
         }

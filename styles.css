@@ -803,9 +803,9 @@ button.disabled {
     padding: 5px 10px;
     position: absolute;
     z-index: 5;
-    bottom: 100%; /* Position above the cookie button */
+    bottom: 50%; /* Position above the cookie button */
     left: 50%;
-    transform: translateX(-50%); /* Center the tooltip */
+    transform: translate(-50%, 50%); /* Center horizontally and vertically */
     opacity: 0;
     transition: opacity 0.3s;
     width: 200px; /* Adjust width as needed */
