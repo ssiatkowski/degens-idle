@@ -969,7 +969,7 @@ function calculateMiniGamesMultiplier() {
         const luckyBoxesEffect = applyProgressiveScaling(numLuckyBoxes, 0.0007);
 
         // Sum up the effects and apply them to the cosmicGamekeeperMultiplier
-        cosmicGamekeeperMultiplier = 1 + (speedTapsEffect + memorizedDotsEffect + mathPortalsEffect) * luckyBoxesEffect;
+        cosmicGamekeeperMultiplier = 1 + (speedTapsEffect + memorizedDotsEffect + mathPortalsEffect + luckyBoxesEffect);
     }
 }
 
