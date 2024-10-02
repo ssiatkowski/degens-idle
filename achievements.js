@@ -952,7 +952,7 @@ function renderAchievements(type = 'all') {
 // Function to handle tab switching
 function switchTab(event) {
     const type = event.target.getAttribute('data-type');
-    
+
     // Remove 'active' class from all buttons
     document.querySelectorAll('.tab-button').forEach(button => {
         button.classList.remove('active');
@@ -1003,7 +1003,7 @@ function updateAchievementsInfo() {
 
 function calculateAchievementMultiplier() {
     numUnlockedAchievements = Array.from(achievementsMap.values()).filter(ach => ach.isUnlocked).length; // Recalculate the number of unlocked achievements
-    
+
     if (achievementHyperchargeSkill) {
         achievementMultiplier = (1 + achievementBoostValue) ** numUnlockedAchievements;
     } else {

@@ -46,11 +46,11 @@
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/localforage/1.9.0/localforage.min.js"></script> -->
     <link rel="icon" type="image/x-icon" href="imgs/textures/favicon.ico"> <!-- For older browsers -->
     <link rel="icon" type="image/png" sizes="32x32" href="imgs/textures/favicon_32.png"> <!-- For modern browsers -->
-    <link rel="icon" type="image/png" sizes="16x16" href="imgs/textures/favicon_64.png">    
+    <link rel="icon" type="image/png" sizes="16x16" href="imgs/textures/favicon_64.png">
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="library.css">    
-    <link rel="stylesheet" href="powerhall.css">    
-    <link rel="stylesheet" href="lovehall.css">    
+    <link rel="stylesheet" href="library.css">
+    <link rel="stylesheet" href="powerhall.css">
+    <link rel="stylesheet" href="lovehall.css">
     <link rel="stylesheet" href="settings.css">
     <link rel="stylesheet" href="fighting.css">
     <link rel="stylesheet" href="meditation.css">
@@ -74,7 +74,7 @@
                 <button id="upgradeConfirmButton" style="display:none;">Confirm Selection</button>
             </div>
         </div>
-    </div>      
+    </div>
     <!-- Immediate Message Modal -->
     <div id="immediateMessageModal" class="modal">
         <div class="modal-content">
@@ -197,8 +197,8 @@
             <p class="big-crunch-text" id="big-crunch-display" style="display:none;">Big Crunch Power 1e-7 (x1.00 mult)</p>
             <button id="infiniteEmbraceButton" style="display:none;" class="custom-button">Infinite Embrace</button>
             <button id="libraryButton">Hall of Knowledge</button>
-            <button id="powerHallButton" style="display:none;">Hall of Power</button>     
-            <button id="loveHallButton" style="display:none;">Hall of Love</button>         
+            <button id="powerHallButton" style="display:none;">Hall of Power</button>
+            <button id="loveHallButton" style="display:none;">Hall of Love</button>
         </div>
         <div id="upgrades">
             <h2>Upgrades</h2>
@@ -220,7 +220,7 @@
                     <option value="yachtMoney">Yacht Money</option>
                     <option value="trollPoints">Troll Points</option>
                 </select>
-                
+
                 <label for="fromResource">To:</label>
                 <select id="toResource" onchange="updateTradeRatio()">
                     <option value="copium">Copium</option>
@@ -230,7 +230,7 @@
                     <option value="hopium">Hopium</option> <!-- Add Hopium as a tradeable resource -->
                 </select>
                 <label for="tradeAmount">Amount:</label>
-                <input type="text" id="tradeAmount" value="" placeholder="Enter (e.g. 1.5M or 50%)" style="font-size: 16px;">                
+                <input type="text" id="tradeAmount" value="" placeholder="Enter (e.g. 1.5M or 50%)" style="font-size: 16px;">
                 <p id="tradeRatioDisplay">Trade ratio is 10:1</p>
                 <button id="tradeButton">Trade</button>
                 <button id="tradeTenPercentButton">Trade 10%</button>
@@ -267,31 +267,31 @@
                         <div id="playerHealthStat"></div>
                     </div>
                     <div class="STAT">
-                        <span>Damage:</span> 
+                        <span>Damage:</span>
                         <span id="playerDamageStat"></span>
                     </div>
                     <div class="STAT">
-                        <span>Speed:</span> 
+                        <span>Speed:</span>
                         <span id="playerAttackSpeedStat"></span>
                     </div>
                     <div class="STAT">
-                        <span>Defense:</span> 
+                        <span>Defense:</span>
                         <span id="playerDefenseStat"></span>
                     </div>
                     <div id="playerCritChanceContainer" class="STAT">
-                        <span>Crit:</span> 
+                        <span>Crit:</span>
                         <span id="playerCritChanceStat"></span>
                     </div>
                     <div id="playerCritDamageContainer" class="STAT">
-                        <span>Crit Dmg:</span> 
+                        <span>Crit Dmg:</span>
                         <span id="playerCritDamageStat"></span>
                     </div>
                     <div id="playerDodgeContainer" class="STAT">
-                        <span>Dodge:</span> 
+                        <span>Dodge:</span>
                         <span id="playerDodgeStat"></span>
                     </div>
                     <div id="playerNonCritDodgeContainer" class="STAT">
-                        <span>Non-Crit Dodge:</span> 
+                        <span>Non-Crit Dodge:</span>
                         <span id="playerNonCritDodgeStat"></span>
                     </div>
                     <div id="playerStunContainer" class="STAT">
@@ -299,7 +299,7 @@
                         <span id="playerStunStat"></span>
                     </div>
                     <div id="playerAbsorbContainer" class="STAT">
-                        <span>Absorb:</span> 
+                        <span>Absorb:</span>
                         <span id="playerAbsorbStat"></span>
                     </div>
                 </div>
@@ -318,27 +318,27 @@
             <div class="enemy-section">
                 <div class="stats">
                     <div class="STAT">
-                        <div>Max HP:</div> 
+                        <div>Max HP:</div>
                         <div id="enemyHealthStat"></div>
                     </div>
                     <div class="STAT">
-                        <div>Damage:</div> 
+                        <div>Damage:</div>
                         <div id="enemyDamageStat"></div>
                     </div>
                     <div class="STAT">
-                        <div>Speed:</div> 
+                        <div>Speed:</div>
                         <div id="enemyAttackSpeedStat"></div>
                     </div>
                     <div class="STAT">
-                        <div>Defense:</div> 
+                        <div>Defense:</div>
                         <div id="enemyDefenseStat"></div>
                     </div>
                     <div id="enemyCritChanceContainer" class="STAT">
-                        <div>Crit:</div> 
+                        <div>Crit:</div>
                         <div id="enemyCritChanceStat"></div>
                     </div>
                     <div id="enemyCritDamageContainer" class="STAT">
-                        <div>Crit Dmg:</div> 
+                        <div>Crit Dmg:</div>
                         <div id="enemyCritDamageStat"></div>
                     </div>
                     <div id="enemyDodgeContainer" class="STAT">
@@ -346,15 +346,15 @@
                         <div id="enemyDodgeStat"></div>
                     </div>
                     <div id="enemyNonCritDodgeContainer" class="STAT">
-                        <div>Non-Crit Dodge:</div> 
+                        <div>Non-Crit Dodge:</div>
                         <div id="enemyNonCritDodgeStat"></div>
                     </div>
                     <div id="enemyStunContainer" class="STAT">
-                        <div>Stun:</div> 
+                        <div>Stun:</div>
                         <div id="enemyStunStat"></div>
                     </div>
                     <div id="enemyAbsorbContainer" class="STAT">
-                        <div>Absorb:</div> 
+                        <div>Absorb:</div>
                         <div id="enemyAbsorbStat"></div>
                     </div>
                 </div>
@@ -367,7 +367,7 @@
 
         <!-- Fight Log -->
         <div id="fightLog" class="fight-log"></div>
-        
+
         <!-- Forfeit Button -->
         <button id="forfeitButton" class="forfeit-button">Forfeit</button>
     </div>
@@ -378,12 +378,12 @@
                 <div class="meditation-arena">
                     <div id="arena" class="arena"></div>
                 </div>
-    
+
                 <!-- Meditation Info Section -->
                 <div class="meditation-info">
                     <h2 id="meditationChallengeName">Meditation Challenge</h2>
                 </div>
-    
+
                 <!-- Updated Meditation Stats Section -->
                 <div id="meditationStats" class="meditation-info">
                     <div class="stat-row">
@@ -411,16 +411,16 @@
                         <p id="meditationLivesPerBallRow" style="display: none;">Focus Per Ball: <span id="meditationLivesPerBall" class="stat-value"></span></p>
                     </div>
                 </div>
-    
+
                 <!-- Stop Meditation Button -->
                 <button id="meditationStopButton" class="meditation-stop-button">Stop Meditation</button>
             </div>
         </div>
     </div>
-    
-    
-    
-      
+
+
+
+
     <!-- Include the Library overlay HTML -->
     <div id="libraryOverlay" class="library-overlay" style="display: none;">
         <div class="library-overlay-content">
@@ -465,14 +465,14 @@
 
             <button id="closeLoveHallButton">Exit</button>
         </div>
-    </div>    
+    </div>
     <!-- Settings Overlay -->
     <div id="settingsOverlay" class="settings-overlay" style="display: none;">
         <div class="settings-overlay-content">
             <span class="close-button" id="closeSettingsOverlay">&times;</span>
             <h1>Settings</h1>
             <h4>Degens Idle v0.9291</h4>
-            
+
             <div class="settings-section">
                 <h3>Save Management</h3>
                 <p>
@@ -492,9 +492,9 @@
                     <label for="createBackupOnImport">Create Save Backup on Import</label>
                 </div>
             </div>
-            
-            
-            
+
+
+
             <div class="settings-section">
                 <h3>Gameplay Options</h3>
                 <div class="settings-buttons">
@@ -517,7 +517,7 @@
                 </div>
                 <button id="restartButton">Restart Entire Game</button>
             </div>
-            
+
             <div class="settings-section">
                 <h3>Community & Support</h3>
                 <div class="settings-note">
@@ -529,7 +529,7 @@
                 </button>
                 <button id="donateButton"><i class="icon-donate"></i> Donate</button>
             </div>
-            
+
             <button id="closeSettingsButton">Exit</button>
         </div>
     </div>
@@ -539,7 +539,7 @@
         <div class="automation-overlay-content">
             <span class="close-button" id="closeAutomationOverlay">&times;</span>
             <h1>Automation Settings</h1>
-            
+
             <!-- Content will be dynamically updated by JavaScript -->
             <div id="automationContent">
                 <!-- Placeholder content, will be replaced by JS -->
@@ -556,7 +556,7 @@
             <span class="close-button" id="closeAchievementsOverlay">&times;</span>
             <h1>Achievements</h1>
             <div id="achievements-info">Achievements Unlocked: 0/100 | Multiplier: 1.00x (to ALL RESOURCES)</div>
-            
+
             <!-- Tabs for Achievement Categories -->
             <div id="achievementTabs" class="achievement-tabs">
                 <button class="tab-button active" data-type="all">All</button>
@@ -565,10 +565,10 @@
                 <button class="tab-button" data-type="puzzle">Puzzle</button>
                 <button class="tab-button" data-type="skill">Skill</button>
             </div>
-            
+
             <!-- Info box to display count of unlocked achievements in current tab -->
             <div id="achievementCount" class="achievement-count">Unlocked: 0/0</div>
-            
+
             <div id="achievements-grid">
                 <!-- Achievements will be dynamically added here -->
             </div>
@@ -592,6 +592,7 @@
     </div>
     <!-- Hidden file input for importing save file -->
     <input type="file" id="importFileInput" style="display: none;">
+    <script src="htmlutils.js"></script>
     <script src="upgrades.js"></script>
     <script src="script.js"></script>
     <script src="library.js"></script>

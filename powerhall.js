@@ -248,7 +248,7 @@ function initializePowerHallSkills() {
             } else {
                 skillDiv.classList.add('purchased');
             }
-            skillDiv.addEventListener('click', async () => {
+            Events.addListener(skillDiv, 'click', async () => {
                 if (!skill.unlocked && power >= skill.cost) {
                     let result = true;  // Default to true if loveHallUnlocked is true
 
@@ -292,7 +292,7 @@ function openPowerHall() {
 
         // Prevent overlay from closing when clicking inside the content
         const powerHallContent = document.querySelector('.powerhall-overlay-content');
-        powerHallContent.addEventListener('click', function(event) {
+        Events.addListener(powerHallContent, 'click', function(event) {
             event.stopPropagation();  // Stop event propagation when clicking inside the library content
         });
 
@@ -344,6 +344,7 @@ function resetPowerHallSkills() {
     });
 
     // Clear the display and reinitialize skills
+    Events.wipe(powerHallSkillsContainer);
     powerHallSkillsContainer.innerHTML = ''; // Clear current skill elements
     initializePowerHallSkills(); // Reinitialize the skills in the UI
 

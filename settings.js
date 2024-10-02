@@ -237,6 +237,7 @@ document.getElementById('automationButton').addEventListener('click', function()
     const saveButton = document.getElementById('saveAutomationSettingsButton');
 
     // Clear any existing content in the automationContent section
+    Events.wipe(automationContent);
     automationContent.innerHTML = '';
 
     // Check if all features are locked (none are unlocked)
@@ -266,14 +267,14 @@ document.getElementById('automationButton').addEventListener('click', function()
 
             // Delay the event listener attachment to ensure the elements are fully rendered
             setTimeout(() => {
-                const toggleContainer = document.querySelector('.three-way-toggle-container .three-way-toggle');
+                const toggleContainer = automationContent.querySelector('.three-way-toggle-container .three-way-toggle');
                 const slider = toggleContainer.querySelector('.slider');
                 const toggleNeutral = document.getElementById('toggleBuyMarkersNeutral');
                 const toggleOff = document.getElementById('toggleBuyMarkersOff');
                 const toggleOn = document.getElementById('toggleBuyMarkersOn');
 
                 // Add click listener to the entire toggle container
-                toggleContainer.addEventListener('click', function() {
+                Events.addListener(toggleContainer, 'click', function() {
                     if (toggleNeutral.checked) {
                         toggleOn.checked = true;
                         slider.style.transform = 'translateX(100%)';
@@ -398,7 +399,7 @@ document.getElementById('automationButton').addEventListener('click', function()
                     ascendWarning.style.display = 'inline';
                 }
 
-                autoAscendInput.addEventListener('input', function() {
+                Events.addListener(autoAscendInput, 'input', function() {
                     if (parseInt(autoAscendInput.value) === 0) {
                         autoAscendInput.style.color = 'red';
                         ascendWarning.style.display = 'inline';
@@ -416,7 +417,7 @@ document.getElementById('automationButton').addEventListener('click', function()
                     transcendWarning.style.display = 'inline';
                 }
 
-                autoTranscendInput.addEventListener('input', function() {
+                Events.addListener(autoTranscendInput, 'input', function() {
                     if (parseInt(autoTranscendInput.value) === 0) {
                         autoTranscendInput.style.color = 'red';
                         transcendWarning.style.display = 'inline';
@@ -441,7 +442,7 @@ document.getElementById('automationButton').addEventListener('click', function()
                     prestigeWarning.style.display = 'inline';
                 }
 
-                autoPrestigeInput.addEventListener('input', function() {
+                Events.addListener(autoPrestigeInput, 'input', function() {
                     if (parseInt(autoPrestigeInput.value) === 0) {
                         autoPrestigeInput.style.color = 'red';
                         prestigeWarning.style.display = 'inline';
@@ -459,7 +460,7 @@ document.getElementById('automationButton').addEventListener('click', function()
                     bigCrunchWarning.style.display = 'inline';
                 }
 
-                autoBigCrunchInput.addEventListener('input', function() {
+                Events.addListener(autoBigCrunchInput, 'input', function() {
                     if (parseInt(autoBigCrunchInput.value) === 0) {
                         autoBigCrunchInput.style.color = 'red';
                         bigCrunchWarning.style.display = 'inline';

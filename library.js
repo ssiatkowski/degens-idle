@@ -2,9 +2,9 @@ const librarySkills = [
     { name: 'Cookie Recipe', cost: 1, description: 'This ancient cookie recipe permanently makes cookie clicks another 10x more powerful.', unlocked: false, level: 'History' },
     { name: 'Knowledge Generation', cost: 400, description: 'After Prestiging or Ascending, begin knowledge generation immediately without reaching -1T delusion.', unlocked: false, level: 'History' },
     { name: 'Trade Ratios', cost: 1500, description: 'Lower trade ratio to 5:1 for top 4 resources and 5M:1 for Hopium.', unlocked: false, level: 'History' },
-    { name: 'Cookie Boost', cost: 3e9, description: 'Cookie clicks now generate resources equal to your earnings per half a second (for the first 4 resources)', unlocked: false, level: 'History' }, 
-    { name: 'Hopeful Cookie', cost: 3e26, description: 'Boosted cookie clicks also generate hopium at 1/2 earnings rate.', unlocked: false, level: 'History' }, 
-    { name: 'Knowledgeable Cookie', cost: 9e45, description: 'Boosted cookie clicks generate knowledge at 1/4 earnings rate.', unlocked: false, level: 'History' }, 
+    { name: 'Cookie Boost', cost: 3e9, description: 'Cookie clicks now generate resources equal to your earnings per half a second (for the first 4 resources)', unlocked: false, level: 'History' },
+    { name: 'Hopeful Cookie', cost: 3e26, description: 'Boosted cookie clicks also generate hopium at 1/2 earnings rate.', unlocked: false, level: 'History' },
+    { name: 'Knowledgeable Cookie', cost: 9e45, description: 'Boosted cookie clicks generate knowledge at 1/4 earnings rate.', unlocked: false, level: 'History' },
 
     { name: 'Cure for Delusion', cost: 5, description: 'Unlock ability to toggle whether delusion gain is positive or negative.', unlocked: false, level: 'Science' },
     { name: 'Luck is Rigged', cost: 777, description: 'Remove 1 unlucky box. Makes lucky boxes better (25%-125% instead of 10%-100%) and unlocky boxes less bad (5%-50% instead of 5%-70%).', unlocked: false, level: 'Science' },
@@ -31,7 +31,7 @@ const librarySkills = [
     { name: 'Perpetual Prestige', cost: 1e24, description: 'Auto-Prestige ability.  (Target prestige multiplier can be set in Automation Settings. Default=100)', unlocked: false, level: 'Robotics' },
     { name: 'Eternal Ascension', cost: 1e28, description: 'Auto-Ascend ability. (Target # upgrades can be set in Automation Settings. Default=Off)', unlocked: false, level: 'Robotics' },
     { name: 'Quantum Symphony', cost: 1e40, description: 'Auto-Transcend. (Similar to Auto-Ascend)', unlocked: false, level: 'Robotics' },
-    
+
     { name: 'Knowledge is Power', cost: 1e6, description: 'Unlock new resource Power. Power is always generated based on your current amount of Knowledge.', unlocked: false, level: 'Celestial Bodies' },
     { name: 'Big Crunch', cost: 8e11, description: 'Could this be what Power is for? Unlock ability to force the universe into a Big Crunch and to be reborn anew!', unlocked: false, level: 'Celestial Bodies' },
     { name: 'Money is Power, too', cost: 2.5e20, description: 'Add a multiplier to Power generation based on Yacht Money (though it scales much less than with Knowledge)', unlocked: false, level: 'Celestial Bodies' },
@@ -66,11 +66,11 @@ function unlockLibrarySkill(skill, duringLoad = false) {
                     cookieTooltip.textContent = `Each cookie click counts as ${cookieClickMultiplier} clicks on collect buttons for Copium, Delusion, Yacht Money, and Troll Points!`;
                 }
                 break;
-        
+
             case 'Knowledge Generation':
                 knowledgeGenerationSkill = true;
                 break;
-        
+
             case 'Trade Ratios':
                 improvedTradeRatio = true;
                 break;
@@ -82,7 +82,7 @@ function unlockLibrarySkill(skill, duringLoad = false) {
                     cookieTooltip.textContent = `Each cookie click generates half second worth of Copium, Delusion, Yacht Money, and Troll Points.`;
                 }
                 break;
-        
+
             case 'Hopeful Cookie':
                 cookieHopeful = true;
                 if (!cookieKnowledgeable){
@@ -97,7 +97,7 @@ function unlockLibrarySkill(skill, duringLoad = false) {
                 cookieTooltip.textContent = `Each cookie click generates half second worth of Copium, Delusion, Yacht Money, Troll Points, Hopium, and Knowledge.`;
                 break;
 
-                
+
 
             case 'Cure for Delusion':
                 document.getElementById('toggleDelusionLabel').classList.remove('hidden');
@@ -109,19 +109,19 @@ function unlockLibrarySkill(skill, duringLoad = false) {
             case 'Luck is Rigged':
                 luckGameSkill = true;
                 break;
-            
+
             case "I Can't Math":
                 mathGameSkill = true;
                 break;
-            
+
             case "Short Term Memory":
                 memoryGameSkill = true;
                 break;
-                
+
             case "Click Speed Demon":
                 speedGameSkill = true;
                 break;
-                
+
             case "Mini Gamer":
                 miniGamerSkill = true;
                 break;
@@ -132,14 +132,14 @@ function unlockLibrarySkill(skill, duringLoad = false) {
                     showMessageModal('Prestige Base', 'For you math nerds out there, the formula for prestige multiplier is <strong>base^(log10(minResource/1000)+1)</strong>.<br><br>Graph shows the Prestige Multiplier scaling with 1.5 base vs 1.75 base. This difference becomes huge later in the game. When your min resource is at 1Qi that is already 10x difference and only increases exponentially form there!', false, false, 'imgs/graphs/prestige_base.png')
                 }
                 break;
-            
+
             case '2D Ascension':
                 twoDimensionalAscensionSkill = true;
                 if (!duringLoad) {
                     showMessageModal('2D Ascension', 'Cube root was rough! Now you at least get some prestige mult left after ascending.', false, false, 'imgs/graphs/2d_ascension.png')
                 }
                 break;
-                        
+
             case 'Less Diminishing God-Mode':
                 lessDiminishingGodModeSkill = true;
                 if (!duringLoad) {
@@ -171,13 +171,13 @@ function unlockLibrarySkill(skill, duringLoad = false) {
                     perfectGodModeSkill = true;
                     if (!duringLoad) {
                         showMessageModal(
-                            'Perfect God-Mode', 
+                            'Perfect God-Mode',
                             `Remember the equation: <strong>GodModeMultiplier = &prod;<sub>i=0</sub><sup>gmLevel - 1</sup> &#40;1 + 0.25 &times; diminishFactor<sup>i</sup>&#41;</strong><br><br>
                             Now featuring a superior diminishing factor of <strong>99.2%</strong>! This is a significant improvement over the <strong>99%</strong> factor in Parallel God Mode. 
                             The graph below illustrates how this seemingly small difference leads to a much higher multiplier, especially at higher God-Mode levels. 
                             At God-Mode Level 150, you will see an immediate improvement of about 5 orders of magnitude.`,
-                            false, 
-                            false, 
+                            false,
+                            false,
                             'imgs/graphs/perfect_gm_diminishing.png'
                         );
                     }
@@ -185,7 +185,7 @@ function unlockLibrarySkill(skill, duringLoad = false) {
                     updateMultipliersDisplay();
                     updateEffectiveMultipliers();
                     break;
-        
+
             case 'Cookie Clicker Clicker':
                 cookieAutoClicker = true;
                 break;
@@ -210,12 +210,12 @@ function unlockLibrarySkill(skill, duringLoad = false) {
             case 'Septuple Transcendence':
                 numPUAscensionUpgrades = Math.max(numPUAscensionUpgrades, 7);
                 break;
-                
+
             case 'Tenfold Ascension':
                 numAscensionUpgrades = Math.max(numAscensionUpgrades, 10);
                 break;
 
-            case 'Autobuy Upgrades':  
+            case 'Autobuy Upgrades':
                 autobuyUpgradesSkill = true;
                 if (autobuyIntervalId === null) { // Check if the interval is not already running
                     autobuyIntervalId = setInterval(autobuyUpgrades, fasterAutobuyerskill ? 250 : 1500);
@@ -228,10 +228,10 @@ function unlockLibrarySkill(skill, duringLoad = false) {
                     showMessageModal('Knowledge is Power', 'The Power equation is <strong>Power per Second = (knowledge)<sup>1/3</sup> / 10<sup>12</sup></strong>.', false, false, 'imgs/graphs/power_per_second_eq.png')
                 }
                 break;
-        
+
             case 'Big Crunch':
                 if (!duringLoad) {
-                    showMessageModal(`Congratulations, Cosmic Architect!`, 
+                    showMessageModal(`Congratulations, Cosmic Architect!`,
                         `<p>You have found a use for Power by forcing the universe into a Big Crunch! Imagine speeding up the decline of everything around you, hastening the collapse of the cosmos into an infinitely dense point, only to trigger a spectacular rebirth. It's like hitting the ultimate reset button on reality itself!</p>
                         <p>As you initiate the Big Crunch, picture galaxies spiraling inward, stars merging, and black holes converging in an epic cosmic finale. And just when it seems all is lost, BOOM! A new universe emerges from the singularity. A fresh start, a blank slate, where all the lessons learned from your previous existence can be leveraged to dominate even harder.</p>
                         <p>Don't think it's going to be a cakewalk! You'll have to regain your God-Mode levels, but here's the kicker: with all the knowledge and experience you've accumulated, it'll be much easier this time around. No more stumbling in the dark; you're now armed with the wisdom of countless cycles. Your prestige multiplier isn't just a number—it's a testament to your cosmic resilience and cunning.</p>
@@ -260,21 +260,21 @@ function unlockLibrarySkill(skill, duringLoad = false) {
             case 'Condensed Power':
                 compressedBigCrunchMult = 30 * overcompressedPower;
                 break;
-                
+
 
             case 'Perpetual Prestige':
                 if(autoPrestigeThreshold === null){
                     autoPrestigeThreshold = 100;
                 }
                 break;
-    
+
             case 'Eternal Ascension':
                 if(autoAscendThreshold === null){
                     autoAscendThreshold = 0;
                 }
                 break;
 
-                
+
             case 'Quantum Symphony':
                 if(autoTranscendThreshold === null){
                     autoTranscendThreshold = 0;
@@ -282,7 +282,7 @@ function unlockLibrarySkill(skill, duringLoad = false) {
                 break;
 
             // Add more cases as needed for additional skills
-        
+
             default:
                 console.warn(`No handler for skill: ${skill.name}`);
                 break;
@@ -391,7 +391,7 @@ function initializeSkills() {
             } else {
                 skillDiv.classList.add('purchased');
             }
-            skillDiv.addEventListener('click', async () => {
+            Events.addListener(skillDiv, 'click', async () => {
                 if (!skill.unlocked && knowledge >= skill.cost) {
                     let result = true;  // Default to true if loveHallUnlocked is true
                     if (!loveHallUnlocked) {
@@ -411,7 +411,7 @@ function initializeSkills() {
                 } else if (!skill.unlocked && knowledge < skill.cost) {
                     //document.removeEventListener('click', outsideLibraryClickListener);
                     // await showMessageModal('Insufficient Knowledge', 'Not enough Knowledge to unlock this skill.', false, false);
-                    
+
                     showStatusMessage(skillDiv, 'Insufficient Knowledge to unlock this skill.', false);
                     //document.addEventListener('click', outsideLibraryClickListener);
                 } else if (skill.unlocked) {
@@ -437,12 +437,12 @@ function openLibrary() {
             unlockAchievement('Skipping Grades');
         }
 
-        openLibraryHallTimestamp= crunchTimer; 
+        openLibraryHallTimestamp= crunchTimer;
         checkFastCommuter();
 
         // Prevent overlay from closing when clicking inside the content
         const libraryContent = document.querySelector('.library-overlay-content');
-        libraryContent.addEventListener('click', function(event) {
+        Events.addListener(libraryContent, 'click', function(event) {
             event.stopPropagation();  // Stop event propagation when clicking inside the library content
         });
 
@@ -494,6 +494,7 @@ function resetLibrarySkills() {
     });
 
     // Clear the display and reinitialize skills
+    Events.wipe(librarySkillsContainer);
     librarySkillsContainer.innerHTML = ''; // Clear current skill elements
     initializeSkills(); // Reinitialize the skills in the UI
 
