@@ -903,11 +903,78 @@ function startCooldown(gameType) {
 }
 
 
+function applyProgressiveScaling(effectValue, baseIncrease) {
+    let scaledEffect = 0;
+    let remainingTaps = effectValue;
+
+    // First tier: Apply 5x scaling for the first 200 taps
+    let firstTierTaps = Math.floor(200 / (10000 * baseIncrease));
+    if (remainingTaps > firstTierTaps) {
+        scaledEffect += firstTierTaps * baseIncrease * 5;
+        remainingTaps -= firstTierTaps;
+    } else {
+        scaledEffect += remainingTaps * baseIncrease * 5;
+        return scaledEffect;
+    }
+
+    // Second tier: Apply 3x scaling for the next 500 taps
+    let secondTierTaps = Math.floor(500 / (10000 * baseIncrease));
+    if (remainingTaps > secondTierTaps) {
+        scaledEffect += secondTierTaps * baseIncrease * 3;
+        remainingTaps -= secondTierTaps;
+    } else {
+        scaledEffect += remainingTaps * baseIncrease * 3;
+        return scaledEffect;
+    }
+
+    // Third tier: Apply 2x scaling for the next 1250 taps
+    let thirdTierTaps = Math.floor(1250 / (10000 * baseIncrease));
+    if (remainingTaps > thirdTierTaps) {
+        scaledEffect += thirdTierTaps * baseIncrease * 2;
+        remainingTaps -= thirdTierTaps;
+    } else {
+        scaledEffect += remainingTaps * baseIncrease * 2;
+        return scaledEffect;
+    }
+
+    // Fourth tier: Apply 1x scaling for the next 5000 taps
+    let fourthTierTaps = Math.floor(5000 / (10000 * baseIncrease));
+    if (remainingTaps > fourthTierTaps) {
+        scaledEffect += fourthTierTaps * baseIncrease;
+        remainingTaps -= fourthTierTaps;
+    } else {
+        scaledEffect += remainingTaps * baseIncrease;
+        return scaledEffect;
+    }
+
+    // Apply diminishing scaling: reduce scaling so it asymptotically approaches 6
+    let decrementMultiplier = 1;
+    while (remainingTaps > 0) {
+        let chunk = Math.min(Math.floor(1000 / (10000 * baseIncrease)), remainingTaps);
+        decrementMultiplier *= 0.980392156862745;  // Reduce the multiplier by 10% for every 0.25 effect
+        scaledEffect += chunk * baseIncrease * decrementMultiplier;
+        remainingTaps -= chunk;
+    }
+
+    // If we have more taps, continue with the remaining tiers (not needed for this test case)
+    return scaledEffect;
+}
+
 function calculateMiniGamesMultiplier() {
-    if (cosmicGamekeeperSkill){
-        cosmicGamekeeperMultiplier = 1 + (numSpeedTaps * 0.0001) + (numMemorizedDots * 0.0003) + (numMathPortals * 0.0005) * (numLuckyBoxes * 0.0007);
+    if (cosmicGamekeeperSkill) {
+        // Calculate each effect with its base increase and progressive scaling
+        const speedTapsEffect = applyProgressiveScaling(numSpeedTaps, 0.0001);
+        const memorizedDotsEffect = applyProgressiveScaling(numMemorizedDots, 0.0003);
+        const mathPortalsEffect = applyProgressiveScaling(numMathPortals, 0.0005);
+        const luckyBoxesEffect = applyProgressiveScaling(numLuckyBoxes, 0.0007);
+
+        // Sum up the effects and apply them to the cosmicGamekeeperMultiplier
+        cosmicGamekeeperMultiplier = 1 + (speedTapsEffect + memorizedDotsEffect + mathPortalsEffect) * luckyBoxesEffect;
     }
 }
+
+
+
 
 function unlockMiniGames() {
     const now = Date.now();

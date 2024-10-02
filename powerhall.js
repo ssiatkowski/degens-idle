@@ -153,14 +153,15 @@ function unlockPowerHallSkill(skill, duringLoad = false) {
                 calculateMiniGamesMultiplier();
                 if (!duringLoad) {
                     showMessageModal(`Cosmic Gamekeeper Unlocked!`, `<p>You’ve unlocked the power of the Cosmic Gamekeeper, a multiplier that enhances all your resources based on your mini-game performance. While the growth is slow and shouldn't be your main progression strategy, the multiplier has no cap and counts retroactively. Even if this skill is ever reset, your mini-game success counts persist across everything.</p>
-                                                                    <p>The multiplier increases only in winning games with:</p>
-                                                                    <ul>
-                                                                        <li>0.0001 per Speed Tap in Speed Game</li>
-                                                                        <li>0.0003 per Memorized Dot in Memory Game</li>
-                                                                        <li>0.0005 per Portal in Math Game</li>
-                                                                        <li>0.0007 per Lucky Box in Luck Game</li>
-                                                                    </ul>
-                                                                    <p>Though the gains may seem small, they will accumulate over time, ensuring that every mini-game contributes to your overall power. Just remember, its strength lies in persistence, not speed.</p>`);
+                        <p>The multiplier increases only in winning games with:</p>
+                        <ul>
+                            <li>0.0001 per Speed Tap in Speed Game</li>
+                            <li>0.0003 per Memorized Dot in Memory Game</li>
+                            <li>0.0005 per Portal in Math Game</li>
+                            <li>0.0007 per Lucky Box in Luck Game</li>
+                        </ul>
+                        <p>Initially, each game’s contribution starts strong, providing a substantial boost. However, as mini-game successes accumulate, the rate of growth for each game diminishes independently. Over time, the contribution from any one game can reach a maximum of 6x, but achieving this would take a very long time.</p>
+                        <p>Though the gains may seem small, they will accumulate over time, ensuring that every mini-game contributes to your overall power. Just remember, its strength lies in persistence, not speed.</p>`);
                 }
                 break;
 
