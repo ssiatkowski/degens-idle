@@ -695,6 +695,8 @@ document.getElementById('numberFormatButton').addEventListener('click', function
         currentNumberFormat = "Scientific";
     } else if (currentNumberFormat === "Scientific") {
         currentNumberFormat = "Suffixes";
+    } else if (currentNumberFormat === "Suffixes") {
+        currentNumberFormat = "Engineering";
     } else {
         currentNumberFormat = "Mixed";
     }

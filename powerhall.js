@@ -33,7 +33,7 @@ const powerHallSkills = [
 
 const powerHallSkillsContainer = document.getElementById('powerHallSkills');
 
-function unlockPowerHallSkill(skill, duringLoad = false) {
+function unlockPowerHallSkill(skill, duringLoad = false, infoOnly = false) {
     skill.unlocked = true;
     const skillDiv = document.querySelector(`.powerskill[data-skill-name="${skill.name}"]`);
 
@@ -151,7 +151,7 @@ function unlockPowerHallSkill(skill, duringLoad = false) {
             case 'Cosmic Gamekeeper':
                 cosmicGamekeeperSkill = true;
                 calculateMiniGamesMultiplier();
-                if (!duringLoad) {
+                if (!duringLoad && (lovePoints == 0 || infoOnly)) {
                     showMessageModal(`Cosmic Gamekeeper Unlocked!`, `<p>You’ve unlocked the power of the Cosmic Gamekeeper, a multiplier that enhances all your resources based on your mini-game performance. While the growth is slow and shouldn't be your main progression strategy, the multiplier has no cap and counts retroactively. Even if this skill is ever reset, your mini-game success counts persist across everything.</p>
                         <p>The multiplier increases only in winning games with:</p>
                         <ul>
@@ -268,7 +268,7 @@ function initializePowerHallSkills() {
                 } else if (!skill.unlocked && power < skill.cost) {
                     showStatusMessage(skillDiv, 'Insufficient Power to unlock this skill.', false);
                 }  else if (skill.unlocked && skill.name == 'Cosmic Gamekeeper') {
-                    unlockPowerHallSkill(skill);  //only to show message again
+                    unlockPowerHallSkill(skill, false, true);  //only to show message again
                 }
             });
             skillRow.appendChild(skillDiv);

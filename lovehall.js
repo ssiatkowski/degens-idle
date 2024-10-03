@@ -26,7 +26,7 @@ const loveHallSkills = [
     { name: 'Fertile Scarcity', cost: 17, description: 'Cosmic Drought sets Stellar Harvest to 250x (instead of 1x)', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 8 },
     
     { name: 'Inverse Prestige', cost: 21, description: 'Prestige is now based on the highest of your first four resources', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 9 },
-    { name: 'Positive Markers', cost: 21, description: 'Buy markers stay turned on through Infinite Embrace', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 9 },
+    { name: 'Positive Markers', cost: 21, description: 'Buy markers stay unlocked and turned on through Infinite Embrace', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 9 },
 
     { name: 'Achievement Boost 2', cost: 32, description: 'Achievement Multiplier x2. (Achievement Boosts stack)', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 10, requirement: 'Achievement Boost' },
     { name: 'Tunneled Ascension', cost: 32, description: 'Transcending an upgrade also Ascends it.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 10 },
@@ -248,6 +248,7 @@ function unlockLoveHallSkill(skill, duringLoad = false) {
                 break;
                     
             case 'Positive Markers':
+                unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Buy Markers'), true);
                 positiveMarkersSkill = true;
                 break;
                 

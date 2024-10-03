@@ -46,7 +46,7 @@ const librarySkills = [
 
 const librarySkillsContainer = document.getElementById('librarySkills');
 
-function unlockLibrarySkill(skill, duringLoad = false) {
+function unlockLibrarySkill(skill, duringLoad = false, infoOnly = false) {
     skill.unlocked = true;
     const skillDiv = document.querySelector(`.libraryskill[data-skill-name="${skill.name}"]`);
 
@@ -128,21 +128,21 @@ function unlockLibrarySkill(skill, duringLoad = false) {
 
             case 'Prestige Base':
                 prestigeBaseValue = enlightenedPrestigeSkill ? 1.775 : 1.75;
-                if (!duringLoad) {
+                if (!duringLoad && (lovePoints == 0 || infoOnly)) {
                     showMessageModal('Prestige Base', 'For you math nerds out there, the formula for prestige multiplier is <strong>base^(log10(minResource/1000)+1)</strong>.<br><br>Graph shows the Prestige Multiplier scaling with 1.5 base vs 1.75 base. This difference becomes huge later in the game. When your min resource is at 1Qi that is already 10x difference and only increases exponentially form there!', false, false, 'imgs/graphs/prestige_base.png')
                 }
                 break;
 
             case '2D Ascension':
                 twoDimensionalAscensionSkill = true;
-                if (!duringLoad) {
+                if (!duringLoad && (lovePoints == 0 || infoOnly)) {
                     showMessageModal('2D Ascension', 'Cube root was rough! Now you at least get some prestige mult left after ascending.', false, false, 'imgs/graphs/2d_ascension.png')
                 }
                 break;
 
             case 'Less Diminishing God-Mode':
                 lessDiminishingGodModeSkill = true;
-                if (!duringLoad) {
+                if (!duringLoad && (lovePoints == 0 || infoOnly)) {
                     showMessageModal('Less Diminishing God-Mode', `Here's another nerdy equation: <strong>GodModeMultiplier = &prod;<sub>i=0</sub><sup>gmLevel - 1</sup> &#40;1 + 0.25 &times; diminishFactor<sup>i</sup>&#41</strong><br><br>Graph shows the God-Mode Multiplier scaling when diminishing at 97.5% vs 98.5%. As you can see, at higher God-Mode levels this makes a huge difference! The multiplier is already 2 orders of magnitude greater at God-Mode Level 150.`, false, false, 'imgs/graphs/gm_diminishing.png')
                 }
                 godModeMultiplier = calculateGodModeMultiplier(godModeLevel);
@@ -153,7 +153,7 @@ function unlockLibrarySkill(skill, duringLoad = false) {
             case 'Much Less Diminishing Parallel God-Mode':
                 lessDiminishingPUGodModeSkill = true;
                 puGodMultiplier = calculatePUGodModeMultiplier(puGodLevel);
-                if (!duringLoad) {
+                if (!duringLoad && (lovePoints == 0 || infoOnly)) {
                     showMessageModal('Much Less Diminishing Parallel God-Mode', 'Parallel God-Mode uses the same equation: <strong>GodModeMultiplier = &prod;<sub>i=0</sub><sup>gmLevel - 1</sup> &#40;1 + 0.25 &times; diminishFactor<sup>i</sup>&#41</strong><br><br>In the quantum entangled universe, you discover that there is less interference, allowing you to scale the diminishing returns much more effectively. Graph shows the Parallel Universe God-Mode Multiplier scaling when diminishing at 97.5% (original) vs 98.5% (Optimized God-Mode) vs 99.0% (Optimized Parallel God-Mode). As you can see, at higher Parallel Universe God-Mode levels this is quite insane! The multiplier is almost 6 orders of magnitude greater at PU God-Mode Level 250.', false, false, 'imgs/graphs/pugm_diminishing.png')
                     updateMultipliersDisplay();
                     updateEffectiveMultipliers();
@@ -162,29 +162,29 @@ function unlockLibrarySkill(skill, duringLoad = false) {
 
             case 'Linear Ascension':
                 linearAscensionSkill = true;
-                if (!duringLoad) {
+                if (!duringLoad && (lovePoints == 0 || infoOnly)) {
                     showMessageModal('Linear Ascension', 'Ahh, the difference that exponential vs linear makes.', false, false, 'imgs/graphs/linear_ascension.png')
                 }
                 break;
 
-                case 'Perfect God-Mode':
-                    perfectGodModeSkill = true;
-                    if (!duringLoad) {
-                        showMessageModal(
-                            'Perfect God-Mode',
-                            `Remember the equation: <strong>GodModeMultiplier = &prod;<sub>i=0</sub><sup>gmLevel - 1</sup> &#40;1 + 0.25 &times; diminishFactor<sup>i</sup>&#41;</strong><br><br>
-                            Now featuring a superior diminishing factor of <strong>99.2%</strong>! This is a significant improvement over the <strong>99%</strong> factor in Parallel God Mode. 
-                            The graph below illustrates how this seemingly small difference leads to a much higher multiplier, especially at higher God-Mode levels. 
-                            At God-Mode Level 150, you will see an immediate improvement of about 5 orders of magnitude.`,
-                            false,
-                            false,
-                            'imgs/graphs/perfect_gm_diminishing.png'
-                        );
-                    }
-                    godModeMultiplier = calculateGodModeMultiplier(godModeLevel);
-                    updateMultipliersDisplay();
-                    updateEffectiveMultipliers();
-                    break;
+            case 'Perfect God-Mode':
+                perfectGodModeSkill = true;
+                if (!duringLoad && (lovePoints == 0 || infoOnly)) {
+                    showMessageModal(
+                        'Perfect God-Mode',
+                        `Remember the equation: <strong>GodModeMultiplier = &prod;<sub>i=0</sub><sup>gmLevel - 1</sup> &#40;1 + 0.25 &times; diminishFactor<sup>i</sup>&#41;</strong><br><br>
+                        Now featuring a superior diminishing factor of <strong>99.2%</strong>! This is a significant improvement over the <strong>99%</strong> factor in Parallel God Mode. 
+                        The graph below illustrates how this seemingly small difference leads to a much higher multiplier, especially at higher God-Mode levels. 
+                        At God-Mode Level 150, you will see an immediate improvement of about 5 orders of magnitude.`,
+                        false,
+                        false,
+                        'imgs/graphs/perfect_gm_diminishing.png'
+                    );
+                }
+                godModeMultiplier = calculateGodModeMultiplier(godModeLevel);
+                updateMultipliersDisplay();
+                updateEffectiveMultipliers();
+                break;
 
             case 'Cookie Clicker Clicker':
                 cookieAutoClicker = true;
@@ -197,7 +197,7 @@ function unlockLibrarySkill(skill, duringLoad = false) {
 
             case 'Buy Markers':
                 buyMarkersSkill = true;
-                if (!duringLoad) {
+                if (!duringLoad && (lovePoints == 0 || infoOnly)) {
                     showMessageModal(`Upgrade Markers`, `You’ve unlocked the highly anticipated Upgrade Markers! This breakthrough represents the pinnacle of artificial intelligence, pushing us a step closer toward true artificial sentience. Imagine the possibilities as your AI not only becomes smarter but also more discerning in its actions. This isn't just an upgrade; it's a revolution in AI capabilities.<br><br>Remember to toggle the setting that lets the AI know which upgrades to focus on. This meticulous control will maximize efficiency and performance. Trust your instincts—this feature will undoubtedly prove invaluable in the future. Embrace the future of AI!`);
                 }
                 enableAllBuyMarkers();
@@ -224,13 +224,13 @@ function unlockLibrarySkill(skill, duringLoad = false) {
 
             case 'Knowledge is Power':
                 unhidePower();
-                if (!duringLoad) {
+                if (!duringLoad && (lovePoints == 0 || infoOnly)) {
                     showMessageModal('Knowledge is Power', 'The Power equation is <strong>Power per Second = (knowledge)<sup>1/3</sup> / 10<sup>12</sup></strong>.', false, false, 'imgs/graphs/power_per_second_eq.png')
                 }
                 break;
 
             case 'Big Crunch':
-                if (!duringLoad) {
+                if (!duringLoad && (lovePoints == 0 || infoOnly)) {
                     showMessageModal(`Congratulations, Cosmic Architect!`,
                         `<p>You have found a use for Power by forcing the universe into a Big Crunch! Imagine speeding up the decline of everything around you, hastening the collapse of the cosmos into an infinitely dense point, only to trigger a spectacular rebirth. It's like hitting the ultimate reset button on reality itself!</p>
                         <p>As you initiate the Big Crunch, picture galaxies spiraling inward, stars merging, and black holes converging in an epic cosmic finale. And just when it seems all is lost, BOOM! A new universe emerges from the singularity. A fresh start, a blank slate, where all the lessons learned from your previous existence can be leveraged to dominate even harder.</p>
@@ -243,7 +243,7 @@ function unlockLibrarySkill(skill, duringLoad = false) {
 
             case 'Money is Power, too':
                 moneyIsPowerTooSkill = true;
-                if (!duringLoad) {
+                if (!duringLoad && (lovePoints == 0 || infoOnly)) {
                     showMessageModal('Money is Power, too', 'The Power equation becomes <strong>Power per Second = (Knowledge<sup>1/3</sup> / 10<sup>12</sup>) * (1 + (YachtMoney<sup>1/30</sup> / 100))</strong>. Any increase to power generation is valuable!', false, false, 'imgs/graphs/power_per_second_eq2.png')
                 }
                 break;
@@ -415,7 +415,7 @@ function initializeSkills() {
                     showStatusMessage(skillDiv, 'Insufficient Knowledge to unlock this skill.', false);
                     //document.addEventListener('click', outsideLibraryClickListener);
                 } else if (skill.unlocked) {
-                    unlockLibrarySkill(skill);  //only to show message again
+                    unlockLibrarySkill(skill, false, true);  //only to show message again
                 }
             });
             skillRow.appendChild(skillDiv);

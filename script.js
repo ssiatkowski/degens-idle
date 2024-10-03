@@ -1481,9 +1481,10 @@ function autoTradeHopium() {
 }
 
 
-const formatSignificant = new Intl.NumberFormat("en-US", { maximumFractionDigits: 3 });
+// const formatSignificant = new Intl.NumberFormat("en-US", { maximumFractionDigits: 3 });
 const formatFraction = new Intl.NumberFormat("en-US", { maximumSignificantDigits: 4 });
 const formatScientific = new Intl.NumberFormat("en-US", { maximumFractionDigits: 3, notation: "scientific" });
+const formatEngineering = new Intl.NumberFormat("en-US", { maximumFractionDigits: 3, notation: "engineering" });
 
 const PREFIXES = ["", "K", "M", "B", "T", "Qa", "Qi", "Sx", "Sp", "Oc", "No", "Dc", "UDc", "DDc",
     "TDc", "QaDc", "QiDc", "SxDc", "SpDc", "ODc", "NDc", "Vg", "UVg", "DVg", "TVg",
@@ -1495,15 +1496,16 @@ const PREFIXES = ["", "K", "M", "B", "T", "Qa", "Qi", "Sx", "Sp", "Oc", "No", "D
     "NSt", "Og", "UOg", "DOg", "TOg", "QaOg", "QiOg", "SxOg", "SpOg", "OOg", "NOg",
     "Nn", "UNn", "DNn", "TNn", "QaNn", "QiNn", "SxNn", "SpNn", "ONn", "NNn", "Ce"];
 
-function formatNumIntl(num, isScientific = false) {
+function formatNumIntl(num, formatType = 0) {
+    // fortmatTpe: 0 = suffixes, 1 = scientific, 2 = engineering
     const absNum = Math.abs(num);
     if (num === 0) return "0";
-    else if (absNum >= 0.001 && absNum < 1000) return formatSignificant.format(num);
-    else if (isScientific) return formatScientific.format(num).toLowerCase();
-    else if (absNum < 1) return formatFraction.format(num);
+    else if (absNum < 1000) return formatFraction.format(num);
+    else if (formatType == 1) return formatScientific.format(num).toLowerCase();
+    else if (formatType == 2) return formatEngineering.format(num).toLowerCase();
 
     const exponent = Math.floor(Math.log10(absNum) / 3);
-    const digits = formatSignificant.format(num / 10 ** (3 * exponent));
+    const digits = formatFraction.format(num / 10 ** (3 * exponent));
 
     return digits + PREFIXES[exponent];
 }
@@ -1514,16 +1516,19 @@ function formatNumber(num) {
     switch(currentNumberFormat) {
         case 'Mixed':
             if(Math.abs(num) < 1e36){
-                formattedNum = formatNumIntl(num, false);
+                formattedNum = formatNumIntl(num, 0);
             } else {
-                formattedNum = formatNumIntl(num, true);
+                formattedNum = formatNumIntl(num, 1);
             }
             break;
         case 'Scientific':
-            formattedNum = formatNumIntl(num, true);
+            formattedNum = formatNumIntl(num, 1);
             break;
         case 'Suffixes':
-            formattedNum = formatNumIntl(num, false);
+            formattedNum = formatNumIntl(num, 0);
+            break;
+        case 'Engineering':
+            formattedNum = formatNumIntl(num, 2);
             break;
     }
 

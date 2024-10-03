@@ -57,10 +57,10 @@ const meditationChallenges = {
         arenaSize: 600,
         ballSize: 20,
         ballSizeDelta: 3,
-        velocity: 0.99,
+        velocity: 1,
         wind: 0,
         respawnFactor: 1,
-        livesPerBall: 1,
+        livesPerBall: 1.35,
     },
     "Rastafarianism": {
         duration: 13,
