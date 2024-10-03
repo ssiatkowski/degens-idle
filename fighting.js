@@ -1327,7 +1327,7 @@ let userScrolledRecently = false;
 let isProgrammaticScroll = false;
 let scrollTimeout = null;
 let scrollPending = false;
-let logBatch = '';
+let logBatch = [];
 const DEBOUNCE_DELAY = 100; // 100 ms delay for batching
 
 // Event listener to detect user scroll activity
@@ -1358,15 +1358,21 @@ function logFight(message) {
     const fightLog = document.getElementById('fightLog');
 
     // Batch messages instead of directly updating the DOM
-    logBatch += `<p>${message}</p>`;
+    logBatch.push(message);
 
     // Debounce the scroll update
     if (!scrollPending) {
         scrollPending = true;
         setTimeout(() => {
+            const frag = document.createDocumentFragment();
             // Update the DOM with batched messages
-            fightLog.innerHTML += logBatch;
-            logBatch = ''; // Clear the batch
+            frag.append(...logBatch.map((message) => {
+                const p = document.createElement('p');
+                p.innerHTML = message;
+                return p;
+            }));
+            fightLog.append(frag);
+            logBatch = []; // Clear the batch
 
             // Scroll to bottom if the user hasn't scrolled manually in the last 5 seconds
             if (!userScrolledRecently) {
