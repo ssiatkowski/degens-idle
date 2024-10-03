@@ -64,7 +64,7 @@ const meditationChallenges = {
     },
     "Rastafarianism": {
         duration: 13,
-        focus: 13,
+        focus: 12,
         ballCount: 5,
         arenaSize: 420,
         ballSize: 50,
