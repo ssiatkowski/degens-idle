@@ -272,6 +272,7 @@ h1, h2 {
     overflow-x: auto; /* Allow horizontal scrolling for overflow content */
     max-width: 100%; /* Ensure the tooltip doesn't overflow the screen */
     pointer-events: none; /* Ensure no blocking when hidden or visible */
+    transform: translateX(-50%); /* part of centering the tooltip */
 }
 
 

@@ -3794,43 +3794,44 @@ function showPopupTooltip(message, color = 'gray', durationSeconds = 2) {
 }
 
 
+const resourceToolTips = new Map();
+function closeResourceToolTip(name) {
+    const tip = resourceToolTips.get(name)
+    if (tip) {
+        tip.remove(); // remove from dom
+        resourceToolTips.delete(tip);
+    }
+}
+
 document.querySelectorAll('.resource-value').forEach(function (element) {
-    let tooltipContainer;  // Declare outside to reference in both mouseenter and mouseleave
+    const resourceId = element.id;  // Directly use element.id
 
     element.addEventListener('mouseenter', function (event) {
-        let resourceId = element.id;  // Directly use element.id
-        let tooltipText = calculateTooltip(resourceId);  // Get tooltip content
-
-        // Ensure no tooltip exists before creating a new one
-        if (!tooltipContainer) {
-            tooltipContainer = document.createElement('div');
-            tooltipContainer.className = 'resource-gain-tooltip';
-            tooltipContainer.innerHTML = tooltipText;
-
-            document.body.appendChild(tooltipContainer);
-
-            const rect = element.getBoundingClientRect();
-            tooltipContainer.style.position = 'absolute';
-            tooltipContainer.style.top = `${rect.bottom + window.scrollY + 28}px`;  // Add a slight margin below
-            tooltipContainer.style.left = `${rect.left + (rect.width / 2)}px`;
-            tooltipContainer.style.transform = 'translateX(-50%)';  // Center the tooltip
+        // close any open tips before opening the new one
+        for (const openTip of resourceToolTips.keys()) {
+            closeResourceToolTip(openTip);
         }
+
+        const tip = document.createElement('div');
+        tip.className = 'resource-gain-tooltip';
+        tip.innerHTML = calculateTooltip(resourceId);  // Get tooltip content
+
+        document.body.appendChild(tip);
+        resourceToolTips.set(resourceId, tip);
+
+        const rect = element.getBoundingClientRect();
+        tip.style.top = `${rect.bottom + window.scrollY + 28}px`;  // Add a slight margin below
+        tip.style.left = `${rect.left + (rect.width / 2)}px`;
     });
 
+    // Hide tooltip when moving away
     element.addEventListener('mouseleave', function () {
-        // Remove the tooltip only if it exists
-        if (tooltipContainer) {
-            tooltipContainer.remove();
-            tooltipContainer = null;  // Set to null to allow recreation on next hover
-        }
+        closeResourceToolTip(resourceId);
     });
 
     // For mobile: Hide tooltip when tapping elsewhere on the screen
-    document.addEventListener('touchstart', function (e) {
-        if (tooltipContainer) {
-            tooltipContainer.remove();
-            tooltipContainer = null;  // Remove and allow recreation on next hover
-        }
+    document.addEventListener('touchstart', function () {
+        closeResourceToolTip(resourceId);
     });
 });
 
