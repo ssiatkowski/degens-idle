@@ -970,6 +970,10 @@ function calculateMiniGamesMultiplier() {
 
         // Sum up the effects and apply them to the cosmicGamekeeperMultiplier
         cosmicGamekeeperMultiplier = 1 + (speedTapsEffect + memorizedDotsEffect + mathPortalsEffect + luckyBoxesEffect);
+
+        if (cosmicGamekeeperMultiplier > 7.5) {
+            unlockAchievement('Serious Gamer');
+        }
     }
 }
 

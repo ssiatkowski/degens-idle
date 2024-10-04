@@ -904,10 +904,22 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
                             <p>This is your last chance to turn back! Once you click this button, there’s no going back. Just like trying to un-toast toast.</p>
                             <p>If you’re still certain, then hit the button below. Otherwise, maybe rethink this whole restarting thing. 😅</p>`;
 
-    // If forceRestart is true, skip confirmation dialogs
-    if (forceRestart || isPrestige ||
-        (await showMessageModal(confirmTitle1, confirmMessage1, true, false) &&
-         await showMessageModal(confirmTitle2, confirmMessage2, true, false))) {
+    let restartConfirm = false;
+    
+    // Only show the confirmation dialogs if neither forceRestart nor isPrestige is true
+    if (!forceRestart && !isPrestige) {
+        // Only show the second confirmation if the first one is true
+        if (await showMessageModal(confirmTitle1, confirmMessage1, true, false)) {
+            restartConfirm = await showMessageModal(confirmTitle2, confirmMessage2, true, false);
+
+            if (!restartConfirm) {
+                unlockAchievement('Crisis Averted');
+            }
+        }
+    }
+    
+    // If forceRestart, isPrestige, or both confirmations are true, proceed with reset
+    if (forceRestart || isPrestige || restartConfirm) {
          // Reset all resources and earnings per second
         copium = 0;
         copiumPerSecond = 0;
@@ -2523,7 +2535,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true, ski
 
         if (name === 'Skepticism') {
             showMessageModal('The Journey Continues',
-                "This marks the end of v0.9295. You've not only completed the Power Saga, but you're also getting the hang of Infinite Embraces and Meditations! Congratulations on your progress, and welcome to the next stage of your journey. "
+                "This marks the end of v0.9296. You've not only completed the Power Saga, but you're also getting the hang of Infinite Embraces and Meditations! Congratulations on your progress, and welcome to the next stage of your journey. "
                 + "With the Hall of Love now open, Love Points are becoming a key part of your experience, alongside the skills you unlock there. While these new mechanics are taking shape, expect ongoing balancing as the game evolves. "
                 + "Feel free to dive deeper into the skills and explore what's possible. The journey is far from over—more meditations and epic content are on the way! "
                 + "Stay connected on Discord, share your feedback, and together, let's create something truly unforgettable!"

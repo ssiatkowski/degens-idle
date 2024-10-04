@@ -79,11 +79,11 @@ const loveHallSkills = [
     { name: 'Deadpool Embrace', cost: 0.1, description: 'Deadpool revives do not reset on Infinite Embrace.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 42 },
     { name: 'Rewarding Victories', cost: 0.1, description: 'Battle upgrades give +40% rewards.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 42 },
     
-    { name: 'Quantum Fortress', cost: 0.2, description: 'Make Quantum Fortress 2.5x more powerful.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 43, requirement: 'Fortified Defenses' },
+    { name: 'Quantum Fortress', cost: 0.2, description: 'Make Quantum Bastion 2.5x more powerful.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 43, requirement: 'Fortified Defenses' },
     { name: 'Chrono Magnetizer', cost: 0.2, description: 'Make Arcane Magnetizer 2x faster.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 43 },
 
     { name: 'Crunch Knowledge', cost: 0.3, description: 'Big Crunch extra knowledge mult is now ^(2/3) instead of ^(1/2).', unlocked: false, level: 'Cosmic Truth (42x)', pair: 44 },
-    { name: 'Stellar Meditation', cost: 0.3, description: 'Increase all resource generation by 10% after each successful meditation.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 44 },
+    { name: 'Stellar Meditation', cost: 0.3, description: 'Multiplicative +10% to all resurces after each successful meditation.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 44 },
 
     { name: 'Oversurged Power', cost: 0.5, description: 'Power Surge Skill is 2x as powerful.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 45 },
     { name: 'Overcompressed Power', cost: 0.5, description: 'Compressed/Condensed Power Skills are 3x as powerful.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 45 },

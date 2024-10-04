@@ -724,7 +724,7 @@ document.getElementById('numberFormatButton').addEventListener('click', function
     localStorage.setItem('currentNumberFormat', JSON.stringify(currentNumberFormat));
 
 
-    if (numberFormatClickCount > 20) {
+    if (numberFormatClickCount > 18) {
         unlockAchievement('Nerdy Career Path');
     } else {
         showPopupTooltip('Number Format Requires Page Reload to Take Full Effect', 'red', 5);

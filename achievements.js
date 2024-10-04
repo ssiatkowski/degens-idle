@@ -777,13 +777,6 @@ const achievements = [
         type: 'puzzle',
     },
     {
-        name: 'Out of Body Experience',
-        isUnlocked: false,
-        hoverText: `lose focus in Dualism meditation with exactly 2 balls`,
-        img: 'imgs/achievements/body_and_soul.jpg',
-        type: 'puzzle',
-    },
-    {
         name: 'Laerdal Tunnel',
         isUnlocked: false,
         hoverText: 'TT.A km',
@@ -809,6 +802,27 @@ const achievements = [
         isUnlocked: false,
         hoverText: 'take 88K+ damage at once from ameterasu',
         img: 'imgs/achievements/amaterasu.jpg',
+        type: 'puzzle',
+    },
+    {
+        name: 'Out of Body Experience',
+        isUnlocked: false,
+        hoverText: `lose focus in Dualism meditation with exactly 2 balls`,
+        img: 'imgs/achievements/body_and_soul.jpg',
+        type: 'puzzle',
+    },
+    {
+        name: 'Serious Gamer',
+        isUnlocked: false,
+        hoverText: `get mini game multiplier above 7.5x`,
+        img: 'imgs/achievements/serious_gamer.jpg',
+        type: 'skill',
+    },
+    {
+        name: 'Crisis Averted',
+        isUnlocked: false,
+        hoverText: '???',
+        img: 'imgs/achievements/crisis_averted.jpg',
         type: 'puzzle',
     },
     {
