@@ -31,8 +31,8 @@ const loveHallSkills = [
     { name: 'Achievement Boost 2', cost: 32, description: 'Achievement Multiplier x2. (Achievement Boosts stack)', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 10, requirement: 'Achievement Boost' },
     { name: 'Tunneled Ascension', cost: 32, description: 'Transcending an upgrade also Ascends it.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 10 },
 
-    { name: 'Achievement Hypercharge', cost: 50, description: 'Achievement multiplier becomes multiplicative instead of additive.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 11 },
-    { name: 'Perfect PU God-Mode', cost: 50, description: 'Make PU God-Mode perfect with diminishing returns at 99.2%.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 11 },
+    { name: 'Achievement Hypercharge', cost: 100, description: 'Achievement multiplier becomes multiplicative instead of additive.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 11 },
+    { name: 'Perfect PU God-Mode', cost: 100, description: 'Make PU God-Mode perfect with diminishing returns at 99.2%.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 11 },
 
     // { name: 'Infinite Collapse', cost: 308, description: 'Automatically apply Big Crunch mult without resetting.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 11, requirement: 'Perpetual Collapse' },
     // { name: '', cost: 308, description: '', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 11 },
@@ -73,38 +73,41 @@ const loveHallSkills = [
 
 
     // 42x Level - the meaning of life
-    { name: 'Fortified Defenses', cost: 0.04, description: 'Vitality Matrix is now 10x stronger.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 40 },
-    { name: 'Study Accelerator', cost: 0.04, description: 'Meditation duration decreased by 0.2 seconds.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 40 },
+    { name: 'Fortified Defenses', cost: 0.04, description: 'Vitality Matrix is now 10x stronger.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 41 },
+    { name: 'Study Accelerator', cost: 0.04, description: 'Meditation duration decreased by 0.2 seconds.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 41 },
 
-    { name: 'Deadpool Embrace', cost: 0.1, description: 'Deadpool revives do not reset on Infinite Embrace.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 41 },
-    { name: 'Rewarding Victories', cost: 0.1, description: 'Battle upgrades give +40% rewards.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 41 },
+    { name: 'Deadpool Embrace', cost: 0.1, description: 'Deadpool revives do not reset on Infinite Embrace.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 42 },
+    { name: 'Rewarding Victories', cost: 0.1, description: 'Battle upgrades give +40% rewards.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 42 },
+    
+    { name: 'Quantum Fortress', cost: 0.2, description: 'Make Quantum Fortress 2.5x more powerful.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 43, requirement: 'Fortified Defenses' },
+    { name: 'Chrono Magnetizer', cost: 0.2, description: 'Make Arcane Magnetizer 2x faster.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 43 },
 
-    { name: 'Crunch Knowledge', cost: 0.3, description: 'Big Crunch extra knowledge mult is now ^(2/3) instead of ^(1/2).', unlocked: false, level: 'Cosmic Truth (42x)', pair: 42 },
-    { name: 'Stellar Meditation', cost: 0.3, description: 'Increase all resource generation by 10% after each successful meditation.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 42 },
+    { name: 'Crunch Knowledge', cost: 0.3, description: 'Big Crunch extra knowledge mult is now ^(2/3) instead of ^(1/2).', unlocked: false, level: 'Cosmic Truth (42x)', pair: 44 },
+    { name: 'Stellar Meditation', cost: 0.3, description: 'Increase all resource generation by 10% after each successful meditation.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 44 },
 
-    { name: 'Oversurged Power', cost: 0.5, description: 'Power Surge Skill is 2x as powerful.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 43 },
-    { name: 'Overcompressed Power', cost: 0.5, description: 'Compressed/Condensed Power Skills are 3x as powerful.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 43 },
+    { name: 'Oversurged Power', cost: 0.5, description: 'Power Surge Skill is 2x as powerful.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 45 },
+    { name: 'Overcompressed Power', cost: 0.5, description: 'Compressed/Condensed Power Skills are 3x as powerful.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 45 },
 
-    { name: 'Raise That Soft Cap', cost: 1.19, description: 'Increase mini games soft cap to 24 hours', unlocked: false, level: 'Cosmic Truth (42x)', pair: 44 },
-    { name: 'Rewarding Meditations', cost: 1.19, description: 'Meditations give +40% rewards', unlocked: false, level: 'Cosmic Truth (42x)', pair: 44, requirement: 'Rewarding Victories' },
+    { name: 'Raise That Soft Cap', cost: 1.19, description: 'Increase mini games soft cap to 24 hours', unlocked: false, level: 'Cosmic Truth (42x)', pair: 46 },
+    { name: 'Rewarding Meditations', cost: 1.19, description: 'Meditations give +40% rewards', unlocked: false, level: 'Cosmic Truth (42x)', pair: 46, requirement: 'Rewarding Victories' },
 
-    { name: 'Infinite Prestige', cost: 4.2, description: 'Automatically apply Prestige Mult without resetting.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 45 },
-    { name: 'Hopium Trade', cost: 4.2, description: 'Trade Hopium for any of the first 4 resources at a 1:1 ratio.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 45 },
+    { name: 'Infinite Prestige', cost: 4.2, description: 'Automatically apply Prestige Mult without resetting.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 47 },
+    { name: 'Hopium Trade', cost: 4.2, description: 'Trade Hopium for any of the first 4 resources at a 1:1 ratio.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 47 },
 
-    { name: 'Perpetual Collapse', cost: 7, description: 'Auto Big Crunch (default 25x)', unlocked: false, level: 'Cosmic Truth (42x)', pair: 46 },
-    { name: 'Beacon of Seven Suns', cost: 7, description: 'Multiplicative 7% bonus to Copium and Hopium for every Hall of Love skill.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 46 },
+    { name: 'Perpetual Collapse', cost: 7, description: 'Auto Big Crunch (default 25x)', unlocked: false, level: 'Cosmic Truth (42x)', pair: 48 },
+    { name: 'Beacon of Seven Suns', cost: 7, description: 'Multiplicative 7% bonus to Copium and Hopium for every Hall of Love skill.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 48 },
 
-    { name: 'Resonance of Love', cost: 8, description: 'Multiply Serenity by log2 of current Love Points.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 47 },
-    { name: 'Equilibrium of Hope', cost: 8, description: 'Automatically trade 1% Hopium for each lower resource.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 47, requirement: 'Hopium Trade' },
+    { name: 'Resonance of Love', cost: 8, description: 'Multiply Serenity by log2 of current Love Points.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 49 },
+    { name: 'Equilibrium of Hope', cost: 8, description: 'Automatically trade 1% Hopium for each lower resource.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 49, requirement: 'Hopium Trade' },
 
-    { name: 'Temporal Drag', cost: 12, description: 'During meditation, decrease ball velocity by 25%.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 48 },
-    { name: 'Look Past Distractions', cost: 12, description: 'During meditation, decrease # of balls by 1.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 48 },
+    { name: 'Temporal Drag', cost: 12, description: 'During meditation, decrease ball velocity by 25%.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 50 },
+    { name: 'Look Past Distractions', cost: 12, description: 'During meditation, decrease # of balls by 1.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 50 },
 
-    // { name: 'Faith-Fueled Knowledge', cost: 14, description: 'Multiplier to knowledge based on log10 of current Hopium / 10.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 49 },
-    // { name: 'Big Crunch Factor Boost', cost: 14, description: 'Increase Big Crunch base from 2 to 2.1.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 49 },
+    { name: 'Faith-Fueled Knowledge', cost: 14, description: 'Multiplier to knowledge based on log10 of current Hopium / 10.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 51 },
+    { name: 'Event Horizon Boost', cost: 14, description: 'Increase Big Crunch base from 2 to 2.1.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 51 },
 
-    // { name: 'Intrinsic Meditation', cost: 42, description: 'Auto complete meditations that are ascended & transcended.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 50 },
-    // { name: 'The Ultimate Fix', cost: 42, description: 'Fix all remaining resources.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 50, requirement: 'Hopium Fix' },
+    // { name: 'Intrinsic Meditation', cost: 42, description: 'Auto complete meditations that are ascended & transcended.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 52 },
+    // { name: 'The Ultimate Fix', cost: 42, description: 'Fix all remaining resources.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 52, requirement: 'Hopium Fix' },
 
 
 ];
@@ -425,7 +428,18 @@ function unlockLoveHallSkill(skill, duringLoad = false) {
                 rewardingVictoriesSkill = true;
                 break;
 
-
+            case 'Quantum Fortress':
+                quantumFortressSkill = true;
+                break;
+                    
+            case 'Chrono Magnetizer':
+                chronoMagnetizerSkill = true;
+                if (autobuyIntervalId !== null) {
+                    clearInterval(autobuyIntervalId);
+                    autobuyIntervalId = setInterval(autobuyUpgrades, 125);
+                }
+                break;
+                
             case 'Crunch Knowledge':
                 crunchKnowledgeSkill = true;
                 if(!duringLoad){
@@ -484,17 +498,6 @@ function unlockLoveHallSkill(skill, duringLoad = false) {
                 equilibriumOfHopeSkill = true;
                 autoTradeHopium();
                 break;
-        
-            case 'Knowledge Exchange':
-                // Logic for Knowledge Exchange skill
-                //tradeHopiumForKnowledge(1e20); // Example: Trade Hopium for Knowledge at 1e20:1 ratio
-                break;
-        
-            case 'Big Crunch Factor Boost':
-                // Logic for Big Crunch Factor Boost skill
-                //increaseBigCrunchFactor(2.1); // Example: Increase Big Crunch factor from 2 to 2.1
-                break;
-        
 
             case 'Temporal Drag':
                 temporalDragReduction = 0.75;
@@ -502,6 +505,15 @@ function unlockLoveHallSkill(skill, duringLoad = false) {
         
             case 'Look Past Distractions':
                 lookPastDistractions = 1;
+                break;
+
+                
+            case 'Faith-Fueled Knowledge':
+                faithFueledKnowledgeSkill = true;
+                break;
+
+            case 'Event Horizon Boost':
+                eventHorizonBoostSkill = true;
                 break;
                 
             default:

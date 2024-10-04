@@ -60,8 +60,8 @@ function unlockPowerHallSkill(skill, duringLoad = false, infoOnly = false) {
 
                 if (autobuyIntervalId !== null) {
                     clearInterval(autobuyIntervalId);
+                    autobuyIntervalId = setInterval(autobuyUpgrades, chronoMagnetizerSkill ? 125 : 250);
                 }
-                autobuyIntervalId = setInterval(autobuyUpgrades, 250);
 
                 break;
 

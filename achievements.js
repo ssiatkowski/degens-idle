@@ -105,6 +105,13 @@ const achievements = [
         type: 'progression',
     },
     {
+        name: 'Nerdy Career Path',
+        isUnlocked: false,
+        hoverText: 'cannot decide between science and engineering',
+        img: 'imgs/achievements/nerdy_career_path.jpg',
+        type: 'puzzle',
+    },
+    {
         name: 'Get Rick Rolled',
         isUnlocked: false,
         hoverText: 'try to finish the game way too early',
@@ -796,6 +803,13 @@ const achievements = [
         hoverText: `complete the Skepticism meditation`,
         img: 'imgs/achievements/skepticism.jpg',
         type: 'progression',
+    },
+    {
+        name: 'Eternal Flame',
+        isUnlocked: false,
+        hoverText: 'take 88K+ damage at once from ameterasu',
+        img: 'imgs/achievements/amaterasu.jpg',
+        type: 'puzzle',
     },
     {
         name: 'More than Sauron',

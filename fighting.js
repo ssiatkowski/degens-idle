@@ -613,6 +613,9 @@ function attackEnemy(resolve) {
     if (playerAmaterasuStacks > 0) {
         const amaterasuDamage = Math.floor(playerMaxHealth * 0.002 * playerAmaterasuStacks);
         playerHealth -= amaterasuDamage;
+        if(amaterasuDamage >= 88000){
+            unlockAchievement('Eternal Flame');
+        }
         logFight(`<span style='color: black;'>${playerAmaterasuStacks.toFixed(1)} stacks of Amaterasu burn you for ${formatNumber(amaterasuDamage)} damage!</span>`);
 
         // Check if Sasuke is helping and reduce Amaterasu stacks by 0.1
@@ -626,7 +629,7 @@ function attackEnemy(resolve) {
     if (playerStunCount > 0) {
         if(quantumBastionSkill){
             logFight(`<span style='color: #FF4500;'>You are stunned and unable to move! Quantum Bastion is helping you recover quicker. (${playerStunCount} turn(s) remaining)</span>`);
-            playerStunCount = Math.max(playerStunCount-2, 0);
+            playerStunCount = Math.max(playerStunCount- (quantumFortressSkill ? 5 : 2) , 0);
         } else{
             logFight(`<span style='color: #FF4500;'>You are stunned and unable to move! (${playerStunCount} turn(s) remaining)</span>`);
             playerStunCount--;

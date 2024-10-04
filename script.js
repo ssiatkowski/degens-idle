@@ -101,6 +101,8 @@ let serenityFlowSkill = false;
 let perfectPUGodModeSkill = false;
 let rewardingVictoriesSkill = false;
 let rewardingMeditationsSkill = false;
+let quantumFortressSkill = false;
+let chronoMagnetizerSkill = false;
 let fortifiedDefensesSkill = false;
 let studyAcceleratorReduction = 0;
 let deadpoolRevivesSkill = false;
@@ -138,6 +140,8 @@ let autoTradeHopiumIntervalId = null;
 let equilibriumOfHopeSkill = false;
 let temporalDragReduction = 1;
 let lookPastDistractions = 0;
+let faithFueledKnowledgeSkill = false;
+let eventHorizonBoostSkill = false;
 
 let autoBigCrunchThreshold = null
 let beaconOfSevenSunsSkill = false;
@@ -209,7 +213,7 @@ let eventProgression = {
 }
 
 function calculateBaseKnowledge() {
-    return knowledgePerSecond * totalMultiplier * (crunchKnowledgeSkill ? bigCrunchMultiplier**(2/3) : bigCrunchMultiplier**(1/2)) * knowledgeInfusionMultiplier;
+    return knowledgePerSecond * totalMultiplier * (crunchKnowledgeSkill ? bigCrunchMultiplier**(2/3) : bigCrunchMultiplier**(1/2)) * knowledgeInfusionMultiplier * ((faithFueledKnowledgeSkill && hopium > 1e10) ? Math.log10(hopium)/10 : 1);
 }
 
 function calculateEffectiveKnowledge() {
@@ -955,6 +959,8 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
                 perfectPUGodModeSkill = false;
                 rewardingVictoriesSkill = false;
                 rewardingMeditationsSkill = false;
+                quantumFortressSkill = false;
+                chronoMagnetizerSkill = false;
                 fortifiedDefensesSkill = false;
                 studyAcceleratorReduction = 0;
                 deadpoolRevivesSkill = false;
@@ -991,6 +997,8 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
                 equilibriumOfHopeSkill = false;
                 temporalDragReduction = 1;
                 lookPastDistractions = 0;
+                faithFueledKnowledgeSkill = false;
+                eventHorizonBoostSkill = false;
 
                 autoBigCrunchThreshold = null
                 beaconOfSevenSunsSkill = false;
@@ -1500,7 +1508,7 @@ function formatNumIntl(num, formatType = 0) {
     // fortmatTpe: 0 = suffixes, 1 = scientific, 2 = engineering
     const absNum = Math.abs(num);
     if (num === 0) return "0";
-    else if (absNum < 1000) return formatFraction.format(num);
+    else if (absNum < 1000 && (absNum > 0.001 || formatType == 0)) return formatFraction.format(num);
     else if (formatType == 1) return formatScientific.format(num).toLowerCase();
     else if (formatType == 2) return formatEngineering.format(num).toLowerCase();
 
@@ -1785,10 +1793,8 @@ function calculatePUGodModeMultiplier(gmLevlel = puGodLevel) {
     return productX
 }
 
-
-
 function calculateBigCrunchMultiplier(bcPower = bigCrunchPower) {
-    return Math.pow(2, Math.log10(bcPower / 1e-7));
+    return Math.pow(eventHorizonBoostSkill ? 2.1: 2, Math.log10(bcPower / 1e-7));
 }
 
 function calculateLovePointsGained() {
@@ -2517,7 +2523,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true, ski
 
         if (name === 'Skepticism') {
             showMessageModal('The Journey Continues',
-                "This marks the end of v0.9294. You've not only completed the Power Saga, but you're also getting the hang of Infinite Embraces and Meditations! Congratulations on your progress, and welcome to the next stage of your journey. "
+                "This marks the end of v0.9295. You've not only completed the Power Saga, but you're also getting the hang of Infinite Embraces and Meditations! Congratulations on your progress, and welcome to the next stage of your journey. "
                 + "With the Hall of Love now open, Love Points are becoming a key part of your experience, alongside the skills you unlock there. While these new mechanics are taking shape, expect ongoing balancing as the game evolves. "
                 + "Feel free to dive deeper into the skills and explore what's possible. The journey is far from over—more meditations and epic content are on the way! "
                 + "Stay connected on Discord, share your feedback, and together, let's create something truly unforgettable!"
@@ -2877,7 +2883,7 @@ function isAffordable(cost) {
 function autobuyUpgrades() {
     if (!isEventInProgress() && startEvent("autobuyUpgrades")) {
 
-        let topUpgrades = availableUpgrades.slice(0, 10);
+        let topUpgrades = availableUpgrades.slice(0, 16);
         let upgradeBought = false;
         let firstFightUpgrade = true;
 
@@ -3431,7 +3437,7 @@ function hotkeyHandler(event) {
                         autobuyIntervalId = null;
                         showPopupTooltip('Auto Buy Upgrades Disabled');
                     } else {
-                        autobuyIntervalId = setInterval(autobuyUpgrades, fasterAutobuyerskill ? 250 : 1500);
+                        autobuyIntervalId = setInterval(autobuyUpgrades, chronoMagnetizerSkill && fasterAutobuyerskill ? 125 : (fasterAutobuyerskill ? 250 : 1500));
                         showPopupTooltip('Auto Buy Upgrades Enabled');
                     }
                     keysPressed.b = true; // Mark 'b' key as pressed
@@ -4036,6 +4042,10 @@ function calculateTooltip(resourceId) {
     if (resourceId === 'knowledge') {
         if (knowledgeInfusionMultiplier !== 1) {
             tooltip += `<span style="color:#9F2B68">x${formatNumber(knowledgeInfusionMultiplier)} (Knowledge Infusion)</span><br>`;
+        }
+        
+        if (faithFueledKnowledgeSkill && hopium > 1e10) {
+            tooltip += `<span style="color:#E1C16E">x${formatNumber(Math.log10(hopium)/10)} (Faith Fueled)</span><br>`;
         }
 
         // Diminishing multiplier for Knowledge

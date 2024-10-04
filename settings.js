@@ -605,7 +605,7 @@ document.getElementById('saveAutomationSettingsButton').addEventListener('click'
         if (autoBuyUpgradesSwitch.checked) {
             // Enable auto-buy if it’s not already running
             if (autobuyIntervalId === null) {
-                autobuyIntervalId = setInterval(autobuyUpgrades, fasterAutobuyerskill ? 250 : 1500);
+                autobuyIntervalId = setInterval(autobuyUpgrades, chronoMagnetizerSkill && fasterAutobuyerskill ? 125 : (fasterAutobuyerskill ? 250 : 1500));
                 console.log("Auto-buy started"); // Debug log
             }
         } else {
@@ -690,7 +690,26 @@ document.getElementById('exitAutomationOverlayButton').addEventListener('click',
 });
 
 
+let numberFormatClickCount = 0;
+let numberFormatClickTimer;
+
 document.getElementById('numberFormatButton').addEventListener('click', function() {
+    // Increment click count
+    numberFormatClickCount++;
+
+    // Start a timer if it's the first click within the timeframe
+    if (!numberFormatClickTimer) {
+        numberFormatClickTimer = setTimeout(function() {
+            // After 1 minute, reset the count and the timer
+            numberFormatClickCount = 0;
+            clearTimeout(numberFormatClickTimer);
+            numberFormatClickTimer = null;
+        }, 60000); // 1 minute in milliseconds
+    }
+
+
+
+    // Your existing logic for changing the number format
     if (currentNumberFormat === "Mixed") {
         currentNumberFormat = "Scientific";
     } else if (currentNumberFormat === "Scientific") {
@@ -703,5 +722,11 @@ document.getElementById('numberFormatButton').addEventListener('click', function
     this.textContent = `Number Format: ${currentNumberFormat}`;
     
     localStorage.setItem('currentNumberFormat', JSON.stringify(currentNumberFormat));
-    window.location.reload();
+
+
+    if (numberFormatClickCount > 20) {
+        unlockAchievement('Nerdy Career Path');
+    } else {
+        showPopupTooltip('Number Format Requires Page Reload to Take Full Effect', 'red', 5);
+    }
 });
