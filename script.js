@@ -203,7 +203,7 @@ let defaultBuyMarkerState = false;
 let crunchTimer = 9999;
 let embraceTimer = 9999;
 
-let numLoveHallFreeRespecs = 0; // Global variable for free respecs
+let numLoveHallFreeRespecs; // Global variable for free respecs
 
 let enableQuickMode = false;
 let enableButtonAnimations = true;
@@ -462,7 +462,8 @@ function loadGameState() {
     numLuckyBoxes = parseFloat(localStorage.getItem('numLuckyBoxes')) || 0;
     numSoftCaps = parseFloat(localStorage.getItem('numSoftCaps')) || 0;
 
-    numLoveHallFreeRespecs = parseFloat(localStorage.getItem('numLoveHallFreeRespecs')) || 0;
+    numLoveHallFreeRespecs = localStorage.getItem('numLoveHallFreeRespecs') !== null ? parseFloat(localStorage.getItem('numLoveHallFreeRespecs')) : 1;
+
 
     consecutiveClicks = parseInt(localStorage.getItem('consecutiveClicks')) || 0;
     lastClickedBoxIndex = parseInt(localStorage.getItem('lastClickedBoxIndex')) || 0;
@@ -1046,7 +1047,7 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
                 achievementBoostValue = 0.01;
                 achievementHyperchargeSkill = false;
 
-                numLoveHallFreeRespecs = 0;
+                numLoveHallFreeRespecs = 1;
 
                 cosmicGamekeeperMultiplier = 1;
                 cosmicGamekeeperSkill = false;
@@ -2201,7 +2202,7 @@ async function infiniteEmbrace(skipConfirms = false, lovePointsOverwrite = false
             }
 
             // Save game state after prestige
-            numLoveHallFreeRespecs = parseFloat(localStorage.getItem('numLoveHallFreeRespecs')) || 0;
+            numLoveHallFreeRespecs = localStorage.getItem('numLoveHallFreeRespecs') !== null ? parseFloat(localStorage.getItem('numLoveHallFreeRespecs')) : 1;
             updateMultipliersDisplay();
             saveGameState();
 
