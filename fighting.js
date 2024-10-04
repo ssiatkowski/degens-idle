@@ -274,7 +274,6 @@ let numCookedRabbits = 0;
 function startFightGame(enemyName, enemyImg) {
     return new Promise((resolve) => {
         // Clear the fight log at the start of the fight
-        const fightLog = document.getElementById('fightLog');
         fightLog.innerHTML = ''; // Clear previous fight logs
 
         // Add player and enemy images dynamically
@@ -1330,19 +1329,27 @@ let scrollPending = false;
 let logBatch = [];
 const DEBOUNCE_DELAY = 100; // 100 ms delay for batching
 
+
+const fightLog = document.getElementById('fightLog');
+
 // Event listener to detect user scroll activity
 document.getElementById('fightLog').addEventListener('scroll', () => {
     if (isProgrammaticScroll) {
         isProgrammaticScroll = false; // Reset the flag after a programmatic scroll
-    } else {
-        userScrolledRecently = true;
 
+    } else if (fightLog.scrollHeight - fightLog.scrollTop - fightLog.clientHeight < 1) {
+        clearTimeout(scrollTimeout);
+        userScrolledRecently = false;
+
+    } else {
         // Clear any existing timeout
-        if (scrollTimeout) {
-            clearTimeout(scrollTimeout);
+        clearTimeout(scrollTimeout);
+
+        if (!fightEnded && !userScrolledRecently) {
+            showPopupTooltip('Fight Log scroll temporarily paused', 'gray', 0.5);
         }
 
-        if (!fightEnded) { showPopupTooltip('Fight Log scroll paused for 5 seconds', 'gray', 0.5); }
+        userScrolledRecently = true;
 
         // Reset the timer for 5 seconds
         scrollTimeout = setTimeout(() => {
@@ -1355,7 +1362,6 @@ document.getElementById('fightLog').addEventListener('scroll', () => {
 function logFight(message) {
     if (fightEnded) return; // Do not log any more messages if the fight has ended
 
-    const fightLog = document.getElementById('fightLog');
 
     // Batch messages instead of directly updating the DOM
     logBatch.push(message);
@@ -1414,7 +1420,6 @@ function endFight(isForfeit = false) {
 
     // Define the function to handle clicks outside the fight log
     function handleClickAnywhereOutsideFightLog(event) {
-        const fightLog = document.getElementById('fightLog');
         if (!fightLog.contains(event.target)) {
             const fightingOverlay = document.getElementById('fightingOverlay');
             fightingOverlay.style.display = 'none';
