@@ -203,6 +203,8 @@ let defaultBuyMarkerState = false;
 let crunchTimer = 9999;
 let embraceTimer = 9999;
 
+let numLoveHallFreeRespecs = 0; // Global variable for free respecs
+
 let enableQuickMode = false;
 let enableButtonAnimations = true;
 
@@ -460,6 +462,8 @@ function loadGameState() {
     numLuckyBoxes = parseFloat(localStorage.getItem('numLuckyBoxes')) || 0;
     numSoftCaps = parseFloat(localStorage.getItem('numSoftCaps')) || 0;
 
+    numLoveHallFreeRespecs = parseFloat(localStorage.getItem('numLoveHallFreeRespecs')) || 0;
+
     consecutiveClicks = parseInt(localStorage.getItem('consecutiveClicks')) || 0;
     lastClickedBoxIndex = parseInt(localStorage.getItem('lastClickedBoxIndex')) || 0;
 
@@ -693,6 +697,8 @@ function saveGameState() {
     localStorage.setItem('deadpoolRevives', deadpoolRevives);
 
     localStorage.setItem('currentNumberFormat', JSON.stringify(currentNumberFormat));
+
+    localStorage.setItem('numLoveHallFreeRespecs', numLoveHallFreeRespecs);
 
     // Save unlocked library skills
     if (Array.isArray(librarySkills)) {
@@ -1039,6 +1045,8 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
                 achievementMultiplier = 1;
                 achievementBoostValue = 0.01;
                 achievementHyperchargeSkill = false;
+
+                numLoveHallFreeRespecs = 0;
 
                 cosmicGamekeeperMultiplier = 1;
                 cosmicGamekeeperSkill = false;
@@ -2140,11 +2148,11 @@ function animateInfiniteEmbraceExpansion() {
 
 
 
-async function infiniteEmbrace(skipConfirms = false) {
+async function infiniteEmbrace(skipConfirms = false, lovePointsOverwrite = false) {
     skipConfirms |= enableQuickMode;
 
     // If we can Infinite Embrace, and no other event is occuring and we successfully trigger a startEvent
-    if (canInfiniteEmbrace() && !isEventInProgress() && startEvent("infiniteEmbrace")) {
+    if ((lovePointsOverwrite || canInfiniteEmbrace()) && !isEventInProgress() && startEvent("infiniteEmbrace")) {
         let confirmed = true;
 
         if (!skipConfirms) {
@@ -2169,29 +2177,31 @@ async function infiniteEmbrace(skipConfirms = false) {
             // Capture the screen and animate the Infinite Embrace effect
             await animateInfiniteEmbraceEffect();
 
-            lovePoints += calculateLovePointsGained();
-            if (serenity < 2000) {
-                unlockAchievement('Gentle Embrace');
-            } else if (calculateLovePointsGained() > 25) {
-                unlockAchievement('Massive Embrace');
+            if (!lovePointsOverwrite) {
+                lovePoints += calculateLovePointsGained();
+                if (serenity < 2000) {
+                    unlockAchievement('Gentle Embrace');
+                } else if (calculateLovePointsGained() > 25) {
+                    unlockAchievement('Massive Embrace');
+                }
+                
+                if (embraceTimer < 180) {
+                    unlockAchievement('Fast Embracer');
+                }
             }
 
             // Call restartGame with isPrestige flag set to true
             restartGame(true, false, true);
-
-            if (embraceTimer < 180) {
-                unlockAchievement('Fast Embracer');
-            }
 
 
             embraceTimer = 0;
 
             if (!skipConfirms) {
                 unlockAchievement('Infinite Embrace');
-
             }
 
             // Save game state after prestige
+            numLoveHallFreeRespecs = parseFloat(localStorage.getItem('numLoveHallFreeRespecs')) || 0;
             updateMultipliersDisplay();
             saveGameState();
 
@@ -2205,6 +2215,54 @@ async function infiniteEmbrace(skipConfirms = false) {
         }, 3000);
     }
 }
+
+async function respecSkills() {
+    loveHallSkills.forEach(skill => {
+        if (skill.unlocked) {
+            const pairSkill = loveHallSkills.find(s => s.pair === skill.pair && s.name !== skill.name);
+            const levelMultiplier = getLevelMultiplier(skill.level);
+
+            // If both skills in the pair are unlocked
+            if (pairSkill && pairSkill.unlocked) {
+                // Refund original cost for the first skill
+                lovePoints += skill.originalCost;
+                
+                // Refund the increased cost for the paired skill (multiplied cost)
+                lovePoints += pairSkill.originalCost * levelMultiplier;
+                
+                // Reset both skills
+                pairSkill.unlocked = false; // Reset the paired skill
+            } else {
+                // Refund original cost if only this skill is unlocked
+                lovePoints += skill.originalCost;
+            }
+
+            skill.unlocked = false; // Reset current skill
+        }
+    });
+
+    if (numLoveHallFreeRespecs > 0) {
+        numLoveHallFreeRespecs--;
+        localStorage.setItem('numLoveHallFreeRespecs', numLoveHallFreeRespecs);
+        await showMessageModal(
+            'Respec Successful',
+            `Skills reset! Love Points refunded. Free respecs remaining: ${numLoveHallFreeRespecs}.`,
+            false
+        );
+    } else {
+        // Charge 10% of total Love Points for respec
+        const respecCost = lovePoints * 0.1;
+        lovePoints -= respecCost;
+
+        await showMessageModal(
+            'Respec Successful',
+            `Skills reset with a cost of 10% Love Points. ${formatNumber(respecCost)} Love Points deducted.`,
+            false
+        );
+    }
+}
+
+
 
 
 
@@ -2535,7 +2593,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true, ski
 
         if (name === 'Skepticism') {
             showMessageModal('The Journey Continues',
-                "This marks the end of v0.9296. You've not only completed the Power Saga, but you're also getting the hang of Infinite Embraces and Meditations! Congratulations on your progress, and welcome to the next stage of your journey. "
+                "This marks the end of v0.9297. You've not only completed the Power Saga, but you're also getting the hang of Infinite Embraces and Meditations! Congratulations on your progress, and welcome to the next stage of your journey. "
                 + "With the Hall of Love now open, Love Points are becoming a key part of your experience, alongside the skills you unlock there. While these new mechanics are taking shape, expect ongoing balancing as the game evolves. "
                 + "Feel free to dive deeper into the skills and explore what's possible. The journey is far from over—more meditations and epic content are on the way! "
                 + "Stay connected on Discord, share your feedback, and together, let's create something truly unforgettable!"

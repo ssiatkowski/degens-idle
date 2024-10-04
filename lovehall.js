@@ -112,6 +112,9 @@ const loveHallSkills = [
 
 ];
 
+loveHallSkills.forEach(skill => {
+    skill.originalCost = skill.cost; // Set original cost during initialization
+});
 
 
 const loveHallSkillsContainer = document.getElementById('loveHallSkills');
@@ -728,6 +731,10 @@ function openLoveHall() {
     const loveHallOverlay = document.getElementById('loveHallOverlay');
     loveHallOverlay.style.display = 'flex';
 
+    // Set the Respec button text dynamically based on available free respecs
+    const respecButton = document.getElementById('respecButton');
+    respecButton.textContent = `Respec and Restart Embrace (${numLoveHallFreeRespecs})`;
+    
     if(crunchTimer < 3.1){
         unlockAchievement('Eager to Love');
     }
@@ -763,6 +770,37 @@ document.addEventListener('DOMContentLoaded', () => {
         closeLoveHall();
     });
 });
+
+document.getElementById('respecButton').addEventListener('click', async () => {
+    let confirmationMessage = '';
+
+    // Check if free respecs are available
+    if (numLoveHallFreeRespecs > 0) {
+        confirmationMessage = `
+            You have <strong>${numLoveHallFreeRespecs}</strong> free respec(s) remaining. Respeccing will reset all your skills in the Hall of Love and refund all Love Points spent. After respec, your progress will be reset via Infinite Embrace.
+            <br><br>
+            Are you sure you want to Respec and Restart the Embrace?
+        `;
+    } else {
+        confirmationMessage = `
+            You have no free respecs remaining. Respeccing will cost 10% of your total Love Points earned.
+            <br><br>
+            Are you sure you want to Respec and Restart the Embrace?
+        `;
+    }
+
+    // Show the modal for confirmation
+    const confirmed = await showMessageModal('Respec Confirmation', confirmationMessage, true);
+
+    if (confirmed) {
+        // Call respecSkills to reset the skills and handle the cost
+        respecSkills();
+
+        // Restart the Embrace immediately
+        infiniteEmbrace(true, true);
+    }
+});
+
 
 let purchaseLibrarySkillsInterval;
 

@@ -385,7 +385,7 @@ function updateMeditationGame(resolve, stageNumber) {
             clearInterval(meditationInterval);
             resolve(true); // Player wins the challenge
             stopMeditationGame();
-            showPopupTooltip(`Successful Meditation: ${currentChallengeName}`, color='#4682B4', 2);
+            showPopupTooltip(`Successful Meditation: ${currentChallengeName}`, color='#4682B4', 1);
             if (fullFocusPreserved ) {
                 if (currentChallengeName === 'Altruism') { unlockAchievement('The Giver'); }
                 else if (currentChallengeName === 'Rastafarianism') { unlockAchievement('Tamed Lion'); }

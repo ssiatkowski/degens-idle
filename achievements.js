@@ -663,6 +663,7 @@ const achievements = [
         hoverText: 'unlock the Hall of Love',
         img: 'imgs/achievements/love_shop.jpg',
         type: 'progression',
+        respecPoint: true,
     },
     {
         name: 'Focus Your Mind',
@@ -719,6 +720,7 @@ const achievements = [
         hoverText: 'perform two Infinite Embraces within 3 minutes',
         img: 'imgs/achievements/fast_embracer.jpg',
         type: 'skill',
+        respecPoint: true,
     },
     {
         name: 'One Hit KO',
@@ -740,6 +742,7 @@ const achievements = [
         hoverText: `why can't we all just be friends?`,
         img: 'imgs/achievements/make_love_not_war.jpg',
         type: 'progression',
+        respecPoint: true,
     },
     {
         name: 'The Giver',
@@ -789,6 +792,7 @@ const achievements = [
         hoverText: 'export your save on 50 different days',
         img: 'imgs/achievements/50_days_of_saving.jpg',
         type: 'freebie',
+        respecPoint: true,
     },
     {
         name: 'Study Skepticism',
@@ -901,6 +905,7 @@ const achievements = [
         hoverText: '???',
         img: 'imgs/achievements/buddhist_bunny.jpg',
         type: 'puzzle',
+        respecPoint: true,
     },
 ];
 
@@ -947,6 +952,10 @@ function renderAchievements(type = 'all') {
         const hoverText = document.createElement('div');
         hoverText.className = 'hover-text';
         hoverText.innerHTML = `<strong>${achievement.name}</strong><br>Tip: ${achievement.hoverText}`;
+
+        if (achievement.respecPoint) {
+            hoverText.innerHTML += `<br><span style="color: pink;">+1 Respec Point</span>`;
+        }
 
         achievementElement.appendChild(img);
         achievementElement.appendChild(hoverText);
@@ -1047,6 +1056,11 @@ function unlockAchievement(name, duringLoad = false) {
         calculateAchievementMultiplier()
 
         if (!duringLoad) {
+
+            if(achievement.respecPoint){
+                numLoveHallFreeRespecs++;
+            }
+
             saveGameState();
             updateMultipliersDisplay();
             updateEffectiveMultipliers();
