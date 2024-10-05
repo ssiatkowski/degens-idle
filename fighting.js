@@ -383,15 +383,25 @@ function startFightGame(enemyName, enemyImg) {
         };
 
         if (currEnemyName === "Darth Vader") {
-            if (!purchasedUpgradesSet.has("Unlimited Power")) {
-                enemyStunCount = 4;
+            if (!purchasedUpgradesSet.has("Unlimited Power") && !purchasedUpgradesSet.has("Still very stupid")) {
+                enemyStunCount = 6;
                 enemyAbsorb = 0.1;
                 document.getElementById('enemyAbsorbStat').innerText = formatNumber(enemyAbsorb * 100) + '%';
+                unlockAchievement('Unlikely Duo');
+                logFight("<span style='color: green; font-weight: bold; font-size: 1.3em';>Darth Vader tries to use the force to stun you but Qui-Gon Jinn protects you. Darth Sidious uses force lightning to stun Darth Vader for 6 turns and reduce his damage absorption to 10%.</span>");
+            } else if (!purchasedUpgradesSet.has("Still very stupid")) {
+                unlockAchievement('Academic Grandmaster');
+                logFight("<span style='color: green; font-weight: bold; font-size: 1.3em';>Darth Vader tries to use the force to stun you but Qui-Gon Jinn protects you. </span>");
+            } else if (!purchasedUpgradesSet.has("Unlimited Power")) {
+                enemyStunCount = 6;
+                enemyAbsorb = 0.1;
+                playerStunCount = 3;
+                document.getElementById('enemyAbsorbStat').innerText = formatNumber(enemyAbsorb * 100) + '%';
                 unlockAchievement('Sheev vs Anakin');
-                logFight("<span style='color: green; font-weight: bold; font-size: 1.3em';>Darth Sidious protects you from the force. He also uses force lightning to stun Darth Vader for 4 turns and reduce his damage absorption to 10%.</span>");
+                logFight("<span style='color: green; font-weight: bold; font-size: 1.3em';>Darth Vader uses the force to stun you for 3 turns. Darth Sidious uses force lightning to stun Darth Vader for 6 turns and reduce his damage absorption to 10%.</span>");
             } else {
-                playerStunCount = 4;
-                logFight("<span style='color: red; font-weight: bold; font-size: 1.3em';>Darth Vader uses the force to stun you for 4 turns. (if only you could get someone who could use the force to protect you) </span>");
+                playerStunCount = 3;
+                logFight("<span style='color: red; font-weight: bold; font-size: 1.3em';>Darth Vader uses the force to stun you for 3 turns. (if only you could get someone who could use the force to protect you) </span>");
             }
         } else if (currEnemyName === "Chuck Norris") {
             if (!purchasedUpgradesSet.has("Training Dummy")) {

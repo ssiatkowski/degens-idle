@@ -70,6 +70,9 @@ let basicResourceBoost = 1;
 let pulseOfAffectionSkill = false;
 let pulseOfAffectionMult = 1;
 
+let altruisticEmbraceSkill = false;
+let masterOfBargainsSkill = false;
+
 let currentNumberFormat = 'Mixed';
 
 let firstTimePrestigeButtonAvailable = true; // Default to true, will be updated based on saved state
@@ -974,6 +977,9 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
                 pulseOfAffectionSkill = false;
                 pulseOfAffectionMult = 1;
 
+                altruisticEmbraceSkill = false;
+                masterOfBargainsSkill = false;
+                
                 serenityFlowSkill = false;
                 perfectPUGodModeSkill = false;
                 rewardingVictoriesSkill = false;
@@ -1297,7 +1303,11 @@ function updateTradeRatio() {
         tradeRatioDisplay.textContent = 'Only Copium can convert to Hopium';
     } else {
         if (improvedTradeRatio){
-            tradeRatioDisplay.textContent = 'Trade ratio is 5:1';
+            if (masterOfBargainsSkill){
+                tradeRatioDisplay.textContent = 'Trade ratio is 3:1';
+            } else {
+                tradeRatioDisplay.textContent = 'Trade ratio is 5:1';
+            }
         } else {
             tradeRatioDisplay.textContent = 'Trade ratio is 10:1';
         }
@@ -1449,8 +1459,13 @@ function tradeResources(tradeAmountInput = null) {
         }
         resourceAmount[fromResource] -= tradeAmount;
         if (improvedTradeRatio) {
-            resourceAmount[toResource] += tradeAmount / 5;
-            showStatusMessage(tradeButton, `Traded ${formatNumber(tradeAmount)} ${fromResource} for ${formatNumber(tradeAmount / 4)} ${toResource}.`, true);
+            if (masterOfBargainsSkill){
+                resourceAmount[toResource] += tradeAmount / 3;
+                showStatusMessage(tradeButton, `Traded ${formatNumber(tradeAmount)} ${fromResource} for ${formatNumber(tradeAmount / 3)} ${toResource}.`, true);
+            } else {
+                resourceAmount[toResource] += tradeAmount / 5;
+                showStatusMessage(tradeButton, `Traded ${formatNumber(tradeAmount)} ${fromResource} for ${formatNumber(tradeAmount / 5)} ${toResource}.`, true);
+            }
         } else {
             resourceAmount[toResource] += tradeAmount / 10;
             showStatusMessage(tradeButton, `Traded ${formatNumber(tradeAmount)} ${fromResource} for ${formatNumber(tradeAmount / 10)} ${toResource}.`, true);
@@ -1819,7 +1834,14 @@ function calculateBigCrunchMultiplier(bcPower = bigCrunchPower) {
 }
 
 function calculateLovePointsGained() {
-    return Math.max(0, Math.log10(serenity) * pulseOfAffectionMult) + embraceExtraLovePoints;
+    let baseLovePointsGained = Math.max(0, Math.log10(serenity) * pulseOfAffectionMult) + embraceExtraLovePoints;
+
+    if (altruisticEmbraceSkill){
+        let meditationCount = purchasedUpgrades.filter(upgrade => upgrade.isMeditation && upgrade.name !== "Yin and Yang" && upgrade.name !== "Existentialism").length;
+        baseLovePointsGained *= 1.25 ** meditationCount;
+    }
+
+    return baseLovePointsGained;
 }
 
 
@@ -2197,9 +2219,7 @@ async function infiniteEmbrace(skipConfirms = false, lovePointsOverwrite = false
 
             embraceTimer = 0;
 
-            if (!skipConfirms) {
-                unlockAchievement('Infinite Embrace');
-            }
+            unlockAchievement('Infinite Embrace');
 
             // Save game state after prestige
             numLoveHallFreeRespecs = localStorage.getItem('numLoveHallFreeRespecs') !== null ? parseFloat(localStorage.getItem('numLoveHallFreeRespecs')) : 1;
@@ -2254,6 +2274,8 @@ async function respecSkills() {
         // Charge 10% of total Love Points for respec
         const respecCost = lovePoints * 0.1;
         lovePoints -= respecCost;
+
+        unlockAchievement('Pay to Win');
 
         await showMessageModal(
             'Respec Successful',
@@ -2594,7 +2616,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true, ski
 
         if (name === 'Skepticism') {
             showMessageModal('The Journey Continues',
-                "This marks the end of v0.9297. You've not only completed the Power Saga, but you're also getting the hang of Infinite Embraces and Meditations! Congratulations on your progress, and welcome to the next stage of your journey. "
+                "This marks the end of v0.9298. You've not only completed the Power Saga, but you're also getting the hang of Infinite Embraces and Meditations! Congratulations on your progress, and welcome to the next stage of your journey. "
                 + "With the Hall of Love now open, Love Points are becoming a key part of your experience, alongside the skills you unlock there. While these new mechanics are taking shape, expect ongoing balancing as the game evolves. "
                 + "Feel free to dive deeper into the skills and explore what's possible. The journey is far from over—more meditations and epic content are on the way! "
                 + "Stay connected on Discord, share your feedback, and together, let's create something truly unforgettable!"
@@ -3654,7 +3676,7 @@ function displayNextModal() {
     }
 
     // Existing logic for other titles
-    if (title === "Are You Sure You Want to Restart?" || title === "You Didn't Ask for It, But I'll Give You One More Try") {
+    if (title === "Are You Sure You Want to Restart?" || title === "You Didn't Ask for It, But I'll Give You One More Try" || (title === 'Respec Confirmation' && message.includes('10%'))) {
         modalContent.classList.add('modal-restart');
     } else {
         modalContent.classList.remove('modal-restart');

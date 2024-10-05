@@ -364,6 +364,13 @@ const achievements = [
         type: 'puzzle',
     },
     {
+        name: 'Academic Grandmaster',
+        isUnlocked: false,
+        hoverText: 'alternate helper',
+        img: 'imgs/achievements/academic_grandmaster.jpg',
+        type: 'puzzle',
+    },
+    {
         name: 'Avoid the Crit',
         isUnlocked: false,
         hoverText: 'defeat Sauron',
@@ -795,6 +802,14 @@ const achievements = [
         respecPoint: true,
     },
     {
+        name: 'Pay to Win',
+        isUnlocked: false,
+        hoverText: 'donate 10% of your earnings to Kuzzi',
+        img: 'imgs/achievements/pay_to_win.jpg',
+        type: 'puzzle',
+        respecPoint: true,
+    },
+    {
         name: 'Study Skepticism',
         isUnlocked: false,
         hoverText: `complete the Skepticism meditation`,
@@ -821,6 +836,13 @@ const achievements = [
         hoverText: `get mini game multiplier above 7.5x`,
         img: 'imgs/achievements/serious_gamer.jpg',
         type: 'skill',
+    },
+    {
+        name: 'Unlikely Duo',
+        isUnlocked: false,
+        hoverText: '???',
+        img: 'imgs/achievements/unlikely_duo.jpg',
+        type: 'puzzle',
     },
     {
         name: 'Crisis Averted',

@@ -1535,7 +1535,7 @@ const upgrades = [
     {         
         name: `Different Tastes`,
         cost: { copium: 0, delusion: 2e115, yachtMoney: 0, trollPoints: 1e115, hopium: 0, knowledge: 0, power: 0, serenity: 1e9 },
-        earnings: { copiumPerSecond: -1e49, delusionPerSecond: 1e50, yachtMoneyPerSecond: 0, trollPointsPerSecond: 4e49, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 240 },
+        earnings: { copiumPerSecond: -1e48, delusionPerSecond: 1e50, yachtMoneyPerSecond: 0, trollPointsPerSecond: 4e49, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 240 },
         img: `imgs/different_tastes.jpg`,
     },
     {         
@@ -1584,19 +1584,19 @@ const upgrades = [
     {         
         name: `Dad Joke #1`,
         cost: { copium: 0, delusion: 0, yachtMoney: 4e127, trollPoints: 4e127, hopium: 0, knowledge: 0, power: 0, serenity: 1e13 },
-        earnings: { copiumPerSecond: -1e53, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 4e54, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 45678 },
+        earnings: { copiumPerSecond: -1e52, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 4e54, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 45678 },
         img: `imgs/dad_joke_1.jpg`,
     },
     {         
         name: `Dad Joke #2`,
         cost: { copium: 0, delusion: 0, yachtMoney: 8e127, trollPoints: 8e127, hopium: 0, knowledge: 0, power: 0, serenity: 3e13 },
-        earnings: { copiumPerSecond: -2e53, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 8e54, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 56789 },
+        earnings: { copiumPerSecond: -2e52, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 8e54, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 56789 },
         img: `imgs/dad_joke_2.jpg`,
     },
     {         
         name: `Dad Joke #3`,
         cost: { copium: 0, delusion: 0, yachtMoney: 1.6e128, trollPoints: 1.6e128, hopium: 0, knowledge: 0, power: 0, serenity: 9e13 },
-        earnings: { copiumPerSecond: -3e53, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1.6e55, hopiumPerSecond: 1e52, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 67890 },
+        earnings: { copiumPerSecond: -3e52, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1.6e55, hopiumPerSecond: 1e52, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 67890 },
         img: `imgs/dad_joke_3.jpg`,
     },
     {         

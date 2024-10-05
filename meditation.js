@@ -55,9 +55,9 @@ const meditationChallenges = {
         focus: 1,
         ballCount: 15,
         arenaSize: 600,
-        ballSize: 20,
+        ballSize: 21,
         ballSizeDelta: 3,
-        velocity: 1.02,
+        velocity: 1.03,
         wind: 0,
         respawnFactor: 1,
         livesPerBall: 1.4,
@@ -67,7 +67,7 @@ const meditationChallenges = {
         focus: 12,
         ballCount: 5,
         arenaSize: 420,
-        ballSize: 50,
+        ballSize: 52,
         ballSizeDelta: 4.2,
         velocity: 3.3,
         wind: 0,
@@ -91,8 +91,8 @@ const meditationChallenges = {
         focus: 8,
         ballCount: 5,
         arenaSize: 520,
-        ballSize: 90,
-        ballSizeDelta: 50,
+        ballSize: 110,
+        ballSizeDelta: 30,
         velocity: 9,
         wind: 5,
         respawnFactor: 1,
@@ -103,7 +103,7 @@ const meditationChallenges = {
         focus: 50,
         ballCount: 25,
         arenaSize: 400,
-        ballSize: 50,
+        ballSize: 55,
         ballSizeDelta: 15,
         velocity: 3.5,
         wind: 2,
@@ -115,7 +115,7 @@ const meditationChallenges = {
         focus: 1,
         ballCount: 1,
         arenaSize: 275,
-        ballSize: 90,
+        ballSize: 100,
         ballSizeDelta: 0,
         velocity: 3,
         wind: 14,
@@ -276,7 +276,7 @@ function createBall(index, stageNumber) {
     ball.classList.add('meditation-ball');
  
     // Add random variation within the delta range
-    const thisBallSize = Math.max(Math.round(ballSize + (Math.random() * 2 * ballSizeDelta - ballSizeDelta)), 10);
+    const thisBallSize = Math.max(Math.round(ballSize + (Math.random() * 2 * ballSizeDelta - ballSizeDelta)), 12);
 
     // Calculate position for each ball in a circular pattern around the center
     const angle = (index / ballCount) * 2 * Math.PI; // Evenly space balls around a circle
@@ -651,7 +651,7 @@ document.getElementById('meditationStopButton').addEventListener('click', () => 
 // Function to calculate ball size based on Copium
 function calculateBallSize() {
     let intervals = Math.max(0, (Math.log10(copium) - 100) / 20);
-    let newBallSize = Math.max(Math.round(ballSize * Math.pow(0.5, intervals)), 10);
+    let newBallSize = Math.max(Math.round(ballSize * Math.pow(0.5, intervals)), 12);
     return newBallSize;
 }
 
