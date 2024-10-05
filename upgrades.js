@@ -1622,7 +1622,7 @@ const upgrades = [
     },
     {         
         name: `Deism`,
-        cost: { copium: 1e139, delusion: 0, yachtMoney: 0, trollPoints: 1e139, hopium: 0, knowledge: 0, power: 3e36, serenity: 1e17 },
+        cost: { copium: 5e138, delusion: 0, yachtMoney: 0, trollPoints: 5e138, hopium: 0, knowledge: 0, power: 3e36, serenity: 1e17 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 7e59, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 9e8 },
         img: `imgs/arena_deism.png`,
         isMeditation: true,
@@ -1631,7 +1631,7 @@ const upgrades = [
     },
     {         
         name: `Skepticism`,
-        cost: { copium: 0, delusion: 1e144, yachtMoney: 0, trollPoints: 1e144, hopium: 0, knowledge: 0, power: 1e40, serenity: 1e20 },
+        cost: { copium: 0, delusion: 1e144, yachtMoney: 0, trollPoints: 1e144, hopium: 0, knowledge: 0, power: 1e39, serenity: 1e20 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 1e30, powerPerSecond: 0, serenityPerSecond: 1.3e10 },
         img: `imgs/arena_skepticism.png`,
         isMeditation: true,

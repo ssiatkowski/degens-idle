@@ -27,13 +27,13 @@ const windDirections = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
 // Define the meditation challenges
 const meditationChallenges = {
     "Yin and Yang": {
-        duration: 15,
+        duration: 13.5,
         focus: 2,
         ballCount: 2,
         arenaSize: 600,
         ballSize: 30,
         ballSizeDelta: 3,
-        velocity: 1,
+        velocity: 1.1,
         wind: 0,
         respawnFactor: 1,
         livesPerBall: 1,

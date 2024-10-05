@@ -1,11 +1,11 @@
 
 const loveHallSkills = [
     // 2.828x Level - Bell's Inequality for quantum entangled particle correlation
-    { name: 'Delusion Surge', cost: 0.2, description: '36x Delusion gain.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 1 },
-    { name: 'Copium Surge', cost: 0.2, description: '36x Copium gain.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 1 },
+    { name: 'Delusion Surge', cost: 0.3, description: '36x Delusion gain.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 1 },
+    { name: 'Copium Surge', cost: 0.3, description: '36x Copium gain.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 1 },
 
-    { name: 'Twenty-Fivefold Ascension', cost: 1.2, description: 'Gain up to 25 God-Mode levels per Ascension.', unlocked: false, level: 'Quantum Harmony (2.8x)',  pair: 2 },
-    { name: 'Twenty-Fivefold Transcendence', cost: 1.2, description: 'Gain up to 25 PU God-Mode levels per Transcendence.', unlocked: false, level: 'Quantum Harmony (2.8x)',  pair: 2 },
+    { name: 'Twenty-Fivefold Ascension', cost: 1.3, description: 'Gain up to 25 God-Mode levels per Ascension.', unlocked: false, level: 'Quantum Harmony (2.8x)',  pair: 2 },
+    { name: 'Twenty-Fivefold Transcendence', cost: 1.3, description: 'Gain up to 25 PU God-Mode levels per Transcendence.', unlocked: false, level: 'Quantum Harmony (2.8x)',  pair: 2 },
 
     { name: 'Achievement Boost', cost: 1.9, description: 'Achievement Multiplier x2. (Achievement Boosts stack)', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 3 },
     { name: 'Cosmic Embrace', cost: 1.9, description: 'Gain +1 Love Point every embrace.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 3 },
@@ -13,7 +13,7 @@ const loveHallSkills = [
     { name: 'Epistemic Engine', cost: 3.3, description: 'Start Embrace with Knowledge Generation skill unlocked.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 4 },
     { name: 'Pulse of Affection', cost: 3.3, description: 'Additive 0.33% extra base Love Points for every Hall of Love skill unlocked.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 4 },
 
-    { name: 'Altruistic Embrace', cost: 3.5, description: 'Starting at Altruism, multiplicative +25% Love Points earned per meditation completed.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 5 },
+    { name: 'Altruistic Embrace', cost: 3.5, description: 'Starting at Altruism, multiplicative +25% Love Points earned per meditation.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 5 },
     { name: 'Master of Bargains', cost: 3.5, description: 'Improve Trade Ratios skill for basic resources from 5:1 to 3:1.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 5 },
 
     { name: 'Serenity Flow', cost: 7, description: 'Hopium gain is multiplied by square root of Serenity.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 6 },
@@ -25,8 +25,8 @@ const loveHallSkills = [
     { name: 'Power Infusion', cost: 30, description: '4x Power gain.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 8},
     { name: 'Soulbound Embrace', cost: 30, description: 'Gain +2.5 Love Points every embrace.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 8, requirement: 'Cosmic Embrace' },
 
-    { name: 'Hopeful Soft Cap', cost: 40, description: 'Mini Games Soft Cap uses resource or Hopium (greater)', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 9 },
-    { name: 'Fertile Scarcity', cost: 40, description: 'Cosmic Drought sets Stellar Harvest to 250x (instead of 1x)', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 9 },
+    { name: 'Hopeful Soft Cap', cost: 42, description: 'Mini Games Soft Cap uses resource or Hopium (greater)', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 9 },
+    { name: 'Fertile Scarcity', cost: 42, description: 'Cosmic Drought sets Stellar Harvest to 250x (instead of 1x)', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 9 },
     
     { name: 'Inverse Prestige', cost: 60, description: 'Prestige is now based on the highest of your first four resources', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 10 },
     { name: 'Positive Markers', cost: 60, description: 'Buy markers stay unlocked and turned on through Infinite Embrace', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 10 },
@@ -41,20 +41,20 @@ const loveHallSkills = [
     // { name: '', cost: 308, description: '', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 13 },
 
     // 27x Level - dimensions in string theory
-    { name: 'Yacht Money Surge', cost: 0.05, description: '24x Yacht Money gain.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 21 },
-    { name: 'Troll Points Surge', cost: 0.05, description: '24x Troll Points gain.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 21 },
+    { name: 'Yacht Money Surge', cost: 0.06, description: '24x Yacht Money gain.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 21 },
+    { name: 'Troll Points Surge', cost: 0.06, description: '24x Troll Points gain.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 21 },
 
-    { name: 'Serene Boost 1', cost: 0.1, description: '2x Serenity gain. (Serene Boosts stack)', unlocked: false, level: 'Dimensional Shift (27x)', pair: 22 },
-    { name: 'Celestial Precision', cost: 0.1, description: 'Improves Astral Precision to power+50%', unlocked: false, level: 'Dimensional Shift (27x)', pair: 22 },
+    { name: 'Serene Boost 1', cost: 0.12, description: '2x Serenity gain. (Serene Boosts stack)', unlocked: false, level: 'Dimensional Shift (27x)', pair: 22 },
+    { name: 'Celestial Precision', cost: 0.12, description: 'Improves Astral Precision to power+50%', unlocked: false, level: 'Dimensional Shift (27x)', pair: 22 },
 
     { name: 'Knowledge Infusion', cost: 0.4, description: '8x Knowledge gain.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 23 },
     { name: 'Basic Resource Boost', cost: 0.4, description: '9x gain to first 4 resources.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 23 },
 
-    { name: 'Hall of Knowledge Auto-Buy', cost: 1.5, description: 'Automatically buy upgrades from the Hall of Knowledge.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 25 },
-    { name: 'Hall of Power Auto-Buy', cost: 1.5, description: 'Automatically buy upgrades from the Hall of Power.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 25 },
+    { name: 'Hall of Knowledge Auto-Buy', cost: 1.8, description: 'Automatically buy upgrades from the Hall of Knowledge.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 25 },
+    { name: 'Hall of Power Auto-Buy', cost: 1.8, description: 'Automatically buy upgrades from the Hall of Power.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 25 },
 
-    { name: 'Gaming Addict', cost: 2, description: 'Improves Mini Gamer skill to reduce cooldowns by 75%.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 26 },
-    { name: 'First-Wave Automation', cost: 2, description: `Hall of Knowledge automation skills are ${formatNumber(1e10)}x cheaper`, unlocked: false, level: 'Dimensional Shift (27x)', pair: 26 },
+    { name: 'Gaming Addict', cost: 2.2, description: 'Improves Mini Gamer skill to reduce cooldowns by 75%.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 26 },
+    { name: 'First-Wave Automation', cost: 2.2, description: `Hall of Knowledge automation skills are ${formatNumber(1e10)}x cheaper`, unlocked: false, level: 'Dimensional Shift (27x)', pair: 26 },
     
     { name: 'Steady Focus', cost: 4, description: 'Reduce meditation focus lost per ball by 1. (min 1)', unlocked: false, level: 'Dimensional Shift (27x)', pair: 27 },
     { name: 'Second-Wave Automation', cost: 4, description: `Keep Hall of Knowledge automation skills unlocked and preserve settings on Embrace.`, unlocked: false, level: 'Dimensional Shift (27x)', pair: 27, requirement: 'First-Wave Automation' },
@@ -82,17 +82,17 @@ const loveHallSkills = [
     { name: 'Deadpool Embrace', cost: 0.1, description: 'Deadpool revives do not reset on Infinite Embrace.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 42 },
     { name: 'Rewarding Victories', cost: 0.1, description: 'Battle upgrades give +40% rewards.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 42 },
     
-    { name: 'Quantum Fortress', cost: 0.2, description: 'Make Quantum Bastion 2.5x more powerful.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 43, requirement: 'Fortified Defenses' },
-    { name: 'Chrono Magnetizer', cost: 0.2, description: 'Make Arcane Magnetizer 2x faster.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 43 },
+    { name: 'Quantum Fortress', cost: 0.25, description: 'Make Quantum Bastion 2.5x more powerful.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 43, requirement: 'Fortified Defenses' },
+    { name: 'Chrono Magnetizer', cost: 0.25, description: 'Make Arcane Magnetizer 2x faster.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 43 },
 
-    { name: 'Crunch Knowledge', cost: 0.3, description: 'Big Crunch extra knowledge mult is now ^(2/3) instead of ^(1/2).', unlocked: false, level: 'Cosmic Truth (42x)', pair: 44 },
-    { name: 'Stellar Meditation', cost: 0.3, description: 'Multiplicative +10% to all resurces after each successful meditation.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 44 },
+    { name: 'Crunch Knowledge', cost: 0.4, description: 'Big Crunch extra knowledge mult is now ^(2/3) instead of ^(1/2).', unlocked: false, level: 'Cosmic Truth (42x)', pair: 44 },
+    { name: 'Stellar Meditation', cost: 0.4, description: 'Multiplicative +10% to all resurces after each successful meditation.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 44 },
 
-    { name: 'Oversurged Power', cost: 0.5, description: 'Power Surge Skill is 2x as powerful.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 45 },
-    { name: 'Overcompressed Power', cost: 0.5, description: 'Compressed/Condensed Power Skills are 3x as powerful.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 45 },
+    { name: 'Oversurged Power', cost: 0.66, description: 'Power Surge Skill is 2x as powerful.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 45 },
+    { name: 'Overcompressed Power', cost: 0.66, description: 'Compressed/Condensed Power Skills are 3x as powerful.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 45 },
 
-    { name: 'Raise That Soft Cap', cost: 1.19, description: 'Increase mini games soft cap to 24 hours', unlocked: false, level: 'Cosmic Truth (42x)', pair: 46 },
-    { name: 'Rewarding Meditations', cost: 1.19, description: 'Meditations give +40% rewards', unlocked: false, level: 'Cosmic Truth (42x)', pair: 46, requirement: 'Rewarding Victories' },
+    { name: 'Raise That Soft Cap', cost: 1.3, description: 'Increase mini games soft cap to 24 hours', unlocked: false, level: 'Cosmic Truth (42x)', pair: 46 },
+    { name: 'Rewarding Meditations', cost: 1.3, description: 'Meditations give +40% rewards', unlocked: false, level: 'Cosmic Truth (42x)', pair: 46, requirement: 'Rewarding Victories' },
 
     { name: 'Infinite Prestige', cost: 4.2, description: 'Automatically apply Prestige Mult without resetting.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 47 },
     { name: 'Hopium Trade', cost: 4.2, description: 'Trade Hopium for any of the first 4 resources at a 1:1 ratio.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 47, requirement: 'Master of Bargains' },
