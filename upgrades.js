@@ -1389,7 +1389,7 @@ const upgrades = [
         cost: { copium: 1e99, delusion: 1e99, yachtMoney: 1e99, trollPoints: 1e99, hopium: 0, knowledge: 0, power: 0, serenity: 100 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 2e43, trollPointsPerSecond: 0, hopiumPerSecond: 1e47, knowledgePerSecond: 1e14, powerPerSecond: 0, serenityPerSecond: 0.001 },
         img: `imgs/infinite_embrace.jpg`,
-        message: `<p>Once you reach 1000 serenity, the Infinite Embrace will become available, offering you the chance to perform a sacred act that will resonate throughout the multiverse.</p>
+        message: `<p>Once you complete one meditation and reach 1000 serenity, the Infinite Embrace will become available, offering you the chance to perform a sacred act that will resonate throughout the multiverse.</p>
                 <p>Physically, the Infinite Embrace resets all of your progress—prestiges, god modes, big crunches, the Hall of Knowledge, and the Hall of Power. But metaphysically, it is an infusion of boundless love into the fabric of existence. Each time you perform this ritual, you strengthen the universe, spreading warmth, harmony, and love to every future incarnation.</p>
                 <p><strong>The more serenity you accumulate in this multiverse, the more Love Points will be injected during the embrace.</strong> These Love Points are permanent, ensuring that your connection to the multiverse grows with each cycle, and they can be spent in the Hall of Love, which remains unlocked across all Infinite Embraces.</p>
                 <p>Through this act, the multiverse is shaped by your love and serenity, enriching all future cycles. Your achievements and Love Points will remain intact, continuing to grow as you transcend each cycle. The embrace is a cosmic renewal, where love fuels the multiverse and your journey within it.</p>`,
@@ -1628,6 +1628,18 @@ const upgrades = [
         isMeditation: true,
         isKey: true,
         message: `Through this meditation, you’ve understood that the <strong>universe operates under the natural laws set in motion by a higher power</strong>, yet it is up to you to seek truth and purpose. Deism teaches that reason, observation, and understanding of the world around you lead to enlightenment. With this knowledge, you’ve realized that your journey is shaped by your actions and understanding of the universe's order.`,
+    },
+    {
+        name: `I Hear Ya`,
+        cost: { copium: 7e138, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 1e36, serenity: 1e16 },
+        earnings: { copiumPerSecond: 6e56, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1e57, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 8e6 },
+        img: `imgs/i_hear_ya.jpg`,
+    },
+    {
+        name: `Angry Girlfriend`,
+        cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 1e110, power: 0, serenity: 1e16 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 1e57, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 1e22, powerPerSecond: 0, serenityPerSecond: 9e6 },
+        img: `imgs/gf_mad_look.jpg`,
     },
     {         
         name: `Skepticism`,

@@ -852,6 +852,20 @@ const achievements = [
         type: 'puzzle',
     },
     {
+        name: 'Fidget Clicks',
+        isUnlocked: false,
+        hoverText: '???',
+        img: 'imgs/achievements/fidget_clicks.jpg',
+        type: 'puzzle',
+    },
+    {
+        name: 'Bells and Whistles',
+        isUnlocked: false,
+        hoverText: '???',
+        img: 'imgs/achievements/all_the_gimmicks.jpg',
+        type: 'puzzle',
+    },
+    {
         name: 'More than Sauron',
         isUnlocked: false,
         hoverText: '???',
@@ -892,13 +906,6 @@ const achievements = [
         hoverText: '???',
         img: 'imgs/achievements/pigeonpost.jpg',
         type: 'freebie',
-    },
-    {
-        name: 'Fidget Clicks',
-        isUnlocked: false,
-        hoverText: '???',
-        img: 'imgs/achievements/fidget_clicks.jpg',
-        type: 'puzzle',
     },
     {
         name: 'The Great American Cookout',

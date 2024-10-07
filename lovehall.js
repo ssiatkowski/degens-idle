@@ -13,7 +13,7 @@ const loveHallSkills = [
     { name: 'Epistemic Engine', cost: 3.3, description: 'Start Embrace with Knowledge Generation skill unlocked.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 4 },
     { name: 'Pulse of Affection', cost: 3.3, description: 'Additive 0.33% extra base Love Points for every Hall of Love skill unlocked.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 4 },
 
-    { name: 'Altruistic Embrace', cost: 3.5, description: 'Starting at Altruism, multiplicative +25% Love Points earned per meditation.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 5 },
+    { name: 'Altruistic Embrace', cost: 3.5, description: 'Starting at Altruism, multiplicative x1.25 base Love Points earned per meditation.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 5 },
     { name: 'Master of Bargains', cost: 3.5, description: 'Improve Trade Ratios skill for basic resources from 5:1 to 3:1.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 5 },
 
     { name: 'Serenity Flow', cost: 7, description: 'Hopium gain is multiplied by square root of Serenity.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 6 },
@@ -23,7 +23,7 @@ const loveHallSkills = [
     { name: 'Early Accelerant', cost: 14, description: '10x multiplier to first 6 resources, degrades by 2.5% with each purchased upgrade.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 7 },
 
     { name: 'Power Infusion', cost: 30, description: '4x Power gain.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 8},
-    { name: 'Soulbound Embrace', cost: 30, description: 'Gain +2.5 Love Points every embrace.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 8, requirement: 'Cosmic Embrace' },
+    { name: 'Soulbound Embrace', cost: 30, description: 'Gain +5 Love Points every embrace.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 8, requirement: 'Cosmic Embrace' },
 
     { name: 'Hopeful Soft Cap', cost: 42, description: 'Mini Games Soft Cap uses resource or Hopium (greater)', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 9 },
     { name: 'Fertile Scarcity', cost: 42, description: 'Cosmic Drought sets Stellar Harvest to 250x (instead of 1x)', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 9 },
@@ -115,8 +115,11 @@ const loveHallSkills = [
 
 ];
 
+let totalLoveHallSkillsCost = 0;
+
 loveHallSkills.forEach(skill => {
     skill.originalCost = skill.cost; // Set original cost during initialization
+    totalLoveHallSkillsCost += 0.5 * (skill.cost + skill.cost * getLevelMultiplier(skill.level));
 });
 
 
@@ -249,7 +252,7 @@ function unlockLoveHallSkill(skill, duringLoad = false) {
                 break;
         
             case 'Soulbound Embrace':
-                embraceExtraLovePoints += 2.5;
+                embraceExtraLovePoints += 5;
                 break;
 
             case 'Hopeful Soft Cap':

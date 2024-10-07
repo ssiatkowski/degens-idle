@@ -187,6 +187,7 @@ let mysticReboundSkill = false;
 let quantumBastionSkill = false;
 
 let makeLoveNotWar = true;
+let numBattleGimmicks = 0;
 
 let nebulaOverdriveSkill = false;
 let stellarHarvestSkill = false;
@@ -275,6 +276,7 @@ function calculateEffectivePower() {
     // Return the effective power considering the diminishing multiplier
     return basePower * diminishingMultiplier;
 }
+
 
 
 function updateEffectiveMultipliers() {
@@ -1227,6 +1229,7 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
         availableUpgrades = upgrades.slice(); // Reset available upgrades to the original state
 
         makeLoveNotWar = true;
+        numBattleGimmicks = 0;
 
         stellarHarvestMult = 1;
         stellarMeditationMult = 1;
@@ -1806,7 +1809,7 @@ function canBigCrunch() {
 }
 
 function canInfiniteEmbrace() {
-    return loveHallUnlocked && serenity > 1000;
+    return loveHallUnlocked && serenity > 1000 && purchasedUpgradesSet.has("Yin and Yang");
 }
 
 function calculateGodModeMultiplier(gmLevlel = godModeLevel) {
@@ -1834,14 +1837,14 @@ function calculateBigCrunchMultiplier(bcPower = bigCrunchPower) {
 }
 
 function calculateLovePointsGained() {
-    let baseLovePointsGained = Math.max(0, Math.log10(serenity) * pulseOfAffectionMult) + embraceExtraLovePoints;
+    let baseLovePointsGained = Math.max(0, Math.log10(serenity) * pulseOfAffectionMult);
 
     if (altruisticEmbraceSkill){
         let meditationCount = purchasedUpgrades.filter(upgrade => upgrade.isMeditation && upgrade.name !== "Yin and Yang" && upgrade.name !== "Existentialism").length;
         baseLovePointsGained *= 1.25 ** meditationCount;
     }
 
-    return baseLovePointsGained;
+    return baseLovePointsGained + embraceExtraLovePoints;
 }
 
 
@@ -2614,14 +2617,9 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true, ski
             localStorage.setItem('messageShownUpgrades', JSON.stringify(messageShownUpgrades));
         }
 
-        if (name === 'Skepticism') {
-            showMessageModal('The Journey Continues',
-                "This marks the end of v0.9298. You've not only completed the Power Saga, but you're also getting the hang of Infinite Embraces and Meditations! Congratulations on your progress, and welcome to the next stage of your journey. "
-                + "With the Hall of Love now open, Love Points are becoming a key part of your experience, alongside the skills you unlock there. While these new mechanics are taking shape, expect ongoing balancing as the game evolves. "
-                + "Feel free to dive deeper into the skills and explore what's possible. The journey is far from over—more meditations and epic content are on the way! "
-                + "Stay connected on Discord, share your feedback, and together, let's create something truly unforgettable!"
-            );
-        }
+        // if (name === 'Skepticism') {
+        //     pass
+        // }
 
         // Apply a mini prestige multiplier if the upgrade has one
         if (miniPrestigeMultiplier) {
@@ -4359,4 +4357,35 @@ document.addEventListener('DOMContentLoaded', () => {
     updateDisplay();
     // Save the game state when the window is about to be unloaded
     window.addEventListener('beforeunload', saveGameState);
+
+    let spentLovePoints = 0;
+    loveHallSkills.forEach(skill => {
+        if (skill.unlocked) {
+            const pairSkill = loveHallSkills.find(s => s.pair === skill.pair && s.name !== skill.name);
+            const levelMultiplier = getLevelMultiplier(skill.level);
+
+            // If both skills in the pair are unlocked
+            if (pairSkill && pairSkill.unlocked) {
+                // Refund original cost for the first skill
+                spentLovePoints += 0.5 * skill.originalCost;
+                
+                // Refund the increased cost for the paired skill (multiplied cost)
+                spentLovePoints += 0.5 * pairSkill.originalCost * levelMultiplier;
+                
+            } else {
+                // Refund original cost if only this skill is unlocked
+                spentLovePoints += skill.originalCost;
+            }
+        }
+    });
+    if (spentLovePoints + lovePoints > totalLoveHallSkillsCost + 2500){
+        
+        lovePoints -= ((spentLovePoints + lovePoints) - (totalLoveHallSkillsCost + 2500));
+        showMessageModal('The Journey Continues',
+            "You've reached an impressive milestone! With all Hall of Love skills unlocked and over 2500 Love Points stockpiled, you're among the few who have completed all current content. To maintain a balanced gameplay experience as we prepare future updates, Love Points are currently capped at 2500. "
+            + "In the meantime, feel free to go achievement hunting if you're missing any, or join us on Discord to share your feedback and stay connected with the community. "
+            + "Congratulations on your progress, and thank you for being part of this incredible journey—there's more exciting content on the horizon!"
+        );
+    }
+
 });

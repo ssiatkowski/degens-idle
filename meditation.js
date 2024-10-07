@@ -53,18 +53,18 @@ const meditationChallenges = {
     "Altruism": {
         duration: 17,
         focus: 1,
-        ballCount: 15,
+        ballCount: 16,
         arenaSize: 600,
-        ballSize: 21,
+        ballSize: 22,
         ballSizeDelta: 3,
-        velocity: 1.03,
+        velocity: 1.05,
         wind: 0,
         respawnFactor: 1,
         livesPerBall: 1.4,
     },
     "Rastafarianism": {
         duration: 13,
-        focus: 12,
+        focus: 11,
         ballCount: 5,
         arenaSize: 420,
         ballSize: 52,
@@ -79,7 +79,7 @@ const meditationChallenges = {
         focus: 1,
         ballCount: 4,
         arenaSize: 350,
-        ballSize: 140,
+        ballSize: 145,
         ballSizeDelta: 10,
         velocity: 1.55,
         wind: 0,
@@ -276,7 +276,7 @@ function createBall(index, stageNumber) {
     ball.classList.add('meditation-ball');
  
     // Add random variation within the delta range
-    const thisBallSize = Math.max(Math.round(ballSize + (Math.random() * 2 * ballSizeDelta - ballSizeDelta)), 12);
+    const thisBallSize = Math.max(Math.round(ballSize + (Math.random() * 2 * ballSizeDelta - ballSizeDelta)), 15);
 
     // Calculate position for each ball in a circular pattern around the center
     const angle = (index / ballCount) * 2 * Math.PI; // Evenly space balls around a circle
@@ -651,7 +651,7 @@ document.getElementById('meditationStopButton').addEventListener('click', () => 
 // Function to calculate ball size based on Copium
 function calculateBallSize() {
     let intervals = Math.max(0, (Math.log10(copium) - 100) / 20);
-    let newBallSize = Math.max(Math.round(ballSize * Math.pow(0.5, intervals)), 12);
+    let newBallSize = Math.max(Math.round(ballSize * Math.pow(0.5, intervals)), 15);
     return newBallSize;
 }
 
