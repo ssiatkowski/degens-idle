@@ -3271,20 +3271,16 @@ function updateUpgradeButtons() {
             if (isAffordable(upgrade.cost)) {
                 foundAffordableUpgrade = true;
                 if (upgrade.isPUGodMode && upgrade.isGodMode) {
-                    button.classList.add('affordable-double-godmode');
-                    button.classList.remove('affordable', 'affordable-godmode', 'affordable-pu-godmode');
+                    button.className = 'affordable-double-godmode';
                 } else if (upgrade.isPUGodMode) {
-                    button.classList.add('affordable-pu-godmode');
-                    button.classList.remove('affordable', 'affordable-godmode', 'affordable-double-godmode');
+                    button.className = 'affordable-pu-godmode';
                 } else if (upgrade.isGodMode) {
-                    button.classList.add('affordable-godmode');
-                    button.classList.remove('affordable', 'affordable-pu-godmode', 'affordable-double-godmode');
+                    button.className = 'affordable-godmode';
                 } else {
-                    button.classList.add('affordable');
-                    button.classList.remove('affordable-godmode', 'affordable-pu-godmode', 'affordable-double-godmode');
+                    button.className = 'affordable';
                 }
             } else {
-                button.classList.remove('affordable', 'affordable-godmode', 'affordable-pu-godmode', 'affordable-double-godmode');
+                button.className = 'unaffordable'
             }
 
             // Attach event listeners for tooltips
