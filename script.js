@@ -2481,7 +2481,7 @@ function resumeWarpTime(remainingTime) {
 
     // Speed up resource generation and start warp timer
     clearInterval(resourceGenerationInterval);
-    resourceGenerationInterval = setInterval(generateResources, 50);
+    resourceGenerationInterval = setInterval(generateResources, 100);
     warpTimeInterval = setInterval(updateWarpTimeRemaining, 1000);
 
     // Disable button during warp
@@ -4476,6 +4476,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Love Sklls
     initializeLoveHallSkills();
 
+    // Set an interval to generate resources every second
+    resourceGenerationInterval = setInterval(generateResources, 500);
     // Load the game state from local storage
     loadGameState();
 
@@ -4484,8 +4486,6 @@ document.addEventListener('DOMContentLoaded', () => {
     updateEffectiveMultipliers();
     // Unlock mini-games based on the current game state
     unlockMiniGames();
-    // Set an interval to generate resources every second
-    resourceGenerationInterval = setInterval(generateResources, 500);
     // Update the list of available upgrades
     updateUpgradeList();
     // Update the display with the current game state
