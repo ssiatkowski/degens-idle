@@ -532,7 +532,7 @@ function updateStatsUI() {
     document.getElementById('playerAbsorbStat').innerText = formatNumber(playerAbsorb * 100) + '%';
 
     // Enemy Stats
-    document.getElementById('enemyHealthStat').innerText = formatNumber(enemyHealth);
+    document.getElementById('enemyHealthStat').innerText = formatNumber(enemyMaxHealth);
     document.getElementById('enemyDamageStat').innerText = `${formatNumber(enemyMinDamage)} - ${formatNumber(enemyMaxDamage)}`;
     document.getElementById('enemyAttackSpeedStat').innerText = formatNumber(enemyAttackSpeed);
     document.getElementById('enemyDefenseStat').innerText = formatNumber(enemyDefense);

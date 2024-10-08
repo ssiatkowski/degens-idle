@@ -22,8 +22,8 @@ const loveHallSkills = [
     { name: 'Illusion of Power', cost: 14, description: 'Lower auto-fight power threshold by 10x each for ascended/transcended upgrades.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 7, requirement: 'Overwhelming Mercy' },
     { name: 'Early Accelerant', cost: 14, description: '10x multiplier to first 6 resources, degrades by 2.5% with each purchased upgrade.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 7 },
 
-    { name: 'Power Infusion', cost: 30, description: '4x Power gain.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 8},
-    { name: 'Soulbound Embrace', cost: 30, description: 'Gain +5 Love Points every embrace.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 8, requirement: 'Cosmic Embrace' },
+    { name: 'Power Infusion', cost: 35, description: '4x Power gain.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 8},
+    { name: 'Soulbound Embrace', cost: 35, description: 'Gain +6 Love Points every embrace.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 8, requirement: 'Cosmic Embrace' },
 
     { name: 'Hopeful Soft Cap', cost: 42, description: 'Mini Games Soft Cap uses resource or Hopium (greater)', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 9 },
     { name: 'Fertile Scarcity', cost: 42, description: 'Cosmic Drought sets Stellar Harvest to 250x (instead of 1x)', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 9 },
@@ -79,8 +79,8 @@ const loveHallSkills = [
     { name: 'Fortified Defenses', cost: 0.04, description: 'Vitality Matrix is now 10x stronger.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 41 },
     { name: 'Study Accelerator', cost: 0.04, description: 'Meditation duration decreased by 0.2 seconds.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 41 },
 
-    { name: 'Deadpool Embrace', cost: 0.1, description: 'Deadpool revives do not reset on Infinite Embrace.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 42 },
-    { name: 'Rewarding Victories', cost: 0.1, description: 'Battle upgrades give +40% rewards.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 42 },
+    { name: 'Deadpool Embrace', cost: 0.12, description: 'Deadpool revives do not reset on Infinite Embrace.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 42 },
+    { name: 'Rewarding Victories', cost: 0.12, description: 'Battle upgrades give +40% rewards.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 42 },
     
     { name: 'Quantum Fortress', cost: 0.25, description: 'Make Quantum Bastion 2.5x more powerful.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 43, requirement: 'Fortified Defenses' },
     { name: 'Chrono Magnetizer', cost: 0.25, description: 'Make Arcane Magnetizer 2x faster.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 43 },
@@ -97,17 +97,20 @@ const loveHallSkills = [
     { name: 'Infinite Prestige', cost: 4.2, description: 'Automatically apply Prestige Mult without resetting.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 47 },
     { name: 'Hopium Trade', cost: 4.2, description: 'Trade Hopium for any of the first 4 resources at a 1:1 ratio.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 47, requirement: 'Master of Bargains' },
 
-    { name: 'Perpetual Collapse', cost: 11, description: 'Auto Big Crunch (default 25x)', unlocked: false, level: 'Cosmic Truth (42x)', pair: 48 },
-    { name: 'Beacon of Seven Suns', cost: 11, description: 'Multiplicative 7% bonus to Copium and Hopium for every Hall of Love skill.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 48 },
+    { name: 'Tranquility Overdrive', cost: 5.5, description: 'Purchasing non-meditation upgrades no longer consumes serenity.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 48, requirement: 'Rewarding Meditations' },
+    { name: 'Time Flux', cost: 5.5, description: 'Time Warp maximum time increased to 12 minutes.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 48},
 
-    { name: 'Resonance of Love', cost: 15, description: 'Multiply Serenity by log2 of current Love Points.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 49, requirement: 'Altruistic Embrace' },
-    { name: 'Equilibrium of Hope', cost: 15, description: 'Automatically trade 1% Hopium for each lower resource.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 49, requirement: 'Hopium Trade' },
+    { name: 'Perpetual Collapse', cost: 11, description: 'Auto Big Crunch (default 25x)', unlocked: false, level: 'Cosmic Truth (42x)', pair: 49 },
+    { name: 'Beacon of Seven Suns', cost: 11, description: 'Multiplicative 7% bonus to Copium and Hopium for every Hall of Love skill.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 49 },
 
-    { name: 'Temporal Drag', cost: 22, description: 'During meditation, decrease ball velocity by 25%.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 50 },
-    { name: 'Look Past Distractions', cost: 22, description: 'During meditation, decrease # of balls by 1.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 50 },
+    { name: 'Resonance of Love', cost: 15, description: 'Multiply Serenity by log2 of current Love Points.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 50, requirement: 'Altruistic Embrace' },
+    { name: 'Equilibrium of Hope', cost: 15, description: 'Automatically trade 1% Hopium for each lower resource.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 50, requirement: 'Hopium Trade' },
 
-    { name: 'Faith-Fueled Knowledge', cost: 30, description: 'Multiplier to knowledge based on log10 of current Hopium / 10.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 51 },
-    { name: 'Event Horizon Boost', cost: 30, description: 'Increase Big Crunch base from 2 to 2.1.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 51 },
+    { name: 'Temporal Drag', cost: 22, description: 'During meditation, decrease ball velocity by 25%.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 51 },
+    { name: 'Look Past Distractions', cost: 22, description: 'During meditation, decrease # of balls by 1.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 51 },
+
+    { name: 'Faith-Fueled Knowledge', cost: 30, description: 'Multiplier to knowledge based on log10 of current Hopium / 10.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 52 },
+    { name: 'Event Horizon Boost', cost: 30, description: 'Increase Big Crunch base from 2 to 2.1.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 52 },
 
     // { name: 'Intrinsic Meditation', cost: 42, description: 'Auto complete meditations that are ascended & transcended.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 52 },
     // { name: 'The Ultimate Fix', cost: 42, description: 'Fix all remaining resources.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 52, requirement: 'Hopium Fix' },
@@ -487,6 +490,14 @@ function unlockLoveHallSkill(skill, duringLoad = false) {
             case 'Hopium Trade':
                 hopiumTradeSkill = true;
                 addHopiumToFromResource();
+                break;
+
+            case 'Tranquility Overdrive':
+                tranquilityOverdriveSkill = true;
+                break;
+                    
+            case 'Time Flux':
+                warpTimeMax = 60 * 60 * 12;
                 break;
 
             case 'Perpetual Collapse':

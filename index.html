@@ -181,11 +181,22 @@
                 <p class="per-second">Serenity per second: <span id="sps">0</span></p>
             </div>
             <div id="cookieButtonContainer">
-                <button id="cookieButton" style="display:none;">
+                <!-- Cookie Button -->
+                <button id="cookieButton">
                     <img src="imgs/cookie.jpg" alt="Cookie">
                     <span class="cookieTooltip">Each cookie click counts as 10 clicks on collect buttons for Copium, Delusion, Yacht Money, and Troll Points!</span>
                 </button>
+            
+                <!-- Warp Time Button -->
+                <div id="warpTimeButtonContainer">
+                    <button id="warpTimeButton" class="game-button" style="display: none;">
+                        <span class="button-content"></span>
+                        <div class="overlay-circle"></div> <!-- Overlay that will mask the progress -->
+                        <span class="cookieTooltip">Warp Time!</span>
+                    </button>
+                </div>         
             </div>
+                 
             <p class="stellar-harvest-text" id="stellar-harvest-display" style="display:none;">Stellar Harvest Mult x1.00</p>
             <button id="prestigeButton" style="display:none;" class="custom-button">Prestige</button>
             <p class="prestige-multiplier-text" id="prestige-multiplier">Prestige: x1.00 mult</p>
@@ -474,7 +485,7 @@
         <div class="settings-overlay-content">
             <span class="close-button" id="closeSettingsOverlay">&times;</span>
             <h1>Settings</h1>
-            <h4>Degens Idle v0.9299</h4>
+            <h4>Degens Idle v0.93</h4>
 
             <div class="settings-section">
                 <h3>Save Management</h3>

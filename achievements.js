@@ -147,6 +147,13 @@ const achievements = [
         type: 'skill',
     },
     {
+        name: 'Time Warp',
+        isUnlocked: false,
+        hoverText: 'another mechanic unlocked by an upgrade',
+        img: 'imgs/achievements/time_warp.jpg',
+        type: 'progression',
+    },
+    {
         name: 'Admire The Acronym',
         isUnlocked: false,
         hoverText: 'understand the meaning of this game',

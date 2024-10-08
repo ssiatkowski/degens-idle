@@ -139,6 +139,7 @@ let serenityGainYachtMoney = false;
 let serenityGainTrollPoints = false;
 let resonanceOfLoveSkill = false;
 let hopiumTradeSkill = false;
+let tranquilityOverdriveSkill = false;
 let autoTradeHopiumIntervalId = null;
 let equilibriumOfHopeSkill = false;
 let temporalDragReduction = 1;
@@ -208,6 +209,14 @@ let crunchTimer = 9999;
 let embraceTimer = 9999;
 
 let numLoveHallFreeRespecs; // Global variable for free respecs
+
+const warpButton = document.getElementById('warpTimeButton');
+let accumulatedWarpTime = 0;
+let warpTimeMax = 60 * 60 * 6;
+let warpTimeActive = false;
+let warpTimeDuration = 0; // X minutes of warp
+let warpTimeRemaining = 0; // Track remaining warp time
+let warpTimeInterval = null;
 
 let enableQuickMode = false;
 let enableButtonAnimations = true;
@@ -469,6 +478,12 @@ function loadGameState() {
 
     numLoveHallFreeRespecs = localStorage.getItem('numLoveHallFreeRespecs') !== null ? parseFloat(localStorage.getItem('numLoveHallFreeRespecs')) : 1;
 
+    accumulatedWarpTime = localStorage.getItem('accumulatedWarpTime') !== null ? parseFloat(localStorage.getItem('accumulatedWarpTime')) : 0;
+    warpTimeRemaining = localStorage.getItem('warpTimeRemaining') !== null ? parseFloat(localStorage.getItem('warpTimeRemaining')) : 0;
+    // If there's any remaining warp time, continue warp
+    if (warpTimeRemaining > 0) {
+        resumeWarpTime(warpTimeRemaining);
+    }
 
     consecutiveClicks = parseInt(localStorage.getItem('consecutiveClicks')) || 0;
     lastClickedBoxIndex = parseInt(localStorage.getItem('lastClickedBoxIndex')) || 0;
@@ -512,6 +527,10 @@ function loadGameState() {
         } else {
             cookieTooltip.textContent = `Each cookie click counts as ${cookieClickMultiplier} clicks on collect buttons for Copium, Delusion, Yacht Money, and Troll Points!`;
         }
+    }
+
+    if (JSON.parse(localStorage.getItem('timeWarpButtonVisible'))) {
+        warpButton.style.display = 'block';
     }
 
     const savedAchievements = JSON.parse(localStorage.getItem('achievements')) || [];
@@ -686,6 +705,7 @@ function saveGameState() {
 
     // Save the state of the Cookie Clicker button
     localStorage.setItem('cookieButtonVisible', document.getElementById('cookieButton').style.display === 'block');
+    localStorage.setItem('timeWarpButtonVisible', warpButton.style.display === 'block');
     localStorage.setItem('cookieClickMultiplier', cookieClickMultiplier);
 
     localStorage.setItem('transcendenceUnlocked', transcendenceUnlocked);
@@ -705,6 +725,10 @@ function saveGameState() {
     localStorage.setItem('currentNumberFormat', JSON.stringify(currentNumberFormat));
 
     localStorage.setItem('numLoveHallFreeRespecs', numLoveHallFreeRespecs);
+
+    localStorage.setItem('accumulatedWarpTime', accumulatedWarpTime);
+    localStorage.setItem('warpTimeRemaining', warpTimeRemaining); // Save remaining warp time
+ 
 
     // Save unlocked library skills
     if (Array.isArray(librarySkills)) {
@@ -849,6 +873,7 @@ function generateResources() {
 
     crunchTimer += 0.5;
     embraceTimer += 0.5;
+    if (accumulatedWarpTime < warpTimeMax) accumulatedWarpTime += 0.5;
 
     updateDisplay();
 }
@@ -999,6 +1024,7 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
                 spaceContinuumStretchSkill = false;
                 enlightenedPrestigeSkill = false;
                 hopefulBeginningSkill = false;
+                hopium = 0;
                 autoFightSkill = false;
                 autoFightEnabled = false;
                 infinitePrestigeSkill = false;
@@ -1021,6 +1047,7 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
                 serenityGainTrollPoints = false;
                 resonanceOfLoveSkill = false;
                 hopiumTradeSkill = false;
+                tranquilityOverdriveSkill = false;
                 equilibriumOfHopeSkill = false;
                 temporalDragReduction = 1;
                 lookPastDistractions = 0;
@@ -1030,6 +1057,10 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
                 autoBigCrunchThreshold = null
                 beaconOfSevenSunsSkill = false;
                 beaconOfSevenSunsMult = 1;
+
+                accumulatedWarpTime = 0;
+                endWarpTime();
+                warpButton.style.display = 'none';
 
                 loveHallUnlocked = false;
                 document.getElementById('loveHallButton').style.display = 'none';
@@ -1638,6 +1669,7 @@ function updateDisplay() {
     updateInfiniteEmbraceButton();
     updateUpgradeButtons();
     updateNumUpgrades();
+    updateWarpTime();
 }
 
 function updateMultipliersDisplay() {
@@ -2360,6 +2392,107 @@ function updateInfiniteEmbraceButton() {
     }
 }
 
+// Function to update Warp Time visuals and progress
+function updateWarpTime() {
+    if ((warpButton.style.display) == 'none') return;
+
+    const overlayCircle = document.querySelector('.overlay-circle');
+
+    // Calculate the progress in percentage of max warp time
+    const progressPercentage = Math.min((accumulatedWarpTime / warpTimeMax) * 100, 100);
+
+    // Convert the progress into degrees for the conic-gradient
+    const progressDegree = (progressPercentage / 100) * 360;
+
+    // Reverse the conic-gradient to reveal the image clockwise
+    overlayCircle.style.backgroundImage = `conic-gradient(transparent ${progressDegree}deg, rgba(0, 0, 0, 0.9) ${progressDegree}deg 360deg)`;
+
+    const warpTimeTooltip = document.querySelector('#warpTimeButton .cookieTooltip');
+    if (warpTimeActive) {
+        warpTimeTooltip.innerHTML = `${warpTimeRemaining>60 ? `${Math.floor(warpTimeRemaining / 60)} minute${warpTimeRemaining < 120 ? '' : 's'}<br>` : ''}${warpTimeRemaining % 60} second${warpTimeRemaining > 1 ? 's' : ''}`;
+    } else if (accumulatedWarpTime < 3600) {
+        warpTimeTooltip.innerHTML = `Time Warp<br>Not Ready`;
+    } else {
+        warpTimeTooltip.innerHTML = `Activate<br><strong>${Math.floor(accumulatedWarpTime / 3600)} minute${accumulatedWarpTime < 7200 ? '' : 's'}</strong> of<br>Warp Time`;
+    }
+
+    // Add/remove 'affordable' class based on accumulatedWarpTime
+    if (accumulatedWarpTime >= 3600) {
+        warpButton.classList.add('affordable');
+        warpButton.classList.remove('not-affordable');
+    } else {
+        warpButton.classList.add('not-affordable');
+        warpButton.classList.remove('affordable');
+    }
+}
+
+// Warp Time Activation logic remains the same
+warpButton.addEventListener("click", function () {
+
+    console.log('Warp Button Clicked')
+    if (warpTimeActive || accumulatedWarpTime < 3600) return;
+
+    warpTimeActive = true;
+    const fullHours = Math.floor(accumulatedWarpTime / 3600); // Only use full hours
+    warpTimeRemaining = fullHours * 60; // Warp for X minutes
+    accumulatedWarpTime -= fullHours * 3600; // Decrement full hour increments
+
+    // Speed up resource generation for the warp time duration
+    clearInterval(resourceGenerationInterval);
+    resourceGenerationInterval = setInterval(generateResources, 50); // Faster generation
+    warpTimeInterval = setInterval(updateWarpTimeRemaining, 1000); // Track remaining time every second
+
+    // Disable button during warp
+    warpButton.disabled = true;
+    warpButton.classList.remove("affordable");
+    warpButton.classList.add("spinning");
+});
+
+// Update warp time remaining and save state
+function updateWarpTimeRemaining() {
+    warpTimeRemaining--; // Decrease remaining time by 1 second
+
+    // If warp time has ended, stop the interval
+    if (warpTimeRemaining <= 0) {
+        endWarpTime();
+    } 
+}
+
+// End Warp Time logic
+function endWarpTime() {
+    clearInterval(warpTimeInterval);
+    clearInterval(resourceGenerationInterval);
+
+    // Restore the original resource generation interval
+    resourceGenerationInterval = setInterval(generateResources, 500); // Back to normal speed
+    warpTimeActive = false;
+    warpTimeRemaining = 0; // Reset warp time remaining
+
+    warpButton.classList.remove("spinning");
+
+    // Re-enable the button after warp ends
+    warpButton.disabled = false;
+
+    // Update UI elements
+    updateWarpTime();
+}
+
+// Resume Warp Time after reload
+function resumeWarpTime(remainingTime) {
+    warpTimeActive = true;
+    warpTimeRemaining = remainingTime;
+
+    // Speed up resource generation and start warp timer
+    clearInterval(resourceGenerationInterval);
+    resourceGenerationInterval = setInterval(generateResources, 50);
+    warpTimeInterval = setInterval(updateWarpTimeRemaining, 1000);
+
+    // Disable button during warp
+    warpButton.disabled = true;
+    warpButton.classList.remove("affordable");
+    warpButton.classList.add("spinning");
+}
+
 
 
 // Function to generate idle resources based on the elapsed time
@@ -2378,6 +2511,7 @@ function generateIdleResources(elapsedSeconds) {
 
     crunchTimer += elapsedSeconds;
     embraceTimer += elapsedSeconds;
+    accumulatedWarpTime = Math.min (accumulatedWarpTime + elapsedSeconds, warpTimeMax);
 
     const baseKnowledgePerSecond = calculateBaseKnowledge();
 
@@ -2477,7 +2611,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true, ski
         hopium -= cost.hopium || 0;
         knowledge -= cost.knowledge || 0;
         power = (nebulaOverdriveSkill && !isFight && !isMeditation) ? power : power - cost.power || 0;
-        serenity -= cost.serenity || 0;
+        serenity = (tranquilityOverdriveSkill && !isFight && !isMeditation) ? serenity : serenity - cost.serenity || 0;
 
         // Special case for the "Antimatter Dimension" upgrade
         if (isFight) {
@@ -2578,6 +2712,10 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true, ski
         // Special case for unlocking the "Cookie Clicker" upgrade
         if (name === "Cookie Clicker") {
             document.getElementById('cookieButton').style.display = 'block';
+        }
+
+        if (name === "Time Warp") {
+            warpButton.style.display = 'block';
         }
 
         // Special case for unlocking the "Transcendence" upgrade

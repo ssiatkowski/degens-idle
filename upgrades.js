@@ -435,6 +435,14 @@ const upgrades = [
         message: `imgs/modal_imgs/resource_hover.jpg`,
     },
     {
+        name: `Time Warp`,
+        cost: { copium: 1.234e14, delusion: 5.678e14, yachtMoney: 9.012e14, trollPoints: 3.456e14, hopium: 78.90, knowledge: 1234, power: 0, serenity: 0 },
+        earnings: { copiumPerSecond: 12, delusionPerSecond: 34, yachtMoneyPerSecond: 56, trollPointsPerSecond: 78, hopiumPerSecond: 0.9, knowledgePerSecond: 0.000012, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: `imgs/time_warp.jpg`,
+        message: `You've unlocked the power of Time Warp! This remarkable feature accelerates resource generation and all game timers, including warp time accumulation itself, by an impressive 10x. For every hour you spend playing—whether active or offline—you’ll accumulate 1 minute of Time Warp, up to a maximum of 6 minutes. Best of all, Time Warp transcends all prestige layers, carrying its temporal prowess through every level of advancement. Use Time Warp wisely to supercharge your progress and witness time itself bend to your advantage.`,
+        achievement: 'Time Warp',
+    },
+    {
         name: `Cybertruck`,
         cost: { copium: 0, delusion: 0, yachtMoney: 3e14, trollPoints: 0, hopium: 10000000, knowledge: 0, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 1.05e7, delusionPerSecond: 1.65e6, yachtMoneyPerSecond: -100000, trollPointsPerSecond: 1.2e6, hopiumPerSecond: 0, knowledgePerSecond: 0.0000037, powerPerSecond: 0, serenityPerSecond: 0 },
@@ -1661,4 +1669,10 @@ const upgrades = [
         message: `Through this meditation, you’ve discovered the <strong>path to inner peace and mindfulness</strong>. Buddhism teaches that by releasing attachment and practicing compassion, you can transcend suffering and find enlightenment. You’ve learned the power of living in the present moment, cultivating awareness and kindness toward yourself and others. Continue to walk the middle path, and you will find peace in all aspects of life.`,
         hoverOverwrite: 'there is no such thing as a wrong sidekick',
     },
+    // {
+    //     name: `Religious Books`,
+    //     cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 1e145, knowledge: 1e120, power: 0, serenity: 1e21 },
+    //     earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 1e55, knowledgePerSecond: 1e29, powerPerSecond: 0, serenityPerSecond: 1e11 },
+    //     img: `imgs/the_cure.jpg`,
+    // },
 ];

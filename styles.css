@@ -757,6 +757,13 @@ button.disabled {
 
 }
 
+/* Flexbox container for cookie and warp button */
+#cookieButtonContainer {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+}
 
 #cookieButton {
     background: none;
@@ -773,7 +780,7 @@ button.disabled {
 }
 
 #cookieButton img {
-    width: 150px; /* Adjust size as needed */
+    width: 140px; /* Adjust size as needed */
     height: auto;
 }
 
@@ -841,6 +848,78 @@ button.disabled {
         transform: scale(1);
     }
 }
+
+#warpTimeButtonContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#warpTimeButton {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    background-image: url('imgs/warp_circle.png'); /* Your custom image */
+    background-size: cover;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border: 3px solid #000000;
+    box-sizing: border-box;
+}
+
+#warpTimeButton .button-content {
+    z-index: 2;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+}
+
+#warpTimeButton .overlay-circle {
+    position: absolute;
+    width: 110%; /* Make the overlay slightly larger than the button */
+    height: 110%; /* Ensure it covers the entire button including the edges */
+    border-radius: 50%;
+    background-image: conic-gradient(transparent 0deg, rgba(0, 0, 0, 0.9) 0deg 360deg); /* Start transparent and progress */
+    z-index: 1;
+    top: -5%; /* Shift the overlay to ensure it's centered properly */
+    left: -5%;
+    clip-path: circle(50%); /* Keep the circular clipping */
+    transition: background-image 0.5s linear; /* Smooth reveal */
+}
+
+#warpTimeButton.spinning {
+    animation: spin-animation 1s linear infinite;
+}
+
+#warpTimeButton.spinning .overlay-circle {
+    display: none; /* Hide overlay when spinning */
+}
+
+#warpTimeButton:hover .cookieTooltip {
+    visibility: visible;
+    font-size: 14px;
+    opacity: 1;
+}
+
+#warpTimeButton.affordable {
+    background-color: rgba(255, 255, 255, 0.9); /* Normal active button */
+}
+
+#warpTimeButton.not-affordable {
+    background-color: rgba(128, 128, 128, 0.5); /* Gray background for disabled */
+    cursor: not-allowed; /* Indicate that it's not clickable */
+}
+
+
+@keyframes countdown {
+    from { background-image: conic-gradient(#76ff03 360deg, #121212 360deg); }
+    to { background-image: conic-gradient(#76ff03 0deg, #121212 0deg); }
+}
+
+
 
 /* Common Custom Button Styling */
 .custom-button {
