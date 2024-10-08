@@ -439,7 +439,7 @@ const upgrades = [
         cost: { copium: 1.234e14, delusion: 5.678e14, yachtMoney: 9.012e14, trollPoints: 3.456e14, hopium: 78.90, knowledge: 1234, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 12, delusionPerSecond: 34, yachtMoneyPerSecond: 56, trollPointsPerSecond: 78, hopiumPerSecond: 0.9, knowledgePerSecond: 0.000012, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/time_warp.jpg`,
-        message: `You've unlocked the power of Time Warp! This remarkable feature accelerates resource generation and all game timers, including warp time accumulation itself, by an impressive 10x. For every hour you spend playing—whether active or offline—you’ll accumulate 1 minute of Time Warp, up to a maximum of 6 minutes. Best of all, Time Warp transcends all prestige layers, carrying its temporal prowess through every level of advancement. Use Time Warp wisely to supercharge your progress and witness time itself bend to your advantage.`,
+        message: `You've unlocked the power of Time Warp! This remarkable feature accelerates resource generation and all game timers, including warp time accumulation itself, by an impressive 5x. For every hour you spend playing—whether active or offline—you’ll accumulate 1 minute of Time Warp, up to a maximum of 6 minutes. Best of all, Time Warp works across all prestige layers, carrying its temporal prowess through every level of advancement. Use Time Warp wisely to supercharge your progress and witness time itself bend to your advantage.`,
         achievement: 'Time Warp',
     },
     {

@@ -605,9 +605,6 @@ function loadGameState() {
     purchasedUpgrades.forEach(upgrade => {
         if (upgrade) {
             addPurchasedUpgrade(upgrade.img, upgrade.name, upgrade.earnings, upgrade.isGodMode, upgrade.isPUGodMode, upgrade.message, upgrade.isFight, upgrade.isMeditation);
-            if (upgrade.name === "Cookie Clicker") {
-                document.getElementById('cookieButton').style.display = 'block';
-            }
         }
     });
 
@@ -2439,7 +2436,7 @@ warpButton.addEventListener("click", function () {
 
     // Speed up resource generation for the warp time duration
     clearInterval(resourceGenerationInterval);
-    resourceGenerationInterval = setInterval(generateResources, 50); // Faster generation
+    resourceGenerationInterval = setInterval(generateResources, 100); // Faster generation
     warpTimeInterval = setInterval(updateWarpTimeRemaining, 1000); // Track remaining time every second
 
     // Disable button during warp
