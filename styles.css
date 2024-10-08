@@ -853,6 +853,7 @@ button.disabled {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative; /* Make this the reference point for the tooltip */
 }
 
 #warpTimeButton {
@@ -898,10 +899,18 @@ button.disabled {
     display: none; /* Hide overlay when spinning */
 }
 
-#warpTimeButton:hover .cookieTooltip {
+
+#warpTimeButtonContainer .cookieTooltip {
+    white-space: nowrap; /* Prevent the text from wrapping */
+    width: auto; /* Automatically adjust the width based on content */
+    max-width: 100%; /* Prevents the tooltip from being too wide */
+}
+
+#warpTimeButtonContainer:hover .cookieTooltip {
     visibility: visible;
-    font-size: 14px;
     opacity: 1;
+    font-size: 14px;
+    pointer-events: none; /* Ensure no blocking when hidden or visible */
 }
 
 #warpTimeButton.affordable {

@@ -2404,7 +2404,7 @@ function updateWarpTime() {
     // Reverse the conic-gradient to reveal the image clockwise
     overlayCircle.style.backgroundImage = `conic-gradient(transparent ${progressDegree}deg, rgba(0, 0, 0, 0.9) ${progressDegree}deg 360deg)`;
 
-    const warpTimeTooltip = document.querySelector('#warpTimeButton .cookieTooltip');
+    const warpTimeTooltip = document.querySelector('#warpTimeButtonContainer .cookieTooltip');
     if (warpTimeActive) {
         warpTimeTooltip.innerHTML = `${warpTimeRemaining>60 ? `${Math.floor(warpTimeRemaining / 60)} minute${warpTimeRemaining < 120 ? '' : 's'}<br>` : ''}${warpTimeRemaining % 60} second${warpTimeRemaining > 1 ? 's' : ''}`;
     } else if (accumulatedWarpTime < 3600) {
