@@ -527,6 +527,8 @@ function loadGameState() {
         } else {
             cookieTooltip.textContent = `Each cookie click counts as ${cookieClickMultiplier} clicks on collect buttons for Copium, Delusion, Yacht Money, and Troll Points!`;
         }
+    } else {
+        document.getElementById('cookieButton').style.display = 'none';
     }
 
     if (JSON.parse(localStorage.getItem('timeWarpButtonVisible'))) {

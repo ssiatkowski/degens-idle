@@ -378,6 +378,13 @@ const achievements = [
         type: 'puzzle',
     },
     {
+        name: 'Morale Boost',
+        isUnlocked: false,
+        hoverText: 'a strong leader will help you defeat Sauron',
+        img: 'imgs/achievements/morale_boost.jpg',
+        type: 'puzzle',
+    },
+    {
         name: 'Avoid the Crit',
         isUnlocked: false,
         hoverText: 'defeat Sauron',
@@ -443,7 +450,7 @@ const achievements = [
     {
         name: 'Chuck Norris Kidney',
         isUnlocked: false,
-        hoverText: 'Find a way to distract Chuck Norris',
+        hoverText: 'find a way to distract Chuck Norris',
         img: 'imgs/achievements/chuck_norris_kidney.jpg',
         type: 'puzzle',
     },
@@ -474,6 +481,13 @@ const achievements = [
         hoverText: 'why spend power?',
         img: 'imgs/achievements/nebula_overdrive.jpg',
         type: 'progression',
+    },
+    {
+        name: 'It Takes Vegeta to Know Vegeta',
+        isUnlocked: false,
+        hoverText: 'self-explanatory',
+        img: 'imgs/achievements/vegeta_vs_vegeta.jpg',
+        type: 'puzzle',
     },
     {
         name: 'Outsmart Vegeta SS God',
@@ -826,7 +840,7 @@ const achievements = [
     {
         name: 'Eternal Flame',
         isUnlocked: false,
-        hoverText: 'take 88K+ damage at once from ameterasu',
+        hoverText: 'take 8888+ damage at once from ameterasu',
         img: 'imgs/achievements/amaterasu.jpg',
         type: 'puzzle',
     },
@@ -849,6 +863,13 @@ const achievements = [
         isUnlocked: false,
         hoverText: '???',
         img: 'imgs/achievements/unlikely_duo.jpg',
+        type: 'puzzle',
+    },
+    {
+        name: 'Unlikely Duo #2',
+        isUnlocked: false,
+        hoverText: '???',
+        img: 'imgs/achievements/unlikely_duo_2.jpg',
         type: 'puzzle',
     },
     {

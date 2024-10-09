@@ -391,10 +391,11 @@ function startFightGame(enemyName, enemyImg) {
                 document.getElementById('enemyAbsorbStat').innerText = formatNumber(enemyAbsorb * 100) + '%';
                 unlockAchievement('Unlikely Duo');
                 logFight("<span style='color: green; font-weight: bold; font-size: 1.3em';>Darth Vader tries to use the force to stun you but Qui-Gon Jinn protects you. Darth Sidious uses force lightning to stun Darth Vader for 6 turns and reduce his damage absorption to 10%.</span>");
-                numBattleGimmicks += 1;
+                numBattleGimmicks += 2;
             } else if (!purchasedUpgradesSet.has("Still very stupid")) {
                 unlockAchievement('Academic Grandmaster');
                 logFight("<span style='color: green; font-weight: bold; font-size: 1.3em';>Darth Vader tries to use the force to stun you but Qui-Gon Jinn protects you. </span>");
+                numBattleGimmicks += 1;
             } else if (!purchasedUpgradesSet.has("Unlimited Power")) {
                 enemyStunCount = 6;
                 enemyAbsorb = 0.1;
@@ -402,10 +403,18 @@ function startFightGame(enemyName, enemyImg) {
                 document.getElementById('enemyAbsorbStat').innerText = formatNumber(enemyAbsorb * 100) + '%';
                 unlockAchievement('Sheev vs Anakin');
                 logFight("<span style='color: green; font-weight: bold; font-size: 1.3em';>Darth Vader uses the force to stun you for 3 turns. Darth Sidious uses force lightning to stun Darth Vader for 6 turns and reduce his damage absorption to 10%.</span>");
+                numBattleGimmicks += 1;
             } else {
                 playerStunCount = 3;
                 logFight("<span style='color: red; font-weight: bold; font-size: 1.3em';>Darth Vader uses the force to stun you for 3 turns. (if only you could get someone who could use the force to protect you) </span>");
             }
+        } else if (currEnemyName === "Sauron" && !purchasedUpgradesSet.has("One Does Not Simply")) {
+            playerBaseMaxDamage = playerBaseMaxDamage * 1.2;
+            playerMaxDamage = playerBaseMaxDamage;
+            document.getElementById('playerDamageStat').innerText = `${formatNumber(playerMinDamage)} - ${formatNumber(playerMaxDamage)}`;
+            unlockAchievement('Morale Boost');
+            logFight("<span style='color: green; font-weight: bold; font-size: 1.3em';>Though Boromir offers no special powers, his presence as a leader inspires you. His courage and determination lift your spirits, boosting your morale and increasing your max damage by 20%.</span>");
+            numBattleGimmicks += 1;
         } else if (currEnemyName === "Chuck Norris") {
             if (!purchasedUpgradesSet.has("Training Dummy")) {
                 enemyDefense /= 2;
@@ -419,6 +428,12 @@ function startFightGame(enemyName, enemyImg) {
             } else {
                 logFight("<span style='color: red; font-weight: bold; font-size: 1.3em';>Chuck Norris has no distractions and is ready to fight you at full power.</span>");
             }
+        } else if (currEnemyName === "Vegeta" && !purchasedUpgradesSet.has("Helpful Vegeta")) {
+            playerCritChance = Math.min((playerCritChance + 0.1), 1);
+            document.getElementById('playerCritChanceStat').innerText = formatNumber(playerCritChance * 100) + '%';
+            unlockAchievement('It Takes Vegeta to Know Vegeta');
+            logFight("<span style='color: green; font-weight: bold; font-size: 1.3em';>In a strange time-travel twist, you face a vastly stronger future Vegeta, with a younger Vegeta by your side. Unable to match his future self’s power, young Vegeta offers crucial advice, raising your critical hit chance by 10% and giving you a chance against the overwhelming foe.</span>");
+            numBattleGimmicks += 1;
         } else if (currEnemyName === "Kaguya") {
             if (!purchasedUpgradesSet.has("Kung Fu Bunny")) {
                 unlockAchievement('Wrong Sidekick');
@@ -439,6 +454,9 @@ function startFightGame(enemyName, enemyImg) {
             } else {
                 sasukeIsHelping = false;
                 logFight("<span style='color: red; font-weight: bold; font-size: 1.3em';>You stand alone against the biggest evil the world has ever seen.</span>");
+            }
+            if (numBattleGimmicks >= 9) {
+                unlockAchievement('Bells and Whistles');
             }
         }
 
@@ -628,7 +646,7 @@ function attackEnemy(resolve) {
     if (playerAmaterasuStacks > 0) {
         const amaterasuDamage = Math.floor(playerMaxHealth * 0.002 * playerAmaterasuStacks);
         playerHealth -= amaterasuDamage;
-        if(amaterasuDamage >= 88000){
+        if(amaterasuDamage >= 8888){
             unlockAchievement('Eternal Flame');
         }
         logFight(`<span style='color: black;'>${playerAmaterasuStacks.toFixed(1)} stacks of Amaterasu burn you for ${formatNumber(amaterasuDamage)} damage!</span>`);
@@ -662,104 +680,117 @@ function attackEnemy(resolve) {
         return; // Skip attacking the enemy, as the player attacked themselves
     }
 
-    let isCritical = Math.random() < playerCritChance;
-    const baseDamage = Math.floor(Math.random() * (playerMaxDamage - playerMinDamage + 1)) + playerMinDamage;
-    let damage = 0;
-
-    if (firstAttackOfBattle) {
-        // Apply Prime Impact skill for the first attack - dodge checks are skipped
-        if (!isCritical) {
-            damage = baseDamage;
-            logFight(`<span style='color: #FBCEB1;'>Prime Impact:</span> You attack ${currEnemyName} for ${formatNumber(Math.max(damage, 0))} damage!</span>`);
-        } else {
-            damage = Math.ceil(baseDamage * playerCritDamage);
-            logFight(`<span style='color: #FBCEB1;'>Prime Impact:</span> <span style='color: #ADD8E6;'>You land a critical hit on ${currEnemyName} for ${formatNumber(Math.max(damage, 0))} damage!</span>`);
-        }
-        firstAttackOfBattle = false;
+    
+    if (currEnemyName === "Deadpool" && !purchasedUpgradesSet.has("Impossible") && !purchasedUpgradesSet.has("Captain Degen") ) {
+        enemyHealth = 0;
+        logFight("<span style='color: green; font-weight: bold; font-size: 1.3em';>In an unlikely team-up, frustrated for different reasons—Captain America sick of Deadpool’s endless jokes and Thanos fed up with his antics—join forces. Cap throws his shield with precision, and Thanos supercharges it with the Power Stone. The impact obliterates Deadpool, reducing him to nothing but dust. Satisfied, they walk away without a word, unaware that Deadpool’s ashes may already starting to reform behind them.</span>");
+        unlockAchievement('Unlikely Duo #2')
+        buyUpgrade(encodeName("Impossible"), true, true);
+        buyUpgrade(encodeName("Captain Degen"), true, true);
+        numBattleGimmicks += 2;
     } else {
-        // Handle non-critical dodge mechanics (applies only if not a critical hit)
-        if (!isCritical && Math.random() < enemyNonCritDodge) {
-            logFight(`<span style='color: yellow;'>${currEnemyName} effortlessly dodges your non-critical attack!</span>`);
-            return; // Enemy dodged, so the attack ends here
-        }
 
-        // Handle regular dodge mechanics (applies to both critical and non-critical hits)
-        if (Math.random() < enemyDodge) {
-            logFight(`<span style='color: orange;'>${currEnemyName} dodges your attack!</span>`);
-            return; // Enemy dodged, so the attack ends here
-        }
+        let isCritical = Math.random() < playerCritChance;
+        const baseDamage = Math.floor(Math.random() * (playerMaxDamage - playerMinDamage + 1)) + playerMinDamage;
+        let damage = 0;
 
-        // Handle regular dodge mechanics (applies to both critical and non-critical hits)
-        if (kamuiActive && isCritical) {
-            kamuiActive = false;
-            if (sasukeIsHelping) {
-                // Sasuke helps prevent Kamui from ending the turn, but makes the hit non-critical
-                logFight(`<span style='color: blue;'>Sasuke sees through ${currEnemyName}'s Kamui escape! You still land a hit, but it's no longer critical.</span>`);
-                isCritical = false; // Hit is still successful, but not critical
+        
+            
+        if (firstAttackOfBattle) {
+            // Apply Prime Impact skill for the first attack - dodge checks are skipped
+            if (!isCritical) {
+                damage = baseDamage;
+                logFight(`<span style='color: #FBCEB1;'>Prime Impact:</span> You attack ${currEnemyName} for ${formatNumber(Math.max(damage, 0))} damage!</span>`);
             } else {
-                logFight(`<span style='color: orange;'>${currEnemyName} uses Kamui and dodges your critical attack!</span>`);
+                damage = Math.ceil(baseDamage * playerCritDamage);
+                logFight(`<span style='color: #FBCEB1;'>Prime Impact:</span> <span style='color: #ADD8E6;'>You land a critical hit on ${currEnemyName} for ${formatNumber(Math.max(damage, 0))} damage!</span>`);
+            }
+            firstAttackOfBattle = false;
+        } else {
+            // Handle non-critical dodge mechanics (applies only if not a critical hit)
+            if (!isCritical && Math.random() < enemyNonCritDodge) {
+                logFight(`<span style='color: yellow;'>${currEnemyName} effortlessly dodges your non-critical attack!</span>`);
                 return; // Enemy dodged, so the attack ends here
             }
-        }
 
-
-        // Calculate damage
-        if (isCritical) {
-            damage = Math.ceil(baseDamage * playerCritDamage) - enemyDefense;
-            logFight(`<span style='color: #ADD8E6;'>You land a critical hit on ${currEnemyName} for ${formatNumber(Math.max(damage, 0))} damage!</span>`);
-        } else {
-            damage = baseDamage - enemyDefense;
-            logFight(`You attack ${currEnemyName} for ${formatNumber(Math.max(damage, 0))} damage!`);
-        }
-    }
-
-    // Handle Temporal Flux skill
-    if (isCritical && temporalFluxSkill) {
-        playerTemporalFluxCount++;
-        playerDodge = Math.min(playerDodgeBase + (playerTemporalFluxCount * 0.1) + (mysticReboundCount > 0 ? 0.2 : 0), 1);
-        document.getElementById('playerDodgeStat').innerText = formatNumber(playerDodge * 100) + '%';
-        logFight(`<span style='color: #1E90FF;'>Temporal Flux activated! Dodge increased to ${formatNumber(playerDodge * 100)}%`);
-    }
-
-    // Handle absorb mechanics
-    if(damage > 0){
-
-        let ogDmg = damage;
-        damage = Math.max(damage * (1 - enemyAbsorb), 0);
-        if (enemyAbsorb > 0) {
-            logFight(`<span style='color: #8A2BE2;'>${currEnemyName} absorbs ${formatNumber(ogDmg - damage)} of the damage!</span>`);
-        }
-    }
-
-    // Apply damage to enemy health
-    enemyHealth -= Math.max(damage, 0);
-
-    if (damage > 0) {
-        playerAttackCount++;
-        if (gravityWellSkill && (playerAttackCount % 5 == 0)) {
-            if (enemyGravityWellCount == 0) {
-                const halvedDamage = enemyMinDamage / 2;
-                gravityWellQueue.push(halvedDamage); // Push the halved damage to the queue
-                enemyMinDamage = halvedDamage;
-                document.getElementById('enemyDamageStat').innerText = `${formatNumber(enemyMinDamage)} - ${formatNumber(enemyMaxDamage)}`;
-                logFight(`<span style='color: #ECFFDC;'>Gravity Well activated! ${currEnemyName}'s minimum damage is halved.</span>`);
+            // Handle regular dodge mechanics (applies to both critical and non-critical hits)
+            if (Math.random() < enemyDodge) {
+                logFight(`<span style='color: orange;'>${currEnemyName} dodges your attack!</span>`);
+                return; // Enemy dodged, so the attack ends here
             }
-            enemyGravityWellCount += 3;
+
+            // Handle regular dodge mechanics (applies to both critical and non-critical hits)
+            if (kamuiActive && isCritical) {
+                kamuiActive = false;
+                if (sasukeIsHelping) {
+                    // Sasuke helps prevent Kamui from ending the turn, but makes the hit non-critical
+                    logFight(`<span style='color: blue;'>Sasuke sees through ${currEnemyName}'s Kamui escape! You still land a hit, but it's no longer critical.</span>`);
+                    isCritical = false; // Hit is still successful, but not critical
+                } else {
+                    logFight(`<span style='color: orange;'>${currEnemyName} uses Kamui and dodges your critical attack!</span>`);
+                    return; // Enemy dodged, so the attack ends here
+                }
+            }
+
+
+            // Calculate damage
+            if (isCritical) {
+                damage = Math.ceil(baseDamage * playerCritDamage) - enemyDefense;
+                logFight(`<span style='color: #ADD8E6;'>You land a critical hit on ${currEnemyName} for ${formatNumber(Math.max(damage, 0))} damage!</span>`);
+            } else {
+                damage = baseDamage - enemyDefense;
+                logFight(`You attack ${currEnemyName} for ${formatNumber(Math.max(damage, 0))} damage!`);
+            }
         }
-    }
+
+        // Handle Temporal Flux skill
+        if (isCritical && temporalFluxSkill) {
+            playerTemporalFluxCount++;
+            playerDodge = Math.min(playerDodgeBase + (playerTemporalFluxCount * 0.1) + (mysticReboundCount > 0 ? 0.2 : 0), 1);
+            document.getElementById('playerDodgeStat').innerText = formatNumber(playerDodge * 100) + '%';
+            logFight(`<span style='color: #1E90FF;'>Temporal Flux activated! Dodge increased to ${formatNumber(playerDodge * 100)}%`);
+        }
+
+        // Handle absorb mechanics
+        if(damage > 0){
+
+            let ogDmg = damage;
+            damage = Math.max(damage * (1 - enemyAbsorb), 0);
+            if (enemyAbsorb > 0) {
+                logFight(`<span style='color: #8A2BE2;'>${currEnemyName} absorbs ${formatNumber(ogDmg - damage)} of the damage!</span>`);
+            }
+        }
+
+        // Apply damage to enemy health
+        enemyHealth -= Math.max(damage, 0);
+
+        if (damage > 0) {
+            playerAttackCount++;
+            if (gravityWellSkill && (playerAttackCount % 5 == 0)) {
+                if (enemyGravityWellCount == 0) {
+                    const halvedDamage = enemyMinDamage / 2;
+                    gravityWellQueue.push(halvedDamage); // Push the halved damage to the queue
+                    enemyMinDamage = halvedDamage;
+                    document.getElementById('enemyDamageStat').innerText = `${formatNumber(enemyMinDamage)} - ${formatNumber(enemyMaxDamage)}`;
+                    logFight(`<span style='color: #ECFFDC;'>Gravity Well activated! ${currEnemyName}'s minimum damage is halved.</span>`);
+                }
+                enemyGravityWellCount += 3;
+            }
+        }
 
 
-    // Check if Nexus Lifeline skill is active
-    if (nexusLifelineSkill) {
-        const healAmount = Math.floor(playerMaxHealth * 0.02);
-        playerHealth = playerHealth + healAmount;
-        logFight(`<span style='color: teal;'>You channel Nexus Lifeline to heal yourself for ${formatNumber(healAmount)}.</span>`);
-    }
+        // Check if Nexus Lifeline skill is active
+        if (nexusLifelineSkill) {
+            const healAmount = Math.floor(playerMaxHealth * 0.02);
+            playerHealth = playerHealth + healAmount;
+            logFight(`<span style='color: teal;'>You channel Nexus Lifeline to heal yourself for ${formatNumber(healAmount)}.</span>`);
+        }
 
-    // Handle Stun mechanics
-    if (damage > 0 && Math.random() < playerStunChance) {
-        enemyStunCount++;
-        logFight(`<span style='color: #DFFF00;'>You stun ${currEnemyName}! (${enemyStunCount} turn(s) stunned)</span>`);
+        // Handle Stun mechanics
+        if (damage > 0 && Math.random() < playerStunChance) {
+            enemyStunCount++;
+            logFight(`<span style='color: #DFFF00;'>You stun ${currEnemyName}! (${enemyStunCount} turn(s) stunned)</span>`);
+        }
     }
 
     // Handle special case for Deadpool revives
@@ -974,7 +1005,7 @@ function attackEnemy(resolve) {
                 unlockAchievement('Dirty Trick');
                 enemyStunCount += 250;
                 logFight("<span style='color: green; font-size: 1.3em';>Just as Saitama got serious, you pointed at a piñata and he couldn't resist. But when he punched it, a swarm of mosquitos burst out, fueling his mosquito hate. He spends 250 turns squashing them, leaving himself wide open to your attacks.</span>");
-                if (numBattleGimmicks == 6) {
+                if (numBattleGimmicks >= 9) {
                     unlockAchievement('Bells and Whistles');
                 }
             } else {

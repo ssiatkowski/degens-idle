@@ -1362,7 +1362,7 @@ const upgrades = [
                     <li><strong>Yacht Money</strong> - <strong>Reduces Meditation Duration</strong>. Accumulating more shortens the time required to complete the meditation challenge.</li>
                     <li><strong>Troll Points</strong> - Increases <strong>Respawn Delay</strong>. Higher Troll Points give you more time before an element that leaves the bounds reappears, offering brief respite.</li>
                     <li><strong>Hopium</strong> - <strong>Reduces the Number of Elements</strong>. With more Hopium, fewer elements must be managed during meditation.</li>
-                    <li><strong>Knowledge</strong> - Affects <strong>Speed</strong>. Greater Knowledge slows down the elements, making it easier to keep them in the meditative space.</li>
+                    <li><strong>Knowledge</strong> - Affects <strong>Velocity</strong>. Greater Knowledge slows down the elements, making it easier to keep them in the meditative space.</li>
                     <li><strong>Power</strong> - Affects <strong>Gravity</strong>. A stronger gravitational pull towards the center keeps the elements from straying too far from the boundary.</li>
                     <li><strong>Serenity</strong> - Enhances <strong>Focus</strong>. More Serenity allows more elements to exit the boundary before you lose focus and fail the meditation.</li>
                 </ul>
@@ -1505,7 +1505,7 @@ const upgrades = [
     },
     {         
         name: `Dualism`,
-        cost: { copium: 1e108, delusion: 1e108, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 200000 },
+        cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 1e108, hopium: 0, knowledge: 0, power: 0, serenity: 200000 },
         earnings: { copiumPerSecond: 1e48, delusionPerSecond: 2e50, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 2e17, powerPerSecond: 0, serenityPerSecond: 200 },
         img: `imgs/arena_dualism.png`,
         isMeditation: true,

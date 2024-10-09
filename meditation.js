@@ -650,6 +650,7 @@ document.getElementById('meditationStopButton').addEventListener('click', () => 
 
 // Function to calculate ball size based on Copium
 function calculateBallSize() {
+    if (copium < 0) {return ballSize;}
     let intervals = Math.max(0, (Math.log10(copium) - 100) / 20);
     let newBallSize = Math.max(Math.round(ballSize * Math.pow(0.5, intervals)), 15);
     return newBallSize;
@@ -657,6 +658,7 @@ function calculateBallSize() {
 
 // Function to calculate turn radius based on Delusion
 function calculateTurnRadius() {
+    if (delusion < 0) {return 0.25;}
     // Calculate the scaling factor based on Delusion, starting at 1e100
     let scalingFactor = 1 + (Math.max(0, Math.log10(delusion) - 100) * 0.1);
 
@@ -677,6 +679,7 @@ function calculateTimerReduction() {
 
 // Function to calculate respawn time based on trollPoints
 function calculateRespawnTime() {
+    if (yachtMoney < 0) {return respawnTime;}
     // Calculate the scaling factor: double the respawn time for every 20-log interval after 100
     let scalingFactor = Math.pow(2, Math.max(0, (Math.log10(trollPoints) - 100) / 20));
 
