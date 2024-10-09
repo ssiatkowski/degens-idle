@@ -680,6 +680,8 @@ function attackEnemy(resolve) {
         return; // Skip attacking the enemy, as the player attacked themselves
     }
 
+    let isCritical = Math.random() < playerCritChance;
+    let damage = 0;
     
     if (currEnemyName === "Deadpool" && !purchasedUpgradesSet.has("Impossible") && !purchasedUpgradesSet.has("Captain Degen") ) {
         enemyHealth = 0;
@@ -690,12 +692,9 @@ function attackEnemy(resolve) {
         numBattleGimmicks += 2;
     } else {
 
-        let isCritical = Math.random() < playerCritChance;
         const baseDamage = Math.floor(Math.random() * (playerMaxDamage - playerMinDamage + 1)) + playerMinDamage;
-        let damage = 0;
 
         
-            
         if (firstAttackOfBattle) {
             // Apply Prime Impact skill for the first attack - dodge checks are skipped
             if (!isCritical) {

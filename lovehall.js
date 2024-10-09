@@ -65,8 +65,8 @@ const loveHallSkills = [
     { name: 'Enlightened Prestige', cost: 10, description: 'Prestige Base skill increases from 1.75 base to 1.775 base.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 29 },
     { name: 'Hopeful Beginning', cost: 10, description: 'Start with 1M Hopium after any prestige layer.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 29 },
 
-    { name: 'Overwhelming Mercy', cost: 15, description: 'Spare opponents who are far weaker than you and auto unlock the upgrades.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 30, requirement: 'Celestial Precision' },
-    { name: 'Hopium Fix', cost: 15, description: 'Fix Hopium in the same way Delusion is cured.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 30 },
+    { name: 'Overwhelming Mercy', cost: 13, description: 'Spare opponents who are far weaker than you and auto unlock the upgrades.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 30, requirement: 'Celestial Precision' },
+    { name: 'Hopium Fix', cost: 13, description: 'Fix Hopium in the same way Delusion is cured.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 30 },
 
     { name: 'Serenity Gain (Copium)', cost: 20, description: 'Serenity gain is multiplied by log2(Copium)/33.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 31 },
     { name: 'Serenity Gain (Delusion)', cost: 20, description: 'Serenity gain is multiplied by log2(Delusion)/33.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 31 },
