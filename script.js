@@ -119,6 +119,7 @@ let enlightenedPrestigeSkill = false;
 let hopefulBeginningSkill = false;
 let autoFightSkill = false;
 let autoFightEnabled = false;
+let autoMeditateSkill = false;
 let infinitePrestigeSkill = false;
 let crunchKnowledgeSkill = false;
 let stellarMeditationSkill = false;
@@ -1026,6 +1027,7 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
                 hopium = 0;
                 autoFightSkill = false;
                 autoFightEnabled = false;
+                autoMeditateSkill = false;
                 infinitePrestigeSkill = false;
                 crunchKnowledgeSkill = false;
                 stellarMeditationSkill = false;
@@ -2612,7 +2614,6 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true, ski
         power = (nebulaOverdriveSkill && !isFight && !isMeditation) ? power : power - cost.power || 0;
         serenity = (tranquilityOverdriveSkill && !isFight && !isMeditation) ? serenity : serenity - cost.serenity || 0;
 
-        // Special case for the "Antimatter Dimension" upgrade
         if (isFight) {
 
             if (name === 'Vegeta' && !purchasedUpgradesSet.has("Cosmetic Surgery")) {
@@ -2665,11 +2666,20 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true, ski
         const multiplier = (upgrade.isGodMode && upgrade.isPUGodMode) ? 100 :
             (upgrade.isGodMode || upgrade.isPUGodMode) ? 10 : 1;
         const battleMultiplier = ((upgrade.isFight && rewardingVictoriesSkill) || (upgrade.isMeditation && rewardingMeditationsSkill)) ? 1.4 : 1;
-        copiumPerSecond += (earnings.copiumPerSecond || 0) * multiplier * battleMultiplier;
-        yachtMoneyPerSecond += (earnings.yachtMoneyPerSecond || 0) * multiplier * battleMultiplier;
-        trollPointsPerSecond += (earnings.trollPointsPerSecond || 0) * multiplier * battleMultiplier;
+
         knowledgePerSecond += (earnings.knowledgePerSecond || 0) * multiplier * battleMultiplier;
         serenityPerSecond += (earnings.serenityPerSecond || 0) * multiplier * battleMultiplier;
+
+        // Handle copium per second based on the toggle state
+        if (document.getElementById('toggleCopiumLabel').classList.contains('hidden')) {
+            // If the toggleCopium is hidden, add copium per second normally
+            copiumPerSecond += (earnings.copiumPerSecond || 0) * multiplier * battleMultiplier;
+        } else {
+            // If the toggleCopium is not hidden, adjust copium per second based on the toggle state
+            const toggleCopium = document.getElementById('toggleCopium').checked;
+            const copiumChange = Math.abs(earnings.copiumPerSecond || 0) * multiplier * battleMultiplier;
+            copiumPerSecond += toggleCopium ? copiumChange : -copiumChange;
+        }
 
         // Handle delusion per second based on the toggle state
         if (document.getElementById('toggleDelusionLabel').classList.contains('hidden')) {
@@ -2680,6 +2690,28 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true, ski
             const toggleDelusion = document.getElementById('toggleDelusion').checked;
             const delusionChange = Math.abs(earnings.delusionPerSecond || 0) * multiplier * battleMultiplier;
             delusionPerSecond += toggleDelusion ? delusionChange : -delusionChange;
+        }
+        
+        // Handle yachtMoney per second based on the toggle state
+        if (document.getElementById('toggleYachtMoneyLabel').classList.contains('hidden')) {
+            // If the toggleYachtMoney is hidden, add yachtMoney per second normally
+            yachtMoneyPerSecond += (earnings.yachtMoneyPerSecond || 0) * multiplier * battleMultiplier;
+        } else {
+            // If the toggleYachtMoney is not hidden, adjust yachtMoney per second based on the toggle state
+            const toggleYachtMoney = document.getElementById('toggleYachtMoney').checked;
+            const yachtMoneyChange = Math.abs(earnings.yachtMoneyPerSecond || 0) * multiplier * battleMultiplier;
+            yachtMoneyPerSecond += toggleYachtMoney ? yachtMoneyChange : -yachtMoneyChange;
+        }
+
+        // Handle trollPoints per second based on the toggle state
+        if (document.getElementById('toggleTrollPointsLabel').classList.contains('hidden')) {
+            // If the toggleTrollPoints is hidden, add trollPoints per second normally
+            trollPointsPerSecond += (earnings.trollPointsPerSecond || 0) * multiplier * battleMultiplier;
+        } else {
+            // If the toggleTrollPoints is not hidden, adjust trollPoints per second based on the toggle state
+            const toggleTrollPoints = document.getElementById('toggleTrollPoints').checked;
+            const trollPointsChange = Math.abs(earnings.trollPointsPerSecond || 0) * multiplier * battleMultiplier;
+            trollPointsPerSecond += toggleTrollPoints ? trollPointsChange : -trollPointsChange;
         }
 
         // Handle hopium per second based on the toggle state
@@ -2860,8 +2892,13 @@ function buyAllUpgrades(limit, pressedButton) {
                     if(upgrade.name == 'Saitama' && makeLoveNotWar){
                         unlockAchievement('Make Love, Not War');
                     }
-                }
-                else if ((isAffordableUpgrade && switchStates[upgrade.name])) {
+                } else if (isAffordableUpgrade && autoMeditateConditionCheck(upgrade)) {
+                    buyUpgrade(encodeName(upgrade.name), false, true);
+                    upgradeBought = true;
+                    if (stellarMeditationSkill) {
+                        stellarMeditationMult *= 1.1;
+                    }
+                } else if ((isAffordableUpgrade && switchStates[upgrade.name])) {
                     buyUpgrade(encodeName(upgrade.name), false, true);
                     purchasedCount++;
                 }
@@ -2893,9 +2930,12 @@ function buyAllUpgrades(limit, pressedButton) {
 
 
 function autoFightConditionCheck(upgrade) {
-    return autoFightSkill && autoFightEnabled && power > (illusionOfPowerSkill ? (upgrade.isGodMode && upgrade.isPUGodMode ? upgrade.autoBattlePower / 100 : (upgrade.isGodMode || upgrade.isPUGodMode ? upgrade.autoBattlePower / 10 : upgrade.autoBattlePower)) : upgrade.autoBattlePower);
+    return upgrade.isFight && autoFightSkill && autoFightEnabled && power > (illusionOfPowerSkill ? (upgrade.isGodMode && upgrade.isPUGodMode ? upgrade.autoBattlePower / 100 : (upgrade.isGodMode || upgrade.isPUGodMode ? upgrade.autoBattlePower / 10 : upgrade.autoBattlePower)) : upgrade.autoBattlePower);
 }
 
+function autoMeditateConditionCheck(upgrade) {
+    return upgrade.isMeditation && autoMeditateSkill && autoFightEnabled && serenity > upgrade.autoMeditateThreshold && upgrade.isGodMode && upgrade.isPUGodMode;
+}
 
 // Function to format the cost or earnings of an upgrade for display
 function formatCostOrEarnings(costOrEarnings, isGodMode = false, isPUGodMode = false, isFight = false, isMeditation = false) {
@@ -3129,8 +3169,13 @@ function autobuyUpgrades() {
                 if(upgrade.name == 'Saitama' && makeLoveNotWar){
                     unlockAchievement('Make Love, Not War');
                 }
-            }
-            else if ((isAffordableUpgrade && switchStates[upgrade.name])) {
+            } else if (isAffordableUpgrade && autoMeditateConditionCheck(upgrade)) {
+                buyUpgrade(encodeName(upgrade.name), false, true);
+                upgradeBought = true;
+                if (stellarMeditationSkill) {
+                    stellarMeditationMult *= 1.1;
+                }
+            } else if ((isAffordableUpgrade && switchStates[upgrade.name])) {
                 buyUpgrade(encodeName(upgrade.name), false, true);
                 upgradeBought = true;
             }
@@ -3685,7 +3730,17 @@ function hotkeyHandler(event) {
                 }
                 break;
             case 'f':
-                if (autoFightSkill) {
+                if (autoMeditateSkill) {
+                    if (autoFightEnabled) {
+                        autoFightEnabled = false;
+                        showPopupTooltip('Auto Fight/Meditate Disabled');
+                    } else {
+                        autoFightEnabled = true;
+                        showPopupTooltip('Auto Fight/Meditate Enabled');
+                    }
+                    localStorage.setItem('autoFightEnabled', autoFightEnabled);
+                    keysPressed.f = true; // Mark 'f' key as pressed
+                } else if (autoFightSkill) {
                     if (autoFightEnabled) {
                         autoFightEnabled = false;
                         showPopupTooltip('Auto Fight Disabled');
@@ -4452,6 +4507,43 @@ document.addEventListener('DOMContentLoaded', () => {
         updateEffectiveMultipliers();
         updateDisplay(); // Update the display to reflect the change
     });
+
+    // Copium Toggle
+    document.getElementById('toggleCopium').addEventListener('change', function() {
+        const isPositive = this.checked;
+        if (isPositive) {
+            copiumPerSecond = Math.abs(copiumPerSecond);
+        } else {
+            copiumPerSecond = -Math.abs(copiumPerSecond);
+        }
+        updateEffectiveMultipliers();
+        updateDisplay(); // Update the display to reflect the change
+    });
+
+    // YachtMoney Toggle
+    document.getElementById('toggleYachtMoney').addEventListener('change', function() {
+        const isPositive = this.checked;
+        if (isPositive) {
+            yachtMoneyPerSecond = Math.abs(yachtMoneyPerSecond);
+        } else {
+            yachtMoneyPerSecond = -Math.abs(yachtMoneyPerSecond);
+        }
+        updateEffectiveMultipliers();
+        updateDisplay(); // Update the display to reflect the change
+    });
+
+    // TrollPoints Toggle
+    document.getElementById('toggleTrollPoints').addEventListener('change', function() {
+        const isPositive = this.checked;
+        if (isPositive) {
+            trollPointsPerSecond = Math.abs(trollPointsPerSecond);
+        } else {
+            trollPointsPerSecond = -Math.abs(trollPointsPerSecond);
+        }
+        updateEffectiveMultipliers();
+        updateDisplay(); // Update the display to reflect the change
+    });
+
 
     // workaround because this needs to be called before initializing skills (to set correct format for skill costs),
     // but loadGameState has to be called after (to enable previously bought skills)

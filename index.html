@@ -111,7 +111,12 @@
         <div id="game">
             <div class="resource">
                 <p><b>C</b>opium: <span id="copium" class="resource-value">0</span></p>
-                <p class="per-second">Copium per second: <span id="cps">0</span></p>
+                <p class="per-second">Copium per second: <span id="cps">0</span>
+                    <label class="switch hidden" id="toggleCopiumLabel">
+                        <input type="checkbox" id="toggleCopium">
+                        <span class="slider"></span>
+                    </label>
+                </p>
                 <div class="buttons">
                     <button id="collectCopiumButton" class="collect-button">Collect Copium</button>
                     <button id="speedGame" class="game-button">
@@ -138,7 +143,12 @@
             </div>
             <div class="resource">
                 <p><b>Y</b>acht <b>M</b>oney: <span id="yachtMoney" class="resource-value">0</span></p>
-                <p class="per-second">Yacht Money per second: <span id="ymps">0</span></p>
+                <p class="per-second">Yacht Money per second: <span id="ymps">0</span>
+                    <label class="switch hidden" id="toggleYachtMoneyLabel">
+                        <input type="checkbox" id="toggleYachtMoney">
+                        <span class="slider"></span>
+                    </label>
+                </p>
                 <div class="buttons">
                     <button id="collectYachtMoneyButton" class="collect-button">Collect Yacht Money</button>
                     <button id="mathGame" class="game-button">
@@ -149,7 +159,12 @@
             </div>
             <div class="resource">
                 <p><b>T</b>roll <b>P</b>oints: <span id="trollPoints" class="resource-value">0</span></p>
-                <p class="per-second">Troll Points per second: <span id="tpps">0</span></p>
+                <p class="per-second">Troll Points per second: <span id="tpps">0</span>
+                    <label class="switch hidden" id="toggleTrollPointsLabel">
+                        <input type="checkbox" id="toggleTrollPoints">
+                        <span class="slider"></span>
+                    </label>
+                </p>
                 <div class="buttons">
                     <button id="collectTrollPointsButton" class="collect-button">Collect Troll Points</button>
                     <button id="luckGame" class="game-button">
@@ -485,7 +500,7 @@
         <div class="settings-overlay-content">
             <span class="close-button" id="closeSettingsOverlay">&times;</span>
             <h1>Settings</h1>
-            <h4>Degens Idle v0.9302</h4>
+            <h4>Degens Idle v0.9303</h4>
 
             <div class="settings-section">
                 <h3>Save Management</h3>

@@ -431,7 +431,7 @@ function startFightGame(enemyName, enemyImg) {
         } else if (currEnemyName === "Vegeta" && !purchasedUpgradesSet.has("Helpful Vegeta")) {
             playerCritChance = Math.min((playerCritChance + 0.1), 1);
             document.getElementById('playerCritChanceStat').innerText = formatNumber(playerCritChance * 100) + '%';
-            unlockAchievement('It Takes Vegeta to Know Vegeta');
+            unlockAchievement('It Takes One to Know One');
             logFight("<span style='color: green; font-weight: bold; font-size: 1.3em';>In a strange time-travel twist, you face a vastly stronger future Vegeta, with a younger Vegeta by your side. Unable to match his future self’s power, young Vegeta offers crucial advice, raising your critical hit chance by 10% and giving you a chance against the overwhelming foe.</span>");
             numBattleGimmicks += 1;
         } else if (currEnemyName === "Kaguya") {

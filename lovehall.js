@@ -112,8 +112,8 @@ const loveHallSkills = [
     { name: 'Faith-Fueled Knowledge', cost: 30, description: 'Multiplier to knowledge based on log10 of current Hopium / 10.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 52 },
     { name: 'Event Horizon Boost', cost: 30, description: 'Increase Big Crunch base from 2 to 2.1.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 52 },
 
-    // { name: 'Intrinsic Meditation', cost: 42, description: 'Auto complete meditations that are ascended & transcended.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 52 },
-    // { name: 'The Ultimate Fix', cost: 42, description: 'Fix all remaining resources.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 52, requirement: 'Hopium Fix' },
+    { name: 'Intrinsic Meditation', cost: 42, description: 'Auto complete meditations that are ascended & transcended after meeting Serenity threshold.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 53, requirement: 'Illusion of Power' },
+    { name: 'The Ultimate Fix', cost: 42, description: 'Fix the 3 remaining basic resources.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 53, requirement: 'Hopium Fix' },
 
 
 ];
@@ -542,6 +542,19 @@ function unlockLoveHallSkill(skill, duringLoad = false) {
 
             case 'Event Horizon Boost':
                 eventHorizonBoostSkill = true;
+                break;
+
+            case 'Intrinsic Meditation':
+                autoMeditateSkill = true;
+                break;
+
+            case 'The Ultimate Fix':
+                document.getElementById('toggleCopiumLabel').classList.remove('hidden');
+                document.getElementById('toggleCopium').checked = copiumPerSecond >= 0;
+                document.getElementById('toggleYachtMoneyLabel').classList.remove('hidden');
+                document.getElementById('toggleYachtMoney').checked = yachtMoneyPerSecond >= 0;
+                document.getElementById('toggleTrollPointsLabel').classList.remove('hidden');
+                document.getElementById('toggleTrollPoints').checked = trollPointsPerSecond >= 0;
                 break;
                 
             default:

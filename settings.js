@@ -475,15 +475,28 @@ document.getElementById('automationButton').addEventListener('click', function()
 
         // Dynamically add Auto-Fighting setting if autoFightSkill is unlocked
         if (autoFightSkill) {
-            const autoFightHtml = `
-                <div style="margin-bottom: 15px;">
-                    <label for="autoFightSwitch" style="margin-right: 10px;">Enable Auto-Fighting</label>
-                    <label class="switch">
-                        <input type="checkbox" id="autoFightSwitch">
-                        <span class="slider"></span>
-                    </label>
-                </div>
-            `;
+            let autoFightHtml;
+            if (autoMeditateSkill) {
+                autoFightHtml = `
+                    <div style="margin-bottom: 15px;">
+                        <label for="autoFightSwitch" style="margin-right: 10px;">Enable Auto-Fighting/Meditating</label>
+                        <label class="switch">
+                            <input type="checkbox" id="autoFightSwitch">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                `;
+            } else {
+                autoFightHtml = `
+                    <div style="margin-bottom: 15px;">
+                        <label for="autoFightSwitch" style="margin-right: 10px;">Enable Auto-Fighting</label>
+                        <label class="switch">
+                            <input type="checkbox" id="autoFightSwitch">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                `;
+            }
             automationContent.innerHTML += autoFightHtml;
 
             // Use a timeout to ensure the checkbox is fully rendered before setting its state

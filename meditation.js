@@ -129,7 +129,7 @@ const meditationChallenges = {
         arenaSize: 700,
         ballSize: 150,
         ballSizeDelta: 20,
-        velocity: 4.5,
+        velocity: 4.6,
         wind: 2,
         respawnFactor: 1,
         livesPerBall: 5,
@@ -147,7 +147,7 @@ const meditationChallenges = {
         livesPerBall: 2.5,
     },
     "Skepticism": {
-        duration: 130,
+        duration: 125,
         focus: 10,
         ballCount: 8,
         arenaSize: 450,
@@ -169,6 +169,42 @@ const meditationChallenges = {
         wind: 0,
         respawnFactor: 1,
         livesPerBall: 8,
+    },
+    "Christianity": {
+        duration: 500,
+        focus: -10,
+        ballCount: 9,
+        arenaSize: 550,
+        ballSize: 400,
+        ballSizeDelta: 0,
+        velocity: 55,
+        wind: 0,
+        respawnFactor: 0.1,
+        livesPerBall: 3,
+    },
+    "Epicureanism": {
+        duration: 1200,
+        focus: 1000,
+        ballCount: 18,
+        arenaSize: 600,
+        ballSize: 600,
+        ballSizeDelta: 20,
+        velocity: 75,
+        wind: 10,
+        respawnFactor: 5,
+        livesPerBall: 1,
+    },
+    "Agnosticism": {
+        duration: 2000,
+        focus: 1,
+        ballCount: 1,
+        arenaSize: 350,
+        ballSize: 800,
+        ballSizeDelta: 0,
+        velocity: 90,
+        wind: 0,
+        respawnFactor: 1,
+        livesPerBall: 101,
     },
 };
 
@@ -204,10 +240,17 @@ function startMeditationGame(challengeName, backgroundImage, stageNumber = 1, pr
         fullFocusPreserved = true;
         livesPerBall = Math.max(challenge.livesPerBall - (steadyFocusSkill ? 1 : 0) , 1) + stageExtraLivesPerBall;
 
+        if (currentChallengeName === 'Dualism' && ballCount == 1) {
+            ballCount = 2;
+        }
         if (currentChallengeName === 'Buddhism' && !purchasedUpgradesSet.has("Kung Fu Bunny")) {
             unlockAchievement('Buddhist Bunny');
             respawnTime += 500;
             livesPerBall = Math.max(livesPerBall - 1, 1);
+        } else if (currentChallengeName === 'Christianity' && !purchasedUpgradesSet.has("Christian Logic")) {
+            unlockAchievement('Theological Reasoning');
+            livesPerBall = Math.max(livesPerBall - 1, 1);
+            baseVelocity *= 0.9;
         }
 
         // Show the meditation overlay
@@ -351,7 +394,7 @@ function updateMeditationInfo() {
     }
 
     const livesPerBallDisplay = document.getElementById('meditationLivesPerBallRow');
-    if (livesPerBall !== 1) {
+    if (livesPerBall !== 1 || currentChallengeName === 'Epicureanism') {
         livesPerBallDisplay.style.display = 'block';
         document.getElementById('meditationLivesPerBall').innerText = formatNumber(livesPerBall);
     } else {
@@ -500,6 +543,12 @@ function checkOutOfBounds() {
 function handleOutOfBounds(ball) {
     // Decrement a life when out of bounds
     meditationFocus -= livesPerBall;
+
+    if (currentChallengeName === 'Epicureanism') {
+        livesPerBall += 1;
+        document.getElementById('meditationLivesPerBall').innerText = formatNumber(livesPerBall);
+    }
+
     fullFocusPreserved = false;
     if (currentChallengeName === 'Dualism' && ballCount == 2){
         unlockAchievement('Out of Body Experience');

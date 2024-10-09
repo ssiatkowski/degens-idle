@@ -483,9 +483,9 @@ const achievements = [
         type: 'progression',
     },
     {
-        name: 'It Takes Vegeta to Know Vegeta',
+        name: 'It Takes One to Know One',
         isUnlocked: false,
-        hoverText: 'self-explanatory',
+        hoverText: 'image is self-explanatory',
         img: 'imgs/achievements/vegeta_vs_vegeta.jpg',
         type: 'puzzle',
     },
@@ -849,6 +849,13 @@ const achievements = [
         isUnlocked: false,
         hoverText: `lose focus in Dualism meditation with exactly 2 balls`,
         img: 'imgs/achievements/body_and_soul.jpg',
+        type: 'puzzle',
+    },
+    {
+        name: 'Theological Reasoning',
+        isUnlocked: false,
+        hoverText: `apply logic`,
+        img: 'imgs/achievements/theological_reasoning.jpg',
         type: 'puzzle',
     },
     {
