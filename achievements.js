@@ -827,14 +827,6 @@ const achievements = [
         type: 'puzzle',
     },
     {
-        name: 'Fast Embracer',
-        isUnlocked: false,
-        hoverText: 'perform two Infinite Embraces within 3 minutes',
-        img: 'imgs/achievements/fast_embracer.jpg',
-        type: 'skill',
-        respecPoint: true,
-    },
-    {
         name: 'One Hit KO',
         isUnlocked: false,
         hoverText: 'one punch the man',
@@ -906,6 +898,14 @@ const achievements = [
         type: 'puzzle',
     },
     {
+        name: 'Fast Embracer',
+        isUnlocked: false,
+        hoverText: 'perform two Infinite Embraces within 3 minutes',
+        img: 'imgs/achievements/fast_embracer.jpg',
+        type: 'skill',
+        respecPoint: true,
+    },
+    {
         name: `Can't Fix Pessimism`,
         isUnlocked: false,
         hoverText: '???',
@@ -918,14 +918,6 @@ const achievements = [
         hoverText: 'TT.A km',
         img: 'imgs/achievements/longest_tunnel.jpg',
         type: 'puzzle',
-    },
-    {
-        name: 'Fifty Days of Saving',
-        isUnlocked: false,
-        hoverText: 'export your save on 50 different days',
-        img: 'imgs/achievements/50_days_of_saving.jpg',
-        type: 'freebie',
-        respecPoint: true,
     },
     {
         name: 'Pay to Win',
@@ -970,6 +962,14 @@ const achievements = [
         hoverText: `apply logic`,
         img: 'imgs/achievements/theological_reasoning.jpg',
         type: 'puzzle',
+    },
+    {
+        name: 'Fifty Days of Saving',
+        isUnlocked: false,
+        hoverText: 'export your save on 50 different days',
+        img: 'imgs/achievements/50_days_of_saving.jpg',
+        type: 'freebie',
+        respecPoint: true,
     },
     {
         name: 'Serious Gamer',

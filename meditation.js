@@ -129,7 +129,7 @@ const meditationChallenges = {
         arenaSize: 700,
         ballSize: 150,
         ballSizeDelta: 20,
-        velocity: 4.6,
+        velocity: 4.8,
         wind: 2,
         respawnFactor: 1,
         livesPerBall: 5,
