@@ -188,7 +188,7 @@ let astralEdgeSkill = false;
 let mysticReboundSkill = false;
 let quantumBastionSkill = false;
 
-let makeLoveNotWar = true;
+let enemiesFoughtManually = new Set();
 let numBattleGimmicks = 0;
 
 let nebulaOverdriveSkill = false;
@@ -1260,7 +1260,7 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
         // Restore all upgrades
         availableUpgrades = upgrades.slice(); // Reset available upgrades to the original state
 
-        makeLoveNotWar = true;
+        enemiesFoughtManually = new Set();
         numBattleGimmicks = 0;
 
         stellarHarvestMult = 1;
@@ -2083,7 +2083,10 @@ async function bigCrunch(skipConfirms = false) {
             bigCrunchPower = power * compressedBigCrunchMult;
             if((calculateBigCrunchMultiplier() / bigCrunchMultiplier) < 1.1){
                 unlockAchievement('The Tiniest Crunch');
+            } else if ((calculateBigCrunchMultiplier() / bigCrunchMultiplier) > 9000){
+                unlockAchievement('Biggest Crunch');
             }
+
             bigCrunchMultiplier = calculateBigCrunchMultiplier();
 
             // Call restartGame with isPrestige flag set to true
@@ -2634,7 +2637,10 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true, ski
 
             if (canManualFight && !isEventInProgress() && startEvent("bossfight")) {
 
-                makeLoveNotWar = false;
+                enemiesFoughtManually.add(name);
+                if (name == 'Saitama' && enemiesFoughtManually.size == 2 && enemiesFoughtManually.values().next().value == 'Chuck Norris') {
+                    unlockAchievement('Two Worthy Opponents');
+                }
 
                 const fightResult = await startFightGame(name, img);
                 stopEvent("bossfight"); // Reset the flag after the fight ends
@@ -2889,7 +2895,7 @@ function buyAllUpgrades(limit, pressedButton) {
                     buyUpgrade(encodeName(upgrade.name), false, true);
                     purchasedCount++;
                     incrementStellarHarvest();
-                    if(upgrade.name == 'Saitama' && makeLoveNotWar){
+                    if(upgrade.name == 'Saitama' && enemiesFoughtManually.size == 0){
                         unlockAchievement('Make Love, Not War');
                     }
                 } else if (isAffordableUpgrade && autoMeditateConditionCheck(upgrade)) {
@@ -2934,7 +2940,7 @@ function autoFightConditionCheck(upgrade) {
 }
 
 function autoMeditateConditionCheck(upgrade) {
-    return upgrade.isMeditation && autoMeditateSkill && autoFightEnabled && serenity > upgrade.autoMeditateThreshold && upgrade.isGodMode && upgrade.isPUGodMode;
+    return upgrade.isMeditation && purchasedUpgradesSet.has("Cosmic Drought") && autoMeditateSkill && autoFightEnabled && serenity > upgrade.autoMeditateThreshold && upgrade.isGodMode && upgrade.isPUGodMode;
 }
 
 // Function to format the cost or earnings of an upgrade for display
@@ -3166,7 +3172,7 @@ function autobuyUpgrades() {
                 buyUpgrade(encodeName(upgrade.name), false, true);
                 upgradeBought = true;
                 incrementStellarHarvest();
-                if(upgrade.name == 'Saitama' && makeLoveNotWar){
+                if(upgrade.name == 'Saitama' && enemiesFoughtManually.size == 0){
                     unlockAchievement('Make Love, Not War');
                 }
             } else if (isAffordableUpgrade && autoMeditateConditionCheck(upgrade)) {
