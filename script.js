@@ -102,6 +102,8 @@ let perfectGodModeSkill = false;
 
 let serenityFlowSkill = false;
 let perfectPUGodModeSkill = false;
+let infiniteCollapseSkill = false;
+let zenOfTheStarsSkill = false;
 let rewardingVictoriesSkill = false;
 let rewardingMeditationsSkill = false;
 let quantumFortressSkill = false;
@@ -138,6 +140,8 @@ let serenityGainCopium = false;
 let serenityGainDelusion = false;
 let serenityGainYachtMoney = false;
 let serenityGainTrollPoints = false;
+let loveIsEverythingSkill = false;
+let etherealReflectionSkill = false;
 let resonanceOfLoveSkill = false;
 let hopiumTradeSkill = false;
 let tranquilityOverdriveSkill = false;
@@ -189,7 +193,7 @@ let mysticReboundSkill = false;
 let quantumBastionSkill = false;
 
 let enemiesFoughtManually = new Set();
-let numBattleGimmicks = 0;
+let numBattleGimmicks = new Set();
 
 let nebulaOverdriveSkill = false;
 let stellarHarvestSkill = false;
@@ -292,10 +296,12 @@ function calculateEffectivePower() {
 function updateEffectiveMultipliers() {
     const amplifierMultiplier = upgradeAmplifierSkill ? purchasedUpgrades.length : 1;
 
-    effectiveCopiumPerSecond = copiumPerSecond * totalMultiplier * amplifierMultiplier * copiumSurgeMultiplier * basicResourceBoost * beaconOfSevenSunsMult;
-    effectiveDelusionPerSecond = delusionPerSecond * totalMultiplier * amplifierMultiplier * delusionSurgeMultiplier * basicResourceBoost;
-    effectiveYachtMoneyPerSecond = yachtMoneyPerSecond * totalMultiplier * amplifierMultiplier * yachtMoneySurgeMultiplier * basicResourceBoost;
-    effectiveTrollPointsPerSecond = trollPointsPerSecond * totalMultiplier * amplifierMultiplier * trollPointsSurgeMultiplier * basicResourceBoost;
+    const loveMultiplier = loveIsEverythingSkill ? (serenity > 1.1 ? Math.log(serenity) / Math.log(1.1) : 1) : 1;
+
+    effectiveCopiumPerSecond = copiumPerSecond * totalMultiplier * amplifierMultiplier * copiumSurgeMultiplier * basicResourceBoost * beaconOfSevenSunsMult * loveMultiplier;
+    effectiveDelusionPerSecond = delusionPerSecond * totalMultiplier * amplifierMultiplier * delusionSurgeMultiplier * basicResourceBoost * loveMultiplier;
+    effectiveYachtMoneyPerSecond = yachtMoneyPerSecond * totalMultiplier * amplifierMultiplier * yachtMoneySurgeMultiplier * basicResourceBoost * loveMultiplier;
+    effectiveTrollPointsPerSecond = trollPointsPerSecond * totalMultiplier * amplifierMultiplier * trollPointsSurgeMultiplier * basicResourceBoost * loveMultiplier;
 
     effectiveHopiumPerSecond = hopiumPerSecond * totalMultiplier * beaconOfSevenSunsMult;
     if (serenityFlowSkill && serenity > 1) {
@@ -1009,6 +1015,8 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
                 
                 serenityFlowSkill = false;
                 perfectPUGodModeSkill = false;
+                infiniteCollapseSkill = false;
+                zenOfTheStarsSkill = false;
                 rewardingVictoriesSkill = false;
                 rewardingMeditationsSkill = false;
                 quantumFortressSkill = false;
@@ -1046,6 +1054,8 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
                 serenityGainDelusion = false;
                 serenityGainYachtMoney = false;
                 serenityGainTrollPoints = false;
+                loveIsEverythingSkill = false;
+                etherealReflectionSkill = false;
                 resonanceOfLoveSkill = false;
                 hopiumTradeSkill = false;
                 tranquilityOverdriveSkill = false;
@@ -1261,7 +1271,7 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
         availableUpgrades = upgrades.slice(); // Reset available upgrades to the original state
 
         enemiesFoughtManually = new Set();
-        numBattleGimmicks = 0;
+        numBattleGimmicks = new Set();
 
         stellarHarvestMult = 1;
         stellarMeditationMult = 1;
@@ -1979,7 +1989,7 @@ async function transcend(skipConfirms = false) {
             selectedUpgrades = await showMessageModal(
                 'Parallel Universe God-Mode Ascension',
                 `Accessing this new dimension requires temporarily aligning your universe with a parallel one, which will unfortunately reduce your Prestige multiplier the same way that Ascending in your Universe would.<br><br>
-                On the bright side, your Parallel Universe God-Mode multiplier will increase - and it works multiplicatively with your God-Mode multiplie!<br><br>
+                On the bright side, your Parallel Universe God-Mode multiplier will increase - and it works multiplicatively with your God-Mode multiplier!<br><br>
                 Additionally, you can ${upgradeText}.`,
                 true,
                 true,
@@ -2081,13 +2091,17 @@ async function bigCrunch(skipConfirms = false) {
             await animateBigCrunchEffect();
 
             bigCrunchPower = power * compressedBigCrunchMult;
-            if((calculateBigCrunchMultiplier() / bigCrunchMultiplier) < 1.1){
+            const prevBigCrunchMult = bigCrunchMultiplier;
+            bigCrunchMultiplier = calculateBigCrunchMultiplier();
+            if((bigCrunchMultiplier / prevBigCrunchMult) < 1.1){
                 unlockAchievement('The Tiniest Crunch');
-            } else if ((calculateBigCrunchMultiplier() / bigCrunchMultiplier) > 9000){
+            } else if ((bigCrunchMultiplier / prevBigCrunchMult) > 9000){
                 unlockAchievement('Biggest Crunch');
+                if ((bigCrunchMultiplier / prevBigCrunchMult) > 1000000){
+                    unlockAchievement('Impossible Crunch');
+                }
             }
 
-            bigCrunchMultiplier = calculateBigCrunchMultiplier();
 
             // Call restartGame with isPrestige flag set to true
             restartGame(true);
@@ -2373,13 +2387,25 @@ function updateTranscendButton() {
 function updateBigCrunchButton() {
     const bigCrunchButton = document.getElementById('bigCrunchButton');
     if (bigCrunchUnlocked && canBigCrunch()) {
-        const newMultiplier = calculateBigCrunchMultiplier(power*compressedBigCrunchMult);
-        bigCrunchButton.textContent = `BIG CRUNCH (x${formatNumber((newMultiplier / bigCrunchMultiplier))} MULT)`;
-        bigCrunchButton.style.display = 'block';
-        // Check if auto-crunch should be triggered
-        if (autoBigCrunchThreshold !== null && autoBigCrunchThreshold >= 1 && (newMultiplier / bigCrunchMultiplier) > autoBigCrunchThreshold && !isEventInProgress()) {
-            showPopupTooltip(`Auto-Crunched for x${formatNumber(newMultiplier / bigCrunchMultiplier)}`, color='#FF4433')
-            bigCrunch(true); // Trigger auto-prestige
+        if (infiniteCollapseSkill) {
+            
+            bigCrunchPower = power * compressedBigCrunchMult;
+            bigCrunchMultiplier = calculateBigCrunchMultiplier();
+
+            bigCrunchButton.style.display = 'none';
+            updateMultipliersDisplay();
+            updateEffectiveMultipliers();
+
+        } else {
+            const newMultiplier = calculateBigCrunchMultiplier(power * compressedBigCrunchMult);
+            bigCrunchButton.textContent = `BIG CRUNCH (x${formatNumber((newMultiplier / bigCrunchMultiplier))} MULT)`;
+            bigCrunchButton.style.display = 'block';
+
+            // Check if auto-crunch should be triggered
+            if (autoBigCrunchThreshold !== null && autoBigCrunchThreshold >= 1 && (newMultiplier / bigCrunchMultiplier) > autoBigCrunchThreshold && !isEventInProgress()) {
+                showPopupTooltip(`Auto-Crunched for x${formatNumber(newMultiplier / bigCrunchMultiplier)}`, color='#FF4433');
+                bigCrunch(true); // Trigger auto-crunch
+            }
         }
     } else {
         bigCrunchButton.style.display = 'none';
@@ -2569,7 +2595,7 @@ function generateIdleResources(elapsedSeconds) {
 }
 
 function calculateStellarMeditationMultiplier() {
-    return 1.1 ** purchasedUpgrades.filter(upgrade => upgrade.isMeditation).length;
+    return (zenOfTheStarsSkill ? 1.5 : 1.1) ** purchasedUpgrades.filter(upgrade => upgrade.isMeditation).length;
 }
 
 
@@ -2664,7 +2690,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true, ski
             }
 
             if (stellarMeditationSkill) {
-                stellarMeditationMult *= 1.1;
+                stellarMeditationMult *= zenOfTheStarsSkill ? 1.5 :1.1;
             }
         }
 
@@ -2902,7 +2928,7 @@ function buyAllUpgrades(limit, pressedButton) {
                     buyUpgrade(encodeName(upgrade.name), false, true);
                     upgradeBought = true;
                     if (stellarMeditationSkill) {
-                        stellarMeditationMult *= 1.1;
+                        stellarMeditationMult *= (zenOfTheStarsSkill ? 1.5 : 1.1);
                     }
                 } else if ((isAffordableUpgrade && switchStates[upgrade.name])) {
                     buyUpgrade(encodeName(upgrade.name), false, true);
@@ -2940,7 +2966,7 @@ function autoFightConditionCheck(upgrade) {
 }
 
 function autoMeditateConditionCheck(upgrade) {
-    return upgrade.isMeditation && purchasedUpgradesSet.has("Cosmic Drought") && autoMeditateSkill && autoFightEnabled && serenity > upgrade.autoMeditateThreshold && upgrade.isGodMode && upgrade.isPUGodMode;
+    return upgrade.isMeditation && purchasedUpgradesSet.has("Cosmic Drought") && autoMeditateSkill && autoFightEnabled && serenity > upgrade.autoMeditateThreshold && (etherealReflectionSkill || (upgrade.isGodMode && upgrade.isPUGodMode));
 }
 
 // Function to format the cost or earnings of an upgrade for display
@@ -3179,7 +3205,7 @@ function autobuyUpgrades() {
                 buyUpgrade(encodeName(upgrade.name), false, true);
                 upgradeBought = true;
                 if (stellarMeditationSkill) {
-                    stellarMeditationMult *= 1.1;
+                    stellarMeditationMult *= (zenOfTheStarsSkill ? 1.5 : 1.1);
                 }
             } else if ((isAffordableUpgrade && switchStates[upgrade.name])) {
                 buyUpgrade(encodeName(upgrade.name), false, true);
@@ -4259,6 +4285,10 @@ function calculateTooltip(resourceId) {
         if (basicResourceBoost !== 1) {
             tooltip += `<span style="color:#FF00FF">x${formatNumber(basicResourceBoost)} (Basic Resource Boost)</span><br>`;
         }
+        const loveMultiplier = loveIsEverythingSkill ? (serenity > 1.1 ? Math.log(serenity) / Math.log(1.1) : 1) : 1;
+        if (loveMultiplier !== 1) {
+            tooltip += `<span style="color:#F89880">x${formatNumber(loveMultiplier)} (Love is Everything)</span><br>`;
+        }
     }
 
     // Copium-specific multiplier
@@ -4613,11 +4643,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     });
-    if (spentLovePoints + lovePoints > totalLoveHallSkillsCost + 2500){
+    if (spentLovePoints + lovePoints > totalLoveHallSkillsCost + 5000){
         
-        lovePoints -= ((spentLovePoints + lovePoints) - (totalLoveHallSkillsCost + 2500));
+        lovePoints -= ((spentLovePoints + lovePoints) - (totalLoveHallSkillsCost + 5000));
         showMessageModal('The Journey Continues',
-            "You've reached an impressive milestone! With all Hall of Love skills unlocked and over 2500 Love Points stockpiled, you're among the few who have completed all current content. To maintain a balanced gameplay experience as we prepare future updates, Love Points are currently capped at 2500. "
+            "You've reached an impressive milestone! With all Hall of Love skills unlocked and over 5000 Love Points stockpiled, you're among the few who have completed all current content. To maintain a balanced gameplay experience as we prepare future updates, Love Points are currently capped at 5000. "
             + "In the meantime, feel free to go achievement hunting if you're missing any, or join us on Discord to share your feedback and stay connected with the community. "
             + "Congratulations on your progress, and thank you for being part of this incredible journey—there's more exciting content on the horizon!"
         );

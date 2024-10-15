@@ -19,6 +19,8 @@ let deismDoubled = false;
 
 let fullFocusPreserved = true;
 
+let skepticismRandomnessFactor = 3;
+
 let respawnFactor;
 let livesPerBall;
 
@@ -79,8 +81,8 @@ const meditationChallenges = {
         focus: 1,
         ballCount: 4,
         arenaSize: 350,
-        ballSize: 145,
-        ballSizeDelta: 10,
+        ballSize: 155,
+        ballSizeDelta: 5,
         velocity: 1.55,
         wind: 0,
         respawnFactor: 1,
@@ -123,7 +125,7 @@ const meditationChallenges = {
         livesPerBall: 1,
     },
     "Stoicism": {
-        duration: 35,
+        duration: 36,
         focus: 10,
         ballCount: 12,
         arenaSize: 700,
@@ -159,8 +161,8 @@ const meditationChallenges = {
         livesPerBall: 1,
     },
     "Buddhism": {
-        duration: 360,
-        focus: 108,
+        duration: 380,
+        focus: 100,
         ballCount: 12,
         arenaSize: 800,
         ballSize: 360,
@@ -177,21 +179,21 @@ const meditationChallenges = {
         arenaSize: 550,
         ballSize: 400,
         ballSizeDelta: 0,
-        velocity: 55,
+        velocity: 56,
         wind: 0,
         respawnFactor: 0.1,
         livesPerBall: 3,
     },
     "Epicureanism": {
-        duration: 1200,
+        duration: 1300,
         focus: 1000,
-        ballCount: 18,
+        ballCount: 20,
         arenaSize: 600,
         ballSize: 600,
         ballSizeDelta: 20,
-        velocity: 75,
+        velocity: 80,
         wind: 10,
-        respawnFactor: 5,
+        respawnFactor: 5.9,
         livesPerBall: 1,
     },
     "Agnosticism": {
@@ -251,6 +253,13 @@ function startMeditationGame(challengeName, backgroundImage, stageNumber = 1, pr
             unlockAchievement('Theological Reasoning');
             livesPerBall = Math.max(livesPerBall - 1, 1);
             baseVelocity *= 0.9;
+        } else if (currentChallengeName === 'Epicureanism' && !purchasedUpgradesSet.has("First Pizza Meme") && !purchasedUpgradesSet.has("Second Pizza Meme")) {
+            unlockAchievement('Slice of Euphoria');
+            ballCount = Math.max(ballCount - 2, 1);
+            respawnFactor += 1;
+        }else if (currentChallengeName === 'Skepticism' && purchasedUpgradesSet.has("Religious Books")) {
+            unlockAchievement('Cured Skepticism');
+            skepticismRandomnessFactor = 2.5;
         }
 
         // Show the meditation overlay
@@ -421,7 +430,7 @@ function updateMeditationGame(resolve, stageNumber) {
             // Flash "Not So Fast" message and then restart the game
             clearInterval(meditationInterval); // Stop the current game loop
             showArenaMessage('Experience Randomness').then(() => {
-                startMeditationGame(currentChallengeName, document.getElementById('arena').style.backgroundImage, 2, meditationFocus, 1 + (Math.random() * 3), parseFloat(((Math.floor(Math.random() * 60) + 40) / 100).toFixed(2)), parseFloat((Math.random() * (3 - 0.01) + 0.01).toFixed(2))).then(resolve);
+                startMeditationGame(currentChallengeName, document.getElementById('arena').style.backgroundImage, 2, meditationFocus, 1 + (Math.random() * skepticismRandomnessFactor), parseFloat(((Math.floor(Math.random() * 60) + 40) / 100).toFixed(2)), parseFloat((Math.random() * (skepticismRandomnessFactor - 0.01) + 0.01).toFixed(2))).then(resolve);
             });
             return;
         } else {

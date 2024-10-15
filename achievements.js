@@ -541,7 +541,7 @@ const achievements = [
     {
         name: 'It Takes One to Know One',
         isUnlocked: false,
-        hoverText: 'image is self-explanatory',
+        hoverText: '???',
         img: 'imgs/achievements/vegeta_vs_vegeta.jpg',
         type: 'puzzle',
     },
@@ -935,12 +935,33 @@ const achievements = [
         type: 'progression',
     },
     {
+        name: 'Impossible Crunch',
+        isUnlocked: false,
+        hoverText: 'big crunch for over 1M mult',
+        img: 'imgs/achievements/impossible_crunch.jpg',
+        type: 'puzzle',
+    },
+    {
+        name: 'Slice of Euphoria',
+        isUnlocked: false,
+        hoverText: 'bring pizza to the Epicurean party',
+        img: 'imgs/achievements/slice_of_euphoria.jpg',
+        type: 'puzzle',
+    },
+    {
         name: 'Buddhist Bunny',
         isUnlocked: false,
         hoverText: '???',
         img: 'imgs/achievements/buddhist_bunny.jpg',
         type: 'puzzle',
         respecPoint: true,
+    },
+    {
+        name: 'Cured Skepticism',
+        isUnlocked: false,
+        hoverText: '???',
+        img: 'imgs/achievements/the_cure.jpg',
+        type: 'puzzle',
     },
     {
         name: 'Eternal Flame',

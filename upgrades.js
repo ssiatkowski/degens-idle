@@ -851,7 +851,7 @@ const upgrades = [
         img: `imgs/isshin.jpg`,
         isFight: true,
         isKey: true,
-        autoBattlePower: 800000,
+        autoBattlePower: 1600000,
     },
     {
         name: `Work do be like that`,
@@ -1355,16 +1355,16 @@ const upgrades = [
         img: `imgs/meditation.jpg`,
         message: `<p>Congratulations! You’ve reached a new level of enlightenment, unlocking a powerful new type of upgrade: <strong>Meditations</strong>. These meditations are similar to battles in that they play out passively, but they tap into a different kind of challenge—one that is driven by all 8 of your resources. In meditation, you’ll explore the metaphysical realm, where the ultimate truths await.</p>
                 <h3>How the Meditation Upgrades Work:</h3>
-                <p>In each meditation, your goal is to maintain a set of mystical <strong>elements</strong> within a meditative space. Just like battles, meditations unfold automatically, but here, the outcome is determined by your mastery of all 8 resources:</p>
+                <p>In each meditation, your goal is to maintain a set of mystical <strong>balls</strong> within a meditative space. Just like battles, meditations unfold automatically, but here, the outcome is determined by your mastery of all 8 resources:</p>
                 <ul>
-                    <li><strong>Copium</strong> - Influences <strong>Element Size</strong>. More Copium results in smaller elements, making them easier to keep within bounds.</li>
-                    <li><strong>Delusion</strong> - Affects <strong>Turn Speed</strong>. A greater delusion allows the elements to adjust their direction more quickly, pulling them back toward the center faster.</li>
+                    <li><strong>Copium</strong> - Influences <strong>Ball Size</strong>. More Copium results in smaller balls, making them easier to keep within bounds.</li>
+                    <li><strong>Delusion</strong> - Affects <strong>Turn Speed</strong>. A greater delusion allows the balls to adjust their direction quicker, pulling them back toward the center faster.</li>
                     <li><strong>Yacht Money</strong> - <strong>Reduces Meditation Duration</strong>. Accumulating more shortens the time required to complete the meditation challenge.</li>
-                    <li><strong>Troll Points</strong> - Increases <strong>Respawn Delay</strong>. Higher Troll Points give you more time before an element that leaves the bounds reappears, offering brief respite.</li>
-                    <li><strong>Hopium</strong> - <strong>Reduces the Number of Elements</strong>. With more Hopium, fewer elements must be managed during meditation.</li>
-                    <li><strong>Knowledge</strong> - Affects <strong>Velocity</strong>. Greater Knowledge slows down the elements, making it easier to keep them in the meditative space.</li>
-                    <li><strong>Power</strong> - Affects <strong>Gravity</strong>. A stronger gravitational pull towards the center keeps the elements from straying too far from the boundary.</li>
-                    <li><strong>Serenity</strong> - Enhances <strong>Focus</strong>. More Serenity allows more elements to exit the boundary before you lose focus and fail the meditation.</li>
+                    <li><strong>Troll Points</strong> - Increases <strong>Respawn Delay</strong>. Higher Troll Points give you more time before a ball that leaves the bounds reappears, offering brief respite.</li>
+                    <li><strong>Hopium</strong> - <strong>Reduces the Number of Balls</strong>. With more Hopium, fewer balls must be managed during meditation.</li>
+                    <li><strong>Knowledge</strong> - Affects <strong>Velocity</strong>. Greater Knowledge slows down the balls, making it easier to keep them in the meditative space.</li>
+                    <li><strong>Power</strong> - Affects <strong>Gravity</strong>. A stronger gravitational pull towards the center keeps the balls from straying too far from the boundary.</li>
+                    <li><strong>Serenity</strong> - Enhances <strong>Focus</strong>. More Serenity allows more balls to exit the boundary before you lose focus and fail the meditation.</li>
                 </ul>
                 <p>As you master each meditation, you’ll unlock upgrades tied to diverse belief systems, philosophies, and worldviews. Use your resources strategically to navigate these metaphysical challenges and achieve deeper understanding and metaphysical mastery.</p>`,
         isKey: true,
@@ -1415,7 +1415,7 @@ const upgrades = [
         earnings: { copiumPerSecond: 5.2e45, delusionPerSecond: 1.6e45, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 1.1e47, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0.05 },
         img: `imgs/arena_existentialism.png`,
         isMeditation: true,
-        autoMeditateThreshold: 500,
+        autoMeditateThreshold: 1000,
         isKey: true,
         message: `You've uncovered the truth that <strong>meaning in life is not preordained</strong>—it is something you must create for yourself. In a vast and indifferent universe, you alone have the freedom to choose your purpose. Through this meditation, you’ve learned that the path to fulfillment is in embracing your freedom and accepting responsibility for your choices. Seek meaning in your actions, and the universe will respond.`,
     },
@@ -1443,7 +1443,7 @@ const upgrades = [
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 2e47, trollPointsPerSecond: 0, hopiumPerSecond: 8e47, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 10 },
         img: `imgs/arena_altruism.png`,
         isMeditation: true,
-        autoMeditateThreshold: 75000,
+        autoMeditateThreshold: 100000,
         isKey: true,
         message: `Through this meditation, you’ve learned that <strong>true fulfillment comes from selfless acts</strong> and putting the well-being of others above your own. Altruism teaches that by lifting others up, we create a better world for everyone. Compassion, generosity, and kindness ripple through the world, leaving a lasting positive impact. Continue to give without expectation, and you’ll find the world gives back in ways you never imagined.`,
     },
@@ -1491,7 +1491,7 @@ const upgrades = [
         earnings: { copiumPerSecond: 0, delusionPerSecond: 4.2e47, yachtMoneyPerSecond: 0, trollPointsPerSecond: 4.2e47, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 42 },
         img: `imgs/arena_rastafarianism.png`,
         isMeditation: true,
-        autoMeditateThreshold: 420000,
+        autoMeditateThreshold: 1000000,
         isKey: true,
         message: `In this meditation, you’ve connected with the <strong>spiritual power of unity, peace, and respect for all living things</strong>. Rastafarianism teaches the importance of freedom, self-awareness, and living in harmony with nature. By embracing these values, you have strengthened your bond with the earth and your community. Walk in the light of peace and continue to cultivate a deep respect for life in all its forms.`,
     },
@@ -1513,7 +1513,7 @@ const upgrades = [
         earnings: { copiumPerSecond: 1e48, delusionPerSecond: 2e50, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 2e17, powerPerSecond: 0, serenityPerSecond: 200 },
         img: `imgs/arena_dualism.png`,
         isMeditation: true,
-        autoMeditateThreshold: 2e7,
+        autoMeditateThreshold: 1e8,
         isKey: true,
         message: `In this meditation, you’ve learned that <strong>existence is shaped by the interplay between two fundamental forces</strong>: body and soul, mind and matter. Dualism shows us that both the physical and spiritual worlds are essential and interconnected. By recognizing and balancing these opposing yet complementary forces, you gain deeper insight into yourself and the universe. Embrace both sides to live in harmony and reach your full potential.`,
     },
@@ -1541,7 +1541,7 @@ const upgrades = [
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 2e51, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 2e18, powerPerSecond: 0, serenityPerSecond: 1999 },
         img: `imgs/arena_libertarianism.png`,
         isMeditation: true,
-        autoMeditateThreshold: 1e10,
+        autoMeditateThreshold: 1e11,
         isKey: true,
         message: `You’ve discovered that <strong>true freedom lies in the ability to live independently and make your own choices</strong>, without unnecessary constraints. Libertarianism teaches the importance of personal liberty and responsibility, where individuals thrive when allowed to pursue their own paths. Through this meditation, you’ve embraced the value of autonomy, and with it, the power to shape your own destiny.`,
         achievement: 'Study Libertarianism',
@@ -1570,7 +1570,7 @@ const upgrades = [
         earnings: { copiumPerSecond: 5e53, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 1e53, knowledgePerSecond: 3e21, powerPerSecond: 0, serenityPerSecond: 32500 },
         img: `imgs/arena_hinduism.png`,
         isMeditation: true,
-        autoMeditateThreshold: 1e12,
+        autoMeditateThreshold: 1e13,
         isKey: true,
         message: `Through this meditation, you’ve gained insight into the <strong>cycle of life, karma, and spiritual growth</strong>. Hinduism teaches that every action shapes your journey toward enlightenment, and by aligning with your dharma (righteous path), you move closer to your true purpose. You’ve learned the importance of inner peace, self-awareness, and respect for the interconnectedness of all life. Continue on your path with an open heart, and the universe will guide you.`,
     },
@@ -1705,6 +1705,7 @@ const upgrades = [
         cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 1e145, knowledge: 1e120, power: 0, serenity: 1e21 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 1e55, knowledgePerSecond: 1e29, powerPerSecond: 0, serenityPerSecond: 3e11 },
         img: `imgs/the_cure.jpg`,
+        hoverOverwrite: `Shoutout to "The Cure", written by the Degens Idle creator's sister! Pro tip: Owning this book will reduce randomness in the Skepticism meditation, so set it to autobuy if you want to optimize your strategy without relying purely on luck.`,
     },
     {         
         name: `Christianity`,
@@ -1717,7 +1718,7 @@ const upgrades = [
         message: `In this meditation, you’ve embraced the <strong>power of faith, love, and redemption</strong>. Christianity teaches that by living with compassion and following a path of grace, you can find peace and salvation. Through your meditation, you’ve learned the importance of forgiveness, selflessness, and the strength that comes from faith. Continue to live with love in your heart, and you will find a deep connection to the divine.`,
     },
     {
-        name: `Journey Over Destination`,
+        name: `Journey > Destination`,
         cost: { copium: 0, delusion: 2e156, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 1e25 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 1e62, yachtMoneyPerSecond: -1e60, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 1e30, powerPerSecond: 0, serenityPerSecond: 5e11 },
         img: `imgs/journey_over_destination.jpg`,
@@ -1730,7 +1731,7 @@ const upgrades = [
     },
     {         
         name: `Epicureanism`,
-        cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 1e163, hopium: 1e163, knowledge: 0, power: 1e46, serenity: 5e27 },
+        cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 1e163, hopium: 1e163, knowledge: 0, power: 1e46, serenity: 3e27 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 1e70, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 1e38, powerPerSecond: 0, serenityPerSecond: 1e16 },
         img: `imgs/arena_epicureanism.png`,
         isMeditation: true,
@@ -1740,19 +1741,19 @@ const upgrades = [
     },
     {
         name: `Hold the Fuck Up`,
-        cost: { copium: 0, delusion: 1e165, yachtMoney: 0, trollPoints: 1e165, hopium: 0, knowledge: 1e160, power: 0, serenity: 2e30 },
+        cost: { copium: 0, delusion: 1e165, yachtMoney: 0, trollPoints: 1e165, hopium: 0, knowledge: 1e150, power: 0, serenity: 2e30 },
         earnings: { copiumPerSecond: -1e68, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1e69, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 4e14 },
         img: `imgs/hold_the_fuck_up.jpg`,
     },
     {
         name: `God's Plan`,
-        cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 1.5e162, power: 0, serenity: 1e32 },
+        cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 1.5e155, power: 0, serenity: 1e32 },
         earnings: { copiumPerSecond: -1e69, delusionPerSecond: -1e69, yachtMoneyPerSecond: -1e69, trollPointsPerSecond: -1e69, hopiumPerSecond: -1e61, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 6.9e14 },
         img: `imgs/gods_plan.jpg`,
     },
     {         
         name: `Agnosticism`,
-        cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 2e162, power: 0, serenity: 1.2e32 },
+        cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 2e155, power: 0, serenity: 1.2e32 },
         earnings: { copiumPerSecond: 1e75, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 1e65, knowledgePerSecond: 1e45, powerPerSecond: 0, serenityPerSecond: 1e19 },
         img: `imgs/arena_agnosticism.png`,
         isMeditation: true,

@@ -78,11 +78,11 @@ const enemyStats = {
         absorb: 0.9
     },
     "Kratos": {
-        health: 6.5e8,
+        health: 7e8,
         minDamage: 1,
         maxDamage: 2,
         attackSpeed: 30,
-        defense: 5e6,
+        defense: 3e6,
         critChance: 0,
         critDamage: 1,
         dodge: 0,
@@ -391,11 +391,12 @@ function startFightGame(enemyName, enemyImg) {
                 document.getElementById('enemyAbsorbStat').innerText = formatNumber(enemyAbsorb * 100) + '%';
                 unlockAchievement('Unlikely Duo');
                 logFight("<span style='color: green; font-weight: bold; font-size: 1.3em';>Darth Vader tries to use the force to stun you but Qui-Gon Jinn protects you. Darth Sidious uses force lightning to stun Darth Vader for 6 turns and reduce his damage absorption to 10%.</span>");
-                numBattleGimmicks += 2;
+                numBattleGimmicks.add('Qui-Gon Jinn');
+                numBattleGimmicks.add('Sheev');
             } else if (!purchasedUpgradesSet.has("Still very stupid")) {
                 unlockAchievement('Academic Grandmaster');
                 logFight("<span style='color: green; font-weight: bold; font-size: 1.3em';>Darth Vader tries to use the force to stun you but Qui-Gon Jinn protects you. </span>");
-                numBattleGimmicks += 1;
+                numBattleGimmicks.add('Qui-Gon Jinn');
             } else if (!purchasedUpgradesSet.has("Unlimited Power")) {
                 enemyStunCount = 6;
                 enemyAbsorb = 0.1;
@@ -403,7 +404,7 @@ function startFightGame(enemyName, enemyImg) {
                 document.getElementById('enemyAbsorbStat').innerText = formatNumber(enemyAbsorb * 100) + '%';
                 unlockAchievement('Sheev vs Anakin');
                 logFight("<span style='color: green; font-weight: bold; font-size: 1.3em';>Darth Vader uses the force to stun you for 3 turns. Darth Sidious uses force lightning to stun Darth Vader for 6 turns and reduce his damage absorption to 10%.</span>");
-                numBattleGimmicks += 1;
+                numBattleGimmicks.add('Sheev');
             } else {
                 playerStunCount = 3;
                 logFight("<span style='color: red; font-weight: bold; font-size: 1.3em';>Darth Vader uses the force to stun you for 3 turns. (if only you could get someone who could use the force to protect you) </span>");
@@ -414,7 +415,7 @@ function startFightGame(enemyName, enemyImg) {
             document.getElementById('playerDamageStat').innerText = `${formatNumber(playerMinDamage)} - ${formatNumber(playerMaxDamage)}`;
             unlockAchievement('Morale Boost');
             logFight("<span style='color: green; font-weight: bold; font-size: 1.3em';>Though Boromir offers no special powers, his presence as a leader inspires you. His courage and determination lift your spirits, boosting your morale and increasing your max damage by 20%.</span>");
-            numBattleGimmicks += 1;
+            numBattleGimmicks.add('Boromir');
         } else if (currEnemyName === "Chuck Norris") {
             if (!purchasedUpgradesSet.has("Training Dummy")) {
                 enemyDefense /= 2;
@@ -424,7 +425,7 @@ function startFightGame(enemyName, enemyImg) {
                 document.getElementById('enemyAbsorbStat').innerText = formatNumber(enemyAbsorb * 100) + '%';
                 unlockAchievement('Chuck Norris Kidney');
                 logFight("<span style='color: green; font-weight: bold; font-size: 1.3em';>You catch Chuck Norris mid-session while he's pummeling the Training Dummy. Seizing the moment, you sneak up and deliver a wrenching gut shot right to his kidney. The impact is so brutal that it cuts his health and defense in half for the rest of the battle, and he is unable to absorb any damage.</span>");
-                numBattleGimmicks += 1;
+                numBattleGimmicks.add('Training');
             } else {
                 logFight("<span style='color: red; font-weight: bold; font-size: 1.3em';>Chuck Norris has no distractions and is ready to fight you at full power.</span>");
             }
@@ -433,7 +434,7 @@ function startFightGame(enemyName, enemyImg) {
             document.getElementById('playerCritChanceStat').innerText = formatNumber(playerCritChance * 100) + '%';
             unlockAchievement('It Takes One to Know One');
             logFight("<span style='color: green; font-weight: bold; font-size: 1.3em';>In a strange time-travel twist, you face a vastly stronger future Vegeta, with a younger Vegeta by your side. Unable to match his future self’s power, young Vegeta offers crucial advice, raising your critical hit chance by 10% and giving you a chance against the overwhelming foe.</span>");
-            numBattleGimmicks += 1;
+            numBattleGimmicks.add('Vegeta');
         } else if (currEnemyName === "Kaguya") {
             if (!purchasedUpgradesSet.has("Kung Fu Bunny")) {
                 unlockAchievement('Wrong Sidekick');
@@ -443,19 +444,19 @@ function startFightGame(enemyName, enemyImg) {
                 }
                 localStorage.setItem('numCookedRabbits', numCookedRabbits);
                 logFight(`<span style='color: yellow; font-size: 1.2em';>Kaguya notices the bunny beside you, clumsily performing kung fu moves. With a single glance, she pulverizes it, leaving nothing behind. That is ${numCookedRabbits} poor bunn${numCookedRabbits > 1 ? 'ies' : 'y'} you have caused to get fried.</span>`);
-                numBattleGimmicks += 1;
+                numBattleGimmicks.add('Bunny');
                 buyUpgrade(encodeName("Kung Fu Bunny"), true, true);
             }
             if (!purchasedUpgradesSet.has("Good Guy Sasuke")) {
                 sasukeIsHelping = true; // Set Sasuke's help flag to true
                 unlockAchievement('Sidekick');
                 logFight("<span style='color: green; font-weight: bold; font-size: 1.3em';>Sasuke joins your side to stop Kaguya and save the multiverse. Although he is leagues below her, Sasuke will assist by partially countering some of her Sharingan powers with his own.</span>");
-                numBattleGimmicks += 1;
+                numBattleGimmicks.add('Sasuke');
             } else {
                 sasukeIsHelping = false;
                 logFight("<span style='color: red; font-weight: bold; font-size: 1.3em';>You stand alone against the biggest evil the world has ever seen.</span>");
             }
-            if (numBattleGimmicks >= 9) {
+            if (numBattleGimmicks.size >= 9) {
                 unlockAchievement('Bells and Whistles');
             }
         }
@@ -689,7 +690,8 @@ function attackEnemy(resolve) {
         unlockAchievement('Unlikely Duo #2')
         buyUpgrade(encodeName("Impossible"), true, true);
         buyUpgrade(encodeName("Captain Degen"), true, true);
-        numBattleGimmicks += 2;
+        numBattleGimmicks.add('Captain');
+        numBattleGimmicks.add('Thanos');
     } else {
 
         const baseDamage = Math.floor(Math.random() * (playerMaxDamage - playerMinDamage + 1)) + playerMinDamage;
@@ -898,7 +900,7 @@ function attackEnemy(resolve) {
                 playerDefense = 1000; // Grant the player 1k defense
                 unlockAchievement('Outsmart Vegeta SS God');
                 logFight(`<span style='color: #00FF00; font-weight: bold; font-size: 1.3em;'>You outwitted Vegeta SS God! His attempt to absorb your defense fails, and instead, you gain 1,000 base defense!</span>`);
-                numBattleGimmicks += 1;
+                numBattleGimmicks.add('SS God');
             }
         }
 
@@ -912,7 +914,7 @@ function attackEnemy(resolve) {
                 playerCurrentAttackSpeed *= 1.75; // Increase attack speed by 75%
                 unlockAchievement('Outsmart Vegeta SS Eternal');
                 logFight(`<span style='color: #00FF00; font-weight: bold; font-size: 1.3em;'>Vegeta SS Eternal feels your hope, and the extremely fucking powerful magnetic field around him boosts your attack speed by 75%!</span>`);
-                numBattleGimmicks += 1;
+                numBattleGimmicks.add('SS Eternal');
             }
         }
 
@@ -1004,7 +1006,7 @@ function attackEnemy(resolve) {
                 unlockAchievement('Dirty Trick');
                 enemyStunCount += 250;
                 logFight("<span style='color: green; font-size: 1.3em';>Just as Saitama got serious, you pointed at a piñata and he couldn't resist. But when he punched it, a swarm of mosquitos burst out, fueling his mosquito hate. He spends 250 turns squashing them, leaving himself wide open to your attacks.</span>");
-                if (numBattleGimmicks >= 9) {
+                if (numBattleGimmicks.size >= 9) {
                     unlockAchievement('Bells and Whistles');
                 }
             } else {

@@ -22,11 +22,11 @@ const loveHallSkills = [
     { name: 'Illusion of Power', cost: 14, description: 'Lower auto-fight power threshold by 10x each for ascended/transcended upgrades.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 7, requirement: 'Overwhelming Mercy' },
     { name: 'Early Accelerant', cost: 14, description: '10x multiplier to first 6 resources, degrades by 2.5% with each purchased upgrade.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 7 },
 
-    { name: 'Power Infusion', cost: 35, description: '4x Power gain.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 8},
-    { name: 'Soulbound Embrace', cost: 35, description: 'Gain +6 Love Points every embrace.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 8, requirement: 'Cosmic Embrace' },
+    { name: 'Power Infusion', cost: 42, description: '4x Power gain.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 8},
+    { name: 'Soulbound Embrace', cost: 42, description: 'Gain +6 Love Points every embrace.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 8, requirement: 'Cosmic Embrace' },
 
-    { name: 'Hopeful Soft Cap', cost: 42, description: 'Mini Games Soft Cap uses resource or Hopium (greater)', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 9 },
-    { name: 'Fertile Scarcity', cost: 42, description: 'Cosmic Drought sets Stellar Harvest to 250x (instead of 1x)', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 9 },
+    { name: 'Hopeful Soft Cap', cost: 50, description: 'Mini Games Soft Cap uses resource or Hopium (greater)', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 9 },
+    { name: 'Fertile Scarcity', cost: 50, description: 'Cosmic Drought sets Stellar Harvest to 250x (instead of 1x)', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 9, requirement: 'Stellar Meditation' },
     
     { name: 'Inverse Prestige', cost: 60, description: 'Prestige is now based on the highest of your first four resources', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 10 },
     { name: 'Positive Markers', cost: 60, description: 'Buy markers stay unlocked and turned on through Infinite Embrace', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 10 },
@@ -37,8 +37,8 @@ const loveHallSkills = [
     { name: 'Achievement Hypercharge', cost: 308, description: 'Achievement multiplier becomes multiplicative instead of additive.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 12 },
     { name: 'Perfect PU God-Mode', cost: 308, description: 'Make PU God-Mode perfect with diminishing returns at 99.2%.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 12 },
 
-    // { name: 'Infinite Collapse', cost: 308, description: 'Automatically apply Big Crunch mult without resetting.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 13, requirement: 'Perpetual Collapse' },
-    // { name: '', cost: 308, description: '', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 13 },
+    { name: 'Infinite Collapse', cost: 5000, description: 'Automatically apply Big Crunch mult without resetting.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 13, requirement: 'Perpetual Collapse' },
+    { name: 'Zen of the Stars', cost: 5000, description: 'Improve Stellar Meditation to x1.5', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 13, requirement: 'Fertile Scarcity'},
 
     // 27x Level - dimensions in string theory
     { name: 'Yacht Money Surge', cost: 0.06, description: '24x Yacht Money gain.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 21 },
@@ -74,6 +74,9 @@ const loveHallSkills = [
     { name: 'Serenity Gain (Yacht Money)', cost: 20, description: 'Serenity gain is multiplied by log2(Yacht Money)/33.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 32 },
     { name: 'Serenity Gain (Troll Points)', cost: 20, description: 'Serenity gain is multiplied by log2(Troll Points)/33.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 32 },
 
+    { name: 'Love is Everything', cost: 740, description: 'First 4 resource gains are multiplied by log 1.1(Serenity).', unlocked: false, level: 'Dimensional Shift (27x)', pair: 34 },
+    { name: 'Ethereal Reflection', cost: 740, description: 'Auto Meditation no longer requries to ascension/transcendence.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 34, requirement: 'Intrinsic Meditation' },
+
 
     // 42x Level - the meaning of life
     { name: 'Fortified Defenses', cost: 0.04, description: 'Vitality Matrix is now 10x stronger.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 41 },
@@ -86,7 +89,7 @@ const loveHallSkills = [
     { name: 'Chrono Magnetizer', cost: 0.25, description: 'Make Arcane Magnetizer 2x faster.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 43 },
 
     { name: 'Crunch Knowledge', cost: 0.4, description: 'Big Crunch extra knowledge mult is now ^(2/3) instead of ^(1/2).', unlocked: false, level: 'Cosmic Truth (42x)', pair: 44 },
-    { name: 'Stellar Meditation', cost: 0.4, description: 'Multiplicative +10% to all resurces after each successful meditation.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 44 },
+    { name: 'Stellar Meditation', cost: 0.4, description: 'Multiplicative x1.1 to all resurces after each successful meditation.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 44 },
 
     { name: 'Oversurged Power', cost: 0.66, description: 'Power Surge Skill is 2x as powerful.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 45 },
     { name: 'Overcompressed Power', cost: 0.66, description: 'Compressed/Condensed Power Skills are 3x as powerful.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 45 },
@@ -112,8 +115,8 @@ const loveHallSkills = [
     { name: 'Faith-Fueled Knowledge', cost: 30, description: 'Multiplier to knowledge based on log10 of current Hopium / 10.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 52 },
     { name: 'Event Horizon Boost', cost: 30, description: 'Increase Big Crunch base from 2 to 2.1.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 52 },
 
-    { name: 'Intrinsic Meditation', cost: 42, description: 'Auto complete meditations that are ascended & transcended after meeting Serenity threshold.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 53, requirement: 'Illusion of Power' },
-    { name: 'The Ultimate Fix', cost: 42, description: 'Fix the 3 remaining basic resources.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 53, requirement: 'Hopium Fix' },
+    { name: 'Intrinsic Meditation', cost: 50, description: 'Auto complete meditations that are ascended & transcended after meeting Serenity threshold.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 53, requirement: 'Illusion of Power' },
+    { name: 'The Ultimate Fix', cost: 50, description: 'Fix the 3 remaining basic resources.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 53, requirement: 'Hopium Fix' },
 
 
 ];
@@ -305,6 +308,18 @@ function unlockLoveHallSkill(skill, duringLoad = false) {
                 }
                 break;
 
+            // { name: 'Infinite Collapse', cost: 5000, description: 'Automatically apply Big Crunch mult without resetting.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 13, requirement: 'Perpetual Collapse' },
+            // { name: 'Zen of the Stars', cost: 5000, description: 'Improve Stellar Meditation to x1.5', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 13, requirement: 'Fertile Scarcity'},
+
+
+            case 'Infinite Collapse':
+                infiniteCollapseSkill = true;
+                break;
+
+            case 'Zen of the Stars':
+                zenOfTheStarsSkill = true;
+                break;
+
             case 'Yacht Money Surge':
                 yachtMoneySurgeMultiplier = 24;
                 if(!duringLoad){
@@ -430,6 +445,14 @@ function unlockLoveHallSkill(skill, duringLoad = false) {
                 if(!duringLoad){
                     updateEffectiveMultipliers();
                 }
+                break;
+
+            case 'Love is Everything':
+                loveIsEverythingSkill = true;
+                break;
+
+            case 'Ethereal Reflection':
+                etherealReflectionSkill = true;
                 break;
 
             case 'Fortified Defenses':
