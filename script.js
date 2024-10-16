@@ -70,6 +70,9 @@ let basicResourceBoost = 1;
 let pulseOfAffectionSkill = false;
 let pulseOfAffectionMult = 1;
 
+let loveSizeMattersMultiplier = 1;
+let largestEmbrace = 0;
+
 let altruisticEmbraceSkill = false;
 let masterOfBargainsSkill = false;
 
@@ -140,6 +143,8 @@ let serenityGainCopium = false;
 let serenityGainDelusion = false;
 let serenityGainYachtMoney = false;
 let serenityGainTrollPoints = false;
+let masterOfTimeSkill = false;
+let loveSizeMattersSkill = false;
 let loveIsEverythingSkill = false;
 let etherealReflectionSkill = false;
 let resonanceOfLoveSkill = false;
@@ -226,6 +231,8 @@ let warpTimeInterval = null;
 let enableQuickMode = false;
 let enableButtonAnimations = true;
 
+let resourceGenerationDisabled = false;
+
 // Global object to manage prevent event occuring at the same time
 let eventProgression = {
     inProgress: false,
@@ -298,9 +305,9 @@ function updateEffectiveMultipliers() {
 
     const loveMultiplier = loveIsEverythingSkill ? (serenity > 1.1 ? Math.log(serenity) / Math.log(1.1) : 1) : 1;
 
-    effectiveCopiumPerSecond = copiumPerSecond * totalMultiplier * amplifierMultiplier * copiumSurgeMultiplier * basicResourceBoost * beaconOfSevenSunsMult * loveMultiplier;
+    effectiveCopiumPerSecond = copiumPerSecond * totalMultiplier * amplifierMultiplier * copiumSurgeMultiplier * basicResourceBoost * beaconOfSevenSunsMult * loveMultiplier * loveSizeMattersMultiplier;
     effectiveDelusionPerSecond = delusionPerSecond * totalMultiplier * amplifierMultiplier * delusionSurgeMultiplier * basicResourceBoost * loveMultiplier;
-    effectiveYachtMoneyPerSecond = yachtMoneyPerSecond * totalMultiplier * amplifierMultiplier * yachtMoneySurgeMultiplier * basicResourceBoost * loveMultiplier;
+    effectiveYachtMoneyPerSecond = yachtMoneyPerSecond * totalMultiplier * amplifierMultiplier * yachtMoneySurgeMultiplier * basicResourceBoost * loveMultiplier * loveSizeMattersMultiplier;
     effectiveTrollPointsPerSecond = trollPointsPerSecond * totalMultiplier * amplifierMultiplier * trollPointsSurgeMultiplier * basicResourceBoost * loveMultiplier;
 
     effectiveHopiumPerSecond = hopiumPerSecond * totalMultiplier * beaconOfSevenSunsMult;
@@ -485,13 +492,6 @@ function loadGameState() {
 
     numLoveHallFreeRespecs = localStorage.getItem('numLoveHallFreeRespecs') !== null ? parseFloat(localStorage.getItem('numLoveHallFreeRespecs')) : 1;
 
-    accumulatedWarpTime = localStorage.getItem('accumulatedWarpTime') !== null ? parseFloat(localStorage.getItem('accumulatedWarpTime')) : 0;
-    warpTimeRemaining = localStorage.getItem('warpTimeRemaining') !== null ? parseFloat(localStorage.getItem('warpTimeRemaining')) : 0;
-    // If there's any remaining warp time, continue warp
-    if (warpTimeRemaining > 0) {
-        resumeWarpTime(warpTimeRemaining);
-    }
-
     consecutiveClicks = parseInt(localStorage.getItem('consecutiveClicks')) || 0;
     lastClickedBoxIndex = parseInt(localStorage.getItem('lastClickedBoxIndex')) || 0;
 
@@ -594,6 +594,18 @@ function loadGameState() {
 
     // Retrieve and parse the purchased upgrades from local storage, defaulting to an empty array if not found
     const savedPurchasedUpgrades = JSON.parse(localStorage.getItem('purchasedUpgrades')) || [];
+
+    largestEmbrace = parseFloat(localStorage.getItem('largestEmbrace')) || 0;
+    if(loveSizeMattersSkill && largestEmbrace > 25) {
+        loveSizeMattersMultiplier = Math.pow(largestEmbrace, 1.5) / 100;
+    }
+
+    accumulatedWarpTime = localStorage.getItem('accumulatedWarpTime') !== null ? parseFloat(localStorage.getItem('accumulatedWarpTime')) : 0;
+    warpTimeRemaining = localStorage.getItem('warpTimeRemaining') !== null ? parseFloat(localStorage.getItem('warpTimeRemaining')) : 0;
+    // If there's any remaining warp time, continue warp
+    if (warpTimeRemaining > 0) {
+        resumeWarpTime(warpTimeRemaining);
+    }
 
     // Map the saved purchased upgrade names to the actual upgrade objects
     purchasedUpgrades = savedPurchasedUpgrades.map(savedUpgradeName => upgrades.find(up => up.name === savedUpgradeName)).filter(Boolean);
@@ -853,6 +865,8 @@ function removeTooltip() {
 
 // Generate resources every interval
 function generateResources() {
+    if(resourceGenerationDisabled) return;
+
     copium += effectiveCopiumPerSecond / 2;
     delusion += effectiveDelusionPerSecond / 2;
     yachtMoney += effectiveYachtMoneyPerSecond / 2;
@@ -1010,6 +1024,9 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
                 pulseOfAffectionSkill = false;
                 pulseOfAffectionMult = 1;
 
+                loveSizeMattersMultiplier = 1;
+                largestEmbrace = 0;
+
                 altruisticEmbraceSkill = false;
                 masterOfBargainsSkill = false;
                 
@@ -1054,6 +1071,8 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
                 serenityGainDelusion = false;
                 serenityGainYachtMoney = false;
                 serenityGainTrollPoints = false;
+                masterOfTimeSkill = false;
+                loveSizeMattersSkill = false;
                 loveIsEverythingSkill = false;
                 etherealReflectionSkill = false;
                 resonanceOfLoveSkill = false;
@@ -2087,6 +2106,9 @@ async function bigCrunch(skipConfirms = false) {
         }
 
         if (confirmed && canBigCrunch()) {
+
+            resourceGenerationDisabled = true;
+
             // Capture the screen and animate the compression
             await animateBigCrunchEffect();
 
@@ -2097,7 +2119,7 @@ async function bigCrunch(skipConfirms = false) {
                 unlockAchievement('The Tiniest Crunch');
             } else if ((bigCrunchMultiplier / prevBigCrunchMult) > 9000){
                 unlockAchievement('Biggest Crunch');
-                if ((bigCrunchMultiplier / prevBigCrunchMult) > 1000000){
+                if ((bigCrunchMultiplier / prevBigCrunchMult) > 99000000){
                     unlockAchievement('Impossible Crunch');
                 }
             }
@@ -2137,11 +2159,13 @@ async function bigCrunch(skipConfirms = false) {
 
             // Animate the expansion back to full screen
             animateBigCrunchExpansion();
+
+            resourceGenerationDisabled = false;
         }
         // Trigger stop event after process complete (greater delay to match the crunch animation)
         setTimeout(() => {
             stopEvent("bigcrunch");
-        }, 2000);
+        }, 1500);
     }
 }
 
@@ -2250,15 +2274,26 @@ async function infiniteEmbrace(skipConfirms = false, lovePointsOverwrite = false
         }
 
         if (confirmed) {
+
+            resourceGenerationDisabled = true;
+
             // Capture the screen and animate the Infinite Embrace effect
             await animateInfiniteEmbraceEffect();
 
             if (!lovePointsOverwrite) {
-                lovePoints += calculateLovePointsGained();
+                const lovePointsGained = calculateLovePointsGained();
+                lovePoints += lovePointsGained;
                 if (serenity < 2000) {
                     unlockAchievement('Gentle Embrace');
-                } else if (calculateLovePointsGained() > 25) {
+                } else if (lovePointsGained > 25) {
                     unlockAchievement('Massive Embrace');
+                    if (lovePointsGained > largestEmbrace) {
+                        largestEmbrace = lovePointsGained;
+                        localStorage.setItem('largestEmbrace', largestEmbrace);
+                        if(loveSizeMattersSkill) {
+                            loveSizeMattersMultiplier = Math.pow(largestEmbrace, 1.5) / 100;
+                        }
+                    }
                 }
                 
                 if (embraceTimer < 180) {
@@ -2281,6 +2316,8 @@ async function infiniteEmbrace(skipConfirms = false, lovePointsOverwrite = false
 
             // Animate the expansion back to full screen
             animateInfiniteEmbraceExpansion();
+
+            resourceGenerationDisabled = false;
         }
 
         // Trigger stop event after process complete (even greater delay to match the embrace animation)
@@ -2456,11 +2493,19 @@ function updateWarpTime() {
     }
 }
 
-// Warp Time Activation logic remains the same
 warpButton.addEventListener("click", function () {
+    console.log('Warp Button Clicked');
+    
+    // If warp time is active and masterOfTimeSkill is true, stop the warp and add remaining time back
+    if (warpTimeActive) {
+        if (masterOfTimeSkill) {
+            accumulatedWarpTime += Math.max(warpTimeRemaining * 60 - 10, 0); // Convert remaining minutes to seconds and add back
+            endWarpTime(); // End the warp immediately
+        }
+        return; // Exit early if warp is active and no other action is needed
+    }
 
-    console.log('Warp Button Clicked')
-    if (warpTimeActive || accumulatedWarpTime < 3600) return;
+    if (accumulatedWarpTime < 3600) return; // Not enough warp time accumulated to start
 
     warpTimeActive = true;
     const fullHours = Math.floor(accumulatedWarpTime / 3600); // Only use full hours
@@ -2472,11 +2517,14 @@ warpButton.addEventListener("click", function () {
     resourceGenerationInterval = setInterval(generateResources, 100); // Faster generation
     warpTimeInterval = setInterval(updateWarpTimeRemaining, 1000); // Track remaining time every second
 
-    // Disable button during warp
-    warpButton.disabled = true;
+    // Disable button during warp, unless masterOfTimeSkill is active
+    if (!masterOfTimeSkill) {
+        warpButton.disabled = true;
+    }
     warpButton.classList.remove("affordable");
     warpButton.classList.add("spinning");
 });
+
 
 // Update warp time remaining and save state
 function updateWarpTimeRemaining() {
@@ -2500,12 +2548,13 @@ function endWarpTime() {
 
     warpButton.classList.remove("spinning");
 
-    // Re-enable the button after warp ends
+    // Re-enable the button regardless of masterOfTimeSkill
     warpButton.disabled = false;
 
     // Update UI elements
     updateWarpTime();
 }
+
 
 // Resume Warp Time after reload
 function resumeWarpTime(remainingTime) {
@@ -2518,7 +2567,9 @@ function resumeWarpTime(remainingTime) {
     warpTimeInterval = setInterval(updateWarpTimeRemaining, 1000);
 
     // Disable button during warp
-    warpButton.disabled = true;
+    if (!masterOfTimeSkill) {
+        warpButton.disabled = true;
+    }
     warpButton.classList.remove("affordable");
     warpButton.classList.add("spinning");
 }
@@ -4299,6 +4350,9 @@ function calculateTooltip(resourceId) {
         if (beaconOfSevenSunsSkill) {
             tooltip += `<span style="color:#FFA500">x${formatNumber(beaconOfSevenSunsMult)} (Beacon of Seven Suns)</span><br>`;
         }
+        if (loveSizeMattersMultiplier !== 1) {
+            tooltip += `<span style="color:#8B4513">x${formatNumber(loveSizeMattersMultiplier)} (Love Size Matters)</span><br>`;
+        }
     }
 
     // Delusion-specific multiplier
@@ -4312,6 +4366,9 @@ function calculateTooltip(resourceId) {
     if (resourceId === 'yachtMoney') {
         if (yachtMoneySurgeMultiplier !== 1) {
             tooltip += `<span style="color:#9F2B68">x${formatNumber(yachtMoneySurgeMultiplier)} (Yacht Money Surge)</span><br>`;
+        }
+        if (loveSizeMattersMultiplier !== 1) {
+            tooltip += `<span style="color:#8B4513">x${formatNumber(loveSizeMattersMultiplier)} (Love Size Matters)</span><br>`;
         }
     }
 

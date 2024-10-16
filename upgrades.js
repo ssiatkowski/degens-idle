@@ -1732,7 +1732,7 @@ const upgrades = [
     {         
         name: `Epicureanism`,
         cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 1e163, hopium: 1e163, knowledge: 0, power: 1e46, serenity: 3e27 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 1e70, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 1e38, powerPerSecond: 0, serenityPerSecond: 1e16 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 1e72, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 1e38, powerPerSecond: 0, serenityPerSecond: 1e16 },
         img: `imgs/arena_epicureanism.png`,
         isMeditation: true,
         autoMeditateThreshold: 5e30,
@@ -1741,24 +1741,49 @@ const upgrades = [
     },
     {
         name: `Hold the Fuck Up`,
-        cost: { copium: 0, delusion: 1e165, yachtMoney: 0, trollPoints: 1e165, hopium: 0, knowledge: 1e150, power: 0, serenity: 2e30 },
-        earnings: { copiumPerSecond: -1e68, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1e69, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 4e14 },
+        cost: { copium: 0, delusion: 1e169, yachtMoney: 0, trollPoints: 1e169, hopium: 0, knowledge: 1e150, power: 0, serenity: 2e30 },
+        earnings: { copiumPerSecond: -1e69, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1e70, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 4e14 },
         img: `imgs/hold_the_fuck_up.jpg`,
     },
     {
         name: `God's Plan`,
         cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 1.5e155, power: 0, serenity: 1e32 },
-        earnings: { copiumPerSecond: -1e69, delusionPerSecond: -1e69, yachtMoneyPerSecond: -1e69, trollPointsPerSecond: -1e69, hopiumPerSecond: -1e61, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 6.9e14 },
+        earnings: { copiumPerSecond: -1e70, delusionPerSecond: -1e70, yachtMoneyPerSecond: -1e70, trollPointsPerSecond: -1e70, hopiumPerSecond: -1e60, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 6.9e14 },
         img: `imgs/gods_plan.jpg`,
     },
     {         
         name: `Agnosticism`,
         cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 2e155, power: 0, serenity: 1.2e32 },
-        earnings: { copiumPerSecond: 1e75, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 1e65, knowledgePerSecond: 1e45, powerPerSecond: 0, serenityPerSecond: 1e19 },
+        earnings: { copiumPerSecond: 1e76, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 1e60, knowledgePerSecond: 1e42, powerPerSecond: 0, serenityPerSecond: 1e18 },
         img: `imgs/arena_agnosticism.png`,
         isMeditation: true,
         autoMeditateThreshold: 1e38,
         isKey: true,
         message: `Through this meditation, you’ve embraced the <strong>wisdom of uncertainty and open-mindedness</strong>. Agnosticism teaches that by acknowledging the limits of human understanding, you remain open to new ideas and possibilities. You’ve learned that sometimes the greatest wisdom lies in accepting that some truths may be beyond our grasp, and that is perfectly okay.`,
+    },
+    {
+        name: `Future Happiness`,
+        cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 5e155, power: 0, serenity: 1e32 },
+        earnings: { copiumPerSecond: -1e74, delusionPerSecond: -1e74, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: `imgs/future_happiness.jpg`,
+    },
+    {
+        name: `Meaning of Life`,
+        cost: { copium: 4.2e196, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 4.2e157, power: 0, serenity: 4.2e34 },
+        earnings: { copiumPerSecond: -1e77, delusionPerSecond: -1e77, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: `imgs/meaning_of_life.jpg`,
+        message: `<p>
+                    After navigating the chaos of existence, discovering the flickers of hope, and wielding the unrelenting power that made you the strongest being in the multiverse, you saved the world. You’ve meditated deeply on love and serenity, studying countless philosophies and beliefs in your pursuit of wisdom. But now, you stand at a new threshold—the Meaning of Life.
+                </p>
+                <p>
+                    You’ve spent eons exploring humanity’s collective knowledge, meditating on the teachings of philosophers, sages, and scholars. Yet, in this journey, one truth becomes painfully clear: one lifetime is never enough to grasp the totality of wisdom passed down by those who came before you. You realize that even with all your strength, love, and serenity, you can only gather fragments, scattered nuggets of truth from some. Every belief holds a kernel of wisdom, every philosophy some glimmer of understanding.
+                </p>
+                <p>
+                    With this knowledge, you form your own conclusions, a personal understanding of existence. However, the vastness of life’s mysteries remains. You are still far from fully understanding the meaning of life. What you have now is not the answer, but a fleeting glimpse of the infinite—a reminder that the pursuit itself may hold more significance than the destination.
+                </p>
+                <p>
+                    <strong>Keep searching. There’s always more to learn.</strong>
+                </p>`,
+        achievement: `Meaning of Life`,
     },
 ];

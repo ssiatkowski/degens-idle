@@ -191,7 +191,7 @@ const meditationChallenges = {
         arenaSize: 600,
         ballSize: 600,
         ballSizeDelta: 20,
-        velocity: 80,
+        velocity: 88,
         wind: 10,
         respawnFactor: 5.9,
         livesPerBall: 1,
@@ -200,10 +200,10 @@ const meditationChallenges = {
         duration: 2000,
         focus: 1,
         ballCount: 1,
-        arenaSize: 350,
+        arenaSize: 364,
         ballSize: 800,
         ballSizeDelta: 0,
-        velocity: 90,
+        velocity: 88,
         wind: 0,
         respawnFactor: 1,
         livesPerBall: 101,
@@ -242,6 +242,10 @@ function startMeditationGame(challengeName, backgroundImage, stageNumber = 1, pr
         fullFocusPreserved = true;
         livesPerBall = Math.max(challenge.livesPerBall - (steadyFocusSkill ? 1 : 0) , 1) + stageExtraLivesPerBall;
 
+        let arenaMessage = '';
+        let fontColor = 'green';
+        let fontSize = '24px';
+
         if (currentChallengeName === 'Dualism' && ballCount == 1) {
             ballCount = 2;
         }
@@ -249,17 +253,39 @@ function startMeditationGame(challengeName, backgroundImage, stageNumber = 1, pr
             unlockAchievement('Buddhist Bunny');
             respawnTime += 500;
             livesPerBall = Math.max(livesPerBall - 1, 1);
+            arenaMessage = 'The Bunny helps you by making balls respawn 0.5s faster and reduces focus loss by 1 per ball.';
+            fontColor = '#C04000';
+            fontSize = '38px';
         } else if (currentChallengeName === 'Christianity' && !purchasedUpgradesSet.has("Christian Logic")) {
             unlockAchievement('Theological Reasoning');
             livesPerBall = Math.max(livesPerBall - 1, 1);
             baseVelocity *= 0.9;
+            arenaMessage = 'Through appying logic, you lose 1 less life per ball and reduce ball velocity by 10%.';
+            fontSize = '32px';
         } else if (currentChallengeName === 'Epicureanism' && !purchasedUpgradesSet.has("First Pizza Meme") && !purchasedUpgradesSet.has("Second Pizza Meme")) {
             unlockAchievement('Slice of Euphoria');
             ballCount = Math.max(ballCount - 2, 1);
             respawnFactor += 1;
-        }else if (currentChallengeName === 'Skepticism' && purchasedUpgradesSet.has("Religious Books")) {
+            arenaMessage = 'Pizzas remove 2 balls and increase the respawn time by 1 second';
+            fontColor = 'purple';
+            fontSize = '38px';
+        } else if (currentChallengeName === 'Skepticism' && purchasedUpgradesSet.has("Religious Books") && stageNumber === 2) {
             unlockAchievement('Cured Skepticism');
             skepticismRandomnessFactor = 2.5;
+            arenaMessage = 'Religious books help you find order in chaos, reducing randomness.';
+        }else if (currentChallengeName === 'Agnosticism') {
+            const isWisdomPattern = ['W', 'I', 'S', 'D', 'O', 'M'].every((letter, index) =>
+                availableUpgrades[index] && availableUpgrades[index].name.startsWith(letter)
+            );
+            
+            // Do something if the pattern matches "WISDOM"
+            if (isWisdomPattern) {
+                unlockAchievement('Apply Wisdom');
+                turnRadius *= 1.3;
+                arenaMessage = 'Wisdom improves your turn radius by 30%.';
+                fontSize = '34px';
+            }
+
         }
 
         // Show the meditation overlay
@@ -278,10 +304,18 @@ function startMeditationGame(challengeName, backgroundImage, stageNumber = 1, pr
         // Initialize the meditation arena and balls
         setupMeditationArena(stageNumber);
 
-        // Start the meditation game loop, updating every 25ms
-        meditationInterval = setInterval(() => {
-            updateMeditationGame(resolve, stageNumber);
-        }, 25); // Update every 25ms for smooth animation
+        if (arenaMessage !== '') {
+            showArenaMessage(arenaMessage, fontColor, fontSize).then(() => {
+                meditationInterval = setInterval(() => {
+                    updateMeditationGame(resolve, stageNumber);
+                }, 25); // Update every 25ms for smooth animation
+            });
+        } else {
+            meditationInterval = setInterval(() => {
+                updateMeditationGame(resolve, stageNumber);
+            }, 25); // Update every 25ms for smooth animation
+        }
+        
     });
 }
 
@@ -721,7 +755,7 @@ function calculateTurnRadius() {
     let scalingFactor = 1 + (Math.max(0, Math.log10(delusion) - 100) * 0.1);
 
     // Apply the scaling factor to the base turn radius
-    let newTurnRadius = 0.25 * scalingFactor;
+    let newTurnRadius = 0.26 * scalingFactor;
 
     return newTurnRadius;
 }
@@ -810,7 +844,7 @@ function scaleArena() {
     }
 }
 
-function showArenaMessage(messageContent) {
+function showArenaMessage(messageContent, fontColor = 'red', fontSize = '48px') {
     return new Promise((resolve) => {
         const arena = document.getElementById('arena');
         const message = document.createElement('div');
@@ -819,8 +853,8 @@ function showArenaMessage(messageContent) {
         message.style.top = '50%';
         message.style.left = '50%';
         message.style.transform = 'translate(-50%, -50%)';
-        message.style.color = 'red';
-        message.style.fontSize = '48px';
+        message.style.color = fontColor;
+        message.style.fontSize = fontSize;
         message.style.fontWeight = 'bold';
         message.style.zIndex = '1000'; // Make sure it appears on top
         message.style.textAlign = 'center';

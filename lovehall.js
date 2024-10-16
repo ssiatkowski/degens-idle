@@ -19,7 +19,7 @@ const loveHallSkills = [
     { name: 'Serenity Flow', cost: 7, description: 'Hopium gain is multiplied by square root of Serenity.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 6 },
     { name: 'Serene Boost 2', cost: 7, description: '5x Serenity gain. (Serenity Boosts stack)', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 6, requirement: 'Serene Boost 1' },
 
-    { name: 'Illusion of Power', cost: 14, description: 'Lower auto-fight power threshold by 10x each for ascended/transcended upgrades.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 7, requirement: 'Overwhelming Mercy' },
+    { name: 'Illusion of Power', cost: 14, description: 'Lower auto-fight power threshold by 10x each for ascended / transcended upgrades.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 7, requirement: 'Overwhelming Mercy' },
     { name: 'Early Accelerant', cost: 14, description: '10x multiplier to first 6 resources, degrades by 2.5% with each purchased upgrade.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 7 },
 
     { name: 'Power Infusion', cost: 42, description: '4x Power gain.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 8},
@@ -74,8 +74,11 @@ const loveHallSkills = [
     { name: 'Serenity Gain (Yacht Money)', cost: 20, description: 'Serenity gain is multiplied by log2(Yacht Money)/33.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 32 },
     { name: 'Serenity Gain (Troll Points)', cost: 20, description: 'Serenity gain is multiplied by log2(Troll Points)/33.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 32 },
 
-    { name: 'Love is Everything', cost: 740, description: 'First 4 resource gains are multiplied by log 1.1(Serenity).', unlocked: false, level: 'Dimensional Shift (27x)', pair: 34 },
-    { name: 'Ethereal Reflection', cost: 740, description: 'Auto Meditation no longer requries to ascension/transcendence.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 34, requirement: 'Intrinsic Meditation' },
+    { name: 'Master of Time', cost: 333, description: 'Unlock ability to start/stop Time Warp.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 33 },
+    { name: 'Love Size Matters', cost: 333, description: 'Copium and Yacht Money are multiplied by ( {largest embrace}**1.5 ) / 100.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 33 },
+
+    { name: 'Love is Everything', cost: 740, description: 'First 4 resource gains are multiplied by log 1.1 (Serenity).', unlocked: false, level: 'Dimensional Shift (27x)', pair: 34 },
+    { name: 'Ethereal Reflection', cost: 740, description: 'Auto Meditation no longer requires ascension / transcendence.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 34, requirement: 'Intrinsic Meditation' },
 
 
     // 42x Level - the meaning of life
@@ -92,7 +95,7 @@ const loveHallSkills = [
     { name: 'Stellar Meditation', cost: 0.4, description: 'Multiplicative x1.1 to all resurces after each successful meditation.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 44 },
 
     { name: 'Oversurged Power', cost: 0.66, description: 'Power Surge Skill is 2x as powerful.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 45 },
-    { name: 'Overcompressed Power', cost: 0.66, description: 'Compressed/Condensed Power Skills are 3x as powerful.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 45 },
+    { name: 'Overcompressed Power', cost: 0.66, description: 'Compressed / Condensed Power Skills are 3x as powerful.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 45 },
 
     { name: 'Raise That Soft Cap', cost: 1.3, description: 'Increase mini games soft cap to 24 hours', unlocked: false, level: 'Cosmic Truth (42x)', pair: 46 },
     { name: 'Rewarding Meditations', cost: 1.3, description: 'Meditations give +40% rewards', unlocked: false, level: 'Cosmic Truth (42x)', pair: 46, requirement: 'Rewarding Victories' },
@@ -445,6 +448,14 @@ function unlockLoveHallSkill(skill, duringLoad = false) {
                 if(!duringLoad){
                     updateEffectiveMultipliers();
                 }
+                break;
+
+            case 'Master of Time':
+                masterOfTimeSkill = true;
+                break;
+
+            case 'Love Size Matters':
+                loveSizeMattersSkill = true;
                 break;
 
             case 'Love is Everything':
