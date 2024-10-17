@@ -44,7 +44,7 @@ const achievements = [
     {
         name: 'First Prestige',
         isUnlocked: false,
-        hoverText: 'click some button',
+        hoverText: 'click some button (without quick mode)',
         img: 'imgs/achievements/first_prestige.jpg',
         type: 'progression',
     },
@@ -65,7 +65,7 @@ const achievements = [
     {
         name: 'First Ascension',
         isUnlocked: false,
-        hoverText: 'become a low level god',
+        hoverText: 'become a low level god (without quick mode)',
         img: 'imgs/achievements/ascension.jpg',
         type: 'progression',
     },
@@ -955,6 +955,13 @@ const achievements = [
         img: 'imgs/achievements/buddhist_bunny.jpg',
         type: 'puzzle',
         respecPoint: true,
+    },
+    {
+        name: 'Warped Cookie',
+        isUnlocked: false,
+        hoverText: 'Wolves Crept Cautiously, Watching Whispers Curl. Wind Carried Cold, Whipping Cliffs.',
+        img: 'imgs/achievements/warped_cookie.jpg',
+        type: 'puzzle',
     },
     {
         name: 'Cured Skepticism',

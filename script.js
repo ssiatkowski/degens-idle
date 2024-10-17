@@ -370,6 +370,10 @@ function cookieCollectAllResources() {
     if(cookieClicks >= 500 && cookieClicks <= 505){
         unlockAchievement('Fatigued Finger');
     }
+    if (!achievementsMap.get('Warped Cookie').isUnlocked && !cookieIntervalId){
+        warpedCookieSequence += 'C';
+        manageWarpedCookieSequence();
+    }
     updateDisplay();
 }
 
@@ -1250,7 +1254,7 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
         }
 
         clearAllTimeouts();
-        clearInterval(cookieIntervalId)
+        clearInterval(cookieIntervalId);
 
         const cookieButtonVisible = JSON.parse(localStorage.getItem('cookieButtonVisible'));
         if (cookieButtonVisible && cookieAutoClicker) {
@@ -1269,6 +1273,7 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
             const timeoutId = setTimeout(() => {
                 if (thisCookieIntervalId === cookieIntervalId) {
                     clearInterval(thisCookieIntervalId);
+                    cookieIntervalId = null;
 
                     // Remove the spinning class to stop the animation
                     cookieButton.classList.remove('spinning');
@@ -2493,14 +2498,21 @@ function updateWarpTime() {
     }
 }
 
+const warpedCookieWinningSequence = 'WCCWWCWCCWC';
+let warpedCookieSequence = '';
+
 warpButton.addEventListener("click", function () {
-    console.log('Warp Button Clicked');
     
     // If warp time is active and masterOfTimeSkill is true, stop the warp and add remaining time back
     if (warpTimeActive) {
         if (masterOfTimeSkill) {
-            accumulatedWarpTime += Math.max(warpTimeRemaining * 60 - 10, 0); // Convert remaining minutes to seconds and add back
+            accumulatedWarpTime += Math.max(warpTimeRemaining * 60 - 60, 0); // Convert remaining minutes to seconds and add back
             endWarpTime(); // End the warp immediately
+
+            if (!achievementsMap.get('Warped Cookie').isUnlocked){
+                warpedCookieSequence += 'W';
+                manageWarpedCookieSequence();
+            }
         }
         return; // Exit early if warp is active and no other action is needed
     }
@@ -2516,6 +2528,11 @@ warpButton.addEventListener("click", function () {
     clearInterval(resourceGenerationInterval);
     resourceGenerationInterval = setInterval(generateResources, 100); // Faster generation
     warpTimeInterval = setInterval(updateWarpTimeRemaining, 1000); // Track remaining time every second
+
+    if (!achievementsMap.get('Warped Cookie').isUnlocked){
+        warpedCookieSequence += 'W';
+        manageWarpedCookieSequence();
+    }
 
     // Disable button during warp, unless masterOfTimeSkill is active
     if (!masterOfTimeSkill) {
@@ -2574,6 +2591,17 @@ function resumeWarpTime(remainingTime) {
     warpButton.classList.add("spinning");
 }
 
+// Manage sequence length to prevent it from growing infinitely
+function manageWarpedCookieSequence() {
+    // Ensure the sequence length doesn't exceed the winning sequence length
+    if (warpedCookieSequence.length > warpedCookieWinningSequence.length) {
+        warpedCookieSequence = warpedCookieSequence.slice(-warpedCookieWinningSequence.length); // Keep only the last n characters
+    }
+    if (warpedCookieSequence === warpedCookieWinningSequence) {
+        unlockAchievement('Warped Cookie');
+        warpedCookieSequence = ""; // Optionally reset the sequence after unlocking the achievement
+    }
+}
 
 
 // Function to generate idle resources based on the elapsed time
@@ -2845,6 +2873,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true, ski
         if (name == "Cosmic Drought") {
             if (stellarCookieSkill) {
                 clearInterval(cookieIntervalId)
+                cookieIntervalId = null;
                 document.getElementById('cookieButton');
                 cookieButton.classList.remove('spinning');
             }
@@ -3589,6 +3618,7 @@ function incrementStellarHarvest() {
                 const cookieButton = document.getElementById('cookieButton');
                 cookieButton.classList.remove('spinning');
                 clearInterval(cookieIntervalId);
+                cookieIntervalId = null;
             }
             //TODO: use global tooltip to show it decreased
         }, duration);

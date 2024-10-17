@@ -13,8 +13,8 @@ const loveHallSkills = [
     { name: 'Epistemic Engine', cost: 3.3, description: 'Start Embrace with Knowledge Generation skill unlocked.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 4 },
     { name: 'Pulse of Affection', cost: 3.3, description: 'Additive 0.33% extra base Love Points for every Hall of Love skill unlocked.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 4 },
 
-    { name: 'Altruistic Embrace', cost: 3.5, description: 'Starting at Altruism, multiplicative x1.25 base Love Points earned per meditation.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 5 },
-    { name: 'Master of Bargains', cost: 3.5, description: 'Improve Trade Ratios skill for basic resources from 5:1 to 3:1.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 5 },
+    { name: 'Altruistic Embrace', cost: 3.8, description: 'Starting at Altruism, multiplicative x1.25 base Love Points earned per meditation.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 5 },
+    { name: 'Master of Bargains', cost: 3.8, description: 'Improve Trade Ratios skill for basic resources from 5:1 to 3:1.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 5 },
 
     { name: 'Serenity Flow', cost: 7, description: 'Hopium gain is multiplied by square root of Serenity.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 6 },
     { name: 'Serene Boost 2', cost: 7, description: '5x Serenity gain. (Serenity Boosts stack)', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 6, requirement: 'Serene Boost 1' },
@@ -75,7 +75,7 @@ const loveHallSkills = [
     { name: 'Serenity Gain (Troll Points)', cost: 20, description: 'Serenity gain is multiplied by log2(Troll Points)/33.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 32 },
 
     { name: 'Master of Time', cost: 333, description: 'Unlock ability to start/stop Time Warp.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 33 },
-    { name: 'Love Size Matters', cost: 333, description: 'Copium and Yacht Money are multiplied by ( {largest embrace}**1.5 ) / 100.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 33 },
+    { name: 'Love Size Matters', cost: 333, description: 'Copium and Yacht Money are multiplied by ( {largest embrace} ^ 1.5 ) / 100.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 33 },
 
     { name: 'Love is Everything', cost: 740, description: 'First 4 resource gains are multiplied by log 1.1 (Serenity).', unlocked: false, level: 'Dimensional Shift (27x)', pair: 34 },
     { name: 'Ethereal Reflection', cost: 740, description: 'Auto Meditation no longer requires ascension / transcendence.', unlocked: false, level: 'Dimensional Shift (27x)', pair: 34, requirement: 'Intrinsic Meditation' },
@@ -261,7 +261,7 @@ function unlockLoveHallSkill(skill, duringLoad = false) {
                 break;
         
             case 'Soulbound Embrace':
-                embraceExtraLovePoints += 5;
+                embraceExtraLovePoints += 6;
                 break;
 
             case 'Hopeful Soft Cap':

@@ -114,7 +114,7 @@ const upgrades = [
     {
         name: `Real Investments`,
         cost: { copium: 2000, delusion: 0, yachtMoney: 1000, trollPoints: 2000, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 5, delusionPerSecond: 0, yachtMoneyPerSecond: 29, trollPointsPerSecond: 5, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 5, delusionPerSecond: 0, yachtMoneyPerSecond: 30, trollPointsPerSecond: 5, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/nvidia.jpg`,
         hoverOverwrite: `Investments = Good`,
     },
@@ -247,7 +247,7 @@ const upgrades = [
         earnings: { copiumPerSecond: 10, delusionPerSecond: 10, yachtMoneyPerSecond: 10, trollPointsPerSecond: 10, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/ascension.jpg`,
         message: `<p>Congratulations, brave soul! With the purchase of the Ascension upgrade, you have unlocked the extraordinary ability to Ascend Above Mortals and enter the revered God Mode. Prepare yourself for an epic journey where the limits of mortality no longer bind you.</p>
-                    <p>Your intuition whispers:<span style="color: #40E0D0;"> I think the optimum strategy is for the first few ascensions to be taken as soon as possible.</span></p>
+                    <p>Your intuition whispers:<span style="color: #40E0D0;"> Optimum strategy is for the first few ascensions to be taken as soon as possible.</span></p>
                     <p>Welcome to the next chapter of your legendary adventure. Ascend and let your godlike journey begin!</p>`,
     },
     {
@@ -1585,6 +1585,14 @@ const upgrades = [
         cost: { copium: 1e126, delusion: 0, yachtMoney: 1e127, trollPoints: 4.2e126, hopium: 0, knowledge: 0, power: 0, serenity: 9e10 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 4.2e53, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 4200 },
         img: `imgs/xzibit.jpg`,
+    },
+    {
+        name: `Get Hooked`,
+        cost: { copium: 0, delusion: 1e128, yachtMoney: 0, trollPoints: 5e128, hopium: 0, knowledge: 0, power: 5e30, serenity: 5e10 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: -1e59, yachtMoneyPerSecond: 0, trollPointsPerSecond: -1e60, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 50000 },
+        img: `imgs/pudge.jpg`,
+        hoverOverwrite: 'Care',
+        message: `Got hooked by Pudge—classic. Once that hook lands, you're stuck, literally and figuratively. Dota 2 pulls you in with its intense strategy, team dynamics, and those epic plays that make your heart race. Whether it’s landing the perfect Black Hole, clutching a game with a surprise Aegis steal, or outplaying with a well-timed BKB, every match is a new adventure. Dota isn't just a game, it's a battlefield where you live for the highs, the lows, and everything in between. Shoutout to the greatest team game of all time!`,
     },
     {         
         name: `Shinto`,
