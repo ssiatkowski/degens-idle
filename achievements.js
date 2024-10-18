@@ -889,6 +889,7 @@ const achievements = [
         hoverText: 'infinite embrace for > 25 LP',
         img: 'imgs/achievements/massive_embrace.jpg',
         type: 'puzzle',
+        respecPoint: true,
     },
     {
         name: 'Ugly by Choice',
@@ -926,6 +927,13 @@ const achievements = [
         img: 'imgs/achievements/pay_to_win.jpg',
         type: 'puzzle',
         respecPoint: true,
+    },
+    {
+        name: 'Unwinnable',
+        isUnlocked: false,
+        hoverText: 'get unlucky Skepticsim rolls',
+        img: 'imgs/achievements/unwinnable.jpg',
+        type: 'puzzle',
     },
     {
         name: 'Study Skepticism',
@@ -1004,6 +1012,20 @@ const achievements = [
         hoverText: `???`,
         img: 'imgs/achievements/meaning_of_life.jpg',
         type: 'progression',
+    },
+    {
+        name: 'Trinitism',
+        isUnlocked: false,
+        hoverText: 'beat Dualism with 3 max size balls, at max duration',
+        img: 'imgs/achievements/trinitism.jpg',
+        type: 'puzzle',
+    },
+    {
+        name: 'Win the Unwinnable',
+        isUnlocked: false,
+        hoverText: 'succeed with unwinnable Skepticsim rolls',
+        img: 'imgs/achievements/win_the_unwinnable.jpg',
+        type: 'puzzle',
     },
     {
         name: 'DodecaDragons',

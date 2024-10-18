@@ -192,10 +192,10 @@ const enemyStats = {
     "Kaguya": {
         health: 2.22e17,
         minDamage: 2000,
-        maxDamage: 3000,
+        maxDamage: 3300,
         attackSpeed: 22.2,
-        defense: 4e15,
-        critChance: 0.1,
+        defense: 4.2e15,
+        critChance: 0.15,
         critDamage: 1.5,
         dodge: 0.2,
         nonCritDodge: 0.4,
@@ -1260,8 +1260,8 @@ function attackPlayer(resolve) {
             enemyCritChance = Math.min(enemyCritChance + critIncrease, 1); // Ensure it doesn't exceed 1
             logFight(`<span style='color: #cd853f;'>Saitama cracks his knuckles! His critical chance increases by ${formatNumber(critIncrease * 100)}%.</span>`);
         } else if (rand < 50) { // 10% chance for Squats
-            enemyDefense += 8e15; // Increases defense by 8 Qa
-            logFight(`<span style='color: #b22222;'>Saitama does Squats! His defense increases by 8 quadrilion.</span>`);
+            enemyDefense += 9e15; // Increases defense by 9 Qa
+            logFight(`<span style='color: #b22222;'>Saitama does Squats! His defense increases by 9 quadrilion.</span>`);
         } else if (rand < 60) { // 10% chance for Sit Ups
             const absorbIncrease = 0.0275 * (1 - enemyAbsorb); // Diminishing absorb increase based on remaining potential
             enemyAbsorb = Math.min(enemyAbsorb + absorbIncrease, 0.9999); // Ensure it doesn't exceed 1
@@ -1296,8 +1296,8 @@ function attackPlayer(resolve) {
                 logFight(`<span style='color: #ff8c00;'>Saitama flicks your ear and lowers your crit chance and crit damage by 1%!</span>`);
             }
         } else { // 10% chance for Says Something Stupid
-            playerStunChance = playerStunChance * 0.99;
-            logFight(`<span style='color: #ffa07a;'>Saitama says something stupid! Your stun chance decreases by 1%.</span>`);
+            playerStunChance = playerStunChance * 0.98;
+            logFight(`<span style='color: #ffa07a;'>Saitama says something stupid! Your stun chance decreases by 2%.</span>`);
         }
 
         updateStatsUI();

@@ -20,6 +20,7 @@ let deismDoubled = false;
 let fullFocusPreserved = true;
 
 let skepticismRandomnessFactor = 3;
+let isSkepticismUnwinnable = false;
 
 let respawnFactor;
 let livesPerBall;
@@ -245,6 +246,13 @@ function startMeditationGame(challengeName, backgroundImage, stageNumber = 1, pr
         let arenaMessage = '';
         let fontColor = 'green';
         let fontSize = '24px';
+
+        isSkepticismUnwinnable = false;
+        if (stageVelocityIncrease > 3 && stageArenaSizeChange < 0.67 && stageExtraLivesPerBall > 2) {
+            unlockAchievement('Unwinnable');
+            isSkepticismUnwinnable = true;
+        }
+
 
         if (currentChallengeName === 'Dualism' && ballCount == 1) {
             ballCount = 2;
@@ -475,6 +483,12 @@ function updateMeditationGame(resolve, stageNumber) {
             if (fullFocusPreserved ) {
                 if (currentChallengeName === 'Altruism') { unlockAchievement('The Giver'); }
                 else if (currentChallengeName === 'Rastafarianism') { unlockAchievement('Tamed Lion'); }
+            }
+            if (isSkepticismUnwinnable) {
+                unlockAchievement('Win the Unwinnable');
+            }
+            if (currentChallengeName === 'Dualism' && ballSize > 154 && ballCount == 3 && yachtMoney < 0) {
+                unlockAchievement('Trinitism');
             }
             return;
         }

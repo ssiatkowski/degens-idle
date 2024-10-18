@@ -26,10 +26,12 @@ html, body {
     z-index: 10; /* Sit on top */
     left: 0;
     top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
+    width: 100vw; /* Full width, use vw to ensure no overflow */
+    height: 100vh; /* Full height, use vh for proper scaling */
+    overflow-y: auto; /* Enable vertical scroll if needed */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
     background-color: rgba(0, 0, 0, 0.8); /* Black w/ opacity */
+    box-sizing: border-box; /* Ensure padding doesn't affect the width */
 }
 
 /* Modal Content/Box */
@@ -155,6 +157,7 @@ h1, h2 {
 #main-container {
     display: flex;
     gap: 20px;
+    width: 100%;
 }
 
 #title-column {

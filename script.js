@@ -3046,7 +3046,7 @@ function autoFightConditionCheck(upgrade) {
 }
 
 function autoMeditateConditionCheck(upgrade) {
-    return upgrade.isMeditation && purchasedUpgradesSet.has("Cosmic Drought") && autoMeditateSkill && autoFightEnabled && serenity > upgrade.autoMeditateThreshold && (etherealReflectionSkill || (upgrade.isGodMode && upgrade.isPUGodMode));
+    return upgrade.isMeditation && purchasedUpgradesSet.has("Cosmic Drought") && purchasedUpgradesSet.has("Saitama") && autoMeditateSkill && autoFightEnabled && serenity > upgrade.autoMeditateThreshold && (etherealReflectionSkill || (upgrade.isGodMode && upgrade.isPUGodMode));
 }
 
 // Function to format the cost or earnings of an upgrade for display
