@@ -4353,7 +4353,7 @@ function calculateTooltip(resourceId) {
     }
 
     // Stellar Harvest Multiplier (for all resources, including Power, but not Serenity)
-    if (stellarMeditationMult !== 1) {
+    if (resourceId !== 'serenity' && stellarMeditationMult !== 1) {
         tooltip += `<span style="color:#ADD8E6">x${formatNumber(stellarMeditationMult)} (Stellar Meditation)</span><br>`;
     }
 
