@@ -3004,7 +3004,7 @@ function buyAllUpgrades(limit, pressedButton) {
                     if(upgrade.name == 'Saitama' && enemiesFoughtManually.size == 0){
                         unlockAchievement('Make Love, Not War');
                     }
-                } else if (isAffordableUpgrade && autoMeditateConditionCheck(upgrade)) {
+                } else if (isAffordableUpgrade && autoMeditateConditionCheck(upgrade) && firstFightUpgrade) {
                     buyUpgrade(encodeName(upgrade.name), false, true);
                     upgradeBought = true;
                     if (stellarMeditationSkill) {
@@ -3022,7 +3022,7 @@ function buyAllUpgrades(limit, pressedButton) {
                 }
             }
 
-            if (upgrade.isFight) {firstFightUpgrade = false;}
+            if (upgrade.isFight || upgrade.isMeditation) {firstFightUpgrade = false;}
 
         });
 
@@ -3046,7 +3046,7 @@ function autoFightConditionCheck(upgrade) {
 }
 
 function autoMeditateConditionCheck(upgrade) {
-    return upgrade.isMeditation && purchasedUpgradesSet.has("Cosmic Drought") && purchasedUpgradesSet.has("Saitama") && autoMeditateSkill && autoFightEnabled && serenity > upgrade.autoMeditateThreshold && (etherealReflectionSkill || (upgrade.isGodMode && upgrade.isPUGodMode));
+    return upgrade.isMeditation && purchasedUpgradesSet.has("Cosmic Drought") && autoMeditateSkill && autoFightEnabled && serenity > upgrade.autoMeditateThreshold && (etherealReflectionSkill || (upgrade.isGodMode && upgrade.isPUGodMode));
 }
 
 // Function to format the cost or earnings of an upgrade for display
@@ -3281,7 +3281,7 @@ function autobuyUpgrades() {
                 if(upgrade.name == 'Saitama' && enemiesFoughtManually.size == 0){
                     unlockAchievement('Make Love, Not War');
                 }
-            } else if (isAffordableUpgrade && autoMeditateConditionCheck(upgrade)) {
+            } else if (isAffordableUpgrade && autoMeditateConditionCheck(upgrade) && firstFightUpgrade) {
                 buyUpgrade(encodeName(upgrade.name), false, true);
                 upgradeBought = true;
                 if (stellarMeditationSkill) {
@@ -3292,7 +3292,7 @@ function autobuyUpgrades() {
                 upgradeBought = true;
             }
 
-            if (upgrade.isFight) {firstFightUpgrade = false;}
+            if (upgrade.isFight || upgrade.isMeditation) {firstFightUpgrade = false;}
 
             // Check if it's a key upgrade and stop further key upgrade processing if buyMarkersSkill is false
             if (!buyMarkersSkill && upgrade.isKey) {

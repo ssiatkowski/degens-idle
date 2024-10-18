@@ -571,6 +571,8 @@ function playMiniGame(gameType) {
 
                     const sum = selectedPortals.reduce((acc, curr) => acc + curr, 0);
 
+                    targetDisplay.textContent = `Target: ${targetSum-sum}`;
+
                     if (sum >= targetSum) {
                         endGame(sum === targetSum); // End the game if the sum is reached or exceeded
                     }

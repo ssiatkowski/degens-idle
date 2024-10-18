@@ -92,7 +92,7 @@ const loveHallSkills = [
     { name: 'Chrono Magnetizer', cost: 0.25, description: 'Make Arcane Magnetizer 2x faster.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 43 },
 
     { name: 'Crunch Knowledge', cost: 0.4, description: 'Big Crunch extra knowledge mult is now ^(2/3) instead of ^(1/2).', unlocked: false, level: 'Cosmic Truth (42x)', pair: 44 },
-    { name: 'Stellar Meditation', cost: 0.4, description: 'Multiplicative x1.1 to all resources after each successful meditation.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 44 },
+    { name: 'Stellar Meditation', cost: 0.4, description: 'Multiplicative x1.1 to first 7 resources after each successful meditation.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 44 },
 
     { name: 'Oversurged Power', cost: 0.66, description: 'Power Surge Skill is 2x as powerful.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 45 },
     { name: 'Overcompressed Power', cost: 0.66, description: 'Compressed / Condensed Power Skills are 3x as powerful.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 45 },
@@ -310,10 +310,6 @@ function unlockLoveHallSkill(skill, duringLoad = false) {
                     updateEffectiveMultipliers();
                 }
                 break;
-
-            // { name: 'Infinite Collapse', cost: 5000, description: 'Automatically apply Big Crunch mult without resetting.', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 13, requirement: 'Perpetual Collapse' },
-            // { name: 'Zen of the Stars', cost: 5000, description: 'Improve Stellar Meditation to x1.5', unlocked: false, level: 'Quantum Harmony (2.8x)', pair: 13, requirement: 'Fertile Scarcity'},
-
 
             case 'Infinite Collapse':
                 infiniteCollapseSkill = true;
