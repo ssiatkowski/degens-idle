@@ -44,6 +44,7 @@
         }
         </script>
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/localforage/1.9.0/localforage.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.4.4/lz-string.min.js"></script>
     <link rel="icon" type="image/x-icon" href="imgs/textures/favicon.ico"> <!-- For older browsers -->
     <link rel="icon" type="image/png" sizes="32x32" href="imgs/textures/favicon_32.png"> <!-- For modern browsers -->
     <link rel="icon" type="image/png" sizes="16x16" href="imgs/textures/favicon_64.png">
@@ -500,25 +501,36 @@
         <div class="settings-overlay-content">
             <span class="close-button" id="closeSettingsOverlay">&times;</span>
             <h1>Settings</h1>
-            <h4>Degens Idle v0.9309</h4>
+            <h4>Degens Idle v0.931</h4>
 
             <div class="settings-section">
                 <h3>Save Management</h3>
-                <p>
-                    Exporting your game will save a file to your Downloads folder. (Currently may have issues on mobile)
-                </p>
-                <div class="settings-buttons">
-                    <button id="exportSaveButton">
-                        <img src="imgs/textures/download.png" alt="Download Icon"> Export Save
-                    </button>
-                    <button id="importSaveButton">
-                        <img src="imgs/textures/upload.png" alt="Upload Icon"> Import Save
-                    </button>
-                </div>
-                <!-- New checkbox for 'Create Save Backup on Import' -->
-                <div class="settings-checkbox">
-                    <input type="checkbox" id="createBackupOnImportCheckbox" name="createBackupOnImport">
-                    <label for="createBackupOnImport">Create Save Backup on Import</label>
+                <div class="settings-buttons two-columns">
+                    <!-- Left Column -->
+                    <div class="left-column">
+                        <button id="exportSaveButton">
+                            <img src="imgs/textures/download.png" alt="Download Icon"> Save File
+                        </button>
+                        <button id="importSaveButton">
+                            <img src="imgs/textures/upload.png" alt="Upload Icon"> Load File
+                        </button>
+            
+                        <!-- Checkbox under left column -->
+                        <div class="settings-checkbox">
+                            <input type="checkbox" id="createBackupOnImportCheckbox" name="createBackupOnImport">
+                            <label for="createBackupOnImport">Create Backup on Import</label>
+                        </div>
+                    </div>
+            
+                    <!-- Right Column -->
+                    <div class="right-column">
+                        <button id="copySaveButton">
+                            <img src="imgs/textures/copy.png" alt="Copy Icon"> Copy Save
+                        </button>
+                        <button id="pasteSaveButton">
+                            <img src="imgs/textures/paste.png" alt="Paste Icon"> Paste Save
+                        </button>
+                    </div>
                 </div>
             </div>
 

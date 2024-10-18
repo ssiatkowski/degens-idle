@@ -56,6 +56,13 @@
     flex-direction: column;
     gap: 10px;
     margin-bottom: 20px;
+    width: 100%;
+}
+
+.settings-checkbox {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
 }
 
 .settings-section {
@@ -77,6 +84,21 @@
     vertical-align: middle; /* Align the icon with the text */
 }
 
+.two-columns {
+    display: flex;
+    flex-direction: row; /* Ensures the columns are side by side */
+    justify-content: space-between;
+    align-items: flex-start; /* Align items to the top of the columns */
+    gap: 20px; /* Add spacing between columns */
+}
+
+.left-column,
+.right-column {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 48%; /* Ensure equal space for both columns */
+}
 
 /* Discord Button */
 #discordButton {

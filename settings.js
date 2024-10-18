@@ -71,15 +71,24 @@ function outsideDonationClickListener(event) {
 // Initialize a Set to store unique export dates
 let exportDates = new Set(JSON.parse(localStorage.getItem('exportDates')) || []); // Ensure it's a Set
 
-function exportSave(fname='degens_idle_save.json') {
-    const currentDate = new Date().toISOString().split('T')[0]; // Get current date in YYYY-MM-DD format
+function exportSave() {
+    // Get the current date and time in a formatted string (YYYY-MM-DD_HH-MM-SS)
+    const now = new Date();
+    const currentDateTime = now.toISOString().slice(0, 19).replace(/:/g, "-").replace("T", "_");
+
+    // Create the filename with the date and time
+    const fname = `degens_idle_save_${currentDateTime}.json`;
+
+    const currentDate = now.toISOString().split('T')[0]; // Get current date in YYYY-MM-DD format
     const previousNumExportDates = exportDates.size; // Store the previous size of the Set
     exportDates.add(currentDate);
+
     if (exportDates.size == 50) {
         unlockAchievement('Fifty Days of Saving');
     } else if (exportDates.size > previousNumExportDates) {
         showPopupTooltip(`Days with save exports: ${exportDates.size}`);
     }
+
     localStorage.setItem('exportDates', JSON.stringify([...exportDates]));
 
     unlockAchievement('Better Safe Than Sorry');
@@ -94,7 +103,7 @@ function exportSave(fname='degens_idle_save.json') {
     // Create a link element to download the file
     const a = document.createElement('a');
     a.href = url;
-    a.download = fname; // Name of the exported file
+    a.download = fname; // Use the dynamic filename with date and time
     document.body.appendChild(a);
     a.click();
     
@@ -145,6 +154,83 @@ function importSave(event) {
 }
 
 
+// Function to compress and copy the save data to clipboard
+function copySave() {
+    const currentDate = new Date().toISOString().split('T')[0];
+    const previousNumExportDates = exportDates.size;
+    exportDates.add(currentDate);
+
+    if (exportDates.size == 50) {
+        unlockAchievement('Fifty Days of Saving');
+    } else if (exportDates.size > previousNumExportDates) {
+        showPopupTooltip(`Days with save exports: ${exportDates.size}`);
+    }
+
+    localStorage.setItem('exportDates', JSON.stringify([...exportDates]));
+
+    // Get all localStorage data and stringify it
+    const allData = JSON.stringify(localStorage);
+
+    // Compress the data using LZ-String and convert it to Base64
+    const compressedData = LZString.compressToBase64(allData);
+
+    // Copy compressed data to clipboard
+    navigator.clipboard.writeText(compressedData).then(() => {
+        showPopupTooltip('Save copied to clipboard!', 'green', 1.5);
+        unlockAchievement('Magical Text');
+    }).catch(err => {
+        showPopupTooltip('Failed to copy save!', 'red', 1.5);
+    });
+}
+
+// Function to paste the compressed save data, decompress it, and load it into the game
+function pasteSave() {
+    const createBackupOnImport = document.getElementById('createBackupOnImportCheckbox').checked;
+
+    // Prompt the user to input their pasted save string
+    const compressedInput = prompt("Please paste your compressed save string:");
+
+    if (!compressedInput) {
+        return; // Exit if no input provided
+    }
+
+    try {
+        // Decompress the data using LZ-String
+        const decompressedData = LZString.decompressFromBase64(compressedInput);
+
+        if (!decompressedData) {
+            throw new Error("Invalid compressed data");
+        }
+
+        const importedData = JSON.parse(decompressedData);
+
+        // Create a backup if the checkbox is checked
+        if (createBackupOnImport) {
+            exportSave('backup_degens_idle_save.json');
+        }
+
+        // Restart the game and then apply the imported data
+        restartGame(false, true).then(() => {
+            // Clear current localStorage and load the imported data
+            localStorage.clear();
+            for (const key in importedData) {
+                if (importedData.hasOwnProperty(key)) {
+                    localStorage.setItem(key, importedData[key]);
+                }
+            }
+
+            // Call loadGameState to apply the imported game state
+            loadGameState();
+
+            // Refresh the page to ensure the game state is properly loaded (optional)
+            window.location.reload();
+        });
+    } catch (err) {
+        showPopupTooltip('Failed to import save: Invalid data!', 'red', 1.5);
+        unlockAchievement('Invalid Data');
+    }
+}
+
 
 
 
@@ -171,6 +257,17 @@ document.getElementById('importSaveButton').addEventListener('click', function()
 
 // Add event listener for file input change
 document.getElementById('importFileInput').addEventListener('change', importSave);
+
+// Add event listener for Copy Save button
+document.getElementById('copySaveButton').addEventListener('click', function() {
+    copySave();  // Call the copySave function when the button is clicked
+});
+
+// Add event listener for Paste Save (formerly Input Save) button
+document.getElementById('pasteSaveButton').addEventListener('click', function() {
+    pasteSave();  // Call the pasteSave function when the button is clicked
+});
+
 
 // Add event listener for Import Save button
 document.getElementById('howToPlayButton').addEventListener('click', function() {

@@ -268,9 +268,23 @@ const achievements = [
     {
         name: 'Better Safe Than Sorry',
         isUnlocked: false,
-        hoverText: 'export your save',
+        hoverText: 'export your save to a file',
         img: 'imgs/achievements/better_safe_than_sorry.jpg',
         type: 'freebie',
+    },
+    {
+        name: 'Magical Text',
+        isUnlocked: false,
+        hoverText: 'copy save into clipboard',
+        img: 'imgs/achievements/magical_text.jpg',
+        type: 'freebie',
+    },
+    {
+        name: 'Invalid Data',
+        isUnlocked: false,
+        hoverText: '???',
+        img: 'imgs/achievements/invalid_data.jpg',
+        type: 'puzzle',
     },
     {
         name: 'Transcend',
