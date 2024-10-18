@@ -4734,7 +4734,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         lovePoints -= ((spentLovePoints + lovePoints) - (totalLoveHallSkillsCost + 10000));
         showMessageModal('The Journey Continues',
-            "You've reached an impressive milestone! With all Hall of Love skills unlocked and over 5000 Love Points stockpiled, you're among the few who have completed all current content. To maintain a balanced gameplay experience as we prepare future updates, Love Points are currently capped at 5000. "
+            "You've reached an impressive milestone! With all Hall of Love skills unlocked and over 10000 Love Points stockpiled, you're among the few who have completed all current content. To maintain a balanced gameplay experience as we prepare future updates, Love Points are currently capped at 5000. "
             + "In the meantime, feel free to go achievement hunting if you're missing any, or join us on Discord to share your feedback and stay connected with the community. "
             + "Congratulations on your progress, and thank you for being part of this incredible journey—there's more exciting content on the horizon!"
         );
