@@ -92,7 +92,7 @@ const loveHallSkills = [
     { name: 'Chrono Magnetizer', cost: 0.25, description: 'Make Arcane Magnetizer 2x faster.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 43 },
 
     { name: 'Crunch Knowledge', cost: 0.4, description: 'Big Crunch extra knowledge mult is now ^(2/3) instead of ^(1/2).', unlocked: false, level: 'Cosmic Truth (42x)', pair: 44 },
-    { name: 'Stellar Meditation', cost: 0.4, description: 'Multiplicative x1.1 to all resurces after each successful meditation.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 44 },
+    { name: 'Stellar Meditation', cost: 0.4, description: 'Multiplicative x1.1 to all resources after each successful meditation.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 44 },
 
     { name: 'Oversurged Power', cost: 0.66, description: 'Power Surge Skill is 2x as powerful.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 45 },
     { name: 'Overcompressed Power', cost: 0.66, description: 'Compressed / Condensed Power Skills are 3x as powerful.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 45 },
@@ -118,8 +118,8 @@ const loveHallSkills = [
     { name: 'Faith-Fueled Knowledge', cost: 30, description: 'Multiplier to knowledge based on log10 of current Hopium / 10.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 52 },
     { name: 'Event Horizon Boost', cost: 30, description: 'Increase Big Crunch base from 2 to 2.1.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 52 },
 
-    { name: 'Intrinsic Meditation', cost: 50, description: 'Auto complete meditations that are ascended & transcended after meeting Serenity threshold.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 53, requirement: 'Illusion of Power' },
-    { name: 'The Ultimate Fix', cost: 50, description: 'Fix the 3 remaining basic resources.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 53, requirement: 'Hopium Fix' },
+    { name: 'Intrinsic Meditation', cost: 125, description: 'Auto complete meditations that are ascended & transcended after meeting Serenity threshold.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 53, requirement: 'Illusion of Power' },
+    { name: 'The Ultimate Fix', cost: 125, description: 'Fix the 3 remaining basic resources.', unlocked: false, level: 'Cosmic Truth (42x)', pair: 53, requirement: 'Hopium Fix' },
 
 
 ];

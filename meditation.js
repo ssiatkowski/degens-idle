@@ -179,19 +179,19 @@ const meditationChallenges = {
         arenaSize: 550,
         ballSize: 400,
         ballSizeDelta: 0,
-        velocity: 56,
+        velocity: 57,
         wind: 0,
         respawnFactor: 0.1,
         livesPerBall: 3,
     },
     "Epicureanism": {
-        duration: 1300,
+        duration: 1150,
         focus: 1000,
         ballCount: 20,
         arenaSize: 600,
         ballSize: 600,
         ballSizeDelta: 20,
-        velocity: 88,
+        velocity: 90,
         wind: 10,
         respawnFactor: 5.9,
         livesPerBall: 1,
@@ -203,7 +203,7 @@ const meditationChallenges = {
         arenaSize: 364,
         ballSize: 800,
         ballSizeDelta: 0,
-        velocity: 88,
+        velocity: 87,
         wind: 0,
         respawnFactor: 1,
         livesPerBall: 101,
@@ -282,7 +282,7 @@ function startMeditationGame(challengeName, backgroundImage, stageNumber = 1, pr
             if (isWisdomPattern) {
                 unlockAchievement('Apply Wisdom');
                 turnRadius *= 1.3;
-                arenaMessage = 'Wisdom improves your turn radius by 30%.';
+                arenaMessage = 'WISDOM improves your turn radius by 30%.';
                 fontSize = '34px';
             }
 
@@ -771,7 +771,7 @@ function calculateTimerReduction() {
 
 // Function to calculate respawn time based on trollPoints
 function calculateRespawnTime() {
-    if (yachtMoney < 0) {return respawnTime;}
+    if (trollPoints < 0) {return respawnTime;}
     // Calculate the scaling factor: double the respawn time for every 20-log interval after 100
     let scalingFactor = Math.pow(2, Math.max(0, (Math.log10(trollPoints) - 100) / 20));
 

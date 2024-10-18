@@ -994,7 +994,7 @@ const achievements = [
     {
         name: 'Apply Wisdom',
         isUnlocked: false,
-        hoverText: 'apprach Agnosticism with WISDOM',
+        hoverText: 'approach Agnosticism with WISDOM',
         img: 'imgs/achievements/agnosticism_wisdom.jpg',
         type: 'puzzle',
     },
@@ -1003,6 +1003,13 @@ const achievements = [
         isUnlocked: false,
         hoverText: `???`,
         img: 'imgs/achievements/meaning_of_life.jpg',
+        type: 'progression',
+    },
+    {
+        name: 'DodecaDragons',
+        isUnlocked: false,
+        hoverText: `buy this upgrade`,
+        img: 'imgs/achievements/dodecadragons.jpg',
         type: 'progression',
     },
     {

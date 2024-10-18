@@ -4730,9 +4730,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     });
-    if (spentLovePoints + lovePoints > totalLoveHallSkillsCost + 5000){
+    if (spentLovePoints + lovePoints > totalLoveHallSkillsCost + 10000){
         
-        lovePoints -= ((spentLovePoints + lovePoints) - (totalLoveHallSkillsCost + 5000));
+        lovePoints -= ((spentLovePoints + lovePoints) - (totalLoveHallSkillsCost + 10000));
         showMessageModal('The Journey Continues',
             "You've reached an impressive milestone! With all Hall of Love skills unlocked and over 5000 Love Points stockpiled, you're among the few who have completed all current content. To maintain a balanced gameplay experience as we prepare future updates, Love Points are currently capped at 5000. "
             + "In the meantime, feel free to go achievement hunting if you're missing any, or join us on Discord to share your feedback and stay connected with the community. "
