@@ -307,8 +307,13 @@ button {
 button:hover {
     background-color: #616161; /* Lighter on hover */
 }
-
+button.unaffordable {
+    width: 100%;
+    background-color: #333; /* Darker gray */
+    color: #666; /* Darker text */
+}
 button.affordable {
+    width: 100%;
     background-color: #4caf50; /* Green */
     color: white;
     touch-action: manipulation;
@@ -316,6 +321,7 @@ button.affordable {
 
 /* God Mode Affordable Button */
 button.affordable-godmode {
+    width: 100%;
     background-color: #1e90ff; /* DodgerBlue */
     color: white;
     border: 2px solid #00bfff; /* DeepSkyBlue */
@@ -330,6 +336,7 @@ button.affordable-godmode:hover {
 
 /* Purple God Mode Affordable Button */
 button.affordable-pu-godmode {
+    width: 100%;
     background-color: #8e44ad; /* Purple */
     color: white;
     border: 2px solid #b565c8; /* Light Purple */
@@ -344,6 +351,7 @@ button.affordable-pu-godmode:hover {
 
 /* Blue and Purple God Mode Affordable Button with Animated Wave Glow */
 button.affordable-double-godmode {
+    width: 100%;
     background: linear-gradient(45deg, #1e90ff, #8e44ad); /* Gradient from Blue to Purple */
     color: white;
     border: 2px solid #4b6cb7; /* A mix between blue and purple for the border */
