@@ -550,8 +550,8 @@ function playMiniGame(gameType) {
                     portalValues.push(forcedNum);
                     portalValues.push(remainingNum);
                     const forcedPortal1 = createPortal(forcedNum);
-                    const forcedPortal2 = createPortal(remainingNum);
                     gameArea.appendChild(forcedPortal1);
+                    const forcedPortal2 = createPortal(remainingNum);
                     gameArea.appendChild(forcedPortal2);
 
                     forcedPortal1.addEventListener('click', function() {
