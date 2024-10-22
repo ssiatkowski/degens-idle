@@ -426,10 +426,23 @@ function playMiniGame(gameType) {
             targetDisplay.style.zIndex = '1100'; // Set z-index higher than portals
             gameArea.appendChild(targetDisplay);
 
+            // Create and display the current sum on the game screen
+            const currentSumDisplay = document.createElement('div');
+            currentSumDisplay.textContent = `Current Sum: 0`;
+            currentSumDisplay.style.position = 'absolute';
+            currentSumDisplay.style.top = '50px'; // Placed below the target display
+            currentSumDisplay.style.left = '50%';
+            currentSumDisplay.style.transform = 'translateX(-50%)';
+            currentSumDisplay.style.color = '#ffffff';
+            currentSumDisplay.style.fontSize = '36px'; // Bigger font size
+            currentSumDisplay.style.fontWeight = 'bold';
+            currentSumDisplay.style.zIndex = '1100'; // Set z-index higher than portals
+            gameArea.appendChild(currentSumDisplay);
+
             // Create and display the countdown timer on the game screen
             const timerDisplay = document.createElement('div');
             timerDisplay.style.position = 'absolute';
-            timerDisplay.style.top = '50px'; // Placed below the target display
+            timerDisplay.style.top = '90px'; // Placed below the current sum display
             timerDisplay.style.left = '50%';
             timerDisplay.style.transform = 'translateX(-50%)';
             timerDisplay.style.color = '#ffffff';
@@ -491,7 +504,7 @@ function playMiniGame(gameType) {
 
                     // Check for overlap with existing portals using circle-based collision detection
                     positionIsValid = !Array.from(gameArea.children).some(child => {
-                        if (child === portal || child === targetDisplay || child === timerDisplay) return false; // Skip the current portal being placed and the target/timer displays
+                        if (child === portal || child === targetDisplay || child === timerDisplay || child === currentSumDisplay) return false; // Skip the current portal being placed and the target/timer displays
                         const childRect = child.getBoundingClientRect();
                         const childCenterX = childRect.left + childRect.width / 2;
                         const childCenterY = childRect.top + childRect.height / 2;
@@ -503,7 +516,7 @@ function playMiniGame(gameType) {
                     });
 
                     // Ensure the portal is not placed near the target and timer displays (avoid top-center area)
-                    if (randomY < 100 && randomX > (gameArea.clientWidth / 2) - 100 && randomX < (gameArea.clientWidth / 2) + 100) {
+                    if (randomY < 180 && randomX > (gameArea.clientWidth / 2) - 300 && randomX < (gameArea.clientWidth / 2) + 300) {
                         positionIsValid = false; // Force reattempt if within this region
                     }
 
@@ -565,20 +578,32 @@ function playMiniGame(gameType) {
 
             // Handle the portal click events
             function handlePortalClick(portal, num) {
-                if (!portal.classList.contains('selected')) {
+                if (portal.classList.contains('selected')) {
+                    // Deselect the portal
+                    portal.classList.remove('selected');
+                    portal.style.backgroundColor = '#00BFFF'; // Reset background color
+                    selectedPortals = selectedPortals.filter(value => value !== num);
+                } else {
+                    // Select the portal
                     portal.classList.add('selected');
+                    portal.style.backgroundColor = '#FFD700'; // Change background color for selected portals
                     selectedPortals.push(num);
+                }
 
-                    const sum = selectedPortals.reduce((acc, curr) => acc + curr, 0);
+                const sum = selectedPortals.reduce((acc, curr) => acc + curr, 0);
 
-                    targetDisplay.textContent = `Target: ${targetSum-sum}`;
+                targetDisplay.textContent = `Target: ${targetSum}`;
+                currentSumDisplay.textContent = `Current Sum: ${sum}`;
 
-                    if (sum >= targetSum) {
-                        endGame(sum === targetSum); // End the game if the sum is reached or exceeded
-                    }
+                if (sum > targetSum) {
+                    currentSumDisplay.style.color = 'red'; // Change color to red to indicate warning
+                    currentSumDisplay.textContent += ' (Over Target!)';
+                } else {
+                    currentSumDisplay.style.color = '#ffffff'; // Reset color
+                }
 
-                    // Remove portal after it's clicked
-                    gameArea.removeChild(portal);
+                if (sum === targetSum) {
+                    endGame(true); // End the game if the sum is exactly the target sum
                 }
             }
 
