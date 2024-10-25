@@ -2383,6 +2383,10 @@ async function respecSkills() {
             false
         );
     }
+
+    // Save the game state after respec
+    saveGameState();
+
 }
 
 
