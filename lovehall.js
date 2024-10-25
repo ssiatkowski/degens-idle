@@ -14,6 +14,12 @@ const loveHallSkills = [
         updateEffectiveMultipliers();
       }
     },
+    onRespec: (duringLoad) => {
+      delusionSurgeMultiplier = 1;
+      if (!duringLoad) {
+        updateEffectiveMultipliers();
+      }
+    },
   },
   {
     name: "Copium Surge",
@@ -24,6 +30,12 @@ const loveHallSkills = [
     pair: 1,
     onUnlock: (duringLoad) => {
       copiumSurgeMultiplier = 36;
+      if (!duringLoad) {
+        updateEffectiveMultipliers();
+      }
+    },
+    onRespec: (duringLoad) => {
+      copiumSurgeMultiplier = 1;
       if (!duringLoad) {
         updateEffectiveMultipliers();
       }
@@ -43,6 +55,12 @@ const loveHallSkills = [
       unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Tenfold Ascension'), true);
       numAscensionUpgrades = Math.max(numAscensionUpgrades, 25);
     },
+    onRespec: () => {
+      unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Double Ascension'), false);
+      unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Quadruple Ascension'), false);
+      unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Tenfold Ascension'), false);
+      numAscensionUpgrades = 1;
+    },
   },
   {
     name: "Twenty-Fivefold Transcendence",
@@ -55,6 +73,11 @@ const loveHallSkills = [
       unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Septuple Transcendence'), true);
       numPUAscensionUpgrades = Math.max(numPUAscensionUpgrades, 25);
     },
+    onRespec: () => {
+      unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Septuple Transcendence'), false);
+      numPUAscensionUpgrades = 2;
+    },
+
   },
 
   {
@@ -71,6 +94,13 @@ const loveHallSkills = [
         updateEffectiveMultipliers();
       }
     },
+    onRespec: (duringLoad) => {
+      achievementBoostValue = 0.01;
+      calculateAchievementMultiplier();
+      if (!duringLoad) {
+        updateEffectiveMultipliers();
+      }
+    },
   },
   {
     name: "Cosmic Embrace",
@@ -81,6 +111,9 @@ const loveHallSkills = [
     pair: 3,
     onUnlock: () => {
       embraceExtraLovePoints += 1;
+    },
+    onRespec: () => {
+      embraceExtraLovePoints = 0;
     },
   },
 
@@ -94,6 +127,9 @@ const loveHallSkills = [
     onUnlock: () => {
       unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Knowledge Generation'), true);
     },
+    onRespec: () => {
+      unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Knowledge Generation'), false);
+    },
   },
   {
     name: "Pulse of Affection",
@@ -105,6 +141,9 @@ const loveHallSkills = [
     pair: 4,
     onUnlock: () => {
       pulseOfAffectionSkill = true;
+    },
+    onRespec: () => {
+      pulseOfAffectionSkill = false;
     },
   },
 
@@ -119,6 +158,9 @@ const loveHallSkills = [
     onUnlock: () => {
       altruisticEmbraceSkill = true;
     },
+    onRespec: () => {
+      altruisticEmbraceSkill = false;
+    },
   },
   {
     name: "Master of Bargains",
@@ -131,6 +173,9 @@ const loveHallSkills = [
     onUnlock: () => {
       masterOfBargainsSkill = true;
     },
+    onRespec: () => {
+      masterOfBargainsSkill = false;
+    },
   },
 
   {
@@ -142,6 +187,12 @@ const loveHallSkills = [
     pair: 6,
     onUnlock: (duringLoad) => {
       serenityFlowSkill = true;
+      if (!duringLoad) {
+        updateEffectiveMultipliers();
+      }
+    },
+    onRespec: (duringLoad) => {
+      serenityFlowSkill = false;
       if (!duringLoad) {
         updateEffectiveMultipliers();
       }
@@ -161,6 +212,12 @@ const loveHallSkills = [
         updateEffectiveMultipliers();
       }
     },
+    onRespec: (duringLoad) => {
+      serenityBoostMultiplier = 1;
+      if (!duringLoad) {
+        updateEffectiveMultipliers();
+      }
+    },
   },
 
   {
@@ -175,6 +232,9 @@ const loveHallSkills = [
     onUnlock: () => {
       illusionOfPowerSkill = true;
     },
+    onRespec: () => {
+      illusionOfPowerSkill = false;
+    },
   },
   {
     name: "Early Accelerant",
@@ -186,6 +246,9 @@ const loveHallSkills = [
     pair: 7,
     onUnlock: () => {
       earlyAccelerantSkill = true;
+    },
+    onRespec: () => {
+      earlyAccelerantSkill = false;
     },
   },
 
@@ -202,6 +265,12 @@ const loveHallSkills = [
         updateEffectiveMultipliers();
       }
     },
+    onRespec: (duringLoad) => {
+      powerInfusionMultiplier = 1;
+      if (!duringLoad) {
+        updateEffectiveMultipliers();
+      }
+    },
   },
   {
     name: "Soulbound Embrace",
@@ -213,6 +282,9 @@ const loveHallSkills = [
     requirement: "Cosmic Embrace",
     onUnlock: () => {
       embraceExtraLovePoints += 6;
+    },
+    onRespec: () => {
+      embraceExtraLovePoints = 0;
     },
   },
 
@@ -226,6 +298,9 @@ const loveHallSkills = [
     onUnlock: () => {
       hopefulSoftCapSkill = true;
     },
+    onRespec: () => {
+      hopefulSoftCapSkill = false;
+    },
   },
   {
     name: "Fertile Scarcity",
@@ -237,6 +312,9 @@ const loveHallSkills = [
     requirement: "Stellar Meditation",
     onUnlock: () => {
       fertileScarcitySkill = true;
+    },
+    onRespec: () => {
+      fertileScarcitySkill = false;
     },
   },
 
@@ -251,6 +329,9 @@ const loveHallSkills = [
     onUnlock: () => {
       inversePrestigeSkill = true;
     },
+    onRespec: () => {
+      inversePrestigeSkill = false;
+    },
   },
   {
     name: "Positive Markers",
@@ -264,6 +345,11 @@ const loveHallSkills = [
       unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Buy Markers'), true);
       positiveMarkersSkill = true;
     },
+    onRespec: () => {
+      unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Buy Markers'), false);
+      positiveMarkersSkill = false;
+    },
+    
   },
 
   {
@@ -281,6 +367,13 @@ const loveHallSkills = [
         updateEffectiveMultipliers();
       }
     },
+    onRespec: (duringLoad) => {
+      achievementBoostValue = 0.01;
+      calculateAchievementMultiplier();
+      if (!duringLoad) {
+        updateEffectiveMultipliers();
+      }
+    },
   },
   {
     name: "Tunneled Ascension",
@@ -291,6 +384,9 @@ const loveHallSkills = [
     pair: 11,
     onUnlock: () => {
       tunneledAscensionSkill = true;
+    },
+    onRespec: () => {
+      tunneledAscensionSkill = false;
     },
   },
 
@@ -304,6 +400,13 @@ const loveHallSkills = [
     pair: 12,
     onUnlock: (duringLoad) => {
       achievementHyperchargeSkill = true;
+      calculateAchievementMultiplier();
+      if (!duringLoad) {
+        updateEffectiveMultipliers();
+      }
+    },
+    onRespec: (duringLoad) => {
+      achievementHyperchargeSkill = false;
       calculateAchievementMultiplier();
       if (!duringLoad) {
         updateEffectiveMultipliers();
@@ -326,6 +429,15 @@ const loveHallSkills = [
         updateEffectiveMultipliers();
       }
     },
+    onRespec: (duringLoad) => {
+      perfectPUGodModeSkill = false;
+      unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Much Less Diminishing Parallel God-Mode'), false);
+      puGodMultiplier = calculatePUGodModeMultiplier(puGodLevel);
+      if (!duringLoad) {
+        updateMultipliersDisplay();
+        updateEffectiveMultipliers();
+      }
+    },
   },
 
   {
@@ -339,6 +451,9 @@ const loveHallSkills = [
     onUnlock: () => {
       infiniteCollapseSkill = true;
     },
+    onRespec: () => {
+      infiniteCollapseSkill = false;
+    },
   },
   {
     name: "Zen of the Stars",
@@ -350,6 +465,9 @@ const loveHallSkills = [
     requirement: "Fertile Scarcity",
     onUnlock: () => {
       zenOfTheStarsSkill = true;
+    },
+    onRespec: () => {
+      zenOfTheStarsSkill = false;
     },
   },
 
@@ -367,6 +485,12 @@ const loveHallSkills = [
         updateEffectiveMultipliers();
       }
     },
+    onRespec: (duringLoad) => {
+      yachtMoneySurgeMultiplier = 1;
+      if (!duringLoad) {
+        updateEffectiveMultipliers();
+      }
+    },
   },
   {
     name: "Troll Points Surge",
@@ -377,6 +501,12 @@ const loveHallSkills = [
     pair: 21,
     onUnlock: (duringLoad) => {
       trollPointsSurgeMultiplier = 24;
+      if (!duringLoad) {
+        updateEffectiveMultipliers();
+      }
+    },
+    onRespec: (duringLoad) => {
+      trollPointsSurgeMultiplier = 1;
       if (!duringLoad) {
         updateEffectiveMultipliers();
       }
@@ -396,6 +526,12 @@ const loveHallSkills = [
         updateEffectiveMultipliers();
       }
     },
+    onRespec: (duringLoad) => {
+      serenityBoostMultiplier = 1;
+      if (!duringLoad) {
+        updateEffectiveMultipliers();
+      }
+    },
   },
   {
     name: "Celestial Precision",
@@ -406,6 +542,9 @@ const loveHallSkills = [
     pair: 22,
     onUnlock: () => {
       celestialPrecisionSkill = true;
+    },
+    onRespec: () => {
+      celestialPrecisionSkill = false;
     },
   },
 
@@ -418,6 +557,12 @@ const loveHallSkills = [
     pair: 23,
     onUnlock: (duringLoad) => {
       knowledgeInfusionMultiplier = 8;
+      if (!duringLoad) {
+        updateEffectiveMultipliers();
+      }
+    },
+    onRespec: (duringLoad) => {
+      knowledgeInfusionMultiplier = 1;
       if (!duringLoad) {
         updateEffectiveMultipliers();
       }
@@ -436,6 +581,12 @@ const loveHallSkills = [
         updateEffectiveMultipliers();
       }
     },
+    onRespec: (duringLoad) => {
+      basicResourceBoost = 1;
+      if (!duringLoad) {
+        updateEffectiveMultipliers();
+      }
+    },
   },
 
   {
@@ -448,6 +599,9 @@ const loveHallSkills = [
     onUnlock: () => {
       purchaseLibrarySkillsInterval = setInterval(purchaseLibrarySkills, 1000);
     },
+    onRespec: () => {
+      clearInterval(purchaseLibrarySkillsInterval);
+    },
   },
   {
     name: "Hall of Power Auto-Buy",
@@ -458,6 +612,9 @@ const loveHallSkills = [
     pair: 25,
     onUnlock: () => {
       purchasePowerHallSkillsInterval = setInterval(purchasePowerHallSkills, 1000);
+    },
+    onRespec: () => {
+      clearInterval(purchasePowerHallSkillsInterval);
     },
   },
 
@@ -470,6 +627,9 @@ const loveHallSkills = [
     pair: 26,
     onUnlock: () => {
       gamingAddictSkill = true;
+    },
+    onRespec: () => {
+      gamingAddictSkill = false;
     },
   },
   {
@@ -487,6 +647,13 @@ const loveHallSkills = [
       divideLibrarySkillCost('Eternal Ascension', 1e10);
       divideLibrarySkillCost('Quantum Symphony', 1e10);
     },
+    onRespec: () => {
+      // TODO would be nicer to reset skill costswithout hardcoding them
+      librarySkills.find(skill => skill.name === 'Autobuy Upgrades').cost = 3e21;
+      librarySkills.find(skill => skill.name === 'Perpetual Prestige').cost = 1e24;
+      librarySkills.find(skill => skill.name === 'Eternal Ascension').cost = 1e28;
+      librarySkills.find(skill => skill.name === 'Quantum Symphony').cost = 1e40;
+    },
   },
 
   {
@@ -498,6 +665,9 @@ const loveHallSkills = [
     pair: 27,
     onUnlock: () => {
       steadyFocusSkill = true;
+    },
+    onRespec: () => {
+      steadyFocusSkill = false;
     },
   },
   {
@@ -515,6 +685,13 @@ const loveHallSkills = [
       unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Eternal Ascension'), true);
       unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Quantum Symphony'), true);
     },
+    onRespec: () => {
+      secondWaveAutomationSkill = false;
+      unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Autobuy Upgrades'), false);
+      unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Perpetual Prestige'), false);
+      unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Eternal Ascension'), false);
+      unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Quantum Symphony'), false);
+    },
   },
 
   {
@@ -527,6 +704,9 @@ const loveHallSkills = [
     onUnlock: () => {
       masterOfElementsSkill = true;
     },
+    onRespec: () => {
+      masterOfElementsSkill = false;
+    },
   },
   {
     name: "Space Continuum Stretch",
@@ -537,6 +717,9 @@ const loveHallSkills = [
     pair: 28,
     onUnlock: () => {
       spaceContinuumStretchSkill = true;
+    },
+    onRespec: () => {
+      spaceContinuumStretchSkill = false;
     },
   },
 
@@ -550,6 +733,9 @@ const loveHallSkills = [
     onUnlock: () => {
       enlightenedPrestigeSkill = true;
     },
+    onRespec: () => {
+      enlightenedPrestigeSkill = false;
+    },
   },
   {
     name: "Hopeful Beginning",
@@ -560,6 +746,9 @@ const loveHallSkills = [
     pair: 29,
     onUnlock: () => {
       hopefulBeginningSkill = true;
+    },
+    onRespec: () => {
+      hopefulBeginningSkill = false;
     },
   },
 
@@ -575,6 +764,9 @@ const loveHallSkills = [
     onUnlock: () => {
       autoFightSkill = true;
     },
+    onRespec: () => {
+      autoFightSkill = false;
+    },
   },
   {
     name: "Hopium Fix",
@@ -588,7 +780,9 @@ const loveHallSkills = [
       // Check the state of hopium and update the switch position accordingly
       const toggleHopium = document.getElementById('toggleHopium');
       toggleHopium.checked = hopiumPerSecond >= 0;
-
+    },
+    onRespec: () => {
+      // TODO: Implement respec for this skill
     },
   },
 
@@ -601,6 +795,12 @@ const loveHallSkills = [
     pair: 31,
     onUnlock: (duringLoad) => {
       serenityGainCopium = true;
+      if(!duringLoad){
+          updateEffectiveMultipliers();
+      }
+    },
+    onRespec: (duringLoad) => {
+      serenityGainCopium = false;
       if(!duringLoad){
           updateEffectiveMultipliers();
       }
@@ -618,7 +818,12 @@ const loveHallSkills = [
       if(!duringLoad){
           updateEffectiveMultipliers();
       }
-
+    },
+    onRespec: (duringLoad) => {
+      serenityGainDelusion = false;
+      if(!duringLoad){
+          updateEffectiveMultipliers();
+      }
     },
   },
 
@@ -631,6 +836,12 @@ const loveHallSkills = [
     pair: 32,
     onUnlock: (duringLoad) => {
       serenityGainYachtMoney = true;
+      if(!duringLoad){
+          updateEffectiveMultipliers();
+      }
+    },
+    onRespec: (duringLoad) => {
+      serenityGainYachtMoney = false;
       if(!duringLoad){
           updateEffectiveMultipliers();
       }
@@ -650,6 +861,12 @@ const loveHallSkills = [
           updateEffectiveMultipliers();
       }
     },
+    onRespec: (duringLoad) => {
+      serenityGainTrollPoints = false;
+      if(!duringLoad){
+          updateEffectiveMultipliers();
+      }
+    },
   },
 
   {
@@ -661,6 +878,9 @@ const loveHallSkills = [
     pair: 33,
     onUnlock: () => {
       masterOfTimeSkill = true;
+    },
+    onRespec: () => {
+      masterOfTimeSkill = false;
     },
   },
   {
@@ -674,6 +894,9 @@ const loveHallSkills = [
     onUnlock: () => {
       loveSizeMattersSkill = true;
     },
+    onRespec: () => {
+      loveSizeMattersSkill = false;
+    },
   },
 
   {
@@ -685,6 +908,9 @@ const loveHallSkills = [
     pair: 34,
     onUnlock: () => {
       loveIsEverythingSkill = true;
+    },
+    onRespec: () => {
+      loveIsEverythingSkill = false;
     },
   },
   {
@@ -699,6 +925,9 @@ const loveHallSkills = [
     onUnlock: () => {
       etherealReflectionSkill = true;
     },
+    onRespec: () => {
+      etherealReflectionSkill = false;
+    },
   },
 
   // 42x Level - the meaning of life
@@ -712,6 +941,9 @@ const loveHallSkills = [
     onUnlock: () => {
       fortifiedDefensesSkill = true;
     },
+    onRespec: () => {
+      fortifiedDefensesSkill = false;
+    },
   },
   {
     name: "Study Accelerator",
@@ -722,6 +954,9 @@ const loveHallSkills = [
     pair: 41,
     onUnlock: () => {
       studyAcceleratorReduction = 0.2;
+    },
+    onRespec: () => {
+      studyAcceleratorReduction = 0;
     },
   },
 
@@ -735,6 +970,9 @@ const loveHallSkills = [
     onUnlock: () => {
       deadpoolRevivesSkill = true;
     },
+    onRespec: () => {
+      deadpoolRevivesSkill = false;
+    },
   },
   {
     name: "Rewarding Victories",
@@ -745,6 +983,9 @@ const loveHallSkills = [
     pair: 42,
     onUnlock: () => {
       rewardingVictoriesSkill = true;
+    },
+    onRespec: () => {
+      rewardingVictoriesSkill = false;
     },
   },
 
@@ -759,6 +1000,9 @@ const loveHallSkills = [
     onUnlock: () => {
       quantumFortressSkill = true;
     },
+    onRespec: () => {
+      quantumFortressSkill = false;
+    },
   },
   {
     name: "Chrono Magnetizer",
@@ -772,6 +1016,12 @@ const loveHallSkills = [
       if (autobuyIntervalId !== null) {
           clearInterval(autobuyIntervalId);
           autobuyIntervalId = setInterval(autobuyUpgrades, 125);
+      }
+    },
+    onRespec: () => {
+      chronoMagnetizerSkill = false;
+      if (autobuyIntervalId !== null) {
+          clearInterval(autobuyIntervalId);
       }
     },
   },
@@ -790,6 +1040,12 @@ const loveHallSkills = [
           updateEffectiveMultipliers();
       }
     },
+    onRespec: (duringLoad) => {
+      crunchKnowledgeSkill = false;
+      if(!duringLoad){
+          updateEffectiveMultipliers();
+      }
+    },
   },
   {
     name: "Stellar Meditation",
@@ -801,6 +1057,9 @@ const loveHallSkills = [
     pair: 44,
     onUnlock: () => {
       stellarMeditationSkill = true;
+    },
+    onRespec: () => {
+      stellarMeditationSkill = false;
     },
   },
 
@@ -814,6 +1073,9 @@ const loveHallSkills = [
     onUnlock: () => {
       oversurgedPower = 2;
     },
+    onRespec: () => {
+      oversurgedPower = 1;
+    },
   },
   {
     name: "Overcompressed Power",
@@ -824,6 +1086,9 @@ const loveHallSkills = [
     pair: 45,
     onUnlock: () => {
       overcompressedPower = 3;
+    },
+    onRespec: () => {
+      overcompressedPower = 1;
     },
   },
 
@@ -837,6 +1102,9 @@ const loveHallSkills = [
     onUnlock: () => {
       miniGamesSoftCapHrs = Math.max(miniGamesSoftCapHrs, 24);
     },
+    onRespec: () => {
+      miniGamesSoftCapHrs = 10;
+    },
   },
   {
     name: "Rewarding Meditations",
@@ -848,6 +1116,9 @@ const loveHallSkills = [
     requirement: "Rewarding Victories",
     onUnlock: () => {
       rewardingMeditationsSkill = true;
+    },
+    onRespec: () => {
+      rewardingMeditationsSkill = false;
     },
   },
 
@@ -861,6 +1132,10 @@ const loveHallSkills = [
     onUnlock: () => {
       unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Perpetual Prestige'), true);
       infinitePrestigeSkill = true;
+    },
+    onRespec: () => {
+      unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Perpetual Prestige'), false);
+      infinitePrestigeSkill = false;
     },
   },
   {
@@ -876,6 +1151,10 @@ const loveHallSkills = [
       hopiumTradeSkill = true;
       addHopiumToFromResource();
     },
+    onRespec: () => {
+      hopiumTradeSkill = false;
+      removeHopiumFromFromResource();
+    },
   },
 
   {
@@ -890,6 +1169,9 @@ const loveHallSkills = [
     onUnlock: () => {
       tranquilityOverdriveSkill = true;
     },
+    onRespec: () => {
+      tranquilityOverdriveSkill = false;
+    },
   },
   {
     name: "Time Flux",
@@ -900,6 +1182,9 @@ const loveHallSkills = [
     pair: 48,
     onUnlock: () => {
       warpTimeMax = 60 * 60 * 12;
+    },
+    onRespec: () => {
+      warpTimeMax = 60 * 60 * 6;
     },
   },
 
@@ -931,6 +1216,9 @@ const loveHallSkills = [
     onUnlock: () => {
       beaconOfSevenSunsSkill = true;
     },
+    onRespec: () => {
+      beaconOfSevenSunsSkill = false;
+    },
   },
 
   {
@@ -943,6 +1231,12 @@ const loveHallSkills = [
     requirement: "Altruistic Embrace",
     onUnlock: (duringLoad) => {
       resonanceOfLoveSkill = true;
+      if(!duringLoad){
+          updateEffectiveMultipliers();
+      }
+    },
+    onRespec: (duringLoad) => {
+      resonanceOfLoveSkill = false;
       if(!duringLoad){
           updateEffectiveMultipliers();
       }
@@ -960,6 +1254,9 @@ const loveHallSkills = [
       equilibriumOfHopeSkill = true;
       autoTradeHopium();
     },
+    onRespec: () => {
+      equilibriumOfHopeSkill = false;
+    },
   },
 
   {
@@ -972,6 +1269,9 @@ const loveHallSkills = [
     onUnlock: () => {
       temporalDragReduction = 0.75;
     },
+    onRespec: () => {
+      temporalDragReduction = 1;
+    },
   },
   {
     name: "Look Past Distractions",
@@ -982,6 +1282,9 @@ const loveHallSkills = [
     pair: 51,
     onUnlock: () => {
       lookPastDistractions = 1;
+    },
+    onRespec: () => {
+      lookPastDistractions = 0;
     },
   },
 
@@ -996,6 +1299,9 @@ const loveHallSkills = [
     onUnlock: () => {
       faithFueledKnowledgeSkill = true;
     },
+    onRespec: () => {
+      faithFueledKnowledgeSkill = false;
+    },
   },
   {
     name: "Event Horizon Boost",
@@ -1006,6 +1312,9 @@ const loveHallSkills = [
     pair: 52,
     onUnlock: () => {
       eventHorizonBoostSkill = true;
+    },
+    onRespec: () => {
+      eventHorizonBoostSkill = false;
     },
   },
 
@@ -1020,6 +1329,9 @@ const loveHallSkills = [
     requirement: "Illusion of Power",
     onUnlock: () => {
       autoMeditateSkill = true;
+    },
+    onRespec: () => {
+      autoMeditateSkill = false;
     },
   },
   {
@@ -1037,6 +1349,14 @@ const loveHallSkills = [
       document.getElementById('toggleYachtMoney').checked = yachtMoneyPerSecond >= 0;
       document.getElementById('toggleTrollPointsLabel').classList.remove('hidden');
       document.getElementById('toggleTrollPoints').checked = trollPointsPerSecond >= 0;
+    },
+    onRespec: () => {
+      document.getElementById('toggleCopiumLabel').classList.add('hidden');
+      document.getElementById('toggleCopium').checked = false;
+      document.getElementById('toggleYachtMoneyLabel').classList.add('hidden');
+      document.getElementById('toggleYachtMoney').checked = false;
+      document.getElementById('toggleTrollPointsLabel').classList.add('hidden');
+      document.getElementById('toggleTrollPoints').checked = false;
     },
   },
 ];
