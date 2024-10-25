@@ -418,7 +418,7 @@ function createBall(index, stageNumber) {
 function updateMeditationInfo() {
     document.getElementById('meditationChallengeName').innerText = currentChallengeName;
     document.getElementById('meditationTimer').innerText = meditationTimer.toFixed(1);
-    document.getElementById('meditationFocus').innerText = formatNumber(meditationFocus);
+    document.getElementById('meditationFocus').innerHTML = formatNumber(meditationFocus);
     document.getElementById('meditationBallCount').innerText = ballCount;
     document.getElementById('meditationBallSize').innerText = ballSize; // Ball size (diameter)
     document.getElementById('meditationArenaSize').innerText = arenaSize;
