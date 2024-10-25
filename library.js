@@ -8,7 +8,7 @@ const librarySkills = [
 
     { name: 'Cure for Delusion', cost: 5, description: 'Unlock ability to toggle whether delusion gain is positive or negative.', unlocked: false, level: 'Science' },
     { name: 'Luck is Rigged', cost: 777, description: 'Remove 1 unlucky box. Makes lucky boxes better (25%-125% instead of 10%-100%) and unlocky boxes less bad (5%-50% instead of 5%-70%).', unlocked: false, level: 'Science' },
-    { name: "I Can't Math", cost: 9000, description: 'Math Game timer increased from 12s to 20s, # portals reduced from 14 to 11, and reward is doubled.', unlocked: false, level: 'Science' },
+    { name: "I Can't Math", cost: 9000, description: 'Math Game timer increased from 12s to 18s, # portals reduced from 15 to 12, and reward is doubled.', unlocked: false, level: 'Science' },
     { name: "Short Term Memory", cost: 80000, description: 'Memory Game sequence length reduced to (3-6) instead of (4-7) and reward is tripled.', unlocked: false, level: 'Science' },
     { name: "Click Speed Demon", cost: 1600000, description: 'Dots in Speed Game get slightly larger and reward is tripled.', unlocked: false, level: 'Science' },
     { name: 'Mini Gamer', cost: 7.5e23, description: 'All mini game cooldowns are reduced by 50%.', unlocked: false, level: 'Science' },

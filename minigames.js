@@ -386,7 +386,7 @@ function playMiniGame(gameType) {
 
     // Math mini-game logic
     else if (gameType === 'math') {
-        let duration = mathGameSkill ? 20 : 12; // 12 or 20 seconds
+        let duration = mathGameSkill ? 18 : 12; // 12 or 18 seconds
         let portalValues = []; // Store all portal values
         let selectedPortals = []; // Store selected portals for checking
         let targetSum = Math.floor(Math.random() * 71) + 10; // Random target sum between 10 and 80
@@ -533,7 +533,7 @@ function playMiniGame(gameType) {
             // Function to generate portals with random values
             function generatePortals() {
                 let sumExists = false;
-                const totalPortals = mathGameSkill ? 11 : 14; // Limit the number of portals
+                const totalPortals = mathGameSkill ? 12 : 15; // Limit the number of portals
 
                 for (let i = 0; i < totalPortals; i++) {
                     const num = Math.floor(Math.random() * (targetSum - 1)) + 1;
