@@ -8,6 +8,12 @@ const loveHallSkills = [
     unlocked: false,
     level: "Quantum Harmony (2.8x)",
     pair: 1,
+    onUnlock: (duringLoad) => {
+      delusionSurgeMultiplier = 36;
+      if (!duringLoad) {
+        updateEffectiveMultipliers();
+      }
+    },
   },
   {
     name: "Copium Surge",
@@ -16,6 +22,12 @@ const loveHallSkills = [
     unlocked: false,
     level: "Quantum Harmony (2.8x)",
     pair: 1,
+    onUnlock: (duringLoad) => {
+      copiumSurgeMultiplier = 36;
+      if (!duringLoad) {
+        updateEffectiveMultipliers();
+      }
+    },
   },
 
   {
@@ -25,6 +37,12 @@ const loveHallSkills = [
     unlocked: false,
     level: "Quantum Harmony (2.8x)",
     pair: 2,
+    onUnlock: () => {
+      unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Double Ascension'), true);
+      unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Quadruple Ascension'), true);
+      unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Tenfold Ascension'), true);
+      numAscensionUpgrades = Math.max(numAscensionUpgrades, 25);
+    },
   },
   {
     name: "Twenty-Fivefold Transcendence",
@@ -33,6 +51,10 @@ const loveHallSkills = [
     unlocked: false,
     level: "Quantum Harmony (2.8x)",
     pair: 2,
+    onUnlock: () => {
+      unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Septuple Transcendence'), true);
+      numPUAscensionUpgrades = Math.max(numPUAscensionUpgrades, 25);
+    },
   },
 
   {
@@ -42,6 +64,13 @@ const loveHallSkills = [
     unlocked: false,
     level: "Quantum Harmony (2.8x)",
     pair: 3,
+    onUnlock: (duringLoad) => {
+      achievementBoostValue *= 2;
+      calculateAchievementMultiplier();
+      if (!duringLoad) {
+        updateEffectiveMultipliers();
+      }
+    },
   },
   {
     name: "Cosmic Embrace",
@@ -50,6 +79,9 @@ const loveHallSkills = [
     unlocked: false,
     level: "Quantum Harmony (2.8x)",
     pair: 3,
+    onUnlock: () => {
+      embraceExtraLovePoints += 1;
+    },
   },
 
   {
@@ -59,6 +91,9 @@ const loveHallSkills = [
     unlocked: false,
     level: "Quantum Harmony (2.8x)",
     pair: 4,
+    onUnlock: () => {
+      unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Knowledge Generation'), true);
+    },
   },
   {
     name: "Pulse of Affection",
@@ -68,6 +103,9 @@ const loveHallSkills = [
     unlocked: false,
     level: "Quantum Harmony (2.8x)",
     pair: 4,
+    onUnlock: () => {
+      pulseOfAffectionSkill = true;
+    },
   },
 
   {
@@ -78,6 +116,9 @@ const loveHallSkills = [
     unlocked: false,
     level: "Quantum Harmony (2.8x)",
     pair: 5,
+    onUnlock: () => {
+      altruisticEmbraceSkill = true;
+    },
   },
   {
     name: "Master of Bargains",
@@ -87,6 +128,9 @@ const loveHallSkills = [
     unlocked: false,
     level: "Quantum Harmony (2.8x)",
     pair: 5,
+    onUnlock: () => {
+      masterOfBargainsSkill = true;
+    },
   },
 
   {
@@ -96,6 +140,12 @@ const loveHallSkills = [
     unlocked: false,
     level: "Quantum Harmony (2.8x)",
     pair: 6,
+    onUnlock: (duringLoad) => {
+      serenityFlowSkill = true;
+      if (!duringLoad) {
+        updateEffectiveMultipliers();
+      }
+    },
   },
   {
     name: "Serene Boost 2",
@@ -105,6 +155,12 @@ const loveHallSkills = [
     level: "Quantum Harmony (2.8x)",
     pair: 6,
     requirement: "Serene Boost 1",
+    onUnlock: (duringLoad) => {
+      serenityBoostMultiplier *= 5;
+      if (!duringLoad) {
+        updateEffectiveMultipliers();
+      }
+    },
   },
 
   {
@@ -116,6 +172,9 @@ const loveHallSkills = [
     level: "Quantum Harmony (2.8x)",
     pair: 7,
     requirement: "Overwhelming Mercy",
+    onUnlock: () => {
+      illusionOfPowerSkill = true;
+    },
   },
   {
     name: "Early Accelerant",
@@ -125,6 +184,9 @@ const loveHallSkills = [
     unlocked: false,
     level: "Quantum Harmony (2.8x)",
     pair: 7,
+    onUnlock: () => {
+      earlyAccelerantSkill = true;
+    },
   },
 
   {
@@ -134,6 +196,12 @@ const loveHallSkills = [
     unlocked: false,
     level: "Quantum Harmony (2.8x)",
     pair: 8,
+    onUnlock: (duringLoad) => {
+      powerInfusionMultiplier = 4;
+      if (!duringLoad) {
+        updateEffectiveMultipliers();
+      }
+    },
   },
   {
     name: "Soulbound Embrace",
@@ -143,6 +211,9 @@ const loveHallSkills = [
     level: "Quantum Harmony (2.8x)",
     pair: 8,
     requirement: "Cosmic Embrace",
+    onUnlock: () => {
+      embraceExtraLovePoints += 6;
+    },
   },
 
   {
@@ -152,6 +223,9 @@ const loveHallSkills = [
     unlocked: false,
     level: "Quantum Harmony (2.8x)",
     pair: 9,
+    onUnlock: () => {
+      hopefulSoftCapSkill = true;
+    },
   },
   {
     name: "Fertile Scarcity",
@@ -161,6 +235,9 @@ const loveHallSkills = [
     level: "Quantum Harmony (2.8x)",
     pair: 9,
     requirement: "Stellar Meditation",
+    onUnlock: () => {
+      fertileScarcitySkill = true;
+    },
   },
 
   {
@@ -171,6 +248,9 @@ const loveHallSkills = [
     unlocked: false,
     level: "Quantum Harmony (2.8x)",
     pair: 10,
+    onUnlock: () => {
+      inversePrestigeSkill = true;
+    },
   },
   {
     name: "Positive Markers",
@@ -180,6 +260,10 @@ const loveHallSkills = [
     unlocked: false,
     level: "Quantum Harmony (2.8x)",
     pair: 10,
+    onUnlock: () => {
+      unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Buy Markers'), true);
+      positiveMarkersSkill = true;
+    },
   },
 
   {
@@ -190,6 +274,13 @@ const loveHallSkills = [
     level: "Quantum Harmony (2.8x)",
     pair: 11,
     requirement: "Achievement Boost",
+    onUnlock: (duringLoad) => {
+      achievementBoostValue *= 2;
+      calculateAchievementMultiplier();
+      if (!duringLoad) {
+        updateEffectiveMultipliers();
+      }
+    },
   },
   {
     name: "Tunneled Ascension",
@@ -198,6 +289,9 @@ const loveHallSkills = [
     unlocked: false,
     level: "Quantum Harmony (2.8x)",
     pair: 11,
+    onUnlock: () => {
+      tunneledAscensionSkill = true;
+    },
   },
 
   {
@@ -208,6 +302,13 @@ const loveHallSkills = [
     unlocked: false,
     level: "Quantum Harmony (2.8x)",
     pair: 12,
+    onUnlock: (duringLoad) => {
+      achievementHyperchargeSkill = true;
+      calculateAchievementMultiplier();
+      if (!duringLoad) {
+        updateEffectiveMultipliers();
+      }
+    },
   },
   {
     name: "Perfect PU God-Mode",
@@ -216,6 +317,15 @@ const loveHallSkills = [
     unlocked: false,
     level: "Quantum Harmony (2.8x)",
     pair: 12,
+    onUnlock: (duringLoad) => {
+      perfectPUGodModeSkill = true;
+      unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Much Less Diminishing Parallel God-Mode'), true);
+      puGodMultiplier = calculatePUGodModeMultiplier(puGodLevel);
+      if (!duringLoad) {
+        updateMultipliersDisplay();
+        updateEffectiveMultipliers();
+      }
+    },
   },
 
   {
@@ -226,6 +336,9 @@ const loveHallSkills = [
     level: "Quantum Harmony (2.8x)",
     pair: 13,
     requirement: "Perpetual Collapse",
+    onUnlock: () => {
+      infiniteCollapseSkill = true;
+    },
   },
   {
     name: "Zen of the Stars",
@@ -235,6 +348,9 @@ const loveHallSkills = [
     level: "Quantum Harmony (2.8x)",
     pair: 13,
     requirement: "Fertile Scarcity",
+    onUnlock: () => {
+      zenOfTheStarsSkill = true;
+    },
   },
 
   // 27x Level - dimensions in string theory
@@ -245,6 +361,12 @@ const loveHallSkills = [
     unlocked: false,
     level: "Dimensional Shift (27x)",
     pair: 21,
+    onUnlock: (duringLoad) => {
+      yachtMoneySurgeMultiplier = 24;
+      if (!duringLoad) {
+        updateEffectiveMultipliers();
+      }
+    },
   },
   {
     name: "Troll Points Surge",
@@ -253,6 +375,12 @@ const loveHallSkills = [
     unlocked: false,
     level: "Dimensional Shift (27x)",
     pair: 21,
+    onUnlock: (duringLoad) => {
+      trollPointsSurgeMultiplier = 24;
+      if (!duringLoad) {
+        updateEffectiveMultipliers();
+      }
+    },
   },
 
   {
@@ -262,6 +390,12 @@ const loveHallSkills = [
     unlocked: false,
     level: "Dimensional Shift (27x)",
     pair: 22,
+    onUnlock: (duringLoad) => {
+      serenityBoostMultiplier *= 2;
+      if (!duringLoad) {
+        updateEffectiveMultipliers();
+      }
+    },
   },
   {
     name: "Celestial Precision",
@@ -270,6 +404,9 @@ const loveHallSkills = [
     unlocked: false,
     level: "Dimensional Shift (27x)",
     pair: 22,
+    onUnlock: () => {
+      celestialPrecisionSkill = true;
+    },
   },
 
   {
@@ -279,6 +416,12 @@ const loveHallSkills = [
     unlocked: false,
     level: "Dimensional Shift (27x)",
     pair: 23,
+    onUnlock: (duringLoad) => {
+      knowledgeInfusionMultiplier = 8;
+      if (!duringLoad) {
+        updateEffectiveMultipliers();
+      }
+    },
   },
   {
     name: "Basic Resource Boost",
@@ -287,6 +430,12 @@ const loveHallSkills = [
     unlocked: false,
     level: "Dimensional Shift (27x)",
     pair: 23,
+    onUnlock: (duringLoad) => {
+      basicResourceBoost = 9;
+      if (!duringLoad) {
+        updateEffectiveMultipliers();
+      }
+    },
   },
 
   {
@@ -296,6 +445,9 @@ const loveHallSkills = [
     unlocked: false,
     level: "Dimensional Shift (27x)",
     pair: 25,
+    onUnlock: () => {
+      purchaseLibrarySkillsInterval = setInterval(purchaseLibrarySkills, 1000);
+    },
   },
   {
     name: "Hall of Power Auto-Buy",
@@ -304,6 +456,9 @@ const loveHallSkills = [
     unlocked: false,
     level: "Dimensional Shift (27x)",
     pair: 25,
+    onUnlock: () => {
+      purchasePowerHallSkillsInterval = setInterval(purchasePowerHallSkills, 1000);
+    },
   },
 
   {
@@ -313,6 +468,9 @@ const loveHallSkills = [
     unlocked: false,
     level: "Dimensional Shift (27x)",
     pair: 26,
+    onUnlock: () => {
+      gamingAddictSkill = true;
+    },
   },
   {
     name: "First-Wave Automation",
@@ -323,6 +481,12 @@ const loveHallSkills = [
     unlocked: false,
     level: "Dimensional Shift (27x)",
     pair: 26,
+    onUnlock: () => {
+      divideLibrarySkillCost('Autobuy Upgrades', 1e10);
+      divideLibrarySkillCost('Perpetual Prestige', 1e10);
+      divideLibrarySkillCost('Eternal Ascension', 1e10);
+      divideLibrarySkillCost('Quantum Symphony', 1e10);
+    },
   },
 
   {
@@ -332,6 +496,9 @@ const loveHallSkills = [
     unlocked: false,
     level: "Dimensional Shift (27x)",
     pair: 27,
+    onUnlock: () => {
+      steadyFocusSkill = true;
+    },
   },
   {
     name: "Second-Wave Automation",
@@ -341,6 +508,13 @@ const loveHallSkills = [
     level: "Dimensional Shift (27x)",
     pair: 27,
     requirement: "First-Wave Automation",
+    onUnlock: () => {
+      secondWaveAutomationSkill = true;
+      unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Autobuy Upgrades'), true);
+      unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Perpetual Prestige'), true);
+      unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Eternal Ascension'), true);
+      unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Quantum Symphony'), true);
+    },
   },
 
   {
@@ -350,6 +524,9 @@ const loveHallSkills = [
     unlocked: false,
     level: "Dimensional Shift (27x)",
     pair: 28,
+    onUnlock: () => {
+      masterOfElementsSkill = true;
+    },
   },
   {
     name: "Space Continuum Stretch",
@@ -358,6 +535,9 @@ const loveHallSkills = [
     unlocked: false,
     level: "Dimensional Shift (27x)",
     pair: 28,
+    onUnlock: () => {
+      spaceContinuumStretchSkill = true;
+    },
   },
 
   {
@@ -367,6 +547,9 @@ const loveHallSkills = [
     unlocked: false,
     level: "Dimensional Shift (27x)",
     pair: 29,
+    onUnlock: () => {
+      enlightenedPrestigeSkill = true;
+    },
   },
   {
     name: "Hopeful Beginning",
@@ -375,6 +558,9 @@ const loveHallSkills = [
     unlocked: false,
     level: "Dimensional Shift (27x)",
     pair: 29,
+    onUnlock: () => {
+      hopefulBeginningSkill = true;
+    },
   },
 
   {
@@ -386,6 +572,9 @@ const loveHallSkills = [
     level: "Dimensional Shift (27x)",
     pair: 30,
     requirement: "Celestial Precision",
+    onUnlock: () => {
+      autoFightSkill = true;
+    },
   },
   {
     name: "Hopium Fix",
@@ -394,6 +583,13 @@ const loveHallSkills = [
     unlocked: false,
     level: "Dimensional Shift (27x)",
     pair: 30,
+    onUnlock: () => {
+      document.getElementById('toggleHopiumLabel').classList.remove('hidden');
+      // Check the state of hopium and update the switch position accordingly
+      const toggleHopium = document.getElementById('toggleHopium');
+      toggleHopium.checked = hopiumPerSecond >= 0;
+
+    },
   },
 
   {
@@ -403,6 +599,12 @@ const loveHallSkills = [
     unlocked: false,
     level: "Dimensional Shift (27x)",
     pair: 31,
+    onUnlock: (duringLoad) => {
+      serenityGainCopium = true;
+      if(!duringLoad){
+          updateEffectiveMultipliers();
+      }
+    },
   },
   {
     name: "Serenity Gain (Delusion)",
@@ -411,6 +613,13 @@ const loveHallSkills = [
     unlocked: false,
     level: "Dimensional Shift (27x)",
     pair: 31,
+    onUnlock: (duringLoad) => {
+      serenityGainDelusion = true;
+      if(!duringLoad){
+          updateEffectiveMultipliers();
+      }
+
+    },
   },
 
   {
@@ -420,6 +629,13 @@ const loveHallSkills = [
     unlocked: false,
     level: "Dimensional Shift (27x)",
     pair: 32,
+    onUnlock: (duringLoad) => {
+      serenityGainYachtMoney = true;
+      if(!duringLoad){
+          updateEffectiveMultipliers();
+      }
+
+    },
   },
   {
     name: "Serenity Gain (Troll Points)",
@@ -428,6 +644,12 @@ const loveHallSkills = [
     unlocked: false,
     level: "Dimensional Shift (27x)",
     pair: 32,
+    onUnlock: (duringLoad) => {
+      serenityGainTrollPoints = true;
+      if(!duringLoad){
+          updateEffectiveMultipliers();
+      }
+    },
   },
 
   {
@@ -437,6 +659,9 @@ const loveHallSkills = [
     unlocked: false,
     level: "Dimensional Shift (27x)",
     pair: 33,
+    onUnlock: () => {
+      masterOfTimeSkill = true;
+    },
   },
   {
     name: "Love Size Matters",
@@ -446,6 +671,9 @@ const loveHallSkills = [
     unlocked: false,
     level: "Dimensional Shift (27x)",
     pair: 33,
+    onUnlock: () => {
+      loveSizeMattersSkill = true;
+    },
   },
 
   {
@@ -455,6 +683,9 @@ const loveHallSkills = [
     unlocked: false,
     level: "Dimensional Shift (27x)",
     pair: 34,
+    onUnlock: () => {
+      loveIsEverythingSkill = true;
+    },
   },
   {
     name: "Ethereal Reflection",
@@ -465,6 +696,9 @@ const loveHallSkills = [
     level: "Dimensional Shift (27x)",
     pair: 34,
     requirement: "Intrinsic Meditation",
+    onUnlock: () => {
+      etherealReflectionSkill = true;
+    },
   },
 
   // 42x Level - the meaning of life
@@ -475,6 +709,9 @@ const loveHallSkills = [
     unlocked: false,
     level: "Cosmic Truth (42x)",
     pair: 41,
+    onUnlock: () => {
+      fortifiedDefensesSkill = true;
+    },
   },
   {
     name: "Study Accelerator",
@@ -483,6 +720,9 @@ const loveHallSkills = [
     unlocked: false,
     level: "Cosmic Truth (42x)",
     pair: 41,
+    onUnlock: () => {
+      studyAcceleratorReduction = 0.2;
+    },
   },
 
   {
@@ -492,6 +732,9 @@ const loveHallSkills = [
     unlocked: false,
     level: "Cosmic Truth (42x)",
     pair: 42,
+    onUnlock: () => {
+      deadpoolRevivesSkill = true;
+    },
   },
   {
     name: "Rewarding Victories",
@@ -500,6 +743,9 @@ const loveHallSkills = [
     unlocked: false,
     level: "Cosmic Truth (42x)",
     pair: 42,
+    onUnlock: () => {
+      rewardingVictoriesSkill = true;
+    },
   },
 
   {
@@ -510,6 +756,9 @@ const loveHallSkills = [
     level: "Cosmic Truth (42x)",
     pair: 43,
     requirement: "Fortified Defenses",
+    onUnlock: () => {
+      quantumFortressSkill = true;
+    },
   },
   {
     name: "Chrono Magnetizer",
@@ -518,6 +767,13 @@ const loveHallSkills = [
     unlocked: false,
     level: "Cosmic Truth (42x)",
     pair: 43,
+    onUnlock: () => {
+      chronoMagnetizerSkill = true;
+      if (autobuyIntervalId !== null) {
+          clearInterval(autobuyIntervalId);
+          autobuyIntervalId = setInterval(autobuyUpgrades, 125);
+      }
+    },
   },
 
   {
@@ -528,6 +784,12 @@ const loveHallSkills = [
     unlocked: false,
     level: "Cosmic Truth (42x)",
     pair: 44,
+    onUnlock: (duringLoad) => {
+      crunchKnowledgeSkill = true;
+      if(!duringLoad){
+          updateEffectiveMultipliers();
+      }
+    },
   },
   {
     name: "Stellar Meditation",
@@ -537,6 +799,9 @@ const loveHallSkills = [
     unlocked: false,
     level: "Cosmic Truth (42x)",
     pair: 44,
+    onUnlock: () => {
+      stellarMeditationSkill = true;
+    },
   },
 
   {
@@ -546,6 +811,9 @@ const loveHallSkills = [
     unlocked: false,
     level: "Cosmic Truth (42x)",
     pair: 45,
+    onUnlock: () => {
+      oversurgedPower = 2;
+    },
   },
   {
     name: "Overcompressed Power",
@@ -554,6 +822,9 @@ const loveHallSkills = [
     unlocked: false,
     level: "Cosmic Truth (42x)",
     pair: 45,
+    onUnlock: () => {
+      overcompressedPower = 3;
+    },
   },
 
   {
@@ -563,6 +834,9 @@ const loveHallSkills = [
     unlocked: false,
     level: "Cosmic Truth (42x)",
     pair: 46,
+    onUnlock: () => {
+      miniGamesSoftCapHrs = Math.max(miniGamesSoftCapHrs, 24);
+    },
   },
   {
     name: "Rewarding Meditations",
@@ -572,6 +846,9 @@ const loveHallSkills = [
     level: "Cosmic Truth (42x)",
     pair: 46,
     requirement: "Rewarding Victories",
+    onUnlock: () => {
+      rewardingMeditationsSkill = true;
+    },
   },
 
   {
@@ -581,6 +858,10 @@ const loveHallSkills = [
     unlocked: false,
     level: "Cosmic Truth (42x)",
     pair: 47,
+    onUnlock: () => {
+      unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Perpetual Prestige'), true);
+      infinitePrestigeSkill = true;
+    },
   },
   {
     name: "Hopium Trade",
@@ -591,6 +872,10 @@ const loveHallSkills = [
     level: "Cosmic Truth (42x)",
     pair: 47,
     requirement: "Master of Bargains",
+    onUnlock: () => {
+      hopiumTradeSkill = true;
+      addHopiumToFromResource();
+    },
   },
 
   {
@@ -602,6 +887,9 @@ const loveHallSkills = [
     level: "Cosmic Truth (42x)",
     pair: 48,
     requirement: "Rewarding Meditations",
+    onUnlock: () => {
+      tranquilityOverdriveSkill = true;
+    },
   },
   {
     name: "Time Flux",
@@ -610,6 +898,9 @@ const loveHallSkills = [
     unlocked: false,
     level: "Cosmic Truth (42x)",
     pair: 48,
+    onUnlock: () => {
+      warpTimeMax = 60 * 60 * 12;
+    },
   },
 
   {
@@ -637,6 +928,9 @@ const loveHallSkills = [
     unlocked: false,
     level: "Cosmic Truth (42x)",
     pair: 49,
+    onUnlock: () => {
+      beaconOfSevenSunsSkill = true;
+    },
   },
 
   {
@@ -647,6 +941,12 @@ const loveHallSkills = [
     level: "Cosmic Truth (42x)",
     pair: 50,
     requirement: "Altruistic Embrace",
+    onUnlock: (duringLoad) => {
+      resonanceOfLoveSkill = true;
+      if(!duringLoad){
+          updateEffectiveMultipliers();
+      }
+    },
   },
   {
     name: "Equilibrium of Hope",
@@ -656,6 +956,10 @@ const loveHallSkills = [
     level: "Cosmic Truth (42x)",
     pair: 50,
     requirement: "Hopium Trade",
+    onUnlock: () => {
+      equilibriumOfHopeSkill = true;
+      autoTradeHopium();
+    },
   },
 
   {
@@ -665,6 +969,9 @@ const loveHallSkills = [
     unlocked: false,
     level: "Cosmic Truth (42x)",
     pair: 51,
+    onUnlock: () => {
+      temporalDragReduction = 0.75;
+    },
   },
   {
     name: "Look Past Distractions",
@@ -673,6 +980,9 @@ const loveHallSkills = [
     unlocked: false,
     level: "Cosmic Truth (42x)",
     pair: 51,
+    onUnlock: () => {
+      lookPastDistractions = 1;
+    },
   },
 
   {
@@ -683,6 +993,9 @@ const loveHallSkills = [
     unlocked: false,
     level: "Cosmic Truth (42x)",
     pair: 52,
+    onUnlock: () => {
+      faithFueledKnowledgeSkill = true;
+    },
   },
   {
     name: "Event Horizon Boost",
@@ -691,6 +1004,9 @@ const loveHallSkills = [
     unlocked: false,
     level: "Cosmic Truth (42x)",
     pair: 52,
+    onUnlock: () => {
+      eventHorizonBoostSkill = true;
+    },
   },
 
   {
@@ -702,6 +1018,9 @@ const loveHallSkills = [
     level: "Cosmic Truth (42x)",
     pair: 53,
     requirement: "Illusion of Power",
+    onUnlock: () => {
+      autoMeditateSkill = true;
+    },
   },
   {
     name: "The Ultimate Fix",
@@ -711,6 +1030,14 @@ const loveHallSkills = [
     level: "Cosmic Truth (42x)",
     pair: 53,
     requirement: "Hopium Fix",
+    onUnlock: () => {
+      document.getElementById('toggleCopiumLabel').classList.remove('hidden');
+      document.getElementById('toggleCopium').checked = copiumPerSecond >= 0;
+      document.getElementById('toggleYachtMoneyLabel').classList.remove('hidden');
+      document.getElementById('toggleYachtMoney').checked = yachtMoneyPerSecond >= 0;
+      document.getElementById('toggleTrollPointsLabel').classList.remove('hidden');
+      document.getElementById('toggleTrollPoints').checked = trollPointsPerSecond >= 0;
+    },
   },
 ];
 
@@ -766,426 +1093,9 @@ function unlockLoveHallSkill(skill, duringLoad = false) {
 
         // Call the onUnlock function if it exists
         if (skill.onUnlock) {
-            skill.onUnlock();
-        }
-        
-        switch (skill.name) {
-            case 'Delusion Surge':
-                delusionSurgeMultiplier = 36;
-                if(!duringLoad){
-                    updateEffectiveMultipliers();
-                }
-                break;
-                
-            case 'Copium Surge':
-                copiumSurgeMultiplier = 36;
-                if(!duringLoad){
-                    updateEffectiveMultipliers();
-                }
-                break;
-        
-            case 'Twenty-Fivefold Ascension':
-                unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Double Ascension'), true);
-                unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Quadruple Ascension'), true);
-                unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Tenfold Ascension'), true);
-                numAscensionUpgrades = Math.max(numAscensionUpgrades, 25);
-                break;
-        
-            case 'Twenty-Fivefold Transcendence':
-                unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Septuple Transcendence'), true);
-                numPUAscensionUpgrades = Math.max(numPUAscensionUpgrades, 25);
-                break;
-        
-            case 'Achievement Boost':
-                achievementBoostValue *= 2;
-                calculateAchievementMultiplier();
-                if(!duringLoad){
-                    updateEffectiveMultipliers();
-                }
-                break;
-        
-            case 'Cosmic Embrace':
-                embraceExtraLovePoints += 1;
-                break;
-        
-            case 'Epistemic Engine':
-                unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Knowledge Generation'), true);
-                break;
+            skill.onUnlock(duringLoad);
+        }        
 
-            case 'Pulse of Affection':
-                pulseOfAffectionSkill = true;
-                break;
-
-            case 'Altruistic Embrace':
-                altruisticEmbraceSkill = true;
-                break;
-
-            case 'Master of Bargains':
-                masterOfBargainsSkill = true;
-                break;
-
-            case 'Serenity Flow':
-                serenityFlowSkill = true;
-                if(!duringLoad){
-                    updateEffectiveMultipliers();
-                }
-                break;
-        
-            case 'Serene Boost 2':
-                serenityBoostMultiplier *= 5;
-                if(!duringLoad){
-                    updateEffectiveMultipliers();
-                }
-                break;
-
-            case 'Illusion of Power':
-                illusionOfPowerSkill = true;
-                break;
-                    
-            case 'Early Accelerant':
-                earlyAccelerantSkill = true;
-                break;
-
-            case 'Power Infusion':
-                powerInfusionMultiplier = 4;
-                if(!duringLoad){
-                    updateEffectiveMultipliers();
-                }
-                break;
-        
-            case 'Soulbound Embrace':
-                embraceExtraLovePoints += 6;
-                break;
-
-            case 'Hopeful Soft Cap':
-                hopefulSoftCapSkill = true;
-                break;
-                    
-            case 'Fertile Scarcity':
-                fertileScarcitySkill = true;
-                break;
-
-            case 'Inverse Prestige':
-                inversePrestigeSkill = true;
-                break;
-                    
-            case 'Positive Markers':
-                unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Buy Markers'), true);
-                positiveMarkersSkill = true;
-                break;
-                
-            case 'Achievement Boost 2':
-                achievementBoostValue *= 2;
-                calculateAchievementMultiplier();
-                if(!duringLoad){
-                    updateEffectiveMultipliers();
-                }
-                break;
-        
-            case 'Tunneled Ascension':
-                tunneledAscensionSkill = true;
-                break;
-
-            case 'Achievement Hypercharge':
-                achievementHyperchargeSkill = true;
-                calculateAchievementMultiplier();
-                if(!duringLoad){
-                    updateEffectiveMultipliers();
-                }
-                break;
-
-            case 'Perfect PU God-Mode':
-                perfectPUGodModeSkill = true;
-                unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Much Less Diminishing Parallel God-Mode'), true);
-                puGodMultiplier = calculatePUGodModeMultiplier(puGodLevel);
-                if (!duringLoad) {
-                    updateMultipliersDisplay();
-                    updateEffectiveMultipliers();
-                }
-                break;
-
-            case 'Infinite Collapse':
-                infiniteCollapseSkill = true;
-                break;
-
-            case 'Zen of the Stars':
-                zenOfTheStarsSkill = true;
-                break;
-
-            case 'Yacht Money Surge':
-                yachtMoneySurgeMultiplier = 24;
-                if(!duringLoad){
-                    updateEffectiveMultipliers();
-                }
-                break;
-                
-            case 'Troll Points Surge':
-                trollPointsSurgeMultiplier = 24;
-                if(!duringLoad){
-                    updateEffectiveMultipliers();
-                }
-                break;
-
-
-            case 'Serene Boost 1':
-                serenityBoostMultiplier *= 2;
-                if(!duringLoad){
-                    updateEffectiveMultipliers();
-                }
-                break;
-        
-            case 'Celestial Precision':
-                celestialPrecisionSkill = true;
-                break;
-        
-            case 'Knowledge Infusion':
-                knowledgeInfusionMultiplier = 8;
-                if(!duringLoad){
-                    updateEffectiveMultipliers();
-                }
-                break;
-        
-            case 'Basic Resource Boost':
-                basicResourceBoost = 9;
-                if(!duringLoad){
-                    updateEffectiveMultipliers();
-                }
-                break;
-        
-            case 'Hall of Knowledge Auto-Buy':
-                purchaseLibrarySkillsInterval = setInterval(purchaseLibrarySkills, 1000);
-                break;
-        
-            case 'Hall of Power Auto-Buy':
-                purchasePowerHallSkillsInterval = setInterval(purchasePowerHallSkills, 1000);
-                break;
-        
-            case 'Gaming Addict':
-                gamingAddictSkill = true;
-                break;
-        
-            case 'First-Wave Automation':
-                divideLibrarySkillCost('Autobuy Upgrades', 1e10);
-                divideLibrarySkillCost('Perpetual Prestige', 1e10);
-                divideLibrarySkillCost('Eternal Ascension', 1e10);
-                divideLibrarySkillCost('Quantum Symphony', 1e10);
-                break;
-
-            case 'Steady Focus':
-                steadyFocusSkill = true;
-                break;
-        
-            case 'Second-Wave Automation':
-                secondWaveAutomationSkill = true;
-                unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Autobuy Upgrades'), true);
-                unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Perpetual Prestige'), true);
-                unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Eternal Ascension'), true);
-                unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Quantum Symphony'), true);
-                break;
-
-
-            case 'Master of Elements':
-                masterOfElementsSkill = true;
-                break;
-                    
-            case 'Space Continuum Stretch':
-                spaceContinuumStretchSkill = true;
-                break;
-
-            case 'Enlightened Prestige':
-                enlightenedPrestigeSkill = true;
-                break;
-
-            case 'Hopeful Beginning':
-                hopefulBeginningSkill = true;
-                break;
-                
-            case 'Overwhelming Mercy':
-                autoFightSkill = true;
-                break;
-        
-            case 'Hopium Fix':
-                document.getElementById('toggleHopiumLabel').classList.remove('hidden');
-                // Check the state of hopium and update the switch position accordingly
-                const toggleHopium = document.getElementById('toggleHopium');
-                toggleHopium.checked = hopiumPerSecond >= 0;
-                break;
-        
-            case 'Serenity Gain (Copium)':
-                serenityGainCopium = true;
-                if(!duringLoad){
-                    updateEffectiveMultipliers();
-                }
-                break;
-        
-            case 'Serenity Gain (Delusion)':
-                serenityGainDelusion = true;
-                if(!duringLoad){
-                    updateEffectiveMultipliers();
-                }
-                break;
-        
-            case 'Serenity Gain (Yacht Money)':
-                serenityGainYachtMoney = true;
-                if(!duringLoad){
-                    updateEffectiveMultipliers();
-                }
-                break;
-        
-            case 'Serenity Gain (Troll Points)':
-                serenityGainTrollPoints = true;
-                if(!duringLoad){
-                    updateEffectiveMultipliers();
-                }
-                break;
-
-            case 'Master of Time':
-                masterOfTimeSkill = true;
-                break;
-
-            case 'Love Size Matters':
-                loveSizeMattersSkill = true;
-                break;
-
-            case 'Love is Everything':
-                loveIsEverythingSkill = true;
-                break;
-
-            case 'Ethereal Reflection':
-                etherealReflectionSkill = true;
-                break;
-
-            case 'Fortified Defenses':
-                fortifiedDefensesSkill = true;
-                break;
-
-            case 'Study Accelerator':
-                studyAcceleratorReduction = 0.2;
-                break;
-
-            case 'Deadpool Embrace':
-                deadpoolRevivesSkill = true;
-                break;
-
-            case 'Rewarding Victories':
-                rewardingVictoriesSkill = true;
-                break;
-
-            case 'Quantum Fortress':
-                quantumFortressSkill = true;
-                break;
-                    
-            case 'Chrono Magnetizer':
-                chronoMagnetizerSkill = true;
-                if (autobuyIntervalId !== null) {
-                    clearInterval(autobuyIntervalId);
-                    autobuyIntervalId = setInterval(autobuyUpgrades, 125);
-                }
-                break;
-                
-            case 'Crunch Knowledge':
-                crunchKnowledgeSkill = true;
-                if(!duringLoad){
-                    updateEffectiveMultipliers();
-                }
-                break;
-
-            case 'Stellar Meditation':
-                stellarMeditationSkill = true;
-                break;
-
-            case 'Oversurged Power':
-                oversurgedPower = 2;
-                break;
-                    
-            case 'Overcompressed Power':
-                overcompressedPower = 3;
-                break;
-
-            case 'Raise That Soft Cap':
-                miniGamesSoftCapHrs = Math.max(miniGamesSoftCapHrs, 24);
-                break;
-
-            case 'Rewarding Meditations':
-                rewardingMeditationsSkill = true;
-                break;
-        
-            case 'Hopium Trade':
-                hopiumTradeSkill = true;
-                addHopiumToFromResource();
-                break;
-
-            case 'Tranquility Overdrive':
-                tranquilityOverdriveSkill = true;
-                break;
-                    
-            case 'Time Flux':
-                warpTimeMax = 60 * 60 * 12;
-                break;
-
-            case 'Perpetual Collapse':
-                if(autoBigCrunchThreshold === null){
-                    autoBigCrunchThreshold = 25;
-                }
-                break;
-
-            case 'Beacon of Seven Suns':
-                beaconOfSevenSunsSkill = true;
-                break;
-
-            case 'Infinite Prestige':
-                unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Perpetual Prestige'), true);
-                infinitePrestigeSkill = true;
-                break;
-        
-            case 'Resonance of Love':
-                resonanceOfLoveSkill = true;
-                if(!duringLoad){
-                    updateEffectiveMultipliers();
-                }
-                break;
-        
-            case 'Equilibrium of Hope':
-                equilibriumOfHopeSkill = true;
-                autoTradeHopium();
-                break;
-
-            case 'Temporal Drag':
-                temporalDragReduction = 0.75;
-                break;
-        
-            case 'Look Past Distractions':
-                lookPastDistractions = 1;
-                break;
-
-                
-            case 'Faith-Fueled Knowledge':
-                faithFueledKnowledgeSkill = true;
-                break;
-
-            case 'Event Horizon Boost':
-                eventHorizonBoostSkill = true;
-                break;
-
-            case 'Intrinsic Meditation':
-                autoMeditateSkill = true;
-                break;
-
-            case 'The Ultimate Fix':
-                document.getElementById('toggleCopiumLabel').classList.remove('hidden');
-                document.getElementById('toggleCopium').checked = copiumPerSecond >= 0;
-                document.getElementById('toggleYachtMoneyLabel').classList.remove('hidden');
-                document.getElementById('toggleYachtMoney').checked = yachtMoneyPerSecond >= 0;
-                document.getElementById('toggleTrollPointsLabel').classList.remove('hidden');
-                document.getElementById('toggleTrollPoints').checked = trollPointsPerSecond >= 0;
-                break;
-                
-            default:
-                console.log('Unknown skill:', skill.name);
-                break;
-        }
-        
-        
         if (beaconOfSevenSunsSkill || pulseOfAffectionSkill) {
             const unlockedSkillsCount = loveHallSkills.filter(skill => skill.unlocked).length;
             if(beaconOfSevenSunsSkill) beaconOfSevenSunsMult = 1.07 ** unlockedSkillsCount;
