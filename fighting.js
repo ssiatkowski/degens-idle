@@ -1261,7 +1261,7 @@ function attackPlayer(resolve) {
             logFight(`<span style='color: #cd853f;'>Saitama cracks his knuckles! His critical chance increases by ${formatNumber(critIncrease * 100)}%.</span>`);
         } else if (rand < 50) { // 10% chance for Squats
             enemyDefense += 9e15; // Increases defense by 9 Qa
-            logFight(`<span style='color: #b22222;'>Saitama does Squats! His defense increases by 9 quadrilion.</span>`);
+            logFight(`<span style='color: #b22222;'>Saitama does Squats! His defense increases by 9 quadrillion.</span>`);
         } else if (rand < 60) { // 10% chance for Sit Ups
             const absorbIncrease = 0.0275 * (1 - enemyAbsorb); // Diminishing absorb increase based on remaining potential
             enemyAbsorb = Math.min(enemyAbsorb + absorbIncrease, 0.9999); // Ensure it doesn't exceed 1

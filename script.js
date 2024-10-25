@@ -1932,7 +1932,7 @@ let tongueTwisterState = 0;
 async function ascend(skipConfirms = false) {
     skipConfirms |= enableQuickMode;
 
-    // If we can Ascend, and no other event is occuring and we successfully trigger a startEvent
+    // If we can Ascend, and no other event is occurring and we successfully trigger a startEvent
     if (canAscend() && !isEventInProgress() && startEvent("ascend")) {
         let confirmed = true;
         let selectedUpgrades = null;
@@ -2004,7 +2004,7 @@ async function ascend(skipConfirms = false) {
 async function transcend(skipConfirms = false) {
     skipConfirms |= enableQuickMode;
 
-    // If we can Transcend, and no other event is occuring and we successfully trigger a startEvent
+    // If we can Transcend, and no other event is occurring and we successfully trigger a startEvent
     if (canTranscend() && !isEventInProgress() && startEvent("transcend")) {
 
         let selectedUpgrades = null;
@@ -2353,6 +2353,11 @@ async function respecSkills() {
                 lovePoints += skill.originalCost;
             }
 
+            // Call the onRespec function if it exists
+            if (skill.onRespec) {
+                skill.onRespec();
+            }
+
             skill.unlocked = false; // Reset current skill
         }
     });
@@ -2378,6 +2383,10 @@ async function respecSkills() {
             false
         );
     }
+
+    // Save the game state after respec
+    saveGameState();
+
 }
 
 
