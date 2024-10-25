@@ -428,7 +428,7 @@ function initializeSkills() {
 
 function openLibrary() {
     unlockAchievement('Hall of Knowledge');
-    if (purchasedUpgradesSet.has('The Library')) {
+    if (purchasedUpgradesSet.has('The Library') || librarySkills.some(skill => skill.unlocked)) {
         const libraryOverlay = document.getElementById('libraryOverlay');
         libraryOverlay.style.display = 'flex';
         updateSkillDisplay();
