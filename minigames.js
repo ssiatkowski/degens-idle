@@ -11,7 +11,7 @@ let cooldowns = {
 const miniGameTimeouts = {
     speed:  6 * 60 * 1000,  // 6 minutes
     memory: 10 * 60 * 1000, // 10 minutes
-    math:   8 * 60 * 1000,  // 8 minutes
+    math:   8 * 60,  // 8 minutes
     luck:   4 * 60 * 1000,   // 4 minutes
 };
 
@@ -394,6 +394,8 @@ function playMiniGame(gameType) {
             duration += 5;
         }
 
+        let maxPortalsReached = false;
+
         // Show the modal with instructions and start the game when the modal is closed
         showMessageModal(
             'Math Portal Puzzle',
@@ -413,6 +415,9 @@ function playMiniGame(gameType) {
             gameArea.style.zIndex = '1000';
             document.body.appendChild(gameArea);
 
+            let targetFontSize = window.innerWidth <= 768 ? '20px' : '36px';
+            let targetFontSpacing = window.innerWidth <= 768 ? 24 : 40;
+
             // Create and display the target sum on the game screen
             const targetDisplay = document.createElement('div');
             targetDisplay.textContent = `Target: ${targetSum}`;
@@ -421,20 +426,20 @@ function playMiniGame(gameType) {
             targetDisplay.style.left = '50%';
             targetDisplay.style.transform = 'translateX(-50%)';
             targetDisplay.style.color = '#ffffff';
-            targetDisplay.style.fontSize = '36px'; // Bigger font size
+            targetDisplay.style.fontSize = targetFontSize;
             targetDisplay.style.fontWeight = 'bold';
             targetDisplay.style.zIndex = '1100'; // Set z-index higher than portals
             gameArea.appendChild(targetDisplay);
 
             // Create and display the current sum on the game screen
             const currentSumDisplay = document.createElement('div');
-            currentSumDisplay.textContent = `Current Sum: 0`;
+            currentSumDisplay.textContent = `Current: 0`;
             currentSumDisplay.style.position = 'absolute';
-            currentSumDisplay.style.top = '50px'; // Placed below the target display
+            currentSumDisplay.style.top = `${10+targetFontSpacing}px`; // Placed below the target display
             currentSumDisplay.style.left = '50%';
             currentSumDisplay.style.transform = 'translateX(-50%)';
             currentSumDisplay.style.color = '#ffffff';
-            currentSumDisplay.style.fontSize = '36px'; // Bigger font size
+            currentSumDisplay.style.fontSize = targetFontSize;
             currentSumDisplay.style.fontWeight = 'bold';
             currentSumDisplay.style.zIndex = '1100'; // Set z-index higher than portals
             gameArea.appendChild(currentSumDisplay);
@@ -442,11 +447,11 @@ function playMiniGame(gameType) {
             // Create and display the countdown timer on the game screen
             const timerDisplay = document.createElement('div');
             timerDisplay.style.position = 'absolute';
-            timerDisplay.style.top = '90px'; // Placed below the current sum display
+            timerDisplay.style.top = `${10+(targetFontSpacing*2)}px`; // Placed below the current sum display
             timerDisplay.style.left = '50%';
             timerDisplay.style.transform = 'translateX(-50%)';
             timerDisplay.style.color = '#ffffff';
-            timerDisplay.style.fontSize = '36px'; // Bigger font size
+            timerDisplay.style.fontSize = targetFontSize;
             timerDisplay.style.fontWeight = 'bold';
             timerDisplay.style.zIndex = '1100'; // Set z-index higher than portals
             gameArea.appendChild(timerDisplay);
@@ -582,22 +587,30 @@ function playMiniGame(gameType) {
                     // Deselect the portal
                     portal.classList.remove('selected');
                     portal.style.backgroundColor = '#00BFFF'; // Reset background color
-                    selectedPortals = selectedPortals.filter(value => value !== num);
+                    
+                    // Remove only one instance of `num` from selectedPortals
+                    const index = selectedPortals.findIndex(value => value === num);
+                    if (index !== -1) {
+                        selectedPortals.splice(index, 1);
+                    }
                 } else {
                     // Select the portal
                     portal.classList.add('selected');
                     portal.style.backgroundColor = '#FFD700'; // Change background color for selected portals
                     selectedPortals.push(num);
+
+                    if (selectedPortals.length >= 12) {
+                        maxPortalsReached = true;
+                    }
                 }
 
                 const sum = selectedPortals.reduce((acc, curr) => acc + curr, 0);
 
                 targetDisplay.textContent = `Target: ${targetSum}`;
-                currentSumDisplay.textContent = `Current Sum: ${sum}`;
+                currentSumDisplay.textContent = `Current: ${sum}`;
 
                 if (sum > targetSum) {
                     currentSumDisplay.style.color = 'red'; // Change color to red to indicate warning
-                    currentSumDisplay.textContent += ' (Over Target!)';
                 } else {
                     currentSumDisplay.style.color = '#ffffff'; // Reset color
                 }
@@ -632,6 +645,9 @@ function playMiniGame(gameType) {
                     }
                     if (selectedPortals.length >= 5) {
                         unlockAchievement('When Math Maths');
+                    }
+                    if (maxPortalsReached) {
+                        unlockAchievement('Mathematical Overshot');
                     }
                     numMathPortals += selectedPortals.length;
                     localStorage.setItem('numMathPortals', numMathPortals);

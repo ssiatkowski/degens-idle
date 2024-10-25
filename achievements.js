@@ -539,6 +539,13 @@ const achievements = [
         type: 'skill',
     },
     {
+        name: 'Mathematical Overshot',
+        isUnlocked: false,
+        hoverText: 'win a math game after selecting way too many portals',
+        img: 'imgs/achievements/mathematical_overshot.jpg',
+        type: 'skill',
+    },
+    {
         name: 'Eager to Love',
         isUnlocked: false,
         hoverText: 'enter Hall of Love in less than 3 seconds after Big Crunch',
