@@ -268,7 +268,7 @@ function startMeditationGame(challengeName, backgroundImage, stageNumber = 1, pr
             unlockAchievement('Theological Reasoning');
             livesPerBall = Math.max(livesPerBall - 1, 1);
             baseVelocity *= 0.9;
-            arenaMessage = 'Through appying logic, you lose 1 less life per ball and reduce ball velocity by 10%.';
+            arenaMessage = 'Through applying logic, you lose 1 less life per ball and reduce ball velocity by 10%.';
             fontSize = '32px';
         } else if (currentChallengeName === 'Epicureanism' && !purchasedUpgradesSet.has("First Pizza Meme") && !purchasedUpgradesSet.has("Second Pizza Meme")) {
             unlockAchievement('Slice of Euphoria');

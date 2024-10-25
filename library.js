@@ -7,7 +7,7 @@ const librarySkills = [
     { name: 'Knowledgeable Cookie', cost: 9e45, description: 'Boosted cookie clicks generate knowledge at 1/4 earnings rate.', unlocked: false, level: 'History' },
 
     { name: 'Cure for Delusion', cost: 5, description: 'Unlock ability to toggle whether delusion gain is positive or negative.', unlocked: false, level: 'Science' },
-    { name: 'Luck is Rigged', cost: 777, description: 'Remove 1 unlucky box. Makes lucky boxes better (25%-125% instead of 10%-100%) and unlocky boxes less bad (5%-50% instead of 5%-70%).', unlocked: false, level: 'Science' },
+    { name: 'Luck is Rigged', cost: 777, description: 'Remove 1 unlucky box. Makes lucky boxes better (25%-125% instead of 10%-100%) and unlucky boxes less bad (5%-50% instead of 5%-70%).', unlocked: false, level: 'Science' },
     { name: "I Can't Math", cost: 9000, description: 'Math Game timer increased from 12s to 20s, # portals reduced from 14 to 11, and reward is doubled.', unlocked: false, level: 'Science' },
     { name: "Short Term Memory", cost: 80000, description: 'Memory Game sequence length reduced to (3-6) instead of (4-7) and reward is tripled.', unlocked: false, level: 'Science' },
     { name: "Click Speed Demon", cost: 1600000, description: 'Dots in Speed Game get slightly larger and reward is tripled.', unlocked: false, level: 'Science' },
@@ -15,10 +15,10 @@ const librarySkills = [
 
     { name: 'Prestige Base', cost: 5000, description: 'Increase Base prestige multiplier from 1.5 to 1.75. Huuge.', unlocked: false, level: 'Nonlinear Partial Differential Equations' },
     { name: '2D Ascension', cost: 230000, description: 'Learn how to ascend God Mode Levels while only folding the space around you into two dimensions. Mathematically, instead of prestige changing to x**(1/3), it changes to x**(2/3).', unlocked: false, level: 'Nonlinear Partial Differential Equations' },
-    { name: 'Less Diminishing God-Mode', cost: 1e14, description: 'Decrease diminishing returns at higher God-Mode levels. Mathematically, instead of diminishing at 97.5%, the multiplier dimninishes at 98.5%. (This is big at high god-mode levels)', unlocked: false, level: 'Nonlinear Partial Differential Equations' },
-    { name: 'Much Less Diminishing Parallel God-Mode', cost: 2e35, description: 'Greatly decrease diminishing returns at higher Parallel Universe God-Mode levels. Mathematically, multiplier dimninishes at 99.0% instead of 97.5%. (Incredibly OP at higher PU God Mode levels)', unlocked: false, level: 'Nonlinear Partial Differential Equations' },
-    { name: 'Linear Ascension', cost: 2e43, description: 'Learn how to ascend God Mode without folding dimensions. Prestige mulitplier only goes down by a factor of 2.', unlocked: false, level: 'Nonlinear Partial Differential Equations' },
-    { name: 'Perfect God-Mode', cost: 2e57, description: 'Make God-Mode better than PU God-Mode. Dimishes at 99.2%. (You must already know this is huge)', unlocked: false, level: 'Nonlinear Partial Differential Equations' },
+    { name: 'Less Diminishing God-Mode', cost: 1e14, description: 'Decrease diminishing returns at higher God-Mode levels. Mathematically, instead of diminishing at 97.5%, the multiplier diminishes at 98.5%. (This is big at high god-mode levels)', unlocked: false, level: 'Nonlinear Partial Differential Equations' },
+    { name: 'Much Less Diminishing Parallel God-Mode', cost: 2e35, description: 'Greatly decrease diminishing returns at higher Parallel Universe God-Mode levels. Mathematically, multiplier diminishes at 99.0% instead of 97.5%. (Incredibly OP at higher PU God Mode levels)', unlocked: false, level: 'Nonlinear Partial Differential Equations' },
+    { name: 'Linear Ascension', cost: 2e43, description: 'Learn how to ascend God Mode without folding dimensions. Prestige multiplier only goes down by a factor of 2.', unlocked: false, level: 'Nonlinear Partial Differential Equations' },
+    { name: 'Perfect God-Mode', cost: 2e57, description: 'Make God-Mode better than PU God-Mode. Diminishes at 99.2%. (You must already know this is huge)', unlocked: false, level: 'Nonlinear Partial Differential Equations' },
 
     { name: 'Buy Markers', cost: 2, description: 'Purchased Upgrades will now have a switch indicating whether or not they should be bought using "Buy Seen" and "Buy All" buttons. (Can toggle all in Automation Settings) ', unlocked: false, level: 'Artificial Intelligence' },
     { name: 'Double Ascension', cost: 20, description: 'Gain up to 2 God-Mode levels per Ascension. Also select up to 2 upgrades to enhance to God Mode.', unlocked: false, level: 'Artificial Intelligence' },
