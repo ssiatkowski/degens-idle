@@ -2353,6 +2353,11 @@ async function respecSkills() {
                 lovePoints += skill.originalCost;
             }
 
+            // Call the onRespec function if it exists
+            if (skill.onRespec) {
+                skill.onRespec();
+            }
+
             skill.unlocked = false; // Reset current skill
         }
     });

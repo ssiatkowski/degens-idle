@@ -619,6 +619,15 @@ const loveHallSkills = [
     unlocked: false,
     level: "Cosmic Truth (42x)",
     pair: 49,
+    requirement: null,
+    onUnlock: () => {
+        if (autoBigCrunchThreshold === null) {
+            autoBigCrunchThreshold = 25;
+        }
+    },
+    onRespec: () => {
+        autoBigCrunchThreshold = null;
+    }
   },
   {
     name: "Beacon of Seven Suns",
@@ -755,7 +764,10 @@ function unlockLoveHallSkill(skill, duringLoad = false) {
             }
         }
 
-
+        // Call the onUnlock function if it exists
+        if (skill.onUnlock) {
+            skill.onUnlock();
+        }
         
         switch (skill.name) {
             case 'Delusion Surge':
