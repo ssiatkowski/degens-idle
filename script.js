@@ -4211,9 +4211,9 @@ class CountdownTimer {
         this.progress.className = 'countdown-progress';
 
         // Assemble the elements
-        this.progressBar.appendChild(this.display);
         this.progressBar.appendChild(this.progress);
         this.container.appendChild(this.progressBar);
+        this.container.appendChild(this.display);
     }
 
     // Method to append timer to a specific element or body
