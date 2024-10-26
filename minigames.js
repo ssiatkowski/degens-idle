@@ -75,6 +75,7 @@ function playMiniGame(gameType) {
 
         showMessageModal('Speed Game', `Tap on the dots as many times as you can in ${duration} seconds! Be careful, clicks outside the dots will count as -0.5 points.`, false, false).then(() => {
             const gameArea = document.createElement('div');
+            gameArea.setAttribute('id', 'speedGameArea');
             gameArea.style.position = 'fixed';
             gameArea.style.top = '5%';
             gameArea.style.left = '5%';
@@ -83,6 +84,10 @@ function playMiniGame(gameType) {
             gameArea.style.backgroundColor = '#000000';
             gameArea.style.zIndex = '1000';
             document.body.appendChild(gameArea);
+            // Create and attach timer
+            const timer = new CountdownTimer();
+            timer.appendTo(document.getElementById('speedGameArea'));
+            timer.start(duration);
 
             const dotSize = Math.min(window.innerWidth, window.innerHeight) * (speedGameSkill ? 0.17 : 0.13);
 
@@ -193,6 +198,7 @@ function playMiniGame(gameType) {
                 updateDisplay(); 
                 startCooldown(gameType); 
                 saveGameState();
+                timer.remove();
             }, duration * 1000);
         });
     }
