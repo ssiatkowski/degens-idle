@@ -11,7 +11,7 @@ let cooldowns = {
 const miniGameTimeouts = {
     speed:  6 * 60 * 1000,  // 6 minutes
     memory: 10 * 60 * 1000, // 10 minutes
-    math:   8 * 60,  // 8 minutes
+    math:   8 * 60 * 1000,  // 8 minutes
     luck:   4 * 60 * 1000,   // 4 minutes
 };
 
