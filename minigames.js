@@ -11,7 +11,7 @@ let cooldowns = {
 const miniGameTimeouts = {
     speed:  6 * 60 * 1000,  // 6 minutes
     memory: 10 * 60 * 1000, // 10 minutes
-    math:   8 * 60,  // 8 minutes
+    math:   8 * 60 * 1000,  // 8 minutes
     luck:   4 * 60 * 1000,   // 4 minutes
 };
 
@@ -587,7 +587,7 @@ function playMiniGame(gameType) {
                     // Deselect the portal
                     portal.classList.remove('selected');
                     portal.style.backgroundColor = '#00BFFF'; // Reset background color
-                    
+
                     // Remove only one instance of `num` from selectedPortals
                     const index = selectedPortals.findIndex(value => value === num);
                     if (index !== -1) {
