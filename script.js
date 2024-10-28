@@ -502,6 +502,8 @@ function loadGameState() {
     serenityUnlocked = JSON.parse(localStorage.getItem('serenityUnlocked')) || false;
     document.getElementById('serenity-container').style.display = serenityUnlocked ? 'block' : 'none';
 
+    twinRealmsSequence = localStorage.getItem('twinRealmsSequence') || '';
+
     loveHallUnlocked = JSON.parse(localStorage.getItem('loveHallUnlocked')) || false;
     // fix for some users experiencing error
     let loveHallButton = document.getElementById('loveHallButton');
@@ -1709,7 +1711,7 @@ function updateDisplay() {
 
 function updateMultipliersDisplay() {
 
-    earlyAccelerantMult = earlyAccelerantSkill ? 1 + (9 * Math.pow(0.975, purchasedUpgrades.length)) : 1;
+    earlyAccelerantMult = earlyAccelerantSkill ? 1 + (13 * Math.pow(0.975, purchasedUpgrades.length)) : 1;
 
     totalMultiplier = epsMultiplier * godModeMultiplier * puGodMultiplier * bigCrunchMultiplier * achievementMultiplier * devMultiplier * stellarHarvestMult * stellarMeditationMult * cosmicGamekeeperMultiplier * earlyAccelerantMult
 
@@ -2051,6 +2053,17 @@ async function transcend(skipConfirms = false) {
                 }
             }
 
+            if (godModeLevel == 0) {
+                if (!achievementsMap.get('Transcendent Leap').isUnlocked) {
+                    unlockAchievement('Transcendent Leap');
+                    suppressAscendPopup = true;
+                }
+                if (!achievementsMap.get('Absolute Leap').isUnlocked && bigCrunchMultiplier == 1) {
+                    unlockAchievement('Absolute Leap');
+                    suppressAscendPopup = true;
+                }
+            }
+
             if(tunneledAscensionSkill){
                 const gmLevelsGained = upgrades.filter(upgrade => upgrade.isGodMode).length - godModeLevel;
                 if (gmLevelsGained == 5 && selectedUpgrades.length == 24){
@@ -2077,6 +2090,7 @@ async function transcend(skipConfirms = false) {
             }
 
             restartGame(true); // Use the existing restartGame function with prestige mode
+
             // Save game state after transcending
             saveGameState();
 

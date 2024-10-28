@@ -352,7 +352,7 @@ const achievements = [
     {
         name: 'Over 9000',
         isUnlocked: false,
-        hoverText: 'prestige for over 9000 mult',
+        hoverText: 'prestige for over 9000 mult (cannot have infinite prestige)',
         img: 'imgs/achievements/over_9000.jpg',
         type: 'puzzle',
     },
@@ -728,6 +728,13 @@ const achievements = [
         type: 'progression',
     },
     {
+        name: 'Transcendent Leap',
+        isUnlocked: false,
+        hoverText: 'T before A',
+        img: 'imgs/achievements/transcendent_leap.jpg',
+        type: 'puzzle',
+    },
+    {
         name: 'Cosmic Drought',
         isUnlocked: false,
         hoverText: 'buy a certain upgrade',
@@ -760,6 +767,13 @@ const achievements = [
         isUnlocked: false,
         hoverText: `open 777 lucky boxes`,
         img: 'imgs/achievements/luck_of_the_irish.jpg',
+        type: 'skill',
+    },
+    {
+        name: 'Twin Mathematical Realms',
+        isUnlocked: false,
+        hoverText: `2233443322 win math games with exactly X portals (losses don't count against you)`,
+        img: 'imgs/achievements/twin_mathematical_realms.jpg',
         type: 'skill',
     },
     {
@@ -808,7 +822,7 @@ const achievements = [
     {
         name: 'Biggest Crunch',
         isUnlocked: false,
-        hoverText: 'big crunch for over 9000 mult',
+        hoverText: 'big crunch for over 9000 mult (cannot have infinite collapse)',
         img: 'imgs/achievements/biggest_crunch.jpg',
         type: 'puzzle',
     },
@@ -966,7 +980,7 @@ const achievements = [
     {
         name: 'Impossible Crunch',
         isUnlocked: false,
-        hoverText: 'big crunch for over 99M mult',
+        hoverText: 'big crunch for over 99M mult (cannot have infinite collapse)',
         img: 'imgs/achievements/impossible_crunch.jpg',
         type: 'puzzle',
     },
@@ -1054,6 +1068,13 @@ const achievements = [
         hoverText: `buy this upgrade`,
         img: 'imgs/achievements/dodecadragons.jpg',
         type: 'progression',
+    },
+    {
+        name: 'Absolute Leap',
+        isUnlocked: false,
+        hoverText: 'T before A without BC (cannot have infinite collapse)',
+        img: 'imgs/achievements/absolute_leap.jpg',
+        type: 'puzzle',
     },
     {
         name: 'Fifty Days of Saving',

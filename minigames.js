@@ -30,6 +30,9 @@ let consecutiveClicks = 0;
 
 let miniGamesSoftCapHrs = 10;
 
+const twinRealmsWinningSequence = '2233443322';
+let twinRealmsSequence = '';
+
 // Function to play a mini-game of a given type
 function playMiniGame(gameType) {
     // Check if the mini-game is on cooldown
@@ -645,6 +648,19 @@ function playMiniGame(gameType) {
                     }
                     if (selectedPortals.length >= 5) {
                         unlockAchievement('When Math Maths');
+                    }
+
+                    // handle the Twin Realms achievement
+                    if (!achievementsMap.get('Twin Mathematical Realms').isUnlocked) {
+                        twinRealmsSequence += selectedPortals.length.toString().charAt(0);
+                        if (twinRealmsSequence.length > twinRealmsWinningSequence.length) {
+                            twinRealmsSequence = twinRealmsSequence.slice(-twinRealmsWinningSequence.length);
+                        }
+                        if (twinRealmsSequence === twinRealmsWinningSequence) {
+                            unlockAchievement('Twin Mathematical Realms');
+                            twinRealmsSequence = '';
+                        }
+                        localStorage.setItem('twinRealmsSequence', twinRealmsSequence);
                     }
                     if (maxPortalsReached) {
                         unlockAchievement('Mathematical Overshot');

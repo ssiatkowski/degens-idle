@@ -240,7 +240,7 @@ const loveHallSkills = [
     name: "Early Accelerant",
     cost: 14,
     description:
-      "10x multiplier to first 6 resources, degrades by 2.5% with each purchased upgrade.",
+      "14x multiplier to first 6 resources, degrades by 2.5% with each purchased upgrade.",
     unlocked: false,
     level: "Quantum Harmony (2.8x)",
     pair: 7,

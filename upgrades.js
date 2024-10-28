@@ -1651,7 +1651,7 @@ const upgrades = [
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 7e59, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 9e8 },
         img: `imgs/arena_deism.png`,
         isMeditation: true,
-        autoMeditateThreshold: 1e20,
+        autoMeditateThreshold: 2e20,
         isKey: true,
         message: `Through this meditation, you’ve understood that the <strong>universe operates under the natural laws set in motion by a higher power</strong>, yet it is up to you to seek truth and purpose. Deism teaches that reason, observation, and understanding of the world around you lead to enlightenment. With this knowledge, you’ve realized that your journey is shaped by your actions and understanding of the universe's order.`,
     },
@@ -1802,4 +1802,10 @@ const upgrades = [
         message: `Congratulations on unlocking the "DodecaDragons" upgrade! This upgrade celebrates one of the most unique idle games in the genre. DodecaDragons is a masterclass in blending strategy, progression, and fun, with an epic twist of dragon-filled adventures and endless replayability.<br><br>Here's to honoring a game that has ignited creativity and innovation in idle gaming. Enjoy the nostalgia and the power it brings to your Degens Idle experience — may your journey soar as high as the dragons!`,
         achievement: `DodecaDragons`,
     },
+    // {
+    //     name: `Easy Balance`,
+    //     cost: { copium: 1e197, delusion: 1e197, yachtMoney: 0, trollPoints: 0, hopium: 1e182, knowledge: 1e160, power: 0, serenity: 0 },
+    //     earnings: { copiumPerSecond: 7e77, delusionPerSecond: 0, yachtMoneyPerSecond: 7e77, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+    //     img: `imgs/balanced_chair.jpg`,
+    // },
 ];
