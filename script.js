@@ -233,6 +233,8 @@ let enableButtonAnimations = true;
 
 let resourceGenerationDisabled = false;
 
+let noGimmicksUsed;
+
 // Global object to manage prevent event occuring at the same time
 let eventProgression = {
     inProgress: false,
@@ -1298,6 +1300,8 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
 
         enemiesFoughtManually = new Set();
         numBattleGimmicks = new Set();
+
+        noGimmicksUsed = true;
 
         stellarHarvestMult = 1;
         stellarMeditationMult = 1;
@@ -3024,12 +3028,14 @@ function buyAllUpgrades(limit, pressedButton) {
                     buyUpgrade(encodeName(upgrade.name), false, true);
                     purchasedCount++;
                     incrementStellarHarvest();
+                    noGimmicksUsed = false;
                     if(upgrade.name == 'Saitama' && enemiesFoughtManually.size == 0){
                         unlockAchievement('Make Love, Not War');
                     }
                 } else if (isAffordableUpgrade && autoMeditateConditionCheck(upgrade) && firstFightUpgrade) {
                     buyUpgrade(encodeName(upgrade.name), false, true);
-                    upgradeBought = true;
+                    purchasedCount++;
+                    noGimmicksUsed = false;
                     if (stellarMeditationSkill) {
                         stellarMeditationMult *= (zenOfTheStarsSkill ? 1.5 : 1.1);
                     }
@@ -3300,6 +3306,7 @@ function autobuyUpgrades() {
             if (isAffordableUpgrade && autoFightConditionCheck(upgrade) && firstFightUpgrade) {
                 buyUpgrade(encodeName(upgrade.name), false, true);
                 upgradeBought = true;
+                noGimmicksUsed = false;
                 incrementStellarHarvest();
                 if(upgrade.name == 'Saitama' && enemiesFoughtManually.size == 0){
                     unlockAchievement('Make Love, Not War');
@@ -3307,6 +3314,7 @@ function autobuyUpgrades() {
             } else if (isAffordableUpgrade && autoMeditateConditionCheck(upgrade) && firstFightUpgrade) {
                 buyUpgrade(encodeName(upgrade.name), false, true);
                 upgradeBought = true;
+                noGimmicksUsed = false;
                 if (stellarMeditationSkill) {
                     stellarMeditationMult *= (zenOfTheStarsSkill ? 1.5 : 1.1);
                 }
@@ -4720,6 +4728,8 @@ document.addEventListener('DOMContentLoaded', () => {
     resourceGenerationInterval = setInterval(generateResources, 500);
     // Load the game state from local storage
     loadGameState();
+
+    noGimmicksUsed = purchasedUpgrades.length == 0;
 
     updateMultipliersDisplay();
     // Initialize effective multipliers

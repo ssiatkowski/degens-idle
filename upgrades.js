@@ -1673,7 +1673,7 @@ const upgrades = [
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 1e30, powerPerSecond: 0, serenityPerSecond: 1.3e10 },
         img: `imgs/arena_skepticism.png`,
         isMeditation: true,
-        autoMeditateThreshold: 1e26,
+        autoMeditateThreshold: 7.77e25,
         isKey: true,
         message: `In this meditation, you’ve learned the <strong>value of questioning and seeking truth</strong>. Skepticism teaches that through doubt, we grow closer to understanding, as every idea must be examined and tested. By embracing a mindset of curiosity and critical thinking, you’ve unlocked the path to deeper knowledge. Continue to question, explore, and refine your beliefs, and truth will reveal itself in time.`,
         achievement: 'Study Skepticism',

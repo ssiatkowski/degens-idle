@@ -262,6 +262,7 @@ function startMeditationGame(challengeName, backgroundImage, stageNumber = 1, pr
             respawnTime += 500;
             livesPerBall = Math.max(livesPerBall - 1, 1);
             arenaMessage = 'The Bunny helps you by making balls respawn 0.5s faster and reduces focus loss by 1 per ball.';
+            noGimmicksUsed = false;
             fontColor = '#C04000';
             fontSize = '38px';
         } else if (currentChallengeName === 'Christianity' && !purchasedUpgradesSet.has("Christian Logic")) {
@@ -269,18 +270,21 @@ function startMeditationGame(challengeName, backgroundImage, stageNumber = 1, pr
             livesPerBall = Math.max(livesPerBall - 1, 1);
             baseVelocity *= 0.9;
             arenaMessage = 'Through applying logic, you lose 1 less life per ball and reduce ball velocity by 10%.';
+            noGimmicksUsed = false;
             fontSize = '32px';
         } else if (currentChallengeName === 'Epicureanism' && !purchasedUpgradesSet.has("First Pizza Meme") && !purchasedUpgradesSet.has("Second Pizza Meme")) {
             unlockAchievement('Slice of Euphoria');
             ballCount = Math.max(ballCount - 2, 1);
             respawnFactor += 1;
             arenaMessage = 'Pizzas remove 2 balls and increase the respawn time by 1 second';
+            noGimmicksUsed = false;
             fontColor = 'purple';
             fontSize = '38px';
         } else if (currentChallengeName === 'Skepticism' && purchasedUpgradesSet.has("Religious Books") && stageNumber === 2) {
             unlockAchievement('Cured Skepticism');
             skepticismRandomnessFactor = 2.5;
             arenaMessage = 'Religious books help you find order in chaos, reducing randomness.';
+            noGimmicksUsed = false;
         }else if (currentChallengeName === 'Agnosticism') {
             const isWisdomPattern = ['W', 'I', 'S', 'D', 'O', 'M'].every((letter, index) =>
                 availableUpgrades[index] && availableUpgrades[index].name.startsWith(letter)
@@ -291,6 +295,7 @@ function startMeditationGame(challengeName, backgroundImage, stageNumber = 1, pr
                 unlockAchievement('Apply Wisdom');
                 turnRadius *= 1.3;
                 arenaMessage = 'WISDOM improves your turn radius by 30%.';
+                noGimmicksUsed = false;
                 fontSize = '34px';
             }
 
@@ -489,6 +494,9 @@ function updateMeditationGame(resolve, stageNumber) {
             }
             if (currentChallengeName === 'Dualism' && ballSize > 154 && ballCount == 3 && yachtMoney < 0) {
                 unlockAchievement('Trinitism');
+            }
+            if (currentChallengeName === 'Agnosticism' && noGimmicksUsed) {
+                unlockAchievement('Obie Trice');
             }
             return;
         }

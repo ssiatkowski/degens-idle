@@ -103,7 +103,12 @@ function unlockLibrarySkill(skill, duringLoad = false, infoOnly = false) {
                 document.getElementById('toggleDelusionLabel').classList.remove('hidden');
                 // Check the state of delusion and update the switch position accordingly
                 const toggleDelusion = document.getElementById('toggleDelusion');
-                toggleDelusion.checked = delusionPerSecond >= 0;
+                toggleDelusion.checked = true;
+                delusionPerSecond = Math.abs(delusionPerSecond);
+                if (!duringLoad){
+                    updateEffectiveMultipliers();
+                    updateMultipliersDisplay();
+                }
                 break;
 
             case 'Luck is Rigged':

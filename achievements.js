@@ -1028,6 +1028,20 @@ const achievements = [
         type: 'puzzle',
     },
     {
+        name: 'Absolute Leap',
+        isUnlocked: false,
+        hoverText: 'T before A without BC (cannot have infinite collapse)',
+        img: 'imgs/achievements/absolute_leap.jpg',
+        type: 'puzzle',
+    },
+    {
+        name: 'Trinitism',
+        isUnlocked: false,
+        hoverText: 'beat Dualism with 3 max size balls, at max duration',
+        img: 'imgs/achievements/trinitism.jpg',
+        type: 'puzzle',
+    },
+    {
         name: 'Slice of Euphoria',
         isUnlocked: false,
         hoverText: 'bring pizza to the Epicurean party',
@@ -1049,13 +1063,6 @@ const achievements = [
         type: 'progression',
     },
     {
-        name: 'Trinitism',
-        isUnlocked: false,
-        hoverText: 'beat Dualism with 3 max size balls, at max duration',
-        img: 'imgs/achievements/trinitism.jpg',
-        type: 'puzzle',
-    },
-    {
         name: 'Win the Unwinnable',
         isUnlocked: false,
         hoverText: 'succeed with unwinnable Skepticsim rolls',
@@ -1070,10 +1077,10 @@ const achievements = [
         type: 'progression',
     },
     {
-        name: 'Absolute Leap',
+        name: 'Obie Trice',
         isUnlocked: false,
-        hoverText: 'T before A without BC (cannot have infinite collapse)',
-        img: 'imgs/achievements/absolute_leap.jpg',
+        hoverText: `real name, __ ________`,
+        img: 'imgs/achievements/obie_trice.jpg',
         type: 'puzzle',
     },
     {

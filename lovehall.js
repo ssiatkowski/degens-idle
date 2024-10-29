@@ -775,14 +775,20 @@ const loveHallSkills = [
     unlocked: false,
     level: "Dimensional Shift (27x)",
     pair: 30,
-    onUnlock: () => {
+    onUnlock: (duringLoad) => {
       document.getElementById('toggleHopiumLabel').classList.remove('hidden');
       // Check the state of hopium and update the switch position accordingly
       const toggleHopium = document.getElementById('toggleHopium');
-      toggleHopium.checked = hopiumPerSecond >= 0;
+      toggleHopium.checked = true;
+      hopiumPerSecond = Math.abs(hopiumPerSecond);
+      if (!duringLoad){
+          updateEffectiveMultipliers();
+          updateDisplay();
+      }
+
     },
     onRespec: () => {
-      // TODO: Implement respec for this skill
+      document.getElementById('toggleHopiumLabel').classList.add('hidden');
     },
   },
 
@@ -1342,21 +1348,25 @@ const loveHallSkills = [
     level: "Cosmic Truth (42x)",
     pair: 53,
     requirement: "Hopium Fix",
-    onUnlock: () => {
+    onUnlock: (duringLoad) => {
       document.getElementById('toggleCopiumLabel').classList.remove('hidden');
-      document.getElementById('toggleCopium').checked = copiumPerSecond >= 0;
+      document.getElementById('toggleCopium').checked = true;
+      copiumPerSecond = Math.abs(copiumPerSecond);
       document.getElementById('toggleYachtMoneyLabel').classList.remove('hidden');
-      document.getElementById('toggleYachtMoney').checked = yachtMoneyPerSecond >= 0;
+      document.getElementById('toggleYachtMoney').checked = true;
+      yachtMoneyPerSecond = Math.abs(yachtMoneyPerSecond);
       document.getElementById('toggleTrollPointsLabel').classList.remove('hidden');
-      document.getElementById('toggleTrollPoints').checked = trollPointsPerSecond >= 0;
+      document.getElementById('toggleTrollPoints').checked = true;
+      trollPointsPerSecond = Math.abs(trollPointsPerSecond);
+      if (!duringLoad){
+          updateEffectiveMultipliers();
+          updateDisplay();
+      }
     },
     onRespec: () => {
       document.getElementById('toggleCopiumLabel').classList.add('hidden');
-      document.getElementById('toggleCopium').checked = false;
       document.getElementById('toggleYachtMoneyLabel').classList.add('hidden');
-      document.getElementById('toggleYachtMoney').checked = false;
       document.getElementById('toggleTrollPointsLabel').classList.add('hidden');
-      document.getElementById('toggleTrollPoints').checked = false;
     },
   },
 ];
