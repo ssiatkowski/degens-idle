@@ -1634,6 +1634,9 @@ function openLoveHall() {
 
     // Set the Respec button text dynamically based on available free respecs
     const respecButton = document.getElementById('respecButton');
+    if (loveHallSkills.filter(skill => skill.unlocked).length > 0) {
+      respecButton.style.display = 'inline-block';
+    }
     respecButton.textContent = `Respec and Restart Embrace (${numLoveHallFreeRespecs})`;
     
     if(crunchTimer < 3.1){

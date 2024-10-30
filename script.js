@@ -909,9 +909,9 @@ function generateResources() {
 async function restartPrestige(){
 
     const confirmTitle = "Are You Sure You Want to Restart this Prestige?"
-    const confirmMessage = `<p>Hold on a second, brave player! You're about to reset your prestige, which will take you all the way back to the beginning (before buying any upgrades).</p>
+    const confirmMessage = `<p>You're about to reset your prestige, which will take you all the way back to the beginning (before buying any upgrades).</p>
                             <p>Your precious prestige progress? It’s going back to square one, but your multiplier will remain intact.</p>
-                            <p><strong>Warning:</strong> This action will reset everything you've earned in this prestige cycle, except for your multiplier. Once you confirm, there's no undoing it. All those hard-earned upgrades? They’ll be gone!</p>
+                            <p><strong>Warning:</strong> Once you confirm, there's no undoing it. All those hard-earned upgrades? They’ll be gone!</p>
                             <p>If you’re certain this is the right move—maybe because your upgrade path took a wrong turn—then go ahead and hit that button. Otherwise, maybe pause and think it over. 😅</p>`;
     if (await showMessageModal(confirmTitle, confirmMessage, true, false)) {
         // Call restartGame with isPrestige flag set to true
@@ -1287,6 +1287,9 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
 
             currentTimeouts.push(timeoutId);
         }
+
+        
+        document.getElementById('balanceHallButton').style.display = 'none';
 
         // Clear purchased upgrades
         purchasedUpgrades = [];
@@ -3231,6 +3234,10 @@ function addPurchasedUpgrade(img, name, earnings, isGodMode = false, isPUGodMode
         });
     }
 
+    if (name === "Balance Apprentice") {
+        document.getElementById('balanceHallButton').style.display = 'flex';
+    }
+
     if (buyMarkersSkill && !isFight && !isMeditation) {
         if (toggleSwitch) {
             // Use defaultBuyMarkerState if switchStates[name] is null
@@ -3809,7 +3816,7 @@ function hotkeyHandler(event) {
                 devIncreasePrestigeMultiplier();
                 break;
         }
-    } else {
+    } else if (!event.ctrlKey) {
         switch (event.key.toLowerCase()) {
             case 'm':
                 if (multibuyUpgradesButtonsUnlocked) {

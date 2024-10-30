@@ -1737,6 +1737,24 @@ const upgrades = [
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1e65, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/helping_with_chores.jpg`,
     },
+    {
+        name: `Balance Apprentice`,
+        cost: { copium: 5e168, delusion: 5e168, yachtMoney: 5e168, trollPoints: 5e168, hopium: 5e168, knowledge: 5e145, power: 5e50, serenity: 5e28 },
+        earnings: { copiumPerSecond: 1e62, delusionPerSecond: 1e62, yachtMoneyPerSecond: 1e62, trollPointsPerSecond: 1e62, hopiumPerSecond: 1e62, knowledgePerSecond: 1e30, powerPerSecond: 0, serenityPerSecond: 1e12 },
+        img: `imgs/balanced_chair.jpg`,
+        message: `<p>
+                At the outset, your journey was driven by an unquenchable thirst for knowledge and power, a relentless pursuit to conquer, to understand, to rise above all limitations. Through countless trials, you achieved strength and wisdom, becoming more than you ever imagined.
+            </p>
+            <p>
+                But with time, you discovered the value of serenity. In the quiet depths of reflection, you found peace—a calm that allowed you to see beyond the noise of ambition. Serenity became your anchor, a place to return amidst the storms.
+            </p>
+            <p>
+                Now, a new truth dawns on you: serenity, while essential, is but one side of a larger truth. Balance is the key, the harmony of all forces within and around you. To live fully, you must blend strength with calm, ambition with acceptance. Only in this equilibrium can true mastery be achieved.
+            </p>
+            <p>
+                <strong>Embrace balance. The journey to wholeness has only begun.</strong>
+            </p>`,
+    },
     {         
         name: `Epicureanism`,
         cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 1e163, hopium: 1e163, knowledge: 0, power: 1e46, serenity: 3e27 },
@@ -1746,6 +1764,24 @@ const upgrades = [
         autoMeditateThreshold: 5e32,
         isKey: true,
         message: `Through this meditation, you’ve discovered the <strong>joy of finding pleasure in simplicity and peace</strong>. Epicureanism teaches that true happiness comes from seeking tranquility, enjoying life’s simple pleasures, and avoiding unnecessary pain. You’ve learned that balance, moderation, and appreciating the present moment are the keys to a fulfilled life. Continue to embrace the small joys, and contentment will follow.`,
+    },
+    {
+        name: `Infinite Compassion`,
+        cost: { copium: 1e158, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 1.8e26 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 3.33e14 },
+        img: `imgs/infinite_compassion.jpg`,
+        message: `<p>
+                    Through trials of the heart, moments of grace, and the fierce devotion to discovering what it means to be human, you have unlocked a profound truth—love. The chaos of existence brought you to this understanding, and now you wield it, not as a weapon but as a shield, a guiding light.
+                </p>
+                <p>
+                    You’ve navigated storms of doubt, found solace in compassion, and forged connections across countless lifetimes. Each encounter, each embrace, has taught you fragments of this elusive power, weaving together a tapestry of empathy and resilience. You’ve meditated on the teachings of sages, learned from the simplest of gestures, and seen the beauty in vulnerability.
+                </p>
+                <p>
+                    Now, as you stand at the edge of what’s to come, a new awareness dawns. With love as your compass, future embraces will come more naturally, flowing from a place of deep understanding. You know the path will still hold challenges, but each embrace will carry a bit more ease, a touch more grace.
+                </p>
+                <p>
+                    <strong>Embrace freely. Love has already unlocked the door.</strong>
+                </p>`,
     },
     {
         name: `Hold the Fuck Up`,

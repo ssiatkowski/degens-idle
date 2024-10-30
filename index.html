@@ -52,6 +52,7 @@
     <link rel="stylesheet" href="library.css">
     <link rel="stylesheet" href="powerhall.css">
     <link rel="stylesheet" href="lovehall.css">
+    <link rel="stylesheet" href="balancehall.css">
     <link rel="stylesheet" href="settings.css">
     <link rel="stylesheet" href="fighting.css">
     <link rel="stylesheet" href="meditation.css">
@@ -226,6 +227,7 @@
             <button id="libraryButton">Hall of Knowledge</button>
             <button id="powerHallButton" style="display:none;">Hall of Power</button>
             <button id="loveHallButton" style="display:none;">Hall of Love</button>
+            <button id="balanceHallButton" style="display:none;">Hall of Balance</button>
         </div>
         <div id="upgrades">
             <h2>Upgrades</h2>
@@ -491,17 +493,31 @@
             </div>
 
             <button id="closeLoveHallButton">Exit</button>
-            <button id="respecButton" style="background-color: red; color: white;">
+            <button id="respecButton" style="background-color: red; color: white; display: none;">
                 Respec and Restart Embrace
             </button>
         </div>
     </div>
+    <div id="balanceHallOverlay" class="balancehall-overlay" style="display: none;">
+        <div class="balancehall-overlay-content">
+            <span class="close-button" id="closeBalanceHallOverlay">&times;</span>
+            <h1>HALL OF BALANCE</h1>
+            <h4>
+                Welcome to the Hall of Balance, a sanctuary where equilibrium and harmony are prized above all. Here, the dualities of existence converge in perfect symmetry, offering insight to those who seek more than just power or peace alone. Each resource you balance within these walls draws you closer to the core of all knowledge, where mastery over extremes leads to true wisdom.<br><br>
+                As you explore these hallowed grounds, remember that balance is a delicate art—a path that asks for restraint and release in equal measure. Embrace this journey, for it is here that you will learn the ultimate truth of existence: only through balance can one truly unlock the boundless potential of the self.
+            </h4>
+            <div id="balanceHallSkills">
+                <!-- Balance Hall sliders and skill buttons will be dynamically added here -->
+            </div>
+            <button id="closeBalanceHallButton">Exit</button>
+        </div>
+    </div>    
     <!-- Settings Overlay -->
     <div id="settingsOverlay" class="settings-overlay" style="display: none;">
         <div class="settings-overlay-content">
             <span class="close-button" id="closeSettingsOverlay">&times;</span>
             <h1>Settings</h1>
-            <h4>Degens Idle v0.9316</h4>
+            <h4>Degens Idle v0.9317</h4>
 
             <div class="settings-section">
                 <h3>Save Management</h3>
@@ -639,6 +655,7 @@
     <script src="library.js"></script>
     <script src="powerhall.js"></script>
     <script src="lovehall.js"></script>
+    <script src="balancehall.js"></script>
     <script src="settings.js"></script>
     <script src="fighting.js"></script>
     <script src="meditation.js"></script>

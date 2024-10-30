@@ -966,7 +966,7 @@ const achievements = [
     {
         name: 'Unwinnable',
         isUnlocked: false,
-        hoverText: 'get unlucky Skepticsim rolls',
+        hoverText: 'get unlucky Skepticism rolls',
         img: 'imgs/achievements/unwinnable.jpg',
         type: 'puzzle',
     },
@@ -1049,6 +1049,13 @@ const achievements = [
         type: 'puzzle',
     },
     {
+        name: 'Lacking Balance',
+        isUnlocked: false,
+        hoverText: `try to enter Hall of Balance before mastering balance`,
+        img: 'imgs/achievements/lacking_balance.jpg',
+        type: 'progression',
+    },
+    {
         name: 'Apply Wisdom',
         isUnlocked: false,
         hoverText: 'approach Agnosticism with WISDOM',
@@ -1065,7 +1072,7 @@ const achievements = [
     {
         name: 'Win the Unwinnable',
         isUnlocked: false,
-        hoverText: 'succeed with unwinnable Skepticsim rolls',
+        hoverText: 'succeed with unwinnable Skepticism rolls',
         img: 'imgs/achievements/win_the_unwinnable.jpg',
         type: 'puzzle',
     },
@@ -1092,18 +1099,18 @@ const achievements = [
         respecPoint: true,
     },
     {
-        name: 'Serious Gamer',
-        isUnlocked: false,
-        hoverText: `get mini game multiplier above 7.5x`,
-        img: 'imgs/achievements/serious_gamer.jpg',
-        type: 'skill',
-    },
-    {
         name: 'Rasta Deadpool',
         isUnlocked: false,
         hoverText: '???',
         img: 'imgs/achievements/rasta_deadpool.jpg',
         type: 'puzzle',
+    },
+    {
+        name: 'Serious Gamer',
+        isUnlocked: false,
+        hoverText: `get mini game multiplier above 7.5x`,
+        img: 'imgs/achievements/serious_gamer.jpg',
+        type: 'skill',
     },
 ];
 
@@ -1262,7 +1269,7 @@ function unlockAchievement(name, duringLoad = false) {
             saveGameState();
             updateMultipliersDisplay();
             updateEffectiveMultipliers();
-            showPopupTooltip(`Unlocked Achievement: ${name}`, color='#1B4D3E', durationSeconds=5);
+            showPopupTooltip(`Unlocked Achievement: ${name}`, color='#1B4D3E', durationSeconds=6);
         }
     }
 }

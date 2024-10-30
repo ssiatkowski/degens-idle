@@ -1115,7 +1115,7 @@ button.disabled {
 }
 
 #libraryButton:hover {
-    background-color: #A0522D; /* Sienna */
+    background-color: #f3814c; /* Sienna */
     box-shadow: 0 20px 30px rgba(0, 0, 0, 0.7); /* Larger shadow on hover */
     transform: translateY(-7px) scale(1.08); /* Lift and scale effect */
 }
@@ -1155,7 +1155,7 @@ button.disabled {
 }
 
 #powerHallButton:hover {
-    background-color: #333300; /* Dark gold on hover */
+    background-color: rgba(196, 178, 80, 0.2); /* Dark gold on hover */
     box-shadow: 0 20px 30px rgba(0, 0, 0, 0.7); /* Larger shadow on hover */
     transform: translateY(-7px) scale(1.08); /* More noticeable lift and scaling */
 }
@@ -1204,6 +1204,46 @@ button.disabled {
     box-shadow: 0 7px 12px rgba(0, 0, 0, 0.5); /* Slightly smaller shadow on click */
     transform: translateY(3px) scale(0.96); /* Slight push down and scale down */
 }
+
+/* Hall of Balance button specific styles */
+#balanceHallButton {
+    background-color: #1a1a1a; /* Dark gray */
+    color: #64cfd3; /* Gold color for text */
+    font-family: 'Impact', 'Arial Black', sans-serif; /* Bold, powerful font */
+    font-size: 32px;
+    padding: 0;
+    border: 2px solid #565e2c; /* Darker gold for border */
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6); /* Strong shadow */
+    transition: all 0.4s ease; /* Smooth transition */
+    text-shadow: 3px 3px 6px #000; /* Intense text shadow */
+    background-image: url('imgs/textures/balance.jpg'); /* Use the balance texture image */
+    background-size: cover; /* Ensure the texture covers the entire button */
+    background-repeat: no-repeat; /* Prevent the image from repeating */
+    background-position: center; /* Center the image on the button */
+    aspect-ratio: 800 / 150; /* Maintain the aspect ratio of the image */
+    width: 100%; /* Set width to 100% of the container */
+    text-align: center; /* Center the text */
+    display: flex; /* Use flexbox for centering */
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+    text-transform: uppercase; /* Make text uppercase for added impact */
+    background-blend-mode: overlay; /* Blend mode for better visibility */
+}
+
+#balanceHallButton:hover {
+    background-color: #dd9f02; /* Darker gold on hover */
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.7); /* Larger shadow on hover */
+    transform: translateY(-7px) scale(1.08); /* More noticeable lift and scaling */
+}
+
+#balanceHallButton:active {
+    background-color: #1a1a1a; /* Return to dark gray on click */
+    box-shadow: 0 7px 12px rgba(0, 0, 0, 0.5); /* Slightly smaller shadow on click */
+    transform: translateY(3px) scale(0.96); /* Slight push down and scale down */
+}
+
 
 
 /* Switch button styles */
@@ -1340,13 +1380,20 @@ input:checked + .slider:before {
 }
 
 #numPurchasedGodModeUpgrades {
-    text-shadow: 0 0 20px #1e90ff, 0 0 20px #00bfff;
+    text-shadow: 
+        0 0 10px #1e90ff, 0 0 20px #1e90ff,
+        0 0 10px #00bfff, 0 0 20px #00bfff;
 }
 
 #numPurchasedPUGodModeUpgrades {
-    text-shadow: 0 0 20px #8e44ad, 0 0 20px #b565c8;
+    text-shadow: 
+        0 0 10px #8e44ad, 0 0 20px #8e44ad, 
+        0 0 10px #b565c8, 0 0 20px #b565c8;
 }
 
 #numPurchasedDoubleGodModeUpgrades {
-    text-shadow: 0 0 20px #1e90ff, 0 0 20px #8e44ad, 0 0 30px #4b6cb7;
+    text-shadow: 
+        0 0 12px #1e90ff, 0 0 24px #1e90ff, /* Repeat blue */
+        0 0 12px #8e44ad, 0 0 24px #8e44ad, /* Repeat purple */
+        0 0 15px #7745d4, 0 0 30px #7745d4; /* Repeat bluish purple */
 }
