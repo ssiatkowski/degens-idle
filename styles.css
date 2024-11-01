@@ -27,7 +27,7 @@ html, body {
     left: 0;
     top: 0;
     width: 100vw; /* Full width, use vw to ensure no overflow */
-    height: 100vh; /* Full height */
+    height: 95vh; /* Full height */
     overflow-y: auto; /* Enable vertical scroll if needed */
     overflow-x: hidden; /* Prevent horizontal scrolling */
     background-color: rgba(0, 0, 0, 0.8); /* Black w/ opacity */
