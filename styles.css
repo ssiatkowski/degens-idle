@@ -27,7 +27,7 @@ html, body {
     left: 0;
     top: 0;
     width: 100vw; /* Full width, use vw to ensure no overflow */
-    height: 100vh; /* Accounts for mobile toolbar */
+    height: 100vh; /* Full height */
     overflow-y: auto; /* Enable vertical scroll if needed */
     overflow-x: hidden; /* Prevent horizontal scrolling */
     background-color: rgba(0, 0, 0, 0.8); /* Black w/ opacity */
@@ -35,19 +35,21 @@ html, body {
     padding-bottom: env(safe-area-inset-bottom); /* Prevents bottom content from being hidden */
 }
 
-/* Modal Content/Box */
 .modal-content {
     background-color: #1e1e1e; /* Dark background */
-    margin: 5% auto; /* 10% from the top and centered */
+    margin: 5% auto; /* Centered */
     padding: 20px;
     border: 1px solid #333; /* Dark border */
     width: 75%; /* Could be more or less, depending on screen size */
+    max-height: 90vh; /* Constrain height to avoid overflow */
     border-radius: 10px; /* Rounded corners */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Shadow for depth */
     color: #e0e0e0; /* Light text color */
     font-family: Arial, sans-serif;
     position: relative;
+    overflow-y: auto; /* Ensure content inside modal scrolls if needed */
 }
+
 
 /* Add this to your existing CSS */
 .modal-restart {
