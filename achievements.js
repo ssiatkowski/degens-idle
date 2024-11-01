@@ -457,7 +457,7 @@ const achievements = [
     {
         name: 'Bring the Whole Squad',
         isUnlocked: false,
-        hoverText: 'have cap, spidey, hulk, thanos, vegeta, and tyson at your side to face The Rock',
+        hoverText: 'have cap, spidey, hulk, thanos, vegeta, arnold, and tyson at your side to face The Rock',
         img: 'imgs/achievements/bring_the_whole_squad.jpg',
         type: 'puzzle',
     },
