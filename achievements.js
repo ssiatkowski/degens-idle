@@ -455,6 +455,13 @@ const achievements = [
         type: 'puzzle',
     },
     {
+        name: 'Bring the Whole Squad',
+        isUnlocked: false,
+        hoverText: 'have cap, spidey, hulk, thanos, vegeta, and tyson at your side to face The Rock',
+        img: 'imgs/achievements/bring_the_whole_squad.jpg',
+        type: 'puzzle',
+    },
+    {
         name: 'Remember Trading?',
         isUnlocked: false,
         hoverText: 'you can buy hopium with copium',

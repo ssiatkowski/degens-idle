@@ -3060,6 +3060,19 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true, ski
             if (!purchasedUpgradesSet.has(`I don't get this game`)) {
                 unlockAchievement('Perpetual Noob');
             }
+        }else if (name == `The Rock`) {
+            if (
+                !purchasedUpgradesSet.has(`Captain Degen`) &&
+                !purchasedUpgradesSet.has(`Proceed with Caution`) &&
+                !purchasedUpgradesSet.has(`How stupid was I?`) &&
+                !purchasedUpgradesSet.has(`Impossible`) &&
+                !purchasedUpgradesSet.has(`Helpful Vegeta`) &&
+                !purchasedUpgradesSet.has(`Feel the Pump`) &&
+                !purchasedUpgradesSet.has(`Channel inner Tyson`)
+            ) {
+                showMessageModal('The Rock', 'The Rock sees your squad, says "I will spare you the embarassment", and walks away. ', false, false, './imgs/the_rock_laughing.jpg');
+                unlockAchievement('Bring the Whole Squad');
+            }
         }
 
         if (callUpdatesAfterBuying) {
@@ -3578,6 +3591,31 @@ function updateUpgradeButtons() {
             } else {
                 button.classList.remove('affordable', 'affordable-godmode', 'affordable-pu-godmode', 'affordable-double-godmode');
             }
+
+            // Add a sword icon to buttons with the .isFight class
+            if ((upgrade.isFight || upgrade.name == 'The Rock') && !button.querySelector('.sword-icon')) {
+                const swordIcon = document.createElement('img');
+                swordIcon.src = './imgs/textures/sword_icon.png'; // Replace with your sword icon path
+                swordIcon.classList.add('sword-icon');
+                swordIcon.style.width = '16px'; // Adjust size as needed
+                swordIcon.style.marginRight = '5px'; // Space between icon and text
+                button.prepend(swordIcon);
+                // Adjust padding to keep text centered with the icon
+                button.style.paddingLeft = '10px'; // Adjust as needed
+            }
+
+            // Add a sword icon to buttons with the .isFight class
+            if (upgrade.isMeditation && !button.querySelector('.meditation-icon')) {
+                const swordIcon = document.createElement('img');
+                swordIcon.src = './imgs/textures/meditation_icon.png'; // Replace with your sword icon path
+                swordIcon.classList.add('meditation-icon');
+                swordIcon.style.width = '16px'; // Adjust size as needed
+                swordIcon.style.marginRight = '5px'; // Space between icon and text
+                button.prepend(swordIcon);
+                // Adjust padding to keep text centered with the icon
+                button.style.paddingLeft = '10px'; // Adjust as needed
+            }
+
 
             // Attach event listeners for tooltips
             attachTooltipEvents(button, upgrade);
@@ -4805,20 +4843,20 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('restartPrestige').addEventListener('click', () => restartPrestige());
 
 
-    // Add event listener for the ascend button with throttling
-    document.getElementById('prestigeButton').addEventListener('click', () => throttle(prestige(), 500));
+    // Add event listener for the prestige button with throttling
+    document.getElementById('prestigeButton').addEventListener('click', throttle(() => prestige(), 500));
 
     // Add event listener for the ascend button with throttling
-    document.getElementById('ascendButton').addEventListener('click', () => throttle(ascend(), 500));
+    document.getElementById('ascendButton').addEventListener('click', throttle(() => ascend(), 500));
 
     // Add event listener for the transcend button with throttling
-    document.getElementById('transcendButton').addEventListener('click', () => throttle(transcend(), 500));
+    document.getElementById('transcendButton').addEventListener('click', throttle(() => transcend(), 500));
 
-    // Add event listener for the transcend button with throttling
-    document.getElementById('bigCrunchButton').addEventListener('click', () => throttle(bigCrunch(), 500));
+    // Add event listener for the big crunch button with throttling
+    document.getElementById('bigCrunchButton').addEventListener('click', throttle(() => bigCrunch(), 500));
 
-    // Add event listener for the transcend button with throttling
-    document.getElementById('infiniteEmbraceButton').addEventListener('click', () => throttle(infiniteEmbrace(), 500));
+    // Add event listener for the infinite embrace button with throttling
+    document.getElementById('infiniteEmbraceButton').addEventListener('click', throttle(() => infiniteEmbrace(), 500));
 
     // Add event listener for the buy all upgrades button
     document.getElementById('buySeenButton').addEventListener('click', function() { buyAllUpgrades(8, this);});
