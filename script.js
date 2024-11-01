@@ -527,13 +527,6 @@ function loadGameState() {
 
     twinRealmsSequence = localStorage.getItem('twinRealmsSequence') || '';
 
-    loveHallUnlocked = JSON.parse(localStorage.getItem('loveHallUnlocked')) || false;
-    // fix for some users experiencing error
-    let loveHallButton = document.getElementById('loveHallButton');
-    if (loveHallButton) {
-        loveHallButton.style.display = loveHallUnlocked ? 'flex' : 'none';
-    }
-
     // Retrieve and parse all upgrades with the isGodMode property from local storage
     const savedUpgrades = JSON.parse(localStorage.getItem('upgrades')) || [];
 
@@ -617,6 +610,21 @@ function loadGameState() {
                 }
             }
         });
+    }
+
+    loveHallUnlocked = JSON.parse(localStorage.getItem('loveHallUnlocked')) || false;
+    // fix for some users experiencing error
+    let loveHallButton = document.getElementById('loveHallButton');
+    if (loveHallButton) {
+        if (loveHallUnlocked) {
+            loveHallButton.style.display = 'flex';
+        } else {
+            loveHallButton.style.display = 'none';
+        }
+    }
+    
+    if (!loveHallUnlocked && savedLoveHallSkills.some(skill => skill.unlocked)) {
+        unlockHallofLove();
     }
 
     // Load unlocked skills
