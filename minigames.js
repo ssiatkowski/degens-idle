@@ -78,6 +78,7 @@ function playMiniGame(gameType) {
 
         showMessageModal('Speed Game', `Tap on the dots as many times as you can in ${duration} seconds! Be careful, clicks outside the dots will count as -0.5 points.`, false, false).then(() => {
             const gameArea = document.createElement('div');
+            gameArea.setAttribute('id', 'speedGameArea');
             gameArea.style.position = 'fixed';
             gameArea.style.top = '5%';
             gameArea.style.left = '5%';
@@ -86,6 +87,10 @@ function playMiniGame(gameType) {
             gameArea.style.backgroundColor = '#000000';
             gameArea.style.zIndex = '1000';
             document.body.appendChild(gameArea);
+            // Create and attach timer
+            const timer = new CountdownTimer();
+            timer.appendTo(document.getElementById('speedGameArea'));
+            timer.start(duration);
 
             const dotSize = Math.min(window.innerWidth, window.innerHeight) * (speedGameSkill ? 0.17 : 0.13);
 
@@ -409,6 +414,7 @@ function playMiniGame(gameType) {
         ).then(() => {
             // Create a game area
             const gameArea = document.createElement('div');
+            gameArea.setAttribute('id', 'mathGameArea');
             gameArea.style.position = 'fixed';
             gameArea.style.top = '5%';
             gameArea.style.left = '5%';
@@ -417,6 +423,10 @@ function playMiniGame(gameType) {
             gameArea.style.backgroundColor = '#000000';
             gameArea.style.zIndex = '1000';
             document.body.appendChild(gameArea);
+            // Create and attach timer
+            const timer = new CountdownTimer();
+            timer.appendTo(document.getElementById('mathGameArea'));
+            timer.start(duration);
 
             let targetFontSize = window.innerWidth <= 768 ? '20px' : '36px';
             let targetFontSpacing = window.innerWidth <= 768 ? 24 : 40;
@@ -447,25 +457,12 @@ function playMiniGame(gameType) {
             currentSumDisplay.style.zIndex = '1100'; // Set z-index higher than portals
             gameArea.appendChild(currentSumDisplay);
 
-            // Create and display the countdown timer on the game screen
-            const timerDisplay = document.createElement('div');
-            timerDisplay.style.position = 'absolute';
-            timerDisplay.style.top = `${10+(targetFontSpacing*2)}px`; // Placed below the current sum display
-            timerDisplay.style.left = '50%';
-            timerDisplay.style.transform = 'translateX(-50%)';
-            timerDisplay.style.color = '#ffffff';
-            timerDisplay.style.fontSize = targetFontSize;
-            timerDisplay.style.fontWeight = 'bold';
-            timerDisplay.style.zIndex = '1100'; // Set z-index higher than portals
-            gameArea.appendChild(timerDisplay);
-
             const mathStartTime = Date.now(); // Track the start time
 
             // Function to update the timer display with 2 decimal places
             const updateTimer = () => {
                 const elapsed = (Date.now() - mathStartTime) / 1000;
                 const timeLeft = Math.max(0, duration - elapsed);
-                timerDisplay.textContent = `Time Left: ${timeLeft.toFixed(2)}`;
                 return timeLeft;
             };
 
@@ -512,7 +509,7 @@ function playMiniGame(gameType) {
 
                     // Check for overlap with existing portals using circle-based collision detection
                     positionIsValid = !Array.from(gameArea.children).some(child => {
-                        if (child === portal || child === targetDisplay || child === timerDisplay || child === currentSumDisplay) return false; // Skip the current portal being placed and the target/timer displays
+                        if (child === portal || child === targetDisplay || child === currentSumDisplay) return false; // Skip the current portal being placed and the target/timer displays
                         const childRect = child.getBoundingClientRect();
                         const childCenterX = childRect.left + childRect.width / 2;
                         const childCenterY = childRect.top + childRect.height / 2;
