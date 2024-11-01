@@ -964,6 +964,13 @@ const achievements = [
         respecPoint: true,
     },
     {
+        name: 'Where did the other ball go?',
+        isUnlocked: false,
+        hoverText: 'do this in Deism',
+        img: 'imgs/achievements/where_did_the_other_ball_go.jpg',
+        type: 'puzzle',
+    },
+    {
         name: 'Unwinnable',
         isUnlocked: false,
         hoverText: 'get unlucky Skepticism rolls',
@@ -976,6 +983,13 @@ const achievements = [
         hoverText: `complete the Skepticism meditation`,
         img: 'imgs/achievements/skepticism.jpg',
         type: 'progression',
+    },
+    {
+        name: 'Perpetual Noob',
+        isUnlocked: false,
+        hoverText: `gamer but still don't get the game`,
+        img: 'imgs/achievements/perpetual_noob.jpg',
+        type: 'puzzle',
     },
     {
         name: 'Impossible Crunch',
@@ -1091,6 +1105,21 @@ const achievements = [
         type: 'puzzle',
     },
     {
+        name: 'Balance Master',
+        isUnlocked: false,
+        hoverText: `meet the balance master`,
+        img: 'imgs/achievements/balance_master.jpg',
+        type: 'progression',
+        respecPoint: true,
+    },
+    {
+        name: 'Birthdayception',
+        isUnlocked: false,
+        hoverText: `celebrate before birthday`,
+        img: 'imgs/achievements/birthdayception.jpg',
+        type: 'puzzle',
+    },
+    {
         name: 'Fifty Days of Saving',
         isUnlocked: false,
         hoverText: 'export your save on 50 different days',
@@ -1103,6 +1132,13 @@ const achievements = [
         isUnlocked: false,
         hoverText: '???',
         img: 'imgs/achievements/rasta_deadpool.jpg',
+        type: 'puzzle',
+    },
+    {
+        name: 'Meditation Maniac',
+        isUnlocked: false,
+        hoverText: `complete all meditations without any Hall of Love skills that have "meditation" in description`,
+        img: 'imgs/achievements/meditation_maniac.jpg',
         type: 'puzzle',
     },
     {

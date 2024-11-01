@@ -201,10 +201,10 @@ const meditationChallenges = {
         duration: 2000,
         focus: 1,
         ballCount: 1,
-        arenaSize: 364,
+        arenaSize: 382,
         ballSize: 800,
         ballSizeDelta: 0,
-        velocity: 87,
+        velocity: 89,
         wind: 0,
         respawnFactor: 1,
         livesPerBall: 101,
@@ -470,6 +470,9 @@ function updateMeditationGame(resolve, stageNumber) {
             // Flash "Not So Fast" message and then restart the game
             clearInterval(meditationInterval); // Stop the current game loop
             showArenaMessage('Not So Fast').then(() => {
+                if(ballCount > (meditationChallenges['Deism'].ballCount - calculateBallCountReduction())){
+                    unlockAchievement('Where did the other ball go?');
+                }
                 startMeditationGame(currentChallengeName, document.getElementById('arena').style.backgroundImage, 2, meditationFocus, 2).then(resolve);
             });
             return;
@@ -495,8 +498,15 @@ function updateMeditationGame(resolve, stageNumber) {
             if (currentChallengeName === 'Dualism' && ballSize > 154 && ballCount == 3 && yachtMoney < 0) {
                 unlockAchievement('Trinitism');
             }
-            if (currentChallengeName === 'Agnosticism' && noGimmicksUsed) {
-                unlockAchievement('Obie Trice');
+            if (currentChallengeName === 'Agnosticism') {
+                if (noGimmicksUsed) {
+                    unlockAchievement('Obie Trice');
+                }
+                if (["Study Accelerator", "Stellar Meditation", "Altruistic Embrace", "Steady Focus", "Rewarding Meditations", "Master of Elements", "Space Continuum Stretch", "Look Past Distractions", "Intrinsic Meditation"]
+                    .every(skillName => !loveHallSkills.find(skill => skill.name === skillName)?.unlocked)) {
+                    
+                    unlockAchievement('Meditation Maniac');
+                }
             }
             return;
         }

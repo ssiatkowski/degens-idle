@@ -107,7 +107,7 @@ function unlockLibrarySkill(skill, duringLoad = false, infoOnly = false) {
                 delusionPerSecond = Math.abs(delusionPerSecond);
                 if (!duringLoad){
                     updateEffectiveMultipliers();
-                    updateMultipliersDisplay();
+                    updateDisplay();
                 }
                 break;
 
@@ -294,14 +294,14 @@ function unlockLibrarySkill(skill, duringLoad = false, infoOnly = false) {
         }
 
         if (!duringLoad) {
-            updateSkillDisplay();
+            updateLibrarySkillDisplay();
         }
     }
 }
 
 
 
-function updateSkillDisplay() {
+function updateLibrarySkillDisplay() {
     librarySkills.forEach(skill => {
         const skillDiv = document.querySelector(`.libraryskill[data-skill-name="${skill.name}"]`);
         if (skillDiv) {
@@ -436,7 +436,7 @@ function openLibrary() {
     if (purchasedUpgradesSet.has('The Library') || librarySkills.some(skill => skill.unlocked)) {
         const libraryOverlay = document.getElementById('libraryOverlay');
         libraryOverlay.style.display = 'flex';
-        updateSkillDisplay();
+        updateLibrarySkillDisplay();
 
         if(crunchTimer < 10){
             unlockAchievement('Skipping Grades');
@@ -504,5 +504,5 @@ function resetLibrarySkills() {
     initializeSkills(); // Reinitialize the skills in the UI
 
     // Update the skill display to reflect the reset state
-    updateSkillDisplay();
+    updateLibrarySkillDisplay();
 }

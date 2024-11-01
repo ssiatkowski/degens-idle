@@ -216,6 +216,20 @@ const enemyStats = {
         stun: 0,
         absorb: 0,
         img: 'imgs/saitama.jpg'
+    },
+    "Your Ego": {
+        health: 1e300,
+        minDamage: 1e10,
+        maxDamage: 1e100,
+        attackSpeed: 10,
+        defense: 1e100,
+        critChance: 0,
+        critDamage: 1,
+        dodge: 0,
+        nonCritDodge: 0,
+        stun: 0,
+        absorb: 0,
+        img: 'imgs/your_ego.jpg'
     }
 };
 

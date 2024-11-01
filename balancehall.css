@@ -23,25 +23,29 @@
     width: 80%;
     max-height: 90%;
     overflow-y: auto;
-    text-align: center; /* Center text and button */
+    text-align: center;
 }
 
+/* Overlay for the Hall of Balance */
 .balancehall-overlay-content h1,
-.balancehall-overlay-content h4 {
-    color: #b0c4de; /* Light steel blue for better visibility */
+.balancehall-overlay-content h4,
+.balance-disclaimer,
+.current-multiplier,
+.new-multiplier {
+    color: #b0c4de; /* Light steel blue for visibility */
     background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent dark background */
-    padding: 10px; /* Add padding around the text */
-    border-radius: 5px; /* Slightly rounded corners */
-    display: inline-block; /* Keeps background size close to text */
-    margin: 0 auto 15px auto; /* Center and add spacing below */
-    max-width: fit-content; /* Fit the background to the text */
+    padding: 5px;
+    border-radius: 5px;
+    display: inline-block;
+    max-width: fit-content;
+    margin: 0 auto;
 }
 
-#closeBalanceHallButton {
-    margin: 10px auto;
-    display: block;
+.balance-disclaimer {
+    margin-top: 20px; /* Adds spacing between Hall text and disclaimer */
 }
 
+/* Main container for the balance sliders and skills */
 #balanceHallSkills {
     display: flex;
     flex-direction: column;
@@ -50,46 +54,44 @@
     margin: 0 auto;
 }
 
-/* Rows and Columns */
 .balancehall-row {
-    display: flex;
     width: 100%;
     margin: 10px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
+/* Left column for sliders and balance button */
 .balancehall-left-column {
-    width: 75%; /* Ensures all left columns take up the same width */
+    width: 100%;
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-.balancehall-right-column {
-    width: 25%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.current-multiplier,
+.new-multiplier {
+    font-weight: bold;
+    color: #b0c4de;
+    font-size: 0.9em;
+    min-width: 100px; /* Fixed width to prevent resizing */
+    text-align: center;
+}
+
+.slider-container {
+    position: relative;
+    width: 100%;
 }
 
 .balance-slider {
-    flex: 1;
-    width: 100%; /* Set equal width for all sliders */
-    max-width: 90%; /* Optional: Adjust max width for better alignment */
+    width: 100%;
 }
 
-.lock-button,
-.balance-skill-button {
+.balance-button {
+    width: 150px;
     padding: 5px 10px;
-    border-radius: 5px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-.lock-button {
-    width: 150px; /* Set a fixed width for uniform button size */
-    padding: 5px 10px;
-    background-color: #b8860b; /* Gold */
+    background-color: #b8860b; /* Gold color */
     color: #1a1a1a;
     font-weight: bold;
     text-align: center;
@@ -98,26 +100,83 @@
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.lock-button:hover {
+.balance-button:hover {
     background-color: #ffcc00;
 }
 
+/* Skill Grid */
+.balance-skill-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    width: 100%;
+    margin-top: 20px;
+}
+
 .balance-skill-button {
-    background-color: #333;
-    color: #e0e0e0;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center; /* Center-aligns text */
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    white-space: pre-line; /* Allows line breaks in the content */
 }
 
-.balance-skill-button:hover {
+.balance-skill-button strong {
+    font-weight: bold;
+    font-size: 1.1em;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.balance-skill-button .skill-cost {
+    color: #ffc107; /* Yellow color for cost */
+    font-size: 0.9em;
+    margin-bottom: 5px;
+}
+
+.balance-skill-button .skill-description {
+    font-size: 0.85em;
+    color: #ddd; /* Light color for description */
+}
+
+
+.balance-skill-button:disabled {
     background-color: #555;
+    cursor: not-allowed;
 }
 
-/* Media query for mobile devices */
+.balance-skill-button.disabled-skill {
+    opacity: 0.9;
+    pointer-events: none; /* Prevent clicking on disabled skills */
+}
+
+.dot-indicator {
+    position: absolute;
+    top: 50%;  /* Center the dot on the slider */
+    width: 18px;
+    height: 18px;
+    background-color: #D3D3D3;  /* Lighter gray */
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+
+#closeBalanceHallButton {
+    margin: 10px auto;
+    display: block;
+}
+
+/* Mobile responsiveness */
 @media (max-width: 768px) {
     .balancehall-row {
-        flex-direction: column;
+        width: 100%;
     }
-    .balancehall-left-column,
-    .balancehall-right-column {
+    .balance-skill-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .balance-button,
+    .balance-skill-button {
         width: 100%;
     }
 }

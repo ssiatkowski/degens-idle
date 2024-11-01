@@ -1272,6 +1272,7 @@ const loveHallSkills = [
     unlocked: false,
     level: "Cosmic Truth (42x)",
     pair: 51,
+    requirement: "Master of Elements",
     onUnlock: () => {
       temporalDragReduction = 0.75;
     },
