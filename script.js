@@ -4291,6 +4291,101 @@ function showImmediateMessageModal(title, message) {
     };
 }
 
+class CountdownTimer {
+    constructor() {
+        this.duration = 0;
+        this.remainingTime = 0;
+        this.interval = null;
+
+        // Create DOM elements
+        this.createElements();
+    }
+
+    createElements() {
+        // Create container
+        this.container = document.createElement('div');
+        this.container.className = 'countdown-timer-container';
+
+        // Create progress bar container
+        this.progressBar = document.createElement('div');
+        this.progressBar.className = 'countdown-progress-bar';
+
+        // Create time display
+        this.display = document.createElement('div');
+        this.display.className = 'countdown-time-display';
+        this.display.textContent = '00:00.0';
+
+        // Create progress element
+        this.progress = document.createElement('div');
+        this.progress.className = 'countdown-progress';
+
+        // Assemble the elements
+        this.progressBar.appendChild(this.progress);
+        this.container.appendChild(this.progressBar);
+        this.container.appendChild(this.display);
+    }
+
+    // Method to append timer to a specific element or body
+    appendTo(element = document.body) {
+        element.appendChild(this.container);
+    }
+
+    start(duration) {
+        // Reset and show the timer
+        this.duration = duration;
+        this.remainingTime = duration;
+        this.progressBar.style.display = 'block';
+        this.progress.style.width = '100%';
+
+        const startTime = Date.now();
+        const endTime = startTime + duration * 1000;
+
+        // Clear any existing interval
+        if (this.interval) {
+            clearInterval(this.interval);
+        }
+
+        this.interval = setInterval(() => {
+            const now = Date.now();
+            this.remainingTime = (endTime - now) / 1000;
+
+            if (this.remainingTime <= 0) {
+                this.remainingTime = 0;
+                clearInterval(this.interval);
+            }
+
+            this.updateDisplay();
+            this.updateProgress();
+            this.updateColor();
+        }, 100);
+    }
+
+    updateDisplay() {
+        const minutes = Math.floor(this.remainingTime / 60);
+        const seconds = Math.floor(this.remainingTime % 60);
+        const tenths = Math.floor((this.remainingTime * 10) % 10);
+
+        this.display.textContent = `${String(minutes).padStart(
+            2,
+            '0'
+        )}:${String(seconds).padStart(2, '0')}.${tenths}`;
+    }
+
+    updateProgress() {
+        const percentage = (this.remainingTime / this.duration) * 100;
+        this.progress.style.width = `${percentage}%`;
+    }
+
+    updateColor() {
+        this.progress.classList.remove('countdown-warning', 'countdown-danger');
+        if (this.remainingTime <= 1) {
+            this.progress.classList.add('countdown-danger');
+        } else if (this.remainingTime <= 2) {
+            this.progress.classList.add('countdown-warning');
+        }
+    }
+}
+
 let currentPopupTooltipTimeoutId = null;
 
 function showPopupTooltip(message, color = 'gray', durationSeconds = 2) {
