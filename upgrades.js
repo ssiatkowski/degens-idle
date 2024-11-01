@@ -1739,7 +1739,7 @@ const upgrades = [
     },
     {
         name: `Balance Apprentice`,
-        cost: { copium: 5e168, delusion: 5e168, yachtMoney: 5e168, trollPoints: 5e168, hopium: 5e168, knowledge: 5e145, power: 5e50, serenity: 5e28 },
+        cost: { copium: 5e168, delusion: 5e168, yachtMoney: 5e168, trollPoints: 5e168, hopium: 5e168, knowledge: 5e137, power: 9e47, serenity: 5e28 },
         earnings: { copiumPerSecond: 1e62, delusionPerSecond: 1e62, yachtMoneyPerSecond: 1e62, trollPointsPerSecond: 1e62, hopiumPerSecond: 1e62, knowledgePerSecond: 1e30, powerPerSecond: 0, serenityPerSecond: 1e13 },
         img: `imgs/balanced_chair.jpg`,
         message: `<p>
@@ -1791,13 +1791,13 @@ const upgrades = [
     },
     {
         name: `God's Plan`,
-        cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 1.5e155, power: 0, serenity: 6e31 },
+        cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 1.5e154, power: 0, serenity: 6e31 },
         earnings: { copiumPerSecond: -1e71, delusionPerSecond: -1e71, yachtMoneyPerSecond: -1e71, trollPointsPerSecond: -1e71, hopiumPerSecond: -2e60, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 6.9e14 },
         img: `imgs/gods_plan.jpg`,
     },
     {         
         name: `Agnosticism`,
-        cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 2e155, power: 0, serenity: 9e31 },
+        cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 2e154, power: 0, serenity: 9e31 },
         earnings: { copiumPerSecond: 1e76, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 1e60, knowledgePerSecond: 1e42, powerPerSecond: 0, serenityPerSecond: 1e18 },
         img: `imgs/arena_agnosticism.png`,
         isMeditation: true,

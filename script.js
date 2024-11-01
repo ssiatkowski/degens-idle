@@ -2591,7 +2591,7 @@ function updateWarpTime() {
     }
 
     // Add/remove 'affordable' class based on accumulatedWarpTime
-    if (accumulatedWarpTime >= 3600) {
+    if (accumulatedWarpTime >= 3600 || (masterOfTimeSkill && warpTimeActive)) {
         warpButton.classList.add('affordable');
         warpButton.classList.remove('not-affordable');
     } else {

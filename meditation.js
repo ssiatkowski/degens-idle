@@ -198,7 +198,7 @@ const meditationChallenges = {
         livesPerBall: 1,
     },
     "Agnosticism": {
-        duration: 2000,
+        duration: 1800,
         focus: 1,
         ballCount: 1,
         arenaSize: 382,
