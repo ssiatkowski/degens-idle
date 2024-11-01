@@ -4085,6 +4085,11 @@ function displayNextModal() {
         };
     } else {
         modalImage.style.display = 'none';
+        // reset refs to images from previous modals
+        modalImage.src = '';
+        modalContent.style.width = '';
+        modalContent.style.maxWidth = '';
+        
     }
 
     modal.style.display = 'block';
