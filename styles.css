@@ -46,6 +46,7 @@ html, body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Shadow for depth */
     color: #e0e0e0; /* Light text color */
     font-family: Arial, sans-serif;
+    position: relative;
 }
 
 /* Add this to your existing CSS */
