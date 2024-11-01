@@ -510,6 +510,13 @@ function loadGameState() {
     numLuckyBoxes = parseFloat(localStorage.getItem('numLuckyBoxes')) || 0;
     numSoftCaps = parseFloat(localStorage.getItem('numSoftCaps')) || 0;
 
+    numSpeedFailures = parseFloat(localStorage.getItem('numSpeedFailures')) || 0;
+    numSpeedWins = parseFloat(localStorage.getItem('numSpeedWins')) || 0;
+    numMemoryFailures = parseFloat(localStorage.getItem('numMemoryFailures')) || 0;
+    numMemoryWins = parseFloat(localStorage.getItem('numMemoryWins')) || 0;
+    numMathFailures = parseFloat(localStorage.getItem('numMathFailures')) || 0;
+    numMathWins = parseFloat(localStorage.getItem('numMathWins')) || 0;
+
     numLoveHallFreeRespecs = localStorage.getItem('numLoveHallFreeRespecs') !== null ? parseFloat(localStorage.getItem('numLoveHallFreeRespecs')) : 1;
 
     consecutiveClicks = parseInt(localStorage.getItem('consecutiveClicks')) || 0;

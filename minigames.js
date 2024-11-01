@@ -24,6 +24,12 @@ let numMemorizedDots = 0;
 let numUnluckyBoxes = 0;
 let numLuckyBoxes = 0;
 let numSoftCaps = 0;
+let numSpeedFailures = 0;
+let numSpeedWins = 0
+let numMemoryFailures = 0;
+let numMemoryWins = 0;
+let numMathFailures = 0;
+let numMathWins = 0;
 
 let lastClickedBoxIndex = null;
 let consecutiveClicks = 0;
@@ -76,7 +82,16 @@ function playMiniGame(gameType) {
         let startingDotsClicked = 0;  // Counter for starting dots
         let duration = Math.floor(Math.random() * 6) + 3; // Random duration between 3 and 8 seconds
 
-        showMessageModal('Speed Game', `Tap on the dots as many times as you can in ${duration} seconds! Be careful, clicks outside the dots will count as -0.5 points.`, false, false).then(() => {
+        showMessageModal(
+            'Speed Game', 
+            `Tap on the dots as many times as you can in ${duration} seconds! Be careful, clicks 
+            outside the dots will count as -0.5 points.
+            <br /> &nbsp;
+            <br /><strong>Wins:</strong> ${numSpeedWins}
+            <br /><strong>Losses:</strong> ${numSpeedFailures}`, 
+            false, 
+            false)
+        .then(() => {
             const gameArea = document.createElement('div');
             gameArea.style.position = 'fixed';
             gameArea.style.top = '5%';
@@ -171,12 +186,16 @@ function playMiniGame(gameType) {
                     calculateMiniGamesMultiplier();
 
                     resultMessage = `You tapped ${points} dots with ${misclicks} misclicks in ${duration} seconds (${effectiveClicksPerSecond.toFixed(2)} points per second). Your reward is <span style="color: green;">${formatNumber(reward)}</span> copium! You have now tapped ${numSpeedTaps} times in winning games.`;
+                    numSpeedWins++
+                    localStorage.setItem('numSpeedWins', numSpeedWins);
                 } else {
                     if (misclicks == 42) {
                         unlockAchievement('42 Misclicks');
                     }
                     reward = -Math.max(Math.floor(Math.abs(copium) * 0.25), 25);
                     resultMessage = `You were too slow, managing only ${points} taps on dots with ${misclicks} misclicks in ${duration} seconds (${effectiveClicksPerSecond.toFixed(2)} points per second). You lose <span style="color: red;">${formatNumber(reward)}</span> copium. Try again later!`;
+                    numSpeedFailures++
+                    localStorage.setItem('numSpeedFailures', numSpeedFailures);
                 }
 
                 copium += reward;
@@ -213,8 +232,10 @@ function playMiniGame(gameType) {
         showMessageModal(
             'Memory Game', 
             `<strong>Grid Size:</strong> ${gridSize}x${gridSize}<br>
-            <strong>Sequence Length:</strong> ${sequenceLength}<br><br>
-            Watch the pattern of dots as they light up, and then click them in the same order! Try to remember the sequence!`,
+            <strong>Sequence Length:</strong> ${sequenceLength}<br>&nbsp;<br>
+            Watch the pattern of dots as they light up, and then click them in the same order! Try to remember the sequence!<br>&nbsp;<br>
+            <strong>Wins:</strong> ${numMemoryWins}<br>
+            <strong>Losses:</strong> ${numMemoryFailures}`,
             false, 
             false
         ).then(() => {
@@ -351,10 +372,15 @@ function playMiniGame(gameType) {
                 if (correct) {
                     numMemorizedDots += sequenceLength;
                     localStorage.setItem('numMemorizedDots', numMemorizedDots);
+                    numMemoryWins++
+                    localStorage.setItem('numMemoryWins', numMemoryWins);
                     if (numMemorizedDots >= 500) {
                         unlockAchievement('Pattern Prodigy');
                     }
                     calculateMiniGamesMultiplier();
+                } else {
+                    numMemoryFailures++
+                    localStorage.setItem('numMemoryFailures', numMemoryFailures);
                 }
 
                 let resultMessage = correct
@@ -403,7 +429,9 @@ function playMiniGame(gameType) {
         showMessageModal(
             'Math Portal Puzzle',
             `<strong style="font-size: 1.5em;">Target Sum: ${targetSum}</strong><br><br>
-            Click on the portals to select numbers that add up to the target sum!`,
+            Click on the portals to select numbers that add up to the target sum in ${duration} seconds!<br>&nbsp;<br>
+            <strong>Wins:</strong> ${numMathWins}<br>
+            <strong>Losses:</strong> ${numMathFailures}<br>`,
             false,
             false
         ).then(() => {
@@ -665,16 +693,20 @@ function playMiniGame(gameType) {
                     if (maxPortalsReached) {
                         unlockAchievement('Mathematical Overshot');
                     }
+                    numMathWins++;
+                    localStorage.setItem('numMathWins', numMathWins);
                     numMathPortals += selectedPortals.length;
                     localStorage.setItem('numMathPortals', numMathPortals);
                     if (numMathPortals > 314) {
                         unlockAchievement('Pie Guy');
                     }
                     calculateMiniGamesMultiplier();
-                    resultMessage = `You found the correct sum and earned <span style="color: green;">${formatNumber(reward)}</span> yachtMoney! You now have selected ${numMathPortals} correct math portals.`;
+                    resultMessage = `You found the correct sum and earned <span style="color: green;">${formatNumber(reward)}</span> Yacht Money! You now have selected ${numMathPortals} correct math portals.`;
                 } else {
+                    numMathFailures++;
+                    localStorage.setItem('numMathFailures', numMathFailures);
                     reward = -Math.max(Math.floor(Math.abs(yachtMoney) * 0.2), 20);
-                    resultMessage = `You didn't find the correct sum. You lost <span style="color: red;">${formatNumber(Math.abs(reward))}</span> yachtMoney.`;
+                    resultMessage = `You didn't find the correct sum. You lost <span style="color: red;">${formatNumber(Math.abs(reward))}</span> Yacht Money.`;
                 }
 
                 yachtMoney += reward;
@@ -746,7 +778,9 @@ function playMiniGame(gameType) {
         showMessageModal(
             'Luck Game',
             `<strong style="font-size: 1.2em;">Choose a box!</strong><br><br>
-            Test your luck and see what fate has in store for you.`,
+            Test your luck and see what fate has in store for you.<br>&nbsp;<br>
+            <strong>Wins:</strong> ${numLuckyBoxes}<br>
+            <strong>Losses:</strong> ${numUnluckyBoxes}`,
             false,
             false
         ).then(() => {
