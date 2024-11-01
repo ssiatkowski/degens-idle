@@ -693,6 +693,10 @@ button.disabled {
         max-height: 100px; /* Allow height to adjust based on the content */
     }
 
+    .modal {
+        height: 90%; /* Full height, use vh for proper scaling */
+    }
+
 
     /* Adjust the game container for mobile layout */
     #main-container {
