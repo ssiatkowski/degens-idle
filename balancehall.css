@@ -170,12 +170,47 @@
 /* Mobile responsiveness */
 @media (max-width: 768px) {
     .balancehall-row {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         width: 100%;
     }
+
+    .slider-container {
+        width: 100%;
+    }
+
+    .balancehall-left-column {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    /* Row for Curr and New displays to keep them side-by-side */
+    .current-new-row {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .current-multiplier,
+    .new-multiplier {
+        text-align: center;
+        margin: 0 5px; /* Space between Curr and New displays */
+        flex: 1; /* Optional: allow equal space if needed */
+    }
+
+    .balance-button {
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
     .balance-skill-grid {
         grid-template-columns: repeat(2, 1fr);
     }
-    .balance-button,
+
     .balance-skill-button {
         width: 100%;
     }

@@ -102,10 +102,16 @@ function initializeBalanceHall() {
         // Append elements to the slider container and then to the left column
         sliderContainer.appendChild(slider);
         sliderContainer.appendChild(dotIndicator);  // Add dot on the slider
-        leftColumn.appendChild(sliderContainer);
-        leftColumn.appendChild(currentDisplay);
-        leftColumn.appendChild(newDisplay);
-        leftColumn.appendChild(balanceButton);
+        // Create a container div for Curr and New displays
+        const currentNewRow = document.createElement('div');
+        currentNewRow.classList.add('current-new-row'); // Class for styling Curr and New on the same row
+        currentNewRow.appendChild(currentDisplay);
+        currentNewRow.appendChild(newDisplay);
+
+        // Add elements to the left column in the desired order
+        leftColumn.appendChild(currentNewRow);      // Curr and New on the same row
+        leftColumn.appendChild(sliderContainer);   // Slider row
+        leftColumn.appendChild(balanceButton);      // Balance button below
 
         rowDiv.appendChild(leftColumn);
         balanceHallContainer.appendChild(rowDiv);
