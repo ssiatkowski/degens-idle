@@ -326,13 +326,11 @@ function unlockBalanceHallSkill(skillName, duringLoad = false) {
 
         switch (skillName) {
             case "Greater Balance":
-                console.log("Greater Balancefunctionality activated.");
+                console.log("Greater Balance functionality activated.");
                 updateSliders();
-                // Placeholder for Skill 1 functionality
                 break;
             case "Love Matters":
-                console.log("Skill 2 functionality activated.");
-                // Placeholder for Skill 2 functionality
+                console.log("Love Matters functionality activated.");
                 break;
             case "Skill 3":
                 console.log("Skill 3 functionality activated.");
