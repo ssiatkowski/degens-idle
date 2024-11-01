@@ -27,7 +27,7 @@ html, body {
     left: 0;
     top: 0;
     width: 100vw; /* Full width, use vw to ensure no overflow */
-    max-height: calc(100vh - env(safe-area-inset-bottom)); /* Accounts for mobile toolbar */
+    height: calc(100vh - env(safe-area-inset-bottom)); /* Accounts for mobile toolbar */
     overflow-y: auto; /* Enable vertical scroll if needed */
     overflow-x: hidden; /* Prevent horizontal scrolling */
     background-color: rgba(0, 0, 0, 0.8); /* Black w/ opacity */
