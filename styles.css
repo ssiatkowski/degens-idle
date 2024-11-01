@@ -27,12 +27,11 @@ html, body {
     left: 0;
     top: 0;
     width: 100vw; /* Full width, use vw to ensure no overflow */
-    height: 100vh; /* Full height, use vh for proper scaling */
+    max-height: calc(100vh - env(safe-area-inset-bottom)); /* Accounts for mobile toolbar */
     overflow-y: auto; /* Enable vertical scroll if needed */
     overflow-x: hidden; /* Prevent horizontal scrolling */
     background-color: rgba(0, 0, 0, 0.8); /* Black w/ opacity */
     box-sizing: border-box; /* Ensure padding doesn't affect the width */
-    padding-bottom: env(safe-area-inset-bottom); /* Prevents bottom content from being hidden */
 }
 
 /* Modal Content/Box */
