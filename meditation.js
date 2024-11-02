@@ -220,7 +220,7 @@ function startMeditationGame(challengeName, backgroundImage, stageNumber = 1, pr
         currentChallengeName = challengeName;
         // Use the calculateTimerReduction function to adjust the duration
         meditationTimer = (challenge.duration - studyAcceleratorReduction) * calculateTimerReduction(yachtMoney);
-        
+
         meditationFocus = preservedFocus !== null ? preservedFocus : challenge.focus + Math.max(0, Math.floor(Math.log10(serenity))); // Preserve focus if passed
         ballCount = Math.max(1, challenge.ballCount - calculateBallCountReduction()); // Hopium reduces ball count
         arenaSize = Math.floor((spaceContinuumStretchSkill ? challenge.arenaSize * 1.1 : challenge.arenaSize) * stageArenaSizeChange);
@@ -289,7 +289,7 @@ function startMeditationGame(challengeName, backgroundImage, stageNumber = 1, pr
             const isWisdomPattern = ['W', 'I', 'S', 'D', 'O', 'M'].every((letter, index) =>
                 availableUpgrades[index] && availableUpgrades[index].name.startsWith(letter)
             );
-            
+
             // Do something if the pattern matches "WISDOM"
             if (isWisdomPattern) {
                 unlockAchievement('Apply Wisdom');
@@ -328,7 +328,7 @@ function startMeditationGame(challengeName, backgroundImage, stageNumber = 1, pr
                 updateMeditationGame(resolve, stageNumber);
             }, 25); // Update every 25ms for smooth animation
         }
-        
+
     });
 }
 
@@ -373,7 +373,7 @@ const pastelColors = [
 function createBall(index, stageNumber) {
     const ball = document.createElement('div');
     ball.classList.add('meditation-ball');
- 
+
     // Add random variation within the delta range
     const thisBallSize = Math.max(Math.round(ballSize + (Math.random() * 2 * ballSizeDelta - ballSizeDelta)), 15);
 
@@ -396,7 +396,7 @@ function createBall(index, stageNumber) {
         if (currentChallengeName === 'Buddhism') {
             // Choose a random color from the pastelColors array
             const randomColor = pastelColors[Math.floor(Math.random() * pastelColors.length)];
-            ball.style.backgroundColor = randomColor; // Set the background color to the random pastel color          
+            ball.style.backgroundColor = randomColor; // Set the background color to the random pastel color
         } else{
             ball.style.backgroundColor = 'orange'; // Assuming blue or any other color for stage 1
         }
@@ -504,7 +504,7 @@ function updateMeditationGame(resolve, stageNumber) {
                 }
                 if (["Study Accelerator", "Stellar Meditation", "Altruistic Embrace", "Steady Focus", "Rewarding Meditations", "Master of Elements", "Space Continuum Stretch", "Look Past Distractions", "Intrinsic Meditation"]
                     .every(skillName => !loveHallSkills.find(skill => skill.name === skillName)?.unlocked)) {
-                    
+
                     unlockAchievement('Meditation Maniac');
                 }
             }
@@ -547,7 +547,7 @@ function moveBalls() {
     balls.forEach((ball) => {
         // Calculate the angle toward the center of the arena
         const angleToCenter = Math.atan2((arenaSize / 2) - ball.y, (arenaSize / 2) - ball.x);
-        
+
         // Calculate the difference between current direction and angle to center
         let angleDifference = angleToCenter - ball.direction;
 
@@ -566,11 +566,11 @@ function moveBalls() {
         // Apply gravitational pull toward the center
         const deltaXToCenter = (arenaSize / 2) - ball.x;
         const deltaYToCenter = (arenaSize / 2) - ball.y;
-        
+
         // Normalize the pull to be small and proportional
         const pullX = gravityStrength * (deltaXToCenter / arenaSize / 4);
         const pullY = gravityStrength * (deltaYToCenter / arenaSize / 4);
-        
+
         // Adjust ball velocity based on the gravitational pull
         const deltaX = ball.velocity * Math.cos(ball.direction) + pullX + windSpeed * windX;
         const deltaY = ball.velocity * Math.sin(ball.direction) + pullY + windSpeed * windY;
@@ -829,10 +829,10 @@ function calculateVelocityReduction() {
     } else {
         // Calculate the number of 20-OOM intervals past 1e75
         let intervals = (Math.log10(knowledge) - 75) / 20;
-        
+
         // Calculate the reduction factor by halving for each 20-OOM interval
         let reductionFactor = Math.pow(0.5, intervals);
-        
+
         return reductionFactor * temporalDragReduction;
     }
 }
@@ -851,7 +851,7 @@ function calculateGravity() {
 function scaleArena() {
     const arena = document.getElementById('arena');
     const meditationWrapper = document.getElementById('meditationWrapper');
-    
+
     if (arena && meditationWrapper) {
         const screenWidth = window.innerWidth;
         const screenHeight = window.innerHeight;
@@ -878,23 +878,16 @@ function scaleArena() {
 
 function showArenaMessage(messageContent, fontColor = 'red', fontSize = '48px') {
     return new Promise((resolve) => {
-        const arena = document.getElementById('arena');
         const message = document.createElement('div');
+        message.classList.add('arena-message');
         message.innerText = messageContent;
-        message.style.position = 'absolute';
-        message.style.top = '50%';
-        message.style.left = '50%';
-        message.style.transform = 'translate(-50%, -50%)';
         message.style.color = fontColor;
         message.style.fontSize = fontSize;
-        message.style.fontWeight = 'bold';
-        message.style.zIndex = '1000'; // Make sure it appears on top
-        message.style.textAlign = 'center';
 
-        arena.appendChild(message);
+        document.getElementById('arena').appendChild(message);
 
         setTimeout(() => {
-            arena.removeChild(message);
+            message.remove();
             resolve();
         }, 1000); // Display message for 1 second
     });

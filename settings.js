@@ -6,7 +6,7 @@ function openSettings() {
 
     const settingsOverlay = document.getElementById('settingsOverlay');
     settingsOverlay.style.display = 'flex';
-    
+
     unlockAchievement('Settings');
 
     // Add a temporary event listener to close the overlay when clicking outside of it
@@ -53,7 +53,7 @@ function closeDonation() {
 // Function to handle clicks outside the overlay
 function outsideClickListener(event) {
     const settingsContent = document.querySelector('.settings-overlay-content');
-    
+
     if (!settingsContent.contains(event.target)) {
         closeSettings();
     }
@@ -62,7 +62,7 @@ function outsideClickListener(event) {
 // Function to handle clicks outside the overlay
 function outsideDonationClickListener(event) {
     const donationContent = document.querySelector('.donation-overlay-content');
-    
+
     if (!donationContent.contains(event.target)) {
         closeDonation();
     }
@@ -99,14 +99,14 @@ function exportSave() {
     // Create a Blob and trigger download
     const blob = new Blob([allData], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
-    
+
     // Create a link element to download the file
     const a = document.createElement('a');
     a.href = url;
     a.download = fname; // Use the dynamic filename with date and time
     document.body.appendChild(a);
     a.click();
-    
+
     // Clean up the DOM elements
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
@@ -286,14 +286,14 @@ document.getElementById('discordButton').addEventListener('click', function() {
 // Add event listeners for donation buttons
 document.getElementById('donateSmallButton').addEventListener('click', function() {
     unlockAchievement('Buy Me a Coffee');
-    window.open('https://buymeacoffee.com/ssiatkowski', '_blank'); 
+    window.open('https://buymeacoffee.com/ssiatkowski', '_blank');
 });
 document.getElementById('donateMediumButton').addEventListener('click', function() {
     window.open('https://account.venmo.com/payment-link?audience=public&amount=7&note=Keep%20improving%20Degens%20Idle&recipients=%2CSebastian-Siatkowski&txn=pay', '_blank'); // Replace with your Venmo link
 });
 document.getElementById('donateLargeButton').addEventListener('click', function() {
     unlockAchievement('PigeonPost');
-    window.open('pigeon.html', '_blank'); 
+    window.open('pigeon.html', '_blank');
 });
 // Add event listener for Feedback button
 document.getElementById('feedbackButton').addEventListener('click', function() {
@@ -305,7 +305,7 @@ function toggleAllBuyMarkers(targetState) {
     purchasedUpgrades.forEach(upgrade => {
         const name = upgrade.name;
         const toggleSwitch = document.getElementById(`toggle-${name}`);
-        
+
         if (!upgrade.isFight && !upgrade.isMeditation) {
             if (toggleSwitch) {
                 toggleSwitch.checked = targetState;
@@ -318,7 +318,7 @@ function toggleAllBuyMarkers(targetState) {
             if (toggleSwitch) {
                 toggleSwitch.checked = false;
                 toggleSwitch.parentElement.style.display = 'none'; // Hide the switch for fight upgrades
-                
+
                 // Update the switch state in the global variable for fight upgrades
                 switchStates[name] = false;
             }
@@ -340,16 +340,17 @@ document.getElementById('automationButton').addEventListener('click', function()
     // Check if all features are locked (none are unlocked)
     const allFeaturesLocked = !autobuyUpgradesSkill && autoPrestigeThreshold === null && !buyMarkersSkill && autoAscendThreshold === null && autoTranscendThreshold === null;
 
+    let content = '';
     // If all features are locked, show the "unlock automation" message
     if (allFeaturesLocked) {
-        automationContent.innerHTML = "<p>You must unlock automation features first.</p>";
+        content += "<p>You must unlock automation features first.</p>";
         saveButton.style.display = 'none'; // Hide the save button
     } else {
         saveButton.style.display = 'inline-block';
 
         // Dynamically add the three-way toggle for Buy Markers if unlocked
         if (buyMarkersSkill) {
-            const toggleHtml = `
+            content += `
                 <div class="three-way-toggle-container" style="margin-bottom: 15px;">
                     <label for="toggleBuyMarkersSwitch" class="three-way-toggle-label">Toggle All Purchased Upgrades Buy Markers</label>
                     <div class="three-way-toggle">
@@ -360,7 +361,6 @@ document.getElementById('automationButton').addEventListener('click', function()
                     </div>
                 </div>
             `;
-            automationContent.innerHTML += toggleHtml;
 
             // Delay the event listener attachment to ensure the elements are fully rendered
             setTimeout(() => {
@@ -391,95 +391,72 @@ document.getElementById('automationButton').addEventListener('click', function()
                 console.log("Three-way toggle event listener attached");
             }, 0); // You can adjust the timeout duration if needed
 
-            const defaultMarkerHtml = `
+            content += `
                 <div style="margin-bottom: 15px;">
                     <label for="defaultBuyMarkerStateSwitch" style="margin-right: 10px;">Default Buy Marker State</label>
                     <label class="switch">
-                        <input type="checkbox" id="defaultBuyMarkerStateSwitch">
+                        <input type="checkbox" id="defaultBuyMarkerStateSwitch" ${defaultBuyMarkerState ? 'checked' : ''}>
                         <span class="slider"></span>
                     </label>
                 </div>
             `;
-            automationContent.innerHTML += defaultMarkerHtml;
-
-            // Use a timeout to ensure the checkbox is fully rendered before setting its state
-            setTimeout(() => {
-                const defaultBuyMarkerStateSwitch = document.getElementById('defaultBuyMarkerStateSwitch');
-                defaultBuyMarkerStateSwitch.checked = defaultBuyMarkerState;
-            }, 0);
-
         }
 
         // Dynamically add Auto-Buy Upgrades setting if unlocked, with space and switch
         if (autobuyUpgradesSkill) {
-            const autoBuyHtml = `
+            content += `
                 <div style="margin-bottom: 15px;">
                     <label for="autoBuyUpgradesSwitch" style="margin-right: 10px;">Enable Auto-Buy Upgrades</label>
                     <label class="switch">
-                        <input type="checkbox" id="autoBuyUpgradesSwitch">
+                        <input type="checkbox" id="autoBuyUpgradesSwitch" ${autobuyIntervalId !== null ? 'checked' : ''}>
                         <span class="slider"></span>
                     </label>
                 </div>
             `;
-            automationContent.innerHTML += autoBuyHtml;
-
-            // Use a timeout to ensure the checkbox is fully rendered before setting its state
-            setTimeout(() => {
-                const autoBuyUpgradesSwitch = document.getElementById('autoBuyUpgradesSwitch');
-                autoBuyUpgradesSwitch.checked = (autobuyIntervalId !== null);
-
-                // Debug: Log the current checked state
-                console.log("Checkbox checked state after timeout:", autoBuyUpgradesSwitch.checked);
-            }, 0); // You can adjust the timeout duration if needed
         }
 
         // Dynamically add Auto-Prestige Threshold setting if available
         if (autoPrestigeThreshold !== null) {
-            const autoPrestigeHtml = `
+            content += `
                 <div style="margin-bottom: 15px;">
                     <label for="autoPrestigeThresholdInput">Auto Prestige Threshold:</label>
                     <input type="number" id="autoPrestigeThresholdInput" value="${autoPrestigeThreshold}" step="0.1" style="font-size: 16px;">
                     <span id="prestigeWarning" style="display: none; color: red;">Disable auto prestige</span> <!-- Add the red-line warning -->
                 </div>
             `;
-            automationContent.innerHTML += autoPrestigeHtml;
         }
 
         // Dynamically add Auto-Big Crunch Threshold setting if available
         if (autoBigCrunchThreshold !== null) {
-            const autoBigCrunchHtml = `
+            content += `
                 <div style="margin-bottom: 15px;">
                     <label for="autoBigCrunchThresholdInput">Auto Big Crunch Threshold:</label>
                     <input type="number" id="autoBigCrunchThresholdInput" value="${autoBigCrunchThreshold}" step="0.1" style="font-size: 16px;">
                     <span id="bigCrunchWarning" style="display: none; color: red;">Disable auto big crunch</span> <!-- Add the red-line warning -->
                 </div>
             `;
-            automationContent.innerHTML += autoBigCrunchHtml;
         }
-
 
         // Dynamically add Auto-Ascend Threshold setting if available
         if (autoAscendThreshold !== null) {
-            const autoAscendHtml = `
+            content += `
                 <div style="margin-bottom: 15px;">
                     <label for="autoAscendThresholdInput">Auto Ascend Threshold (0 to ${numAscensionUpgrades}):</label>
                     <input type="number" id="autoAscendThresholdInput" value="${autoAscendThreshold}" min="0" max="${numAscensionUpgrades}" style="font-size: 16px;">
                     <span id="ascendWarning" style="display: none; color: red;">Disable auto ascend</span>
                 </div>
             `;
-            automationContent.innerHTML += autoAscendHtml;
         }
 
         // Dynamically add Auto-Transcend Threshold setting if available
         if (autoTranscendThreshold !== null) {
-            const autoTranscendHtml = `
+            content += `
                 <div style="margin-bottom: 15px;">
                     <label for="autoTranscendThresholdInput">Auto Transcend Threshold (0 to ${numPUAscensionUpgrades}):</label>
                     <input type="number" id="autoTranscendThresholdInput" value="${autoTranscendThreshold}" min="0" max="${numPUAscensionUpgrades}" style="font-size: 16px;">
                     <span id="transcendWarning" style="display: none; color: red;">Disable auto transcend</span>
                 </div>
             `;
-            automationContent.innerHTML += autoTranscendHtml;
         }
 
         // Add listeners to detect when 0 is selected, including when settings are reopened
@@ -572,56 +549,30 @@ document.getElementById('automationButton').addEventListener('click', function()
 
         // Dynamically add Auto-Fighting setting if autoFightSkill is unlocked
         if (autoFightSkill) {
-            let autoFightHtml;
-            if (autoMeditateSkill) {
-                autoFightHtml = `
-                    <div style="margin-bottom: 15px;">
-                        <label for="autoFightSwitch" style="margin-right: 10px;">Enable Auto-Fighting/Meditating</label>
-                        <label class="switch">
-                            <input type="checkbox" id="autoFightSwitch">
-                            <span class="slider"></span>
-                        </label>
-                    </div>
-                `;
-            } else {
-                autoFightHtml = `
-                    <div style="margin-bottom: 15px;">
-                        <label for="autoFightSwitch" style="margin-right: 10px;">Enable Auto-Fighting</label>
-                        <label class="switch">
-                            <input type="checkbox" id="autoFightSwitch">
-                            <span class="slider"></span>
-                        </label>
-                    </div>
-                `;
-            }
-            automationContent.innerHTML += autoFightHtml;
-
-            // Use a timeout to ensure the checkbox is fully rendered before setting its state
-            setTimeout(() => {
-                const autoFightSwitch = document.getElementById('autoFightSwitch');
-                autoFightSwitch.checked = autoFightEnabled; // Assume autoFightIntervalId manages auto-fighting
-            }, 0); // Adjust timeout if necessary
-        }
-
-        
-        // Dynamically add Auto-Fighting setting if autoFightSkill is unlocked
-        if (hopiumTradeSkill && equilibriumOfHopeSkill) {
-            const autoHopiumTradeHtml = `
+            content += `
                 <div style="margin-bottom: 15px;">
-                    <label for="autoHopiumTradeSwitch" style="margin-right: 10px;">Enable Auto Hopium Trade</label>
+                    <label for="autoFightSwitch" style="margin-right: 10px;">${
+                        autoMeditateSkill ? 'Enable Auto-Fighting/Meditating' : 'Enable Auto-Fighting'
+                    }</label>
                     <label class="switch">
-                        <input type="checkbox" id="autoHopiumTradeSwitch">
+                        <input type="checkbox" id="autoFightSwitch" ${autoFightEnabled ? 'checked' : ''}>
                         <span class="slider"></span>
                     </label>
                 </div>
             `;
-            automationContent.innerHTML += autoHopiumTradeHtml;
+        }
 
-            // Use a timeout to ensure the checkbox is fully rendered before setting its state
-            setTimeout(() => {
-                const autoHopiumTradeSwitch = document.getElementById('autoHopiumTradeSwitch');
-                autoHopiumTradeSwitch.checked = autoTradeHopiumIntervalId !== null;
-            }, 0); // Adjust timeout if necessary
+        // Dynamically add Auto-Fighting setting if autoFightSkill is unlocked
+        if (hopiumTradeSkill && equilibriumOfHopeSkill) {
+            content += `
+                <div style="margin-bottom: 15px;">
+                    <label for="autoHopiumTradeSwitch" style="margin-right: 10px;">Enable Auto Hopium Trade</label>
+                    <label class="switch">
+                        <input type="checkbox" id="autoHopiumTradeSwitch" ${autoTradeHopiumIntervalId !== null ? 'checked' : ''}  >
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            `;
         }
 
         // Check if any feature is missing and at least one is unlocked
@@ -629,12 +580,13 @@ document.getElementById('automationButton').addEventListener('click', function()
         const atLeastOneFeatureUnlocked = autobuyUpgradesSkill || autoPrestigeThreshold !== null || buyMarkersSkill || autoAscendThreshold !== null || autoTranscendThreshold === null;
 
         if (someFeaturesMissing && atLeastOneFeatureUnlocked) {
-            automationContent.innerHTML += `
+            content += `
                 <p style="margin-top: 20px; color: #ccc;">
                     You are still missing some automation features. Once unlocked, their settings will appear here.
                 </p>`;
         }
     }
+    automationContent.innerHTML = content;
 
     document.getElementById('automationOverlay').style.display = 'flex';
 
@@ -648,7 +600,7 @@ document.getElementById('automationButton').addEventListener('click', function()
 function outsideAutomationClickListener(event) {
     const automationContent = document.getElementById('automationContent');
     const automationOverlay = document.getElementById('automationOverlay');
-    
+
     // Close the overlay if the click is outside the automation content
     if (!automationContent.contains(event.target)) {
         automationOverlay.style.display = 'none';
@@ -781,7 +733,7 @@ document.getElementById('saveAutomationSettingsButton').addEventListener('click'
     // Close the overlay
     document.getElementById('automationOverlay').style.display = 'none';
     showImmediateMessageModal('Automation Settings Saved', 'Your automation settings have been saved successfully.');
-    
+
     unlockAchievement('Automation Optimizer');
 });
 
@@ -830,7 +782,7 @@ document.getElementById('numberFormatButton').addEventListener('click', function
         currentNumberFormat = "Mixed";
     }
     this.textContent = `Number Format: ${currentNumberFormat}`;
-    
+
     localStorage.setItem('currentNumberFormat', JSON.stringify(currentNumberFormat));
 
 

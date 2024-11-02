@@ -1234,24 +1234,6 @@ function renderAchievements(type = 'all') {
     updateAchievementsInfo();
 }
 
-// Function to handle tab switching
-function switchTab(event) {
-    const type = event.target.getAttribute('data-type');
-
-    // Remove 'active' class from all buttons
-    document.querySelectorAll('.tab-button').forEach(button => {
-        button.classList.remove('active');
-    });
-
-    // Add 'active' class to the clicked button
-    event.target.classList.add('active');
-
-    // Render achievements for the selected type and update count
-    renderAchievements(type);
-}
-
-
-
 let numAchievementsOpens = 0;
 // Function to show the achievements overlay
 function showAchievementsOverlay() {
@@ -1262,14 +1244,8 @@ function showAchievementsOverlay() {
     if (numAchievementsOpens==5){
         unlockAchievement('Fifth');
     }
-
-    // Reset active tab to 'All'
-    document.querySelectorAll('.tab-button').forEach(button => {
-        button.classList.remove('active');
-    });
-    document.querySelector('.tab-button[data-type="all"]').classList.add('active');
-
-    renderAchievements(); // Render the achievements grid inside the overlay
+    // Reset to default tab and render achievements
+    achievementTabs.reset();
 }
 
 // Function to update the achievements info
@@ -1322,6 +1298,11 @@ function closeAchievementsOverlay() {
     overlay.style.display = 'none';
 }
 
+const achievementTabs = new TabbedDisplay(
+    document.querySelector('#achievementTabs'), // tab containing element
+    renderAchievements // call this function with name when changing tabs
+);
+
 document.addEventListener('DOMContentLoaded', () => {
     // Event listener to open the achievements overlay when the button is clicked
     document.getElementById('achievementsButton').addEventListener('click', showAchievementsOverlay);
@@ -1338,9 +1319,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Event listeners for tab buttons
-    document.querySelectorAll('.tab-button').forEach(button => {
-        button.addEventListener('click', switchTab);
-    });
+    achievementTabs.addTabsListeners();
 
     // Optional: Render achievements immediately if needed
     // renderAchievements();

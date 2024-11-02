@@ -64,7 +64,7 @@
             <span class="close-button" id="closeMessageModal">&times;</span>
             <h2 id="modalTitle"></h2>
             <p id="modalMessage"></p>
-            <img id="modalImage" src="" alt="Modal Image">
+            <img id="modalImage" src="" alt="">
             <button id="modalCloseButton">Close</button>
             <div id="modalConfirmButtons">
                 <button id="modalConfirmButton">Confirm</button>
@@ -203,7 +203,7 @@
                     <img src="imgs/cookie.jpg" alt="Cookie">
                     <span class="cookieTooltip">Each cookie click counts as 10 clicks on collect buttons for Copium, Delusion, Yacht Money, and Troll Points!</span>
                 </button>
-            
+
                 <!-- Warp Time Button -->
                 <div id="warpTimeButtonContainer">
                     <button id="warpTimeButton" class="game-button" style="display: none;">
@@ -211,9 +211,9 @@
                         <div class="overlay-circle"></div> <!-- Overlay that will mask the progress -->
                     </button>
                     <span class="cookieTooltip">Warp Time!</span>
-                </div>         
+                </div>
             </div>
-                 
+
             <p class="stellar-harvest-text" id="stellar-harvest-display" style="display:none;">Stellar Harvest Mult x1.00</p>
             <button id="prestigeButton" style="display:none;" class="custom-button">Prestige</button>
             <p class="prestige-multiplier-text" id="prestige-multiplier">Prestige: x1.00 mult</p>
@@ -511,7 +511,7 @@
             </div>
             <button id="closeBalanceHallButton">Exit</button>
         </div>
-    </div>    
+    </div>
     <!-- Settings Overlay -->
     <div id="settingsOverlay" class="settings-overlay" style="display: none;">
         <div class="settings-overlay-content">
@@ -525,26 +525,26 @@
                     <!-- Left Column -->
                     <div class="left-column">
                         <button id="exportSaveButton">
-                            <img src="imgs/textures/download.png" alt="Download Icon"> Save File
+                            <img src="imgs/textures/download.png" alt=""> Save File
                         </button>
                         <button id="importSaveButton">
-                            <img src="imgs/textures/upload.png" alt="Upload Icon"> Load File
+                            <img src="imgs/textures/upload.png" alt=""> Load File
                         </button>
-            
+
                         <!-- Checkbox under left column -->
                         <div class="settings-checkbox">
                             <input type="checkbox" id="createBackupOnImportCheckbox" name="createBackupOnImport">
                             <label for="createBackupOnImport">Create Backup on Import</label>
                         </div>
                     </div>
-            
+
                     <!-- Right Column -->
                     <div class="right-column">
                         <button id="copySaveButton">
-                            <img src="imgs/textures/copy.png" alt="Copy Icon"> Copy Save
+                            <img src="imgs/textures/copy.png" alt=""> Copy Save
                         </button>
                         <button id="pasteSaveButton">
-                            <img src="imgs/textures/paste.png" alt="Paste Icon"> Paste Save
+                            <img src="imgs/textures/paste.png" alt=""> Paste Save
                         </button>
                     </div>
                 </div>
@@ -615,12 +615,12 @@
             <div id="achievements-info">Achievements Unlocked: 0/100 | Multiplier: 1.00x (to ALL RESOURCES)</div>
 
             <!-- Tabs for Achievement Categories -->
-            <div id="achievementTabs" class="achievement-tabs">
-                <button class="tab-button active" data-type="all">All</button>
-                <button class="tab-button" data-type="progression">Progression</button>
-                <button class="tab-button" data-type="freebie">Freebie</button>
-                <button class="tab-button" data-type="puzzle">Puzzle</button>
-                <button class="tab-button" data-type="skill">Skill</button>
+            <div id="achievementTabs" class="achievement-tabs" data-default-tab="all">
+                <button type="button" class="tab-button" data-tab="all">All</button>
+                <button type="button" class="tab-button" data-tab="progression">Progression</button>
+                <button type="button" class="tab-button" data-tab="freebie">Freebie</button>
+                <button type="button" class="tab-button" data-tab="puzzle">Puzzle</button>
+                <button type="button" class="tab-button" data-tab="skill">Skill</button>
             </div>
 
             <!-- Info box to display count of unlocked achievements in current tab -->
@@ -649,7 +649,8 @@
     </div>
     <!-- Hidden file input for importing save file -->
     <input type="file" id="importFileInput" style="display: none;">
-    <script src="htmlutils.js"></script>
+    <script src="lib/events.js"></script>
+    <script src="lib/components.js"></script>
     <script src="upgrades.js"></script>
     <script src="script.js"></script>
     <script src="library.js"></script>
