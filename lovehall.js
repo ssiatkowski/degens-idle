@@ -1579,7 +1579,10 @@ function initializeLoveHallSkills() {
                             'Confirm Love Skill Unlock',
                             `Do you want to unlock ${skill.name} for ${formatNumber(skill.cost)} Love Points? Remember - the paired skill will increase in cost!`,
                             true,
-                            false
+                            false,
+                            null,
+                            false,
+                            true
                         );
                         if (result) {
                             lovePoints -= skill.cost;
@@ -1606,8 +1609,8 @@ function initializeLoveHallSkills() {
 
 function outsideLoveHallClickListener(event) {
     const loveHallContent = document.querySelector('.lovehall-overlay-content');
-
-    if (!loveHallContent.contains(event.target)) {
+    const modalContent = document.querySelector('.modal-embrace');
+    if (!loveHallContent.contains(event.target) && !modalContent.contains(event.target) && !event.target.contains(modalContent)) {  
         closeLoveHall();
     }
 }
