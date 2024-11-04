@@ -392,6 +392,13 @@ const achievements = [
         type: 'puzzle',
     },
     {
+        name: 'Virtual Dodging',
+        isUnlocked: false,
+        hoverText: 'tweak VR code for the Matrix',
+        img: 'imgs/achievements/virtual_dodging.jpg',
+        type: 'puzzle',
+    },
+    {
         name: 'Mortal Kombat',
         isUnlocked: false,
         hoverText: 'I only know Scorpion',
@@ -749,6 +756,13 @@ const achievements = [
         type: 'progression',
     },
     {
+        name: 'Rote Amnesia',
+        isUnlocked: false,
+        hoverText: 'complete a 6-length memory game in reverse',
+        img: 'imgs/achievements/rote_amnesia.jpg',
+        type: 'skill',
+    },
+    {
         name: 'Tank the Crit',
         isUnlocked: false,
         hoverText: 'live to tell the tale of getting crit by Sauron',
@@ -825,6 +839,13 @@ const achievements = [
         hoverText: 'infinite embrace for < 3.3 base LP',
         img: 'imgs/achievements/mini_embrace.jpg',
         type: 'puzzle',
+    },
+    {
+        name: 'But What If I Want To 69?',
+        isUnlocked: false,
+        hoverText: 'get sum of 69 in a math game with target less than 30',
+        img: 'imgs/achievements/but_what_if_i_want_to_69.jpg',
+        type: 'skill',
     },
     {
         name: 'Biggest Crunch',

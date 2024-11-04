@@ -398,7 +398,17 @@ function startFightGame(enemyName, enemyImg) {
             endFight(true); // Pass true to indicate the player forfeited
         };
 
-        if (currEnemyName === "Darth Vader") {
+        if (currEnemyName === "Agent Smith") {
+            if (!purchasedUpgradesSet.has("VR Life")) {
+                playerDodgeBase += 0.25;
+                playerDodge = playerDodgeBase;
+                document.getElementById('playerDodgeStat').innerText = formatNumber(playerDodge * 100) + '%';
+                unlockAchievement('Virtual Dodging');
+                logFight("<span style='color: green; font-weight: bold; font-size: 1.3em';>You figure out this is a VR fight and casually increase your dodge chance by 25%.</span>");
+                numBattleGimmicks.add('VR Dodging');
+                noGimmicksUsed = false;
+            }
+        }else if (currEnemyName === "Darth Vader") {
             if (!purchasedUpgradesSet.has("Unlimited Power") && !purchasedUpgradesSet.has("Still very stupid")) {
                 enemyStunCount = 6;
                 enemyAbsorb = 0.1;

@@ -347,6 +347,13 @@ function playMiniGame(gameType) {
                 disableClicks(); // Disable further clicks during check
                 let correct = true;
 
+                // check if sequence is length 6 and in reverse order
+                if (sequenceLength == 6) {
+                    if (sequence[0] == playerSequence[5] && sequence[1] == playerSequence[4] && sequence[2] == playerSequence[3] && sequence[3] == playerSequence[2] && sequence[4] == playerSequence[1] && sequence[5] == playerSequence[0]) {
+                        unlockAchievement('Rote Amnesia');
+                    }
+                }
+
                 for (let i = 0; i < sequence.length; i++) {
                     if (sequence[i] !== playerSequence[i]) {
                         correct = false;
@@ -641,6 +648,10 @@ function playMiniGame(gameType) {
                     currentSumDisplay.style.color = 'red'; // Change color to red to indicate warning
                 } else {
                     currentSumDisplay.style.color = '#ffffff'; // Reset color
+                }
+
+                if (sum == 69 && targetSum < 30) {
+                    unlockAchievement('But What If I Want To 69?');
                 }
 
                 if (sum === targetSum) {
