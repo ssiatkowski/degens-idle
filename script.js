@@ -781,9 +781,6 @@ function saveGameState() {
     // Save the purchased upgrades
     localStorage.setItem('purchasedUpgrades', JSON.stringify(purchasedUpgrades.map(upgrade => upgrade.name)));
 
-    // Save the first time prestige button available flag
-    localStorage.setItem('firstTimePrestigeButtonAvailable', firstTimePrestigeButtonAvailable);
-
     // Save the state of the Cookie Clicker button
     localStorage.setItem('cookieButtonVisible', document.getElementById('cookieButton').style.display === 'block');
     localStorage.setItem('timeWarpButtonVisible', warpButton.style.display === 'block');
@@ -1903,7 +1900,7 @@ async function prestige(skipConfirms = false) {
             prestigeRequirement = newPrestigeReq;
 
             // Call restartGame with isPrestige flag set to true
-            restartGame(true);
+            await restartGame(true);
 
             prestiges += 1;
 
@@ -1940,7 +1937,8 @@ function updatePrestigeButton() {
             if (firstTimePrestigeButtonAvailable && godModeLevel < 3 && bigCrunchMultiplier < 2 && lovePoints == 0) {
                 showMessageModal('Prestige Unlocked: Rise Stronger!', 'Congratulations! You have unlocked the first of many prestige layers. This one is straightforward, but it represents something much greater: the beginning of a journey filled with deeper challenges and complexity.<br><br>Prestige isn’t just a reset—it’s a testament to your resilience, symbolizing the strength to rise again, stronger and wiser. While this first step may seem simple, future layers will add layers of strategy and depth that will truly test your skills.<br><br>By choosing Prestige, you’re not just starting over; you’re gaining a powerful multiplier that will enhance everything you do. Each click, each resource, and every upgrade will be boosted, setting the stage for even greater achievements.<br><br>Are you ready to embrace this opportunity? To rebuild with newfound strength and surpass your past progress? Prestige now, and begin your ascent to greatness once more!');
                 firstTimePrestigeButtonAvailable = false; // Set the flag to false after showing the message
-                saveGameState(); // Save the game state to persist the flag
+                // Save the first time prestige button available flag
+                localStorage.setItem('firstTimePrestigeButtonAvailable', firstTimePrestigeButtonAvailable);
             }
             const newMultiplier = calculatePrestigeMultiplier();
             prestigeButton.textContent = `PRESTIGE (x${formatNumber(newMultiplier / epsMultiplier)} MULT)`;
@@ -2079,7 +2077,7 @@ async function ascend(skipConfirms = false) {
                 }
             }
 
-            restartGame(true); // Use the existing restartGame function with prestige mode
+            await restartGame(true); // Use the existing restartGame function with prestige mode
             // Save game state after ascending
             saveGameState();
 
@@ -2183,7 +2181,7 @@ async function transcend(skipConfirms = false) {
                 }
             }
 
-            restartGame(true); // Use the existing restartGame function with prestige mode
+            await restartGame(true); // Use the existing restartGame function with prestige mode
 
             // Save game state after transcending
             saveGameState();
@@ -2239,7 +2237,7 @@ async function bigCrunch(skipConfirms = false) {
 
 
             // Call restartGame with isPrestige flag set to true
-            restartGame(true);
+            await restartGame(true);
 
             epsMultiplier = 1;
             prestigeRequirement = 1000;
@@ -2415,9 +2413,7 @@ async function infiniteEmbrace(skipConfirms = false, lovePointsOverwrite = false
             }
 
             // Call restartGame with isPrestige flag set to true
-            restartGame(true, false, true);
-
-            saveGameState();
+            await restartGame(true, false, true);
 
             embraceTimer = 0;
 
@@ -2441,10 +2437,10 @@ async function infiniteEmbrace(skipConfirms = false, lovePointsOverwrite = false
     }
 }
 
-function balanceReset(){
+async function balanceReset(){
     if (!isEventInProgress() && startEvent("infiniteEmbrace")) {
         closeBalanceHall();
-        restartGame(true, false, true);
+        await restartGame(true, false, true);
         saveGameState();
         window.location.reload();
     }
