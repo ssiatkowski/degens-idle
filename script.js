@@ -1089,6 +1089,16 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
                     skill.unlocked = false;
                 });
 
+                // Reset balanceHallMultipliers
+                balanceHallMultipliers.forEach((value, key) => {
+                    value.currentMultiplier = 1;
+                });
+
+                // Reset balanceHallSkills
+                balanceHallSkills.forEach((value, key) => {
+                    value.available = false;
+                    value.unlocked = false;
+                });
 
                 // Hide the cookie button
                 document.getElementById('cookieButton').style.display = 'none';
@@ -3060,7 +3070,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true, ski
             if (!purchasedUpgradesSet.has(`I don't get this game`)) {
                 unlockAchievement('Perpetual Noob');
             }
-        }else if (name == `The Rock`) {
+        } else if (name == `The Rock`) {
             if (
                 !purchasedUpgradesSet.has(`Captain Degen`) &&
                 !purchasedUpgradesSet.has(`Proceed with Caution`) &&
@@ -3073,7 +3083,17 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true, ski
                 showMessageModal('The Rock', 'The Rock sees your squad, says "I will spare you the embarassment", and walks away. ', false, false, './imgs/the_rock_laughing.jpg');
                 unlockAchievement('Bring the Whole Squad');
             }
+        } else if (name == `One in a Million`) {
+            if (
+                !purchasedUpgradesSet.has(`Some of you right now`) &&
+                !purchasedUpgradesSet.has(`Deadlines`) &&
+                !purchasedUpgradesSet.has(`Best Meme`) &&
+                !purchasedUpgradesSet.has(`What to do`)
+            ) {
+                unlockAchievement('Number One');
+            }
         }
+
 
         if (callUpdatesAfterBuying) {
             if (name == 'Degens Idle Dev') {
@@ -4514,44 +4534,80 @@ document.querySelectorAll('.resource-value').forEach(function (element) {
 
 function calculateTooltip(resourceId) {
     let tooltip = '';
-    let baseValue, basePerSecond;
+    let baseValue, currentAmount, basePerSecond, gainPerSecond;
 
     switch (resourceId) {
         case 'copium':
             baseValue = 'Copium';
+            currentAmount = copium;
             basePerSecond = copiumPerSecond;
+            gainPerSecond = effectiveCopiumPerSecond;
             break;
         case 'delusion':
             baseValue = 'Delusion';
+            currentAmount = delusion;
             basePerSecond = delusionPerSecond;
+            gainPerSecond = effectiveDelusionPerSecond;
             break;
         case 'yachtMoney':
             baseValue = 'Yacht Money';
+            currentAmount = yachtMoney;
             basePerSecond = yachtMoneyPerSecond;
+            gainPerSecond = effectiveYachtMoneyPerSecond;
             break;
         case 'trollPoints':
             baseValue = 'Troll Points';
+            currentAmount = trollPoints;
             basePerSecond = trollPointsPerSecond;
+            gainPerSecond = effectiveTrollPointsPerSecond;
             break;
         case 'hopium':
             baseValue = 'Hopium';
+            currentAmount = hopium;
             basePerSecond = hopiumPerSecond;
+            gainPerSecond = effectiveHopiumPerSecond;
             break;
         case 'knowledge':
             baseValue = 'Knowledge';
+            currentAmount = knowledge;
             basePerSecond = knowledgePerSecond;
+            gainPerSecond = effectiveKnowledgePerSecond;
             break;
         case 'power':
             baseValue = 'Power';
-            basePerSecond = (Math.max(knowledge, 0) ** (1 / 3)) / 1e12;
+            currentAmount = power;
+            basePerSecond = (Math.max(knowledge, 0) ** (1 / 3)) / 1e12;  // Custom calculation for power base gain
+            gainPerSecond = effectivePowerPerSecond;
             break;
         case 'serenity':
             baseValue = 'Serenity';
+            currentAmount = serenity;
             basePerSecond = serenityPerSecond;
+            gainPerSecond = effectiveSerenityPerSecond;
             break;
         default:
             return 'Gain calculation based on upgrades and boosts.';
     }
+
+    // Calculate next order of magnitude and time required to reach it
+    let nextOrderOfMagnitude = Math.pow(10, Math.ceil(Math.log10(currentAmount)));
+    let timeUntilNextOrder = (nextOrderOfMagnitude - currentAmount) / gainPerSecond;
+
+    // Format the time with appropriate units
+    let timeFormatted;
+    if (timeUntilNextOrder < 60) {
+        timeFormatted = `${Math.round(timeUntilNextOrder)} seconds`;
+    } else if (timeUntilNextOrder < 3600) {
+        timeFormatted = `${Math.round(timeUntilNextOrder / 60)} minutes`;
+    } else if (timeUntilNextOrder < 86400) {
+        timeFormatted = `${(timeUntilNextOrder / 3600).toFixed(1)} hours`;
+    } else {
+        timeFormatted = `${(timeUntilNextOrder / 86400).toFixed(1)} days`;
+    }
+
+    // Add the time until the next order of magnitude to the tooltip
+    tooltip += `<b>Time Until ${formatNumber(nextOrderOfMagnitude)}:</b> ~${timeFormatted}<br><br>`;
+    
 
     if (resourceId !== 'power'){
         // Base gain display

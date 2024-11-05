@@ -848,6 +848,13 @@ const achievements = [
         type: 'skill',
     },
     {
+        name: 'Number One',
+        isUnlocked: false,
+        hoverText: `Everybody want to know what I'd do if I didn't win. I guess we'll never know.`,
+        img: 'imgs/achievements/kanye_number_one.jpg',
+        type: 'puzzle',
+    },
+    {
         name: 'Biggest Crunch',
         isUnlocked: false,
         hoverText: 'big crunch for over 9000 mult (cannot have infinite collapse)',
@@ -1146,6 +1153,13 @@ const achievements = [
         hoverText: `celebrate before birthday`,
         img: 'imgs/achievements/birthdayception.jpg',
         type: 'puzzle',
+    },
+    {
+        name: 'Balancing Act',
+        isUnlocked: false,
+        hoverText: `unlock first Hall of Balance skill`,
+        img: 'imgs/achievements/balancing_act.jpg',
+        type: 'progression',
     },
     {
         name: 'Fifty Days of Saving',

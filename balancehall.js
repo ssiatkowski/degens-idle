@@ -327,6 +327,7 @@ function unlockBalanceHallSkill(skillName, duringLoad = false) {
         switch (skillName) {
             case "Greater Balance":
                 console.log("Greater Balance functionality activated.");
+                unlockAchievement('Balancing Act');
                 updateSliders();
                 break;
             case "Love Matters":

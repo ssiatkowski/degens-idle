@@ -1853,12 +1853,12 @@ const upgrades = [
     {
         name: `Salt`,
         cost: { copium: 0, delusion: 2e197, yachtMoney: 0, trollPoints: 2e197, hopium: 1e190, knowledge: 1e167, power: 0, serenity: 3e33 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 3e84, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 7e41, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 3e84, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 9e41, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/salt.jpg`,
     },
     {
         name: `Balance Master`,
-        cost: { copium: 1e198, delusion: 1e198, yachtMoney: 1e198, trollPoints: 1e198, hopium: 1e192, knowledge: 1e167, power: 1e62, serenity: 1e34 },
+        cost: { copium: 1e199, delusion: 1e199, yachtMoney: 1e199, trollPoints: 1e199, hopium: 1e192, knowledge: 1e167, power: 1e62, serenity: 1e34 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 1e42, powerPerSecond: 0, serenityPerSecond: 1e18 },
         img: `imgs/balance_master.jpg`,
         message: `<p>
