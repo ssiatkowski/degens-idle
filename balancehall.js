@@ -16,7 +16,7 @@ let balanceHallSkills = new Map([
     ["Greater Balance", { description: "Increase max balance values x100", cost: { Copium: 1e205 }, available: false, unlocked: false }],
     ["Love Matters", { description: "Multiply all resources by (Love Points / 1000)", cost: { Delusion: 1e210 }, available: false, unlocked: false }],
     ["Balance Check", { description: "Multiplier to last 4 resource based on balance of first 4 resources (checked every 30 seconds)", cost: { 'Yacht Money': 5e217 }, available: false, unlocked: false }],
-    ["Everlasting Love", { description: "Pasively generate Love Points based on largest embrace", cost: { 'Troll Points': 1e225 }, available: false, unlocked: false }],
+    ["Everlasting Love", { description: "Pasively generate Love Points based on largest embrace each hour (online & offline)", cost: { 'Troll Points': 1e225 }, available: false, unlocked: false }],
     ["Skill 5", { description: "Does not Exist Yet", cost: { Hopium: 1e300 }, available: false, unlocked: false }],
     ["Skill 6", { description: "Does not Exist Yet", cost: { Knowledge: 1e300 }, available: false, unlocked: false }],
     ["Skill 7", { description: "Does not Exist Yet", cost: { Power: 1e300 }, available: false, unlocked: false }],

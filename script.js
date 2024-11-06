@@ -975,7 +975,7 @@ function generateResources() {
 
     // Generate 0.5 seconds' worth of lovePoints if Everlasting Love is unlocked
     if (balanceHallSkills.get("Everlasting Love").unlocked) {
-        lovePoints += largestEmbrace / 86400 / 2; // 0.5 seconds of lovePoints
+        lovePoints += largestEmbrace / 3600 / 2; // 0.5 seconds of lovePoints
     }
 
     crunchTimer += 0.5;
@@ -2752,7 +2752,7 @@ function generateIdleResources(elapsedSeconds) {
 
     // Check if Everlasting Love is unlocked and increment lovePoints accordingly
     if (balanceHallSkills.get("Everlasting Love").unlocked) {
-        lovePoints += (largestEmbrace / 86400) * elapsedSeconds;
+        lovePoints += (largestEmbrace / 3600) * elapsedSeconds;
     }
 
     if (elapsedSeconds > 60 * 60 * 24){
