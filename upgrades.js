@@ -1941,7 +1941,7 @@ const upgrades = [
         cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 1e85, serenity: 0 },
         earnings: { copiumPerSecond: 1e90, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/volume_controls.jpg`,
-        hoverOverwrite: 'One must HOPE that for more power (or buy the 5th Hall of Balance skill)',
+        hoverOverwrite: 'One must HOPE for more power (or buy the 5th Hall of Balance skill)',
     },
     {
         name: `Your Ego`,
