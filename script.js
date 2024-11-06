@@ -2382,6 +2382,10 @@ function animateInfiniteEmbraceExpansion() {
 async function infiniteEmbrace(skipConfirms = false, lovePointsOverwrite = false) {
     skipConfirms |= enableQuickMode;
 
+    if (!lovePointsOverwrite && calculateLovePointsGained() == 0) {
+        return;
+    }
+
     // If we can Infinite Embrace, and no other event is occuring and we successfully trigger a startEvent
     if ((lovePointsOverwrite || canInfiniteEmbrace()) && !isEventInProgress() && startEvent("infiniteEmbrace")) {
         let confirmed = true;
