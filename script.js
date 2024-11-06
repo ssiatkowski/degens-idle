@@ -208,6 +208,8 @@ let stellarCookieSkill = false;
 
 let stellarMeditationMult = 1;
 
+let balanceCheckMultiplier = 1;
+
 let currentTimeouts = [];  // Array to store all active timeout IDs
 let cookieIntervalId;
 
@@ -242,7 +244,7 @@ let eventProgression = {
 }
 
 function calculateBaseKnowledge() {
-    let baseKnowledge = knowledgePerSecond * totalMultiplier * (crunchKnowledgeSkill ? bigCrunchMultiplier**(2/3) : bigCrunchMultiplier**(1/2)) * knowledgeInfusionMultiplier * ((faithFueledKnowledgeSkill && hopium > 1e10) ? Math.log10(hopium)/10 : 1) * balanceHallMultipliers.get('Knowledge').currentMultiplier;
+    let baseKnowledge = knowledgePerSecond * totalMultiplier * (crunchKnowledgeSkill ? bigCrunchMultiplier**(2/3) : bigCrunchMultiplier**(1/2)) * knowledgeInfusionMultiplier * ((faithFueledKnowledgeSkill && hopium > 1e10) ? Math.log10(hopium)/10 : 1) * balanceHallMultipliers.get('Knowledge').currentMultiplier * balanceCheckMultiplier;
 
     if(balanceHallSkills.get("Love Matters").unlocked && lovePoints > 1000) {
         baseKnowledge *= (lovePoints / 1000);
@@ -276,7 +278,7 @@ function calculateBasePower() {
     let basePower = (moneyIsPowerTooSkill ?
         (Math.max(knowledge, 0) ** (1/3) / 1e12) * (1 + (Math.max(yachtMoney, 0) ** (1/30) / 100))
         : Math.max(knowledge, 0) ** (1/3) / 1e12)
-        * powerSurgeMultiplier * devMultiplier * stellarHarvestMult * stellarMeditationMult * achievementMultiplier * powerInfusionMultiplier * cosmicGamekeeperMultiplier * balanceHallMultipliers.get('Power').currentMultiplier;
+        * powerSurgeMultiplier * devMultiplier * stellarHarvestMult * stellarMeditationMult * achievementMultiplier * powerInfusionMultiplier * cosmicGamekeeperMultiplier * balanceHallMultipliers.get('Power').currentMultiplier * balanceCheckMultiplier;
 
     if (powerIsPowerSkill) {
         basePower *= 1.1 ** (powerHallSkills.filter(skill => skill.unlocked).length);
@@ -322,7 +324,7 @@ function updateEffectiveMultipliers() {
     effectiveYachtMoneyPerSecond = yachtMoneyPerSecond * totalMultiplier * amplifierMultiplier * yachtMoneySurgeMultiplier * basicResourceBoost * loveMultiplier * loveSizeMattersMultiplier * balanceHallMultipliers.get('Yacht Money').currentMultiplier;
     effectiveTrollPointsPerSecond = trollPointsPerSecond * totalMultiplier * amplifierMultiplier * trollPointsSurgeMultiplier * basicResourceBoost * loveMultiplier * balanceHallMultipliers.get('Troll Points').currentMultiplier;
 
-    effectiveHopiumPerSecond = hopiumPerSecond * totalMultiplier * beaconOfSevenSunsMult * balanceHallMultipliers.get('Hopium').currentMultiplier;
+    effectiveHopiumPerSecond = hopiumPerSecond * totalMultiplier * beaconOfSevenSunsMult * balanceHallMultipliers.get('Hopium').currentMultiplier * balanceCheckMultiplier;
     if (serenityFlowSkill && serenity > 1) {
         effectiveHopiumPerSecond *= Math.sqrt(serenity);
     }
@@ -333,7 +335,7 @@ function updateEffectiveMultipliers() {
         effectivePowerPerSecond = calculateEffectivePower();
     }
 
-    effectiveSerenityPerSecond = serenityPerSecond * achievementMultiplier * serenityBoostMultiplier * cosmicGamekeeperMultiplier * balanceHallMultipliers.get('Serenity').currentMultiplier;
+    effectiveSerenityPerSecond = serenityPerSecond * achievementMultiplier * serenityBoostMultiplier * cosmicGamekeeperMultiplier * balanceHallMultipliers.get('Serenity').currentMultiplier * balanceCheckMultiplier;
 
     if(balanceHallSkills.get("Love Matters").unlocked && lovePoints > 1000) {
         effectiveSerenityPerSecond *= (lovePoints / 1000);
@@ -544,6 +546,8 @@ function loadGameState() {
     godModeMultiplier = calculateGodModeMultiplier(godModeLevel);
     puGodLevel = upgrades.filter(upgrade => upgrade.isPUGodMode).length;
     puGodMultiplier = calculatePUGodModeMultiplier(puGodLevel);
+
+    balanceCheckMultiplier = JSON.parse(localStorage.getItem('balanceCheckMultiplier')) || 1;
 
     // Load the state of the Cookie Clicker button
     const cookieButtonVisible = JSON.parse(localStorage.getItem('cookieButtonVisible'));
@@ -969,6 +973,11 @@ function generateResources() {
         }
     }
 
+    // Generate 0.5 seconds' worth of lovePoints if Everlasting Love is unlocked
+    if (balanceHallSkills.get("Everlasting Love").unlocked) {
+        lovePoints += largestEmbrace / 86400 / 2; // 0.5 seconds of lovePoints
+    }
+
     crunchTimer += 0.5;
     embraceTimer += 0.5;
     if (accumulatedWarpTime < warpTimeMax) accumulatedWarpTime += 0.5;
@@ -1080,6 +1089,8 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
             if (!isInfiniteEmbrace) {
 
                 lovePoints = 0;
+
+                clearInterval(balanceCheckInterval);
 
                 // Reset love hall skills
                 loveHallSkills.forEach(skill => {
@@ -1236,6 +1247,8 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
             puGodMultiplier = 1;
             bigCrunchPower = 1e-7;
             bigCrunchMultiplier = 1;
+            
+            balanceCheckMultiplier = 1;
 
             // Reset the isGodMode property for all upgrades
             upgrades.forEach(upgrade => {
@@ -2736,6 +2749,11 @@ function generateIdleResources(elapsedSeconds) {
     trollPoints += effectiveTrollPointsPerSecond * elapsedSeconds;
     hopium += effectiveHopiumPerSecond * elapsedSeconds;
     serenity += effectiveSerenityPerSecond * elapsedSeconds;
+
+    // Check if Everlasting Love is unlocked and increment lovePoints accordingly
+    if (balanceHallSkills.get("Everlasting Love").unlocked) {
+        lovePoints += (largestEmbrace / 86400) * elapsedSeconds;
+    }
 
     if (elapsedSeconds > 60 * 60 * 24){
         unlockAchievement('Take a Break');
@@ -4805,6 +4823,10 @@ function calculateTooltip(resourceId) {
         tooltip += `<span style="color:#E37383">x${formatNumber(lovePoints / 1000)} (Love Matters)</span><br>`;
     }
 
+    if (balanceCheckMultiplier > 1 && (resourceId == 'hopium' || resourceId == 'knowledge' || resourceId == 'power' || resourceId == 'serenity')) {
+        tooltip += `<span style="color:#b0c4de">x${formatNumber(balanceCheckMultiplier)} (Balance Check)</span><br>`;
+    }
+
     return tooltip;
 }
 
@@ -5045,34 +5067,34 @@ document.addEventListener('DOMContentLoaded', () => {
     // Save the game state when the window is about to be unloaded
     window.addEventListener('beforeunload', saveGameState);
 
-    let spentLovePoints = 0;
-    loveHallSkills.forEach(skill => {
-        if (skill.unlocked) {
-            const pairSkill = loveHallSkills.find(s => s.pair === skill.pair && s.name !== skill.name);
-            const levelMultiplier = getLevelMultiplier(skill.level);
+    // let spentLovePoints = 0;
+    // loveHallSkills.forEach(skill => {
+    //     if (skill.unlocked) {
+    //         const pairSkill = loveHallSkills.find(s => s.pair === skill.pair && s.name !== skill.name);
+    //         const levelMultiplier = getLevelMultiplier(skill.level);
 
-            // If both skills in the pair are unlocked
-            if (pairSkill && pairSkill.unlocked) {
-                // Refund original cost for the first skill
-                spentLovePoints += 0.5 * skill.originalCost;
+    //         // If both skills in the pair are unlocked
+    //         if (pairSkill && pairSkill.unlocked) {
+    //             // Refund original cost for the first skill
+    //             spentLovePoints += 0.5 * skill.originalCost;
                 
-                // Refund the increased cost for the paired skill (multiplied cost)
-                spentLovePoints += 0.5 * pairSkill.originalCost * levelMultiplier;
+    //             // Refund the increased cost for the paired skill (multiplied cost)
+    //             spentLovePoints += 0.5 * pairSkill.originalCost * levelMultiplier;
                 
-            } else {
-                // Refund original cost if only this skill is unlocked
-                spentLovePoints += skill.originalCost;
-            }
-        }
-    });
-    if (spentLovePoints + lovePoints > totalLoveHallSkillsCost + 100000){
+    //         } else {
+    //             // Refund original cost if only this skill is unlocked
+    //             spentLovePoints += skill.originalCost;
+    //         }
+    //     }
+    // });
+    // if (spentLovePoints + lovePoints > totalLoveHallSkillsCost + 1e8){
         
-        lovePoints -= ((spentLovePoints + lovePoints) - (totalLoveHallSkillsCost + 100000));
-        showMessageModal('The Journey Continues',
-            "You've reached an impressive milestone! With all Hall of Love skills unlocked and over 100K Love Points stockpiled, you're among the few who have completed all current content. To maintain a balanced gameplay experience as we prepare future updates, Love Points are currently capped at 100K. "
-            + "In the meantime, feel free to go achievement hunting if you're missing any, or join us on Discord to share your feedback and stay connected with the community. "
-            + "Congratulations on your progress, and thank you for being part of this incredible journey—there's more exciting content on the horizon!"
-        );
-    }
+    //     lovePoints -= ((spentLovePoints + lovePoints) - (totalLoveHallSkillsCost + 100000));
+    //     showMessageModal('The Journey Continues',
+    //         "You've reached an impressive milestone! With all Hall of Love skills unlocked and over 100K Love Points stockpiled, you're among the few who have completed all current content. To maintain a balanced gameplay experience as we prepare future updates, Love Points are currently capped at 100K. "
+    //         + "In the meantime, feel free to go achievement hunting if you're missing any, or join us on Discord to share your feedback and stay connected with the community. "
+    //         + "Congratulations on your progress, and thank you for being part of this incredible journey—there's more exciting content on the horizon!"
+    //     );
+    // }
 
 });

@@ -15,16 +15,16 @@ const basicResources = ['Copium', 'Delusion', 'Yacht Money', 'Troll Points'];
 let balanceHallSkills = new Map([
     ["Greater Balance", { description: "Increase max balance values x100", cost: { Copium: 1e205 }, available: false, unlocked: false }],
     ["Love Matters", { description: "Multiply all resources by (Love Points / 1000)", cost: { Delusion: 1e210 }, available: false, unlocked: false }],
-    ["Skill 3", { description: "Does not Exist Yet", cost: { YachtMoney: 1e300 }, available: false, unlocked: false }],
-    ["Skill 4", { description: "Does not Exist Yet", cost: { TrollPoints: 1e300 }, available: false, unlocked: false }],
+    ["Balance Check", { description: "Multiplier to last 4 resource based on balance of first 4 resources (checked every 30 seconds)", cost: { 'Yacht Money': 5e217 }, available: false, unlocked: false }],
+    ["Everlasting Love", { description: "Pasively generate Love Points based on largest embrace", cost: { 'Troll Points': 1e225 }, available: false, unlocked: false }],
     ["Skill 5", { description: "Does not Exist Yet", cost: { Hopium: 1e300 }, available: false, unlocked: false }],
     ["Skill 6", { description: "Does not Exist Yet", cost: { Knowledge: 1e300 }, available: false, unlocked: false }],
     ["Skill 7", { description: "Does not Exist Yet", cost: { Power: 1e300 }, available: false, unlocked: false }],
     ["Skill 8", { description: "Does not Exist Yet", cost: { Serenity: 1e300 }, available: false, unlocked: false }],
-    ["Advanced Skill 1", { description: "Does not Exist Yet", cost: { Copium: 1e300, Delusion: 1e300, YachtMoney: 1e300, TrollPoints: 1e300, Hopium: 1e300, Knowledge: 1e300, Power: 1e300, Serenity: 1e300 }, available: false, unlocked: false }],
-    ["Advanced Skill 2", { description: "Does not Exist Yet", cost: { Copium: 1e300, Delusion: 1e300, YachtMoney: 1e300, TrollPoints: 1e300, Hopium: 1e300, Knowledge: 1e300, Power: 1e300, Serenity: 1e300 }, available: false, unlocked: false }],
-    ["Advanced Skill 3", { description: "Does not Exist Yet", cost: { Copium: 1e300, Delusion: 1e300, YachtMoney: 1e300, TrollPoints: 1e300, Hopium: 1e300, Knowledge: 1e300, Power: 1e300, Serenity: 1e300 }, available: false, unlocked: false }],
-    ["Advanced Skill 4", { description: "Does not Exist Yet", cost: { Copium: 1e300, Delusion: 1e300, YachtMoney: 1e300, TrollPoints: 1e300, Hopium: 1e300, Knowledge: 1e300, Power: 1e300, Serenity: 1e300 }, available: false, unlocked: false }]
+    ["Advanced Skill 1", { description: "Does not Exist Yet", cost: { Copium: 1e300, Delusion: 1e300, 'Yacht Money': 1e300, 'Troll Points': 1e300, Hopium: 1e300, Knowledge: 1e300, Power: 1e300, Serenity: 1e300 }, available: false, unlocked: false }],
+    ["Advanced Skill 2", { description: "Does not Exist Yet", cost: { Copium: 1e300, Delusion: 1e300, 'Yacht Money': 1e300, 'Troll Points': 1e300, Hopium: 1e300, Knowledge: 1e300, Power: 1e300, Serenity: 1e300 }, available: false, unlocked: false }],
+    ["Advanced Skill 3", { description: "Does not Exist Yet", cost: { Copium: 1e300, Delusion: 1e300, 'Yacht Money': 1e300, 'Troll Points': 1e300, Hopium: 1e300, Knowledge: 1e300, Power: 1e300, Serenity: 1e300 }, available: false, unlocked: false }],
+    ["Advanced Skill 4", { description: "Does not Exist Yet", cost: { Copium: 1e300, Delusion: 1e300, 'Yacht Money': 1e300, 'Troll Points': 1e300, Hopium: 1e300, Knowledge: 1e300, Power: 1e300, Serenity: 1e300 }, available: false, unlocked: false }]
 ]);
 
 function initializeBalanceHall() {
@@ -317,6 +317,7 @@ function purchaseSkill(skillName) {
     }
 }
 
+let balanceCheckInterval;
 
 function unlockBalanceHallSkill(skillName, duringLoad = false) {
     const skill = balanceHallSkills.get(skillName);
@@ -333,12 +334,12 @@ function unlockBalanceHallSkill(skillName, duringLoad = false) {
             case "Love Matters":
                 console.log("Love Matters functionality activated.");
                 break;
-            case "Skill 3":
-                console.log("Skill 3 functionality activated.");
-                // Placeholder for Skill 3 functionality
+            case "Balance Check":
+                console.log("Balance Check functionality activated.");
+                balanceCheckInterval = setInterval(balanceCheck, 30000);
                 break;
-            case "Skill 4":
-                console.log("Skill 4 functionality activated.");
+            case "Everlasting Love":
+                console.log("Everlasting Love functionality activated.");
                 // Placeholder for Skill 4 functionality
                 break;
             case "Skill 5":
@@ -421,4 +422,43 @@ function outsideBalanceHallClickListener(event) {
     if (!balanceHallContent.contains(event.target)) {
         closeBalanceHall();
     }
+}
+
+
+function balanceCheck() {
+    // Array of resources
+    const resources = [copium, delusion, yachtMoney, trollPoints];
+    
+    // Calculate max and min values
+    const maxResource = Math.max(...resources);
+    const minResource = Math.min(...resources);
+    
+    // Calculate the ratio (diff) between max and min
+    const diffRatio = minResource !== 0 ? maxResource / minResource : Infinity;
+    
+    // Scaling function for balanceCheckMultiplier based on diffRatio
+
+    if (diffRatio < 2) {
+        balanceCheckMultiplier = 1000;
+    } else if (diffRatio < 5) {
+        // Interpolate between 1000 (2x) and 500 (5x)
+        balanceCheckMultiplier = 1000 - ((diffRatio - 2) / (5 - 2)) * (1000 - 500);
+    } else if (diffRatio < 10) {
+        // Interpolate between 500 (5x) and 100 (10x)
+        balanceCheckMultiplier = 500 - ((diffRatio - 5) / (10 - 5)) * (500 - 100);
+    } else if (diffRatio < 100) {
+        // Interpolate between 100 (10x) and 10 (100x)
+        balanceCheckMultiplier = 100 - ((diffRatio - 10) / (100 - 10)) * (100 - 10);
+    } else if (diffRatio < 1000) {
+        // Interpolate between 10 (100x) and 1 (1000x)
+        balanceCheckMultiplier = 10 - ((diffRatio - 100) / (1000 - 100)) * (10 - 1);
+    } else {
+        // If diffRatio is >= 1000, set balanceCheckMultiplier to 1
+        balanceCheckMultiplier = 1;
+    }
+
+    localStorage.setItem('balanceCheckMultiplier', balanceCheckMultiplier);
+    showPopupTooltip(`Balance Check: x${formatNumber(balanceCheckMultiplier)}`, '#b0c4de', 0.8);
+
+    return balanceCheckMultiplier;
 }
