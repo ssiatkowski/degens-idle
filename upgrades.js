@@ -1881,7 +1881,7 @@ const upgrades = [
     {
         name: `Unnamed Space`,
         cost: { copium: 2e201, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 8e194, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 1e84, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 8e41, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 6e83, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 6e41, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/unnamed_space.jpg`,
         message: `<p>Congratulations on unlocking the "Unnamed Space" upgrade! This upgrade honors one of the most iconic space-themed idle games in the genre. <b>Unnamed Space Idle</b> takes players on a cosmic journey through exploration, strategy, and the vast mysteries of the universe, setting a new standard for depth and immersion.</p>
                 <p>Here's to celebrating a game that has pushed the boundaries of idle gaming with interstellar ambition and innovation. Enjoy the boost it brings to your Degens Idle experience — may your journey expand as infinitely as the cosmos!</p>`,
@@ -1889,25 +1889,25 @@ const upgrades = [
     {
         name: `Waiting Faster`,
         cost: { copium: 0, delusion: 1e205, yachtMoney: 0, trollPoints: 0, hopium: 1e197, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1e85, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 5e84, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/waiting_faster.jpg`,
     },
     {
         name: `Bad Teachers`,
         cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 3e207, hopium: 1e198, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 1e84, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 5e83, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/bad_teachers.jpg`,
     },
     {
         name: `Birthday Celebration`,
         cost: { copium: 0, delusion: 7e210, yachtMoney: 7e210, trollPoints: 0, hopium: 2e202, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 1e86, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 1e72, knowledgePerSecond: 7e41, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 3e85, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 4e71, knowledgePerSecond: 6e41, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/birthday_celebration.jpg`,
     },
     {
         name: `On Time Release`,
         cost: { copium: 0, delusion: 3e214, yachtMoney: 0, trollPoints: 0, hopium: 1e212, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 5e80, delusionPerSecond: 5e86, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 6e72, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 2e80, delusionPerSecond: 2e86, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 2e72, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/gta_6.jpg`,
         message: `<p>Congratulations! You have unlocked the fabled "GTA 6" upgrade—a tribute to what will soon stand among the greatest games ever made. <b>GTA 6</b> is set to be a monumental return to the series’ origins, yet it promises an experience more immersive and boundless than anything before it. Nostalgia will collide with innovation as the streets come alive in a world redefined.</p>
             <p>GTA is a game that has dared to push the very boundaries of open-world gaming, fueled by raw ambition and unrestrained creativity. The countdown begins, and the anticipation builds. Let’s hope the release holds steady; the wait is nearly over, and the legacy of Los Santos is ready to evolve.</p>`,
@@ -1921,25 +1921,25 @@ const upgrades = [
     {
         name: `Hold on to Knowledge`,
         cost: { copium: 1.5e221, delusion: 0, yachtMoney: 0, trollPoints: 1.5e221, hopium: 0, knowledge: 5e193, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1e90, hopiumPerSecond: 0, knowledgePerSecond: 1e42, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 2e89, hopiumPerSecond: 0, knowledgePerSecond: 8e41, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/hold_on_to_knowledge.jpg`,
     },
     {
         name: `A Watch is a Watch`,
         cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 3e223, hopium: 0, knowledge: 0, power: 2e80, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 5e92, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1e92, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/a_watch_is_a_watch.jpg`,
     },
     {
         name: `Sloppy Burgers`,
         cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 1e230, hopium: 0, knowledge: 0, power: 2e81, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 1e75, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 2e74, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/sloppy_burgers.jpg`,
     },
     {
         name: `Volume Controls`,
         cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 1e85, serenity: 0 },
-        earnings: { copiumPerSecond: 1e99, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 1e90, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/volume_controls.jpg`,
         hoverOverwrite: 'One must HOPE that for more power (or buy the 5th Hall of Balance skill)',
     },

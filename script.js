@@ -2987,6 +2987,16 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true, ski
         purchasedUpgradesSet.add(upgrade.name); // Add to set for fast lookups
 
 
+        
+        // Special case for unlocking the "Sebo's Luck" upgrade
+        if (name === "Sloppy Burgers") {
+            showMessageModal('The Journey Continues',
+                "Thank you for reaching this far in the game! Your dedication is truly appreciated, and you've now unlocked 1/3 of the Hall of Balance skills—are you excited for what's to come? We're in the final push toward v1.0, edging ever closer to the limits of infinity (1e308). "
+                + "Your involvement means a lot, and if you'd like to get even more involved, we'd love to see you in the Discord community. Every bit helps, whether it's spreading the word about the game, contributing code updates, helping populate our Wiki, or just lending a hand to other players. "
+                + "Congratulations on your progress, and thank you for being a vital part of this journey. There's so much more to look forward to!"
+            );
+        }
+
         // Check if the upgrade has an associated achievement and unlock it
         if (upgrade.achievement) {
             unlockAchievement(upgrade.achievement);
