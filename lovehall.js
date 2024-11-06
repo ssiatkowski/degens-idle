@@ -1496,8 +1496,12 @@ function updateLoveHallSkillDisplay() {
 
         // Check if canInfiniteEmbrace() and show (+Y = (sum(X+Y)) if true
         if (canInfiniteEmbrace()) {
-            const totalLovePoints = lovePoints + lovePointsGained; // Calculate the sum of X and Y
-            lovePointsDisplay.innerHTML = `${lovePointsDisplayText} <span style="color: gray;">(+${formatNumber(lovePointsGained)} = ${formatNumber(totalLovePoints)})</span>`;
+            if (lovePoints > 1e6) {
+              lovePointsDisplay.innerHTML = `${lovePointsDisplayText} <span style="color: gray;">(Soft Capped - Largest Embrace = ${formatNumber(largestEmbrace)})</span>`;
+            } else {
+              const totalLovePoints = lovePoints + lovePointsGained; // Calculate the sum of X and Y
+              lovePointsDisplay.innerHTML = `${lovePointsDisplayText} <span style="color: gray;">(+${formatNumber(lovePointsGained)} = ${formatNumber(totalLovePoints)})</span>`;
+            }
         } else {
             lovePointsDisplay.textContent = lovePointsDisplayText;
         }

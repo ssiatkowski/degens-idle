@@ -2011,6 +2011,7 @@ function calculateBigCrunchMultiplier(bcPower = bigCrunchPower) {
 }
 
 function calculateLovePointsGained() {
+
     let baseLovePointsGained = Math.max(0, Math.log10(serenity) * pulseOfAffectionMult);
 
     if (altruisticEmbraceSkill){
@@ -2018,7 +2019,13 @@ function calculateLovePointsGained() {
         baseLovePointsGained *= 1.25 ** meditationCount;
     }
 
-    return baseLovePointsGained + embraceExtraLovePoints;
+    baseLovePointsGained += embraceExtraLovePoints;
+
+    if (lovePoints > 1e6 && baseLovePointsGained < largestEmbrace ) {
+        baseLovePointsGained = 0;
+    }
+
+    return baseLovePointsGained;
 }
 
 
@@ -2380,21 +2387,37 @@ async function infiniteEmbrace(skipConfirms = false, lovePointsOverwrite = false
         let confirmed = true;
 
         if (!skipConfirms) {
-            confirmed = await showMessageModal(
-                'Infinite Embrace Confirmation',
-                `
-                Infinite Embrace is a profound act of injecting more love into the multiverse, ensuring that your next incarnation will be more pleasant and harmonious. By embracing the universe with infinite love, you enhance the very fabric of existence, bringing more warmth and joy to every future cycle.
-                <br><br>
-                In order to complete this sacred ritual, all progress will be reset, including prestiges, god modes, big crunches, the Hall of Knowledge, and the Hall of Power. The only things that remain intact are your achievements and the everlasting Love Points you have gathered.
-                <br><br>
-                You will gain <strong>Love Points, increasing from ${formatNumber(lovePoints)} to ${formatNumber(lovePoints + calculateLovePointsGained())}</strong>. These Love Points can be spent at the Hall of Love, which will remain unlocked across all Infinite Embraces.
-                <br><br>
-                Remember: you never lose your Love Points. They will continue to accumulate across all cycles, fueling your journey through the multiverse.
-                <br><br>
-                Are you sure you want to activate Infinite Embrace and reset your progress to inject love into the multiverse?
-                `,
-                true
-            );
+            if (lovePoints < 1e6) {
+                confirmed = await showMessageModal(
+                    'Infinite Embrace Confirmation',
+                    `
+                    Infinite Embrace is a profound act of injecting more love into the multiverse, ensuring that your next incarnation will be more pleasant and harmonious. By embracing the universe with infinite love, you enhance the very fabric of existence, bringing more warmth and joy to every future cycle.
+                    <br><br>
+                    In order to complete this sacred ritual, all progress will be reset, including prestiges, god modes, big crunches, the Hall of Knowledge, and the Hall of Power. The only things that remain intact are your achievements and the everlasting Love Points you have gathered.
+                    <br><br>
+                    You will gain <strong>Love Points, increasing from ${formatNumber(lovePoints)} to ${formatNumber(lovePoints + calculateLovePointsGained())}</strong>. These Love Points can be spent at the Hall of Love, which will remain unlocked across all Infinite Embraces.
+                    <br><br>
+                    Note: The maximum number of Love Points you can accumulate is 1 Million. Remember: you never lose your Love Points. They will continue to accumulate across all cycles, up to this cap, fueling your journey through the multiverse.
+                    <br><br>
+                    Are you sure you want to activate Infinite Embrace and reset your progress to inject love into the multiverse?
+                    `,
+                    true
+                );
+            } else {
+                confirmed = await showMessageModal(
+                    'Infinite Embrace Confirmation',
+                    `
+                    Infinite Embrace is a profound act of injecting more love into the multiverse, ensuring that your next incarnation will be more pleasant and harmonious. By embracing the universe with infinite love, you enhance the very fabric of existence, bringing more warmth and joy to every future cycle.
+                    <br><br>
+                    In order to complete this sacred ritual, all progress will be reset, including prestiges, god modes, big crunches, the Hall of Knowledge, and the Hall of Power. The only things that remain intact are your achievements and the everlasting Love Points you have gathered.
+                    <br><br>
+                    Note: You have reached the maximum number of Love Points you can gain manually - 1 Million. Remember: you never lose your Love Points. They will continue to accumulate across all cycles, up to this cap, fueling your journey through the multiverse. However, this reset can still update your Largest Embrace.
+                    <br><br>
+                    Are you sure you want to activate Infinite Embrace and reset your progress to inject love into the multiverse?
+                    `,
+                    true
+                );
+            }
         }
 
         if (confirmed) {
@@ -2406,7 +2429,10 @@ async function infiniteEmbrace(skipConfirms = false, lovePointsOverwrite = false
 
             if (!lovePointsOverwrite) {
                 const lovePointsGained = calculateLovePointsGained();
-                lovePoints += lovePointsGained;
+                
+                if (lovePoints < 1e6) {
+                    lovePoints += lovePointsGained;
+                }
                 if (serenity < 2000) {
                     unlockAchievement('Gentle Embrace');
                 } else if (lovePointsGained > 25) {
