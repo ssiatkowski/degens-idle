@@ -2699,9 +2699,11 @@ warpButton.addEventListener("click", function () {
                         brokenTimeMachineClickCount = 0;
                     }
                 }, 10000); // 10,000 milliseconds = 10 seconds
-            } else {
-                showPopupTooltip('You went too fast', 'gray', 1);
-                brokenTimeMachineClickCount = 0;
+            } else if (brokenTimeMachineClickCount > 88){
+                showPopupTooltip('You went too fast, wait 10 seconds and try again.', 'gray', 2);
+                setTimeout(function() {
+                    brokenTimeMachineClickCount = 0;
+                }, 10000); // 10,000 milliseconds = 10 seconds
             }
         }
         return; // Not enough warp time accumulated to start
