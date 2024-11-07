@@ -143,6 +143,27 @@
     overflow: hidden;
 }
 
+/* Wiki Button */
+#wikiButton {
+    background-color: #331433; /* Theme color */
+    border: none;
+    cursor: pointer;
+    padding: 10px 20px;
+    margin: 10px 0;
+    width: 100%; /* Full width button */
+    display: block;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    color: white; /* White text */
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+#wikiButton:hover {
+    background-color: #5e285e; /* Slightly darker theme color on hover */
+}
+
 #donateButton:hover {
     background-color: #e6b800; /* Darker yellow on hover */
     box-shadow: 0 0 10px rgba(255, 204, 0, 0.8), 0 0 20px rgba(255, 204, 0, 0.6);

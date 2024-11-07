@@ -161,6 +161,13 @@ const achievements = [
         type: 'puzzle',
     },
     {
+        name: 'Broken Time Machine',
+        isUnlocked: false,
+        hoverText: 'how fast does the DeLorean need to go? click the Not Ready Time Warp exactly that many times and wait 10 seconds',
+        img: 'imgs/achievements/broken_time_machine.jpg',
+        type: 'puzzle',
+    },
+    {
         name: 'Admire The Acronym',
         isUnlocked: false,
         hoverText: 'understand the meaning of this game',
@@ -361,6 +368,13 @@ const achievements = [
         isUnlocked: false,
         hoverText: 'join the Discord',
         img: 'imgs/achievements/discord.jpg',
+        type: 'freebie',
+    },
+    {
+        name: 'Visit Wiki',
+        isUnlocked: false,
+        hoverText: 'visit the game wiki (you are also encouraged to contribute to it)',
+        img: 'imgs/achievements/visit_wiki.jpg',
         type: 'freebie',
     },
     {

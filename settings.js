@@ -276,6 +276,10 @@ document.getElementById('howToPlayButton').addEventListener('click', function() 
     showMessageModal('How to Play', '', false, false, 'imgs/modal_imgs/howtoplay.png');
 });
 
+document.getElementById('wikiButton').addEventListener('click', function() {
+    unlockAchievement('Visit Wiki');
+    window.open('https://degens-idle.fandom.com/wiki/Degens_Idle_Wiki', '_blank');
+});
 
 // Add event listener for Discord button
 document.getElementById('discordButton').addEventListener('click', function() {

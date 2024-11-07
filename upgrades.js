@@ -259,7 +259,7 @@ const upgrades = [
     {
         name: `Proceed with Caution`,
         cost: { copium: 1000000, delusion: 0, yachtMoney: 0, trollPoints: 1000000, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 60, delusionPerSecond: 0, yachtMoneyPerSecond: 400, trollPointsPerSecond: 100, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 50, delusionPerSecond: 0, yachtMoneyPerSecond: 400, trollPointsPerSecond: 100, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/proceed_with_caution.jpg`,
         message: `<p>You've just permanently unlocked the <strong>"Buy Seen"</strong> and <strong>"Buy Max"</strong> buttons. These will help you speed up your progress by purchasing all affordable upgrades with a single click. However, <strong>be cautious</strong>—for now, these buttons will also buy upgrades that might work against you. Choose wisely!</p>
                     <p><strong>Hint 1:</strong> You can press <strong>S</strong> and <strong>M</strong> on your keyboard to quickly use these features.</p>
@@ -309,7 +309,7 @@ const upgrades = [
     {
         name: `Internet = Cats`,
         cost: { copium: 0, delusion: 0, yachtMoney: 1.1e9, trollPoints: 6e9, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 100000, delusionPerSecond: -4000, yachtMoneyPerSecond: 0, trollPointsPerSecond: 45600, hopiumPerSecond: 0.001, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 100000, delusionPerSecond: -5000, yachtMoneyPerSecond: 0, trollPointsPerSecond: 45600, hopiumPerSecond: 0.001, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/cats_mice.jpg`,
     },
     {
@@ -662,7 +662,7 @@ const upgrades = [
     },
     {
         name: `Job Application #3`,
-        cost: { copium: 9.9e24, delusion: 9.9e24, yachtMoney: 0, trollPoints: 1e24, hopium: 1e19, knowledge: 0, power: 0, serenity: 0 },
+        cost: { copium: 9.8e24, delusion: 9.8e24, yachtMoney: 0, trollPoints: 1e24, hopium: 1e19, knowledge: 0, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 1e11, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 4, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/job_application_3.jpg`,
         hoverOverwrite: `A few minor surgeries and forged documents later... will 3rd time be the charm?`,
@@ -753,7 +753,7 @@ const upgrades = [
     },
     {
         name: `Buy Apple Product`,
-        cost: { copium: 1.3e41, delusion: 0, yachtMoney: 7.5e41, trollPoints: 0, hopium: 8e32, knowledge: 0, power: 0.5, serenity: 0 },
+        cost: { copium: 1.3e41, delusion: 0, yachtMoney: 7.2e41, trollPoints: 0, hopium: 8e32, knowledge: 0, power: 0.5, serenity: 0 },
         earnings: { copiumPerSecond: 4e14, delusionPerSecond: 4e14, yachtMoneyPerSecond: 0, trollPointsPerSecond: 4e14, hopiumPerSecond: 0, knowledgePerSecond: 666, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/apple_mug.jpg`,
     },
@@ -901,7 +901,7 @@ const upgrades = [
     },
     {
         name: `Still Mediocre`,
-        cost: { copium: 0, delusion: 1e52, yachtMoney: 0, trollPoints: 5e52, hopium: 0, knowledge: 1e41, power: 35000, serenity: 0 },
+        cost: { copium: 0, delusion: 1e52, yachtMoney: 0, trollPoints: 4e52, hopium: 0, knowledge: 1e41, power: 35000, serenity: 0 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 8e18, yachtMoneyPerSecond: 0, trollPointsPerSecond: 7e18, hopiumPerSecond: 0, knowledgePerSecond: 37000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/3rd_place_upvotes.jpg`,        
     },
@@ -949,7 +949,7 @@ const upgrades = [
     },
     {
         name: `The Rock`,
-        cost: { copium: 3e54, delusion: 1.8e55, yachtMoney: 0, trollPoints: 5e54, hopium: 0, knowledge: 8e43, power: 2.4e7, serenity: 0 },
+        cost: { copium: 3e54, delusion: 1.8e55, yachtMoney: 0, trollPoints: 4e54, hopium: 0, knowledge: 8e43, power: 2.4e7, serenity: 0 },
         earnings: { copiumPerSecond: 2e18, delusionPerSecond: 3e18, yachtMoneyPerSecond: 0, trollPointsPerSecond: 3e19, hopiumPerSecond: 0, knowledgePerSecond: 87000, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/the_rock_photo.jpg`,                
         message: `Don't worry, you never have to fight The Rock. He would beat you to a pulp.`,

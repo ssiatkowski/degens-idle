@@ -2667,6 +2667,8 @@ function updateWarpTime() {
 const warpedCookieWinningSequence = 'WCCWWCWCCWC';
 let warpedCookieSequence = '';
 
+let brokenTimeMachineClickCount = 0;
+
 warpButton.addEventListener("click", function () {
     
     // If warp time is active and masterOfTimeSkill is true, stop the warp and add remaining time back
@@ -2683,7 +2685,27 @@ warpButton.addEventListener("click", function () {
         return; // Exit early if warp is active and no other action is needed
     }
 
-    if (accumulatedWarpTime < 3600) return; // Not enough warp time accumulated to start
+    if (accumulatedWarpTime < 3600) {
+        if (!achievementsMap.get('Broken Time Machine').isUnlocked){
+            brokenTimeMachineClickCount += 1;
+            if (brokenTimeMachineClickCount === 88) {
+                // Wait 10 seconds before checking again
+                setTimeout(function() {
+                    // Check if the count is still 88 after 10 seconds
+                    if (brokenTimeMachineClickCount === 88) {
+                        // Unlock the achievement
+                        unlockAchievement('Broken Time Machine');
+                        accumulatedWarpTime = warpTimeMax;
+                        brokenTimeMachineClickCount = 0;
+                    }
+                }, 10000); // 10,000 milliseconds = 10 seconds
+            } else {
+                showPopupTooltip('You went too fast', 'gray', 1);
+                brokenTimeMachineClickCount = 0;
+            }
+        }
+        return; // Not enough warp time accumulated to start
+    }
 
     warpTimeActive = true;
     const fullHours = Math.floor(accumulatedWarpTime / 3600); // Only use full hours
@@ -3137,7 +3159,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true, ski
                 showMessageModal('The Rock', 'The Rock sees your squad, says "I will spare you the embarassment", and walks away. ', false, false, './imgs/the_rock_laughing.jpg');
                 unlockAchievement('Bring the Whole Squad');
             }
-        } else if (name == `One in a Million`) {
+        } else if (name == `The Best Revenge`) {
             if (
                 !purchasedUpgradesSet.has(`Some of you right now`) &&
                 !purchasedUpgradesSet.has(`Deadlines`) &&
