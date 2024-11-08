@@ -14,7 +14,7 @@ const enemyStats = {
     },
     "Agent Smith": {
         health: 300,
-        minDamage: 5,
+        minDamage: 7,
         maxDamage: 15,
         attackSpeed: 3,
         defense: 8,

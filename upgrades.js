@@ -196,7 +196,7 @@ const upgrades = [
         img: `imgs/cosmetic_surgery.jpg`,
         message: `Congratulations on your bold transformation! It's natural to feel a little weaker—about 10% on a prestige multiplier scale—after undergoing significant cosmetic surgery. Just like recovering from any major procedure, your strength and confidence will gradually return.<br><br>This temporary adjustment is a gentle reminder that even extraordinary changes come with phases of recovery. Embrace this period of healing as a testament to your resilience. With time and patience, your full strength and beauty will shine through, stronger than ever.`,
         miniPrestigeMultiplier: 0.9,
-        hoverOverwrite: `Just a quick snip`,
+        hoverOverwrite: `This one has a big tradeoff`,
     },
     {
         name: `Ultimate Solution`,
@@ -1657,7 +1657,7 @@ const upgrades = [
     },
     {
         name: `I Hear Ya`,
-        cost: { copium: 7e138, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 1e36, serenity: 1e16 },
+        cost: { copium: 9e138, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 1e36, serenity: 1e16 },
         earnings: { copiumPerSecond: 6e56, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1e57, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 2e7 },
         img: `imgs/i_hear_ya.jpg`,
     },
@@ -1680,13 +1680,13 @@ const upgrades = [
     },
     {
         name: `We're All Gamers`,
-        cost: { copium: 2e143, delusion: 2e143, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 7.5e19 },
+        cost: { copium: 3e143, delusion: 3e143, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 7.5e19 },
         earnings: { copiumPerSecond: 1e59, delusionPerSecond: 1e59, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 3e9 },
         img: `imgs/we_are_all_gamers.jpg`,
     },
     {
         name: `Actual Life Advice`,
-        cost: { copium: 8e145, delusion: 0, yachtMoney: 0, trollPoints: 8e145, hopium: 0, knowledge: 1e118, power: 0, serenity: 8e21 },
+        cost: { copium: 1.6e146, delusion: 0, yachtMoney: 0, trollPoints: 1.6e146, hopium: 0, knowledge: 1e118, power: 0, serenity: 8e21 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 3e59, yachtMoneyPerSecond: 0, trollPointsPerSecond: 2e59, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 6e9 },
         img: `imgs/actual_life_advice.jpg`,
         hoverOverwrite: `don't take advice from a guy who made a game called "Degens Idle"`,
@@ -1704,7 +1704,7 @@ const upgrades = [
     },
     {
         name: `Your Guiding Light`,
-        cost: { copium: 0, delusion: 0, yachtMoney: 1e148, trollPoints: 0, hopium: 0, knowledge: 1e120, power: 0, serenity: 1e21 },
+        cost: { copium: 0, delusion: 0, yachtMoney: 2e148, trollPoints: 0, hopium: 0, knowledge: 1e120, power: 0, serenity: 1e21 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 1e62, trollPointsPerSecond: -1e59, hopiumPerSecond: 1e55, knowledgePerSecond: 1e29, powerPerSecond: 0, serenityPerSecond: 1e12 },
         img: `imgs/your_guiding_light.jpg`,
     },
@@ -1717,7 +1717,7 @@ const upgrades = [
     },
     {         
         name: `Christianity`,
-        cost: { copium: 0, delusion: 0, yachtMoney: 7e157, trollPoints: 0, hopium: 7e157, knowledge: 0, power: 7e43, serenity: 3e26 },
+        cost: { copium: 0, delusion: 0, yachtMoney: 1.5e158, trollPoints: 0, hopium: 1.5e158, knowledge: 0, power: 7e43, serenity: 3e26 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 7e60, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/arena_christianity.png`,
         isMeditation: true,
@@ -1757,7 +1757,7 @@ const upgrades = [
     },
     {         
         name: `Epicureanism`,
-        cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 1e163, hopium: 1e163, knowledge: 0, power: 1e46, serenity: 3e27 },
+        cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 1.5e163, hopium: 1.5e163, knowledge: 0, power: 1e46, serenity: 3e27 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 1e72, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 1.2e38, powerPerSecond: 0, serenityPerSecond: 1.5e16 },
         img: `imgs/arena_epicureanism.png`,
         isMeditation: true,
@@ -1767,7 +1767,7 @@ const upgrades = [
     },
     {
         name: `Infinite Compassion`,
-        cost: { copium: 1e158, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 2e25 },
+        cost: { copium: 3e158, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 2e25 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 3.33e15 },
         img: `imgs/infinite_compassion.jpg`,
         message: `<p>
@@ -1785,7 +1785,7 @@ const upgrades = [
     },
     {
         name: `Hold the Fuck Up`,
-        cost: { copium: 0, delusion: 1e169, yachtMoney: 0, trollPoints: 1e169, hopium: 0, knowledge: 1e142, power: 0, serenity: 1e28 },
+        cost: { copium: 0, delusion: 2e169, yachtMoney: 0, trollPoints: 2e169, hopium: 0, knowledge: 1e142, power: 0, serenity: 1e28 },
         earnings: { copiumPerSecond: -2e69, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1.1e71, hopiumPerSecond: 2e60, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 4e14 },
         img: `imgs/hold_the_fuck_up.jpg`,
     },
@@ -1832,7 +1832,7 @@ const upgrades = [
     },    
     {
         name: `DodecaDragons`,
-        cost: { copium: 1e196, delusion: 1e196, yachtMoney: 0, trollPoints: 0, hopium: 1e187, knowledge: 1e164, power: 0, serenity: 0 },
+        cost: { copium: 4e196, delusion: 4e196, yachtMoney: 0, trollPoints: 0, hopium: 4e187, knowledge: 1e164, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 8e80, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/dodecadragons.jpg`,
         message: `Congratulations on unlocking the "DodecaDragons" upgrade! This upgrade celebrates one of the most unique idle games in the genre. DodecaDragons is a masterclass in blending strategy, progression, and fun, with an epic twist of dragon-filled adventures and endless replayability.<br><br>Here's to honoring a game that has ignited creativity and innovation in idle gaming. Enjoy the nostalgia and the power it brings to your Degens Idle experience — may your journey soar as high as the dragons!`,
@@ -1840,25 +1840,25 @@ const upgrades = [
     },
     {
         name: `Talent Shows`,
-        cost: { copium: 1e197, delusion: 0, yachtMoney: 1e197, trollPoints: 1.5e197, hopium: 1e188, knowledge: 1e165, power: 0, serenity: 1e33 },
+        cost: { copium: 5e197, delusion: 0, yachtMoney: 5e197, trollPoints: 7.5e197, hopium: 1e188, knowledge: 1e165, power: 0, serenity: 1e33 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 4e83, hopiumPerSecond: 0, knowledgePerSecond: 5e41, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/talent_shows.jpg`,
     },
     {
         name: `Eat Your Veggies`,
-        cost: { copium: 2e197, delusion: 0, yachtMoney: 2e197, trollPoints: 0, hopium: 1e189, knowledge: 1e166, power: 0, serenity: 2e33 },
+        cost: { copium: 1e198, delusion: 0, yachtMoney: 1e198, trollPoints: 0, hopium: 5e189, knowledge: 1e166, power: 0, serenity: 2e33 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 9e83, hopiumPerSecond: 0, knowledgePerSecond: 6e41, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/eat_your_veggies.jpg`,
     },
     {
         name: `Salt`,
-        cost: { copium: 0, delusion: 2e197, yachtMoney: 0, trollPoints: 2e197, hopium: 1e190, knowledge: 1e167, power: 0, serenity: 3e33 },
+        cost: { copium: 0, delusion: 1e198, yachtMoney: 0, trollPoints: 1e198, hopium: 5e190, knowledge: 1e167, power: 0, serenity: 3e33 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 3e84, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 9e41, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/salt.jpg`,
     },
     {
         name: `Balance Master`,
-        cost: { copium: 1e199, delusion: 1e199, yachtMoney: 1e199, trollPoints: 1e199, hopium: 1e192, knowledge: 1e167, power: 1e62, serenity: 1e34 },
+        cost: { copium: 5e199, delusion: 5e199, yachtMoney: 5e199, trollPoints: 5e199, hopium: 5e192, knowledge: 1.5e167, power: 1.5e62, serenity: 1.5e34 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 1e42, powerPerSecond: 0, serenityPerSecond: 1e18 },
         img: `imgs/balance_master.jpg`,
         message: `<p>
@@ -1880,7 +1880,7 @@ const upgrades = [
     },
     {
         name: `Unnamed Space`,
-        cost: { copium: 2e201, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 8e194, knowledge: 0, power: 0, serenity: 0 },
+        cost: { copium: 1.2e202, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 6e195, knowledge: 0, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 5e83, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 5e41, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/unnamed_space.jpg`,
         message: `<p>Congratulations on unlocking the "Unnamed Space" upgrade! This upgrade honors one of the most iconic space-themed idle games in the genre. <b>Unnamed Space Idle</b> takes players on a cosmic journey through exploration, strategy, and the vast mysteries of the universe, setting a new standard for depth and immersion.</p>
@@ -1888,25 +1888,25 @@ const upgrades = [
     },
     {
         name: `Waiting Faster`,
-        cost: { copium: 0, delusion: 1e205, yachtMoney: 0, trollPoints: 0, hopium: 1e197, knowledge: 0, power: 0, serenity: 0 },
+        cost: { copium: 0, delusion: 5e205, yachtMoney: 0, trollPoints: 0, hopium: 5e197, knowledge: 0, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 4e84, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/waiting_faster.jpg`,
     },
     {
         name: `Bad Teachers`,
-        cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 3e207, hopium: 1e198, knowledge: 0, power: 0, serenity: 0 },
+        cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 1.5e208, hopium: 5e198, knowledge: 0, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 4.5e83, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/bad_teachers.jpg`,
     },
     {
         name: `Birthday Celebration`,
-        cost: { copium: 0, delusion: 7e210, yachtMoney: 7e210, trollPoints: 0, hopium: 2e202, knowledge: 0, power: 0, serenity: 0 },
+        cost: { copium: 0, delusion: 4.2e211, yachtMoney: 4.2e211, trollPoints: 0, hopium: 1.2e203, knowledge: 0, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 2.5e85, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 3.7e71, knowledgePerSecond: 6e41, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/birthday_celebration.jpg`,
     },
     {
         name: `On Time Release`,
-        cost: { copium: 0, delusion: 3e214, yachtMoney: 0, trollPoints: 0, hopium: 1e212, knowledge: 0, power: 0, serenity: 0 },
+        cost: { copium: 0, delusion: 1.8e215, yachtMoney: 0, trollPoints: 0, hopium: 2e212, knowledge: 0, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 1.8e80, delusionPerSecond: 1.8e86, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 1.8e72, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/gta_6.jpg`,
         message: `<p>Congratulations! You have unlocked the fabled "GTA 6" upgrade—a tribute to what will soon stand among the greatest games ever made. <b>GTA 6</b> is set to be a monumental return to the series’ origins, yet it promises an experience more immersive and boundless than anything before it. Nostalgia will collide with innovation as the streets come alive in a world redefined.</p>
@@ -1914,31 +1914,31 @@ const upgrades = [
     },
     {
         name: `Toom Woom Boom`,
-        cost: { copium: 3e217, delusion: 0, yachtMoney: 0, trollPoints: 5e217, hopium: 0, knowledge: 0, power: 1e78, serenity: 0 },
+        cost: { copium: 2.5e218, delusion: 0, yachtMoney: 0, trollPoints: 4e218, hopium: 0, knowledge: 0, power: 1e78, serenity: 0 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 2e41, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/toom_woom_boom.jpg`,
     },
     {
         name: `Hold on to Knowledge`,
-        cost: { copium: 1.5e221, delusion: 0, yachtMoney: 0, trollPoints: 1.5e221, hopium: 0, knowledge: 5e193, power: 0, serenity: 0 },
+        cost: { copium: 1.2e222, delusion: 0, yachtMoney: 0, trollPoints: 1.2e222, hopium: 0, knowledge: 8e193, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1.7e89, hopiumPerSecond: 0, knowledgePerSecond: 8e41, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/hold_on_to_knowledge.jpg`,
     },
     {
         name: `A Watch is a Watch`,
-        cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 3e223, hopium: 0, knowledge: 0, power: 2e80, serenity: 0 },
+        cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 5e224, hopium: 0, knowledge: 0, power: 4e80, serenity: 0 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 9.2e91, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/a_watch_is_a_watch.jpg`,
     },
     {
         name: `Sloppy Burgers`,
-        cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 1e230, hopium: 0, knowledge: 0, power: 5e81, serenity: 0 },
+        cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 5e230, hopium: 0, knowledge: 0, power: 8e81, serenity: 0 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 1.8e74, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/sloppy_burgers.jpg`,
     },
     {
         name: `Volume Controls`,
-        cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 1e85, serenity: 0 },
+        cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 2e85, serenity: 0 },
         earnings: { copiumPerSecond: 1e90, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/volume_controls.jpg`,
         hoverOverwrite: 'One must HOPE for more power (or buy the 5th Hall of Balance skill)',

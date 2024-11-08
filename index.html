@@ -559,13 +559,6 @@
                     <button id="numberFormatButton" class="full-width-button">Number Format: Mixed</button>
                 </div>
                 <div class="settings-switch" style="margin-bottom: 10px;">
-                    <label for="enableQuickMode">Quick mode : Skip all confirmation pop-ups</label>
-                    <label class="switch">
-                        <input type="checkbox" id="enableQuickMode">
-                        <span class="slider"></span>
-                    </label>
-                </div>
-                <div class="settings-switch" style="margin-bottom: 10px;">
                     <label for="enableButtonAnimations">Glowing Animations (CPU intensive)</label>
                     <label class="switch">
                         <input type="checkbox" id="enableButtonAnimations">
@@ -597,6 +590,51 @@
         <div class="automation-overlay-content">
             <span class="close-button" id="closeAutomationOverlay">&times;</span>
             <h1>Automation Settings</h1>
+
+            <!-- Quick Mode Switch for Prestige -->
+            <div class="settings-switch" id="quickModePrestigeContainer" style="margin-bottom: 10px; display: none;">
+                <label for="enableQuickModePrestige">Quick Mode for Prestige: Skip confirmation pop-up</label>
+                <label class="switch">
+                    <input type="checkbox" id="enableQuickModePrestige">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <!-- Quick Mode Switch for Ascend -->
+            <div class="settings-switch" id="quickModeAscendContainer" style="margin-bottom: 10px; display: none;">
+                <label for="enableQuickModeAscend">Quick Mode for Ascend: Skip upgrade selection pop-up</label>
+                <label class="switch">
+                    <input type="checkbox" id="enableQuickModeAscend">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <!-- Quick Mode Switch for Transcend -->
+            <div class="settings-switch" id="quickModeTranscendContainer" style="margin-bottom: 10px; display: none;">
+                <label for="enableQuickModeTranscend">Quick Mode for Transcend: Skip upgrade selection pop-up</label>
+                <label class="switch">
+                    <input type="checkbox" id="enableQuickModeTranscend">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <!-- Quick Mode Switch for Big Crunch -->
+            <div class="settings-switch" id="quickModeBigCrunchContainer" style="margin-bottom: 10px; display: none;">
+                <label for="enableQuickModeBigCrunch">Quick Mode for Big Crunch: Skip confirmation pop-up</label>
+                <label class="switch">
+                    <input type="checkbox" id="enableQuickModeBigCrunch">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <!-- Quick Mode Switch for Infinite Embrace -->
+            <div class="settings-switch" id="quickModeInfiniteEmbraceContainer" style="margin-bottom: 10px; display: none;">
+                <label for="enableQuickModeInfiniteEmbrace">Quick Mode for Infinite Embrace: Skip confirmation pop-up</label>
+                <label class="switch">
+                    <input type="checkbox" id="enableQuickModeInfiniteEmbrace">
+                    <span class="slider"></span>
+                </label>
+            </div>
 
             <!-- Content will be dynamically updated by JavaScript -->
             <div id="automationContent">

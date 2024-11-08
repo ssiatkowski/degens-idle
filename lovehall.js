@@ -441,12 +441,43 @@ const loveHallSkills = [
   },
 
   {
+    name: "Stoic Embrace",
+    cost: 500,
+    description: "Starting at Stoicism, Altruistic Embrace bonus increased from 1.25x to 1.5x",
+    unlocked: false,
+    level: "Quantum Harmony (2.8x)",
+    pair: 13,
+    requirement: "Resonance of Love",
+    onUnlock: () => {
+      stoicEmbraceSkill = true;
+    },
+    onRespec: () => {
+      stoicEmbraceSkill = false;
+    },
+  },
+  {
+    name: "Transcendent Embrace",
+    cost: 500,
+    description: "Gain +42 Love Points every embrace.",
+    unlocked: false,
+    level: "Quantum Harmony (2.8x)",
+    pair: 13,
+    requirement: "Soulbound Embrace",
+    onUnlock: () => {
+      embraceExtraLovePoints += 42;
+    },
+    onRespec: () => {
+      embraceExtraLovePoints = 0;
+    },
+  },
+
+  {
     name: "Infinite Collapse",
     cost: 5000,
     description: "Automatically apply Big Crunch mult without resetting.",
     unlocked: false,
     level: "Quantum Harmony (2.8x)",
-    pair: 13,
+    pair: 14,
     requirement: "Perpetual Collapse",
     onUnlock: () => {
       infiniteCollapseSkill = true;
@@ -461,7 +492,7 @@ const loveHallSkills = [
     description: "Improve Stellar Meditation to x1.5",
     unlocked: false,
     level: "Quantum Harmony (2.8x)",
-    pair: 13,
+    pair: 14,
     requirement: "Fertile Scarcity",
     onUnlock: () => {
       zenOfTheStarsSkill = true;

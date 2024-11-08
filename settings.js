@@ -14,12 +14,6 @@ function openSettings() {
         document.addEventListener('click', outsideClickListener);
     }, 0);
 
-    // EnableQuickMode : Use a timeout to ensure the checkbox is fully rendered before setting its state
-    setTimeout(() => {
-        const enableQuickModeSwitch = document.getElementById('enableQuickMode');
-        enableQuickModeSwitch.checked = enableQuickMode;
-    }, 0); // Adjust timeout if necessary
-
     // EnableButtonAnimations : Use a timeout to ensure the checkbox is fully rendered before setting its state
     setTimeout(() => {
         const enableButtonAnimationsSwitch = document.getElementById('enableButtonAnimations');
@@ -332,10 +326,51 @@ function toggleAllBuyMarkers(targetState) {
 
 
 
+
 // Open the automation overlay
 document.getElementById('automationButton').addEventListener('click', function() {
     const automationContent = document.getElementById('automationContent');
     const saveButton = document.getElementById('saveAutomationSettingsButton');
+
+    // Use a timeout to ensure each checkbox is fully rendered before setting its state
+    setTimeout(() => {
+        // Set up each Quick Mode switch based on corresponding variables
+        const enableQuickModePrestigeSwitch = document.getElementById('enableQuickModePrestige');
+        enableQuickModePrestigeSwitch.checked = enableQuickModePrestige;
+        const quickModePrestigeContainer = document.getElementById('quickModePrestigeContainer');
+        if (epsMultiplier > 1) {
+            quickModePrestigeContainer.style.display = 'block';
+        }
+
+        const enableQuickModeAscendSwitch = document.getElementById('enableQuickModeAscend');
+        enableQuickModeAscendSwitch.checked = enableQuickModeAscend;
+        const quickModeAscendContainer = document.getElementById('quickModeAscendContainer');
+        if (upgrades.some(upgrade => upgrade.isGodMode)) {
+            quickModeAscendContainer.style.display = 'block';
+        }
+
+        const enableQuickModeTranscendSwitch = document.getElementById('enableQuickModeTranscend');
+        enableQuickModeTranscendSwitch.checked = enableQuickModeTranscend;
+        const quickModeTranscendContainer = document.getElementById('quickModeTranscendContainer');
+        if (upgrades.some(upgrade => upgrade.isPUGodMode)) {
+            quickModeTranscendContainer.style.display = 'block';
+        }
+
+        const enableQuickModeBigCrunchSwitch = document.getElementById('enableQuickModeBigCrunch');
+        enableQuickModeBigCrunchSwitch.checked = enableQuickModeBigCrunch;
+        const quickModeBigCrunchContainer = document.getElementById('quickModeBigCrunchContainer');
+        if (bigCrunchMultiplier > 1) {
+            quickModeBigCrunchContainer.style.display = 'block';
+        }
+
+        const enableQuickModeInfiniteEmbraceSwitch = document.getElementById('enableQuickModeInfiniteEmbrace');
+        enableQuickModeInfiniteEmbraceSwitch.checked = enableQuickModeInfiniteEmbrace;
+        const quickModeInfiniteEmbraceContainer = document.getElementById('quickModeInfiniteEmbraceContainer');
+        if (lovePoints > 0) {
+            quickModeInfiniteEmbraceContainer.style.display = 'block';
+        }
+    }, 0); // Adjust timeout if necessary
+
 
     // Clear any existing content in the automationContent section
     Events.wipe(automationContent);
@@ -347,7 +382,7 @@ document.getElementById('automationButton').addEventListener('click', function()
     let content = '';
     // If all features are locked, show the "unlock automation" message
     if (allFeaturesLocked) {
-        content += "<p>You must unlock automation features first.</p>";
+        content += "<p>You have many Automation features yet to be unlocked.</p>";
         saveButton.style.display = 'none'; // Hide the save button
     } else {
         saveButton.style.display = 'inline-block';
@@ -612,6 +647,11 @@ function outsideAutomationClickListener(event) {
     }
 }
 
+// Prevent clicks inside the overlay content from closing it
+document.querySelector('.automation-overlay-content').addEventListener('click', function(event) {
+    event.stopPropagation(); // Prevent click from propagating to the outside listener
+});
+
 // Save the automation settings and close the overlay
 document.getElementById('saveAutomationSettingsButton').addEventListener('click', function() {
     // Auto Prestige Threshold
@@ -736,6 +776,7 @@ document.getElementById('saveAutomationSettingsButton').addEventListener('click'
 
     // Close the overlay
     document.getElementById('automationOverlay').style.display = 'none';
+    document.removeEventListener('click', outsideAutomationClickListener); // Remove listener after closing
     showImmediateMessageModal('Automation Settings Saved', 'Your automation settings have been saved successfully.');
 
     unlockAchievement('Automation Optimizer');
@@ -748,11 +789,13 @@ document.getElementById('saveAutomationSettingsButton').addEventListener('click'
 // Close the automation overlay (without closing the settings overlay)
 document.getElementById('closeAutomationOverlay').addEventListener('click', function() {
     document.getElementById('automationOverlay').style.display = 'none';
+    document.removeEventListener('click', outsideAutomationClickListener); // Remove listener after closing
 });
 
 // Handle the exit button to close the automation overlay
 document.getElementById('exitAutomationOverlayButton').addEventListener('click', function() {
     document.getElementById('automationOverlay').style.display = 'none';
+    document.removeEventListener('click', outsideAutomationClickListener); // Remove listener after closing
 });
 
 
