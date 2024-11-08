@@ -204,6 +204,7 @@
     justify-content: center;
     align-items: center;
     z-index: 7;
+    overflow-y: auto; /* Allows vertical scrolling */
 }
 
 .automation-overlay-content {
