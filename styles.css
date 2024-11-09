@@ -1383,7 +1383,7 @@ input:checked + .slider:before {
     height: auto;  /* Keep the aspect ratio */
     transform: scale(50);  /* Start much larger than the viewport */
     transform-origin: center;  /* Ensure the heart scales from its center */
-    transition: transform 3s ease-in-out;  /* Smooth transition for shrinking and expanding */
+    transition: transform 1s ease-in-out;  /* Smooth transition for shrinking and expanding */
 }
 
 #numPurchasedGodModeUpgrades {

@@ -1881,7 +1881,7 @@ const upgrades = [
     {
         name: `Unnamed Space`,
         cost: { copium: 1.2e202, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 6e195, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 5e83, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 5e41, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 4e84, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 5e41, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/unnamed_space.jpg`,
         message: `<p>Congratulations on unlocking the "Unnamed Space" upgrade! This upgrade honors one of the most iconic space-themed idle games in the genre. <b>Unnamed Space Idle</b> takes players on a cosmic journey through exploration, strategy, and the vast mysteries of the universe, setting a new standard for depth and immersion.</p>
                 <p>Here's to celebrating a game that has pushed the boundaries of idle gaming with interstellar ambition and innovation. Enjoy the boost it brings to your Degens Idle experience — may your journey expand as infinitely as the cosmos!</p>`,
@@ -1950,7 +1950,6 @@ const upgrades = [
         img: `imgs/your_ego.jpg`,
         hoverOverwrite: 'This is just a teaser - content not yet balanced',
         isFight: true,
-        isKey: true,
         autoBattlePower: 1e300,
     },
 ];

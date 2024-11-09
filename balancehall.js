@@ -13,7 +13,7 @@ const balanceHallContainer = document.getElementById('balanceHallSkills');
 const basicResources = ['Copium', 'Delusion', 'Yacht Money', 'Troll Points'];
 
 let balanceHallSkills = new Map([
-    ["Greater Balance", { description: "Increase max balance values x100", cost: { Copium: 1e205 }, available: false, unlocked: false }],
+    ["Greater Balance", { description: "Increase max balance values x100", cost: { Copium: 2.5e205 }, available: false, unlocked: false }],
     ["Love Matters", { description: "Multiply all resources by (Love Points / 1000)", cost: { Delusion: 1e210 }, available: false, unlocked: false }],
     ["Balance Check", { description: "Multiplier to last 4 resources based on balance of first 4 resources (checked every 30 seconds)", cost: { 'Yacht Money': 5e217 }, available: false, unlocked: false }],
     ["Everlasting Love", { description: "Passively generate Love Points based on largest embrace each hour (online & offline) -- can go beyond the Infinite Embrace 1M limit", cost: { 'Troll Points': 1e225 }, available: false, unlocked: false }],
@@ -63,7 +63,8 @@ function initializeBalanceHall() {
         // Create a gray dot indicator for the "Curr" value
         const dotIndicator = document.createElement('div');
         dotIndicator.classList.add('dot-indicator');
-        const dotPosition = (resource.currentMultiplier / logMax) * 100;
+        let dotPosition = (resource.currentMultiplier / logMax) * 100;
+        dotPosition = Math.min(dotPosition, 100); // Clamp to a maximum of 100%
         dotIndicator.style.left = `${dotPosition}%`;
 
         // Current and New displays with updated colors

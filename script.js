@@ -416,6 +416,9 @@ let collectClicks = {
     trollPoints: 0
 };
 
+const resourceClicksWinningSequence = 'CDYDTYCCDDYTTD';
+let resourceClicksSequence = '';
+
 // Function to collect a specific resource and update the game state
 function collectResource(resource) {
     // Increase the appropriate resource by the totalMultiplier
@@ -423,6 +426,21 @@ function collectResource(resource) {
     if (resource === 'delusion') delusion += totalMultiplier;
     if (resource === 'yachtMoney') yachtMoney += totalMultiplier;
     if (resource === 'trollPoints') trollPoints += totalMultiplier;
+
+    if (!achievementsMap.get('Creative Dreams').isUnlocked){
+        if (resource === 'copium') resourceClicksSequence += 'C';
+        if (resource === 'delusion') resourceClicksSequence += 'D';
+        if (resource === 'yachtMoney') resourceClicksSequence += 'Y';
+        if (resource === 'trollPoints') resourceClicksSequence += 'T';
+
+        if (resourceClicksSequence.length > resourceClicksWinningSequence.length) {
+            resourceClicksSequence = resourceClicksSequence.slice(-resourceClicksWinningSequence.length); // Keep only the last n characters
+        }
+        if (resourceClicksSequence === resourceClicksWinningSequence) {
+            unlockAchievement('Creative Dreams');
+            resourceClicksSequence = ""; // Optionally reset the sequence after unlocking the achievement
+        }
+    }
 
     // Track the resource click if cookieKnowledgeable is true
     if (cookieKnowledgeable) {
@@ -2379,7 +2397,7 @@ async function animateInfiniteEmbraceEffect() {
 
         setTimeout(() => {
             resolve();  // Continue after the animation is complete
-        }, 3000);  // 3-second duration for the shrinking effect
+        }, 1000);  // 3-second duration for the shrinking effect
     });
 }
 
@@ -2394,7 +2412,7 @@ function animateInfiniteEmbraceExpansion() {
             // Remove the mask element after the expansion is complete
             heartImage.parentElement.remove();
             window.location.reload();
-        }, 3000);  // 1.5-second duration for the expansion effect
+        }, 1000);  // 1.5-second duration for the expansion effect
     }
 }
 
@@ -2685,6 +2703,7 @@ function updateWarpTime() {
         warpButton.classList.remove('affordable');
     }
 }
+
 
 const warpedCookieWinningSequence = 'WCCWWCWCCWC';
 let warpedCookieSequence = '';
@@ -3376,6 +3395,27 @@ const devCheatSequence = [
 // Track the current sequence
 let currentCheatSequence = [];
 
+// List of upgrade names that have isMeditation: true
+const meditationUpgrades = [
+    'Yin and Yang',
+    'Existentialism',
+    'Altruism',
+    'Rastafarianism',
+    'Dualism',
+    'Libertarianism',
+    'Hinduism',
+    'Shinto',
+    'Stoicism',
+    'Deism',
+    'Skepticism',
+    'Buddhism',
+    'Christianity',
+    'Epicureanism',
+    'Agnosticism'
+];
+// Map to track clicked status for each meditation upgrade
+const meditationClickMap = new Map(meditationUpgrades.map(name => [name, false]));
+
 function addPurchasedUpgrade(img, name, earnings, isGodMode = false, isPUGodMode = false, message = null, isFight = false, isMeditation = false) {
     const purchasedList = document.getElementById('purchasedList');
     const upgradeElement = document.createElement('div');
@@ -3473,6 +3513,11 @@ function addPurchasedUpgrade(img, name, earnings, isGodMode = false, isPUGodMode
             } else {
                 if (name == `Clickable`){
                     unlockAchievement('Click the Clicker');
+                } else if (isMeditation && !achievementsMap.get('Reflections of Insight').isUnlocked){
+                    meditationClickMap.set(name, true);
+                    if(Array.from(meditationClickMap.values()).every(clicked => clicked)){
+                        unlockAchievement('Reflections of Insight');
+                    }
                 }
 
                 showMessageModal(name, message);
@@ -4927,7 +4972,7 @@ function calculateTooltip(resourceId) {
     }
 
     if (balanceHallSkills.get("Love Matters").unlocked && lovePoints > 1000) {
-        tooltip += `<span style="color:#E37383">x${formatNumber(lovePoints / 1000)} (Love Matters)</span><br>`;
+        tooltip += `<span style="color:#E37383">x${formatNumber(lovePoints / 1000)} (Love Points)</span><br>`;
     }
 
     if (balanceCheckMultiplier > 1 && (resourceId == 'hopium' || resourceId == 'knowledge' || resourceId == 'power' || resourceId == 'serenity')) {

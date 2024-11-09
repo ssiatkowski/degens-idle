@@ -42,6 +42,13 @@ const achievements = [
         type: 'freebie',
     },
     {
+        name: 'Creative Dreams',
+        isUnlocked: false,
+        hoverText: 'Creative Dreams Yield Daring Triumphs, Yet Careful Curiosity Drives Determined Youth Toward Timeless Discoveries.',
+        img: 'imgs/achievements/creative_dreams.jpg',
+        type: 'puzzle',
+    },
+    {
         name: 'First Prestige',
         isUnlocked: false,
         hoverText: 'click some button (without quick mode)',
@@ -1123,6 +1130,13 @@ const achievements = [
         isUnlocked: false,
         hoverText: 'approach Agnosticism with WISDOM',
         img: 'imgs/achievements/agnosticism_wisdom.jpg',
+        type: 'puzzle',
+    },
+    {
+        name: 'Reflections of Insight',
+        isUnlocked: false,
+        hoverText: `review what you have learned from all the meditations`,
+        img: 'imgs/achievements/reflections_of_insight.jpg',
         type: 'puzzle',
     },
     {
