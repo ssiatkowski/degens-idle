@@ -506,55 +506,55 @@ function startFightGame(enemyName, enemyImg) {
         if (currEnemyName === "Saitama") {
             setTimeout(() => {
                 logFight("<span style='color: #b3a125; font-size: 1.2em';>Saitama: Oh, hello there.</span>");
-            }, 500);
+            }, 400);
 
             setTimeout(() => {
                 logFight("<span style='color: #6b8ca4; font-size: 1.2em';>You: What? I can sense your power. You could have stopped her yourself, why didn’t you?</span>");
-            }, 1000);
+            }, 800);
 
             setTimeout(() => {
                 logFight("<span style='color: #b3a125; font-size: 1.2em';>Saitama: It would have been boring.</span>");
-            }, 1500);
+            }, 1200);
 
             setTimeout(() => {
                 logFight("<span style='color: #6b8ca4; font-size: 1.2em';>You: But you were going to let her destroy the multiverse?</span>");
-            }, 2000);
+            }, 1600);
 
             setTimeout(() => {
                 logFight("<span style='color: #b3a125; font-size: 1.2em';>Saitama: There’s no meaning to existence anyway. Everything is boring.</span>");
-            }, 2500);
+            }, 2000);
 
             setTimeout(() => {
                 logFight("<span style='color: #6b8ca4; font-size: 1.2em';>You: What the hell, man? Why so bleak?</span>");
-            }, 3000);
+            }, 2400);
 
             setTimeout(() => {
                 logFight("<span style='color: #b3a125; font-size: 1.2em';>Saitama: I’m bored. I’m gonna go now.</span>");
-            }, 3500);
+            }, 2800);
 
             setTimeout(() => {
                 logFight("<span style='color: #6b8ca4; font-size: 1.2em';>You: No! Stand and fight!</span>");
-            }, 4000);
+            }, 3200);
 
             setTimeout(() => {
                 logFight("<span style='color: #b3a125; font-size: 1.2em';>Saitama: *yawns*</span>");
-            }, 4500);
+            }, 3600);
             // Start the fight loop
             // Add a 0.25-second delay before starting the fight loop
             setTimeout(() => {
                 fightLoop(resolve);
-            }, 5000); // 250 milliseconds = 0.25 seconds
+            }, 4000); // 250 milliseconds = 0.25 seconds
         } else{
             // Start the fight loop
             if (currEnemyName === "Chuck Norris" || currEnemyName === "Kaguya" || currEnemyName === "Darth Vader" || (currEnemyName === "Training Dummy" && !achievementsMap.get('Skip Leg Day').isUnlocked)){
                 setTimeout(() => {
                     fightLoop(resolve);
-                }, 750);
+                }, 600);
             } else {
                 // Add a 0.25-second delay before starting the fight loop
                 setTimeout(() => {
                     fightLoop(resolve);
-                }, 250); // 250 milliseconds = 0.25 seconds
+                }, 200); // 250 milliseconds = 0.25 seconds
             }
         }
 
