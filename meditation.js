@@ -272,14 +272,20 @@ function startMeditationGame(challengeName, backgroundImage, stageNumber = 1, pr
             arenaMessage = 'Through applying logic, you lose 1 less life per ball and reduce ball velocity by 10%.';
             noGimmicksUsed = false;
             fontSize = '32px';
-        } else if (currentChallengeName === 'Epicureanism' && !purchasedUpgradesSet.has("First Pizza Meme") && !purchasedUpgradesSet.has("Second Pizza Meme")) {
-            unlockAchievement('Slice of Euphoria');
-            ballCount = Math.max(ballCount - 2, 1);
-            respawnFactor += 1;
-            arenaMessage = 'Pizzas remove 2 balls and increase the respawn time by 1 second';
-            noGimmicksUsed = false;
-            fontColor = 'purple';
-            fontSize = '38px';
+        } else if (currentChallengeName === 'Epicureanism') {
+            if (!purchasedUpgradesSet.has("First Pizza Meme") && !purchasedUpgradesSet.has("Second Pizza Meme")){
+                unlockAchievement('Slice of Euphoria');
+                ballCount = Math.max(ballCount - 2, 1);
+                respawnFactor += 1;
+                respawnTime = calculateRespawnTime();
+                arenaMessage = 'Pizzas remove 2 balls and increase the respawn time by 1 second';
+                noGimmicksUsed = false;
+                fontColor = 'purple';
+                fontSize = '38px';
+            }
+            if (respawnTime > meditationTimer) {
+                unlockAchievement('Where did everyone go?');
+            }
         } else if (currentChallengeName === 'Skepticism' && purchasedUpgradesSet.has("Religious Books") && stageNumber === 2) {
             unlockAchievement('Cured Skepticism');
             skepticismRandomnessFactor = 2.5;
@@ -507,6 +513,9 @@ function updateMeditationGame(resolve, stageNumber) {
 
                     unlockAchievement('Meditation Maniac');
                 }
+            }
+            if (currentChallengeName === 'Christianity' && godModeLevel == 0 && puGodLevel == 0) {
+                unlockAchievement('First Commandment');
             }
             return;
         }

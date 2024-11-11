@@ -431,6 +431,20 @@ function initializeSkills() {
     });
 }
 
+
+const hallVisitsWinningSequence = 'KPLBPLLPBPBL';
+let hallVisitsSequence = '';
+
+function checkHallVisitsSequence(){
+    if (hallVisitsSequence.length > hallVisitsWinningSequence.length) {
+        hallVisitsSequence = hallVisitsSequence.slice(-hallVisitsWinningSequence.length); // Keep only the last n characters
+    }
+    if (hallVisitsSequence === hallVisitsWinningSequence) {
+        unlockAchievement('Do as dev #3 says');
+        hallVisitsSequence = ""; // Optionally reset the sequence after unlocking the achievement
+    }
+}
+
 function openLibrary() {
     unlockAchievement('Hall of Knowledge');
     if (purchasedUpgradesSet.has('The Library') || librarySkills.some(skill => skill.unlocked)) {
@@ -444,6 +458,11 @@ function openLibrary() {
 
         openLibraryHallTimestamp= crunchTimer;
         checkFastCommuter();
+
+        if (!achievementsMap.get('Do as dev #3 says').isUnlocked && purchasedUpgradesSet.has('Degens Idle Dev #3')){
+            hallVisitsSequence += 'K';
+            checkHallVisitsSequence();
+        }
 
         // Prevent overlay from closing when clicking inside the content
         const libraryContent = document.querySelector('.library-overlay-content');

@@ -218,16 +218,16 @@ const enemyStats = {
         img: 'imgs/saitama.jpg'
     },
     "Your Ego": {
-        health: 1e300,
-        minDamage: 1e10,
-        maxDamage: 1e100,
-        attackSpeed: 10,
-        defense: 1e100,
+        health: 2.5e122,
+        minDamage: 2e19,
+        maxDamage: 2e21,
+        attackSpeed: 20,
+        defense: 0,
         critChance: 0,
         critDamage: 1,
-        dodge: 0,
+        dodge: 0.15,
         nonCritDodge: 0,
-        stun: 0,
+        stun: 1,
         absorb: 0,
         img: 'imgs/your_ego.jpg'
     }
@@ -315,7 +315,7 @@ function startFightGame(enemyName, enemyImg) {
         firstAttackOfBattle = primeImpactSkill ? true : false;
 
         // Get player stats from resources with rounding up
-        playerMaxHealth = Math.ceil((copium ** (1/20)) * playerHealthMult);
+        playerMaxHealth = (balanceHallSkills.get("Singularity Wielder").unlocked ? Math.ceil((copium ** (1/13))) : Math.ceil((copium ** (1/20))) * playerHealthMult);
         playerHealth = playerMaxHealth;
         playerDefenseBase = delusion > 0 ? Math.ceil((delusion ** (1/12)) / 500) : 0;
         playerDefense = playerDefenseBase;
@@ -332,6 +332,11 @@ function startFightGame(enemyName, enemyImg) {
         playerMinDamage = Math.floor(power * playerMinDamageMult);
         playerBaseMaxDamage = Math.ceil(power * playerMaxDamageMult);
         playerMaxDamage = playerBaseMaxDamage;
+
+        if (balanceHallSkills.get("Singularity Wielder").unlocked) {
+            playerDodgeBase = Math.floor(Math.log10(serenity)) / 100
+            playerStunChance = Math.floor(Math.log10(serenity)) / 100
+        }
 
         playerDodge = playerDodgeBase;
 
@@ -1533,6 +1538,10 @@ function endFight(isForfeit = false) {
     } else if (playerHealth > 0) {
         logFight("<span style='color: green;'>You Win!</span>");
         overlayWinnerLoserText("Winner", "Dead");
+
+        if (currEnemyName === 'Your Ego') {
+            unlockAchievement('Ego Death');
+        }
 
         incrementStellarHarvest();
 

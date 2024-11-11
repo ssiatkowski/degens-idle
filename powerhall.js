@@ -290,6 +290,11 @@ function openPowerHall() {
         openPowerHallTimestamp = crunchTimer; 
         checkFastCommuter();
 
+        if (!achievementsMap.get('Do as dev #3 says').isUnlocked && purchasedUpgradesSet.has('Degens Idle Dev #3')){
+            hallVisitsSequence += 'P';
+            checkHallVisitsSequence();
+        }
+
         // Prevent overlay from closing when clicking inside the content
         const powerHallContent = document.querySelector('.powerhall-overlay-content');
         Events.addListener(powerHallContent, 'click', function(event) {

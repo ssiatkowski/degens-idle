@@ -1218,10 +1218,14 @@ const loveHallSkills = [
     level: "Cosmic Truth (42x)",
     pair: 48,
     onUnlock: () => {
-      warpTimeMax = 60 * 60 * 12;
+      if(!balanceHallSkills.get("Temporal Dominion").unlocked){
+        warpTimeMax = 60 * 60 * 12;
+      }
     },
     onRespec: () => {
-      warpTimeMax = 60 * 60 * 6;
+      if(!balanceHallSkills.get("Temporal Dominion").unlocked){
+        warpTimeMax = 60 * 60 * 6;
+      }
     },
   },
 
@@ -1601,7 +1605,8 @@ function initializeLoveHallSkills() {
                     skillDiv.classList.add('purchased');
                 }
 
-                skillDiv.addEventListener('click', async () => {
+                skillDiv.addEventListener('click', async (event) => {
+                    event.stopPropagation(); // Prevent the click from reaching the outside click listener
                     // Check if the skill has a requirement and if that requirement is unlocked
                     if (skill.requirement && !loveHallSkills.find(s => s.name === skill.requirement).unlocked) {
                         showStatusMessage(skillDiv, 'Missing Prerequisite Skill', false);
@@ -1609,18 +1614,24 @@ function initializeLoveHallSkills() {
                     }
 
                     if (!skill.unlocked && lovePoints >= skill.cost) {
-                        // Show the confirmation modal only if the requirement is met
-                        const result = await showMessageModal(
-                            'Confirm Love Skill Unlock',
-                            `Do you want to unlock ${skill.name} for ${formatNumber(skill.cost)} Love Points? Remember - the paired skill will increase in cost!`,
-                            true,
-                            false
-                        );
-                        if (result) {
-                            lovePoints -= skill.cost;
-                            unlockLoveHallSkill(skill);
-                            saveGameState(); // Assuming this saves the game state
-                            updateLoveHallSkillDisplay(); // Update after unlocking
+                        if (balanceHallSkills.get("Quality of Life").unlocked) {
+                          lovePoints -= skill.cost;
+                          unlockLoveHallSkill(skill);
+                          updateLoveHallSkillDisplay(); // Update after unlocking
+                        } else {
+                          // Show the confirmation modal only if the requirement is met
+                          const result = await showMessageModal(
+                              'Confirm Love Skill Unlock',
+                              `Do you want to unlock ${skill.name} for ${formatNumber(skill.cost)} Love Points? Remember - the paired skill will increase in cost!`,
+                              true,
+                              false
+                          );
+                          if (result) {
+                              lovePoints -= skill.cost;
+                              unlockLoveHallSkill(skill);
+                              saveGameState(); // Assuming this saves the game state
+                              updateLoveHallSkillDisplay(); // Update after unlocking
+                          }
                         }
                     } else if (lovePoints < skill.cost) {
                         showStatusMessage(skillDiv, 'Insufficient Love Points to unlock this skill.', false);
@@ -1640,11 +1651,10 @@ function initializeLoveHallSkills() {
 
 
 function outsideLoveHallClickListener(event) {
-    const loveHallContent = document.querySelector('.lovehall-overlay-content');
-
-    if (!loveHallContent.contains(event.target)) {
-        closeLoveHall();
-    }
+  const loveHallContent = document.querySelector('.lovehall-overlay-content');
+  if (!loveHallContent.contains(event.target)) {
+      closeLoveHall();
+  }
 }
 
 let openLoveHallTimestamp = 0;
@@ -1684,6 +1694,11 @@ function openLoveHall() {
 
     initializeLoveHallSkills();
     updateLoveHallSkillDisplay();
+
+    if (!achievementsMap.get('Do as dev #3 says').isUnlocked && purchasedUpgradesSet.has('Degens Idle Dev #3')){
+      hallVisitsSequence += 'L';
+      checkHallVisitsSequence();
+    }
 
     // Add a temporary event listener to close the overlay when clicking outside of it
     setTimeout(() => {

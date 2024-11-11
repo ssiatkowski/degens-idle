@@ -17,14 +17,14 @@ let balanceHallSkills = new Map([
     ["Love Matters", { description: "Multiply all resources by (Love Points / 1000)", cost: { Delusion: 1e210 }, available: false, unlocked: false }],
     ["Balance Check", { description: "Multiplier to last 4 resources based on balance of first 4 resources (checked every 30 seconds)", cost: { 'Yacht Money': 5e217 }, available: false, unlocked: false }],
     ["Everlasting Love", { description: "Passively generate Love Points based on largest embrace each hour (online & offline) -- can go beyond the Infinite Embrace 1M limit", cost: { 'Troll Points': 1e225 }, available: false, unlocked: false }],
-    ["Skill 5", { description: "Does not Exist Yet", cost: { Hopium: 1e300 }, available: false, unlocked: false }],
-    ["Skill 6", { description: "Does not Exist Yet", cost: { Knowledge: 1e300 }, available: false, unlocked: false }],
-    ["Skill 7", { description: "Does not Exist Yet", cost: { Power: 1e300 }, available: false, unlocked: false }],
-    ["Skill 8", { description: "Does not Exist Yet", cost: { Serenity: 1e300 }, available: false, unlocked: false }],
-    ["Advanced Skill 1", { description: "Does not Exist Yet", cost: { Copium: 1e300, Delusion: 1e300, 'Yacht Money': 1e300, 'Troll Points': 1e300, Hopium: 1e300, Knowledge: 1e300, Power: 1e300, Serenity: 1e300 }, available: false, unlocked: false }],
-    ["Advanced Skill 2", { description: "Does not Exist Yet", cost: { Copium: 1e300, Delusion: 1e300, 'Yacht Money': 1e300, 'Troll Points': 1e300, Hopium: 1e300, Knowledge: 1e300, Power: 1e300, Serenity: 1e300 }, available: false, unlocked: false }],
-    ["Advanced Skill 3", { description: "Does not Exist Yet", cost: { Copium: 1e300, Delusion: 1e300, 'Yacht Money': 1e300, 'Troll Points': 1e300, Hopium: 1e300, Knowledge: 1e300, Power: 1e300, Serenity: 1e300 }, available: false, unlocked: false }],
-    ["Advanced Skill 4", { description: "Does not Exist Yet", cost: { Copium: 1e300, Delusion: 1e300, 'Yacht Money': 1e300, 'Troll Points': 1e300, Hopium: 1e300, Knowledge: 1e300, Power: 1e300, Serenity: 1e300 }, available: false, unlocked: false }]
+    ["Quality of Life", { description: "Resource balancing first 4 resources no longer resets game AND Ascend/Transcend up to 100 upgrades at once AND Cookie Clicker Clicker is permanent AND remove Hall of Love skill confirmations", cost: { Hopium: 1e230 }, available: false, unlocked: false }],
+    ["Balance is Power", { description: "Multiplicative 5x to Power for each Balance Skill unlocked", cost: { Knowledge: 1e202 }, available: false, unlocked: false }],
+    ["Temporal Dominion", { description: "Time Warp charges 6x faster AND max time increases to 24 minutes", cost: { Power: 1e90 }, available: false, unlocked: false }],
+    ["Serene Future", { description: "Multiplicative 3% to Serenity for each upgrade purchased", cost: { Serenity: 1e47 }, available: false, unlocked: false }],
+    ["Greatest Balance", { description: "Max balance values are squared", cost: { Copium: 1e242, Delusion: 1e242, 'Yacht Money': 1e242, 'Troll Points': 1e242, Hopium: 1e242, Knowledge: 1e213, Power: 1e96, Serenity: 1e52 }, available: false, unlocked: false }],
+    ["Surrounded by Love", { description: "Passive Love Point Generation is 600x faster", cost: { Copium: 1e258, Delusion: 1e258, 'Yacht Money': 1e258, 'Troll Points': 1e258, Hopium: 1e257, Knowledge: 1e230, Power: 1e107, Serenity: 1.6e56 }, available: false, unlocked: false }],
+    ["Singularity Wielder", { description: "In battles, set Stun and Dodge chances to log10(serenity) AND vastly increase HP scaling with Copium", cost: { Copium: 1e268, Delusion: 1e268, 'Yacht Money': 1e268, 'Troll Points': 1e268, Hopium: 2e266, Knowledge: 3e242, Power: 6e114, Serenity: 1.6e59 }, available: false, unlocked: false }],
+    ["Guardian Training", { description: "Vastly Improve Meditation resource calculations (not implemented yet)", cost: { Copium: 1e300, Delusion: 1e300, 'Yacht Money': 1e300, 'Troll Points': 1e300, Hopium: 1e300, Knowledge: 1e300, Power: 1e300, Serenity: 1e300 }, available: false, unlocked: false }]
 ]);
 
 function initializeBalanceHall() {
@@ -44,21 +44,24 @@ function initializeBalanceHall() {
         const slider = document.createElement('input');
         slider.type = 'range';
         slider.min = '1';
-        
+
         let logMax = Math.floor(Math.log10(resource.resource));
         if (balanceHallSkills.get("Greater Balance").unlocked) {
             logMax *= 100;
+        }
+        if (balanceHallSkills.get("Greatest Balance").unlocked) {
+            logMax = logMax ** 2;
         }
         slider.max = logMax;
         slider.value = logMax;  // Set initial slider position to max value
 
         slider.classList.add('balance-slider');
-        slider.dataset.name = name;
+        slider.dataset.name = name; // Ensure `data-name` matches the `name` used in updateSliders
 
         // Determine initial disable state for sliders 5-8
         const isBasicResource = basicResources.includes(name);
-        slider.disabled = !isBasicResource && 
-                          !(basicResources.every(resName => balanceHallMultipliers.get(resName).currentMultiplier > 1) || anySkillPurchased());
+        slider.disabled = !isBasicResource &&
+            !(basicResources.every(resName => balanceHallMultipliers.get(resName).currentMultiplier > 1) || anySkillPurchased());
 
         // Create a gray dot indicator for the "Curr" value
         const dotIndicator = document.createElement('div');
@@ -85,7 +88,8 @@ function initializeBalanceHall() {
         const balanceButton = document.createElement('button');
         balanceButton.classList.add('balance-button');
         balanceButton.textContent = `Balance ${name}`;
-        
+        balanceButton.dataset.name = name; // Ensure `data-name` matches `name` used in updateSliders
+
         // Disable button for resources 5-8 based on initial conditions
         balanceButton.disabled = !isBasicResource &&
             !(basicResources.every(resName => balanceHallMultipliers.get(resName).currentMultiplier > 1) || anySkillPurchased());
@@ -93,16 +97,18 @@ function initializeBalanceHall() {
         balanceButton.addEventListener('click', () => {
             resource.currentMultiplier = parseInt(slider.value);
             currentDisplay.textContent = `Curr: ${formatNumber(slider.value)}`;
-            
-            balanceReset();
-            updateSliders();  // Re-evaluate all sliders after balancing a resource
-            checkSkillUnlock();
-            updateDisclaimerText();
+
+            if (balanceHallSkills.get("Quality of Life").unlocked && (name == 'Copium' || name == 'Delusion' || name == 'Yacht Money' || name == 'Troll Points')) {
+                updateSliders();
+            } else {
+                balanceReset();
+            }
         });
 
         // Append elements to the slider container and then to the left column
         sliderContainer.appendChild(slider);
         sliderContainer.appendChild(dotIndicator);  // Add dot on the slider
+
         // Create a container div for Curr and New displays
         const currentNewRow = document.createElement('div');
         currentNewRow.classList.add('current-new-row'); // Class for styling Curr and New on the same row
@@ -125,17 +131,17 @@ function initializeBalanceHall() {
         const skillButton = document.createElement('button');
         skillButton.classList.add('balance-skill-button');
         skillButton.dataset.name = skillName;
-    
+
         if (skill.unlocked) {
             skill.available = true;
         }
-    
+
         updateBalanceSkillDisplay(skill, skillName);
-    
+
         skillButton.addEventListener('click', () => {
             purchaseSkill(skillName);
         });
-    
+
         skillGrid.appendChild(skillButton);
     });
 
@@ -147,8 +153,11 @@ function initializeBalanceHall() {
 
     updateDisclaimerText();
     checkSkillUnlock();
+
+    // Call updateSliders only after elements are fully added to the DOM
     updateSliders();
 }
+
 
 
 
@@ -169,6 +178,7 @@ function updateDisclaimerText() {
         disclaimer.textContent = "";
     }
 }
+
 
 
 function updateSliders() {
@@ -193,7 +203,17 @@ function updateSliders() {
             if (balanceHallSkills.get("Greater Balance").unlocked) {
                 logMax *= 100;
             }
+            if (balanceHallSkills.get("Greatest Balance").unlocked) {
+                logMax = logMax ** 2;
+            }
             slider.max = logMax;
+
+            // Update dot position
+            const dotPosition = Math.min((resource.currentMultiplier / logMax) * 100, 100);
+            const dotIndicator = slider.parentNode.querySelector('.dot-indicator');
+            if (dotIndicator) {
+                dotIndicator.style.left = `${dotPosition}%`;
+            }
         } else {
             console.warn(`Element for ${name} not found.`);
         }
@@ -341,27 +361,25 @@ function unlockBalanceHallSkill(skillName, duringLoad = false) {
                 break;
             case "Everlasting Love":
                 console.log("Everlasting Love functionality activated.");
-                // Placeholder for Skill 4 functionality
                 break;
-            case "Skill 5":
-                console.log("Skill 5 functionality activated.");
-                // Placeholder for Skill 5 functionality
+            case "Quality of Life":
+                console.log("Quality of Life functionality activated.");
+                numAscensionUpgrades = Math.max(numAscensionUpgrades, 100);
+                numPUAscensionUpgrades = Math.max(numPUAscensionUpgrades, 100);
                 break;
-            case "Skill 6":
-                console.log("Skill 6 functionality activated.");
-                // Placeholder for Skill 6 functionality
+            case "Balance is Power":
+                console.log("Balance is Power functionality activated.");
                 break;
-            case "Skill 7":
-                console.log("Skill 7 functionality activated.");
-                // Placeholder for Skill 7 functionality
+            case "Temporal Dominion":
+                warpTimeMax = 60 * 60 * 24;
+                console.log("Temporal Dominion functionality activated.");
                 break;
-            case "Skill 8":
-                console.log("Skill 8 functionality activated.");
-                // Placeholder for Skill 8 functionality
+            case "Serene Future":
+                console.log("Serene Future functionality activated.");
                 break;
-            case "Advanced Skill 1":
-                console.log("Advanced Skill 1 functionality activated.");
-                // Placeholder for Advanced Skill 1 functionality
+            case "Greatest Balance":
+                console.log("Greatest Balance functionality activated.");
+                updateSliders();
                 break;
             case "Advanced Skill 2":
                 console.log("Advanced Skill 2 functionality activated.");
@@ -404,6 +422,13 @@ function openBalanceHall() {
         initializeBalanceHall();
         const balanceHallOverlay = document.getElementById('balanceHallOverlay');
         balanceHallOverlay.style.display = 'flex';
+
+        
+        if (!achievementsMap.get('Do as dev #3 says').isUnlocked && purchasedUpgradesSet.has('Degens Idle Dev #3')){
+            hallVisitsSequence += 'B';
+            checkHallVisitsSequence();
+        }
+
         // Add a temporary event listener to close the overlay when clicking outside of it
         setTimeout(() => {
             document.addEventListener('click', outsideBalanceHallClickListener);
@@ -460,6 +485,8 @@ function balanceCheck() {
 
     localStorage.setItem('balanceCheckMultiplier', balanceCheckMultiplier);
     showPopupTooltip(`Balance Check: x${formatNumber(balanceCheckMultiplier)}`, '#b0c4de', 0.8);
+
+    updateEffectiveMultipliers();
 
     return balanceCheckMultiplier;
 }

@@ -243,6 +243,8 @@ let resourceGenerationDisabled = false;
 
 let noGimmicksUsed;
 
+let messageShownUpgrades = new Set(JSON.parse(localStorage.getItem('messageShownUpgrades')) || []);
+
 // Global object to manage prevent event occuring at the same time
 let eventProgression = {
     inProgress: false,
@@ -294,6 +296,10 @@ function calculateBasePower() {
         basePower *= (lovePoints / 1000);
     }
 
+    if (balanceHallSkills.get("Balance is Power").unlocked) {
+        basePower *= (5 ** (Array.from(balanceHallSkills.values()).filter(skill => skill.unlocked).length))
+    }
+
     return basePower;
 }
 
@@ -341,7 +347,9 @@ function updateEffectiveMultipliers() {
         effectivePowerPerSecond = calculateEffectivePower();
     }
 
-    effectiveSerenityPerSecond = serenityPerSecond * achievementMultiplier * serenityBoostMultiplier * cosmicGamekeeperMultiplier * balanceHallMultipliers.get('Serenity').currentMultiplier * balanceCheckMultiplier;
+    const sereneFutureMultiplier = balanceHallSkills.get("Serene Future").unlocked ? 1.03 ** purchasedUpgrades.length : 1;
+
+    effectiveSerenityPerSecond = serenityPerSecond * achievementMultiplier * serenityBoostMultiplier * cosmicGamekeeperMultiplier * balanceHallMultipliers.get('Serenity').currentMultiplier * balanceCheckMultiplier * sereneFutureMultiplier;
 
     if(balanceHallSkills.get("Love Matters").unlocked && lovePoints > 1000) {
         effectiveSerenityPerSecond *= (lovePoints / 1000);
@@ -371,7 +379,7 @@ function updateEffectiveMultipliers() {
 let cookieClicks = 0;
 
 // Function to handle cookie click
-function cookieCollectAllResources() {
+function cookieCollectAllResources(isManualClick=true) {
     if (cookieBoost){
         copium += Math.max(cookieClickMultiplier * totalMultiplier, effectiveCopiumPerSecond/2);
         delusion += Math.max(cookieClickMultiplier * totalMultiplier, effectiveDelusionPerSecond/2);
@@ -394,7 +402,7 @@ function cookieCollectAllResources() {
     if(cookieClicks >= 500 && cookieClicks <= 505){
         unlockAchievement('Fatigued Finger');
     }
-    if (!achievementsMap.get('Warped Cookie').isUnlocked && !cookieIntervalId){
+    if (!achievementsMap.get('Warped Cookie').isUnlocked && isManualClick){
         warpedCookieSequence += 'C';
         manageWarpedCookieSequence();
     }
@@ -755,6 +763,16 @@ function loadGameState() {
     // Generate idle resources based on the elapsed time
     generateIdleResources(elapsedSeconds);
 
+    if (balanceHallSkills.get("Quality of Life").unlocked){
+        clearInterval(cookieIntervalId);
+        const cookieButton = document.getElementById('cookieButton');
+        cookieButton.classList.remove('spinning');
+        cookieButton.classList.add('spinning');
+        cookieIntervalId = setInterval(() => {
+            cookieCollectAllResources(false);
+        }, 100); // 100 milliseconds = 0.1 seconds
+    }
+
     // Update the display and the upgrade list, and unlock any available mini-games
     updateDisplay();
     updateUpgradeList();
@@ -1008,12 +1026,12 @@ function generateResources() {
 
     // Generate 0.5 seconds' worth of lovePoints if Everlasting Love is unlocked
     if (balanceHallSkills.get("Everlasting Love").unlocked) {
-        lovePoints += largestEmbrace / 3600 / 2; // 0.5 seconds of lovePoints
+        lovePoints += (balanceHallSkills.get("Surrounded by Love").unlocked) ? largestEmbrace / 6 / 2 : largestEmbrace / 3600 / 2; // 0.5 seconds of lovePoints
     }
 
     crunchTimer += 0.5;
     embraceTimer += 0.5;
-    if (accumulatedWarpTime < warpTimeMax) accumulatedWarpTime += 0.5;
+    if (accumulatedWarpTime < warpTimeMax) accumulatedWarpTime += (balanceHallSkills.get("Temporal Dominion").unlocked ? 3 : 0.5);
 
     updateDisplay();
 }
@@ -1395,24 +1413,26 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
             cookieButton.classList.add('spinning');
 
             cookieIntervalId = setInterval(() => {
-                cookieCollectAllResources();
+                cookieCollectAllResources(false);
             }, 100); // 100 milliseconds = 0.1 seconds
 
             const thisCookieIntervalId = cookieIntervalId;
 
             // Stop the interval after 15 seconds
-            const timeoutId = setTimeout(() => {
-                if (thisCookieIntervalId === cookieIntervalId) {
-                    clearInterval(thisCookieIntervalId);
-                    cookieIntervalId = null;
+            if (!balanceHallSkills.get("Quality of Life").unlocked) {
+                const timeoutId = setTimeout(() => {
+                    if (thisCookieIntervalId === cookieIntervalId) {
+                        clearInterval(thisCookieIntervalId);
+                        cookieIntervalId = null;
 
-                    // Remove the spinning class to stop the animation
-                    cookieButton.classList.remove('spinning');
-                }
+                        // Remove the spinning class to stop the animation
+                        cookieButton.classList.remove('spinning');
+                    }
 
-            }, 15000); // 15000 milliseconds = 15 seconds
+                }, 15000); // 15000 milliseconds = 15 seconds
 
-            currentTimeouts.push(timeoutId);
+                currentTimeouts.push(timeoutId);
+            }
         }
 
         
@@ -2481,6 +2501,9 @@ async function infiniteEmbrace(skipConfirms = false, lovePointsOverwrite = false
                     unlockAchievement('Gentle Embrace');
                 } else if (lovePointsGained > 25) {
                     unlockAchievement('Massive Embrace');
+                    if (lovePointsGained > 618.5 && lovePointsGained < 619.5) {
+                        unlockAchievement('Engagement');
+                    }
                     if (lovePointsGained > largestEmbrace) {
                         largestEmbrace = lovePointsGained;
                         localStorage.setItem('largestEmbrace', largestEmbrace);
@@ -2847,7 +2870,7 @@ function generateIdleResources(elapsedSeconds) {
 
     // Check if Everlasting Love is unlocked and increment lovePoints accordingly
     if (balanceHallSkills.get("Everlasting Love").unlocked) {
-        lovePoints += (largestEmbrace / 3600) * elapsedSeconds;
+        lovePoints += (balanceHallSkills.get("Surrounded by Love").unlocked) ? (largestEmbrace / 6) * elapsedSeconds : (largestEmbrace / 3600) * elapsedSeconds;
     }
 
     if (elapsedSeconds > 60 * 60 * 24){
@@ -2856,7 +2879,7 @@ function generateIdleResources(elapsedSeconds) {
 
     crunchTimer += elapsedSeconds;
     embraceTimer += elapsedSeconds;
-    accumulatedWarpTime = Math.min (accumulatedWarpTime + elapsedSeconds, warpTimeMax);
+    accumulatedWarpTime = Math.min (accumulatedWarpTime + ((balanceHallSkills.get("Temporal Dominion").unlocked ? 6 : 1) * elapsedSeconds), warpTimeMax);
 
     const baseKnowledgePerSecond = calculateBaseKnowledge();
 
@@ -2941,6 +2964,11 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true, ski
     if (!upgrade) {
         console.error(`Upgrade not found: ${upgradeName}`);
         return;
+    }
+
+    if (upgrade.name == 'Future You' && !purchasedUpgradesSet.has("Your Ego") && !skipEventCheck) {
+        showMessageModal('You must defeat Your Ego first.', `You feel the gaze of an incomprehensibly superior being watching over you—a presence vast and cosmic, yet with a soul that feels uncannily familiar, like a reflection of your own. You sense its desire to connect, to share its wisdom, but there is one obstacle left: your ego. Only by overcoming this final barrier can you open yourself to the truths it holds.`);
+        return
     }
 
     // Destructure the upgrade object to get its properties
@@ -3082,13 +3110,11 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true, ski
         purchasedUpgradesSet.add(upgrade.name); // Add to set for fast lookups
 
 
-        
-        // Special case for unlocking the "Sebo's Luck" upgrade
-        if (name === "Sloppy Burgers") {
-            showMessageModal('The Journey Continues',
-                "Thank you for reaching this far in the game! Your dedication is truly appreciated, and you've now unlocked 1/3 of the Hall of Balance skills—are you excited for what's to come? We're in the final push toward v1.0, edging ever closer to the limits of infinity (1e308). "
-                + "Your involvement means a lot, and if you'd like to get even more involved, we'd love to see you in the Discord community. Every bit helps, whether it's spreading the word about the game, contributing code updates, helping populate our Wiki, or just lending a hand to other players. "
-                + "Congratulations on your progress, and thank you for being a vital part of this journey. There's so much more to look forward to!"
+        if (name === "What's Next?") {
+            showMessageModal(`You've come so far!`,
+                "The journey is nearing its end, as you’ve nearly conquered the Hall of Balance. You've defeated your ego, met your future self, and now only the final step remains: guardianship training. We're closing in on v1.0, where the initial story of Degens Idle will come to a climactic finish! "
+                + "Your support and involvement have been incredible, and if you’re eager to help push Degens Idle even further, we'd love to have you in our growing Discord community. Whether it’s spreading the word, contributing code, adding to the Wiki, or helping fellow players, every bit makes a difference. "
+                + "Congratulations on your journey so far, and thank you for being such an essential part of this adventure. There’s still so much more to experience, and we hope you're as excited as we are!"
             );
         }
 
@@ -3117,22 +3143,23 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true, ski
         }
 
         if (name == "Cosmic Drought") {
-            if (stellarCookieSkill) {
-                clearInterval(cookieIntervalId)
-                cookieIntervalId = null;
-                document.getElementById('cookieButton');
-                cookieButton.classList.remove('spinning');
+            if (!balanceHallSkills.get("Quality of Life").unlocked) {
+                if (stellarCookieSkill) {
+                    clearInterval(cookieIntervalId)
+                    cookieIntervalId = null;
+                    document.getElementById('cookieButton');
+                    cookieButton.classList.remove('spinning');
+                }
+                clearAllTimeouts();
             }
-            clearAllTimeouts();
             stellarHarvestMult = fertileScarcitySkill ? 250 : 1;
             updateMultipliersDisplay();
             unlockAchievement('Cosmic Drought');
         }
 
         // Check if the upgrade message has been shown before
-        const messageShownUpgrades = JSON.parse(localStorage.getItem('messageShownUpgrades')) || [];
-        const isFirstPurchase = !messageShownUpgrades.includes(name);
-
+        const isFirstPurchase = !messageShownUpgrades.has(name);
+        
         // Show a message if the upgrade has one and it's the first purchase
         if (message && isFirstPurchase) {
             if (message.startsWith('imgs/modal_imgs/')) {
@@ -3140,8 +3167,10 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true, ski
             } else {
                 showMessageModal(name, message);
             }
-            messageShownUpgrades.push(name);
-            localStorage.setItem('messageShownUpgrades', JSON.stringify(messageShownUpgrades));
+            
+            // Add the name to the Set and store it back in localStorage
+            messageShownUpgrades.add(name);
+            localStorage.setItem('messageShownUpgrades', JSON.stringify(Array.from(messageShownUpgrades)));
         }
 
         // if (name === 'Skepticism') {
@@ -3685,6 +3714,24 @@ function updateUpgradeList() {
         }
     });
 
+    if (!achievementsMap.get(`Decisively Indecisive`).isUnlocked && (topUpgrades.some(upgrade => upgrade.name === 'More Decisions...') && topUpgrades.some(upgrade => upgrade.name === 'Decisions, decisions...'))) {
+        if (decisionTimerId === null) { // Only start the timer if it hasn't started yet
+            decisionTimerId = setTimeout(() => {
+                // Check if both upgrades are still in the list after 5 minutes
+                const currentUpgrades = availableUpgrades.slice(0, 8);
+                const stillHasDecisions = currentUpgrades.some(upgrade => upgrade.name === 'Decisions, decisions...');
+                const stillHasMoreDecisions = currentUpgrades.some(upgrade => upgrade.name === 'More Decisions...');
+    
+                if (stillHasDecisions && stillHasMoreDecisions) {
+                    unlockAchievement('Decisively Indecisive'); // Unlock the achievement
+                }
+    
+                decisionTimerId = null; // Reset the timer ID
+            }, 5 * 60 * 1000); // 5 minutes in milliseconds
+        }
+    }
+        
+
     // Remove excess elements if there are more than needed
     while (upgradeList.children.length > topUpgrades.length) {
         upgradeList.removeChild(upgradeList.lastChild);
@@ -3946,13 +3993,13 @@ function incrementStellarHarvest() {
         const multiplier = celestialCollectorSkill ? 1.5: 1.3;
         const duration = celestialCollectorSkill ? 600000 : 180000; // 10 minutes (600,000 ms) or 3 minute (180,000 ms)
 
-        if (stellarHarvestMult == 1 && stellarCookieSkill){
+        if (stellarHarvestMult == 1 && stellarCookieSkill && !balanceHallSkills.get("Quality of Life").unlocked){
             clearInterval(cookieIntervalId);
             const cookieButton = document.getElementById('cookieButton');
             cookieButton.classList.remove('spinning');
             cookieButton.classList.add('spinning');
             cookieIntervalId = setInterval(() => {
-                cookieCollectAllResources();
+                cookieCollectAllResources(false);
             }, 100); // 100 milliseconds = 0.1 seconds
         }
 
@@ -3965,23 +4012,25 @@ function incrementStellarHarvest() {
             unlockAchievement('Stellar Harvester');
         }
 
-        // Set a timeout to reset the multiplier after the specified duration
-        const timeoutId = setTimeout(() => {
-            stellarHarvestMult = Math.max(stellarHarvestMult / multiplier, 1);
-            updateMultipliersDisplay();
-            updateEffectiveMultipliers();
+        if(!balanceHallSkills.get("Quality of Life").unlocked){
+            // Set a timeout to reset the multiplier after the specified duration
+            const timeoutId = setTimeout(() => {
+                stellarHarvestMult = Math.max(stellarHarvestMult / multiplier, 1);
+                updateMultipliersDisplay();
+                updateEffectiveMultipliers();
 
-            if (stellarHarvestMult == 1 && stellarCookieSkill){
-                const cookieButton = document.getElementById('cookieButton');
-                cookieButton.classList.remove('spinning');
-                clearInterval(cookieIntervalId);
-                cookieIntervalId = null;
-            }
-            //TODO: use global tooltip to show it decreased
-        }, duration);
+                if (stellarHarvestMult == 1 && stellarCookieSkill){
+                    const cookieButton = document.getElementById('cookieButton');
+                    cookieButton.classList.remove('spinning');
+                    clearInterval(cookieIntervalId);
+                    cookieIntervalId = null;
+                }
+                //TODO: use global tooltip to show it decreased
+            }, duration);
 
-        // Store the timeout ID in the array
-        currentTimeouts.push(timeoutId);
+            // Store the timeout ID in the array
+            currentTimeouts.push(timeoutId);
+        }
     }
 }
 
@@ -4757,7 +4806,7 @@ function calculateTooltip(resourceId) {
 
     // Calculate next order of magnitude and time required to reach it
     let nextOrderOfMagnitude = Math.pow(10, Math.ceil(Math.log10(currentAmount)));
-    let timeUntilNextOrder = (nextOrderOfMagnitude - currentAmount) / gainPerSecond;
+    let timeUntilNextOrder = (nextOrderOfMagnitude - currentAmount) / (warpTimeActive ? gainPerSecond * 5 : gainPerSecond);
 
     // Format the time with appropriate units
     let timeFormatted;
@@ -4772,7 +4821,7 @@ function calculateTooltip(resourceId) {
     }
 
     // Add the time until the next order of magnitude to the tooltip
-    tooltip += `<b>Time Until ${formatNumber(nextOrderOfMagnitude)}:</b> ~${timeFormatted}<br><br>`;
+    tooltip += `<b>Time until ${formatNumber(nextOrderOfMagnitude)}:</b> ~${timeFormatted}<br><br>`;
     
 
     if (resourceId !== 'power'){
@@ -4975,8 +5024,16 @@ function calculateTooltip(resourceId) {
         tooltip += `<span style="color:#E37383">x${formatNumber(lovePoints / 1000)} (Love Points)</span><br>`;
     }
 
-    if (balanceCheckMultiplier > 1 && (resourceId == 'hopium' || resourceId == 'knowledge' || resourceId == 'power' || resourceId == 'serenity')) {
+    if ((resourceId == 'hopium' || resourceId == 'knowledge' || resourceId == 'power' || resourceId == 'serenity')) {
         tooltip += `<span style="color:#b0c4de">x${formatNumber(balanceCheckMultiplier)} (Balance Check)</span><br>`;
+    }
+
+    if (resourceId === 'power' && balanceHallSkills.get("Balance is Power").unlocked) {
+        tooltip += `<span style="color:#FAFAD2">x${formatNumber((5 ** (Array.from(balanceHallSkills.values()).filter(skill => skill.unlocked).length)))} (Balance is Power)</span><br>`;
+    }
+
+    if (resourceId === 'serenity' &&balanceHallSkills.get("Serene Future").unlocked && purchasedUpgrades.length > 0) {
+        tooltip += `<span style="color:#FFEFD5">x${formatNumber(1.03 ** purchasedUpgrades.length)} (Serene Future)</span><br>`;
     }
 
     return tooltip;
@@ -5035,7 +5092,7 @@ let hopiumToggleTimes = [];
 // Add event listeners after the DOM content is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
     // Add event listener for the cookie button to collect all resources
-    document.getElementById('cookieButton').addEventListener('click', throttle(cookieCollectAllResources, 70));
+    document.getElementById('cookieButton').addEventListener('click', throttle(() =>cookieCollectAllResources(true), 70));
 
     // Add event listeners for resource collection buttons
     document.getElementById('collectCopiumButton').addEventListener('click', () => { collectResource('copium'); });
