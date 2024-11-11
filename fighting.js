@@ -971,7 +971,7 @@ function attackEnemy(resolve) {
 
         setTimeout(() => {
             fightLoop(resolve);
-        }, 750);
+        }, 600);
     }
 
     if (currEnemyName === "Kaguya" && enemyHealth <= enemyMaxHealth) {
