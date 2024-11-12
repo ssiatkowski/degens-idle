@@ -405,8 +405,7 @@ function startFightGame(enemyName, enemyImg) {
 
         if (currEnemyName === "Agent Smith") {
             if (!purchasedUpgradesSet.has("VR Life")) {
-                playerDodgeBase += 0.25;
-                playerDodge = playerDodgeBase;
+                playerDodge += 0.25;
                 document.getElementById('playerDodgeStat').innerText = formatNumber(playerDodge * 100) + '%';
                 unlockAchievement('Virtual Dodging');
                 logFight("<span style='color: green; font-weight: bold; font-size: 1.3em';>You figure out this is a VR fight and casually increase your dodge chance by 25%.</span>");

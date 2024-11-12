@@ -749,7 +749,7 @@ function playMiniGame(gameType) {
         if (sebosLuck) {
             // If Sebo's Luck is active, only 4 values are needed
             boxValues = [
-                Math.floor(Math.random() * 46) - 50, // -50% to -5% 
+                Math.floor(Math.random() * 41) - 45, // -45% to -5%
                 Math.floor(Math.random() * 101) + 25, // 25% to 125%
                 Math.floor(Math.random() * 101) + 25, // 25% to 125%
                 Math.floor(Math.random() * 101) + 25  // 25% to 125%
@@ -757,8 +757,8 @@ function playMiniGame(gameType) {
         } else if (luckGameSkill) {
             // If luckGameSkill is active, but Sebo's Luck is not, 5 values are needed
             boxValues = [
-                Math.floor(Math.random() * 46) - 50, // -50% to -5%
-                Math.floor(Math.random() * 46) - 50, // -50% to -5% 
+                Math.floor(Math.random() * 41) - 45, // -45% to -5%
+                Math.floor(Math.random() * 41) - 45, // -45% to -5%
                 Math.floor(Math.random() * 101) + 25, // 25% to 125%
                 Math.floor(Math.random() * 101) + 25, // 25% to 125%
                 Math.floor(Math.random() * 101) + 25  // 25% to 125%
@@ -766,9 +766,9 @@ function playMiniGame(gameType) {
         } else {
             // Default scenario with 6 values
             boxValues = [
-                Math.floor(Math.random() * 66) - 70, // -70% to -5%
-                Math.floor(Math.random() * 66) - 70, // -70% to -5%
-                Math.floor(Math.random() * 66) - 70, // -70% to -5%
+                Math.floor(Math.random() * 56) - 60, // -60% to -5%
+                Math.floor(Math.random() * 56) - 60, // -60% to -5%
+                Math.floor(Math.random() * 56) - 60, // -60% to -5%
                 Math.floor(Math.random() * 91) + 10,  // 10% to 100%
                 Math.floor(Math.random() * 91) + 10,  // 10% to 100%
                 Math.floor(Math.random() * 91) + 10   // 10% to 100%
@@ -933,7 +933,7 @@ function playMiniGame(gameType) {
                         if(boxValue >= 123){
                             unlockAchievement('Pure Luck');
                         }
-                        if(sebosLuck && boxValue <= -49.9){
+                        if(sebosLuck && boxValue <= -44.9){
                             unlockAchievement('That is some Bad Luck');
                         }
 

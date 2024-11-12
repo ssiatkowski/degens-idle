@@ -1198,6 +1198,13 @@ const achievements = [
         type: 'progression',
     },
     {
+        name: `Now that's a time wall!`,
+        isUnlocked: false,
+        hoverText: 'time displayed in eons',
+        img: 'imgs/achievements/now_thats_a_time_wall.jpg',
+        type: 'puzzle',
+    },
+    {
         name: 'Fifty Days of Saving',
         isUnlocked: false,
         hoverText: 'export your save on 50 different days',
@@ -1234,7 +1241,7 @@ const achievements = [
         type: 'puzzle',
     },
     {
-        name: 'Where did everyone go?',
+        name: 'Where did everybody go?',
         isUnlocked: false,
         hoverText: `longer respawn time than duration on Epicureanism`,
         img: 'imgs/achievements/where_did_everybody_go.jpg',

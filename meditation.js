@@ -283,8 +283,9 @@ function startMeditationGame(challengeName, backgroundImage, stageNumber = 1, pr
                 fontColor = 'purple';
                 fontSize = '38px';
             }
-            if (respawnTime > meditationTimer) {
-                unlockAchievement('Where did everyone go?');
+            if (respawnTime / 1000 > meditationTimer) {
+                unlockAchievement('Where did everybody go?');
+                console.log(`Respawn Time: ${respawnTime / 1000}, Meditation Timer: ${meditationTimer}`);
             }
         } else if (currentChallengeName === 'Skepticism' && purchasedUpgradesSet.has("Religious Books") && stageNumber === 2) {
             unlockAchievement('Cured Skepticism');

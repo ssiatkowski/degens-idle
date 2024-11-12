@@ -254,7 +254,7 @@ const loveHallSkills = [
 
   {
     name: "Power Infusion",
-    cost: 42,
+    cost: 40,
     description: "4x Power gain.",
     unlocked: false,
     level: "Quantum Harmony (2.8x)",
@@ -274,7 +274,7 @@ const loveHallSkills = [
   },
   {
     name: "Soulbound Embrace",
-    cost: 42,
+    cost: 40,
     description: "Gain +6 Love Points every embrace.",
     unlocked: false,
     level: "Quantum Harmony (2.8x)",
@@ -442,7 +442,7 @@ const loveHallSkills = [
 
   {
     name: "Stoic Embrace",
-    cost: 500,
+    cost: 420,
     description: "Starting at Stoicism, Altruistic Embrace bonus increased from 1.25x to 1.5x",
     unlocked: false,
     level: "Quantum Harmony (2.8x)",
@@ -457,7 +457,7 @@ const loveHallSkills = [
   },
   {
     name: "Transcendent Embrace",
-    cost: 500,
+    cost: 420,
     description: "Gain +42 Love Points every embrace.",
     unlocked: false,
     level: "Quantum Harmony (2.8x)",
@@ -651,7 +651,7 @@ const loveHallSkills = [
 
   {
     name: "Gaming Addict",
-    cost: 2.2,
+    cost: 2.1,
     description: "Improves Mini Gamer skill to reduce cooldowns by 75%.",
     unlocked: false,
     level: "Dimensional Shift (27x)",
@@ -665,7 +665,7 @@ const loveHallSkills = [
   },
   {
     name: "First-Wave Automation",
-    cost: 2.2,
+    cost: 2.1,
     description: `Hall of Knowledge automation skills are ${formatNumber(
       1e10
     )}x cheaper`,
@@ -727,7 +727,7 @@ const loveHallSkills = [
 
   {
     name: "Master of Elements",
-    cost: 6,
+    cost: 5,
     description: "Reduce Meditation Wind Speed by 50%",
     unlocked: false,
     level: "Dimensional Shift (27x)",
@@ -741,7 +741,7 @@ const loveHallSkills = [
   },
   {
     name: "Space Continuum Stretch",
-    cost: 6,
+    cost: 5,
     description: "Increase Meditation Arena Size by 10%",
     unlocked: false,
     level: "Dimensional Shift (27x)",
@@ -1065,7 +1065,7 @@ const loveHallSkills = [
 
   {
     name: "Crunch Knowledge",
-    cost: 0.4,
+    cost: 0.35,
     description:
       "Big Crunch extra knowledge mult is now ^(2/3) instead of ^(1/2).",
     unlocked: false,
@@ -1086,7 +1086,7 @@ const loveHallSkills = [
   },
   {
     name: "Stellar Meditation",
-    cost: 0.4,
+    cost: 0.35,
     description:
       "Multiplicative x1.1 to first 7 resources after each successful meditation.",
     unlocked: false,
@@ -1131,7 +1131,7 @@ const loveHallSkills = [
 
   {
     name: "Raise That Soft Cap",
-    cost: 1.3,
+    cost: 1.2,
     description: "Increase mini games soft cap to 24 hours",
     unlocked: false,
     level: "Cosmic Truth (42x)",
@@ -1145,7 +1145,7 @@ const loveHallSkills = [
   },
   {
     name: "Rewarding Meditations",
-    cost: 1.3,
+    cost: 1.2,
     description: "Meditations give +40% rewards",
     unlocked: false,
     level: "Cosmic Truth (42x)",
@@ -1196,7 +1196,7 @@ const loveHallSkills = [
 
   {
     name: "Tranquility Overdrive",
-    cost: 5.5,
+    cost: 5.3,
     description:
       "Purchasing non-meditation upgrades no longer consumes serenity.",
     unlocked: false,
@@ -1212,7 +1212,7 @@ const loveHallSkills = [
   },
   {
     name: "Time Flux",
-    cost: 5.5,
+    cost: 5.3,
     description: "Time Warp maximum time increased to 12 minutes.",
     unlocked: false,
     level: "Cosmic Truth (42x)",
@@ -1231,7 +1231,7 @@ const loveHallSkills = [
 
   {
     name: "Perpetual Collapse",
-    cost: 11,
+    cost: 10,
     description: "Auto Big Crunch (default 25x)",
     unlocked: false,
     level: "Cosmic Truth (42x)",
@@ -1248,7 +1248,7 @@ const loveHallSkills = [
   },
   {
     name: "Beacon of Seven Suns",
-    cost: 11,
+    cost: 10,
     description:
       "Multiplicative 7% bonus to Copium and Hopium for every Hall of Love skill.",
     unlocked: false,
@@ -1302,7 +1302,7 @@ const loveHallSkills = [
 
   {
     name: "Temporal Drag",
-    cost: 22,
+    cost: 21,
     description: "During meditation, decrease ball velocity by 25%.",
     unlocked: false,
     level: "Cosmic Truth (42x)",
@@ -1317,7 +1317,7 @@ const loveHallSkills = [
   },
   {
     name: "Look Past Distractions",
-    cost: 22,
+    cost: 21,
     description: "During meditation, decrease # of balls by 1.",
     unlocked: false,
     level: "Cosmic Truth (42x)",

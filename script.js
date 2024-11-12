@@ -4816,12 +4816,28 @@ function calculateTooltip(resourceId) {
         timeFormatted = `${Math.round(timeUntilNextOrder / 60)} minutes`;
     } else if (timeUntilNextOrder < 86400) {
         timeFormatted = `${(timeUntilNextOrder / 3600).toFixed(1)} hours`;
-    } else {
+    } else if (timeUntilNextOrder < 604800) {
         timeFormatted = `${(timeUntilNextOrder / 86400).toFixed(1)} days`;
+    } else if (timeUntilNextOrder < 2592000) { // 4.5 weeks in seconds
+        timeFormatted = `${(timeUntilNextOrder / 604800).toFixed(1)} weeks`;
+    } else if (timeUntilNextOrder < 31536000) { // 12 months in seconds
+        timeFormatted = `${(timeUntilNextOrder / 2592000).toFixed(1)} months`;
+    } else if (timeUntilNextOrder < 315360000) { // 10 years in seconds
+        timeFormatted = `${(timeUntilNextOrder / 31536000).toFixed(1)} years`;
+    } else if (timeUntilNextOrder < 3153600000) { // 10 decades in seconds
+        timeFormatted = `${(timeUntilNextOrder / 315360000).toFixed(1)} decades`;
+    } else if (timeUntilNextOrder < 31536000000) { // 10 centuries in seconds
+        timeFormatted = `${(timeUntilNextOrder / 3153600000).toFixed(1)} centuries`;
+    } else if (timeUntilNextOrder < 3.1536e16) { // 1 million millennia in seconds
+        timeFormatted = `${(timeUntilNextOrder / 3.1536e10).toFixed(1)} millennia`;
+    } else {
+        timeFormatted = `${(timeUntilNextOrder / 3.1536e16).toFixed(1)} eons`;
+        unlockAchievement(`Now that's a time wall!`);
     }
 
     // Add the time until the next order of magnitude to the tooltip
     tooltip += `<b>Time until ${formatNumber(nextOrderOfMagnitude)}:</b> ~${timeFormatted}<br><br>`;
+
     
 
     if (resourceId !== 'power'){
@@ -5024,7 +5040,7 @@ function calculateTooltip(resourceId) {
         tooltip += `<span style="color:#E37383">x${formatNumber(lovePoints / 1000)} (Love Points)</span><br>`;
     }
 
-    if ((resourceId == 'hopium' || resourceId == 'knowledge' || resourceId == 'power' || resourceId == 'serenity')) {
+    if (balanceHallSkills.get("Balance Check").unlocked && (resourceId == 'hopium' || resourceId == 'knowledge' || resourceId == 'power' || resourceId == 'serenity')) {
         tooltip += `<span style="color:#b0c4de">x${formatNumber(balanceCheckMultiplier)} (Balance Check)</span><br>`;
     }
 
@@ -5032,7 +5048,7 @@ function calculateTooltip(resourceId) {
         tooltip += `<span style="color:#FAFAD2">x${formatNumber((5 ** (Array.from(balanceHallSkills.values()).filter(skill => skill.unlocked).length)))} (Balance is Power)</span><br>`;
     }
 
-    if (resourceId === 'serenity' &&balanceHallSkills.get("Serene Future").unlocked && purchasedUpgrades.length > 0) {
+    if (resourceId === 'serenity' && balanceHallSkills.get("Serene Future").unlocked && purchasedUpgrades.length > 0) {
         tooltip += `<span style="color:#FFEFD5">x${formatNumber(1.03 ** purchasedUpgrades.length)} (Serene Future)</span><br>`;
     }
 

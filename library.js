@@ -7,7 +7,7 @@ const librarySkills = [
     { name: 'Knowledgeable Cookie', cost: 9e45, description: 'Boosted cookie clicks generate knowledge at 1/4 earnings rate.', unlocked: false, level: 'History' },
 
     { name: 'Cure for Delusion', cost: 5, description: 'Unlock ability to toggle whether delusion gain is positive or negative.', unlocked: false, level: 'Science' },
-    { name: 'Luck is Rigged', cost: 777, description: 'Remove 1 unlucky box. Makes lucky boxes better (25%-125% instead of 10%-100%) and unlucky boxes less bad (5%-50% instead of 5%-70%).', unlocked: false, level: 'Science' },
+    { name: 'Luck is Rigged', cost: 777, description: 'Remove 1 unlucky box. Makes lucky boxes better (25%-125% instead of 10%-100%) and unlucky boxes less bad (5%-45% instead of 5%-60%).', unlocked: false, level: 'Science' },
     { name: "I Can't Math", cost: 9000, description: 'Math Game timer increased from 12s to 20s, # portals reduced from 14 to 11, and reward is doubled.', unlocked: false, level: 'Science' },
     { name: "Short Term Memory", cost: 80000, description: 'Memory Game sequence length reduced to (3-6) instead of (4-7) and reward is tripled.', unlocked: false, level: 'Science' },
     { name: "Click Speed Demon", cost: 1600000, description: 'Dots in Speed Game get slightly larger and reward is tripled.', unlocked: false, level: 'Science' },

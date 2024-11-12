@@ -1953,7 +1953,7 @@ const upgrades = [
         cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 1e200, power: 1e85, serenity: 0 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: -1e100, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 5e46, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/your_ego.jpg`,
-        hoverOverwrite: 'This is just a teaser - content not yet balanced',
+        hoverOverwrite: 'Try a dose of humility — if you can manage it.',
         isFight: true,
         autoBattlePower: 1e300,
     },
