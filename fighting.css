@@ -158,6 +158,18 @@
     background-color: #ffffff;
 }
 
+
+.floating-damage {
+    position: absolute;
+    font-size: 40px; /* Increased font size */
+    font-weight: bold;
+    opacity: 1;
+    transition: transform 0.6s ease, opacity 0.6s ease;
+    pointer-events: none; /* Disable pointer interactions */
+    transform: translateY(0); /* Initial position */
+}
+
+
 /* Mobile adjustments */
 @media (max-width: 768px) {
     /* Hide the VS sign on small screens */
@@ -205,18 +217,11 @@
     .enemy-section, .player-section {
         padding: 2px; /* Reduce padding to make more space for the content */
     }
-}
 
-.floating-damage {
-    position: absolute;
-    font-size: 40px; /* Increased font size */
-    font-weight: bold;
-    opacity: 1;
-    transition: transform 0.6s ease, opacity 0.6s ease;
-    pointer-events: none; /* Disable pointer interactions */
-    transform: translateY(0); /* Initial position */
+    .floating-damage {
+        font-size: 28px;
+    }
 }
-
 
 /* Winner/Loser/Dead/Taunting Text */
 .result-text {
