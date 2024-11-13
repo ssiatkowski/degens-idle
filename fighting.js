@@ -683,6 +683,9 @@ function attackEnemy(resolve) {
     if (playerAmaterasuStacks > 0) {
         const amaterasuDamage = Math.floor(playerMaxHealth * 0.002 * playerAmaterasuStacks);
         playerHealth -= amaterasuDamage;
+        if(amaterasuDamage > 0){
+            showFloatingDamage(amaterasuDamage, true, 'black');
+        }
         if(amaterasuDamage >= 8888){
             unlockAchievement('Eternal Flame');
         }
@@ -711,6 +714,9 @@ function attackEnemy(resolve) {
     if (playerTsukuyomiStacks > 0) {
         const selfDamage = Math.min(Math.max(Math.ceil((Math.random() * (playerMaxDamage - playerMinDamage + 1) + playerMinDamage - (playerDefense*1e11)) / 1e12), playerMaxHealth*0.01), playerMaxHealth*0.2);
         playerHealth -= selfDamage;
+        if (selfDamage > 0) {
+            showFloatingDamage(selfDamage, true, '#9370DB');
+        }
         logFight(`<span style='color: #9370DB;'>Tsukuyomi activates! You attack yourself for ${formatNumber(selfDamage)} damage!</span>`);
         playerTsukuyomiStacks--; // Remove one stack
         updateHealthBars();
@@ -791,7 +797,6 @@ function attackEnemy(resolve) {
 
         // Handle absorb mechanics
         if(damage > 0){
-
             let ogDmg = damage;
             damage = Math.max(damage * (1 - enemyAbsorb), 0);
             if (enemyAbsorb > 0) {
@@ -801,6 +806,10 @@ function attackEnemy(resolve) {
 
         // Apply damage to enemy health
         enemyHealth -= Math.max(damage, 0);
+        if (damage > 0) {
+            dmgColor = isCritical ? '#89CFF0' : 'white';
+            showFloatingDamage(damage, false, dmgColor);
+        }
 
         if (damage > 0) {
             playerAttackCount++;
@@ -1359,6 +1368,10 @@ function attackPlayer(resolve) {
 
     // Apply damage to player health
     playerHealth -= Math.max(damage, 0);
+    if (damage > 0) {
+        dmgColor = isCritical ? 'orange' : 'white';
+        showFloatingDamage(damage, true, dmgColor);
+    }
 
     if(damage > 0 && isCritical && currEnemyName === "Sauron" && playerHealth > 0) {
         unlockAchievement('Tank the Crit');
@@ -1414,6 +1427,54 @@ function attackPlayer(resolve) {
     // Update health bars
     updateHealthBars();
 }
+
+// Function to show floating damage numbers with customizable color
+function showFloatingDamage(damage, isPlayer, color = 'red') {
+    try {
+        // Determine the image container
+        const imageContainer = isPlayer ? document.getElementById('playerImageContainer') : document.getElementById('enemyImageContainer');
+
+        // Check if the container exists
+        if (!imageContainer) {
+            console.error("Image container not found!");
+            return;
+        }
+
+        // Create the damage number element
+        const damageElement = document.createElement('div');
+        damageElement.classList.add('floating-damage');
+        damageElement.innerText = `-${formatNumber(damage)}`;
+        damageElement.style.color = color; // Set the custom color
+
+        // Generate random position within the center of the image
+        const randomX = Math.random() * 63 + 2; // 2% to 65% horizontally
+        const randomY = Math.random() * 68 + 2; // 2% to 70% vertically
+        damageElement.style.left = `${randomX}%`;
+        damageElement.style.top = `${randomY}%`;
+
+        // Append the damage number to the image container
+        imageContainer.appendChild(damageElement);
+
+        // Start the animation
+        setTimeout(() => {
+            damageElement.style.transform = 'translateY(-20px)';
+            damageElement.style.opacity = '0';
+        }, 10);
+
+        // Remove the damage number from the DOM after the animation
+        setTimeout(() => {
+            if (imageContainer.contains(damageElement)) {
+                imageContainer.removeChild(damageElement);
+            }
+        }, 1000); // 1 second
+    } catch (error) {
+        console.error("Error in showFloatingDamage:", error);
+    }
+}
+
+
+
+
 
 let userScrolledRecently = false;
 let isProgrammaticScroll = false;

@@ -207,6 +207,15 @@
     }
 }
 
+.floating-damage {
+    position: absolute;
+    font-size: 40px; /* Increased font size */
+    font-weight: bold;
+    opacity: 1;
+    transition: transform 0.6s ease, opacity 0.6s ease;
+    pointer-events: none; /* Disable pointer interactions */
+    transform: translateY(0); /* Initial position */
+}
 
 
 /* Winner/Loser/Dead/Taunting Text */

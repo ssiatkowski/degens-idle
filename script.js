@@ -2879,7 +2879,7 @@ function generateIdleResources(elapsedSeconds) {
 
     crunchTimer += elapsedSeconds;
     embraceTimer += elapsedSeconds;
-    accumulatedWarpTime = Math.min (accumulatedWarpTime + ((balanceHallSkills.get("Temporal Dominion").unlocked ? 6 : 1) * elapsedSeconds), warpTimeMax);
+    accumulatedWarpTime = Math.min (accumulatedWarpTime + ((balanceHallSkills.get("Temporal Dominion").unlocked ? 6 : 1) * elapsedSeconds), warpTimeMax - (warpTimeRemaining * 60));
 
     const baseKnowledgePerSecond = calculateBaseKnowledge();
 
@@ -4830,9 +4830,11 @@ function calculateTooltip(resourceId) {
         timeFormatted = `${(timeUntilNextOrder / 3153600000).toFixed(1)} centuries`;
     } else if (timeUntilNextOrder < 3.1536e16) { // 1 million millennia in seconds
         timeFormatted = `${(timeUntilNextOrder / 3.1536e10).toFixed(1)} millennia`;
-    } else {
+    } else if (gainPerSecond > 0){
         timeFormatted = `${(timeUntilNextOrder / 3.1536e16).toFixed(1)} eons`;
         unlockAchievement(`Now that's a time wall!`);
+    } else {
+        timeFormatted = 'infinity';
     }
 
     // Add the time until the next order of magnitude to the tooltip
