@@ -245,7 +245,7 @@ function startMeditationGame(challengeName, backgroundImage, stageNumber = 1, pr
 
         let arenaMessage = '';
         let fontColor = 'green';
-        let fontSize = '24px';
+        let fontSize = '20px';
 
         isSkepticismUnwinnable = false;
         if (stageVelocityIncrease > 3 && stageArenaSizeChange < 0.67 && stageExtraLivesPerBall > 2) {
@@ -264,14 +264,14 @@ function startMeditationGame(challengeName, backgroundImage, stageNumber = 1, pr
             arenaMessage = 'The Bunny helps you by making balls respawn 0.5s faster and reduces focus loss by 1 per ball.';
             noGimmicksUsed = false;
             fontColor = '#C04000';
-            fontSize = '38px';
+            fontSize = '26px';
         } else if (currentChallengeName === 'Christianity' && !purchasedUpgradesSet.has("Christian Logic")) {
             unlockAchievement('Theological Reasoning');
             livesPerBall = Math.max(livesPerBall - 1, 1);
             baseVelocity *= 0.9;
             arenaMessage = 'Through applying logic, you lose 1 less life per ball and reduce ball velocity by 10%.';
             noGimmicksUsed = false;
-            fontSize = '32px';
+            fontSize = '22px';
         } else if (currentChallengeName === 'Epicureanism') {
             if (!purchasedUpgradesSet.has("First Pizza Meme") && !purchasedUpgradesSet.has("Second Pizza Meme")){
                 unlockAchievement('Slice of Euphoria');
@@ -282,7 +282,7 @@ function startMeditationGame(challengeName, backgroundImage, stageNumber = 1, pr
                 arenaMessage = 'Pizzas remove 2 balls and increase the respawn time by 1 second';
                 noGimmicksUsed = false;
                 fontColor = 'purple';
-                fontSize = '38px';
+                fontSize = '24px';
             }
             if (respawnTime / 1000 > meditationTimer) {
                 unlockAchievement('Where did everybody go?');
@@ -304,7 +304,7 @@ function startMeditationGame(challengeName, backgroundImage, stageNumber = 1, pr
                 turnRadius *= 1.3;
                 arenaMessage = 'WISDOM improves your turn radius by 30%.';
                 noGimmicksUsed = false;
-                fontSize = '34px';
+                fontSize = '26px';
             }
 
             const isInsightPattern = ['I', 'N', 'S', 'I', 'G', 'H', 'T'].every((letter, index) =>
@@ -334,16 +334,20 @@ function startMeditationGame(challengeName, backgroundImage, stageNumber = 1, pr
         setupMeditationArena(stageNumber);
 
         if (arenaMessage !== '') {
-            showArenaMessage(arenaMessage, fontColor, fontSize).then(() => {
-                meditationInterval = setInterval(() => {
-                    updateMeditationGame(resolve, stageNumber);
-                }, 25); // Update every 25ms for smooth animation
-            });
-        } else {
-            meditationInterval = setInterval(() => {
-                updateMeditationGame(resolve, stageNumber);
-            }, 25); // Update every 25ms for smooth animation
-        }
+            showArenaMessage(arenaMessage, fontColor, fontSize);
+        } else if (challengeName == 'Deism' && stageNumber == 2) {
+            showArenaMessage('Not So Fast');
+        } else if (challengeName == 'Skepticism' && stageNumber == 2) {
+            showArenaMessage('Experience Randomness');
+        } 
+
+
+
+        
+
+        meditationInterval = setInterval(() => {
+            updateMeditationGame(resolve, stageNumber);
+        }, 25); // Update every 25ms for smooth animation
 
     });
 }
@@ -485,19 +489,15 @@ function updateMeditationGame(resolve, stageNumber) {
         if (currentChallengeName === 'Deism' && stageNumber === 1) {
             // Flash "Not So Fast" message and then restart the game
             clearInterval(meditationInterval); // Stop the current game loop
-            showArenaMessage('Not So Fast').then(() => {
-                if(ballCount > (meditationChallenges['Deism'].ballCount - calculateBallCountReduction())){
-                    unlockAchievement('Where did the other ball go?');
-                }
-                startMeditationGame(currentChallengeName, document.getElementById('arena').style.backgroundImage, 2, meditationFocus, 2).then(resolve);
-            });
+            if(ballCount > (meditationChallenges['Deism'].ballCount - calculateBallCountReduction())){
+                unlockAchievement('Where did the other ball go?');
+            }
+            startMeditationGame(currentChallengeName, document.getElementById('arena').style.backgroundImage, 2, meditationFocus, 2).then(resolve);
             return;
         } else if (currentChallengeName === 'Skepticism' && stageNumber === 1) {
             // Flash "Not So Fast" message and then restart the game
             clearInterval(meditationInterval); // Stop the current game loop
-            showArenaMessage('Experience Randomness').then(() => {
-                startMeditationGame(currentChallengeName, document.getElementById('arena').style.backgroundImage, 2, meditationFocus, 1 + (Math.random() * skepticismRandomnessFactor), parseFloat(((Math.floor(Math.random() * 60) + 40) / 100).toFixed(2)), parseFloat((Math.random() * (skepticismRandomnessFactor - 0.01) + 0.01).toFixed(2))).then(resolve);
-            });
+            startMeditationGame(currentChallengeName, document.getElementById('arena').style.backgroundImage, 2, meditationFocus, 1 + (Math.random() * skepticismRandomnessFactor), parseFloat(((Math.floor(Math.random() * 60) + 40) / 100).toFixed(2)), parseFloat((Math.random() * (skepticismRandomnessFactor - 0.01) + 0.01).toFixed(2))).then(resolve);
             return;
         } else {
             clearInterval(meditationInterval);
@@ -895,19 +895,22 @@ function scaleArena() {
     }
 }
 
-function showArenaMessage(messageContent, fontColor = 'red', fontSize = '48px') {
+function showArenaMessage(messageContent, fontColor = 'red', fontSize = '32px') {
     return new Promise((resolve) => {
         const message = document.createElement('div');
         message.classList.add('arena-message');
         message.innerText = messageContent;
         message.style.color = fontColor;
         message.style.fontSize = fontSize;
+        message.style.backgroundColor = 'rgba(0, 0, 0, 0.3)'; // Transparent dark gray background
+        message.style.padding = '10px'; // Add some padding for better appearance
+        message.style.borderRadius = '5px'; // Optional: rounded corners
 
         document.getElementById('arena').appendChild(message);
 
         setTimeout(() => {
             message.remove();
             resolve();
-        }, 1000); // Display message for 1 second
+        }, 2000); // Display message for 1 second
     });
 }
