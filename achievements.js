@@ -693,6 +693,13 @@ const achievements = [
         type: 'puzzle',
     },
     {
+        name: `What's so special about Cosmic Gamekeeper?`,
+        isUnlocked: false,
+        hoverText: `why don't the others do this?`,
+        img: 'imgs/achievements/whats_so_special_about_cosmic_gamekeeper.jpg',
+        type: 'puzzle',
+    },
+    {
         name: 'Make Kuzzi Love You',
         isUnlocked: false,
         hoverText: 'fill out the game feedback form with lots of details',
@@ -798,6 +805,13 @@ const achievements = [
         type: 'puzzle',
     },
     {
+        name: `I like graphs!`,
+        isUnlocked: false,
+        hoverText: `ok nerd`,
+        img: 'imgs/achievements/i_like_graphs.jpg',
+        type: 'puzzle',
+    },
+    {
         name: `Can't Hold Me Back`,
         isUnlocked: false,
         hoverText: 'hit mini game soft cap 50 times',
@@ -860,6 +874,13 @@ const achievements = [
         hoverText: 'infinite embrace for < 3.3 base LP',
         img: 'imgs/achievements/mini_embrace.jpg',
         type: 'puzzle',
+    },
+    {
+        name: 'One Week of Saving',
+        isUnlocked: false,
+        hoverText: 'export your save on 7 different days',
+        img: 'imgs/achievements/7_days_of_saving.jpg',
+        type: 'freebie',
     },
     {
         name: 'But What If I Want To 69?',
@@ -1134,6 +1155,13 @@ const achievements = [
         respecPoint: true,
     },
     {
+        name: 'Two Weeks of Saving',
+        isUnlocked: false,
+        hoverText: 'export your save on 14 different days',
+        img: 'imgs/achievements/14_days_of_saving.jpg',
+        type: 'freebie',
+    },
+    {
         name: 'Apply Wisdom',
         isUnlocked: false,
         hoverText: 'approach Agnosticism with WISDOM',
@@ -1176,6 +1204,13 @@ const achievements = [
         type: 'puzzle',
     },
     {
+        name: 'Wisdom, not Insight',
+        isUnlocked: false,
+        hoverText: `???`,
+        img: 'imgs/achievements/wisdom_not_insight.jpg',
+        type: 'puzzle',
+    },
+    {
         name: 'Balance Master',
         isUnlocked: false,
         hoverText: `meet the balance master`,
@@ -1198,19 +1233,18 @@ const achievements = [
         type: 'progression',
     },
     {
+        name: 'One Month of Saving',
+        isUnlocked: false,
+        hoverText: 'export your save on 30 different days',
+        img: 'imgs/achievements/30_days_of_saving.jpg',
+        type: 'freebie',
+    },
+    {
         name: `Now that's a time wall!`,
         isUnlocked: false,
         hoverText: 'time displayed in eons',
         img: 'imgs/achievements/now_thats_a_time_wall.jpg',
         type: 'puzzle',
-    },
-    {
-        name: 'Fifty Days of Saving',
-        isUnlocked: false,
-        hoverText: 'export your save on 50 different days',
-        img: 'imgs/achievements/50_days_of_saving.jpg',
-        type: 'freebie',
-        respecPoint: true,
     },
     {
         name: 'Rasta Deadpool',
@@ -1246,6 +1280,14 @@ const achievements = [
         hoverText: `longer respawn time than duration on Epicureanism`,
         img: 'imgs/achievements/where_did_everybody_go.jpg',
         type: 'puzzle',
+    },
+    {
+        name: 'Fifty Days of Saving',
+        isUnlocked: false,
+        hoverText: 'export your save on 50 different days',
+        img: 'imgs/achievements/50_days_of_saving.jpg',
+        type: 'freebie',
+        respecPoint: true,
     },
     {
         name: 'Ego Death',

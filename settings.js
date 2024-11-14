@@ -77,7 +77,13 @@ function exportSave() {
     const previousNumExportDates = exportDates.size; // Store the previous size of the Set
     exportDates.add(currentDate);
 
-    if (exportDates.size == 50) {
+    if (exportDates.size >= 7 && !achievementsMap.get('One Week of Saving').isUnlocked) {
+        unlockAchievement('One Week of Saving');
+    } else if (exportDates.size >= 14 && !achievementsMap.get('Two Weeks of Saving').isUnlocked) {
+        unlockAchievement('Two Weeks of Saving');
+    } else if (exportDates.size >= 30 && !achievementsMap.get('One Month of Saving').isUnlocked) {
+        unlockAchievement('One Month of Saving');
+    } else if (exportDates.size >= 50 && !achievementsMap.get('Fifty Days of Saving').isUnlocked) {
         unlockAchievement('Fifty Days of Saving');
     } else if (exportDates.size > previousNumExportDates) {
         showPopupTooltip(`Days with save exports: ${exportDates.size}`);
@@ -154,11 +160,18 @@ function copySave() {
     const previousNumExportDates = exportDates.size;
     exportDates.add(currentDate);
 
-    if (exportDates.size == 50) {
+    if (exportDates.size >= 7 && !achievementsMap.get('One Week of Saving').isUnlocked) {
+        unlockAchievement('One Week of Saving');
+    } else if (exportDates.size >= 14 && !achievementsMap.get('Two Weeks of Saving').isUnlocked) {
+        unlockAchievement('Two Weeks of Saving');
+    } else if (exportDates.size >= 30 && !achievementsMap.get('One Month of Saving').isUnlocked) {
+        unlockAchievement('One Month of Saving');
+    } else if (exportDates.size >= 50 && !achievementsMap.get('Fifty Days of Saving').isUnlocked) {
         unlockAchievement('Fifty Days of Saving');
     } else if (exportDates.size > previousNumExportDates) {
         showPopupTooltip(`Days with save exports: ${exportDates.size}`);
     }
+
 
     localStorage.setItem('exportDates', JSON.stringify([...exportDates]));
 

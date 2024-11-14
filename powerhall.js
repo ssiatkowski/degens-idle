@@ -207,6 +207,8 @@ function updatePowerHallSkillDisplay() {
     });
 }
 
+let clickedPowerHallSkills = new Set();
+
 function initializePowerHallSkills() {
     console.log("Initializing Power Hall Skills...");
     const skillLevels = {};
@@ -267,8 +269,13 @@ function initializePowerHallSkills() {
                     }
                 } else if (!skill.unlocked && power < skill.cost) {
                     showStatusMessage(skillDiv, 'Insufficient Power to unlock this skill.', false);
-                }  else if (skill.unlocked && skill.name == 'Cosmic Gamekeeper') {
+                } else if (skill.unlocked && skill.name == 'Cosmic Gamekeeper') {
                     unlockPowerHallSkill(skill, false, true);  //only to show message again
+                } else if (skill.unlocked){
+                    clickedPowerHallSkills.add(skill.name);
+                    if(clickedPowerHallSkills.size == powerHallSkills.length - 1){
+                        unlockAchievement(`What's so special about Cosmic Gamekeeper?`);
+                    }
                 }
             });
             skillRow.appendChild(skillDiv);

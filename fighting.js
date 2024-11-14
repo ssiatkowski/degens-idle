@@ -1447,7 +1447,7 @@ function showFloatingDamage(damage, isPlayer, color = 'red') {
         damageElement.style.color = color; // Set the custom color
 
         // Generate random position within the center of the image
-        const randomX = Math.random() * 63 + 2; // 2% to 65% horizontally
+        const randomX = Math.random() * 58 + 2; // 2% to 60% horizontally
         const randomY = Math.random() * 68 + 2; // 2% to 70% vertically
         damageElement.style.left = `${randomX}%`;
         damageElement.style.top = `${randomY}%`;

@@ -1696,7 +1696,7 @@ const upgrades = [
         earnings: { copiumPerSecond: 0, delusionPerSecond: 1e65, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 1e57, knowledgePerSecond: 1e31, powerPerSecond: 0, serenityPerSecond: 1e13 },
         img: `imgs/arena_buddhism.png`,
         isMeditation: true,
-        autoMeditateThreshold: 1e27,
+        autoMeditateThreshold: 2e27,
         isKey: true,
         message: `Through this meditation, you’ve discovered the <strong>path to inner peace and mindfulness</strong>. Buddhism teaches that by releasing attachment and practicing compassion, you can transcend suffering and find enlightenment. You’ve learned the power of living in the present moment, cultivating awareness and kindness toward yourself and others. Continue to walk the middle path, and you will find peace in all aspects of life.`,
         hoverOverwrite: 'there is no such thing as a wrong sidekick',

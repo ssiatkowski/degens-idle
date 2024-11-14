@@ -43,6 +43,7 @@ const librarySkills = [
     // Add more skills as needed
 ];
 
+let graphsRevisited = new Set([]);
 
 const librarySkillsContainer = document.getElementById('librarySkills');
 
@@ -134,21 +135,24 @@ function unlockLibrarySkill(skill, duringLoad = false, infoOnly = false) {
             case 'Prestige Base':
                 prestigeBaseValue = enlightenedPrestigeSkill ? 1.775 : 1.75;
                 if (!duringLoad && (lovePoints == 0 || infoOnly)) {
-                    showMessageModal('Prestige Base', 'For you math nerds out there, the formula for prestige multiplier is <strong>base^(log10(minResource/1000)+1)</strong>.<br><br>Graph shows the Prestige Multiplier scaling with 1.5 base vs 1.75 base. This difference becomes huge later in the game. When your min resource is at 1Qi that is already 10x difference and only increases exponentially form there!', false, false, 'imgs/graphs/prestige_base.png')
+                    showMessageModal('Prestige Base', 'For you math nerds out there, the formula for prestige multiplier is <strong>base^(log10(minResource/1000)+1)</strong>.<br><br>Graph shows the Prestige Multiplier scaling with 1.5 base vs 1.75 base. This difference becomes huge later in the game. When your min resource is at 1Qi that is already 10x difference and only increases exponentially form there!', false, false, 'imgs/graphs/prestige_base.png');
+                    graphsRevisited.add('Prestige Base');
                 }
                 break;
 
             case '2D Ascension':
                 twoDimensionalAscensionSkill = true;
                 if (!duringLoad && (lovePoints == 0 || infoOnly)) {
-                    showMessageModal('2D Ascension', 'Cube root was rough! Now you at least get some prestige mult left after ascending.', false, false, 'imgs/graphs/2d_ascension.png')
+                    showMessageModal('2D Ascension', 'Cube root was rough! Now you at least get some prestige mult left after ascending.', false, false, 'imgs/graphs/2d_ascension.png');
+                    graphsRevisited.add('2D Ascension');
                 }
                 break;
 
             case 'Less Diminishing God-Mode':
                 lessDiminishingGodModeSkill = true;
                 if (!duringLoad && (lovePoints == 0 || infoOnly)) {
-                    showMessageModal('Less Diminishing God-Mode', `Here's another nerdy equation: <strong>GodModeMultiplier = &prod;<sub>i=0</sub><sup>gmLevel - 1</sup> &#40;1 + 0.25 &times; diminishFactor<sup>i</sup>&#41</strong><br><br>Graph shows the God-Mode Multiplier scaling when diminishing at 97.5% vs 98.5%. As you can see, at higher God-Mode levels this makes a huge difference! The multiplier is already 2 orders of magnitude greater at God-Mode Level 150.`, false, false, 'imgs/graphs/gm_diminishing.png')
+                    showMessageModal('Less Diminishing God-Mode', `Here's another nerdy equation: <strong>GodModeMultiplier = &prod;<sub>i=0</sub><sup>gmLevel - 1</sup> &#40;1 + 0.25 &times; diminishFactor<sup>i</sup>&#41</strong><br><br>Graph shows the God-Mode Multiplier scaling when diminishing at 97.5% vs 98.5%. As you can see, at higher God-Mode levels this makes a huge difference! The multiplier is already 2 orders of magnitude greater at God-Mode Level 150.`, false, false, 'imgs/graphs/gm_diminishing.png');
+                    graphsRevisited.add('Less Diminishing God-Mode');
                 }
                 godModeMultiplier = calculateGodModeMultiplier(godModeLevel);
                 updateMultipliersDisplay();
@@ -159,7 +163,8 @@ function unlockLibrarySkill(skill, duringLoad = false, infoOnly = false) {
                 lessDiminishingPUGodModeSkill = true;
                 puGodMultiplier = calculatePUGodModeMultiplier(puGodLevel);
                 if (!duringLoad && (lovePoints == 0 || infoOnly)) {
-                    showMessageModal('Much Less Diminishing Parallel God-Mode', 'Parallel God-Mode uses the same equation: <strong>GodModeMultiplier = &prod;<sub>i=0</sub><sup>gmLevel - 1</sup> &#40;1 + 0.25 &times; diminishFactor<sup>i</sup>&#41</strong><br><br>In the quantum entangled universe, you discover that there is less interference, allowing you to scale the diminishing returns much more effectively. Graph shows the Parallel Universe God-Mode Multiplier scaling when diminishing at 97.5% (original) vs 98.5% (Optimized God-Mode) vs 99.0% (Optimized Parallel God-Mode). As you can see, at higher Parallel Universe God-Mode levels this is quite insane! The multiplier is almost 6 orders of magnitude greater at PU God-Mode Level 250.', false, false, 'imgs/graphs/pugm_diminishing.png')
+                    showMessageModal('Much Less Diminishing Parallel God-Mode', 'Parallel God-Mode uses the same equation: <strong>GodModeMultiplier = &prod;<sub>i=0</sub><sup>gmLevel - 1</sup> &#40;1 + 0.25 &times; diminishFactor<sup>i</sup>&#41</strong><br><br>In the quantum entangled universe, you discover that there is less interference, allowing you to scale the diminishing returns much more effectively. Graph shows the Parallel Universe God-Mode Multiplier scaling when diminishing at 97.5% (original) vs 98.5% (Optimized God-Mode) vs 99.0% (Optimized Parallel God-Mode). As you can see, at higher Parallel Universe God-Mode levels this is quite insane! The multiplier is almost 6 orders of magnitude greater at PU God-Mode Level 250.', false, false, 'imgs/graphs/pugm_diminishing.png');
+                    graphsRevisited.add('Much Less Diminishing Parallel God-Mode');
                     updateMultipliersDisplay();
                     updateEffectiveMultipliers();
                 }
@@ -168,7 +173,8 @@ function unlockLibrarySkill(skill, duringLoad = false, infoOnly = false) {
             case 'Linear Ascension':
                 linearAscensionSkill = true;
                 if (!duringLoad && (lovePoints == 0 || infoOnly)) {
-                    showMessageModal('Linear Ascension', 'Ahh, the difference that exponential vs linear makes.', false, false, 'imgs/graphs/linear_ascension.png')
+                    showMessageModal('Linear Ascension', 'Ahh, the difference that exponential vs linear makes.', false, false, 'imgs/graphs/linear_ascension.png');
+                    graphsRevisited.add('Linear Ascension');
                 }
                 break;
 
@@ -185,6 +191,7 @@ function unlockLibrarySkill(skill, duringLoad = false, infoOnly = false) {
                         false,
                         'imgs/graphs/perfect_gm_diminishing.png'
                     );
+                    graphsRevisited.add('Perfect God-Mode');
                 }
                 godModeMultiplier = calculateGodModeMultiplier(godModeLevel);
                 updateMultipliersDisplay();
@@ -230,7 +237,8 @@ function unlockLibrarySkill(skill, duringLoad = false, infoOnly = false) {
             case 'Knowledge is Power':
                 unhidePower();
                 if (!duringLoad && (lovePoints == 0 || infoOnly)) {
-                    showMessageModal('Knowledge is Power', 'The Power equation is <strong>Power per Second = (knowledge)<sup>1/3</sup> / 10<sup>12</sup></strong>.', false, false, 'imgs/graphs/power_per_second_eq.png')
+                    showMessageModal('Knowledge is Power', 'The Power equation is <strong>Power per Second = (knowledge)<sup>1/3</sup> / 10<sup>12</sup></strong>.', false, false, 'imgs/graphs/power_per_second_eq.png');
+                    graphsRevisited.add('Knowledge is Power');
                 }
                 break;
 
@@ -249,7 +257,8 @@ function unlockLibrarySkill(skill, duringLoad = false, infoOnly = false) {
             case 'Money is Power, too':
                 moneyIsPowerTooSkill = true;
                 if (!duringLoad && (lovePoints == 0 || infoOnly)) {
-                    showMessageModal('Money is Power, too', 'The Power equation becomes <strong>Power per Second = (Knowledge<sup>1/3</sup> / 10<sup>12</sup>) * (1 + (YachtMoney<sup>1/30</sup> / 100))</strong>. Any increase to power generation is valuable!', false, false, 'imgs/graphs/power_per_second_eq2.png')
+                    showMessageModal('Money is Power, too', 'The Power equation becomes <strong>Power per Second = (Knowledge<sup>1/3</sup> / 10<sup>12</sup>) * (1 + (YachtMoney<sup>1/30</sup> / 100))</strong>. Any increase to power generation is valuable!', false, false, 'imgs/graphs/power_per_second_eq2.png');
+                    graphsRevisited.add('Money is Power, too');
                 }
                 break;
 
@@ -420,7 +429,14 @@ function initializeSkills() {
                     showStatusMessage(skillDiv, 'Insufficient Knowledge to unlock this skill.', false);
                     //document.addEventListener('click', outsideLibraryClickListener);
                 } else if (skill.unlocked) {
+                    const prevGraphsRevisitedLength = graphsRevisited.size;
                     unlockLibrarySkill(skill, false, true);  //only to show message again
+                    if (graphsRevisited.size == 8) {
+                        unlockAchievement('I like graphs!')
+                    } else if (graphsRevisited.size == prevGraphsRevisitedLength) {
+                        graphsRevisited = new Set([]);
+                    }
+
                 }
             });
             skillRow.appendChild(skillDiv);

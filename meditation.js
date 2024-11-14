@@ -277,6 +277,7 @@ function startMeditationGame(challengeName, backgroundImage, stageNumber = 1, pr
                 unlockAchievement('Slice of Euphoria');
                 ballCount = Math.max(ballCount - 2, 1);
                 respawnFactor += 1;
+                respawnTime = 100;
                 respawnTime = calculateRespawnTime();
                 arenaMessage = 'Pizzas remove 2 balls and increase the respawn time by 1 second';
                 noGimmicksUsed = false;
@@ -304,6 +305,14 @@ function startMeditationGame(challengeName, backgroundImage, stageNumber = 1, pr
                 arenaMessage = 'WISDOM improves your turn radius by 30%.';
                 noGimmicksUsed = false;
                 fontSize = '34px';
+            }
+
+            const isInsightPattern = ['I', 'N', 'S', 'I', 'G', 'H', 'T'].every((letter, index) =>
+                availableUpgrades[index] && availableUpgrades[index].name.startsWith(letter)
+            );
+            // Do something if the pattern matches "WISDOM"
+            if (isInsightPattern) {
+                unlockAchievement('Wisdom, not Insight');
             }
 
         }

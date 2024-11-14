@@ -1041,7 +1041,7 @@ button.disabled {
 
 
 .god-mode-text {
-    font-size: 1.3em;
+    font-size: 1.2em;
     color: rgb(247, 247, 247);
     font-weight: bold;
     text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff, 0 0 12px #00bfff, 0 0 15px #00bfff;
@@ -1051,7 +1051,7 @@ button.disabled {
 }
 
 .pu-god-text {
-    font-size: 1.3em;
+    font-size: 1.2em;
     color: rgb(247, 247, 247);
     font-weight: bold;
     text-shadow: 
@@ -1066,7 +1066,7 @@ button.disabled {
 
 
 .big-crunch-text {
-    font-size: 1.4em; /* Slightly bigger font size */
+    font-size: 1.2em; /* Slightly bigger font size */
     color: rgb(247, 247, 247);
     font-weight: bold;
     text-shadow: 
@@ -1082,7 +1082,7 @@ button.disabled {
 }
 
 .stellar-harvest-text {
-    font-size: 1.2em;
+    font-size: 1.1em;
     color: rgb(190, 247, 190);
     font-weight: bold;
     text-shadow: 

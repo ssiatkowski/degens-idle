@@ -191,15 +191,16 @@ function playMiniGame(gameType) {
                     calculateMiniGamesMultiplier();
 
                     resultMessage = `You tapped ${points} dots with ${misclicks} misclicks in ${duration} seconds (${effectiveClicksPerSecond.toFixed(2)} points per second). Your reward is <span style="color: green;">${formatNumber(reward)}</span> copium! You have now tapped ${numSpeedTaps} times in winning games.`;
-                    numSpeedWins++
+                    numSpeedWins++;
                     localStorage.setItem('numSpeedWins', numSpeedWins);
                 } else {
                     if (misclicks == 42) {
                         unlockAchievement('42 Misclicks');
+                        numSpeedFailures--;
                     }
                     reward = -Math.max(Math.floor(Math.abs(copium) * 0.25), 25);
                     resultMessage = `You were too slow, managing only ${points} taps on dots with ${misclicks} misclicks in ${duration} seconds (${effectiveClicksPerSecond.toFixed(2)} points per second). You lose <span style="color: red;">${formatNumber(reward)}</span> copium. Try again later!`;
-                    numSpeedFailures++
+                    numSpeedFailures++;
                     localStorage.setItem('numSpeedFailures', numSpeedFailures);
                 }
 
@@ -351,6 +352,7 @@ function playMiniGame(gameType) {
                 if (sequenceLength == 6) {
                     if (sequence[0] == playerSequence[5] && sequence[1] == playerSequence[4] && sequence[2] == playerSequence[3] && sequence[3] == playerSequence[2] && sequence[4] == playerSequence[1] && sequence[5] == playerSequence[0]) {
                         unlockAchievement('Rote Amnesia');
+                        numMemoryFailures--;
                     }
                 }
 
