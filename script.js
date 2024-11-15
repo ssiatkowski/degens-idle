@@ -503,8 +503,12 @@ function loadGameState() {
     bigCrunchPower = parseFloat(localStorage.getItem('bigCrunchPower')) || 1e-7;
     bigCrunchMultiplier = parseFloat(localStorage.getItem('bigCrunchMultiplier')) || 1;
 
-    crunchTimer = (parseFloat(localStorage.getItem('crunchTimer')) ?? NaN) || 9999;
-    embraceTimer = (parseFloat(localStorage.getItem('embraceTimer')) ?? NaN) || 9999;
+    crunchTimer = parseFloat(localStorage.getItem('crunchTimer'));
+    crunchTimer = (crunchTimer === null || isNaN(crunchTimer)) ? 9999 : crunchTimer;
+    
+    embraceTimer = parseFloat(localStorage.getItem('embraceTimer'));
+    embraceTimer = (embraceTimer === null || isNaN(embraceTimer)) ? 9999 : embraceTimer;
+    
 
     // Load the first time prestige button available flag
     firstTimePrestigeButtonAvailable = JSON.parse(localStorage.getItem('firstTimePrestigeButtonAvailable')) || true;
@@ -2549,88 +2553,58 @@ async function infiniteEmbrace(skipConfirms = false, lovePointsOverwrite = false
     }
 }
 
-async function animateBalanceEffect() {
+// Function to fade out to black
+function fadeOutEffect() {
     return new Promise((resolve) => {
         const body = document.body;
         body.style.overflow = "hidden"; // Prevent scrolling during the animation
 
-        // Create a black background overlay
-        const blackOverlay = document.createElement('div');
-        blackOverlay.style.position = "fixed";
-        blackOverlay.style.top = "0";
-        blackOverlay.style.left = "0";
-        blackOverlay.style.width = "100vw";
-        blackOverlay.style.height = "100vh";
-        blackOverlay.style.backgroundColor = "black";
-        blackOverlay.style.zIndex = "9998"; // Behind the splitting halves
+        // Create a black overlay for the fade effect
+        const overlay = document.createElement('div');
+        overlay.style.position = "fixed";
+        overlay.style.top = "0";
+        overlay.style.left = "0";
+        overlay.style.width = "100vw";
+        overlay.style.height = "100vh";
+        overlay.style.backgroundColor = "black";
+        overlay.style.opacity = "0"; // Start fully transparent
+        overlay.style.zIndex = "9999";
+        overlay.style.transition = "opacity 0.6s ease"; // Smooth fade transition
 
-        // Create a wrapper to overlay the entire screen content
-        const wrapper = document.createElement('div');
-        wrapper.style.position = "fixed";
-        wrapper.style.top = "0";
-        wrapper.style.left = "0";
-        wrapper.style.width = "100vw";
-        wrapper.style.height = "100vh";
-        wrapper.style.overflow = "hidden";
-        wrapper.style.zIndex = "9999"; // In front of the black overlay
-        wrapper.style.display = "flex";
+        // Append the overlay to the body
+        body.appendChild(overlay);
 
-        // Create divs for the left and right halves
-        const leftHalf = document.createElement('div');
-        const rightHalf = document.createElement('div');
+        // Start the fade-out effect
+        requestAnimationFrame(() => {
+            overlay.style.opacity = "1"; // Fade to full black
+        });
 
-        // Style the divs to cover half the screen each
-        leftHalf.style.width = rightHalf.style.width = "50vw";
-        leftHalf.style.height = rightHalf.style.height = "100vh";
-        leftHalf.style.overflow = rightHalf.style.overflow = "hidden";
-
-        // Set initial positions to cover the full screen
-        leftHalf.style.position = rightHalf.style.position = "absolute";
-        leftHalf.style.left = "0";
-        rightHalf.style.left = "50vw";
-
-        // Clone the body content and apply to each half
-        leftHalf.innerHTML = rightHalf.innerHTML = body.innerHTML;
-
-        // Append both halves to the wrapper and the wrapper and overlay to the body
-        wrapper.appendChild(leftHalf);
-        wrapper.appendChild(rightHalf);
-        body.appendChild(blackOverlay);
-        body.appendChild(wrapper);
-
-        // Animate each half to move off-screen
-        setTimeout(() => {
-            leftHalf.style.transition = rightHalf.style.transition = "transform 0.5s ease-in-out";
-            leftHalf.style.transform = "translateX(-100vw)";
-            rightHalf.style.transform = "translateX(100vw)";
-        }, 50); // Small delay before starting the animation
-
-        // Wait for the outward animation to finish
-        setTimeout(() => {
-            // Animate each half to return to the center
-            leftHalf.style.transform = "translateX(0)";
-            rightHalf.style.transform = "translateX(0)";
-
-            // Wait for the merge animation to finish
-            setTimeout(() => {
-                // Clean up and resolve
-                wrapper.remove();
-                blackOverlay.remove();
-                body.style.overflow = "";
-                resolve();
-            }, 500); // 1-second duration for the return effect
-        }, 500); // 1-second duration for the split effect
+        // Wait for the fade-out animation to complete
+        setTimeout(() => resolve(overlay), 600); // 0.6-second duration for the fade-out effect
     });
 }
 
+// Function to fade back in from black
+function fadeInEffect(overlay) {
+    return new Promise((resolve) => {
+        // Start the fade-in effect
+        overlay.style.opacity = "0";
 
-
+        // Wait for the fade-in animation to complete
+        setTimeout(() => {
+            overlay.remove();
+            document.body.style.overflow = ""; // Restore scrolling
+            resolve();
+        }, 600); // 0.6-second duration for the fade-in effect
+    });
+}
 
 async function balanceReset(){
     if (!isEventInProgress() && startEvent("infiniteEmbrace")) {
-        await animateBalanceEffect();
+        let fadeOverlay = await fadeOutEffect();
         closeBalanceHall();
         await restartGame(true, false, true);
+        await fadeInEffect(fadeOverlay);
         saveGameState();
         window.location.reload();
     }
