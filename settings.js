@@ -7,6 +7,10 @@ function openSettings() {
     const settingsOverlay = document.getElementById('settingsOverlay');
     settingsOverlay.style.display = 'flex';
 
+    // load the state of the autoSaveCheckbox and set the checkbox per the value
+    const autoSaveCheckbox = document.getElementById('autoSaveCheckbox');
+    autoSaveCheckbox.checked = JSON.parse(localStorage.getItem('isAutoSaveEnabled')) || false;
+    
     unlockAchievement('Settings');
 
     // Add a temporary event listener to close the overlay when clicking outside of it
@@ -62,16 +66,50 @@ function outsideDonationClickListener(event) {
     }
 }
 
+// Add an event listener for the 'change' event
+autoSaveCheckbox.addEventListener("change", function () {
+    // Update the variable based on the checkbox state
+    isAutoSaveEnabled = autoSaveCheckbox.checked;
+    console.log("Auto Save Enabled:", isAutoSaveEnabled); // For debugging
+    //save the state of autoSaveCheckbox checkbox
+    localStorage.setItem('isAutoSaveEnabled', isAutoSaveEnabled);
+});
+
 // Initialize a Set to store unique export dates
 let exportDates = new Set(JSON.parse(localStorage.getItem('exportDates')) || []); // Ensure it's a Set
 
 function exportSave() {
-    // Get the current date and time in a formatted string (YYYY-MM-DD_HH-MM-SS)
+    // Get the current date and time in local time (YYYY-MM-DD_HH-MM)
     const now = new Date();
-    const currentDateTime = now.toISOString().slice(0, 19).replace(/:/g, "-").replace("T", "_");
+    const currentDateTime = now.toLocaleString("en-GB", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit"
+    }).replace(/[/,]/g, "-").replace(/, /g, "_").replace(/:/g, ".").replace(" ", "");
 
-    // Create the filename with the date and time
-    const fname = `degens_idle_save_${currentDateTime}.json`;
+    // Determine the filename based on the conditions
+    let fname;
+    const balanceSkillsUnlocked = Array.from(balanceHallSkills.values()).filter(skill => skill.unlocked).length;
+    const loveSkillsUnlocked = loveHallSkills.filter(skill => skill.unlocked).length;
+    const powerSkillsUnlocked = powerHallSkills.filter(skill => skill.unlocked).length;
+    const librarySkillsUnlocked = librarySkills.filter(skill => skill.unlocked).length;
+    const achievementsUnlocked = Array.from(achievementsMap.values()).filter(achievement => achievement.isUnlocked).length;
+
+    if (balanceSkillsUnlocked > 0) {
+        fname = `degens_idle_${currentDateTime}_HoB-${balanceSkillsUnlocked}_LP-${formatNumber(lovePoints)}_Ach-${achievementsUnlocked}`;
+    } else if (loveSkillsUnlocked > 0) {
+        fname = `degens_idle_${currentDateTime}_HoL-${loveSkillsUnlocked}_LP-${formatNumber(lovePoints)}_Ach-${achievementsUnlocked}`;
+    } else if (powerSkillsUnlocked > 0) {
+        fname = `degens_idle_${currentDateTime}_HoP-${powerSkillsUnlocked}_HoK-${librarySkillsUnlocked}_BCM-${formatNumber(bigCrunchMultiplier)}_Ach-${achievementsUnlocked}`;
+    } else if (bigCrunchMultiplier > 1) {
+        fname = `degens_idle_${currentDateTime}_HoK-${librarySkillsUnlocked}_BCM-${formatNumber(bigCrunchMultiplier)}_Ach-${achievementsUnlocked}`;
+    } else if (puGodLevel > 0) {
+        fname = `degens_idle_${currentDateTime}_PUG-${puGodLevel}_GM-${godModeLevel}_Ach-${achievementsUnlocked}`;
+    } else {
+        fname = `degens_idle_${currentDateTime}_GM-${godModeLevel}_Pres-${formatNumber(epsMultiplier)}_Ach-${achievementsUnlocked}`;
+    }
 
     const currentDate = now.toISOString().split('T')[0]; // Get current date in YYYY-MM-DD format
     const previousNumExportDates = exportDates.size; // Store the previous size of the Set
@@ -113,13 +151,6 @@ function exportSave() {
 }
 
 function importSave(event) {
-    // Get the checkbox status
-    const createBackupOnImport = document.getElementById('createBackupOnImportCheckbox').checked;
-
-    // Create a backup if the checkbox is checked
-    if (createBackupOnImport) {
-        exportSave('backup_degens_idle_save.json');
-    }
 
     // Restart the game and chain the rest of the logic
     restartGame(false, true).then(() => {
@@ -192,8 +223,6 @@ function copySave() {
 
 // Function to paste the compressed save data, decompress it, and load it into the game
 function pasteSave() {
-    const createBackupOnImport = document.getElementById('createBackupOnImportCheckbox').checked;
-
     // Prompt the user to input their pasted save string
     const compressedInput = prompt("Please paste your compressed save string:");
 
@@ -210,11 +239,6 @@ function pasteSave() {
         }
 
         const importedData = JSON.parse(decompressedData);
-
-        // Create a backup if the checkbox is checked
-        if (createBackupOnImport) {
-            exportSave('backup_degens_idle_save.json');
-        }
 
         // Restart the game and then apply the imported data
         restartGame(false, true).then(() => {

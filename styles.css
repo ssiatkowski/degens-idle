@@ -761,6 +761,7 @@ button.disabled {
     }
     
     .resource-gain-tooltip {
+        font-size: 16px; /* Make the font slightly smaller on mobile */
         max-width: 90vw;  /* Allow tooltip to take up 90% of the viewport on mobile */
         padding: 8px; /* Adjust padding for smaller screens */
     }

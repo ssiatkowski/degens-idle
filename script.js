@@ -48,6 +48,8 @@ let purchasedUpgrades = []; // Array for maintaining order and accessing propert
 let purchasedUpgradesSet = new Set(); // Set for fast lookups
 let availableUpgrades = [];
 
+let isAutoSaveEnabled = false;
+
 let godModeLevel = 0;
 let godModeMultiplier = 1;
 let puGodLevel = 0;
@@ -738,10 +740,8 @@ function loadGameState() {
         }
     });
 
-    // load the state of the createBackupOnImportCheckbox and set the checkbox per the value
-    const createBackupOnImportCheckbox = document.getElementById('createBackupOnImportCheckbox');
-    createBackupOnImportCheckbox.checked = JSON.parse(localStorage.getItem('createBackupOnImportCheckbox')) || false;
-
+    isAutoSaveEnabled = JSON.parse(localStorage.getItem('isAutoSaveEnabled')) || false;
+    
     updateTradeRatio();
     updateTradeButtonText();
 
@@ -920,9 +920,6 @@ function saveGameState() {
     Object.keys(switchStates).forEach(upgradeName => {
         localStorage.setItem(`switchState-${upgradeName}`, JSON.stringify(switchStates[upgradeName]));
     });
-
-    //save the state of createBackupOnImportCheckbox checkbox
-    localStorage.setItem('createBackupOnImportCheckbox', document.getElementById('createBackupOnImportCheckbox').checked)
 
 }
 
@@ -1252,6 +1249,8 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
                 warpButton.style.display = 'none';
 
                 messageShownUpgrades = new Set([]);
+
+                exportDates = new Set([]);
 
                 loveHallUnlocked = false;
                 document.getElementById('loveHallButton').style.display = 'none';
@@ -1886,7 +1885,8 @@ function updateMultipliersDisplay() {
     document.getElementById('prestige-multiplier').textContent = `Prestige: x${formatNumber(epsMultiplier)}`;
     document.getElementById('god-mode-display').textContent = `God-Mode Lvl ${godModeLevel} (x${formatNumber(godModeMultiplier)})`;
     document.getElementById('pu-god-display').textContent = `PU God Lvl ${puGodLevel} (x${formatNumber(puGodMultiplier)})`;
-    document.getElementById('big-crunch-display').textContent = `Big Crunch Power ${formatNumber(bigCrunchPower)}\n(x${formatNumber(bigCrunchMultiplier)} + KPSx${formatNumber(crunchKnowledgeSkill ? bigCrunchMultiplier**(2/3) : bigCrunchMultiplier**(1/2))})`;
+    document.getElementById('big-crunch-display').innerHTML = `Big Crunch Power ${formatNumber(bigCrunchPower)}<br>(x${formatNumber(bigCrunchMultiplier)} + KPSx${formatNumber(crunchKnowledgeSkill ? bigCrunchMultiplier**(2/3) : bigCrunchMultiplier**(1/2))})`;
+
 
     updateStellarHarvestDisplay();
 }
@@ -1973,6 +1973,11 @@ async function prestige(skipConfirms = false) {
                 unlockAchievement('Over 9000');
             }
             if (!skipConfirms) { unlockAchievement('First Prestige'); }
+
+            if(isAutoSaveEnabled && puGodLevel == 0 && bigCrunchMultiplier == 1){
+                exportSave();
+            }
+
             epsMultiplier = newPrestigeMult;
             prestigeRequirement = newPrestigeReq;
 
@@ -2118,7 +2123,6 @@ async function ascend(skipConfirms = false) {
 
     // If we can Ascend, and no other event is occurring and we successfully trigger a startEvent
     if (canAscend() && !isEventInProgress() && startEvent("ascend")) {
-        let confirmed = true;
         let selectedUpgrades = null;
         if (!skipConfirms) {
             const upgradeText = numAscensionUpgrades > 1
@@ -2137,6 +2141,10 @@ async function ascend(skipConfirms = false) {
         }
 
         if (selectedUpgrades) {
+
+            if(isAutoSaveEnabled && bigCrunchMultiplier  == 1){
+                exportSave();
+            }
 
             selectedUpgrades.forEach(upgrade => {
                 upgrade.isGodMode = true;
@@ -2210,6 +2218,11 @@ async function transcend(skipConfirms = false) {
         }
 
         if (selectedUpgrades) {
+
+            if(isAutoSaveEnabled && powerHallSkills.filter(skill => skill.unlocked).length  == 0){
+                exportSave();
+            }
+
             selectedUpgrades.forEach(upgrade => {
                 upgrade.isPUGodMode = true;
                 if(tunneledAscensionSkill){
@@ -2307,6 +2320,10 @@ async function bigCrunch(skipConfirms = false) {
         }
 
         if (confirmed && canBigCrunch()) {
+
+            if(isAutoSaveEnabled && loveHallSkills.filter(skill => skill.unlocked).length == 0){
+                exportSave();
+            }
 
             resourceGenerationDisabled = true;
 
@@ -2496,6 +2513,10 @@ async function infiniteEmbrace(skipConfirms = false, lovePointsOverwrite = false
 
         if (confirmed) {
 
+            if(isAutoSaveEnabled && Array.from(balanceHallSkills.values()).filter(skill => skill.unlocked).length < 0){
+                exportSave();
+            }
+
             resourceGenerationDisabled = true;
 
             // Capture the screen and animate the Infinite Embrace effect
@@ -2549,7 +2570,7 @@ async function infiniteEmbrace(skipConfirms = false, lovePointsOverwrite = false
         // Trigger stop event after process complete (even greater delay to match the embrace animation)
         setTimeout(() => {
             stopEvent("infiniteEmbrace");
-        }, 3000);
+        }, 2000);
     }
 }
 
@@ -2600,13 +2621,21 @@ function fadeInEffect(overlay) {
 }
 
 async function balanceReset(){
-    if (!isEventInProgress() && startEvent("infiniteEmbrace")) {
+    if (!isEventInProgress() && startEvent("balanceReset")) {
+        if(isAutoSaveEnabled && Array.from(balanceHallSkills.values()).filter(skill => skill.unlocked).length == 0){
+            exportSave();
+        }
+
         let fadeOverlay = await fadeOutEffect();
         closeBalanceHall();
         await restartGame(true, false, true);
         await fadeInEffect(fadeOverlay);
         saveGameState();
         window.location.reload();
+
+        setTimeout(() => {
+            stopEvent("balanceReset");
+        }, 1500);
     }
 }
 
@@ -4770,24 +4799,34 @@ function closeResourceToolTip(name) {
 }
 
 document.querySelectorAll('.resource-value').forEach(function (element) {
-    const resourceId = element.id;  // Directly use element.id
+    const resourceId = element.id; // Directly use element.id
 
-    element.addEventListener('mouseenter', function (event) {
-        // close any open tips before opening the new one
+    element.addEventListener('mouseenter', function () {
+        // Close any open tooltips before opening the new one
         for (const openTip of resourceToolTips.keys()) {
             closeResourceToolTip(openTip);
         }
 
         const tip = document.createElement('div');
         tip.className = 'resource-gain-tooltip';
-        tip.innerHTML = calculateTooltip(resourceId);  // Get tooltip content
+        tip.innerHTML = calculateTooltip(resourceId); // Get tooltip content
 
         document.body.appendChild(tip);
         resourceToolTips.set(resourceId, tip);
 
         const rect = element.getBoundingClientRect();
-        tip.style.top = `${rect.bottom + window.scrollY + 28}px`;  // Add a slight margin below
-        tip.style.left = `${rect.left + (rect.width / 2)}px`;
+        let topPosition = rect.bottom + window.scrollY + 28; // Default position below the element
+
+        // Check if the tooltip would overflow the bottom of the viewport
+        const tooltipRect = tip.getBoundingClientRect();
+        const spaceBelow = window.innerHeight - rect.bottom;
+        if (tooltipRect.height > spaceBelow) {
+            // Move the tooltip up just enough to fit within the viewport
+            topPosition = rect.bottom + window.scrollY + spaceBelow - tooltipRect.height - 10; // 10px buffer
+        }
+
+        tip.style.top = `${topPosition}px`;
+        tip.style.left = `${rect.left + rect.width / 2}px`;
     });
 
     // Hide tooltip when moving away
@@ -4800,7 +4839,6 @@ document.querySelectorAll('.resource-value').forEach(function (element) {
         closeResourceToolTip(resourceId);
     });
 });
-
 
 
 
