@@ -2038,19 +2038,19 @@ const upgrades = [
     {
         name: `N`,
         cost: { copium: 0, delusion: 5e254, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 2e97, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 4e44, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 2e97, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 5e44, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/letter_n.jpg`,
     },
     {
         name: `O`,
         cost: { copium: 0, delusion: 0, yachtMoney: 2.5e255, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 4e94, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 4e44, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 4e94, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 6e44, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/letter_o.jpg`,
     },
     {
         name: `P`,
         cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 1.25e256, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 8e97, hopiumPerSecond: 0, knowledgePerSecond: 4e44, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 8e97, hopiumPerSecond: 0, knowledgePerSecond: 7e44, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/letter_p.jpg`,
     },
     {
