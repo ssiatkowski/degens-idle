@@ -107,7 +107,7 @@ const achievements = [
     {
         name: 'Now we are Progressing',
         isUnlocked: false,
-        hoverText: 'why only ascend one upgrade at a time?',
+        hoverText: 'why only ascend two upgrades at a time?',
         img: 'imgs/achievements/double_ascension.jpg',
         type: 'progression',
     },
