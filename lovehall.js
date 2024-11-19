@@ -50,13 +50,13 @@ const loveHallSkills = [
     level: "Quantum Harmony (2.8x)",
     pair: 2,
     onUnlock: () => {
-      unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Double Ascension'), true);
+      unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Triple Ascension'), true);
       unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Quadruple Ascension'), true);
       unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Tenfold Ascension'), true);
       numAscensionUpgrades = Math.max(numAscensionUpgrades, 25);
     },
     onRespec: () => {
-      unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Double Ascension'), false);
+      unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Triple Ascension'), false);
       unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Quadruple Ascension'), false);
       unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Tenfold Ascension'), false);
       numAscensionUpgrades = 1;

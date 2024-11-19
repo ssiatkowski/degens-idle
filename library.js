@@ -21,7 +21,7 @@ const librarySkills = [
     { name: 'Perfect God-Mode', cost: 2e57, description: 'Make God-Mode better than PU God-Mode. Diminishes at 99.2%. (You must already know this is huge)', unlocked: false, level: 'Nonlinear Partial Differential Equations' },
 
     { name: 'Buy Markers', cost: 2, description: 'Purchased Upgrades will now have a switch indicating whether or not they should be bought using "Buy Seen" and "Buy All" buttons. (Can toggle all in Automation Settings) ', unlocked: false, level: 'Artificial Intelligence' },
-    { name: 'Double Ascension', cost: 20, description: 'Gain up to 2 God-Mode levels per Ascension. Also select up to 2 upgrades to enhance to God Mode.', unlocked: false, level: 'Artificial Intelligence' },
+    { name: 'Triple Ascension', cost: 30, description: 'Gain up to 3 God-Mode levels per Ascension. Also select up to 3 upgrades to enhance to God Mode.', unlocked: false, level: 'Artificial Intelligence' },
     { name: 'Cookie Clicker Clicker', cost: 350, description: 'After Prestiging or Ascending, automatically click the cookie 10 times per second for 15 seconds.', unlocked: false, level: 'Artificial Intelligence' },
     { name: 'Quadruple Ascension', cost: 4e6, description: 'Gain up to 4 God-Mode levels per Ascension. Also select up to 4 upgrades to enhance to God Mode.', unlocked: false, level: 'Artificial Intelligence' },
     { name: 'Septuple Transcendence', cost: 7e19, description: 'Gain up to 7 Parallel Universe God-Mode levels per Transcendence. Also select up to 7 upgrades to enhance to PU God Mode.', unlocked: false, level: 'Artificial Intelligence' },
@@ -202,9 +202,9 @@ function unlockLibrarySkill(skill, duringLoad = false, infoOnly = false) {
                 cookieAutoClicker = true;
                 break;
 
-            case 'Double Ascension':
+            case 'Triple Ascension':
                 unlockAchievement('Now we are Progressing');
-                numAscensionUpgrades = Math.max(numAscensionUpgrades, 2);
+                numAscensionUpgrades = Math.max(numAscensionUpgrades, 3);
                 break;
 
             case 'Buy Markers':

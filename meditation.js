@@ -209,6 +209,18 @@ const meditationChallenges = {
         respawnFactor: 1,
         livesPerBall: 101,
     },
+    "Dimensional Weaving": {
+        duration: 1e7,
+        focus: 50,
+        ballCount: 100,
+        arenaSize: 500,
+        ballSize: 28000,
+        ballSizeDelta: 10,
+        velocity: 1000,
+        wind: 0,
+        respawnFactor: 0.1,
+        livesPerBall: 1,
+    },
 };
 
 // Function to initialize the meditation game
@@ -293,7 +305,7 @@ function startMeditationGame(challengeName, backgroundImage, stageNumber = 1, pr
             skepticismRandomnessFactor = 2.5;
             arenaMessage = 'Religious books help you find order in chaos, reducing randomness.';
             noGimmicksUsed = false;
-        }else if (currentChallengeName === 'Agnosticism') {
+        } else if (currentChallengeName === 'Agnosticism') {
             const isWisdomPattern = ['W', 'I', 'S', 'D', 'O', 'M'].every((letter, index) =>
                 availableUpgrades[index] && availableUpgrades[index].name.startsWith(letter)
             );
@@ -315,6 +327,9 @@ function startMeditationGame(challengeName, backgroundImage, stageNumber = 1, pr
                 unlockAchievement('Wisdom, not Insight');
             }
 
+        } else if (currentChallengeName === "Dimensional Weaving") {
+            gravityStrength /= 10;
+            turnRadius /= 10;
         }
 
         // Show the meditation overlay
@@ -417,6 +432,8 @@ function createBall(index, stageNumber) {
             // Choose a random color from the pastelColors array
             const randomColor = pastelColors[Math.floor(Math.random() * pastelColors.length)];
             ball.style.backgroundColor = randomColor; // Set the background color to the random pastel color
+        } else if (currentChallengeName === "Dimensional Weaving") {
+            ball.style.backgroundColor = ["white", "black"][Math.floor(Math.random() * 2)];
         } else{
             ball.style.backgroundColor = 'orange'; // Assuming blue or any other color for stage 1
         }

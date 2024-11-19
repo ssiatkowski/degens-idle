@@ -175,7 +175,7 @@ let autoPrestigeThreshold = null;
 let autoAscendThreshold = null;
 let autoTranscendThreshold = null;
 
-let numAscensionUpgrades = 1;
+let numAscensionUpgrades = 2;
 let numPUAscensionUpgrades = 2;
 
 let improvedTradeRatio = false;
@@ -1031,12 +1031,12 @@ function generateResources() {
 
     // Generate 0.5 seconds' worth of lovePoints if Everlasting Love is unlocked
     if (balanceHallSkills.get("Everlasting Love").unlocked) {
-        lovePoints += (balanceHallSkills.get("Surrounded by Love").unlocked) ? largestEmbrace / 6 / 2 : largestEmbrace / 3600 / 2; // 0.5 seconds of lovePoints
+        lovePoints += (balanceHallSkills.get("Surrounded by Love").unlocked) ? largestEmbrace / 7.2 / 2 : largestEmbrace / 3600 / 2; // 0.5 seconds of lovePoints
     }
 
     crunchTimer += 0.5;
     embraceTimer += 0.5;
-    if (accumulatedWarpTime < warpTimeMax) accumulatedWarpTime += (balanceHallSkills.get("Temporal Dominion").unlocked ? 3 : 0.5);
+    if (accumulatedWarpTime < warpTimeMax) accumulatedWarpTime += (balanceHallSkills.get("Temporal Dominion").unlocked ? 2.5 : 0.5);
 
     updateDisplay();
 }
@@ -1338,7 +1338,7 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
             speedGameSkill = false;
             luckGameSkill = false;
             miniGamerSkill = false;
-            numAscensionUpgrades = 1;
+            numAscensionUpgrades = 2;
             numPUAscensionUpgrades = 2;
             buyMarkersSkill = false;
             improvedTradeRatio = false;
@@ -2125,13 +2125,12 @@ async function ascend(skipConfirms = false) {
     if (canAscend() && !isEventInProgress() && startEvent("ascend")) {
         let selectedUpgrades = null;
         if (!skipConfirms) {
-            const upgradeText = numAscensionUpgrades > 1
-                ? `select up to ${numAscensionUpgrades} upgrades to enhance and increase your God-Mode multiplier proportionally to how many upgrades you select`
-                : "select an upgrade to enhance which will make its gains 10x stronger and also increase your God-Mode multiplier (global 1.25x stacking but diminishing multiplier)";
             selectedUpgrades = await showMessageModal(
                 'God-Mode Ascension',
                 `Raising your God-Mode level requires temporarily folding three dimensions in the space around you to a single point, which will unfortunately reduce your Prestige multiplier to its cube root.<br><br>
-                You can ${upgradeText}.`,
+                You can select up to ${numAscensionUpgrades} upgrades to enhance.<br>
+                Each selected upgrade will have its gains increased by 10x and will also boost your God-Mode multiplier.<br>
+                The multiplier effect scales proportionally, with a global 1.25x stacking but diminishing multiplier.`,
                 true,
                 true
             );
@@ -2142,7 +2141,7 @@ async function ascend(skipConfirms = false) {
 
         if (selectedUpgrades) {
 
-            if(isAutoSaveEnabled && bigCrunchMultiplier  == 1){
+            if(isAutoSaveEnabled && bigCrunchMultiplier  == 1 && lovePoints == 0){
                 exportSave();
             }
 
@@ -2219,7 +2218,7 @@ async function transcend(skipConfirms = false) {
 
         if (selectedUpgrades) {
 
-            if(isAutoSaveEnabled && powerHallSkills.filter(skill => skill.unlocked).length  == 0){
+            if(isAutoSaveEnabled && powerHallSkills.filter(skill => skill.unlocked).length  == 0 && lovePoints == 0){
                 exportSave();
             }
 
@@ -2957,7 +2956,7 @@ function generateIdleResources(elapsedSeconds) {
 
     // Check if Everlasting Love is unlocked and increment lovePoints accordingly
     if (balanceHallSkills.get("Everlasting Love").unlocked) {
-        lovePoints += (balanceHallSkills.get("Surrounded by Love").unlocked) ? (largestEmbrace / 6) * elapsedSeconds : (largestEmbrace / 3600) * elapsedSeconds;
+        lovePoints += (balanceHallSkills.get("Surrounded by Love").unlocked) ? (largestEmbrace / 7.2) * elapsedSeconds : (largestEmbrace / 3600) * elapsedSeconds;
     }
 
     if (elapsedSeconds > 60 * 60 * 24){
@@ -2966,7 +2965,7 @@ function generateIdleResources(elapsedSeconds) {
 
     crunchTimer += elapsedSeconds;
     embraceTimer += elapsedSeconds;
-    accumulatedWarpTime = Math.min (accumulatedWarpTime + ((balanceHallSkills.get("Temporal Dominion").unlocked ? 6 : 1) * elapsedSeconds), warpTimeMax - (warpTimeRemaining * 60));
+    accumulatedWarpTime = Math.min (accumulatedWarpTime + ((balanceHallSkills.get("Temporal Dominion").unlocked ? 5 : 1) * elapsedSeconds), warpTimeMax - (warpTimeRemaining * 60));
 
     const baseKnowledgePerSecond = calculateBaseKnowledge();
 
