@@ -141,7 +141,7 @@ function exportSave() {
     // Create a link element to download the file
     const a = document.createElement('a');
     a.href = url;
-    a.download = fname; // Use the dynamic filename with date and time
+    a.download = fname + '.json'; // Use the dynamic filename with date and time
     document.body.appendChild(a);
     a.click();
 

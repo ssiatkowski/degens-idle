@@ -284,6 +284,8 @@ let mysticReboundCount = 0;
 
 let numCookedRabbits = 0;
 
+let yourEgoWins = 0;
+
 // Function to initialize and start the mini-game
 function startFightGame(enemyName, enemyImg) {
     return new Promise((resolve) => {
@@ -1608,6 +1610,14 @@ function endFight(isForfeit = false) {
     } else {
         logFight(`<span style='color: red;'>${currEnemyName} defeated you!</span>`);
         overlayWinnerLoserText("Loser", "Taunting");
+
+        if (currEnemyName === 'Your Ego') {
+            yourEgoWins += 1;
+            if(yourEgoWins >= 50) {
+                unlockAchievement('Check Your Ego');
+            }
+        }
+
     }
 
     fightEnded = true; // Set the flag to true when the fight ends

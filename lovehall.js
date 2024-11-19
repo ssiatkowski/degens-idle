@@ -59,7 +59,7 @@ const loveHallSkills = [
       unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Triple Ascension'), false);
       unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Quadruple Ascension'), false);
       unlockLibrarySkill(librarySkills.find(skill => skill.name === 'Tenfold Ascension'), false);
-      numAscensionUpgrades = 1;
+      numAscensionUpgrades = 2;
     },
   },
   {

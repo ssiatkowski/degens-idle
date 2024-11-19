@@ -19,10 +19,10 @@ let balanceHallSkills = new Map([
     ["Everlasting Love", { description: "Passively generate Love Points based on largest embrace each hour (online & offline) -- can go beyond the Infinite Embrace 1M limit", cost: { 'Troll Points': 1e225 }, available: false, unlocked: false }],
     ["Quality of Life", { description: "Resource balancing first 4 resources no longer resets game AND Ascend/Transcend up to 100 upgrades at once AND Cookie Clicker Clicker is permanent AND remove Hall of Love skill confirmations", cost: { Hopium: 1e230 }, available: false, unlocked: false }],
     ["Balance is Power", { description: "Multiplicative 5x to Power for each Balance Skill unlocked", cost: { Knowledge: 1e202 }, available: false, unlocked: false }],
-    ["Temporal Dominion", { description: "Time Warp charges 6x faster AND max time increases to 24 minutes", cost: { Power: 1e90 }, available: false, unlocked: false }],
+    ["Temporal Dominion", { description: "Time Warp charges 5x faster AND max time increases to 24 minutes", cost: { Power: 1e90 }, available: false, unlocked: false }],
     ["Serene Future", { description: "Multiplicative 3% to Serenity for each upgrade purchased", cost: { Serenity: 1e47 }, available: false, unlocked: false }],
     ["Greatest Balance", { description: "Max balance values are squared", cost: { Copium: 1e242, Delusion: 1e242, 'Yacht Money': 1e242, 'Troll Points': 1e242, Hopium: 1e242, Knowledge: 1e213, Power: 1e96, Serenity: 1e52 }, available: false, unlocked: false }],
-    ["Surrounded by Love", { description: "Passive Love Point Generation is 600x faster", cost: { Copium: 1e258, Delusion: 1e258, 'Yacht Money': 1e258, 'Troll Points': 1e258, Hopium: 1e257, Knowledge: 1e230, Power: 1e107, Serenity: 1.6e56 }, available: false, unlocked: false }],
+    ["Surrounded by Love", { description: "Passive Love Point Generation is 500x faster", cost: { Copium: 1e258, Delusion: 1e258, 'Yacht Money': 1e258, 'Troll Points': 1e258, Hopium: 1e257, Knowledge: 1e230, Power: 1e107, Serenity: 1.6e56 }, available: false, unlocked: false }],
     ["Singularity Wielder", { description: "In battles, set Stun and Dodge chances to log10(serenity) AND vastly increase HP scaling with Copium", cost: { Copium: 1e268, Delusion: 1e268, 'Yacht Money': 1e268, 'Troll Points': 1e268, Hopium: 2e266, Knowledge: 3e242, Power: 6e114, Serenity: 1.6e59 }, available: false, unlocked: false }],
     ["Guardian Training", { description: "Vastly Improve Meditation resource calculations (not implemented yet)", cost: { Copium: 1e300, Delusion: 1e300, 'Yacht Money': 1e300, 'Troll Points': 1e300, Hopium: 1e300, Knowledge: 1e300, Power: 1e300, Serenity: 1e300 }, available: false, unlocked: false }]
 ]);
@@ -83,6 +83,22 @@ function initializeBalanceHall() {
 
         slider.addEventListener('input', () => {
             newDisplay.textContent = `New: ${formatNumber(slider.value)}`;
+                // Get the current slider values
+            const sliderValues = [
+                document.querySelector('.balance-slider[data-name="Copium"]').value,
+                document.querySelector('.balance-slider[data-name="Delusion"]').value,
+                document.querySelector('.balance-slider[data-name="Yacht Money"]').value,
+                document.querySelector('.balance-slider[data-name="Troll Points"]').value,
+                document.querySelector('.balance-slider[data-name="Hopium"]').value,
+                document.querySelector('.balance-slider[data-name="Knowledge"]').value,
+                document.querySelector('.balance-slider[data-name="Power"]').value,
+                document.querySelector('.balance-slider[data-name="Serenity"]').value
+            ].map(Number);
+
+            // Check if the slider values are in order
+            if (sliderValues.every((value, index, array) => index === 0 || array[index - 1] < value)) {
+                unlockAchievement('Rising Balance');
+    }
         });
 
         const balanceButton = document.createElement('button');

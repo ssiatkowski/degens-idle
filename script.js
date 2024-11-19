@@ -2512,7 +2512,7 @@ async function infiniteEmbrace(skipConfirms = false, lovePointsOverwrite = false
 
         if (confirmed) {
 
-            if(isAutoSaveEnabled && Array.from(balanceHallSkills.values()).filter(skill => skill.unlocked).length < 0){
+            if(isAutoSaveEnabled && Array.from(balanceHallSkills.values()).filter(skill => skill.unlocked).length < 8){
                 exportSave();
             }
 
@@ -2621,7 +2621,7 @@ function fadeInEffect(overlay) {
 
 async function balanceReset(){
     if (!isEventInProgress() && startEvent("balanceReset")) {
-        if(isAutoSaveEnabled && Array.from(balanceHallSkills.values()).filter(skill => skill.unlocked).length == 0){
+        if(isAutoSaveEnabled){
             exportSave();
         }
 
@@ -3326,7 +3326,17 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true, ski
             ) {
                 unlockAchievement('Number One');
             }
+        } else if (name.length == 1 && !achievementsMap.get('Honor').isUnlocked && [0, 1, 2, 3].some(startIndex =>
+            ['G', 'L', 'O', 'R', 'Y'].every((letter, index) =>
+                availableUpgrades[startIndex + index] && availableUpgrades[startIndex + index].name == letter))) {
+                unlockAchievement('Honor');
+        } else if (name == 'S' && !achievementsMap.get('STARBOUND').isUnlocked &&
+            ['D', 'N', 'U', 'O', 'B', 'R', 'A', 'T', 'S'].every((letter, index) =>
+                purchasedUpgrades[purchasedUpgrades.length - 9 + index] &&
+                purchasedUpgrades[purchasedUpgrades.length - 9 + index].name == letter)) {
+            unlockAchievement('STARBOUND');
         }
+        
 
         if (callUpdatesAfterBuying) {
             if (name == 'Degens Idle Dev') {

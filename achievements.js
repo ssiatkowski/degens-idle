@@ -1268,6 +1268,13 @@ const achievements = [
         type: 'puzzle',
     },
     {
+        name: 'Rising Balance',
+        isUnlocked: false,
+        hoverText: `play with balance sliders`,
+        img: 'imgs/achievements/rising_balance.jpg',
+        type: 'puzzle',
+    },
+    {
         name: 'First Commandment',
         isUnlocked: false,
         hoverText: `study Christianity without calling yourself a god`,
@@ -1279,6 +1286,27 @@ const achievements = [
         isUnlocked: false,
         hoverText: `longer respawn time than duration on Epicureanism`,
         img: 'imgs/achievements/where_did_everybody_go.jpg',
+        type: 'puzzle',
+    },
+    {
+        name: 'Check Your Ego',
+        isUnlocked: false,
+        hoverText: `let your ego win over and over`,
+        img: 'imgs/achievements/check_your_ego.jpg',
+        type: 'puzzle',
+    },
+    {
+        name: 'Honor',
+        isUnlocked: false,
+        hoverText: `???`,
+        img: 'imgs/achievements/honor.jpg',
+        type: 'puzzle',
+    },
+    {
+        name: 'STARBOUND',
+        isUnlocked: false,
+        hoverText: `that's too many letters`,
+        img: 'imgs/achievements/starbound.jpg',
         type: 'puzzle',
     },
     {
