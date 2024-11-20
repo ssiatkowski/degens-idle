@@ -2132,10 +2132,23 @@ const upgrades = [
                 <br><br>The choice, as always, is yours.`,
         isKey: true,
     },
+    
+    {
+        name: `Good Guy Jupiter`,
+        cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 2.5e247, power: 0, serenity: 2e60 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 1e98, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: `imgs/good_guy_jupiter.jpg`,
+    },
+    {
+        name: `Say no to Ads`,
+        cost: { copium: 0, delusion: 0, yachtMoney: 4e271, trollPoints: 0, hopium: 0, knowledge: 0, power: 3.3e118, serenity: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1e100, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: `imgs/say_no_to_ads.jpg`,
+    },
     {
         name: `What's Next?`,
-        cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 1e272, hopium: 0, knowledge: 0, power: 0, serenity: 6e60 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1e100, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 1e272, hopium: 0, knowledge: 0, power: 0, serenity: 5.5e60 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 5e100, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/whats_next.jpg`,
     },
     {         
@@ -2149,4 +2162,40 @@ const upgrades = [
         message: `TBD`,
         hoverOverwrite: 'this content is not yet balanced!',
     },
+    // {
+    //     name: `The Worst`,
+    //     cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
+    //     earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+    //     img: `imgs/the_worst.jpg`,
+    // },
+    // {
+    //     name: `Peaceful Hike`,
+    //     cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
+    //     earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+    //     img: `imgs/peaceful_hike.jpg`,
+    // },
+    // {
+    //     name: `Real MVPs`,
+    //     cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
+    //     earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+    //     img: `imgs/real_mvps.jpg`,
+    // },
+    // {
+    //     name: `Good People Winning`,
+    //     cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
+    //     earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+    //     img: `imgs/good_people_winning.jpg`,
+    // },
+    // {
+    //     name: `Peace on Earth`,
+    //     cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
+    //     earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+    //     img: `imgs/peace_on_earth.jpg`,
+    // },
+    // {
+    //     name: `Finishing Degens Idle`,
+    //     cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
+    //     earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+    //     img: `imgs/finishing_degens_idle.jpg`,
+    // },
 ];

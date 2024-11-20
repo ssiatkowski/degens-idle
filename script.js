@@ -556,10 +556,13 @@ function loadGameState() {
 
     numSpeedFailures = parseFloat(localStorage.getItem('numSpeedFailures')) || 0;
     numSpeedWins = parseFloat(localStorage.getItem('numSpeedWins')) || 0;
+    numConsecutiveSpeedFailures = parseFloat(localStorage.getItem('numConsecutiveSpeedFailures')) || 0;
     numMemoryFailures = parseFloat(localStorage.getItem('numMemoryFailures')) || 0;
     numMemoryWins = parseFloat(localStorage.getItem('numMemoryWins')) || 0;
+    numConsecutiveMemoryFailures = parseFloat(localStorage.getItem('numConsecutiveMemoryFailures')) || 0;
     numMathFailures = parseFloat(localStorage.getItem('numMathFailures')) || 0;
     numMathWins = parseFloat(localStorage.getItem('numMathWins')) || 0;
+    numConsecutiveMathFailures = parseFloat(localStorage.getItem('numConsecutiveMathFailures')) || 0;
 
     numLoveHallFreeRespecs = localStorage.getItem('numLoveHallFreeRespecs') !== null ? parseFloat(localStorage.getItem('numLoveHallFreeRespecs')) : 1;
 

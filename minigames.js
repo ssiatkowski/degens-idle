@@ -26,10 +26,13 @@ let numLuckyBoxes = 0;
 let numSoftCaps = 0;
 let numSpeedFailures = 0;
 let numSpeedWins = 0
+let numConsecutiveSpeedFailures = 0;
 let numMemoryFailures = 0;
 let numMemoryWins = 0;
+let numConsecutiveMemoryFailures = 0;
 let numMathFailures = 0;
 let numMathWins = 0;
+let numConsecutiveMathFailures = 0;
 
 let lastClickedBoxIndex = null;
 let consecutiveClicks = 0;
@@ -81,15 +84,18 @@ function playMiniGame(gameType) {
         let misclicks = 0;
         let startingDotsClicked = 0;  // Counter for starting dots
         let duration = Math.floor(Math.random() * 6) + 3; // Random duration between 3 and 8 seconds
+        const origTargetClickSpeed = 1.5;
+        let targetClickSpeed = origTargetClickSpeed / (1 + numConsecutiveSpeedFailures * 0.1);
 
         showMessageModal(
-            'Speed Game', 
+            'Speed Game',
             `Tap on the dots as many times as you can in ${duration} seconds! Be careful, clicks 
             outside the dots will count as -0.5 points.
             <br /> &nbsp;
             <br /><strong>Wins:</strong> ${numSpeedWins}
-            <br /><strong>Losses:</strong> ${numSpeedFailures}`, 
-            false, 
+            <br /><strong>Losses:</strong> ${numSpeedFailures}
+            ${numConsecutiveSpeedFailures >= 1 ? `<br /><strong>Consecutive Losses:</strong> ${numConsecutiveSpeedFailures} (target click speed lowered from ${origTargetClickSpeed} to ${formatNumber(targetClickSpeed)})` : ''}`,
+            false,
             false)
         .then(() => {
             const gameArea = document.createElement('div');
@@ -161,7 +167,7 @@ function playMiniGame(gameType) {
                 let effectivePoints = points - (0.5 * misclicks);
                 let effectiveClicksPerSecond = effectivePoints / duration;
 
-                if (effectiveClicksPerSecond > 1.49) {
+                if (effectiveClicksPerSecond >= targetClickSpeed) {
                     reward = Math.max(Math.floor(Math.abs(copium) * (effectiveClicksPerSecond * 0.15)), 25);
                     if (speedGameSkill) { reward *= 3; }
                     if (reward > softCaps.speed) {
@@ -193,6 +199,8 @@ function playMiniGame(gameType) {
                     resultMessage = `You tapped ${points} dots with ${misclicks} misclicks in ${duration} seconds (${effectiveClicksPerSecond.toFixed(2)} points per second). Your reward is <span style="color: green;">${formatNumber(reward)}</span> copium! You have now tapped ${numSpeedTaps} times in winning games.`;
                     numSpeedWins++;
                     localStorage.setItem('numSpeedWins', numSpeedWins);
+                    numConsecutiveSpeedFailures = 0;
+                    localStorage.setItem('numConsecutiveSpeedFailures', numConsecutiveSpeedFailures);
                 } else {
                     if (misclicks == 42) {
                         unlockAchievement('42 Misclicks');
@@ -202,6 +210,8 @@ function playMiniGame(gameType) {
                     resultMessage = `You were too slow, managing only ${points} taps on dots with ${misclicks} misclicks in ${duration} seconds (${effectiveClicksPerSecond.toFixed(2)} points per second). You lose <span style="color: red;">${formatNumber(reward)}</span> copium. Try again later!`;
                     numSpeedFailures++;
                     localStorage.setItem('numSpeedFailures', numSpeedFailures);
+                    numConsecutiveSpeedFailures++;
+                    localStorage.setItem('numConsecutiveSpeedFailures', numConsecutiveSpeedFailures);
                 }
 
                 copium += reward;
@@ -234,15 +244,36 @@ function playMiniGame(gameType) {
         let playerSequence = [];
         let isSequencePlaying = true; // Flag to prevent clicking during the sequence playback
 
-        // Show the modal with instructions and start the game when the modal is closed
+        // Adjust sequenceLength based on numConsecutiveMemoryFailures
+        if (numConsecutiveMemoryFailures === 1) {
+            sequenceLength = Math.min(sequenceLength, 6);
+        } else if (numConsecutiveMemoryFailures >= 2 && numConsecutiveMemoryFailures <= 3) {
+            sequenceLength = Math.min(sequenceLength, 5);
+        } else if (numConsecutiveMemoryFailures >= 4 && numConsecutiveMemoryFailures <= 5) {
+            sequenceLength = Math.min(sequenceLength, 4);
+        } else if (numConsecutiveMemoryFailures > 5) {
+            sequenceLength = Math.min(sequenceLength, 3);
+        }
+
+        let maxSequenceLengthMessage;
+        if (numConsecutiveMemoryFailures > 0) {
+            let maxLength = numConsecutiveMemoryFailures === 1 ? 6 :
+                            numConsecutiveMemoryFailures <= 3 ? 5 :
+                            numConsecutiveMemoryFailures <= 5 ? 4 : 3;
+            maxSequenceLengthMessage = `<strong>Consecutive Losses:</strong> ${numConsecutiveMemoryFailures} (Max Sequence length = ${maxLength})`;
+        } else {
+            maxSequenceLengthMessage = "";
+        }
+
         showMessageModal(
-            'Memory Game', 
+            'Memory Game',
             `<strong>Grid Size:</strong> ${gridSize}x${gridSize}<br>
             <strong>Sequence Length:</strong> ${sequenceLength}<br>&nbsp;<br>
             Watch the pattern of dots as they light up, and then click them in the same order! Try to remember the sequence!<br>&nbsp;<br>
             <strong>Wins:</strong> ${numMemoryWins}<br>
-            <strong>Losses:</strong> ${numMemoryFailures}`,
-            false, 
+            <strong>Losses:</strong> ${numMemoryFailures}
+            ${maxSequenceLengthMessage ? `<br />${maxSequenceLengthMessage}` : ''}`,
+            false,
             false
         ).then(() => {
 
@@ -388,13 +419,17 @@ function playMiniGame(gameType) {
                     localStorage.setItem('numMemorizedDots', numMemorizedDots);
                     numMemoryWins++
                     localStorage.setItem('numMemoryWins', numMemoryWins);
+                    numConsecutiveMemoryFailures = 0;
+                    localStorage.setItem('numConsecutiveMemoryFailures', numConsecutiveMemoryFailures);
                     if (numMemorizedDots >= 500) {
                         unlockAchievement('Pattern Prodigy');
                     }
                     calculateMiniGamesMultiplier();
                 } else {
-                    numMemoryFailures++
+                    numMemoryFailures++;
                     localStorage.setItem('numMemoryFailures', numMemoryFailures);
+                    numConsecutiveMemoryFailures++;
+                    localStorage.setItem('numConsecutiveMemoryFailures', numConsecutiveMemoryFailures);
                 }
 
                 let resultMessage = correct
@@ -437,15 +472,42 @@ function playMiniGame(gameType) {
             duration += 5;
         }
 
+        let totalPortals = mathGameSkill ? 12 : 15; // Limit the number of portals
         let maxPortalsReached = false;
+
+        // Save the original duration and totalPortals for reference
+        const originalDuration = duration;
+
+        // Adjust the duration based on numConsecutiveMathFailures
+        if (numConsecutiveMathFailures > 0) {
+            duration *= (1 + numConsecutiveMathFailures * 0.05);
+        }
+
+        // Adjust totalPortals based on numConsecutiveMathFailures
+        if (numConsecutiveMathFailures >= 2) {
+            const portalsSubtracted = Math.min(7, Math.floor(numConsecutiveMathFailures / 2));
+            totalPortals = Math.max(1, totalPortals - portalsSubtracted); // Ensure totalPortals doesn't go below 1
+        }
+
+        // Create the duration note
+        let durationNote = '';
+        if (numConsecutiveMathFailures > 0) {
+            durationNote = `<br><strong>Consecutive Losses:</strong> ${numConsecutiveMathFailures} (duration extended from ${originalDuration.toFixed(2)} to ${duration.toFixed(2)} seconds`;
+            if (numConsecutiveMathFailures >= 2) {
+                const portalsSubtracted = Math.min(7, Math.floor(numConsecutiveMathFailures / 2));
+                durationNote += `, and ${portalsSubtracted} portal${portalsSubtracted > 1 ? 's' : ''} subtracted`;
+            }
+            durationNote += ').';
+        }
 
         // Show the modal with instructions and start the game when the modal is closed
         showMessageModal(
             'Math Portal Puzzle',
             `<strong style="font-size: 1.5em;">Target Sum: ${targetSum}</strong><br><br>
-            Click on the portals to select numbers that add up to the target sum in ${duration} seconds!<br>&nbsp;<br>
+            Click on the portals to select numbers that add up to the target sum in ${duration.toFixed(2)} seconds!<br>&nbsp;<br>
             <strong>Wins:</strong> ${numMathWins}<br>
-            <strong>Losses:</strong> ${numMathFailures}<br>`,
+            <strong>Losses:</strong> ${numMathFailures}<br>
+            ${durationNote}`,
             false,
             false
         ).then(() => {
@@ -575,7 +637,6 @@ function playMiniGame(gameType) {
             // Function to generate portals with random values
             function generatePortals() {
                 let sumExists = false;
-                const totalPortals = mathGameSkill ? 12 : 15; // Limit the number of portals
 
                 for (let i = 0; i < totalPortals; i++) {
                     const num = Math.floor(Math.random() * (targetSum - 1)) + 1;
@@ -705,6 +766,8 @@ function playMiniGame(gameType) {
                     }
                     numMathWins++;
                     localStorage.setItem('numMathWins', numMathWins);
+                    numConsecutiveMathFailures = 0;
+                    localStorage.setItem('numConsecutiveMathFailures', numConsecutiveMathFailures);
                     numMathPortals += selectedPortals.length;
                     localStorage.setItem('numMathPortals', numMathPortals);
                     if (numMathPortals > 314) {
@@ -715,6 +778,8 @@ function playMiniGame(gameType) {
                 } else {
                     numMathFailures++;
                     localStorage.setItem('numMathFailures', numMathFailures);
+                    numConsecutiveMathFailures++;
+                    localStorage.setItem('numConsecutiveMathFailures', numConsecutiveMathFailures);
                     reward = -Math.max(Math.floor(Math.abs(yachtMoney) * 0.2), 20);
                     resultMessage = `You didn't find the correct sum. You lost <span style="color: red;">${formatNumber(Math.abs(reward))}</span> Yacht Money.`;
                 }
