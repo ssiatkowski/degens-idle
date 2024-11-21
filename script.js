@@ -3671,7 +3671,7 @@ function addPurchasedUpgrade(img, name, earnings, isGodMode = false, isPUGodMode
             } else {
                 if (name == `Clickable`){
                     unlockAchievement('Click the Clicker');
-                } else if (name == 'The M Word'){
+                } else if (name == 'The M Word' && tearsOfJoySkill){
                     if (calculateEffectivePower() < calculateBasePower() * 0.5 && calculateEffectiveKnowledge() < calculateBaseKnowledge() * 0.5){
                         unlockAchievement('Prove the Muppet Wrong');
                     }
