@@ -295,6 +295,7 @@ const loveHallSkills = [
     unlocked: false,
     level: "Quantum Harmony (2.8x)",
     pair: 9,
+    requirement: "Raise That Soft Cap",
     onUnlock: () => {
       hopefulSoftCapSkill = true;
     },
@@ -965,6 +966,41 @@ const loveHallSkills = [
     onRespec: () => {
       etherealReflectionSkill = false;
     },
+    
+  },
+
+  {
+    name: "Serene Extortion",
+    cost: 3703.7,
+    description: "Increase mini game skip reward from 5% to 10%",
+    unlocked: false,
+    level: "Dimensional Shift (27x)",
+    pair: 35,
+    requirement: "Love is Everything",
+    onUnlock: () => {
+      sereneExtortionSkill = true;
+    },
+    onRespec: () => {
+      sereneExtortionSkill = false;
+    },
+  },
+  {
+    name: "Pricy Tranquility",
+    cost: 3703.7,
+    description:
+      "Setting for 'Quick Mini Game Skip` to make skip the default and no pop ups",
+    unlocked: false,
+    level: "Dimensional Shift (27x)",
+    pair: 35,
+    requirement: "The Ultimate Fix",
+    onUnlock: () => {
+      pricyTranquilitySkill = true;
+    },
+    onRespec: () => {
+      pricyTranquilitySkill = false;
+      enableQuickModeMiniGameSkip = false;
+    },
+    
   },
 
   // 42x Level - the meaning of life
@@ -1403,6 +1439,35 @@ const loveHallSkills = [
       document.getElementById('toggleCopiumLabel').classList.add('hidden');
       document.getElementById('toggleYachtMoneyLabel').classList.add('hidden');
       document.getElementById('toggleTrollPointsLabel').classList.add('hidden');
+    },
+  },
+
+  {
+    name: "Tears of Joy",
+    cost: 10000000,
+    description: "Remove diminishing returns from Knowledge and Power.",
+    unlocked: false,
+    level: "Cosmic Truth (42x)",
+    pair: 54,
+    onUnlock: () => {
+      tearsOfJoySkill = true;
+    },
+    onRespec: () => {
+      tearsOfJoySkill = false;
+    },
+  },
+  {
+    name: "Min-Maxing Love",
+    cost: 10000000,
+    description: "Increase Serenity gain by 25%",
+    unlocked: false,
+    level: "Cosmic Truth (42x)",
+    pair: 54,
+    onUnlock: () => {
+      minMaxingLoveSkill = true;
+    },
+    onRespec: () => {
+      minMaxingLoveSkill = false;
     },
   },
 ];

@@ -406,6 +406,13 @@ document.getElementById('automationButton').addEventListener('click', function()
         if (lovePoints > 0) {
             quickModeInfiniteEmbraceContainer.style.display = 'block';
         }
+
+        const enableQuickModeMiniGameSkipSwitch = document.getElementById('enableQuickModeMiniGameSkip');
+        enableQuickModeMiniGameSkipSwitch.checked = enableQuickModeMiniGameSkip;
+        const quickModeMiniGameSkipContainer = document.getElementById('quickModeMiniGameSkipContainer');
+        if (pricyTranquilitySkill) {
+            quickModeMiniGameSkipContainer.style.display = 'block';
+        }
     }, 0); // Adjust timeout if necessary
 
 

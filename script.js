@@ -128,6 +128,8 @@ let hopefulBeginningSkill = false;
 let autoFightSkill = false;
 let autoFightEnabled = false;
 let autoMeditateSkill = false;
+let tearsOfJoySkill = false;
+let minMaxingLoveSkill = false;
 let infinitePrestigeSkill = false;
 let crunchKnowledgeSkill = false;
 let stellarMeditationSkill = false;
@@ -150,6 +152,8 @@ let masterOfTimeSkill = false;
 let loveSizeMattersSkill = false;
 let loveIsEverythingSkill = false;
 let etherealReflectionSkill = false;
+let sereneExtortionSkill = false;
+let pricyTranquilitySkill = false;
 let resonanceOfLoveSkill = false;
 let hopiumTradeSkill = false;
 let tranquilityOverdriveSkill = false;
@@ -238,6 +242,7 @@ let enableQuickModeAscend = false;
 let enableQuickModeTranscend = false;
 let enableQuickModeBigCrunch = false;
 let enableQuickModeInfiniteEmbrace = false;
+let enableQuickModeMiniGameSkip = false;
 
 let enableButtonAnimations = true;
 
@@ -343,10 +348,10 @@ function updateEffectiveMultipliers() {
         effectiveHopiumPerSecond *= Math.sqrt(serenity);
     }
 
-    effectiveKnowledgePerSecond = calculateEffectiveKnowledge();
+    effectiveKnowledgePerSecond = tearsOfJoySkill ? calculateBaseKnowledge() : calculateEffectiveKnowledge();
 
     if (powerUnlocked){
-        effectivePowerPerSecond = calculateEffectivePower();
+        effectivePowerPerSecond = tearsOfJoySkill ? calculateBasePower() : calculateEffectivePower();
     }
 
     const sereneFutureMultiplier = balanceHallSkills.get("Serene Future").unlocked ? 1.03 ** purchasedUpgrades.length : 1;
@@ -376,6 +381,9 @@ function updateEffectiveMultipliers() {
         effectiveSerenityPerSecond *= Math.max(1, Math.log2(lovePoints));
     }
 
+    if (minMaxingLoveSkill){
+        effectiveSerenityPerSecond *= 1.25;
+    }
 }
 
 let cookieClicks = 0;
@@ -530,6 +538,7 @@ function loadGameState() {
     enableQuickModeTranscend = JSON.parse(localStorage.getItem('enableQuickModeTranscend')) || false;
     enableQuickModeBigCrunch = JSON.parse(localStorage.getItem('enableQuickModeBigCrunch')) || false;
     enableQuickModeInfiniteEmbrace = JSON.parse(localStorage.getItem('enableQuickModeInfiniteEmbrace')) || false;
+    enableQuickModeMiniGameSkip = JSON.parse(localStorage.getItem('enableQuickModeMiniGameSkip')) || false;
     
     // Retrieve animation preferences
     manageButtonAnimations(localStorage.getItem('enableButtonAnimations') == null ? true : localStorage.getItem('enableButtonAnimations') === 'true');
@@ -857,6 +866,7 @@ function saveGameState() {
     localStorage.setItem('enableQuickModeTranscend', enableQuickModeTranscend);
     localStorage.setItem('enableQuickModeBigCrunch', enableQuickModeBigCrunch);
     localStorage.setItem('enableQuickModeInfiniteEmbrace', enableQuickModeInfiniteEmbrace);
+    localStorage.setItem('enableQuickModeMiniGameSkip', enableQuickModeMiniGameSkip);
     
     localStorage.setItem('enableButtonAnimations', enableButtonAnimations);
 
@@ -1018,14 +1028,14 @@ function generateResources() {
     serenity += effectiveSerenityPerSecond / 2;
 
     if (powerUnlocked){
-        effectivePowerPerSecond = calculateEffectivePower();
+        effectivePowerPerSecond = tearsOfJoySkill ? calculateBasePower() : calculateEffectivePower();
     }
 
     // Check if delusion drops below negative 1 trillion to start generating Knowledge
     if ((delusion < -1e12 || knowledgeGenerationSkill) && knowledgePerSecond === 0) {
         unlockAchievement('Clarity');
         knowledgePerSecond = 0.000001
-        effectiveKnowledgePerSecond = calculateEffectiveKnowledge();
+        effectiveKnowledgePerSecond = tearsOfJoySkill ? calculateBaseKnowledge() : calculateEffectiveKnowledge();
 
         if (!knowledgeGenerationSkill) {
             showMessageModal('The Age of Knowledge', `As you cross the threshold of -1 trillion delusion, the dense fog of confusion and distorted thoughts begins to lift. A sense of clarity pierces through the haze, revealing a world beyond the familiar chaos. The swirling mists part to unveil a luminous realm, shimmering with the light of hidden truths. For the first time, you feel a profound shift within, as the once insurmountable delusion gives way to the dawning of true knowledge. This newfound awareness pulses with a quiet intensity, each revelation a stepping stone towards deeper understanding. Your journey through the labyrinth of the mind has led to this pivotal moment, where the pursuit of enlightenment begins. Your mind expands, absorbing the essence of ancient wisdom and universal secrets, setting the stage for a transformative quest that transcends the ordinary limits of perception.`, false, false);
@@ -1212,6 +1222,8 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
                 autoFightSkill = false;
                 autoFightEnabled = false;
                 autoMeditateSkill = false;
+                tearsOfJoySkill = false;
+                minMaxingLoveSkill = false;
                 infinitePrestigeSkill = false;
                 crunchKnowledgeSkill = false;
                 stellarMeditationSkill = false;
@@ -1234,6 +1246,8 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
                 loveSizeMattersSkill = false;
                 loveIsEverythingSkill = false;
                 etherealReflectionSkill = false;
+                sereneExtortionSkill = false;
+                pricyTranquilitySkill = false;
                 resonanceOfLoveSkill = false;
                 hopiumTradeSkill = false;
                 tranquilityOverdriveSkill = false;
@@ -1298,6 +1312,22 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
                 clearInterval(purchasePowerHallSkillsInterval);
 
                 removeHopiumFromFromResource();
+
+                numMathPortals = 0;
+                numSpeedTaps = 0;
+                numMemorizedDots = 0;
+                numUnluckyBoxes = 0;
+                numLuckyBoxes = 0;
+                numSoftCaps = 0;
+                numSpeedFailures = 0;
+                numSpeedWins = 0
+                numConsecutiveSpeedFailures = 0;
+                numMemoryFailures = 0;
+                numMemoryWins = 0;
+                numConsecutiveMemoryFailures = 0;
+                numMathFailures = 0;
+                numMathWins = 0;
+                numConsecutiveMathFailures = 0;
 
                 localStorage.clear();
             }
@@ -3641,6 +3671,10 @@ function addPurchasedUpgrade(img, name, earnings, isGodMode = false, isPUGodMode
             } else {
                 if (name == `Clickable`){
                     unlockAchievement('Click the Clicker');
+                } else if (name == 'The M Word'){
+                    if (calculateEffectivePower() < calculateBasePower() * 0.5 && calculateEffectiveKnowledge() < calculateBaseKnowledge() * 0.5){
+                        unlockAchievement('Prove the Muppet Wrong');
+                    }
                 } else if (isMeditation && !achievementsMap.get('Reflections of Insight').isUnlocked){
                     meditationClickMap.set(name, true);
                     if(Array.from(meditationClickMap.values()).every(clicked => clicked)){
@@ -5123,9 +5157,11 @@ function calculateTooltip(resourceId) {
         }
 
         // Diminishing multiplier for Knowledge
-        const diminishingMultiplier = calculateEffectiveKnowledge() / calculateBaseKnowledge();
-        if (diminishingMultiplier < 1) {
-            tooltip += `<span style="color:#DC143C">x${formatNumber(diminishingMultiplier)} (Diminishing Returns)</span><br>`;
+        if(!tearsOfJoySkill) {
+            const diminishingMultiplier = calculateEffectiveKnowledge() / calculateBaseKnowledge();
+            if (diminishingMultiplier < 1) {
+                tooltip += `<span style="color:#DC143C">x${formatNumber(diminishingMultiplier)} (Diminishing Returns)</span><br>`;
+            }
         }
     }
 
@@ -5134,9 +5170,11 @@ function calculateTooltip(resourceId) {
             tooltip += `<span style="color:#9F2B68">x${formatNumber(powerInfusionMultiplier)} (Power Infusion)</span><br>`;
         }
         // Diminishing multiplier for Power
-        const diminishingMultiplier = calculateEffectivePower() / calculateBasePower();
-        if (diminishingMultiplier < 1) {
-            tooltip += `<span style="color:#DC143C">x${formatNumber(diminishingMultiplier)} (Diminishing Returns)</span><br>`;  // Crimson Red
+        if (!tearsOfJoySkill) {
+            const diminishingMultiplier = calculateEffectivePower() / calculateBasePower();
+            if (diminishingMultiplier < 1) {
+                tooltip += `<span style="color:#DC143C">x${formatNumber(diminishingMultiplier)} (Diminishing Returns)</span><br>`;  // Crimson Red
+            }
         }
     }
 
@@ -5160,6 +5198,10 @@ function calculateTooltip(resourceId) {
 
     if (resourceId === 'serenity' && balanceHallSkills.get("Serene Future").unlocked && purchasedUpgrades.length > 0) {
         tooltip += `<span style="color:#FFEFD5">x${formatNumber(1.03 ** purchasedUpgrades.length)} (Serene Future)</span><br>`;
+    }
+
+    if (resourceId === 'serenity' && minMaxingLoveSkill) {
+        tooltip += `<span style="color:#880808">x1.25 (Min-Maxing Love)</span><br>`;
     }
 
     return tooltip;
@@ -5369,7 +5411,9 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('enableQuickModeInfiniteEmbrace').addEventListener('change', function() {
         enableQuickModeInfiniteEmbrace = this.checked;
     });
-
+    document.getElementById('enableQuickModeMiniGameSkip').addEventListener('change', function() {
+        enableQuickModeMiniGameSkip = this.checked;
+    });
 
     document.getElementById('enableButtonAnimations').addEventListener('change', function() {
         if(this.checked){
@@ -5404,6 +5448,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Update the display with the current game state
     updateNumUpgrades();
     updateDisplay();
+
+    setupMiniGameTooltips();
     // Save the game state when the window is about to be unloaded
     window.addEventListener('beforeunload', saveGameState);
 

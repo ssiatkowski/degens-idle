@@ -77,6 +77,15 @@
             </div>
         </div>
     </div>
+    <div id="miniGameStartModal" class="modal">
+        <div class="modal-content">
+            <h2 id="miniGameModalTitle"></h2>
+            <p id="miniGameModalMessage"></p>
+            <div id="miniGameModalButtons">
+                <!-- Buttons will be dynamically added here -->
+            </div>
+        </div>
+    </div>    
     <!-- Immediate Message Modal -->
     <div id="immediateMessageModal" class="modal">
         <div class="modal-content">
@@ -630,6 +639,15 @@
                 <label for="enableQuickModeInfiniteEmbrace">Quick Infinite Embrace: Skip pop-up</label>
                 <label class="switch">
                     <input type="checkbox" id="enableQuickModeInfiniteEmbrace">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <!-- Quick Mode Switch for Mini Game Skips -->
+            <div class="settings-switch" id="quickModeMiniGameSkipContainer" style="margin-bottom: 10px; display: none;">
+                <label for="enableQuickModeMiniGameSkip">Quick Mini Games: Skip pop-up</label>
+                <label class="switch">
+                    <input type="checkbox" id="enableQuickModeMiniGameSkip">
                     <span class="slider"></span>
                 </label>
             </div>

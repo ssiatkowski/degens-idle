@@ -681,7 +681,7 @@ const upgrades = [
         cost: { copium: 4e26, delusion: 2e26, yachtMoney: 7e26, trollPoints: 2.5e26, hopium: 5e20, knowledge: 1e17, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 3.5e10, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1.5e10, hopiumPerSecond: 0, knowledgePerSecond: 15, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/the_m_word.jpg`,
-        message : `The Muppet pops up with a knowing smirk. "So, you’re hoarding Knowledge and Power like there’s no tomorrow, huh? Well, here’s a tip: when it comes to advanced resources, the more you stockpile beyond your earnings per second, the slower your gains will get—like trying to climb a hill made of jelly. Let’s just say, these fancy resources don’t like being hoarded too much."<br>"But don’t sweat it," the Muppet adds with a playful wink, "this won't mess with your regular gameplay. Just a little nudge to keep things balanced. And who knows... this might not be the last time you run into this little quirk with other advanced goodies down the road!"`,
+        message : `The Muppet pops up with a knowing smirk. "So, you’re hoarding Knowledge and Power like there’s no tomorrow, huh? Well, here’s a tip: when it comes to these advanced resources, the more you stockpile beyond your earnings per second, the slower your gains will get—like trying to climb a hill made of jelly. Let’s just say, these fancy resources don’t like being hoarded too much."<br>"But don’t sweat it," the Muppet adds with a playful wink, "this won't mess with your regular gameplay. Just a little nudge to keep things balanced."`,
     },
     {
         name: `Degens Idle Dev #2`,

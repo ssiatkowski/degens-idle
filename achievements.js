@@ -1296,6 +1296,13 @@ const achievements = [
         type: 'puzzle',
     },
     {
+        name: 'Prove the Muppet Wrong',
+        isUnlocked: false,
+        hoverText: `???`,
+        img: 'imgs/achievements/prove_the_muppet_wrong.jpg',
+        type: 'puzzle',
+    },
+    {
         name: 'Honor',
         isUnlocked: false,
         hoverText: `???`,
@@ -1323,6 +1330,13 @@ const achievements = [
         hoverText: `defeat your ego`,
         img: 'imgs/achievements/defeat_your_ego.jpg',
         type: 'progression',
+    },
+    {
+        name: 'Math is Evil',
+        isUnlocked: false,
+        hoverText: `not a tip, but if you choose to skip any achievements - skip this one`,
+        img: 'imgs/achievements/math_is_evil.jpg',
+        type: 'skill',
     },
     {
         name: 'Serious Gamer',

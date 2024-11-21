@@ -288,6 +288,27 @@ h1, h2 {
     margin-bottom: 10px;
 }
 
+/* Mini-game tooltip container */
+.mini-game-tooltip {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.8); /* Dark background */
+    color: white; /* White text */
+    padding: 8px;
+    border-radius: 5px;
+    font-size: 14px;
+    white-space: nowrap;
+    z-index: 1000; /* Ensure it's above everything else */
+    pointer-events: none; /* Prevent interference with mouse events */
+    opacity: 0; /* Hidden by default */
+    transition: opacity 0.2s ease;
+}
+
+/* Mini-game tooltip visible state */
+.mini-game-tooltip.visible {
+    opacity: 1;
+}
+
+
 /* .resource .per-second {
     display: flex;
     align-items: center;
@@ -1336,6 +1357,39 @@ input:checked + .slider:before {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Shadow for depth */
     z-index: 3;
 }
+
+#miniGameStartModal .modal-content {
+    width: 80%;
+    max-width: 500px;
+    background-color: #1e1e1e;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+#miniGameModalButtons {
+    margin-top: 20px;
+}
+
+.modal-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.modal-button.play-button {
+    background-color: #4CAF50;
+    color: #ffffff;
+}
+
+.modal-button.skip-button {
+    background-color: #FFA500;
+    color: #ffffff;
+}
+
 
 #popup-tooltip {
     position: fixed;
