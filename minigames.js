@@ -1499,21 +1499,40 @@ function setupMiniGameTooltips() {
         if (!button) return;
 
         button.addEventListener('mouseenter', (event) => {
-            const content = getTooltipContent(); // Dynamically generate tooltip content
+            const content = getTooltipContent();
             tooltip.innerHTML = content;
-            tooltip.style.left = `${event.clientX + 10}px`; // Position near mouse
-            tooltip.style.top = `${event.clientY + 10}px`;
             tooltip.classList.add('visible');
+            positionTooltip(event);
         });
 
-        button.addEventListener('mousemove', (event) => {
-            tooltip.style.left = `${event.clientX + 10}px`; // Update position
-            tooltip.style.top = `${event.clientY + 10}px`;
-        });
+        button.addEventListener('mousemove', positionTooltip);
 
         button.addEventListener('mouseleave', () => {
-            tooltip.classList.remove('visible'); // Hide tooltip
+            tooltip.classList.remove('visible');
         });
+
+        // Function to position tooltip with boundary checks
+        function positionTooltip(event) {
+            const tooltipRect = tooltip.getBoundingClientRect();
+            const viewportWidth = window.innerWidth;
+            const viewportHeight = window.innerHeight;
+
+            // Default positions
+            let left = event.clientX + 10;
+            let top = event.clientY + 10;
+
+            // Adjust if tooltip overflows the viewport
+            if (left + tooltipRect.width > viewportWidth) {
+                left = viewportWidth - tooltipRect.width - 10;
+            }
+            if (top + tooltipRect.height > viewportHeight) {
+                top = viewportHeight - tooltipRect.height - 10;
+            }
+
+            // Apply calculated positions
+            tooltip.style.left = `${left}px`;
+            tooltip.style.top = `${top}px`;
+        }
     });
 }
 
