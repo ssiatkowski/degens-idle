@@ -47,6 +47,15 @@ function playMiniGame(gameType) {
     // Check if the mini-game is on cooldown
     if (cooldowns[gameType]) return;
 
+    if (!pricyTranquilitySkill || !enableQuickModeMiniGameSkip) {
+        // Hide all tooltips
+        document.querySelectorAll('.game-button').forEach((button) => {
+            if (button._tooltip) {
+                button._tooltip.classList.remove('visible');
+            }
+        });
+    }
+
     // Get the button element for the mini-game
     const button = document.getElementById(`${gameType}Game`);
     button.disabled = true; // Disable the button at the start of the game
@@ -57,8 +66,8 @@ function playMiniGame(gameType) {
     const cooldownMultiplier = miniGamerSkill ? (gamingAddictSkill ? 0.25 : 0.5) : 1;
     const cooldownMinutes = (miniGameTimeouts[gameType] * cooldownMultiplier) / (60 * 1000);
     const cooldownMessage = (gameType === 'memory' || gameType === 'math') ? 
-        `<br>In ${cooldownMinutes} minutes, you get to test your ${gameType} skills again.` : 
-        `<br>In ${cooldownMinutes} minutes, you get to test your ${gameType} again.`;
+        `<br><br>In ${cooldownMinutes} minutes, you get to test your ${gameType} skills again.` : 
+        `<br><br>In ${cooldownMinutes} minutes, you get to test your ${gameType} again.`;
 
     // Define the soft cap for each mini-game
     const softCaps = {
@@ -173,15 +182,22 @@ function playMiniGame(gameType) {
                             unlockAchievement('Correcting Mistakes');
                         }
     
-                        numSpeedTaps += Math.max(0, points - misclicks);
+                        const speedTapsDelta = Math.max(0, points - misclicks);
+    
+                        resultMessage = `You tapped ${points} dots with ${misclicks} misclicks in ${duration} seconds (${effectiveClicksPerSecond.toFixed(2)} points per second). Your reward is <span style="color: green;">${formatNumber(reward)}</span> copium!<br><br>You added ${speedTapsDelta} taps to for a total of ${formatNumber(numSpeedTaps)} taps in winning games.`;
+                        
+                        if(cosmicGamekeeperSkill){
+                            resultMessage += `<br><br>Cosmic Gamekeeper mult has permanently increased by <span style="color: #90EE90;">+${formatNumber(applyProgressiveScaling(numSpeedTaps + speedTapsDelta, 0.0001) - applyProgressiveScaling(numSpeedTaps, 0.0001))}</span>!`;
+                        }
+
+                        numSpeedTaps += speedTapsDelta;
                         localStorage.setItem('numSpeedTaps', numSpeedTaps);
                         if (numSpeedTaps >= 1500) {
                             unlockAchievement('Pathological Speedster');
                         }
     
                         calculateMiniGamesMultiplier();
-    
-                        resultMessage = `You tapped ${points} dots with ${misclicks} misclicks in ${duration} seconds (${effectiveClicksPerSecond.toFixed(2)} points per second). Your reward is <span style="color: green;">${formatNumber(reward)}</span> copium! You have now tapped ${formatNumber(numSpeedTaps)} times in winning games.`;
+
                         numSpeedWins++;
                         localStorage.setItem('numSpeedWins', numSpeedWins);
                         numConsecutiveSpeedFailures = 0;
@@ -216,7 +232,7 @@ function playMiniGame(gameType) {
                 }, duration * 1000);
             } else if (action === 'skip') {
 
-                reward = Math.max(Math.floor(Math.abs(copium) * (0.15)), 25);
+                reward = Math.max(Math.floor(Math.abs(copium) * 1.5 * (0.15)), 25);
                 if (speedGameSkill) { reward *= 3; }
                 if (reward > softCaps.speed) {
                     reward = softCaps.speed;
@@ -227,11 +243,17 @@ function playMiniGame(gameType) {
 
                 copium += reward;
 
-                numSpeedTaps += duration * (sereneExtortionSkill ? 0.1 : 0.05);
+                speedTapsDelta = duration * 1.5 * (sereneExtortionSkill ? 0.1 : 0.05)
+
+                let resultMessage = `You got rewards equivalent to (${(1.5 * (sereneExtortionSkill ? 0.1 : 0.05)).toFixed(2)} points per second). Your reward is <span style="color: green;">${formatNumber(reward)}</span> copium! <br><br>You added ${formatNumber(speedTapsDelta)} taps to for a total of ${formatNumber(numSpeedTaps)} taps in winning games.`;
+
+                if(cosmicGamekeeperSkill){
+                    resultMessage += `<br><br>Cosmic Gamekeeper mult has permanently increased by <span style="color: #90EE90;">+${formatNumber(applyProgressiveScaling(numSpeedTaps + speedTapsDelta, 0.0001) - applyProgressiveScaling(numSpeedTaps, 0.0001))}</span>!`;
+                }
+
+                numSpeedTaps += speedTapsDelta;
                 localStorage.setItem('numSpeedTaps', numSpeedTaps);
                 calculateMiniGamesMultiplier();
-
-                let resultMessage = `You got rewards equivalent to (${(duration * (sereneExtortionSkill ? 0.1 : 0.05)).toFixed(2)} points per second). Your reward is <span style="color: green;">${formatNumber(reward)}</span> copium! You have now tapped ${formatNumber(numSpeedTaps)} times in winning games.`;
 
                 if (softCapReached) {
                     resultMessage += `<br><span style="color: orange;">Soft cap reached: Maximum reward of ${miniGamesSoftCapHrs} hours effective Copium applied.</span>`;
@@ -418,7 +440,15 @@ function playMiniGame(gameType) {
                     }
     
                     delusion += reward;
+
+                    let resultMessage = correct
+                        ? `You successfully matched the pattern and earned <span style="color: green;">${formatNumber(reward)}</span> delusion!<br><br>You memorized ${formatNumber(sequenceLength)} new dots for a total of ${formatNumber(numMemorizedDots)} dots in winning games!`
+                        : `You failed to match the pattern and lost <span style="color: red;">${formatNumber(Math.abs(reward))}</span> delusion!`;
     
+                    if (cosmicGamekeeperSkill && correct) {
+                        resultMessage += `<br><br>Cosmic Gamekeeper mult has permanently increased by <span style="color: #90EE90;">+${formatNumber(applyProgressiveScaling(numMemorizedDots + sequenceLength, 0.0003) - applyProgressiveScaling(numMemorizedDots, 0.0003))}</span>!`;
+                    }
+
                     if (correct) {
                         numMemorizedDots += sequenceLength;
                         localStorage.setItem('numMemorizedDots', numMemorizedDots);
@@ -436,11 +466,8 @@ function playMiniGame(gameType) {
                         numConsecutiveMemoryFailures++;
                         localStorage.setItem('numConsecutiveMemoryFailures', numConsecutiveMemoryFailures);
                     }
-    
-                    let resultMessage = correct
-                        ? `You successfully matched the pattern and earned <span style="color: green;">${formatNumber(reward)}</span> delusion! You now have memorized ${formatNumber(numMemorizedDots)} dots in winning games!`
-                        : `You failed to match the pattern and lost <span style="color: red;">${formatNumber(Math.abs(reward))}</span> delusion!`;
-    
+        
+
                     if (softCapReached) {
                         numSoftCaps++;
                         localStorage.setItem('numSoftCaps', numSoftCaps);
@@ -476,11 +503,15 @@ function playMiniGame(gameType) {
 
                 delusion += reward;
 
+                let resultMessage = `You got rewards equivalent to ${(sequenceLength * (sereneExtortionSkill ? 0.1 : 0.05)).toFixed(2)} sequence length. Your reward is <span style="color: green;">${formatNumber(reward)}</span> delusion! You have now memorized ${formatNumber(numMemorizedDots)} dots in winning games.`;
+
+                if (cosmicGamekeeperSkill) {
+                    resultMessage += `<br><br>Cosmic Gamekeeper mult has permanently increased by <span style="color: #90EE90;">+${formatNumber(applyProgressiveScaling(numMemorizedDots + (sequenceLength * (sereneExtortionSkill ? 0.1 : 0.05)), 0.0003) - applyProgressiveScaling(numMemorizedDots, 0.0003))}</span>!`;
+                }
+
                 numMemorizedDots += sequenceLength * (sereneExtortionSkill ? 0.1 : 0.05);
                 localStorage.setItem('numMemorizedDots', numMemorizedDots);
                 calculateMiniGamesMultiplier();
-
-                let resultMessage = `You got rewards equivalent to ${(sequenceLength * (sereneExtortionSkill ? 0.1 : 0.05)).toFixed(2)} sequence length. Your reward is <span style="color: green;">${formatNumber(reward)}</span> delusion! You have now memorized ${formatNumber(numMemorizedDots)} dots in winning games.`;
 
                 if (softCapReached) {
                     resultMessage += `<br><span style="color: orange;">Soft cap reached: Maximum reward of ${miniGamesSoftCapHrs} hours effective Delusion applied.</span>`;
@@ -810,6 +841,13 @@ function playMiniGame(gameType) {
                         if (maxPortalsReached) {
                             unlockAchievement('Mathematical Overshot');
                         }
+
+                        resultMessage = `You found the correct sum and earned <span style="color: green;">${formatNumber(reward)}</span> Yacht Money! You selected ${selectedPortals.length} portals for a total of ${formatNumber(numMathPortals)} correct math portals.`;
+
+                        if (cosmicGamekeeperSkill) {
+                            resultMessage += `<br><br>Cosmic Gamekeeper mult has permanently increased by <span style="color: #90EE90;">+${formatNumber(applyProgressiveScaling(numMathPortals + selectedPortals.length, 0.0005) - applyProgressiveScaling(numMathPortals, 0.0005))}</span>!`;
+                        }
+
                         numMathWins++;
                         localStorage.setItem('numMathWins', numMathWins);
                         numConsecutiveMathFailures = 0;
@@ -820,7 +858,6 @@ function playMiniGame(gameType) {
                             unlockAchievement('Pie Guy');
                         }
                         calculateMiniGamesMultiplier();
-                        resultMessage = `You found the correct sum and earned <span style="color: green;">${formatNumber(reward)}</span> Yacht Money! You now have selected ${formatNumber(numMathPortals)} correct math portals.`;
                     } else {
                         numMathFailures++;
                         localStorage.setItem('numMathFailures', numMathFailures);
@@ -863,11 +900,15 @@ function playMiniGame(gameType) {
 
                 yachtMoney += reward;
 
+                let resultMessage = `You got rewards equivalent to ${(2.5 * (sereneExtortionSkill ? 0.1 : 0.05)).toFixed(3)} math portals. Your reward is <span style="color: green;">${formatNumber(reward)}</span> yacht money! You have now selected ${formatNumber(numMathPortals)} correct math portals.`;
+
+                if (cosmicGamekeeperSkill) {
+                    resultMessage += `<br><br>Cosmic Gamekeeper mult has permanently increased by <span style="color: #90EE90;">+${formatNumber(applyProgressiveScaling(numMathPortals + (2.5 * (sereneExtortionSkill ? 0.1 : 0.05)), 0.0005) - applyProgressiveScaling(numMathPortals, 0.0005))}</span>!`;
+                }
+
                 numMathPortals += 2.5 * (sereneExtortionSkill ? 0.1 : 0.05);
                 localStorage.setItem('numMathPortals', numMathPortals);
                 calculateMiniGamesMultiplier();
-
-                let resultMessage = `You got rewards equivalent to ${(2.5 * (sereneExtortionSkill ? 0.1 : 0.05)).toFixed(3)} math portals. Your reward is <span style="color: green;">${formatNumber(reward)}</span> yacht money! You have now selected ${formatNumber(numMathPortals)} correct math portals.`;
 
                 if (softCapReached) {
                     resultMessage += `<br><span style="color: orange;">Soft cap reached: Maximum reward of ${miniGamesSoftCapHrs} hours effective Yacht Money applied.</span>`;
@@ -1068,6 +1109,11 @@ function playMiniGame(gameType) {
                         resultMessage = boxValue >= 0 ?
                             `You chose a lucky box and gained <span style="color: green;">${formatNumber(reward)}</span> troll points! That was your ${numLuckyBoxes}${getOrdinalSuffix(numLuckyBoxes)} lucky box.` :
                             `You chose an unlucky box and lost <span style="color: red;">${formatNumber(Math.abs(reward))}</span> troll points. That was your ${numUnluckyBoxes}${getOrdinalSuffix(numUnluckyBoxes)} unlucky box.`;
+
+                        if (cosmicGamekeeperSkill && boxValue > 0) {
+                            resultMessage += `<br><br>Cosmic Gamekeeper mult has permanently increased by <span style="color: #90EE90;">+${formatNumber(applyProgressiveScaling(numLuckyBoxes, 0.0007) - applyProgressiveScaling(numLuckyBoxes-1, 0.0007))}</span>!`;
+                        }
+    
 
                         trollPoints += reward;
 
@@ -1419,10 +1465,10 @@ function setupMiniGameTooltips() {
             id: 'speedGame', 
             getTooltipContent: () => {
                 const remainingCooldown = getRemainingMiniGameCooldown('speed');
-                const cooldownText = remainingCooldown > 0 ? `<br><strong>Cooldown:</strong> ${formatMiniGameTime(remainingCooldown)}` : '';
+                const cooldownText = remainingCooldown > 0 ? `<br><br><strong>Cooldown:</strong> ${formatMiniGameTime(remainingCooldown)}` : '';
                 return cosmicGamekeeperSkill 
                     ? `<strong>Mini Games Mult:</strong> ${formatNumber(cosmicGamekeeperMultiplier)}x<br>
-                    <strong>From Speed Game:</strong> ${formatNumber(applyProgressiveScaling(numSpeedTaps, 0.0001))}x<br>
+                    <strong>From Speed Game:</strong> +${formatNumber(applyProgressiveScaling(numSpeedTaps, 0.0001))}<br>
                     <strong># Speed Taps:</strong> ${formatNumber(numSpeedTaps)}<br>
                     <strong>Wins:</strong> ${formatNumber(numSpeedWins)}<br>
                     <strong>Losses:</strong> ${formatNumber(numSpeedFailures)}
@@ -1437,10 +1483,10 @@ function setupMiniGameTooltips() {
             id: 'memoryGame', 
             getTooltipContent: () => {
                 const remainingCooldown = getRemainingMiniGameCooldown('memory');
-                const cooldownText = remainingCooldown > 0 ? `<br><strong>Cooldown:</strong> ${formatMiniGameTime(remainingCooldown)}` : '';
+                const cooldownText = remainingCooldown > 0 ? `<br><br><strong>Cooldown:</strong> ${formatMiniGameTime(remainingCooldown)}` : '';
                 return cosmicGamekeeperSkill 
                     ? `<strong>Mini Games Mult:</strong> ${formatNumber(cosmicGamekeeperMultiplier)}x<br>
-                    <strong>From Memory Game:</strong> ${formatNumber(applyProgressiveScaling(numMemorizedDots, 0.0003))}x<br>
+                    <strong>From Memory Game:</strong> +${formatNumber(applyProgressiveScaling(numMemorizedDots, 0.0003))}<br>
                     <strong># Memorized Dots:</strong> ${formatNumber(numMemorizedDots)}<br>
                     <strong>Wins:</strong> ${formatNumber(numMemoryWins)}<br>
                     <strong>Losses:</strong> ${formatNumber(numMemoryFailures)}
@@ -1455,10 +1501,10 @@ function setupMiniGameTooltips() {
             id: 'mathGame', 
             getTooltipContent: () => {
                 const remainingCooldown = getRemainingMiniGameCooldown('math');
-                const cooldownText = remainingCooldown > 0 ? `<br><strong>Cooldown:</strong> ${formatMiniGameTime(remainingCooldown)}` : '';
+                const cooldownText = remainingCooldown > 0 ? `<br><br><strong>Cooldown:</strong> ${formatMiniGameTime(remainingCooldown)}` : '';
                 return cosmicGamekeeperSkill 
                     ? `<strong>Mini Games Mult:</strong> ${formatNumber(cosmicGamekeeperMultiplier)}x<br>
-                    <strong>From Math Game:</strong> ${formatNumber(applyProgressiveScaling(numMathPortals, 0.0005))}x<br>
+                    <strong>From Math Game:</strong> +${formatNumber(applyProgressiveScaling(numMathPortals, 0.0005))}<br>
                     <strong># Math Portals:</strong> ${formatNumber(numMathPortals)}<br>
                     <strong>Wins:</strong> ${formatNumber(numMathWins)}<br>
                     <strong>Losses:</strong> ${formatNumber(numMathFailures)}
@@ -1473,12 +1519,12 @@ function setupMiniGameTooltips() {
             id: 'luckGame', 
             getTooltipContent: () => {
                 const remainingCooldown = getRemainingMiniGameCooldown('luck');
-                const cooldownText = remainingCooldown > 0 ? `<br><strong>Cooldown:</strong> ${formatMiniGameTime(remainingCooldown)}` : '';
+                const cooldownText = remainingCooldown > 0 ? `<br><br><strong>Cooldown:</strong> ${formatMiniGameTime(remainingCooldown)}` : '';
                 return cosmicGamekeeperSkill 
                     ? `<strong>Mini Games Mult:</strong> ${formatNumber(cosmicGamekeeperMultiplier)}x<br>
-                    <strong>From Luck Game:</strong> ${formatNumber(applyProgressiveScaling(numLuckyBoxes, 0.0007))}x<br>
+                    <strong>From Luck Game:</strong> +${formatNumber(applyProgressiveScaling(numLuckyBoxes, 0.0007))}<br>
                     <strong># Lucky Boxes:</strong> ${formatNumber(numLuckyBoxes)}<br>
-                    <strong># Unlucky Boxes:</strong> ${formatNumber(numUnluckyBoxes)}<br>
+                    <strong># Unlucky Boxes:</strong> ${formatNumber(numUnluckyBoxes)}
                     ${cooldownText}`
                     : `Try your fortune in the Luck Game!<br>
                     <strong>Luck Level:</strong> ${formatNumber(numUnluckyBoxes)}<br>
@@ -1489,39 +1535,36 @@ function setupMiniGameTooltips() {
         }
     ];
 
-    // Create a mini-game tooltip element
-    const tooltip = document.createElement('div');
-    tooltip.className = 'mini-game-tooltip';
-    document.body.appendChild(tooltip);
-
+    // Tooltip handling
     miniGameButtons.forEach(({ id, getTooltipContent }) => {
         const button = document.getElementById(id);
         if (!button) return;
 
-        button.addEventListener('mouseenter', (event) => {
+        // Create a mini-game tooltip element for this button
+        const tooltip = document.createElement('div');
+        tooltip.className = 'mini-game-tooltip';
+        document.body.appendChild(tooltip);
+
+        const showTooltip = (event) => {
             const content = getTooltipContent();
             tooltip.innerHTML = content;
             tooltip.classList.add('visible');
             positionTooltip(event);
-        });
+        };
 
-        button.addEventListener('mousemove', positionTooltip);
-
-        button.addEventListener('mouseleave', () => {
+        const hideTooltip = () => {
             tooltip.classList.remove('visible');
-        });
+        };
 
-        // Function to position tooltip with boundary checks
-        function positionTooltip(event) {
+        const positionTooltip = (event) => {
             const tooltipRect = tooltip.getBoundingClientRect();
             const viewportWidth = window.innerWidth;
             const viewportHeight = window.innerHeight;
 
-            // Default positions
             let left = event.clientX + 10;
             let top = event.clientY + 10;
 
-            // Adjust if tooltip overflows the viewport
+            // Prevent tooltip overflow
             if (left + tooltipRect.width > viewportWidth) {
                 left = viewportWidth - tooltipRect.width - 10;
             }
@@ -1529,10 +1572,22 @@ function setupMiniGameTooltips() {
                 top = viewportHeight - tooltipRect.height - 10;
             }
 
-            // Apply calculated positions
             tooltip.style.left = `${left}px`;
             tooltip.style.top = `${top}px`;
-        }
+        };
+
+        button.addEventListener('mouseenter', (event) => {
+            hoverTimeout = showTooltip(event);
+        });
+
+        button.addEventListener('mousemove', positionTooltip);
+
+        button.addEventListener('mouseleave', () => {
+            hideTooltip();
+        });
+
+        // Store the tooltip in the button element for external control
+        button._tooltip = tooltip;
     });
 }
 

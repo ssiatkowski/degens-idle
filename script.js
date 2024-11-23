@@ -4369,7 +4369,7 @@ function hotkeyHandler(event) {
                 }
                 break;
             case 'p':
-                if (prevPrestigeThreshold !== null) {
+                if (autoPrestigeThreshold !== null) {
                     if (autoPrestigeThreshold == 0) {
                         autoPrestigeThreshold = prevPrestigeThreshold;
                         showPopupTooltip(`Auto Prestige Enabled (${formatNumber(autoPrestigeThreshold)})`);
@@ -4866,7 +4866,7 @@ document.querySelectorAll('.resource-value').forEach(function (element) {
         // Check if the tooltip would overflow the bottom of the viewport
         const tooltipRect = tip.getBoundingClientRect();
         const spaceBelow = window.innerHeight - rect.bottom;
-        if (tooltipRect.height > spaceBelow) {
+        if (tooltipRect.height + 40 > spaceBelow) {
             // Move the tooltip up just enough to fit within the viewport
             topPosition = rect.bottom + window.scrollY + spaceBelow - tooltipRect.height - 10; // 10px buffer
         }
