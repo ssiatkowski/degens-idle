@@ -149,10 +149,13 @@ function initializeBalanceHall() {
         suppressToggleContainer.id = 'suppressToggleContainer';
         suppressToggleContainer.style.textAlign = 'center';
         suppressToggleContainer.style.margin = '20px';
+        suppressToggleContainer.style.padding = '5px';
+        suppressToggleContainer.style.borderRadius = '5px';
+        suppressToggleContainer.style.backgroundColor = 'rgba(0, 0, 0, 0.6)';
 
         // Create the label for the toggle switch
         const toggleLabel = document.createElement('label');
-        toggleLabel.className = 'toggle-switch';
+        toggleLabel.className = 'balance-toggle-switch';
 
         // Create the actual input for the toggle switch
         const suppressToggle = document.createElement('input');
@@ -162,7 +165,7 @@ function initializeBalanceHall() {
 
         // Create the slider (the styled part of the toggle)
         const slider = document.createElement('span');
-        slider.className = 'slider';
+        slider.className = 'balance-toggle-slider';
 
         // Append input and slider to the toggle label
         toggleLabel.appendChild(suppressToggle);
@@ -173,7 +176,13 @@ function initializeBalanceHall() {
         toggleText.textContent = 'Suppress Balance Skill (not slider) Multipliers (only needed for missed achievement hunting)';
         toggleText.style.color = '#b0c4de';
         toggleText.style.marginLeft = '10px';
-        toggleText.backgroundColor = 'rgba(0, 0, 0, 0.6)'; /* Semi-transparent dark background */
+        // Apply the same background style
+        toggleText.style.backgroundColor = 'rgba(0, 0, 0, 0.6)';
+        toggleText.style.padding = '5px';
+        toggleText.style.borderRadius = '5px';
+        toggleText.style.display = 'inline-block';
+        toggleText.style.maxWidth = 'fit-content';
+        toggleText.style.margin = '0 auto';
 
         // Append the toggle label and text to the container
         suppressToggleContainer.appendChild(toggleLabel);
