@@ -17,7 +17,7 @@ let balanceHallSkills = new Map([
     ["Love Matters", { description: "Multiply all resources by (Love Points / 1000)", cost: { Delusion: 1e210 }, available: false, unlocked: false }],
     ["Balance Check", { description: "Multiplier to last 4 resources based on balance of first 4 resources (checked every 30 seconds)", cost: { 'Yacht Money': 5e217 }, available: false, unlocked: false }],
     ["Everlasting Love", { description: "Passively generate Love Points based on largest embrace each hour (online & offline) -- can go beyond the Infinite Embrace 1M limit", cost: { 'Troll Points': 1e225 }, available: false, unlocked: false }],
-    ["Quality of Life", { description: "Resource balancing first 4 resources no longer resets game AND Ascend/Transcend up to 100 upgrades at once AND Cookie Clicker Clicker is permanent AND remove Hall of Love skill confirmations", cost: { Hopium: 1e230 }, available: false, unlocked: false }],
+    ["Quality of Life", { description: "Resource balancing first 4 resources no longer resets game AND Ascend/Transcend up to 100 upgrades at once AND Cookie Clicker Clicker is permanent AND unlock toggle for suppressing Hall of Balance skills", cost: { Hopium: 1e230 }, available: false, unlocked: false }],
     ["Balance is Power", { description: "Multiplicative 5x to Power for each Balance Skill unlocked", cost: { Knowledge: 1e202 }, available: false, unlocked: false }],
     ["Temporal Dominion", { description: "Time Warp charges 5x faster AND max time increases to 24 minutes", cost: { Power: 1e90 }, available: false, unlocked: false }],
     ["Serene Future", { description: "Multiplicative 3% to Serenity for each upgrade purchased", cost: { Serenity: 1e47 }, available: false, unlocked: false }],
@@ -98,7 +98,7 @@ function initializeBalanceHall() {
             // Check if the slider values are in order
             if (sliderValues.every((value, index, array) => index === 0 || array[index - 1] < value)) {
                 unlockAchievement('Rising Balance');
-    }
+            }
         });
 
         const balanceButton = document.createElement('button');
@@ -139,6 +139,58 @@ function initializeBalanceHall() {
         rowDiv.appendChild(leftColumn);
         balanceHallContainer.appendChild(rowDiv);
     });
+
+    // Logic to show the toggle switch only if "Quality of Life" is unlocked
+    if (balanceHallSkills.get("Quality of Life").unlocked) {
+        console.log("Quality of Life skill is unlocked. Adding toggle switch...");
+
+        // Create the toggle switch container
+        const suppressToggleContainer = document.createElement('div');
+        suppressToggleContainer.id = 'suppressToggleContainer';
+        suppressToggleContainer.style.textAlign = 'center';
+        suppressToggleContainer.style.margin = '20px';
+
+        // Create the label for the toggle switch
+        const toggleLabel = document.createElement('label');
+        toggleLabel.className = 'toggle-switch';
+
+        // Create the actual input for the toggle switch
+        const suppressToggle = document.createElement('input');
+        suppressToggle.type = 'checkbox';
+        suppressToggle.id = 'suppressToggle';
+        suppressToggle.checked = suppressBalanceSkills; // Match current global variable state
+
+        // Create the slider (the styled part of the toggle)
+        const slider = document.createElement('span');
+        slider.className = 'slider';
+
+        // Append input and slider to the toggle label
+        toggleLabel.appendChild(suppressToggle);
+        toggleLabel.appendChild(slider);
+
+        // Create the text for the toggle switch
+        const toggleText = document.createElement('span');
+        toggleText.textContent = 'Suppress Balance Skill (not slider) Multipliers (only needed for missed achievement hunting)';
+        toggleText.style.color = '#b0c4de';
+        toggleText.style.marginLeft = '10px';
+        toggleText.backgroundColor = 'rgba(0, 0, 0, 0.6)'; /* Semi-transparent dark background */
+
+        // Append the toggle label and text to the container
+        suppressToggleContainer.appendChild(toggleLabel);
+        suppressToggleContainer.appendChild(toggleText);
+
+        // Insert the toggle switch into the DOM
+        balanceHallContainer.appendChild(suppressToggleContainer);
+
+        // Add an event listener to update the global variable when toggled
+        suppressToggle.addEventListener('change', (event) => {
+            suppressBalanceSkills = event.target.checked;
+            console.log(`Suppress Balance Skills: ${suppressBalanceSkills}`);
+        });
+    }
+
+
+
 
     const skillGrid = document.createElement('div');
     skillGrid.classList.add('balance-skill-grid');
@@ -480,7 +532,9 @@ function balanceCheck() {
     
     // Scaling function for balanceCheckMultiplier based on diffRatio
 
-    if (diffRatio < 2) {
+    if(suppressBalanceSkills) {
+        balanceCheckMultiplier = 1;
+    } else if (diffRatio < 2) {
         balanceCheckMultiplier = 1000;
     } else if (diffRatio < 5) {
         // Interpolate between 1000 (2x) and 500 (5x)
@@ -500,7 +554,11 @@ function balanceCheck() {
     }
 
     localStorage.setItem('balanceCheckMultiplier', balanceCheckMultiplier);
-    showPopupTooltip(`Balance Check: x${formatNumber(balanceCheckMultiplier)}`, '#b0c4de', 0.8);
+    if (suppressBalanceSkills) {
+        showPopupTooltip(`Balance Check: x${formatNumber(balanceCheckMultiplier)} (suppressed)`, '#b0c4de', 0.8);
+    } else {
+        showPopupTooltip(`Balance Check: x${formatNumber(balanceCheckMultiplier)}`, '#b0c4de', 0.8);
+    }
 
     updateEffectiveMultipliers();
 

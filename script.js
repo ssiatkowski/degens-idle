@@ -216,6 +216,7 @@ let stellarCookieSkill = false;
 let stellarMeditationMult = 1;
 
 let balanceCheckMultiplier = 1;
+let suppressBalanceSkills = false;
 
 let currentTimeouts = [];  // Array to store all active timeout IDs
 let cookieIntervalId;
@@ -261,7 +262,7 @@ let eventProgression = {
 function calculateBaseKnowledge() {
     let baseKnowledge = knowledgePerSecond * totalMultiplier * (crunchKnowledgeSkill ? bigCrunchMultiplier**(2/3) : bigCrunchMultiplier**(1/2)) * knowledgeInfusionMultiplier * ((faithFueledKnowledgeSkill && hopium > 1e10) ? Math.log10(hopium)/10 : 1) * balanceHallMultipliers.get('Knowledge').currentMultiplier * balanceCheckMultiplier;
 
-    if(balanceHallSkills.get("Love Matters").unlocked && lovePoints > 1000) {
+    if(balanceHallSkills.get("Love Matters").unlocked && lovePoints > 1000 && !suppressBalanceSkills) {
         baseKnowledge *= (lovePoints / 1000);
     }
 
@@ -299,11 +300,11 @@ function calculateBasePower() {
         basePower *= 1.1 ** (powerHallSkills.filter(skill => skill.unlocked).length);
     }
 
-    if(balanceHallSkills.get("Love Matters").unlocked && lovePoints > 1000) {
+    if(balanceHallSkills.get("Love Matters").unlocked && lovePoints > 1000 && !suppressBalanceSkills) {
         basePower *= (lovePoints / 1000);
     }
 
-    if (balanceHallSkills.get("Balance is Power").unlocked) {
+    if (balanceHallSkills.get("Balance is Power").unlocked && !suppressBalanceSkills) {
         basePower *= (5 ** (Array.from(balanceHallSkills.values()).filter(skill => skill.unlocked).length))
     }
 
@@ -354,11 +355,11 @@ function updateEffectiveMultipliers() {
         effectivePowerPerSecond = tearsOfJoySkill ? calculateBasePower() : calculateEffectivePower();
     }
 
-    const sereneFutureMultiplier = balanceHallSkills.get("Serene Future").unlocked ? 1.03 ** purchasedUpgrades.length : 1;
+    const sereneFutureMultiplier = (balanceHallSkills.get("Serene Future").unlocked && !suppressBalanceSkills) ? 1.03 ** purchasedUpgrades.length : 1;
 
     effectiveSerenityPerSecond = serenityPerSecond * achievementMultiplier * devMultiplier * serenityBoostMultiplier * cosmicGamekeeperMultiplier * balanceHallMultipliers.get('Serenity').currentMultiplier * balanceCheckMultiplier * sereneFutureMultiplier;
 
-    if(balanceHallSkills.get("Love Matters").unlocked && lovePoints > 1000) {
+    if(balanceHallSkills.get("Love Matters").unlocked && lovePoints > 1000 && !suppressBalanceSkills) {
         effectiveSerenityPerSecond *= (lovePoints / 1000);
     }
 
@@ -602,6 +603,7 @@ function loadGameState() {
     puGodMultiplier = calculatePUGodModeMultiplier(puGodLevel);
 
     balanceCheckMultiplier = JSON.parse(localStorage.getItem('balanceCheckMultiplier')) || 1;
+    suppressBalanceSkills = JSON.parse(localStorage.getItem('suppressBalanceSkills')) || false;
 
     // Load the state of the Cookie Clicker button
     const cookieButtonVisible = JSON.parse(localStorage.getItem('cookieButtonVisible'));
@@ -910,6 +912,8 @@ function saveGameState() {
     // Save as JSON string
     localStorage.setItem('balanceHallMultipliers', JSON.stringify(multipliers));
     
+    localStorage.setItem('suppressBalanceSkills', suppressBalanceSkills);
+
     // Create a plain object from the Map to save only unlocked skills
     const unlockedBalanceHallSkills = {};
     balanceHallSkills.forEach((skill, skillName) => {
@@ -1343,6 +1347,7 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
             bigCrunchMultiplier = 1;
             
             balanceCheckMultiplier = 1;
+            suppressBalanceSkills = false;
 
             // Reset the isGodMode property for all upgrades
             upgrades.forEach(upgrade => {
@@ -1911,7 +1916,7 @@ function updateMultipliersDisplay() {
 
     totalMultiplier = epsMultiplier * godModeMultiplier * puGodMultiplier * bigCrunchMultiplier * achievementMultiplier * devMultiplier * stellarHarvestMult * stellarMeditationMult * cosmicGamekeeperMultiplier * earlyAccelerantMult
 
-    if(balanceHallSkills.get("Love Matters").unlocked && lovePoints > 1000) {
+    if(balanceHallSkills.get("Love Matters").unlocked && lovePoints > 1000 && !suppressBalanceSkills) {
         totalMultiplier *= (lovePoints / 1000);
     }
 
@@ -5184,7 +5189,7 @@ function calculateTooltip(resourceId) {
         tooltip += `<span style="color:#FFD700">x${formatNumber(balanceMultiplier)} (Balance)</span><br>`;
     }
 
-    if (balanceHallSkills.get("Love Matters").unlocked && lovePoints > 1000) {
+    if (balanceHallSkills.get("Love Matters").unlocked && lovePoints > 1000 && !suppressBalanceSkills) {
         tooltip += `<span style="color:#E37383">x${formatNumber(lovePoints / 1000)} (Love Points)</span><br>`;
     }
 
@@ -5192,11 +5197,11 @@ function calculateTooltip(resourceId) {
         tooltip += `<span style="color:#b0c4de">x${formatNumber(balanceCheckMultiplier)} (Balance Check)</span><br>`;
     }
 
-    if (resourceId === 'power' && balanceHallSkills.get("Balance is Power").unlocked) {
+    if (resourceId === 'power' && balanceHallSkills.get("Balance is Power").unlocked && !suppressBalanceSkills) {
         tooltip += `<span style="color:#FAFAD2">x${formatNumber((5 ** (Array.from(balanceHallSkills.values()).filter(skill => skill.unlocked).length)))} (Balance is Power)</span><br>`;
     }
 
-    if (resourceId === 'serenity' && balanceHallSkills.get("Serene Future").unlocked && purchasedUpgrades.length > 0) {
+    if (resourceId === 'serenity' && balanceHallSkills.get("Serene Future").unlocked && purchasedUpgrades.length > 0 && !suppressBalanceSkills) {
         tooltip += `<span style="color:#FFEFD5">x${formatNumber(1.03 ** purchasedUpgrades.length)} (Serene Future)</span><br>`;
     }
 

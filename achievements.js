@@ -1169,6 +1169,13 @@ const achievements = [
         type: 'puzzle',
     },
     {
+        name: 'Final Meditation?',
+        isUnlocked: false,
+        hoverText: 'complete the final belief system oriented meditation',
+        img: 'imgs/achievements/final_meditation.jpg',
+        type: 'progression',
+    },
+    {
         name: 'Reflections of Insight',
         isUnlocked: false,
         hoverText: `review what you have learned from all the meditations`,

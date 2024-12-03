@@ -1689,6 +1689,7 @@ const upgrades = [
         earnings: { copiumPerSecond: 0, delusionPerSecond: 3e59, yachtMoneyPerSecond: 0, trollPointsPerSecond: 2e59, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 6e9 },
         img: `imgs/actual_life_advice.jpg`,
         hoverOverwrite: `don't take advice from a guy who made a game called "Degens Idle"`,
+        message: `<p style="color: #ADD8E6;"> For listening to my advice, your <strong>Hall of Love</strong> skill purchases will no longer have confirmations, making respec'ing less cumbersome.</p>`,
     },
     {         
         name: `Buddhism`,
@@ -1803,6 +1804,7 @@ const upgrades = [
         autoMeditateThreshold: 1e38,
         isKey: true,
         message: `Through this meditation, you’ve embraced the <strong>wisdom of uncertainty and open-mindedness</strong>. Agnosticism teaches that by acknowledging the limits of human understanding, you remain open to new ideas and possibilities. You’ve learned that sometimes the greatest wisdom lies in accepting that some truths may be beyond our grasp, and that is perfectly okay.`,
+        achievement: 'Final Meditation?',
     },
     {
         name: `Future Happiness`,
@@ -2104,19 +2106,19 @@ const upgrades = [
     {
         name: `Y`,
         cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 5e112, serenity: 1e58 },
-        earnings: { copiumPerSecond: 1.2e94, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 1.1e46, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 1.2e94, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 1.5e46, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/letter_y.jpg`,
     },
     {
         name: `Z`,
         cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 1e114, serenity: 1e59 },
-        earnings: { copiumPerSecond: 2.4e94, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 2.2e46, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 2.4e94, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 3e46, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/letter_z.jpg`,
     },
     {
         name: `Future You`,
         cost: { copium: 1, delusion: 1, yachtMoney: 1, trollPoints: 1, hopium: 1, knowledge: 1, power: 1, serenity: 1 },
-        earnings: { copiumPerSecond: 1e90, delusionPerSecond: 1e90, yachtMoneyPerSecond: 1e90, trollPointsPerSecond: 1e90, hopiumPerSecond: 1e65, knowledgePerSecond: 1e40, powerPerSecond: 0, serenityPerSecond: 1e15 },
+        earnings: { copiumPerSecond: 1e95, delusionPerSecond: 5e99, yachtMoneyPerSecond: 5e96, trollPointsPerSecond: 5e99, hopiumPerSecond: 1e72, knowledgePerSecond: 3e46, powerPerSecond: 0, serenityPerSecond: 2e19 },
         img: `imgs/future_you.jpg`,                
         message: `As the world around you flickers with ethereal light, a figure steps forward from the mist of time itself. It’s you—but a version that has lived eons, carrying a timeless aura. Your future self’s form is draped in celestial robes interwoven with the golden threads of destiny, their eyes shimmering with the collected knowledge of a million lifetimes. They look at you with a mixture of pride and understanding, a smile breaking through their cosmic demeanor.
                 <br><br>“Well met, my past self,” they greet you, their voice resonating with echoes of the universe. “You’ve come so far, haven’t you? Remember the chaos that first pulled you into this world—a cacophony of uncertainty that seemed insurmountable. But even in those turbulent times, you found hope. You lit a beacon in the darkness, guiding yourself toward knowledge and the magnificent Hall of Knowledge. There, you absorbed the secrets of existence and unlocked the wisdom that transformed your journey.”
@@ -2132,7 +2134,18 @@ const upgrades = [
                 <br><br>The choice, as always, is yours.`,
         isKey: true,
     },
-    
+    {
+        name: `Good People Winning`,
+        cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 3e116, serenity: 3e59 },
+        earnings: { copiumPerSecond: 2e94, delusionPerSecond: 1e99, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 5e46, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: `imgs/good_people_winning.jpg`,
+    },
+    {
+        name: `Peace on Earth`,
+        cost: { copium: 2e270, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 1e270, knowledge: 0, power: 0, serenity: 5e59 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: -1e99, hopiumPerSecond: 0, knowledgePerSecond: 7e45, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: `imgs/peace_on_earth.jpg`,
+    },
     {
         name: `Good Guy Jupiter`,
         cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 2.5e247, power: 0, serenity: 2e60 },
@@ -2162,6 +2175,7 @@ const upgrades = [
         message: `TBD`,
         hoverOverwrite: 'this content is not yet balanced!',
     },
+    
     // {
     //     name: `The Worst`,
     //     cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
@@ -2179,18 +2193,6 @@ const upgrades = [
     //     cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
     //     earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
     //     img: `imgs/real_mvps.jpg`,
-    // },
-    // {
-    //     name: `Good People Winning`,
-    //     cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
-    //     earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
-    //     img: `imgs/good_people_winning.jpg`,
-    // },
-    // {
-    //     name: `Peace on Earth`,
-    //     cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
-    //     earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
-    //     img: `imgs/peace_on_earth.jpg`,
     // },
     // {
     //     name: `Finishing Degens Idle`,

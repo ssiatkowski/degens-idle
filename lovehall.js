@@ -1679,7 +1679,7 @@ function initializeLoveHallSkills() {
                     }
 
                     if (!skill.unlocked && lovePoints >= skill.cost) {
-                        if (balanceHallSkills.get("Quality of Life").unlocked) {
+                        if (messageShownUpgrades.has(`Actual Life Advice`)) {
                           lovePoints -= skill.cost;
                           unlockLoveHallSkill(skill);
                           updateLoveHallSkillDisplay(); // Update after unlocking
