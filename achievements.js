@@ -126,6 +126,13 @@ const achievements = [
         type: 'progression',
     },
     {
+        name: 'Big Sean - Dance',
+        isUnlocked: false,
+        hoverText: 'sing the lyrics',
+        img: 'imgs/achievements/ass_ass.jpg',
+        type: 'puzzle',
+    },
+    {
         name: 'Speed Demon',
         isUnlocked: false,
         hoverText: 'score over 3 points per second in speed game',
@@ -1441,6 +1448,8 @@ function showAchievementsOverlay() {
     if (numAchievementsOpens==5){
         unlockAchievement('Fifth');
     }
+    assAssSequence += 'A';
+    checkAssAssSequence();
     // Reset to default tab and render achievements
     achievementTabs.reset();
 }

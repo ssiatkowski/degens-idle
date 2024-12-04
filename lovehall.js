@@ -1322,7 +1322,7 @@ const loveHallSkills = [
   {
     name: "Equilibrium of Hope",
     cost: 15,
-    description: "Automatically trade 1% Hopium for each lower resource.",
+    description: "Unlock option to automatically trade 1% Hopium for each lower resource.",
     unlocked: false,
     level: "Cosmic Truth (42x)",
     pair: 50,

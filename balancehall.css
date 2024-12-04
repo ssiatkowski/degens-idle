@@ -272,4 +272,10 @@
     .balance-skill-button {
         width: 100%;
     }
+
+        /* Toggle Switch Container */
+    #suppressToggleContainer {
+        font-size: 1em;
+    }
+
 }

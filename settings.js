@@ -13,6 +13,9 @@ function openSettings() {
     
     unlockAchievement('Settings');
 
+    assAssSequence += 'S';
+    checkAssAssSequence();
+
     // Add a temporary event listener to close the overlay when clicking outside of it
     setTimeout(() => {
         document.addEventListener('click', outsideClickListener);
@@ -30,6 +33,25 @@ function closeSettings() {
     const settingsOverlay = document.getElementById('settingsOverlay');
     settingsOverlay.style.display = 'none';
     document.removeEventListener('click', outsideClickListener);
+}
+
+const assAssWinningSequence = 'ASSASSASSASSASS';
+let assAssSequence = '123456789012345';
+
+function checkAssAssSequence(){
+    assAssSequence = assAssSequence.slice(-assAssWinningSequence.length); // Keep only the last n characters
+    if (assAssSequence === assAssWinningSequence) {
+        unlockAchievement('Big Sean - Dance');
+        assAssSequence = '123456789012345';
+    } else if (assAssSequence.slice(-12) === assAssWinningSequence.slice(-12)) {
+        showPopupTooltip('♫ ASS ♪ ASS ♪ ASS ♪ ASS ♫', 'black', 1);
+    } else if (assAssSequence.slice(-9) === assAssWinningSequence.slice(-9)) {
+        showPopupTooltip('♫ ASS ♪ ASS ♪ ASS ♫', 'black', 1);
+    } else if (assAssSequence.slice(-6) === assAssWinningSequence.slice(-6)) {
+        showPopupTooltip('♫ ASS ♪ ASS ♫', 'black', 1);
+    } else if (!achievementsMap.get('Big Sean - Dance').isUnlocked &&assAssSequence.slice(-3) === assAssWinningSequence.slice(-3)) {
+        showPopupTooltip('♫ ♪ ASS ♪ ♫', 'black', 1);
+    } 
 }
 
 // Function to open the donation overlay
@@ -369,6 +391,9 @@ document.getElementById('automationButton').addEventListener('click', function()
     const automationContent = document.getElementById('automationContent');
     const saveButton = document.getElementById('saveAutomationSettingsButton');
 
+    assAssSequence += 'A';
+    checkAssAssSequence();
+
     // Use a timeout to ensure each checkbox is fully rendered before setting its state
     setTimeout(() => {
         // Set up each Quick Mode switch based on corresponding variables
@@ -645,7 +670,7 @@ document.getElementById('automationButton').addEventListener('click', function()
             `;
         }
 
-        // Dynamically add Auto-Fighting setting if autoFightSkill is unlocked
+        // Dynamically add Auto-Hopium Trade setting if both Hopium Trade and Equilibrium of Hope are unlocked
         if (hopiumTradeSkill && equilibriumOfHopeSkill) {
             content += `
                 <div style="margin-bottom: 15px;">
@@ -803,12 +828,14 @@ document.getElementById('saveAutomationSettingsButton').addEventListener('click'
         console.log("Auto-hopium trade switch state at save:", autoHopiumTradeSwitch.checked); // Debug log
 
         if (autoHopiumTradeSwitch.checked) {
+            autoTradeHopiumEnabled = true;
             // Enable auto-buy if it’s not already running
             if (autoTradeHopiumIntervalId === null) {
                 autoTradeHopium();
                 console.log("Auto-hopium trade started"); // Debug log
             }
         } else {
+            autoTradeHopiumEnabled = false;
             // Disable auto-buy if the switch is unchecked
             if (autobuyIntervalId !== null) {
                 clearInterval(autoTradeHopiumIntervalId);
@@ -877,7 +904,7 @@ document.getElementById('numberFormatButton').addEventListener('click', function
     localStorage.setItem('currentNumberFormat', JSON.stringify(currentNumberFormat));
 
 
-    if (numberFormatClickCount > 18) {
+    if (numberFormatClickCount > 12) {
         unlockAchievement('Nerdy Career Path');
     } else {
         showPopupTooltip('Number Format Requires Page Reload to Take Full Effect', 'red', 5);

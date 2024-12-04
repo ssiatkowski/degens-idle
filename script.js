@@ -158,6 +158,7 @@ let resonanceOfLoveSkill = false;
 let hopiumTradeSkill = false;
 let tranquilityOverdriveSkill = false;
 let autoTradeHopiumIntervalId = null;
+let autoTradeHopiumEnabled = false;
 let equilibriumOfHopeSkill = false;
 let temporalDragReduction = 1;
 let lookPastDistractions = 0;
@@ -605,6 +606,8 @@ function loadGameState() {
     balanceCheckMultiplier = JSON.parse(localStorage.getItem('balanceCheckMultiplier')) || 1;
     suppressBalanceSkills = JSON.parse(localStorage.getItem('suppressBalanceSkills')) || false;
 
+    autoTradeHopiumEnabled = JSON.parse(localStorage.getItem('autoTradeHopiumEnabled')) || false;
+
     // Load the state of the Cookie Clicker button
     const cookieButtonVisible = JSON.parse(localStorage.getItem('cookieButtonVisible'));
     if (cookieButtonVisible) {
@@ -913,6 +916,8 @@ function saveGameState() {
     localStorage.setItem('balanceHallMultipliers', JSON.stringify(multipliers));
     
     localStorage.setItem('suppressBalanceSkills', suppressBalanceSkills);
+    
+    localStorage.setItem('autoTradeHopiumEnabled', autoTradeHopiumEnabled);
 
     // Create a plain object from the Map to save only unlocked skills
     const unlockedBalanceHallSkills = {};
@@ -1333,7 +1338,10 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
                 numMathWins = 0;
                 numConsecutiveMathFailures = 0;
 
+                suppressBalanceSkills = false;
                 localStorage.clear();
+
+                autoTradeHopiumEnabled = false;
             }
             prestiges = 0;
             epsMultiplier = 1;
@@ -1347,7 +1355,6 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
             bigCrunchMultiplier = 1;
             
             balanceCheckMultiplier = 1;
-            suppressBalanceSkills = false;
 
             // Reset the isGodMode property for all upgrades
             upgrades.forEach(upgrade => {
@@ -1767,7 +1774,7 @@ function tradeTenPercent() {
 function autoTradeHopium() {
     if (isEventInProgress()) return;
 
-    if (hopiumTradeSkill && equilibriumOfHopeSkill && autoTradeHopiumIntervalId === null) {
+    if (hopiumTradeSkill && equilibriumOfHopeSkill && autoTradeHopiumEnabled && autoTradeHopiumIntervalId === null) {
         autoTradeHopiumIntervalId = setInterval(() => {
             // Get 1% of the current hopium
             const hopiumTradeAmount = hopium * 0.01;
