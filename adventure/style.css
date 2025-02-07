@@ -11,100 +11,141 @@ body {
   padding: 20px;
   position: relative;
 }
+
+/* Ensure fixed elements do not cover content */
 .container {
   max-width: 900px;
   margin: 0 auto;
+  padding-top: 100px;  /* space for fixed topStatus */
+  padding-bottom: 60px; /* space for fixed footer */
 }
 
-/* Top row buttons */
-#topButtons {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 10px;
-}
-#settingsButton {
-  padding: 8px 12px;
-  background: #27ae60;
-  border: none;
-  border-radius: 5px;
-  color: #fff;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-#settingsButton:hover {
-  background: #1e8449;
-}
-
-/* TOP STATUS section: 3 bars on the left, 3 upgrades on the right */
+/* ---------------------- */
+/* Top Status Area (Fixed & Centered) */
+/* ---------------------- */
 #topStatus {
   display: flex;
   gap: 20px;
-  margin-bottom: 20px;
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 40px); /* full width minus body padding */
+  max-width: 900px;
+  background: #222;
+  padding: 10px 20px;
+  z-index: 1000;
 }
 
-/* Left side: stacked bars container */
-.bars-container {
-  flex: 2; /* 2/3-ish */
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-/* Single status bar structure */
-.status-bar {
+/* Settings Column – now 50% larger */
+.settings-column {
+  flex: 0 0 8%;
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
 }
+.settings-column img {
+  max-width: 64px;   /* increased from ~30px */
+  max-height: 64px;
+  cursor: pointer;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.settings-column img:hover {
+  filter: brightness(1.5);
+}
+
+/* Bars Container occupies 75% of the topStatus area */
+.bars-container {
+  flex: 0 0 72%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+}
+
+/* Each status bar row uses a grid layout: label and the bar */
+.status-bar {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 5px;
+}
+
 .status-label {
-  width: 70px; /* label text area, adjust as needed */
+  margin-right: 2px; /* minimal gap so the bar is right next to the label */
+  font-size: 0.75em;
 }
+
+/* Bar container is now “longer” (taller) and serves as the positioning context */
 .status-bar-bg {
-  flex: 1;
+  position: relative;
   background: #555;
-  height: 20px;
+  height: 20px;        /* increased height from 15px for a longer bar */
   border-radius: 10px;
   overflow: hidden;
-  position: relative;
 }
+
+/* The fill element (its width is updated via JS) */
 .status-bar-fill {
-  background: #e74c3c; /* default for Energy bar; you can change for Copium/Delusion if needed */
+  position: absolute;
+  top: 0;
+  left: 0;
   height: 100%;
   width: 0%;
   transition: width 0.2s;
 }
-#energyBarFill { background: #e74c3c; }
-#copiumBarFill { background: #9b59b6; }     /* example purple color for Copium */
-#delusionBarFill { background: #3498db; }  /* example blue color for Delusion */
 
-/* Right side: 3 upgrades container */
+/* Specific fill colors for each type of bar */
+#energyBarFill {
+  background: #e74c3c;
+}
+#copiumBarFill {
+  background: #9b59b6;
+}
+#delusionBarFill {
+  background: #3498db;
+}
+
+/* The numeric value is positioned in the center of the bar */
+.status-bar-value {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.75em;
+  color: #fff;
+  pointer-events: none;
+}
+
+/* ---------------------- */
+/* Upgrades Display Styling */
+/* ---------------------- */
 .upgrades-container {
-  flex: 1; /* 1/3-ish */
+  flex: 0 0 15%;  /* 50% wider than 10% (10% * 1.5 = 15%) */
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  user-select: none; 
-  cursor: default;
+  gap: 5px;
+  align-items: left;
 }
+
 .upgrade-display {
-  background: #333;
-  padding: 4px;
-  border-radius: 2px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  background: #444;
+  padding: 4px 6px;
+  border-radius: 3px;
+  font-size: 0.75em;
+  width: 100%;
+  text-align: center;
 }
-.upgrade-label {
-  font-weight: bold;
+.upgrade-label:after {
+  content: ":";
 }
 
-.upgrade-label,
-.upgrade-value {
-  font-size: 0.8em; /* or 0.65, whichever you prefer for a ~40% reduction */
-}
-   
 
-/* Skills Display */
+/* ---------------------- */
+/* Skills Display (50% smaller) */
+/* ---------------------- */
 #skills {
   display: flex;
   flex-wrap: wrap;
@@ -113,20 +154,19 @@ body {
   margin-bottom: 20px;
 }
 .skill {
-  width: 170px; 
+  width: 85px;
   background: #333;
-  padding: 10px;
+  padding: 5px;
   border-radius: 5px;
   text-align: center;
-  user-select: none; 
+  user-select: none;
   cursor: default;
+  font-size: 0.75em;
 }
 .skill * {
   user-select: none;
   cursor: default;
 }
-
-
 .skill:hover {
   background: #444;
 }
@@ -137,8 +177,8 @@ body {
 .skill-bar {
   width: 100%;
   background: #555;
-  height: 15px;
-  border-radius: 7.5px;
+  height: 10px;
+  border-radius: 5px;
   overflow: hidden;
   margin-bottom: 5px;
 }
@@ -157,7 +197,9 @@ body {
   font-size: 0.8em;
 }
 
+/* ---------------------- */
 /* Main area layout */
+/* ---------------------- */
 .game-layout {
   display: flex;
   gap: 20px;
@@ -170,23 +212,26 @@ body {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  align-items: center; /* so image/perks are centered horizontally; optional */
+  align-items: center;
 }
 
-/* Zone Image (right column) */
+/* Zone Image */
 #zoneName {
   margin: 0;
   font-size: 1.3em;
   text-align: center;
 }
 #zoneImage {
-  max-width: 100%;
+  display: block;
+  width: 100%;
   height: auto;
   border: 2px solid #555;
   border-radius: 5px;
 }
 
-/* Resources & Perks (right column) */
+/* ---------------------- */
+/* Resources & Perks */
+/* ---------------------- */
 #resourcesContainer,
 #perksContainer {
   width: 100%;
@@ -199,32 +244,25 @@ body {
   margin-bottom: 10px;
 }
 
-.resource-icon {
-  width: 16px; /* or 20px */
-  height: 16px;
-  margin-left: 3px; 
-  vertical-align: middle;
-}
 
-.resources-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+/* Resources grid */
+#resourcesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(54px, 1fr));
+  gap: 5px;
 }
-
+/* Resource items */
 .resource-item {
   position: relative;
-  width: 64px; /* or 50px, up to you */
-  height: 64px;
+  width: 43px;
+  height: 43px;
   cursor: pointer; 
 }
-
 .resource-item img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-
 .resource-count {
   position: absolute;
   bottom: 2px;
@@ -236,43 +274,43 @@ body {
   border-radius: 3px;
 }
 
+.resource-item:hover {
+  transform: scale(1.1);
+  filter: brightness(1.2);
+}
 
 /* Perks grid */
 .perks-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
-  gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(54px, 1fr));
+  gap: 5px;
 }
-
-/* Ensure perk items are hovered easily. */
 .perk-item {
-  display: inline-block; /* or flex if you prefer */
-  position: relative;    /* ensures bounding box */
-  cursor: default;       /* or pointer if you want a hand icon */
+  display: inline-block;
+  position: relative;
+  cursor: default;
 }
-
-/* Let the .perk-item itself handle tooltip, 
-   but child img won't interfere with hover. */
 .perk-item img {
-  pointer-events: none;  /* so hover belongs to the container, not the img */
-  width: 48px;
-  height: 48px;
+  pointer-events: none;
+  width: 43px;
+  height: 43px;
   object-fit: contain;
 }
-
-/* If locked, grayscale or reduce opacity. */
 .perk-item.locked img {
   filter: grayscale(1);
   opacity: 0.5;
 }
-
 .perk-item.unlocked img {
   filter: none;
   opacity: 1;
 }
+.perk-item:hover {
+  filter: brightness(1.3);
+}
 
-
+/* ---------------------- */
 /* Tasks Styling */
+/* ---------------------- */
 #tasks .task {
   background: #333;
   padding: 10px;
@@ -285,19 +323,17 @@ body {
   align-items: center;
   margin-bottom: 5px;
 }
-
-/* The button itself */
 .task-control button {
   width: 50%;
   padding: 10px;
-  font-size: 1em;
+  font-size: 0.7em;
   background: #27ae60;
   border: none;
   border-radius: 5px;
   color: #fff;
   cursor: pointer;
   transition: background-color 0.2s;
-  position: relative; /* so we can position a star inside if needed */
+  position: relative;
 }
 .task-control button:disabled {
   background: #555;
@@ -306,16 +342,23 @@ body {
 .task-control button.active {
   background-color: #1e8449;
 }
-
-/* Additional styles for mandatory/travel tasks */
+.task-control button:hover {
+  transform: scale(1.02);
+  filter: brightness(0.9);
+}
+.task-control img.resource-icon {
+  width: 16px;
+  height: 16px;
+  margin-left: 3px;
+  vertical-align: middle;
+}
 .task.mandatory-task .task-control button {
-  border: 2px dashed #f39c12; /* or any other style for mandatory tasks */
+  border: 2px dashed #f39c12;
 }
 .task.travel-task .task-control button {
-  border: 2px solid #3498db; /* or any other style for travel tasks */
+  border: 2px solid #3498db;
 }
 
-/* Star for perk tasks (unlocked = false) */
 .perk-star {
   position: absolute;
   right: 8px;
@@ -324,21 +367,20 @@ body {
   font-size: 1.2em;
   pointer-events: none;
 }
-
-/* Reps display */
 .rep-container {
   width: 50%;
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(10, auto); /* 10 columns */
   justify-content: flex-start;
   align-items: center;
   gap: 5px;
   padding-left: 5px;
 }
 .rep-indicator {
-  width: 27px;
-  height: 27px;
+  width: 12px;
+  height: 12px;
   background: #777;
-  border-radius: 3px;
+  border-radius: 2px;
 }
 .rep-indicator.completed {
   background: #27ae60;
@@ -359,16 +401,29 @@ body {
 }
 #tasks .task p {
   margin-top: 5px;
+  font-size: 0.7em;
 }
 
-/* Footer */
+/* ---------------------- */
+/* Footer (Fixed at Bottom) */
+/* ---------------------- */
 footer {
   text-align: center;
   font-size: 0.9em;
-  margin-top: 20px;
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 40px);
+  max-width: 900px;
+  background: #222;
+  padding: 10px 0;
+  z-index: 1000;
 }
 
+/* ---------------------- */
 /* Game Over Overlay */
+/* ---------------------- */
 #gameOverScreenEnergy, #gameOverScreenCopium {
   position: fixed;
   top: 0;
@@ -389,7 +444,7 @@ footer {
   margin-bottom: 20px;
 }
 #gameOverContentEnergy button, #gameOverContentCopium button {
-  margin-top: 20px; 
+  margin-top: 20px;
   padding: 10px 20px;
   font-size: 1em;
   background: #27ae60;
@@ -399,8 +454,9 @@ footer {
   cursor: pointer;
 }
 
-
+/* ---------------------- */
 /* Settings Modal */
+/* ---------------------- */
 .modal {
   position: fixed;
   top: 0;
@@ -430,7 +486,9 @@ footer {
   margin: 5px;
 }
 
+/* ---------------------- */
 /* Custom Tooltip */
+/* ---------------------- */
 .custom-tooltip {
   position: absolute;
   background: #000;

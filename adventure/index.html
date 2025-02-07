@@ -9,73 +9,55 @@
 </head>
 <body>
   <div class="container">
-
-    <!-- Top row with buttons (Settings, future additions) -->
-    <div id="topButtons">
-      <button id="settingsButton">Settings</button>
-      <!-- Reserve space for more future buttons, e.g.
-           <button>Button1</button>
-           <button>Button2</button>
-           <button>Button3</button>
-           <button>Button4</button> -->
-    </div>
-
-    <!-- Top status section with bars (left) and upgrades (right) -->
+    <!-- Top status section with settings image, bars, and upgrades -->
     <div id="topStatus">
-      <!-- Left side: 3 bars in a vertical stack or flexible arrangement -->
+      <!-- Settings Column -->
+      <div class="settings-column">
+        <img id="settingsImage" src="images/settings.png" alt="Settings">
+      </div>
+      
+      <!-- Bars Container -->
       <div class="bars-container">
-        <!-- Energy bar -->
-        <div class="status-bar" style="display:flex;">
+        <!-- Energy Bar -->
+        <div class="status-bar">
           <span class="status-label">Energy</span>
           <div class="status-bar-bg">
-            <div class="status-bar-fill" id="energyBarFill"></div>
+             <div class="status-bar-fill" id="energyBarFill"></div>
+             <span class="status-bar-value" id="energyText">100</span>
           </div>
-          <span id="energyText">100</span>
         </div>
-
-        <!-- Copium bar (start hidden) -->
+        
+        <!-- Copium Bar (initially hidden) -->
         <div class="status-bar" id="copiumBarContainer" style="display:none;">
           <span class="status-label">Copium</span>
           <div class="status-bar-bg">
-            <div class="status-bar-fill" id="copiumBarFill"></div>
+             <div class="status-bar-fill" id="copiumBarFill"></div>
+             <span class="status-bar-value" id="copiumText">0</span>
           </div>
-          <span id="copiumText">0</span>
         </div>
-
-
-        <!-- Delusion bar (start hidden) -->
+        
+        <!-- Delusion Bar (initially hidden) -->
         <div class="status-bar" id="delusionBarContainer" style="display:none;">
           <span class="status-label">Delusion</span>
           <div class="status-bar-bg">
-            <div class="status-bar-fill" id="delusionBarFill"></div>
+             <div class="status-bar-fill" id="delusionBarFill"></div>
+             <span class="status-bar-value" id="delusionText">0</span>
           </div>
-          <span id="delusionText">0</span>
         </div>
       </div>
-
-      <!-- Right side: 3 upgrades (start hidden) -->
+      
+      <!-- Upgrades Container (unchanged except for background styling below) -->
       <div class="upgrades-container">
-        <!-- Knowledge -->
         <div class="upgrade-display" style="display:none;">
           <span class="upgrade-label">Knowledge</span>
           <span class="upgrade-value" id="knowledgeUpgValue">0</span>
         </div>
-        <!-- Power -->
-        <div class="upgrade-display" style="display:none;">
-          <span class="upgrade-label">Power</span>
-          <span class="upgrade-value" id="powerUpgValue">0</span>
-        </div>
-        <!-- Serenity -->
-        <div class="upgrade-display" style="display:none;">
-          <span class="upgrade-label">Serenity</span>
-          <span class="upgrade-value" id="serenityUpgValue">0</span>
-        </div>
+        <!-- Other upgrade items… -->
       </div>
     </div>
+    
 
     <header>
-      <h1>Degens Adventure</h1>
-
       <!-- Skills display (populated by game.js) -->
       <div id="skills"></div>
     </header>
@@ -85,10 +67,8 @@
       <!-- Left column (2/3 width) -->
       <div class="left-column">
         <div id="narrative">
-          <!-- "Your adventure begins..." text removed -->
           <p id="scenarioText"></p>
         </div>
-
         <!-- Tasks display (populated by game.js) -->
         <div id="tasks"></div>
       </div>
@@ -100,10 +80,7 @@
 
         <div id="resourcesContainer">
           <h3>Resources</h3>
-          <!-- Resources Grid to display items (Elixirs, etc.) -->
-          <div class="resources-grid" id="resourcesGrid">
-            <!-- Populated by game.js with resource icons + counts -->
-          </div>
+          <div class="resources-grid" id="resourcesGrid"></div>
         </div>
 
         <div id="perksContainer">
@@ -113,12 +90,13 @@
       </div>
     </main>
 
+    <!-- Footer (with message) -->
     <footer>
       <p id="message"></p>
     </footer>
   </div>
 
-  <!-- Game Over Overlay (Energy-based) -->
+  <!-- Game Over Overlays (unchanged) -->
   <div id="gameOverScreenEnergy" class="hidden">
     <div id="gameOverContentEnergy">
       <h2>Game Over</h2>
@@ -128,7 +106,6 @@
     </div>
   </div>
   
-  <!-- Game Over Overlay (Copium-based) -->
   <div id="gameOverScreenCopium" class="hidden">
     <div id="gameOverContentCopium">
       <h2>Game Over</h2>
