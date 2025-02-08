@@ -405,7 +405,7 @@
     if (reason === "energyLoss") {
       // half resources
       Object.keys(gameState.resources).forEach(rName => {
-        gameState.resources[rName] = Math.floor(gameState.resources[rName] / 2);
+        gameState.resources[rName] = Math.ceil(gameState.resources[rName] / 2);
       });
       gameState.numEnergyResets++;
     } else if (reason === "copiumOverflow") {

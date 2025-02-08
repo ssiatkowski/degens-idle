@@ -26,7 +26,7 @@ var zones = [
     tasks: [
       { id: 21, name: "Map the City", type: "Training", maxReps: 5, count: 0, baseTime: 3e3, description: "Study the city’s layout to boost your intellect.", skills: ["intellect"], mandatory: true },
       { id: 22, name: "Spot the Details", type: "Training", maxReps: 8, count: 0, baseTime: 5e3, description: "Sharpen your senses by noticing urban subtleties.", skills: ["perception"], mandatory: true },
-      { id: 23, name: "Combined Recall Drill", type: "Training", maxReps: 6, count: 0, baseTime: 1e4, description: "Run while recalling facts about your surroundings.", skills: ["endurance", "intellect"] },
+      { id: 23, name: "Combined Recall Drill", type: "Training", maxReps: 6, count: 0, baseTime: 2e4, description: "Run while recalling facts about your surroundings.", skills: ["endurance", "intellect"] },
       { id: 24, name: "Assemble a Magnifying Glass", type: "Training", maxReps: 20, count: 0, baseTime: 6e3, description: "Assemble a simple magnifying glass.", skills: ["tinkering"], resources: ["magnifying_glass"] },
       { id: 25, name: "Strike up a Quick Chat", type: "Training", maxReps: 2, count: 0, baseTime: 9e3, description: "Engage strangers in conversation.", skills: ["charisma"] },
       { id: 26, name: "Healthy Living: Explore Dietary Options", type: "Training", maxReps: 3, count: 0, baseTime: 6e5, description: "Learn about healthy eating habits.", skills: ["endurance", "intellect", "alchemy"], perk: "healthy_living" },
@@ -40,7 +40,7 @@ var zones = [
     tasks: [
       { id: 31, name: "Workshop Fix a Broken Engine", type: "Training", maxReps: 5, count: 0, baseTime: 5e3, description: "Learn the basics of machinery repair.", skills: ["mechanics"] },
       { id: 32, name: "Basic Mech: Rudimentary Upgrade", type: "Training", maxReps: 1, count: 0, baseTime: 4e5, description: "Construct a basic biomechanical upgrade.", skills: ["mechanics", "intellect"], perk: "basic_mech" },
-      { id: 33, name: "Traffic Analysis Study Urban Flow", type: "Training", maxReps: 10, count: 0, baseTime: 5e4, description: "Analyze traffic patterns using perception and intellect.", skills: ["perception", "intellect"] },
+      { id: 33, name: "Study Urban Traffic Flow", type: "Training", maxReps: 10, count: 0, baseTime: 8e4, description: "Analyze traffic patterns using perception and intellect.", skills: ["perception", "intellect"] },
       { id: 34, name: "Completionist: Run City Marathon", type: "Training", maxReps: 1, count: 0, baseTime: 2e5, description: "Test your stamina on a long city run.", skills: ["endurance"], mandatory: true, perk: "completionist" },
       { id: 35, name: "Assemble Goggles", type: "Training", maxReps: 20, count: 0, baseTime: 2e5, description: "Build yourself some eye protection.", skills: ["tinkering"], resources: ["goggles"] },
       { id: 36, name: "Travel: Enter Corporate District", type: "Travel", maxReps: 1, count: 0, baseTime: 3e4, description: "Step into the orderly world of corporate business.", skills: ["travel"] }
