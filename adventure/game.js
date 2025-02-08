@@ -3,7 +3,7 @@
    * DEFINITIONS: Skills that affect knowledge, copium, delusion
    ****************************************/
   const knowledgeSkills = ["tinkering", "intellect", "hacking"];
-  const copiumSkills = ["endurance", "alchemy", "travel", "mechanics", "combat"];
+  const copiumSkills = ["endurance", "alchemy", "mechanics"];
   const delusionSkills = ["charisma", "perception", "aiMastery", "negotiation", "omniscience"];
 
   /****************************************
@@ -22,24 +22,27 @@
       copiumUnlocked: false,
       delusionUnlocked: false,
       skills: {
-        endurance:   { level: 1, xp: 0, visible: true,  energyDrain: 2,   progressBoost: 1, drainBoost: 1 },
-        tinkering:   { level: 1, xp: 0, visible: true,  energyDrain: 2.5, progressBoost: 1, drainBoost: 1 },
-        charisma:    { level: 1, xp: 0, visible: true,  energyDrain: 1.5, progressBoost: 1, drainBoost: 1 },
-        alchemy:     { level: 1, xp: 0, visible: true,  energyDrain: 10,   progressBoost: 1, drainBoost: 1 },
-        travel:      { level: 1, xp: 0, visible: true,  energyDrain: 1,   progressBoost: 1, drainBoost: 1 },
+        endurance:   { level: 1, xp: 0, visible: true,  energyDrain: 2,   progressBoost: 1, drainBoost: 1, xpGainFactor: 1 },
+        tinkering:   { level: 1, xp: 0, visible: true,  energyDrain: 2.5, progressBoost: 1, drainBoost: 1, xpGainFactor: 1  },
+        charisma:    { level: 1, xp: 0, visible: true,  energyDrain: 1.5, progressBoost: 1, drainBoost: 1, xpGainFactor: 1  },
+        alchemy:     { level: 1, xp: 0, visible: true,  energyDrain: 10,   progressBoost: 1, drainBoost: 1, xpGainFactor: 1  },
+        travel:      { level: 1, xp: 0, visible: true,  energyDrain: 1,   progressBoost: 1, drainBoost: 1, xpGainFactor: 1.5  },
 
-        intellect:   { level: 1, xp: 0, visible: false, energyDrain: 3, progressBoost: 1, drainBoost: 1 },
-        perception:  { level: 1, xp: 0, visible: false, energyDrain: 2, progressBoost: 1, drainBoost: 1 },
-        mechanics:   { level: 1, xp: 0, visible: false, energyDrain: 5,   progressBoost: 1, drainBoost: 1 },
-        combat:      { level: 1, xp: 0, visible: false, energyDrain: 20,   progressBoost: 1, drainBoost: 1 },
-        hacking:     { level: 1, xp: 0, visible: false, energyDrain: 7,   progressBoost: 1, drainBoost: 1 },
-        aiMastery:   { level: 1, xp: 0, visible: false, energyDrain: 15,   progressBoost: 1, drainBoost: 1 },
-        negotiation: { level: 1, xp: 0, visible: false, energyDrain: 20,   progressBoost: 1, drainBoost: 1 },
-        cybernetics: { level: 1, xp: 0, visible: false, energyDrain: 25,   progressBoost: 1, drainBoost: 1 },
-        quantum:     { level: 1, xp: 0, visible: false, energyDrain: 50,  progressBoost: 1, drainBoost: 1 },
-        omniscience: { level: 1, xp: 0, visible: false, energyDrain: 100, progressBoost: 1, drainBoost: 1 }
+        intellect:   { level: 1, xp: 0, visible: false, energyDrain: 3, progressBoost: 1, drainBoost: 1, xpGainFactor: 0.5  },
+        perception:  { level: 1, xp: 0, visible: false, energyDrain: 2, progressBoost: 1, drainBoost: 1, xpGainFactor: 0.3  },
+        mechanics:   { level: 1, xp: 0, visible: false, energyDrain: 5,   progressBoost: 1, drainBoost: 1, xpGainFactor: 0.1  },
+        combat:      { level: 1, xp: 0, visible: false, energyDrain: 20,   progressBoost: 1, drainBoost: 1, xpGainFactor: 0.2  },
+        hacking:     { level: 1, xp: 0, visible: false, energyDrain: 7,   progressBoost: 1, drainBoost: 1, xpGainFactor: 0.01  },
+        cybernetics: { level: 1, xp: 0, visible: false, energyDrain: 12,   progressBoost: 1, drainBoost: 1, xpGainFactor: 0.05  },
+        negotiation: { level: 1, xp: 0, visible: false, energyDrain: 20,   progressBoost: 1, drainBoost: 1, xpGainFactor: 0.02  },
+        aiMastery:   { level: 1, xp: 0, visible: false, energyDrain: 15,   progressBoost: 1, drainBoost: 1, xpGainFactor: 0.001  },
+        quantum:     { level: 1, xp: 0, visible: false, energyDrain: 50,  progressBoost: 1, drainBoost: 1, xpGainFactor: 0.0001  },
+        omniscience: { level: 1, xp: 0, visible: false, energyDrain: 100, progressBoost: 1, drainBoost: 1, xpGainFactor: 0.00001  }
       },
-      perks: {}
+      perks: {},
+      numEnergyResets: 0,
+      numCopiumResets: 0,
+      numDelusionResets: 0
     };
   }
 
@@ -57,9 +60,10 @@
     healthy_living:  "Reduce energy drain by 25%.",
     basic_mech:      "Increases starting Energy by 25.",
     double_timer:    "Allows running two tasks simultaneously.",
-    energetic_bliss: "Doubles progress/XP if energy is above 50.",
+    energetic_bliss: "Doubles progress while energy is above 50%.",
     workaholic:      "All XP gains increased by 50%.",
-    brewmaster:      "Alchemy is 25% faster."
+    brewmaster:      "Alchemy is 25% faster.",
+    copium_reactor:   "Get +5 starting Energy for each Copium reset.",
   };
 
   /****************************************
@@ -87,6 +91,13 @@
         updateSkillDisplay();
       },
       tooltip: "Click to reduce Alchemy energy drain by 5% per Goggles. Right-click to consume all."
+    },
+    "cybernetic_potion" : {
+      onConsume: function(amt) {
+        gameState.skills["cybernetics"].drainBoost += 0.2 * amt;
+        updateSkillDisplay();
+      },
+      tooltip: "Click to reduce Cybernetics energy drain by 20% per Cybernetic Potion. Right-click to consume all."
     }
   };
 
@@ -164,25 +175,17 @@
   function updateEnergyDisplay() {
     const val = Math.max(0, gameState.energy);
     const energyText = document.getElementById("energyText");
-    if (energyText) {
-      energyText.textContent = val.toFixed(0);
-    }
+    energyText.textContent = val.toFixed(0);
     const energyFill = document.getElementById("energyBarFill");
-    if (energyFill) {
-      energyFill.style.width = (val * 100 / gameState.startingEnergy) + "%";
-    }
+    energyFill.style.width = (val * 100 / gameState.startingEnergy) + "%";
   }
 
   function updateCopiumDisplay() {
     const val = Math.max(0, gameState.copium);
     const copiumText = document.getElementById("copiumText");
-    if (copiumText) {
-      copiumText.textContent = val.toFixed(0);
-    }
+    copiumText.textContent = val.toFixed(0);
     const copiumFill = document.getElementById("copiumBarFill");
-    if (copiumFill) {
-      copiumFill.style.width = (val / 90) + "%";
-    }
+    copiumFill.style.width = (val / 90) + "%";
   }
 
   /****************************************
@@ -229,6 +232,7 @@
           consumeResource(rName, 1);
           if (resourceActions[rName] && resourceActions[rName].onConsume) {
             resourceActions[rName].onConsume(1);
+            hideTooltip();
           }
         }
       });
@@ -240,6 +244,7 @@
           consumeResource(rName, amt);
           if (resourceActions[rName] && resourceActions[rName].onConsume) {
             resourceActions[rName].onConsume(amt);
+            hideTooltip();
           }
         }
       });
@@ -255,12 +260,11 @@
   function addXP(skillName, rawXP) {
     if (rawXP <= 0) return;
     const skill = gameState.skills[skillName];
-    if (!skill) return;
     // knowledge bonus if unlocked + skill in knowledgeSkills
     if (gameState.knowledgeUnlocked && knowledgeSkills.includes(skillName)) {
       rawXP *= (1 + 0.001 * gameState.knowledge);
     }
-    skill.xp += rawXP;
+    skill.xp += rawXP * skill.xpGainFactor;
     let required = Math.pow(skillXpScaling, skill.level - 1);
     while (skill.xp >= required) {
       skill.xp -= required;
@@ -403,12 +407,17 @@
       Object.keys(gameState.resources).forEach(rName => {
         gameState.resources[rName] = Math.floor(gameState.resources[rName] / 2);
       });
+      gameState.numEnergyResets++;
     } else if (reason === "copiumOverflow") {
       // all resources lost
       gameState.resources = {};
       // lose half knowledge
       gameState.knowledge = Math.floor(gameState.knowledge / 2);
       gameState.copium = 0;
+      if (gameState.perks["copium_reactor"]) {
+        gameState.startingEnergy += 5;
+      }
+      gameState.numCopiumResets++;
     }
   
     // do not reset perks or knowledgeUnlocked or copiumUnlocked
@@ -425,6 +434,7 @@
     currentTasks = [];
     saveGameProgress();
     updateEnergyDisplay();
+    updateCopiumDisplay();
     renderSkills();
     updateSkillDisplay();
     renderResources();
@@ -432,12 +442,35 @@
   }
   
   function handleGameOver() {
-    document.getElementById("gameOverScreenEnergy").style.display = "flex";
+    const energyScreen = document.getElementById("gameOverScreenEnergy");
+    energyScreen.style.display = "flex";
+    const energyContent = document.getElementById("gameOverContentEnergy");
+  
+    // Create or update the reset message paragraph
+    let resetMsg = energyContent.querySelector("#energyResetMsg");
+    if (!resetMsg) {
+      resetMsg = document.createElement("p");
+      resetMsg.id = "energyResetMsg";
+      energyContent.appendChild(resetMsg);
+    }
+    resetMsg.textContent = "This is your " + gameState.numEnergyResets + getOrdinalSuffix(gameState.numEnergyResets) + " Energy reset.";
   }
+  
   function handleCopiumOverflow() {
-    document.getElementById("gameOverScreenCopium").style.display = "flex";
+    const copiumScreen = document.getElementById("gameOverScreenCopium");
+    copiumScreen.style.display = "flex";
+    const copiumContent = document.getElementById("gameOverContentCopium");
+  
+    // Create or update the reset message paragraph
+    let resetMsg = copiumContent.querySelector("#copiumResetMsg");
+    if (!resetMsg) {
+      resetMsg = document.createElement("p");
+      resetMsg.id = "copiumResetMsg";
+      copiumContent.appendChild(resetMsg);
+    }
+    resetMsg.textContent = "This is your " + gameState.numCopiumResets + getOrdinalSuffix(gameState.numCopiumResets) + " Copium reset.";
   }
-
+  
   /****************************************
    * MAIN GAME LOOP
    ****************************************/
@@ -510,6 +543,7 @@
           if (hasCopiumSkill) {
             gameState.copium += (10 * zone.id);
             if (gameState.copium > 9000) {
+              currentTasks = [];
               handleCopiumOverflow();
               return;
             }
@@ -724,9 +758,9 @@
           btn.appendChild(rIcon);
         });
       }
-      if (task.skills && task.skills.length > 0) {
-        btn.setAttribute("data-tooltip", "Uses: " + task.skills.join(", "));
-      }
+      // if (task.skills && task.skills.length > 0) {
+      //   btn.setAttribute("data-tooltip", "Uses: " + task.skills.join(", "));
+      // }
       if (task.type === "Travel" && !isTravelAvailable(zone)) {
         btn.disabled = true;
       }
@@ -758,7 +792,22 @@
       div.appendChild(cDiv);
       div.appendChild(progressBar);
       const desc = document.createElement("p");
-      desc.textContent = task.description;
+
+      let usesColor;
+      if (task.skills.length === 1) {
+        usesColor = "green";
+      } else if (task.skills.length === 2) {
+        usesColor = "#9aad32"; // yellow-green tint
+      } else if (task.skills.length === 3) {
+        usesColor = "orange";
+      } else {
+        usesColor = "red";
+      }
+
+      desc.innerHTML = task.description +
+        "<br><span style='color:" + usesColor + ";'>Uses: " +
+        task.skills.join(", ") + "</span>";
+
       div.appendChild(desc);
       tasksContainer.appendChild(div);
     });
@@ -828,8 +877,8 @@
     const content = document.createElement("div");
     content.className = "modal-content";
     const p = document.createElement("p");
-    p.innerHTML = "Copium unlocked!<br>Tasks using skills:<br>-" + copiumSkills.join("<br>-") +
-      "<br>now yield Copium.<br>If it reaches >9000, you reset with half knowledge lost!";    
+    p.innerHTML = "Copium unlocked!<br>Tasks using skills below now yield Copium:<br>-" + copiumSkills.join("<br>-") +
+      "<br><br>If it reaches >9000, you reset with all resources and half knowledge lost!";    
     content.appendChild(p);
     const btn = document.createElement("button");
     btn.textContent = "Got It";
@@ -843,7 +892,7 @@
   }
   function showCopiumBar() {
     const cBar = document.getElementById("copiumBarContainer");
-    if (cBar) cBar.style.display = "flex";
+    if (cBar) cBar.style.display = "grid";
     const copiumBarElem = document.getElementById("copiumBarFill");
     if (copiumBarElem) {
       copiumBarElem.setAttribute("data-tooltip",
@@ -892,6 +941,7 @@
     zones.forEach(z => z.tasks.forEach(t => t.count = 0));
     currentZoneIndex = 0;
     currentTasks = [];
+    document.getElementById("copiumBarContainer").style.display = "none";
     updateEnergyDisplay();
     renderSkills();
     updateSkillDisplay();

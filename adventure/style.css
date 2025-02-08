@@ -33,7 +33,7 @@ body {
   width: calc(100% - 40px); /* full width minus body padding */
   max-width: 900px;
   background: #222;
-  padding: 10px 20px;
+  padding: 10px 0px;
   z-index: 1000;
 }
 
@@ -102,10 +102,10 @@ body {
   background: #e74c3c;
 }
 #copiumBarFill {
-  background: #9b59b6;
+  background: #dbd834;
 }
 #delusionBarFill {
-  background: #3498db;
+  background: #9b59b6;
 }
 
 /* The numeric value is positioned in the center of the bar */
@@ -137,9 +137,14 @@ body {
   font-size: 0.75em;
   width: 100%;
   text-align: center;
+  cursor: default;
 }
 .upgrade-label:after {
   content: ":";
+}
+.upgrade-display .upgrade-label,
+.upgrade-display .upgrade-value {
+  pointer-events: none;
 }
 
 
@@ -154,7 +159,7 @@ body {
   margin-bottom: 20px;
 }
 .skill {
-  width: 85px;
+  width: 100px;
   background: #333;
   padding: 5px;
   border-radius: 5px;
@@ -171,6 +176,7 @@ body {
   background: #444;
 }
 .skill-name {
+  pointer-events: none;
   font-weight: bold;
   margin-bottom: 5px;
 }
@@ -181,6 +187,7 @@ body {
   border-radius: 5px;
   overflow: hidden;
   margin-bottom: 5px;
+  pointer-events: none;
 }
 .skill-bar-fill {
   height: 100%;
@@ -189,12 +196,14 @@ body {
   transition: width 0.2s;
 }
 .skill-info {
-  font-size: 0.9em;
+  font-size: 1em;
+  pointer-events: none;
 }
 .skill-info .skill-xp,
 .skill-info .skill-xp-total {
+  pointer-events: none;
   opacity: 0.5;
-  font-size: 0.8em;
+  font-size: 0.9em;
 }
 
 /* ---------------------- */
@@ -246,16 +255,17 @@ body {
 
 
 /* Resources grid */
-#resourcesGrid {
+#resourcesGrid, .perks-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(54px, 1fr));
-  gap: 5px;
+  gap: 2px;
 }
+
 /* Resource items */
-.resource-item {
+.resource-item, .perk-item img {
   position: relative;
-  width: 43px;
-  height: 43px;
+  width: 50px;
+  height: 50px;
   cursor: pointer; 
 }
 .resource-item img {
@@ -279,23 +289,12 @@ body {
   filter: brightness(1.2);
 }
 
-/* Perks grid */
-.perks-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(54px, 1fr));
-  gap: 5px;
-}
 .perk-item {
   display: inline-block;
   position: relative;
   cursor: default;
 }
-.perk-item img {
-  pointer-events: none;
-  width: 43px;
-  height: 43px;
-  object-fit: contain;
-}
+
 .perk-item.locked img {
   filter: grayscale(1);
   opacity: 0.5;
@@ -326,7 +325,7 @@ body {
 .task-control button {
   width: 50%;
   padding: 10px;
-  font-size: 0.7em;
+  font-size: 0.9em;
   background: #27ae60;
   border: none;
   border-radius: 5px;
@@ -377,8 +376,8 @@ body {
   padding-left: 5px;
 }
 .rep-indicator {
-  width: 12px;
-  height: 12px;
+  width: 16px;
+  height: 16px;
   background: #777;
   border-radius: 2px;
 }
@@ -401,7 +400,7 @@ body {
 }
 #tasks .task p {
   margin-top: 5px;
-  font-size: 0.7em;
+  font-size: 0.8em;
 }
 
 /* ---------------------- */
@@ -445,6 +444,7 @@ footer {
 }
 #gameOverContentEnergy button, #gameOverContentCopium button {
   margin-top: 20px;
+  margin-bottom: 20px;
   padding: 10px 20px;
   font-size: 1em;
   background: #27ae60;
@@ -500,4 +500,54 @@ footer {
   opacity: 0;
   transition: opacity 0.1s;
   z-index: 1200;
+}
+
+/* Media Queries for Mobile Devices */
+@media (max-width: 768px) {
+  #topStatus {
+    max-width: 100%;
+    gap: 5px; /* optional: adjust gap if needed */
+  }
+  .bars-container {
+    flex: 0 0 60%;
+  }
+  .upgrades-container {
+    flex: 0 0 24%;  /* 50% wider than 10% (10% * 1.5 = 15%) */
+  }
+  .upgrade-display {
+    font-size: 0.7em;
+  }
+  .skill {
+    width: 80px;
+    font-size: 0.75em;
+  }
+  .skill-info {
+    font-size: 0.9em;
+  }
+  .skill-info .skill-xp,
+  .skill-info .skill-xp-total {
+    font-size: 0.9em;
+  }
+  .rep-indicator {
+    width: 9px;
+    height: 9px;
+  }
+  .rep-container {
+    gap: 1px;
+  }
+  #resourcesGrid, .perks-grid {
+    grid-template-columns: repeat(auto-fill, minmax(46px, 1fr));
+    gap: 1px;
+  }
+  .resource-item, .perk-item img {
+    width: 43px;
+    height: 43px;
+  }
+  
+  .task-control button {
+    font-size: 0.7em;
+  }
+  #tasks .task p {
+    font-size: 0.7em;
+  }
 }
