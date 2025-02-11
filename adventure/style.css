@@ -553,4 +553,8 @@ footer {
   #tasks .task p {
     font-size: 0.7em;
   }
+
+  .custom-tooltip {
+    font-size: 0.6em;
+  }
 }

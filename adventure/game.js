@@ -73,19 +73,19 @@
   const resourceActions = {
     "energy_elixir": {
       onConsume: amt => { gameState.energy += 3 * amt; updateEnergyDisplay(); },
-      tooltip: "Click to gain +3 Energy per Energy Elixir. Right-click to consume all."
+      tooltip: "Click to gain +3 Energy per Energy Elixir.<br>Right-click or Hold to consume all."
     },
     "magnifying_glass": {
       onConsume: amt => { gameState.skills["perception"].progressBoost += 0.05 * amt; updateSkillDisplay(); },
-      tooltip: "Click to boost Perception by 5% per Magnifying Glass. Right-click to consume all."
+      tooltip: "Click to boost Perception by 5% per Magnifying Glass.<br>Right-click or Hold to consume all."
     },
     "goggles": {
       onConsume: amt => { gameState.skills["alchemy"].drainBoost += 0.05 * amt; updateSkillDisplay(); },
-      tooltip: "Click to reduce Alchemy energy drain by 5% per Goggles. Right-click to consume all."
+      tooltip: "Click to reduce Alchemy energy drain by 5% per Goggles.<br>Right-click or Hold to consume all."
     },
     "cybernetic_potion": {
       onConsume: amt => { gameState.skills["cybernetics"].drainBoost += 0.2 * amt; updateSkillDisplay(); },
-      tooltip: "Click to reduce Cybernetics energy drain by 20% per Cybernetic Potion. Right-click to consume all."
+      tooltip: "Click to reduce Cybernetics energy drain by 20% per Cybernetic Potion.<br>Right-click or Hold to consume all."
     },
     "amphetamine_pill": {
       onConsume: amt => { 
@@ -93,7 +93,7 @@
         gameState.skills["hacking"].progressBoost += 0.1 * amt; 
         updateSkillDisplay(); 
       },
-      tooltip: "Click to boost Tinkering and Hacking by 10% per Amphetamine Pill. Right-click to consume all."
+      tooltip: "Click to boost Tinkering and Hacking by 10% per Amphetamine Pill.<br>Right-click or Hold to consume all."
     },
     "steroids": {
       onConsume: amt => { 
@@ -101,7 +101,7 @@
         gameState.skills["combat"].drainBoost += 0.1 * amt; 
         updateSkillDisplay(); 
       },
-      tooltip: "Click to reduce Endurance and Combat energy drain by 10% per Steroid. Right-click to consume all."
+      tooltip: "Click to reduce Endurance and Combat energy drain by 10% per Steroid.<br>Right-click or Hold to consume all."
     },
   };
   function consumeResource(name, amt) {
@@ -124,23 +124,37 @@
       if (count <= 0) return;
       const div = document.createElement("div");
       div.className = "resource-item";
+      
+      // Create the image and prevent selection/dragging.
       const img = document.createElement("img");
       img.src = "images/" + rName + ".jpg";
       img.alt = rName;
       img.style.pointerEvents = "none";
+      img.style.userSelect = "none";          // Prevent text selection.
+      img.setAttribute("draggable", "false");  // Prevent dragging.
+      
       const cnt = document.createElement("div");
       cnt.className = "resource-count";
       cnt.textContent = count;
-      div.setAttribute("data-tooltip", (resourceActions[rName] && resourceActions[rName].tooltip) ? resourceActions[rName].tooltip : "Click to consume 1 unit. Right-click to consume all.");
+      
+      // Set tooltip text.
+      div.setAttribute("data-tooltip", (resourceActions[rName] && resourceActions[rName].tooltip)
+        ? resourceActions[rName].tooltip
+        : "Click to consume 1 unit. Right-click or Hold to consume all.");
+  
+      // Left-click: consume 1 unit.
       div.addEventListener("click", () => {
         if (gameState.resources[rName] > 0) {
           consumeResource(rName, 1);
           if (resourceActions[rName] && resourceActions[rName].onConsume) {
+            const amt = gameState.resources[rName];
             resourceActions[rName].onConsume(1);
-            hideTooltip();
+            if (amt == 1) hideTooltip();
           }
         }
       });
+  
+      // Right-click: consume all.
       div.addEventListener("contextmenu", e => {
         e.preventDefault();
         if (gameState.resources[rName] > 0) {
@@ -152,11 +166,39 @@
           }
         }
       });
+  
+      // Mobile: long press (1 second) consumes all.
+      let touchTimeout;
+      div.addEventListener("touchstart", e => {
+        // Start a timeout for 1 second.
+        touchTimeout = setTimeout(() => {
+          if (gameState.resources[rName] > 0) {
+            const amt = gameState.resources[rName];
+            consumeResource(rName, amt);
+            if (resourceActions[rName] && resourceActions[rName].onConsume) {
+              resourceActions[rName].onConsume(amt);
+              hideTooltip();
+            }
+          }
+        }, 1000);
+      });
+      // Cancel the timeout if touch ends or is canceled.
+      div.addEventListener("touchend", e => {
+        clearTimeout(touchTimeout);
+        touchTimeout = null;
+      });
+      div.addEventListener("touchcancel", e => {
+        clearTimeout(touchTimeout);
+        touchTimeout = null;
+      });
+  
+      // Append the elements.
       div.appendChild(img);
       div.appendChild(cnt);
       grid.appendChild(div);
     });
   }
+  
 
   /****************************************
    * LOAD / SAVE / PERK INIT
