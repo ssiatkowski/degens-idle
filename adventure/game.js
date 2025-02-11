@@ -30,7 +30,7 @@
         intellect:   { level: 1, xp: 0, visible: false, energyDrain: 3,   progressBoost: 1, drainBoost: 1, xpGainFactor: 0.5 },
         perception:  { level: 1, xp: 0, visible: false, energyDrain: 2,   progressBoost: 1, drainBoost: 1, xpGainFactor: 0.3 },
         mechanics:   { level: 1, xp: 0, visible: false, energyDrain: 5,   progressBoost: 1, drainBoost: 1, xpGainFactor: 0.1 },
-        combat:      { level: 1, xp: 0, visible: false, energyDrain: 20,  progressBoost: 1, drainBoost: 1, xpGainFactor: 0.2 },
+        combat:      { level: 1, xp: 0, visible: false, energyDrain: 20,  progressBoost: 1, drainBoost: 1, xpGainFactor: 0.06 },
         hacking:     { level: 1, xp: 0, visible: false, energyDrain: 7,   progressBoost: 1, drainBoost: 1, xpGainFactor: 0.01 },
         cybernetics: { level: 1, xp: 0, visible: false, energyDrain: 12,  progressBoost: 1, drainBoost: 1, xpGainFactor: 0.05 },
         negotiation: { level: 1, xp: 0, visible: false, energyDrain: 20,  progressBoost: 1, drainBoost: 1, xpGainFactor: 0.02 },
@@ -55,14 +55,16 @@
   const xpScale        = 0.001; // XP per tick
   const skillXpScaling = 1.02;
   const perkDescriptions = {
-    completionist:   "Automatically continue tasks until max reps.",
-    healthy_living:  "Reduce energy drain by 25%.",
-    basic_mech:      "Increases starting Energy by 25.",
-    double_timer:    "Allows running two tasks simultaneously.",
-    energetic_bliss: "Doubles progress while energy is above 50%.",
-    workaholic:      "All XP gains increased by 50%.",
-    brewmaster:      "Alchemy is 25% faster.",
-    copium_reactor:  "Get +5 starting Energy for each Copium reset."
+    completionist:      "Automatically continue tasks until max reps.",
+    healthy_living:     "Reduce energy drain by 25%.",
+    basic_mech:         "Increases starting Energy by 25.",
+    double_timer:       "Allows running two tasks simultaneously.",
+    energetic_bliss:    "Doubles progress while energy is above 50%.",
+    workaholic:         "All XP gains increased by 50%.",
+    brewmaster:         "Alchemy is 25% faster.",
+    copium_reactor:     "Get +5 starting Energy for each Copium reset.",
+    gacha_machine:      "25% chance to produce double resources.",
+    futuristic_wrench:  "Mechanics is 5x faster."
   };
 
   /****************************************
@@ -84,7 +86,23 @@
     "cybernetic_potion": {
       onConsume: amt => { gameState.skills["cybernetics"].drainBoost += 0.2 * amt; updateSkillDisplay(); },
       tooltip: "Click to reduce Cybernetics energy drain by 20% per Cybernetic Potion. Right-click to consume all."
-    }
+    },
+    "amphetamine_pill": {
+      onConsume: amt => { 
+        gameState.skills["tinkering"].progressBoost += 0.1 * amt; 
+        gameState.skills["hacking"].progressBoost += 0.1 * amt; 
+        updateSkillDisplay(); 
+      },
+      tooltip: "Click to boost Tinkering and Hacking by 10% per Amphetamine Pill. Right-click to consume all."
+    },
+    "steroids": {
+      onConsume: amt => { 
+        gameState.skills["endurance"].drainBoost += 0.1 * amt; 
+        gameState.skills["combat"].drainBoost += 0.1 * amt; 
+        updateSkillDisplay(); 
+      },
+      tooltip: "Click to reduce Endurance and Combat energy drain by 10% per Steroid. Right-click to consume all."
+    },
   };
   function consumeResource(name, amt) {
     if (!gameState.resources[name] || gameState.resources[name] < amt) return;
@@ -240,7 +258,8 @@
       if (levelSpan) levelSpan.textContent = formatNumber(sData.level);
       let baseMult = Math.pow(1.01, sData.level);
       if (sName === "alchemy" && gameState.perks.brewmaster) baseMult *= 1.25;
-      if (sName === "perception" && sData.progressBoost) baseMult *= (1 + sData.progressBoost);
+      if (sName === "mechanics" && gameState.perks.futuristic_wrench) baseMult *= 5;
+      baseMult *= (sData.progressBoost);
       let drainMsg = (sName !== "travel") ? `<br>Energy Drain: ${formatNumber(sData.energyDrain / (sData.drainBoost || 1))}x` : "";
       el.setAttribute("data-tooltip", `<strong>${capitalize(sName)} (Level: ${formatNumber(sData.level)})</strong><br>
                                       XP: ${formatNumber(sData.xp)} / ${formatNumber(xpTot)}<br>
@@ -312,6 +331,7 @@
         if (sk) {
           let sm = Math.pow(1.01, sk.level);
           if (sName === "alchemy" && gameState.perks["brewmaster"]) sm *= 1.25;
+          if (sName === "mechanics" && gameState.perks["futuristic_wrench"]) sm *= 5;
           sm *= (sk.progressBoost || 1);
           mult *= sm;
         }
@@ -373,7 +393,7 @@
       resetMsg.id = "energyResetMsg";
       energyContent.appendChild(resetMsg);
     }
-    resetMsg.textContent = "This is your " + gameState.numEnergyResets + getOrdinalSuffix(gameState.numEnergyResets) + " Energy reset.";
+    resetMsg.textContent = "This is your " + (gameState.numEnergyResets + 1) + getOrdinalSuffix((gameState.numEnergyResets + 1)) + " Energy reset.";
   }
   function handleCopiumOverflow() {
     const copiumScreen = document.getElementById("gameOverScreenCopium");
@@ -385,7 +405,7 @@
       resetMsg.id = "copiumResetMsg";
       copiumContent.appendChild(resetMsg);
     }
-    resetMsg.textContent = "This is your " + gameState.numCopiumResets + getOrdinalSuffix(gameState.numCopiumResets) + " Copium reset.";
+    resetMsg.textContent = "This is your " + (gameState.numCopiumResets + 1) + getOrdinalSuffix((gameState.numCopiumResets + 1)) + " Copium reset.";
   }
 
   /****************************************
@@ -709,10 +729,12 @@
         }
       
         // Produce resources.
-        if (task.resource) {
-          addResource(task.resource, 1);
-        } else if (task.resources && Array.isArray(task.resources)) {
-          task.resources.forEach(r => addResource(r, 1));
+        if (task.resources && Array.isArray(task.resources)) {
+          if (gameState.perks["gacha_machine"] && Math.random() < 0.25) {
+            task.resources.forEach(r => addResource(r, 2));
+          } else {
+            task.resources.forEach(r => addResource(r, 1));
+          }
         }
       
         // Process copium.
@@ -826,7 +848,7 @@
     const energyBarElem = document.getElementById("energyBarFill");
     if (energyBarElem) {
       energyBarElem.setAttribute("data-tooltip",
-        "Energy drains based on each skill used. Multiple skills multiply the drain. A high-level multi-skill task can drain energy quickly!"
+        "Energy drains based on each skill used.<br>Multiple skills multiply the drain. A high-level multi-skill task can drain energy quickly!"
       );
     }
     const kUpg = document.getElementById("knowledgeUpgValue");
