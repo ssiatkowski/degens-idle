@@ -313,10 +313,10 @@ const CURRENT_GAME_VERSION = "v0.01";
       if (sName === "alchemy" && gameState.perks.brewmaster) baseMult *= 1.25;
       if (sName === "mechanics" && gameState.perks.futuristic_wrench) baseMult *= 5;
       baseMult *= (sData.progressBoost);
-      let drainMsg = (sName !== "travel") ? `<br>Energy Drain: ${formatNumber(sData.energyDrain / (sData.drainBoost || 1))}x` : "";
-      el.setAttribute("data-tooltip", `<strong>${capitalize(sName)} (Level: ${formatNumber(sData.level)})</strong><br>
+      el.setAttribute("data-tooltip", `${capitalize(sName)} (Level: ${formatNumber(sData.level)})<br>
                                       XP: ${formatNumber(sData.xp)} / ${formatNumber(xpTot)}<br>
-                                      Speed: x${formatNumber(baseMult)}${drainMsg}`);
+                                      Speed: x${formatNumber(baseMult)}<br>
+                                      Energy Drain: ${formatNumber(sData.energyDrain / (sData.drainBoost || 1))}x`);
     });
   }
   function renderSkills() {
@@ -827,22 +827,45 @@ const CURRENT_GAME_VERSION = "v0.01";
       modal.className = "modal";
       const content = document.createElement("div");
       content.className = "modal-content";
+      
+      // Arrange buttons vertically
+      content.style.display = "flex";
+      content.style.flexDirection = "column";
+      content.style.gap = "10px";
+      
+      // Cheat Codes Button (new)
+      const cheatBtn = document.createElement("button");
+      cheatBtn.textContent = "Cheat Codes";
+      cheatBtn.addEventListener("click", () => {
+        showCheatCodeModal();
+      });
+      content.appendChild(cheatBtn);
+      
+      // FULL RESTART Button (red) with confirmation dialog
       const restartAll = document.createElement("button");
       restartAll.textContent = "FULL RESTART";
+      restartAll.style.backgroundColor = "#e74c3c"; // red
       restartAll.addEventListener("click", () => {
-        localStorage.clear();
-        fullRestart();
-        modal.remove();
+        if (confirm("Are you sure you want to FULL RESTART? This cannot be undone.")) {
+          localStorage.removeItem("degensAdventureProgress");
+          fullRestart();
+          modal.remove();
+        }
       });
       content.appendChild(restartAll);
+      
+      // Back Button (green)
       const backBtn = document.createElement("button");
-      backBtn.textContent = "Go Back";
+      backBtn.textContent = "Back";
+      backBtn.style.backgroundColor = "#27ae60"; // green
       backBtn.addEventListener("click", () => { modal.remove(); });
       content.appendChild(backBtn);
+      
       modal.appendChild(content);
       document.body.appendChild(modal);
     });
   }
+  
   createSettingsButton();
   function fullRestart() {
     gameState = getInitialGameState();
@@ -869,6 +892,88 @@ const CURRENT_GAME_VERSION = "v0.01";
     resetGame("copiumOverflow");
   });
 
+  function showCheatCodeModal() {
+    const modal = document.createElement("div");
+    modal.id = "cheatCodeModal";
+    modal.className = "modal";
+    const content = document.createElement("div");
+    content.className = "modal-content";
+    
+    // Vertical layout for cheat code modal
+    content.style.display = "flex";
+    content.style.flexDirection = "column";
+    content.style.gap = "10px";
+    
+    const input = document.createElement("input");
+    input.type = "text";
+    input.placeholder = "Enter Cheat Code";
+    content.appendChild(input);
+    
+    const submitBtn = document.createElement("button");
+    submitBtn.textContent = "Submit";
+    submitBtn.addEventListener("click", () => {
+      processCheatCode(input.value.trim());
+      modal.remove();
+    });
+    content.appendChild(submitBtn);
+    
+    const cancelBtn = document.createElement("button");
+    cancelBtn.textContent = "Cancel";
+    cancelBtn.style.backgroundColor = "#27ae60"; // green
+    cancelBtn.addEventListener("click", () => { modal.remove(); });
+    content.appendChild(cancelBtn);
+    
+    modal.appendChild(content);
+    document.body.appendChild(modal);
+  }
+
+  function processCheatCode(code) {
+    if (code === "BetterStart") {
+      // For endurance, tinkering, charisma, and alchemy: ensure level is at least 250
+      ["endurance", "tinkering", "charisma", "alchemy"].forEach(skillName => {
+        if (gameState.skills[skillName].level < 250) {
+          gameState.skills[skillName].level = 250;
+          gameState.skills[skillName].xp = 0; // Optionally reset XP
+        }
+      });
+      // For travel: ensure level is at least 200
+      if (gameState.skills["travel"].level < 200) {
+        gameState.skills["travel"].level = 200;
+        gameState.skills["travel"].xp = 0; // Optionally reset XP
+      }
+      showConfirmationModal("Cheat Code Activated: BetterStart");
+      renderSkills();
+      updateSkillDisplay();
+    } else {
+      showConfirmationModal("Invalid Cheat Code");
+    }
+  }  
+  
+  function showConfirmationModal(message) {
+    const modal = document.createElement("div");
+    modal.className = "modal";
+    const content = document.createElement("div");
+    content.className = "modal-content";
+    content.style.display = "flex";
+    content.style.flexDirection = "column";
+    content.style.gap = "10px";
+    
+    const msgP = document.createElement("p");
+    msgP.textContent = message;
+    content.appendChild(msgP);
+    
+    const okBtn = document.createElement("button");
+    okBtn.textContent = "OK";
+    okBtn.style.backgroundColor = "#27ae60"; // green button
+    okBtn.addEventListener("click", () => {
+      modal.remove();
+    });
+    content.appendChild(okBtn);
+    
+    modal.appendChild(content);
+    document.body.appendChild(modal);
+  }
+  
   /****************************************
    * MAIN GAME LOOP
    ****************************************/

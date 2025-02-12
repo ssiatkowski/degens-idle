@@ -38,7 +38,7 @@ var zones = [
     name: "City Core",
     img: "images/zone3.jpg",
     tasks: [
-      { id: 31, name: "Workshop Fix a Broken Engine", type: "Training", maxReps: 5, count: 0, baseTime: 5e3, description: "Learn the basics of machinery repair.", skills: ["mechanics"] },
+      { id: 31, name: "Workshop Fix a Broken Engine", type: "Training", maxReps: 5, count: 0, baseTime: 3e4, description: "Learn the basics of machinery repair.", skills: ["mechanics"] },
       { id: 32, name: "Basic Mech: Rudimentary Upgrade", type: "Training", maxReps: 1, count: 0, baseTime: 4e5, description: "Construct a basic biomechanical upgrade.", skills: ["mechanics", "intellect"], perk: "basic_mech" },
       { id: 33, name: "Study Urban Traffic Flow", type: "Training", maxReps: 10, count: 0, baseTime: 8e4, description: "Analyze traffic patterns using perception and intellect.", skills: ["perception", "intellect"] },
       { id: 34, name: "Completionist: Run City Marathon", type: "Training", maxReps: 1, count: 0, baseTime: 2e5, description: "Test your stamina on a long city run.", skills: ["endurance"], mandatory: true, perk: "completionist" },
