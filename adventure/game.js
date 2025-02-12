@@ -32,10 +32,10 @@ const CURRENT_GAME_VERSION = "v0.01";
         intellect:   { level: 1, xp: 0, visible: false, energyDrain: 3,   progressBoost: 1, drainBoost: 1, xpGainFactor: 0.5 },
         perception:  { level: 1, xp: 0, visible: false, energyDrain: 2,   progressBoost: 1, drainBoost: 1, xpGainFactor: 0.3 },
         mechanics:   { level: 1, xp: 0, visible: false, energyDrain: 5,   progressBoost: 1, drainBoost: 1, xpGainFactor: 0.1 },
-        combat:      { level: 1, xp: 0, visible: false, energyDrain: 20,  progressBoost: 1, drainBoost: 1, xpGainFactor: 0.06 },
+        combat:      { level: 1, xp: 0, visible: false, energyDrain: 20,  progressBoost: 1, drainBoost: 1, xpGainFactor: 0.02 },
         hacking:     { level: 1, xp: 0, visible: false, energyDrain: 7,   progressBoost: 1, drainBoost: 1, xpGainFactor: 0.01 },
-        cybernetics: { level: 1, xp: 0, visible: false, energyDrain: 12,  progressBoost: 1, drainBoost: 1, xpGainFactor: 0.05 },
-        negotiation: { level: 1, xp: 0, visible: false, energyDrain: 20,  progressBoost: 1, drainBoost: 1, xpGainFactor: 0.02 },
+        cybernetics: { level: 1, xp: 0, visible: false, energyDrain: 12,  progressBoost: 1, drainBoost: 1, xpGainFactor: 0.03 },
+        negotiation: { level: 1, xp: 0, visible: false, energyDrain: 20,  progressBoost: 1, drainBoost: 1, xpGainFactor: 0.01 },
         aiMastery:   { level: 1, xp: 0, visible: false, energyDrain: 15,  progressBoost: 1, drainBoost: 1, xpGainFactor: 0.001 },
         quantum:     { level: 1, xp: 0, visible: false, energyDrain: 50,  progressBoost: 1, drainBoost: 1, xpGainFactor: 0.0001 },
         omniscience: { level: 1, xp: 0, visible: false, energyDrain: 100, progressBoost: 1, drainBoost: 1, xpGainFactor: 0.00001 }
@@ -66,7 +66,7 @@ const CURRENT_GAME_VERSION = "v0.01";
     healthy_living:     "Reduce energy drain by 25%.",
     basic_mech:         "Increases starting Energy by 25.",
     double_timer:       "Allows running two tasks simultaneously.",
-    energetic_bliss:    "Doubles progress while energy is above 50%.",
+    energetic_bliss:    "Doubles progress while energy is above 80%.",
     workaholic:         "All XP gains increased by 50%.",
     brewmaster:         "Alchemy is 25% faster.",
     copium_reactor:     "Get +5 starting Energy for each Copium reset.",
@@ -437,7 +437,7 @@ const CURRENT_GAME_VERSION = "v0.01";
         }
       });
     }
-    if (gameState.perks["energetic_bliss"] && gameState.energy > (gameState.startingEnergy * 0.5)) {
+    if (gameState.perks["energetic_bliss"] && gameState.energy > (gameState.startingEnergy * 0.8)) {
       mult *= 2;
     }
     return mult;
@@ -757,7 +757,7 @@ const CURRENT_GAME_VERSION = "v0.01";
       icon.alt = formatPerkName(pKey);
       icon.style.pointerEvents = "none";
       if (gameState.perks[pKey]) {
-        div.setAttribute("data-tooltip", formatPerkName(pKey) + ": " + (perkDescriptions[pKey] || "An unknown perk."));
+        div.setAttribute("data-tooltip", formatPerkName(pKey) + ":<br>" + (perkDescriptions[pKey] || "An unknown perk."));
         div.className = "perk-item unlocked";
       } else {
         div.setAttribute("data-tooltip", formatPerkName(pKey) + ": Unlock perk to see description.");
@@ -1008,7 +1008,7 @@ const CURRENT_GAME_VERSION = "v0.01";
       const usedSkills = tData.task.skills || [];
       let xpEach = baseXP / (usedSkills.length || 1);
       if (gameState.perks["workaholic"]) xpEach *= 1.5;
-      if (gameState.perks["energetic_bliss"] && gameState.energy > 50) xpEach *= 2;
+      if (gameState.perks["energetic_bliss"] && gameState.energy > (gameState.startingEnergy * 0.8)) xpEach *= 2;
       usedSkills.forEach(sName => { addXP(sName, xpEach); });
       const pct = (tData.progress / tData.totalDuration) * 100;
       tData.progressFill.style.width = Math.min(pct, 100) + "%";
