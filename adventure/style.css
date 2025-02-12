@@ -512,6 +512,37 @@ footer {
   z-index: 1200;
 }
 
+#zoneAutomation {
+  margin-top: 5px;
+  font-size: 1.2em;
+  text-align: center;
+  color: #eee;
+}
+
+#zoneAutomation button {
+  background: #27ae60;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+
+#zoneAutomation button:hover {
+  transform: scale(1.02);
+  filter: brightness(0.9);
+}
+
+#versionBanner {
+  background-color: #ff4444;  /* bright red background */
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+  font-size: 0.9em;
+  display: none; /* Hidden by default */
+}
+
 /* Media Queries for Mobile Devices */
 @media (max-width: 768px) {
   #topStatus {

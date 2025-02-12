@@ -1,9 +1,11 @@
+const CURRENT_GAME_VERSION = "v0.01";
+
 (function() {
   /****************************************
    * DEFINITIONS: Skills affecting knowledge, copium, delusion
    ****************************************/
   const knowledgeSkills = ["tinkering", "intellect", "hacking"];
-  const copiumSkills    = ["endurance", "alchemy", "travel", "mechanics", "combat"];
+  const copiumSkills    = ["endurance", "alchemy", "mechanics"];
   const delusionSkills  = ["charisma", "perception", "aiMastery", "negotiation", "omniscience"];
 
   /****************************************
@@ -41,7 +43,12 @@
       perks: {},
       numEnergyResets: 0,
       numCopiumResets: 0,
-      numDelusionResets: 0
+      numDelusionResets: 0,
+      numCyberneticArmors: 0,
+      cyberneticArmorTaskRunning: false,
+      zoneFullCompletes: {},
+      autoRun: false,
+      gameVersion: CURRENT_GAME_VERSION
     };
   }
 
@@ -64,7 +71,9 @@
     brewmaster:         "Alchemy is 25% faster.",
     copium_reactor:     "Get +5 starting Energy for each Copium reset.",
     gacha_machine:      "25% chance to produce double resources.",
-    futuristic_wrench:  "Mechanics is 5x faster."
+    futuristic_wrench:  "Mechanics is 5x faster.",
+    luck_of_the_irish:  "1% chance to produce 77x resources.",
+    simulation_engine:  "Unlock ability to automate zones after fully completing 10 times."
   };
 
   /****************************************
@@ -87,22 +96,33 @@
       onConsume: amt => { gameState.skills["cybernetics"].drainBoost += 0.2 * amt; updateSkillDisplay(); },
       tooltip: "Click to reduce Cybernetics energy drain by 20% per Cybernetic Potion.<br>Right-click or Hold to consume all."
     },
+    "cybernetic_armor": {
+      onConsume: amt => { gameState.numCyberneticArmors += amt; },
+      tooltip: "Click to reduce energy drain by 75% for next task.<br>Stacks with number of tasks, not drain on single task.<br>Right-click or Hold to consume all."
+    },
     "amphetamine_pill": {
-      onConsume: amt => { 
-        gameState.skills["tinkering"].progressBoost += 0.1 * amt; 
-        gameState.skills["hacking"].progressBoost += 0.1 * amt; 
-        updateSkillDisplay(); 
+      onConsume: amt => {
+        gameState.skills["tinkering"].progressBoost += 0.1 * amt;
+        gameState.skills["hacking"].progressBoost += 0.1 * amt;
+        updateSkillDisplay();
       },
       tooltip: "Click to boost Tinkering and Hacking by 10% per Amphetamine Pill.<br>Right-click or Hold to consume all."
     },
     "steroids": {
-      onConsume: amt => { 
-        gameState.skills["endurance"].drainBoost += 0.1 * amt; 
-        gameState.skills["combat"].drainBoost += 0.1 * amt; 
-        updateSkillDisplay(); 
+      onConsume: amt => {
+        gameState.skills["endurance"].drainBoost += 0.1 * amt;
+        gameState.skills["combat"].drainBoost += 0.1 * amt;
+        updateSkillDisplay();
       },
       tooltip: "Click to reduce Endurance and Combat energy drain by 10% per Steroid.<br>Right-click or Hold to consume all."
     },
+    "touchable_grass": {
+      onConsume: amt => {
+        gameState.copium = Math.max(gameState.copium - 100 * amt, 0);
+        updateCopiumDisplay();
+      },
+      tooltip: "Click to reduce Copium by 100 per Touchable Grass.<br>Right-click or Hold to consume all."
+    }
   };
   function consumeResource(name, amt) {
     if (!gameState.resources[name] || gameState.resources[name] < amt) return;
@@ -147,9 +167,8 @@
         if (gameState.resources[rName] > 0) {
           consumeResource(rName, 1);
           if (resourceActions[rName] && resourceActions[rName].onConsume) {
-            const amt = gameState.resources[rName];
             resourceActions[rName].onConsume(1);
-            if (amt == 1) hideTooltip();
+            hideTooltip();
           }
         }
       });
@@ -170,7 +189,6 @@
       // Mobile: long press (1 second) consumes all.
       let touchTimeout;
       div.addEventListener("touchstart", e => {
-        // Start a timeout for 1 second.
         touchTimeout = setTimeout(() => {
           if (gameState.resources[rName] > 0) {
             const amt = gameState.resources[rName];
@@ -182,23 +200,14 @@
           }
         }, 1000);
       });
-      // Cancel the timeout if touch ends or is canceled.
-      div.addEventListener("touchend", e => {
-        clearTimeout(touchTimeout);
-        touchTimeout = null;
-      });
-      div.addEventListener("touchcancel", e => {
-        clearTimeout(touchTimeout);
-        touchTimeout = null;
-      });
+      div.addEventListener("touchend", e => { clearTimeout(touchTimeout); touchTimeout = null; });
+      div.addEventListener("touchcancel", e => { clearTimeout(touchTimeout); touchTimeout = null; });
   
-      // Append the elements.
       div.appendChild(img);
       div.appendChild(cnt);
       grid.appendChild(div);
     });
   }
-  
 
   /****************************************
    * LOAD / SAVE / PERK INIT
@@ -268,7 +277,7 @@
     if (rawXP <= 0) return;
     const skill = gameState.skills[skillName];
     if (!skill) return;
-    // If the skill was hidden, reveal it now and re-render skills.
+    // Reveal hidden skills on first use.
     if (!skill.visible) {
       skill.visible = true;
       renderSkills();
@@ -318,7 +327,7 @@
         const div = document.createElement("div");
         div.className = "skill";
         div.setAttribute("data-skill", sName);
-        // Static display: only skill name and level; XP details are in tooltip.
+        // Static display: show only the skill name and level.
         div.innerHTML = `<div class="skill-name">${capitalize(sName)}<br>(Level: <span class="skill-level">${formatNumber(s.level)}</span>)</div>
                          <div class="skill-bar"><div class="skill-bar-fill"></div></div>`;
         container.appendChild(div);
@@ -379,9 +388,12 @@
         }
       });
     }
+    if (gameState.perks["energetic_bliss"] && gameState.energy > (gameState.startingEnergy * 0.5)) {
+      mult *= 2;
+    }
     return mult;
   }
-  function getCombinedEnergyDrain(task) {
+  function getCombinedEnergyDrain(task, zoneIndex) {
     let baseDrain = 0.05;
     if (Array.isArray(task.skills)) {
       task.skills.forEach(sName => {
@@ -390,6 +402,8 @@
         }
       });
     }
+    baseDrain *= Math.pow(1.1, zoneIndex - 1);
+    baseDrain = baseDrain * (gameState.perks["healthy_living"] ? 0.75 : 1)
     return baseDrain;
   }
 
@@ -417,6 +431,8 @@
     gameState.energy = gameState.startingEnergy;
     currentZoneIndex = 0;
     currentTasks = [];
+    gameState.autoRun = false;
+    gameState.cyberneticArmorTaskRunning = false;
     saveGameProgress();
     updateEnergyDisplay();
     updateCopiumDisplay();
@@ -435,7 +451,7 @@
       resetMsg.id = "energyResetMsg";
       energyContent.appendChild(resetMsg);
     }
-    resetMsg.textContent = "This is your " + (gameState.numEnergyResets + 1) + getOrdinalSuffix((gameState.numEnergyResets + 1)) + " Energy reset.";
+    resetMsg.textContent = "This is your " + (gameState.numEnergyResets + 1) + getOrdinalSuffix(gameState.numEnergyResets + 1) + " Energy reset.";
   }
   function handleCopiumOverflow() {
     const copiumScreen = document.getElementById("gameOverScreenCopium");
@@ -447,7 +463,7 @@
       resetMsg.id = "copiumResetMsg";
       copiumContent.appendChild(resetMsg);
     }
-    resetMsg.textContent = "This is your " + (gameState.numCopiumResets + 1) + getOrdinalSuffix((gameState.numCopiumResets + 1)) + " Copium reset.";
+    resetMsg.textContent = "This is your " + (gameState.numCopiumResets + 1) + getOrdinalSuffix(gameState.numCopiumResets + 1) + " Copium reset.";
   }
 
   /****************************************
@@ -457,8 +473,18 @@
     const activeCount = currentTasks.filter(t => !t.paused).length;
     const existing = currentTasks.find(t => t.zoneIndex === zoneIndex && t.taskIndex === taskIndex);
     if (existing) {
+      // Toggle pause state.
       existing.paused = !existing.paused;
       button.classList.toggle("active", !existing.paused);
+      // If paused, revert zone image (if no other boss tasks active).
+      if (existing.paused) {
+        const zoneImg = document.getElementById("zoneImage");
+        const zone = zones[zoneIndex];
+        // Check if any other active task has a boss_image.
+        if (!currentTasks.some(t => !t.paused && t.task.boss_image)) {
+          zoneImg.src = zone.img;
+        }
+      }
     } else {
       const maxSlots = gameState.perks["double_timer"] ? 2 : 1;
       if (activeCount >= maxSlots) {
@@ -466,6 +492,11 @@
         return;
       }
       startTask(zoneIndex, taskIndex, button, progressFill, repContainer);
+      // If the newly started task has a boss_image, update the zone image.
+      const task = zones[zoneIndex].tasks[taskIndex];
+      if (task.boss_image) {
+        document.getElementById("zoneImage").src = task.boss_image;
+      }
     }
   }
   function startTask(zoneIndex, taskIndex, button, progressFill, repContainer) {
@@ -514,7 +545,10 @@
     }
     document.getElementById("zoneName").textContent = `Zone ${zone.id}: ${zone.name}`;
     const zImg = document.getElementById("zoneImage");
-    if (zImg && zone.img) { zImg.src = zone.img; zImg.alt = zone.name; }
+    if (zImg && zone.img) {
+      zImg.src = zone.img;
+      zImg.alt = zone.name;
+    }
     const tasksContainer = document.getElementById("tasks");
     if (!tasksContainer) return;
     tasksContainer.innerHTML = "";
@@ -553,8 +587,18 @@
           btn.appendChild(rIcon);
         });
       }
-      // Set tooltip for the button with the task description only.
-      btn.setAttribute("data-tooltip", task.description);
+      // The speed multiplier from skills.
+      const speedMult = getCombinedMultiplier(task);
+      // Calculate how many ticks are required for the task to complete.
+      // (tickDuration is in milliseconds and task.baseTime is in the same time unit as used in your gameLoop.)
+      const ticksRequired = task.baseTime / (tickDuration * speedMult);
+      // Force at least 1 tick.
+      const effectiveTicks = Math.max(1, ticksRequired);
+      // Energy drained per tick (as in your gameLoop).
+      const energyPerTick = getCombinedEnergyDrain(task, zones[currentZoneIndex].id);
+      // Estimated total energy needed.
+      const estimatedEnergy = energyPerTick * effectiveTicks;
+      btn.setAttribute("data-tooltip", task.description + `<br><br>Rough Estimate of Energy Needed${task.maxReps > 1 ? " per task" : ""} (at start of zone): ` + formatNumber(estimatedEnergy));
       if (task.type === "Travel" && !isTravelAvailable(zone)) btn.disabled = true;
       const progressFill = document.createElement("div");
       progressFill.className = "current-progress-fill";
@@ -590,9 +634,37 @@
     });
     renderPerks();
     showKnowledgeIfUnlocked();
+    // --- New Code for Simulation Engine Automation ---
+    const zoneAutomationEl = document.getElementById("zoneAutomation");
+    // Only display the automation UI if the simulation_engine perk is unlocked.
+    if (gameState.perks["simulation_engine"]) {
+      // Ensure the current zone's full completion count exists (default to 0 if not).
+      if (typeof gameState.zoneFullCompletes[currentZoneIndex] !== "number") {
+        gameState.zoneFullCompletes[currentZoneIndex] = 0;
+      }
+      if (gameState.zoneFullCompletes[currentZoneIndex] >= 10) {
+        // Create (or update) an Automate button.
+        zoneAutomationEl.innerHTML = "";
+        const autoBtn = document.createElement("button");
+        autoBtn.textContent = "Automate";
+        autoBtn.addEventListener("click", () => {
+          gameState.autoRun = true;
+          // Optionally: immediately start automation.
+        });
+        zoneAutomationEl.appendChild(autoBtn);
+      } else {
+        // Show the counter as "X/10"
+        zoneAutomationEl.textContent = "Full Completes: " +gameState.zoneFullCompletes[currentZoneIndex] + "/10";
+      }
+    } else {
+      // If simulation_engine perk is not unlocked, clear the automation display.
+      zoneAutomationEl.innerHTML = "";
+    }
+
   }
   function nextZone() {
     currentZoneIndex++;
+    gameState.autoRun = false; // Reset automation when changing zones.
     if (currentZoneIndex < zones.length) displayZone();
     else {
       const scenario = document.getElementById("scenarioText");
@@ -601,6 +673,7 @@
       if (tasksEl) tasksEl.innerHTML = "";
     }
   }
+  
 
   /****************************************
    * PERKS RENDER & MODALS
@@ -667,7 +740,7 @@
     if (copiumBarElem) {
       copiumBarElem.setAttribute("data-tooltip",
         "Copium builds up from tasks with " + copiumSkills.join(", ") +
-        ". If it exceeds 9000, you reset with half your knowledge lost!"
+        ".<br>If it exceeds 9000, you reset with half your knowledge lost!"
       );
     }
     updateCopiumDisplay();
@@ -717,6 +790,7 @@
     const kUpg = document.getElementById("knowledgeUpgValue");
     if (kUpg) kUpg.parentElement.style.display = "none";
     displayZone();
+    document.getElementById("versionBanner").style.display = "none";
   }
   document.getElementById("restartButtonEnergy").addEventListener("click", () => {
     document.getElementById("gameOverScreenEnergy").style.display = "none";
@@ -731,20 +805,23 @@
    * MAIN GAME LOOP
    ****************************************/
   function gameLoop() {
-    if (currentTasks.length === 0) return;
+    if (currentTasks.length === 0 && !gameState.autoRun) return;
     currentTasks.forEach((tData, idx) => {
       if (tData.paused) return;
       const oldProgress = tData.progress;
       const zone = zones[tData.zoneIndex];
       let speedMult = getCombinedMultiplier(tData.task);
-      if (gameState.perks["energetic_bliss"] && gameState.energy > (gameState.startingEnergy * 0.5)) {
-        speedMult *= 2;
-      }
       tData.progress += tickDuration * speedMult;
       if (tData.progress > tData.totalDuration) tData.progress = tData.totalDuration;
       const delta = tData.progress - oldProgress;
-      const zoneDrain = Math.pow(1.1, zone.id - 1);
-      const drain = getCombinedEnergyDrain(tData.task) * zoneDrain * (gameState.perks["healthy_living"] ? 0.75 : 1);
+      let drain = getCombinedEnergyDrain(tData.task, tData.zoneIndex);
+      if (!gameState.cyberneticArmorTaskRunning && gameState.numCyberneticArmors > 0) {
+        gameState.cyberneticArmorTaskRunning = true;
+        gameState.numCyberneticArmors--;
+      }
+      if (gameState.cyberneticArmorTaskRunning) {
+        drain *= 0.25;
+      }
       gameState.energy -= drain;
       updateEnergyDisplay();
       if (gameState.energy <= 0) {
@@ -764,69 +841,61 @@
       tData.progressFill.style.width = Math.min(pct, 100) + "%";
       if (tData.progress >= tData.totalDuration) {
         const task = zone.tasks[tData.taskIndex];
-      
-        // Increment the task count if not yet at max.
-        if (task.count < task.maxReps) {
-          task.count++;
-        }
-      
-        // Produce resources.
+        if (task.count < task.maxReps) task.count++;
         if (task.resources && Array.isArray(task.resources)) {
-          if (gameState.perks["gacha_machine"] && Math.random() < 0.25) {
+          if (gameState.perks["luck_of_the_irish"] && Math.random() < 0.01) {
+            task.resources.forEach(r => addResource(r, 77));
+          } else if (gameState.perks["gacha_machine"] && Math.random() < 0.25) {
             task.resources.forEach(r => addResource(r, 2));
           } else {
             task.resources.forEach(r => addResource(r, 1));
           }
         }
-      
-        // Process copium.
         if (gameState.copiumUnlocked && usedSkills.some(s => copiumSkills.includes(s))) {
           gameState.copium += (10 * zone.id);
-          if (gameState.copium > 9000) {
-            currentTasks = [];
-            handleCopiumOverflow();
-            return;
-          }
+          if (gameState.copium > 9000) { currentTasks = []; handleCopiumOverflow(); return; }
           updateCopiumDisplay();
         }
-      
         updateRepContainer(tData.repContainer, task);
-      
-        // For mandatory tasks that unlock travel.
         if (task.mandatory && task.count >= task.maxReps && isTravelAvailable(zone)) {
           enableTravelButtons(tData.zoneIndex);
         }
-      
         if (task.type === "Travel") {
-          // Travel tasks: process as before.
+          // Check if all non-Travel tasks in this zone are complete.
+          const nonTravelTasks = zone.tasks.filter(t => t.type !== "Travel");
+          const allNonTravelComplete = nonTravelTasks.every(t => t.count >= t.maxReps);
+          if (allNonTravelComplete) {
+            // Increment the full completion counter in gameState.
+            gameState.zoneFullCompletes[tData.zoneIndex] = (gameState.zoneFullCompletes[tData.zoneIndex] || 0) + 1;
+          }
           showMessage("Travel complete: " + task.name);
           tData.button.classList.remove("active");
           removeTaskFromCurrent(tData);
           nextZone();
           displayZone();
-        } else {
+        }
+         else {
           // Non-Travel tasks:
           if (task.count >= task.maxReps) {
-            // Regardless of Completionist, if maximum count is reached, hide the task.
+            // Hide the task if it has reached max repetitions.
             hideTooltip();
             tData.button.parentElement.parentElement.style.display = "none";
             removeTaskFromCurrent(tData);
           } else {
-            // Task not yet complete.
+            // If not yet at max, then:
             if (gameState.perks["completionist"]) {
-              // With Completionist, automatically reset progress for the next repetition.
+              // With Completionist, automatically reset progress.
               showMessage(`Repetition complete: ${task.name} (${task.count}/${task.maxReps})`);
               tData.progress = 0;
               tData.progressFill.style.width = "0%";
             } else {
-              // Without Completionist, stop running after one repetition so the player must click to restart.
+              // Without Completionist, stop running after one repetition.
               showMessage(`Repetition complete: ${task.name} (${task.count}/${task.maxReps}). Click to run again.`);
               removeTaskFromCurrent(tData);
             }
+            gameState.cyberneticArmorTaskRunning = false;
           }
         }
-      
-        // Award knowledge only once when the task reaches max repetitions.
         if (task.count >= task.maxReps &&
             gameState.knowledgeUnlocked &&
             usedSkills.some(s => knowledgeSkills.includes(s))) {
@@ -834,16 +903,47 @@
           showMessage(`+1 Knowledge (Total: ${gameState.knowledge})`);
           showKnowledgeIfUnlocked();
         }
-      
-        // Unlock perk if applicable.
         if (task.perk && !gameState.perks[task.perk] && task.count >= task.maxReps) {
           gameState.perks[task.perk] = true;
           if (task.perk === "basic_mech") gameState.startingEnergy += 25;
           showMessage("Perk unlocked: " + formatPerkName(task.perk));
           renderPerks();
         }
-      }      
+      }
     });
+    // After processing tasks, update the zone image based on any active boss.
+    const zoneImage = document.getElementById("zoneImage");
+    // Look for any active task that has a boss_image attribute.
+    const activeBossTask = currentTasks.find(t => !t.paused && t.task.boss_image);
+    if (activeBossTask) {
+      zoneImage.src = activeBossTask.task.boss_image;
+    } else {
+      // Revert to the zone's default image.
+      zoneImage.src = zones[currentZoneIndex].img;
+    }
+    // AUTOMATE: If autoRun is enabled and no tasks are running, start one.
+    if (gameState.autoRun && currentTasks.length === 0) {
+      const zone = zones[currentZoneIndex];
+      // Loop over tasks in the current zone.
+      for (let idx = 0; idx < zone.tasks.length; idx++) {
+        const task = zone.tasks[idx];
+        // Only auto-run tasks that are not complete.
+        if (task.count < task.maxReps) {
+          // Find the corresponding DOM elements.
+          const taskDiv = document.querySelector(`.task[data-zone-index="${currentZoneIndex}"][data-task-index="${idx}"]`);
+          if (taskDiv) {
+            const btn = taskDiv.querySelector("button");
+            const progressFill = taskDiv.querySelector(".current-progress-fill");
+            const repContainer = taskDiv.querySelector(".rep-container");
+            if (btn && progressFill && repContainer) {
+              startTask(currentZoneIndex, idx, btn, progressFill, repContainer);
+              break; // Only one task should be running at a time.
+            }
+          }
+        }
+      }
+    }
+
     saveGameProgress();
   }
   setInterval(gameLoop, tickDuration);
@@ -903,6 +1003,16 @@
     updateSkillDisplay();
     renderResources();
     displayZone();
+    // Version check: if the saved game version doesn't match, show the banner.
+    if (gameState.gameVersion !== CURRENT_GAME_VERSION) {
+      const banner = document.getElementById("versionBanner");
+      if (banner) {
+        banner.style.display = "block";
+        banner.innerHTML = "Your save is using a previous version. This will cause issues and not work with all current content. Full Restart through settings is advised.";
+      } else {
+        banner.style.display = "none";
+      }
+    }
   });
 
   // Expose gameState for debugging.
