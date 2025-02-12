@@ -28,7 +28,7 @@ const CURRENT_GAME_VERSION = "v0.01";
         tinkering:   { level: 1, xp: 0, visible: true,  energyDrain: 2.5, progressBoost: 1, drainBoost: 1, xpGainFactor: 1 },
         charisma:    { level: 1, xp: 0, visible: true,  energyDrain: 1.5, progressBoost: 1, drainBoost: 1, xpGainFactor: 1 },
         alchemy:     { level: 1, xp: 0, visible: true,  energyDrain: 10,  progressBoost: 1, drainBoost: 1, xpGainFactor: 1 },
-        travel:      { level: 1, xp: 0, visible: true,  energyDrain: 1,   progressBoost: 1, drainBoost: 1, xpGainFactor: 1.5 },
+        travel:      { level: 1, xp: 0, visible: false,  energyDrain: 1,   progressBoost: 1, drainBoost: 1, xpGainFactor: 1.5 },
         intellect:   { level: 1, xp: 0, visible: false, energyDrain: 3,   progressBoost: 1, drainBoost: 1, xpGainFactor: 0.5 },
         perception:  { level: 1, xp: 0, visible: false, energyDrain: 2,   progressBoost: 1, drainBoost: 1, xpGainFactor: 0.3 },
         mechanics:   { level: 1, xp: 0, visible: false, energyDrain: 5,   progressBoost: 1, drainBoost: 1, xpGainFactor: 0.1 },
@@ -168,7 +168,9 @@ const CURRENT_GAME_VERSION = "v0.01";
           consumeResource(rName, 1);
           if (resourceActions[rName] && resourceActions[rName].onConsume) {
             resourceActions[rName].onConsume(1);
-            hideTooltip();
+            if (gameState.resources[rName] == 0) {
+              hideTooltip();
+            }
           }
         }
       });
@@ -340,15 +342,25 @@ const CURRENT_GAME_VERSION = "v0.01";
    * HOVER TOOLTIP SYSTEM
    ****************************************/
   let tooltipEl = null;
+  let tooltipTimeout = null; // Used to auto-hide the tooltip
+  
   function updateTooltipPosition(e) {
-    let x = e.pageX + 10, y = e.pageY + 10;
-    const tooltipWidth = tooltipEl.offsetWidth, tooltipHeight = tooltipEl.offsetHeight;
-    if (x + tooltipWidth > window.innerWidth) x = e.pageX - tooltipWidth - 10;
-    if (y + tooltipHeight > window.innerHeight) y = e.pageY - tooltipHeight - 10;
+    // Position the tooltip 10px to the right and 10px below the pointer.
+    let x = e.pageX + 10,
+        y = e.pageY + 10;
+    const tooltipWidth = tooltipEl.offsetWidth,
+          tooltipHeight = tooltipEl.offsetHeight;
+    if (x + tooltipWidth > window.innerWidth) {
+      x = e.pageX - tooltipWidth - 10;
+    }
+    if (y + tooltipHeight > window.innerHeight) {
+      y = e.pageY - tooltipHeight - 10;
+    }
     tooltipEl.style.left = x + "px";
     tooltipEl.style.top = y + "px";
   }
-  function showTooltip(e, text) {
+  
+  function showTooltip(e, text, duration = 2500) {
     if (!tooltipEl) {
       tooltipEl = document.createElement("div");
       tooltipEl.className = "custom-tooltip";
@@ -357,19 +369,56 @@ const CURRENT_GAME_VERSION = "v0.01";
     tooltipEl.innerHTML = text;
     updateTooltipPosition(e);
     tooltipEl.style.opacity = 1;
+    
+    // Clear any existing auto-hide timer and set a new one.
+    clearTimeout(tooltipTimeout);
+    tooltipTimeout = setTimeout(() => {
+      hideTooltip();
+    }, duration);
   }
+  
   function hideTooltip() {
-    if (tooltipEl) tooltipEl.style.opacity = 0;
+    if (tooltipEl) {
+      tooltipEl.style.opacity = 0;
+    }
+    clearTimeout(tooltipTimeout);
   }
+  
+  // For both PC (mouse events) and mobile (touch events):
   document.addEventListener("mouseover", e => {
-    if (e.target.hasAttribute("data-tooltip")) showTooltip(e, e.target.getAttribute("data-tooltip"));
+    if (e.target.hasAttribute("data-tooltip")) {
+      showTooltip(e, e.target.getAttribute("data-tooltip"));
+    }
   });
+  
   document.addEventListener("mousemove", e => {
-    if (tooltipEl && tooltipEl.style.opacity === "1") updateTooltipPosition(e);
+    // While moving the mouse, update the tooltip position if it's visible.
+    if (tooltipEl && tooltipEl.style.opacity === "1") {
+      updateTooltipPosition(e);
+    }
   });
+  
   document.addEventListener("mouseout", e => {
-    if (e.target.hasAttribute("data-tooltip")) hideTooltip();
+    if (e.target.hasAttribute("data-tooltip")) {
+      hideTooltip();
+    }
   });
+  
+  document.addEventListener("touchstart", e => {
+    const target = e.target;
+    if (target && target.hasAttribute("data-tooltip")) {
+      showTooltip(e, target.getAttribute("data-tooltip"));
+    }
+  });
+  
+  document.addEventListener("touchend", e => {
+    hideTooltip();
+  });
+  
+  document.addEventListener("touchcancel", e => {
+    hideTooltip();
+  });
+  
 
   /****************************************
    * FORMULAS: COMBINED MULTIPLIERS & ENERGY DRAINS
@@ -470,35 +519,54 @@ const CURRENT_GAME_VERSION = "v0.01";
    * TASK TOGGLING FUNCTIONS
    ****************************************/
   function toggleTask(zoneIndex, taskIndex, button, progressFill, repContainer) {
-    const activeCount = currentTasks.filter(t => !t.paused).length;
+    // Determine the maximum allowed active tasks.
+    const maxSlots = gameState.perks["double_timer"] ? 2 : 1;
+    
+    // Find if the task already exists in currentTasks.
     const existing = currentTasks.find(t => t.zoneIndex === zoneIndex && t.taskIndex === taskIndex);
+    
     if (existing) {
-      // Toggle pause state.
-      existing.paused = !existing.paused;
-      button.classList.toggle("active", !existing.paused);
-      // If paused, revert zone image (if no other boss tasks active).
+      // The task is already in currentTasks.
       if (existing.paused) {
-        const zoneImg = document.getElementById("zoneImage");
-        const zone = zones[zoneIndex];
-        // Check if any other active task has a boss_image.
+        // The task is paused and the player is trying to resume it.
+        // Check the number of active (non-paused) tasks.
+        const activeCount = currentTasks.filter(t => !t.paused).length;
+        if (activeCount >= maxSlots) {
+          showMessage("You cannot resume this task because you're already running the maximum number of tasks!");
+          return;
+        }
+        // Resume the task.
+        existing.paused = false;
+        button.classList.add("active");
+        // If this task uses a boss image, update the zone image.
+        if (existing.task.boss_image) {
+          document.getElementById("zoneImage").src = existing.task.boss_image;
+        }
+      } else {
+        // The task is active and the player wants to pause it.
+        existing.paused = true;
+        button.classList.remove("active");
+        // If pausing leaves no active boss task, revert the zone image.
         if (!currentTasks.some(t => !t.paused && t.task.boss_image)) {
-          zoneImg.src = zone.img;
+          document.getElementById("zoneImage").src = zones[zoneIndex].img;
         }
       }
     } else {
-      const maxSlots = gameState.perks["double_timer"] ? 2 : 1;
+      // This is a new task.
+      const activeCount = currentTasks.filter(t => !t.paused).length;
       if (activeCount >= maxSlots) {
         showMessage("You cannot start another task right now!");
         return;
       }
       startTask(zoneIndex, taskIndex, button, progressFill, repContainer);
-      // If the newly started task has a boss_image, update the zone image.
+      // If the new task has a boss image, update the zone image.
       const task = zones[zoneIndex].tasks[taskIndex];
       if (task.boss_image) {
         document.getElementById("zoneImage").src = task.boss_image;
       }
     }
   }
+  
   function startTask(zoneIndex, taskIndex, button, progressFill, repContainer) {
     const zone = zones[zoneIndex];
     const task = zone.tasks[taskIndex];
@@ -598,7 +666,7 @@ const CURRENT_GAME_VERSION = "v0.01";
       const energyPerTick = getCombinedEnergyDrain(task, zones[currentZoneIndex].id);
       // Estimated total energy needed.
       const estimatedEnergy = energyPerTick * effectiveTicks;
-      btn.setAttribute("data-tooltip", task.description + `<br><br>Rough Estimate of Energy Needed${task.maxReps > 1 ? " per task" : ""} (at start of zone): ` + formatNumber(estimatedEnergy));
+      btn.setAttribute("data-tooltip", task.description + `<br><br>Estimated Energy Needed${task.maxReps > 1 ? " per task" : ""}: ~` + formatNumber(estimatedEnergy));
       if (task.type === "Travel" && !isTravelAvailable(zone)) btn.disabled = true;
       const progressFill = document.createElement("div");
       progressFill.className = "current-progress-fill";
@@ -739,8 +807,8 @@ const CURRENT_GAME_VERSION = "v0.01";
     const copiumBarElem = document.getElementById("copiumBarFill");
     if (copiumBarElem) {
       copiumBarElem.setAttribute("data-tooltip",
-        "Copium builds up from tasks with " + copiumSkills.join(", ") +
-        ".<br>If it exceeds 9000, you reset with half your knowledge lost!"
+        "Copium builds up from tasks with<br>" + copiumSkills.join(", ") +
+        ".<br><br>If it exceeds 9000, your game will reset<br>with all resources and half your knowledge lost!"
       );
     }
     updateCopiumDisplay();
@@ -990,7 +1058,7 @@ const CURRENT_GAME_VERSION = "v0.01";
     const energyBarElem = document.getElementById("energyBarFill");
     if (energyBarElem) {
       energyBarElem.setAttribute("data-tooltip",
-        "Energy drains based on each skill used.<br>Multiple skills multiply the drain. A high-level multi-skill task can drain energy quickly!"
+        "Energy drains based on each skill used.<br>Stacks multiplicatively."
       );
     }
     const kUpg = document.getElementById("knowledgeUpgValue");
