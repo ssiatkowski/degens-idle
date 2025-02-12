@@ -188,7 +188,7 @@ const CURRENT_GAME_VERSION = "v0.01";
         }
       });
   
-      // Mobile: long press (1 second) consumes all.
+      // Mobile: long press (0.8 second) consumes all.
       let touchTimeout;
       div.addEventListener("touchstart", e => {
         touchTimeout = setTimeout(() => {
@@ -200,7 +200,7 @@ const CURRENT_GAME_VERSION = "v0.01";
               hideTooltip();
             }
           }
-        }, 1000);
+        }, 800);
       });
       div.addEventListener("touchend", e => { clearTimeout(touchTimeout); touchTimeout = null; });
       div.addEventListener("touchcancel", e => { clearTimeout(touchTimeout); touchTimeout = null; });
@@ -636,6 +636,10 @@ const CURRENT_GAME_VERSION = "v0.01";
         btn.innerHTML = `${task.name} <span class="perk-star">★</span>`;
       } else {
         btn.textContent = task.name;
+      }
+      // If the task has a boss_image, give the button a red tint.
+      if (task.boss_image) {
+        btn.style.backgroundColor = "rgba(255, 40, 0, 0.5)"; // Adjust the alpha as needed.
       }
       // If the task yields a resource, add its icon.
       if (task.resource) {
