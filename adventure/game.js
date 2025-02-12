@@ -1008,7 +1008,7 @@ const CURRENT_GAME_VERSION = "v0.01";
       const banner = document.getElementById("versionBanner");
       if (banner) {
         banner.style.display = "block";
-        banner.innerHTML = "Your save is using a previous version. This will cause issues and not work with all current content. Full Restart through settings is advised.";
+        banner.innerHTML = "New major update was released and your save is out of date. This will cause issues with current content. Full Restart through settings is advised.";
       } else {
         banner.style.display = "none";
       }

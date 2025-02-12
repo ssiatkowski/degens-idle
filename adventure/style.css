@@ -13,6 +13,7 @@
 }
 html, body {
   overflow-x: hidden;
+  touch-action: manipulation;
 }
 body {
   font-family: Arial, sans-serif;
