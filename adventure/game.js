@@ -75,7 +75,7 @@ const CURRENT_GAME_VERSION = "v0.01";
     futuristic_wrench:  "Mechanics is 5x faster.",
     luck_of_the_irish:  "1% chance to produce 77x resources.",
     simulation_engine:  "Unlock ability to automate zones after fully completing 10 times.",
-    rex:                "Increases charisma xp gain by 2500%.",
+    rex:                "25x increased charisma xp gain.",
     copious_alchemist:  "Reduce Copium gain by 50%.",
     hoverboard:         "Increase travel speed by 200%.",
   };
@@ -85,23 +85,23 @@ const CURRENT_GAME_VERSION = "v0.01";
    ****************************************/
   const resourceActions = {
     "energy_elixir": {
-      onConsume: amt => { gameState.energy += 3 * amt; updateEnergyDisplay(); },
+      onConsume: amt => { gameState.energy += 3 * amt; updateEnergyDisplay(); updateTasksHoverInfo(); },
       tooltip: "Click to gain +3 Energy per Energy Elixir.<br>Right-click or Hold to consume all."
     },
     "magnifying_glass": {
-      onConsume: amt => { gameState.skills["perception"].progressBoost += 0.05 * amt; updateSkillDisplay(); },
+      onConsume: amt => { gameState.skills["perception"].progressBoost += 0.05 * amt; updateSkillDisplay(); updateTasksHoverInfo(); },
       tooltip: "Click to boost Perception by 5% per Magnifying Glass.<br>Right-click or Hold to consume all."
     },
     "goggles": {
-      onConsume: amt => { gameState.skills["alchemy"].drainBoost += 0.05 * amt; updateSkillDisplay(); },
+      onConsume: amt => { gameState.skills["alchemy"].drainBoost += 0.05 * amt; updateSkillDisplay(); updateTasksHoverInfo();},
       tooltip: "Click to reduce Alchemy energy drain by 5% per Goggles.<br>Right-click or Hold to consume all."
     },
     "cybernetic_potion": {
-      onConsume: amt => { gameState.skills["cybernetics"].drainBoost += 0.2 * amt; updateSkillDisplay(); },
+      onConsume: amt => { gameState.skills["cybernetics"].drainBoost += 0.2 * amt; updateSkillDisplay(); updateTasksHoverInfo(); },
       tooltip: "Click to reduce Cybernetics energy drain by 20% per Cybernetic Potion.<br>Right-click or Hold to consume all."
     },
     "cybernetic_armor": {
-      onConsume: amt => { gameState.numCyberneticArmors += amt; },
+      onConsume: amt => { gameState.numCyberneticArmors += amt; updateTasksHoverInfo();  updateTasksHoverInfo();},
       tooltip: "Click to reduce energy drain by 75% for next task.<br>Stacks with number of tasks, not drain on single task.<br>Right-click or Hold to consume all."
     },
     "amphetamine_pill": {
@@ -109,6 +109,7 @@ const CURRENT_GAME_VERSION = "v0.01";
         gameState.skills["tinkering"].progressBoost += 0.1 * amt;
         gameState.skills["hacking"].progressBoost += 0.1 * amt;
         updateSkillDisplay();
+        updateTasksHoverInfo();
       },
       tooltip: "Click to boost Tinkering and Hacking by 10% per Amphetamine Pill.<br>Right-click or Hold to consume all."
     },
@@ -117,6 +118,7 @@ const CURRENT_GAME_VERSION = "v0.01";
         gameState.skills["endurance"].drainBoost += 0.1 * amt;
         gameState.skills["combat"].drainBoost += 0.1 * amt;
         updateSkillDisplay();
+        updateTasksHoverInfo();
       },
       tooltip: "Click to reduce Endurance and Combat energy drain by 10% per Steroid.<br>Right-click or Hold to consume all."
     },
@@ -131,9 +133,26 @@ const CURRENT_GAME_VERSION = "v0.01";
       onConsume: amt => {
         gameState.skills["hacking"].progressBoost += 1 * amt;
         updateSkillDisplay();
+        updateTasksHoverInfo();
       },
       tooltip: "Click to boost Hacking by 100% per Cool Sunglasses.<br>Right-click or Hold to consume all."
-    }
+    },
+    "omega_resonator": {
+      onConsume: amt => {
+        gameState.skills["combat"].progressBoost += 0.20 * amt;
+        updateSkillDisplay();
+        updateTasksHoverInfo();
+      },
+      tooltip: "Click to boost Combat by 20% per Omega Resonator.<br>Right-click or Hold to consume all."
+    },
+    "shiny_helmet": {
+      onConsume: amt => {
+        gameState.skills["combat"].drainBoost += 1 * amt;
+        updateSkillDisplay();
+        updateTasksHoverInfo();
+      },
+      tooltip: "Click to reduce Combat energy drain by 100% per Shiny Helmet.<br>Right-click or Hold to consume all."
+    },
   };
   function consumeResource(name, amt) {
     if (!gameState.resources[name] || gameState.resources[name] < amt) return;
@@ -469,6 +488,9 @@ const CURRENT_GAME_VERSION = "v0.01";
     }
     baseDrain *= Math.pow(1.1, zoneIndex - 1);
     baseDrain = baseDrain * (gameState.perks["healthy_living"] ? 0.75 : 1)
+    if (task.drainMult !== undefined) {
+      baseDrain *= task.drainMult;
+    }
     return baseDrain;
   }
 
@@ -756,6 +778,71 @@ const CURRENT_GAME_VERSION = "v0.01";
     }
 
   }
+
+  // Helper: compute the raw base multiplier (without energetic_bliss)
+  function getBaseMultiplier(task) {
+    let mult = 1;
+    if (Array.isArray(task.skills)) {
+      task.skills.forEach(sName => {
+        const sk = gameState.skills[sName];
+        if (sk) {
+          let sm = Math.pow(1.01, sk.level);
+          if (sName === "alchemy" && gameState.perks["brewmaster"]) sm *= 1.25;
+          if (sName === "mechanics" && gameState.perks["futuristic_wrench"]) sm *= 5;
+          if (sName === "travel" && gameState.perks["hoverboard"]) sm *= 3;
+          sm *= (sk.progressBoost || 1);
+          mult *= sm;
+        }
+      });
+    }
+    return mult;
+  }
+  
+  // Analytic estimate of total energy drained to complete a task,
+  // using a two-phase model (bonus multiplier then base multiplier).
+  function estimateEnergyDrain(task, zone) {
+    const tick = tickDuration;
+    
+    // Compute effective drain per tick (includes drainMult and drainBoost):
+    let D = getCombinedEnergyDrain(task, zone.id);
+    if (task.drainMult !== undefined) {
+      D *= task.drainMult;
+    }
+    if (gameState.numCyberneticArmors > 0) {
+      D *= 0.25;
+    }
+    
+    const threshold = gameState.startingEnergy * 0.8;
+    const energy = gameState.energy;
+    
+    // Phase 1 multiplier: bonus active
+    const M_bonus = getCombinedMultiplier(task);
+    // Phase 2 multiplier: base multiplier only (no energetic_bliss)
+    const M_base = getBaseMultiplier(task);
+    
+    // t1: number of ticks during which energy remains above threshold.
+    // (If energy is already at or below threshold, t1 = 0.)
+    const t1 = energy > threshold ? (energy - threshold) / D : 0;
+    // Progress made during phase 1:
+    const progressPhase1 = t1 * tick * M_bonus;
+    
+    let ticksNeeded;
+    if (progressPhase1 >= task.baseTime) {
+      // The bonus phase alone would complete the task.
+      ticksNeeded = task.baseTime / (tick * M_bonus);
+    } else {
+      // After phase 1, the remaining progress must be done at base multiplier.
+      const remainingProgress = task.baseTime - progressPhase1;
+      const t2 = remainingProgress / (tick * M_base);
+      ticksNeeded = t1 + t2;
+    }
+    
+    // Total estimated energy drain is drain per tick multiplied by the total ticks.
+    return D * Math.max(1, ticksNeeded);
+  }
+
+
+  
   function updateTasksHoverInfo() {
     const zone = zones[currentZoneIndex];
     zone.tasks.forEach((task, idx) => {
@@ -764,21 +851,55 @@ const CURRENT_GAME_VERSION = "v0.01";
       const btn = taskDiv.querySelector("button");
       if (!btn) return;
       
-      // Recalculate estimated energy needed.
-      const speedMult = getCombinedMultiplier(task);
-      const ticksRequired = task.baseTime / (tickDuration * speedMult);
-      const effectiveTicks = Math.max(1, ticksRequired);
-      const energyPerTick = getCombinedEnergyDrain(task, zone.id);
-      const estimatedEnergy = energyPerTick * effectiveTicks;
+      // --- Energy Estimation ---
+      const estimatedEnergy = estimateEnergyDrain(task, zone);
       
-      // Update the tooltip with the new estimated energy.
+      // --- XP Calculation (unchanged) ---
+      const usedSkills = task.skills;
+      const numSkills = usedSkills.length || 1;
+      let baseXP = (task.baseTime * xpScale) / numSkills;
+      if (gameState.perks["workaholic"]) baseXP *= 1.5;
+      let xpText = "";
+      usedSkills.forEach(sName => {
+        let skillXP = baseXP;
+        const skill = gameState.skills[sName];
+        if (skill) {
+          skillXP *= skill.xpGainFactor;
+        }
+        if (gameState.knowledgeUnlocked && knowledgeSkills.includes(sName)) {
+          skillXP *= (1 + 0.001 * gameState.knowledge);
+        }
+        if (gameState.perks["rex"] && sName === "charisma") {
+          skillXP *= 25;
+        }
+        xpText += `<br>${capitalize(sName)}: ` + formatNumber(skillXP) + " XP";
+      });
+      
+      // --- Extra Info ---
+      let extraInfo = "";
+      if (gameState.knowledgeUnlocked && usedSkills.some(s => knowledgeSkills.includes(s))) {
+        extraInfo += `<br><br><span style="color:gray">Knowledge Gain on Completion: ${formatNumber(zone.id)}</span>`;
+      }
+      if (gameState.copiumUnlocked && usedSkills.some(s => copiumSkills.includes(s))) {
+        let copiumGain = 10 * zone.id;
+        if (gameState.perks["copious_alchemist"]) {
+          copiumGain *= 0.5;
+        }
+        extraInfo += `<br><br><span style="color:gray">Copium Gain per Task: ${formatNumber(copiumGain)}</span>`;
+      }
+      
+      // --- Update Tooltip ---
       btn.setAttribute("data-tooltip", 
         task.description +
-        `<br><br>Estimated Energy Needed${task.maxReps > 1 ? " per task" : ""}: ~` +
-        formatNumber(estimatedEnergy)
+        `<br><br><span style="color:gray">Estimated Energy Needed${task.maxReps > 1 ? " per task" : ""}: ` +
+        formatNumber(estimatedEnergy) +
+        `<br><br>Estimated XP Gains${task.maxReps > 1 ? " per task" : ""}:${xpText}</span>` +
+        extraInfo
       );
     });
   }
+  
+  
   function nextZone() {
     currentZoneIndex++;
     if (gameState.autoRun && gameState.automationMode === "all") {
@@ -1060,6 +1181,7 @@ const CURRENT_GAME_VERSION = "v0.01";
       if (gameState.energy <= 0) {
         gameState.energy = 0;
         updateEnergyDisplay();
+        gameState.autoRun = false;
         currentTasks = [];
         handleGameOver();
         return;
@@ -1068,7 +1190,6 @@ const CURRENT_GAME_VERSION = "v0.01";
       const usedSkills = tData.task.skills || [];
       let xpEach = baseXP / (usedSkills.length || 1);
       if (gameState.perks["workaholic"]) xpEach *= 1.5;
-      if (gameState.perks["energetic_bliss"] && gameState.energy > (gameState.startingEnergy * 0.8)) xpEach *= 2;
       usedSkills.forEach(sName => { addXP(sName, xpEach); });
       const pct = (tData.progress / tData.totalDuration) * 100;
       tData.progressFill.style.width = Math.min(pct, 100) + "%";
@@ -1086,7 +1207,12 @@ const CURRENT_GAME_VERSION = "v0.01";
         }
         if (gameState.copiumUnlocked && usedSkills.some(s => copiumSkills.includes(s))) {
           gameState.copium += (10 * zone.id) * (gameState.perks["copious_alchemist"] ? 0.5 : 1);
-          if (gameState.copium > 9000) { currentTasks = []; handleCopiumOverflow(); return; }
+          if (gameState.copium > 9000) { 
+            currentTasks = []; 
+            gameState.autoRun = false;
+            handleCopiumOverflow(); 
+            return; 
+          }
           updateCopiumDisplay();
         }
         updateRepContainer(tData.repContainer, task);
