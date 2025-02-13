@@ -32,7 +32,7 @@ const CURRENT_GAME_VERSION = "v0.01";
         intellect:   { level: 1, xp: 0, visible: false, energyDrain: 3,   progressBoost: 1, drainBoost: 1, xpGainFactor: 0.5 },
         perception:  { level: 1, xp: 0, visible: false, energyDrain: 2,   progressBoost: 1, drainBoost: 1, xpGainFactor: 0.3 },
         mechanics:   { level: 1, xp: 0, visible: false, energyDrain: 5,   progressBoost: 1, drainBoost: 1, xpGainFactor: 0.1 },
-        combat:      { level: 1, xp: 0, visible: false, energyDrain: 20,  progressBoost: 1, drainBoost: 1, xpGainFactor: 0.02 },
+        combat:      { level: 1, xp: 0, visible: false, energyDrain: 20,  progressBoost: 1, drainBoost: 1, xpGainFactor: 0.01 },
         hacking:     { level: 1, xp: 0, visible: false, energyDrain: 7,   progressBoost: 1, drainBoost: 1, xpGainFactor: 0.01 },
         cybernetics: { level: 1, xp: 0, visible: false, energyDrain: 12,  progressBoost: 1, drainBoost: 1, xpGainFactor: 0.03 },
         negotiation: { level: 1, xp: 0, visible: false, energyDrain: 20,  progressBoost: 1, drainBoost: 1, xpGainFactor: 0.01 },
@@ -48,6 +48,7 @@ const CURRENT_GAME_VERSION = "v0.01";
       cyberneticArmorTaskRunning: false,
       zoneFullCompletes: {},
       autoRun: false,
+      automationMode: "zone",
       gameVersion: CURRENT_GAME_VERSION
     };
   }
@@ -62,18 +63,21 @@ const CURRENT_GAME_VERSION = "v0.01";
   const xpScale        = 0.001; // XP per tick
   const skillXpScaling = 1.02;
   const perkDescriptions = {
-    completionist:      "Automatically continue tasks until max reps.",
+    brewmaster:         "Alchemy is 25% faster.",
     healthy_living:     "Reduce energy drain by 25%.",
+    completionist:      "Automatically continue tasks until max reps.",
     basic_mech:         "Increases starting Energy by 25.",
     double_timer:       "Allows running two tasks simultaneously.",
     energetic_bliss:    "Doubles progress while energy is above 80%.",
     workaholic:         "All XP gains increased by 50%.",
-    brewmaster:         "Alchemy is 25% faster.",
     copium_reactor:     "Get +5 starting Energy for each Copium reset.",
     gacha_machine:      "25% chance to produce double resources.",
     futuristic_wrench:  "Mechanics is 5x faster.",
     luck_of_the_irish:  "1% chance to produce 77x resources.",
-    simulation_engine:  "Unlock ability to automate zones after fully completing 10 times."
+    simulation_engine:  "Unlock ability to automate zones after fully completing 10 times.",
+    rex:                "Increases charisma xp gain by 2500%.",
+    copious_alchemist:  "Reduce Copium gain by 50%.",
+    hoverboard:         "Increase travel speed by 200%.",
   };
 
   /****************************************
@@ -122,6 +126,13 @@ const CURRENT_GAME_VERSION = "v0.01";
         updateCopiumDisplay();
       },
       tooltip: "Click to reduce Copium by 100 per Touchable Grass.<br>Right-click or Hold to consume all."
+    },
+    "cool_sunglasses": {
+      onConsume: amt => {
+        gameState.skills["hacking"].progressBoost += 1 * amt;
+        updateSkillDisplay();
+      },
+      tooltip: "Click to boost Hacking by 100% per Cool Sunglasses.<br>Right-click or Hold to consume all."
     }
   };
   function consumeResource(name, amt) {
@@ -287,6 +298,9 @@ const CURRENT_GAME_VERSION = "v0.01";
     if (gameState.knowledgeUnlocked && knowledgeSkills.includes(skillName)) {
       rawXP *= (1 + 0.001 * gameState.knowledge);
     }
+    if (gameState.perks["rex"] && skillName === "charisma") {
+      rawXP *= 25;
+    }
     skill.xp += rawXP * skill.xpGainFactor;
     let required = Math.pow(skillXpScaling, skill.level - 1);
     while (skill.xp >= required) {
@@ -312,6 +326,7 @@ const CURRENT_GAME_VERSION = "v0.01";
       let baseMult = Math.pow(1.01, sData.level);
       if (sName === "alchemy" && gameState.perks.brewmaster) baseMult *= 1.25;
       if (sName === "mechanics" && gameState.perks.futuristic_wrench) baseMult *= 5;
+      if (sName === "travel" && gameState.perks.hoverboard) baseMult *= 3;
       baseMult *= (sData.progressBoost);
       el.setAttribute("data-tooltip", `${capitalize(sName)} (Level: ${formatNumber(sData.level)})<br>
                                       XP: ${formatNumber(sData.xp)} / ${formatNumber(xpTot)}<br>
@@ -432,6 +447,7 @@ const CURRENT_GAME_VERSION = "v0.01";
           let sm = Math.pow(1.01, sk.level);
           if (sName === "alchemy" && gameState.perks["brewmaster"]) sm *= 1.25;
           if (sName === "mechanics" && gameState.perks["futuristic_wrench"]) sm *= 5;
+          if (sName === "travel" && gameState.perks["hoverboard"]) sm *= 3;
           sm *= (sk.progressBoost || 1);
           mult *= sm;
         }
@@ -659,18 +675,7 @@ const CURRENT_GAME_VERSION = "v0.01";
           btn.appendChild(rIcon);
         });
       }
-      // The speed multiplier from skills.
-      const speedMult = getCombinedMultiplier(task);
-      // Calculate how many ticks are required for the task to complete.
-      // (tickDuration is in milliseconds and task.baseTime is in the same time unit as used in your gameLoop.)
-      const ticksRequired = task.baseTime / (tickDuration * speedMult);
-      // Force at least 1 tick.
-      const effectiveTicks = Math.max(1, ticksRequired);
-      // Energy drained per tick (as in your gameLoop).
-      const energyPerTick = getCombinedEnergyDrain(task, zones[currentZoneIndex].id);
-      // Estimated total energy needed.
-      const estimatedEnergy = energyPerTick * effectiveTicks;
-      btn.setAttribute("data-tooltip", task.description + `<br><br>Estimated Energy Needed${task.maxReps > 1 ? " per task" : ""}: ~` + formatNumber(estimatedEnergy));
+      updateTasksHoverInfo();
       if (task.type === "Travel" && !isTravelAvailable(zone)) btn.disabled = true;
       const progressFill = document.createElement("div");
       progressFill.className = "current-progress-fill";
@@ -715,18 +720,35 @@ const CURRENT_GAME_VERSION = "v0.01";
         gameState.zoneFullCompletes[currentZoneIndex] = 0;
       }
       if (gameState.zoneFullCompletes[currentZoneIndex] >= 10) {
-        // Create (or update) an Automate button.
         zoneAutomationEl.innerHTML = "";
-        const autoBtn = document.createElement("button");
-        autoBtn.textContent = "Automate";
-        autoBtn.addEventListener("click", () => {
+        
+        // Create a label "Automate:" before the buttons.
+        const label = document.createElement("span");
+        label.textContent = "Automate: ";
+        zoneAutomationEl.appendChild(label);
+        
+        // Create "Zone" button.
+        const zoneBtn = document.createElement("button");
+        zoneBtn.textContent = "Zone";
+        zoneBtn.addEventListener("click", () => {
           gameState.autoRun = true;
-          // Optionally: immediately start automation.
+          gameState.automationMode = "zone";
+          showMessage("Automation set to Zone mode.");
         });
-        zoneAutomationEl.appendChild(autoBtn);
+        zoneAutomationEl.appendChild(zoneBtn);
+        
+        // Create "All" button.
+        const allBtn = document.createElement("button");
+        allBtn.textContent = "All";
+        allBtn.addEventListener("click", () => {
+          gameState.autoRun = true;
+          gameState.automationMode = "all";
+          showMessage("Automation set to All mode.");
+        });
+        zoneAutomationEl.appendChild(allBtn);
       } else {
-        // Show the counter as "X/10"
-        zoneAutomationEl.textContent = "Full Completes: " +gameState.zoneFullCompletes[currentZoneIndex] + "/10";
+        // Show the counter as "X/10" if not eligible for automation.
+        zoneAutomationEl.textContent = "Full Completes: " + gameState.zoneFullCompletes[currentZoneIndex] + "/10";
       }
     } else {
       // If simulation_engine perk is not unlocked, clear the automation display.
@@ -734,9 +756,43 @@ const CURRENT_GAME_VERSION = "v0.01";
     }
 
   }
+  function updateTasksHoverInfo() {
+    const zone = zones[currentZoneIndex];
+    zone.tasks.forEach((task, idx) => {
+      const taskDiv = document.querySelector(`.task[data-zone-index="${currentZoneIndex}"][data-task-index="${idx}"]`);
+      if (!taskDiv) return;
+      const btn = taskDiv.querySelector("button");
+      if (!btn) return;
+      
+      // Recalculate estimated energy needed.
+      const speedMult = getCombinedMultiplier(task);
+      const ticksRequired = task.baseTime / (tickDuration * speedMult);
+      const effectiveTicks = Math.max(1, ticksRequired);
+      const energyPerTick = getCombinedEnergyDrain(task, zone.id);
+      const estimatedEnergy = energyPerTick * effectiveTicks;
+      
+      // Update the tooltip with the new estimated energy.
+      btn.setAttribute("data-tooltip", 
+        task.description +
+        `<br><br>Estimated Energy Needed${task.maxReps > 1 ? " per task" : ""}: ~` +
+        formatNumber(estimatedEnergy)
+      );
+    });
+  }
   function nextZone() {
     currentZoneIndex++;
-    gameState.autoRun = false; // Reset automation when changing zones.
+    if (gameState.autoRun && gameState.automationMode === "all") {
+      // In "All" mode, if the new zone also qualifies, keep autoRun true.
+      if (typeof gameState.zoneFullCompletes[currentZoneIndex] === "number" &&
+          gameState.zoneFullCompletes[currentZoneIndex] >= 10) {
+        gameState.autoRun = true;
+      } else {
+        gameState.autoRun = false;
+      }
+    } else {
+      // In "Zone" mode (or if no automation mode set), turn autoRun off.
+      gameState.autoRun = false;
+    }
     if (currentZoneIndex < zones.length) displayZone();
     else {
       const scenario = document.getElementById("scenarioText");
@@ -1029,7 +1085,7 @@ const CURRENT_GAME_VERSION = "v0.01";
           }
         }
         if (gameState.copiumUnlocked && usedSkills.some(s => copiumSkills.includes(s))) {
-          gameState.copium += (10 * zone.id);
+          gameState.copium += (10 * zone.id) * (gameState.perks["copious_alchemist"] ? 0.5 : 1);
           if (gameState.copium > 9000) { currentTasks = []; handleCopiumOverflow(); return; }
           updateCopiumDisplay();
         }
@@ -1086,6 +1142,7 @@ const CURRENT_GAME_VERSION = "v0.01";
           showMessage("Perk unlocked: " + formatPerkName(task.perk));
           renderPerks();
         }
+        updateTasksHoverInfo();
       }
     });
     // After processing tasks, update the zone image based on any active boss.
@@ -1100,24 +1157,32 @@ const CURRENT_GAME_VERSION = "v0.01";
     }
     // AUTOMATE: If autoRun is enabled and no tasks are running, start one.
     if (gameState.autoRun && currentTasks.length === 0) {
-      const zone = zones[currentZoneIndex];
-      // Loop over tasks in the current zone.
-      for (let idx = 0; idx < zone.tasks.length; idx++) {
-        const task = zone.tasks[idx];
-        // Only auto-run tasks that are not complete.
-        if (task.count < task.maxReps) {
-          // Find the corresponding DOM elements.
-          const taskDiv = document.querySelector(`.task[data-zone-index="${currentZoneIndex}"][data-task-index="${idx}"]`);
-          if (taskDiv) {
-            const btn = taskDiv.querySelector("button");
-            const progressFill = taskDiv.querySelector(".current-progress-fill");
-            const repContainer = taskDiv.querySelector(".rep-container");
-            if (btn && progressFill && repContainer) {
-              startTask(currentZoneIndex, idx, btn, progressFill, repContainer);
-              break; // Only one task should be running at a time.
+      const maxSlots = gameState.perks["double_timer"] ? 2 : 1;
+      // Keep starting tasks until we've filled all available slots
+      while (currentTasks.filter(t => !t.paused).length < maxSlots) {
+        let taskStarted = false;
+        const zone = zones[currentZoneIndex];
+        // Loop over tasks in the current zone.
+        for (let idx = 0; idx < zone.tasks.length; idx++) {
+          const task = zone.tasks[idx];
+          // Only auto-run tasks that are not complete and not already running.
+          if (task.count < task.maxReps && 
+              !currentTasks.some(t => t.zoneIndex === currentZoneIndex && t.taskIndex === idx)) {
+            // Find the corresponding DOM elements.
+            const taskDiv = document.querySelector(`.task[data-zone-index="${currentZoneIndex}"][data-task-index="${idx}"]`);
+            if (taskDiv) {
+              const btn = taskDiv.querySelector("button");
+              const progressFill = taskDiv.querySelector(".current-progress-fill");
+              const repContainer = taskDiv.querySelector(".rep-container");
+              if (btn && progressFill && repContainer) {
+                startTask(currentZoneIndex, idx, btn, progressFill, repContainer);
+                taskStarted = true;
+                break; // After starting one task, break to re-check the available slot count.
+              }
             }
           }
         }
+        if (!taskStarted) break; // No available tasks to auto-start.
       }
     }
 
