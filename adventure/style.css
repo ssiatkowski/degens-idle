@@ -194,6 +194,11 @@ body {
   font-weight: bold;
 }
 
+#powerUpgDiv {
+  color: rgb(222, 34, 191);
+  font-weight: bold;
+}
+
 
 /* ---------------------- */
 /* Skills Display (50% smaller) */

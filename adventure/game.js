@@ -1,10 +1,11 @@
-const CURRENT_GAME_VERSION = "v0.01";
+const CURRENT_GAME_VERSION = "v0.02";
 
 (function() {
   /****************************************
    * DEFINITIONS: Skills affecting knowledge, copium, delusion
    ****************************************/
   const knowledgeSkills = ["tinkering", "intellect", "hacking"];
+  const powerSkills     = ["combat", "endurance"];
   const copiumSkills    = ["endurance", "alchemy", "mechanics"];
   const delusionSkills  = ["charisma", "perception", "aiMastery", "negotiation", "omniscience"];
 
@@ -19,7 +20,9 @@ const CURRENT_GAME_VERSION = "v0.01";
       delusion: 0,
       resources: {},
       knowledge: 0,
+      power: 0,
       knowledgeUnlocked: false,
+      powerUnlocked: false,
       copiumUnlocked: false,
       delusionUnlocked: false,
       // Note: Default boost values are now 1.
@@ -63,21 +66,22 @@ const CURRENT_GAME_VERSION = "v0.01";
   const xpScale        = 0.001; // XP per tick
   const skillXpScaling = 1.02;
   const perkDescriptions = {
-    brewmaster:         "Alchemy is 25% faster.",
-    healthy_living:     "Reduce energy drain by 25%.",
-    completionist:      "Automatically continue tasks until max reps.",
-    basic_mech:         "Increases starting Energy by 25.",
-    double_timer:       "Allows running two tasks simultaneously.",
-    energetic_bliss:    "Doubles progress while energy is above 80%.",
-    workaholic:         "All XP gains increased by 50%.",
-    copium_reactor:     "Get +5 starting Energy for each Copium reset.",
-    gacha_machine:      "25% chance to produce double resources.",
-    futuristic_wrench:  "Mechanics is 5x faster.",
-    luck_of_the_irish:  "1% chance to produce 77x resources.",
-    simulation_engine:  "Unlock ability to automate zones after fully completing 10 times.",
-    rex:                "25x increased charisma xp gain.",
-    copious_alchemist:  "Reduce Copium gain by 50%.",
-    hoverboard:         "Increase travel speed by 200%.",
+    brewmaster:             "Alchemy is 25% faster.",
+    healthy_living:         "Reduce energy drain by 25%.",
+    completionist:          "Automatically continue tasks until max reps.",
+    basic_mech:             "Increases starting Energy by 25.",
+    double_timer:           "Allows running two tasks simultaneously.",
+    energetic_bliss:        "Doubles progress while energy is above 80%.",
+    workaholic:             "All XP gains increased by 50%.",
+    copium_reactor:         "Get +5 starting Energy for each Copium reset.",
+    gacha_machine:          "25% chance to produce double resources.",
+    futuristic_wrench:      "Mechanics is 5x faster.",
+    luck_of_the_irish:      "1% chance to produce 77x resources.",
+    simulation_engine:      "Unlock ability to automate zones after fully completing 10 times.",
+    rex:                    "25x increased charisma XP gain.",
+    copious_alchemist:      "Reduce Copium gain by 50%.",
+    hoverboard:             "Increase travel speed by 200%.",
+    reinforcement_learning: "4x increased AI Mastery XP gain.",
   };
 
   /****************************************
@@ -139,11 +143,11 @@ const CURRENT_GAME_VERSION = "v0.01";
     },
     "omega_resonator": {
       onConsume: amt => {
-        gameState.skills["combat"].progressBoost += 0.20 * amt;
+        gameState.skills["combat"].progressBoost += 0.2 * amt;
         updateSkillDisplay();
         updateTasksHoverInfo();
       },
-      tooltip: "Click to boost Combat by 20% per Omega Resonator.<br>Right-click or Hold to consume all."
+      tooltip: "Click to boost Combat speed by 20% per Omega Resonator.<br>Right-click or Hold to consume all."
     },
     "shiny_helmet": {
       onConsume: amt => {
@@ -179,7 +183,15 @@ const CURRENT_GAME_VERSION = "v0.01";
         updateTasksHoverInfo();
       },
       tooltip: "Click to level a random skill to next level for each Random Crystal.<br>Right-click or Hold to consume all."
-    }
+    },
+    "one_ring": {
+      onConsume: amt => {
+        gameState.skills["quantum"].progressBoost += 5 * amt;
+        updateSkillDisplay();
+        updateTasksHoverInfo();
+      },
+      tooltip: "Click to boost Quantum by 500% per One Ring.<br>Right-click or Hold to consume all."
+    },
 
   };
   function consumeResource(name, amt) {
@@ -403,6 +415,9 @@ const CURRENT_GAME_VERSION = "v0.01";
     if (gameState.perks["rex"] && skillName === "charisma") {
       rawXP *= 25;
     }
+    if (gameState.perks["reinforcement_learning"] && skillName === "aiMastery") {
+      rawXP *= 4;
+    }
     skill.xp += rawXP * skill.xpGainFactor;
     let required = Math.pow(skillXpScaling, skill.level - 1);
     while (skill.xp >= required) {
@@ -550,6 +565,7 @@ const CURRENT_GAME_VERSION = "v0.01";
           if (sName === "alchemy" && gameState.perks["brewmaster"]) sm *= 1.25;
           if (sName === "mechanics" && gameState.perks["futuristic_wrench"]) sm *= 5;
           if (sName === "travel" && gameState.perks["hoverboard"]) sm *= 3;
+          if (gameState.powerUnlocked && powerSkills.includes(sName)) sm *= (1 + 0.01 * gameState.power);
           sm *= (sk.progressBoost || 1);
           mult *= sm;
         }
@@ -732,6 +748,10 @@ const CURRENT_GAME_VERSION = "v0.01";
       gameState.copiumUnlocked = true;
       showCopiumModal();
     }
+    if (zone.id >= 11 && !gameState.powerUnlocked) {
+      gameState.powerUnlocked = true;
+      showPowerModal();
+    }
     document.getElementById("zoneName").textContent = `Zone ${zone.id}: ${zone.name}`;
     const zImg = document.getElementById("zoneImage");
     if (zImg && zone.img) {
@@ -816,6 +836,7 @@ const CURRENT_GAME_VERSION = "v0.01";
     });
     renderPerks();
     showKnowledgeIfUnlocked();
+    showPowerIfUnlocked();
     // --- New Code for Simulation Engine Automation ---
     const zoneAutomationEl = document.getElementById("zoneAutomation");
     // Only display the automation UI if the simulation_engine perk is unlocked.
@@ -883,6 +904,7 @@ const CURRENT_GAME_VERSION = "v0.01";
           if (sName === "alchemy" && gameState.perks["brewmaster"]) sm *= 1.25;
           if (sName === "mechanics" && gameState.perks["futuristic_wrench"]) sm *= 5;
           if (sName === "travel" && gameState.perks["hoverboard"]) sm *= 3;
+          if (gameState.powerUnlocked && powerSkills.includes(sName)) sm *= (1 + 0.01 * gameState.power);
           sm *= (sk.progressBoost || 1);
           mult *= sm;
         }
@@ -965,6 +987,9 @@ const CURRENT_GAME_VERSION = "v0.01";
         if (gameState.perks["rex"] && sName === "charisma") {
           skillXP *= 25;
         }
+        if (gameState.perks["reinforcement_learning"] && sName === "aiMastery") {
+          skillXP *= 4;
+        }
         xpText += `<br>${capitalize(sName)}: ` + formatNumber(skillXP) + " XP";
       });
       
@@ -979,6 +1004,9 @@ const CURRENT_GAME_VERSION = "v0.01";
           copiumGain *= 0.5;
         }
         extraInfo += `<br><br><span style="color:#dbd834">Copium Gain per Task: ${formatNumber(copiumGain)}</span>`;
+      }
+      if (gameState.powerUnlocked && task.boss_image) {
+        extraInfo += `<br><br><span style="color:rgb(222, 34, 191)">Power Gain on Completion: ${formatNumber(zone.id)}</span>`;
       }
       
       // --- Update Tooltip ---
@@ -1075,6 +1103,23 @@ const CURRENT_GAME_VERSION = "v0.01";
     document.body.appendChild(modal);
     showCopiumBar();
   }
+  function showPowerModal() {
+    const modal = document.createElement("div");
+    modal.className = "modal";
+    modal.id = "powerModal";
+    const content = document.createElement("div");
+    content.className = "modal-content";
+    const p = document.createElement("p");
+    p.innerHTML = "Power unlocked!<br>Boss wins grant levels based on zone." +
+                  "<br><br>Power boosts speed of Combat and Endurance!";
+    content.appendChild(p);
+    const btn = document.createElement("button");
+    btn.textContent = "Roger That";
+    btn.addEventListener("click", () => { modal.parentNode && modal.parentNode.removeChild(modal); });
+    content.appendChild(btn);
+    modal.appendChild(content);
+    document.body.appendChild(modal);
+  }
   function showCopiumBar() {
     const cBar = document.getElementById("copiumBarContainer");
     if (cBar) cBar.style.display = "grid";
@@ -1147,6 +1192,8 @@ const CURRENT_GAME_VERSION = "v0.01";
     gatherAllPerks();
     const kUpg = document.getElementById("knowledgeUpgValue");
     if (kUpg) kUpg.parentElement.style.display = "none";
+    const pUpg = document.getElementById("powerUpgValue");
+    if (pUpg) pUpg.parentElement.style.display = "none";
     displayZone();
     document.getElementById("versionBanner").style.display = "none";
   }
@@ -1209,6 +1256,17 @@ const CURRENT_GAME_VERSION = "v0.01";
         gameState.skills["travel"].xp = 0; // Optionally reset XP
       }
       showConfirmationModal("Cheat Code Activated: BetterStart");
+      renderSkills();
+      updateSkillDisplay();
+    } else if (code === "WhatAboutOtherSkills") {
+      // For endurance, tinkering, charisma, and alchemy: ensure level is at least 250
+      ["intellect", "perception", "mechanics"].forEach(skillName => {
+        if (gameState.skills[skillName].level < 150) {
+          gameState.skills[skillName].level = 150;
+          gameState.skills[skillName].xp = 0; // Optionally reset XP
+        }
+      });
+      showConfirmationModal("Cheat Code Activated: WhatAboutOtherSkills");
       renderSkills();
       updateSkillDisplay();
     } else {
@@ -1345,8 +1403,13 @@ const CURRENT_GAME_VERSION = "v0.01";
             gameState.knowledgeUnlocked &&
             usedSkills.some(s => knowledgeSkills.includes(s))) {
           gameState.knowledge += zone.id;
-          showMessage(`+1 Knowledge (Total: ${gameState.knowledge})`);
           showKnowledgeIfUnlocked();
+        }
+        if (task.count >= task.maxReps &&
+            gameState.powerUnlocked &&
+            task.boss_image) {
+          gameState.power += zone.id;
+          showPowerIfUnlocked();
         }
         if (task.perk && !gameState.perks[task.perk] && task.count >= task.maxReps) {
           gameState.perks[task.perk] = true;
@@ -1432,6 +1495,17 @@ const CURRENT_GAME_VERSION = "v0.01";
       const tooltipStr = "Knowledge increases XP gain by <b>" + formatNumber(gameState.knowledge * 0.1) +
                          "%</b> for these skills:<br>- " + knowledgeSkills.join("<br>- ");
       knowledgeUpg.parentElement.setAttribute("data-tooltip", tooltipStr);
+    }
+  }
+  function showPowerIfUnlocked() {
+    const powerUpg = document.getElementById("powerUpgValue");
+    if (!powerUpg) return;
+    if (gameState.powerUnlocked) {
+      powerUpg.parentElement.style.display = "inline-block";
+      powerUpg.textContent = gameState.power;
+      const tooltipStr = "Power increases speed by <b>" + formatNumber(gameState.power * 0.1) +
+                         "%</b><br>for Combat and Endurance.";
+      powerUpg.parentElement.setAttribute("data-tooltip", tooltipStr);
     }
   }
 
