@@ -153,6 +153,34 @@ const CURRENT_GAME_VERSION = "v0.01";
       },
       tooltip: "Click to reduce Combat energy drain by 100% per Shiny Helmet.<br>Right-click or Hold to consume all."
     },
+    "karate_belt": {
+      onConsume: amt => {
+        gameState.skills["negotiation"].progressBoost += 1 * amt;
+        updateSkillDisplay();
+        updateTasksHoverInfo();
+      },
+      tooltip: "Click to boost Negotiation by 100% per Karate Belt.<br>Right-click or Hold to consume all."
+    },
+    "random_crystal": {
+      onConsume: amt => {
+        for (let i = 0; i < amt; i++) {
+          // Get all visible skills
+          const visibleSkills = Object.keys(gameState.skills).filter(sName => gameState.skills[sName].visible);
+          // Choose a random visible skill
+          const randomSkillName = visibleSkills[Math.floor(Math.random() * visibleSkills.length)];
+          const skill = gameState.skills[randomSkillName];
+          // Calculate XP needed to reach next level:
+          const requiredXP = Math.pow(skillXpScaling, skill.level - 1);
+          const xpNeeded = requiredXP - skill.xp;
+          // Level up the skill by giving it the needed XP
+          addXP(randomSkillName, xpNeeded);
+        }
+        updateSkillDisplay();
+        updateTasksHoverInfo();
+      },
+      tooltip: "Click to level a random skill to next level for each Random Crystal.<br>Right-click or Hold to consume all."
+    }
+
   };
   function consumeResource(name, amt) {
     if (!gameState.resources[name] || gameState.resources[name] < amt) return;
@@ -291,17 +319,72 @@ const CURRENT_GAME_VERSION = "v0.01";
   /****************************************
    * ENERGY & COPIUM DISPLAY FUNCTIONS
    ****************************************/
+
   function updateEnergyDisplay() {
     const val = Math.max(0, gameState.energy);
-    document.getElementById("energyText").textContent = val.toFixed(0);
-    document.getElementById("energyBarFill").style.width = (val * 100 / gameState.startingEnergy) + "%";
+    const energyText = document.getElementById("energyText");
+    if (energyText) {
+      energyText.textContent = val.toFixed(0);
+    }
+    const energyBarFill = document.getElementById("energyBarFill");
+    if (energyBarFill) {
+      energyBarFill.style.width = (val * 100 / gameState.startingEnergy) + "%";
+      // Existing energetic_bliss glow (if desired)
+      if (gameState.perks["energetic_bliss"] && gameState.energy > (gameState.startingEnergy * 0.8)) {
+        energyBarFill.classList.add("glowing");
+        energyBarFill.classList.remove("energy-low");
+        energyBarFill.setAttribute("data-tooltip",
+          "Energy drains based on each skill used.<br>Stacks multiplicatively.<br><br>Energetic Bliss is active!"
+        );
+      } else if (gameState.energy < gameState.startingEnergy * 0.1) {
+        energyBarFill.classList.remove("glowing");
+        energyBarFill.classList.add("energy-low");
+        energyBarFill.setAttribute("data-tooltip",
+          "Energy drains based on each skill used.<br>Stacks multiplicatively.<br><br>Energy is critically low!"
+        );
+      } else {
+        energyBarFill.classList.remove("glowing");
+        energyBarFill.classList.remove("energy-low");
+        energyBarFill.setAttribute("data-tooltip",
+          "Energy drains based on each skill used.<br>Stacks multiplicatively."
+        );
+      }
+    }
   }
+  
   function updateCopiumDisplay() {
     const val = Math.max(0, gameState.copium);
-    document.getElementById("copiumText").textContent = val.toFixed(0);
-    document.getElementById("copiumBarFill").style.width = (val / 90) + "%";
+    const copiumText = document.getElementById("copiumText");
+    if (copiumText) {
+      copiumText.textContent = val.toFixed(0);
+    }
+    const copiumBarFill = document.getElementById("copiumBarFill");
+    if (copiumBarFill) {
+      copiumBarFill.style.width = (val / 90) + "%";
+      // Add high-copium glow if copium is above 8000
+      if (gameState.copium > 8000) {
+        copiumBarFill.classList.add("copium-high");
+        const copiumBarElem = document.getElementById("copiumBarFill");
+        if (copiumBarElem) {
+          copiumBarElem.setAttribute("data-tooltip",
+            "Copium builds up from tasks with<br>" + copiumSkills.join(", ") +
+            ".<br><br>If it exceeds 9000, your game will reset<br>with all resources and half your knowledge lost!"
+          );
+        }
+      } else {
+        copiumBarFill.classList.remove("copium-high");
+        const copiumBarElem = document.getElementById("copiumBarFill");
+        if (copiumBarElem) {
+          copiumBarElem.setAttribute("data-tooltip",
+            "Copium builds up from tasks with<br>" + copiumSkills.join(", ") +
+            ".<br><br>If it exceeds 9000, your game will reset<br>with all resources and half your knowledge lost!" +
+            "<br><br>Copium is critically high!"
+          );
+        }
+      }
+    }
   }
-
+  
   /****************************************
    * SKILLS & XP FUNCTIONS
    ****************************************/
@@ -753,9 +836,14 @@ const CURRENT_GAME_VERSION = "v0.01";
         const zoneBtn = document.createElement("button");
         zoneBtn.textContent = "Zone";
         zoneBtn.addEventListener("click", () => {
-          gameState.autoRun = true;
-          gameState.automationMode = "zone";
-          showMessage("Automation set to Zone mode.");
+          if (gameState.autoRun){
+            gameState.autoRun = false;
+            showMessage("Automation disabled.");
+          } else {
+            gameState.autoRun = true;
+            gameState.automationMode = "zone";
+            showMessage("Automation set to Zone mode.");
+          }
         });
         zoneAutomationEl.appendChild(zoneBtn);
         
@@ -763,9 +851,14 @@ const CURRENT_GAME_VERSION = "v0.01";
         const allBtn = document.createElement("button");
         allBtn.textContent = "All";
         allBtn.addEventListener("click", () => {
-          gameState.autoRun = true;
-          gameState.automationMode = "all";
-          showMessage("Automation set to All mode.");
+          if (gameState.autoRun){
+            gameState.autoRun = false;
+            showMessage("Automation disabled.");
+          } else {
+            gameState.autoRun = true;
+            gameState.automationMode = "all";
+            showMessage("Automation set to All mode.");
+          }
         });
         zoneAutomationEl.appendChild(allBtn);
       } else {
@@ -878,14 +971,14 @@ const CURRENT_GAME_VERSION = "v0.01";
       // --- Extra Info ---
       let extraInfo = "";
       if (gameState.knowledgeUnlocked && usedSkills.some(s => knowledgeSkills.includes(s))) {
-        extraInfo += `<br><br><span style="color:gray">Knowledge Gain on Completion: ${formatNumber(zone.id)}</span>`;
+        extraInfo += `<br><br><span style="color:rgb(141, 26, 191)">Knowledge Gain on Completion: ${formatNumber(zone.id)}</span>`;
       }
       if (gameState.copiumUnlocked && usedSkills.some(s => copiumSkills.includes(s))) {
         let copiumGain = 10 * zone.id;
         if (gameState.perks["copious_alchemist"]) {
           copiumGain *= 0.5;
         }
-        extraInfo += `<br><br><span style="color:gray">Copium Gain per Task: ${formatNumber(copiumGain)}</span>`;
+        extraInfo += `<br><br><span style="color:#dbd834">Copium Gain per Task: ${formatNumber(copiumGain)}</span>`;
       }
       
       // --- Update Tooltip ---
@@ -985,13 +1078,6 @@ const CURRENT_GAME_VERSION = "v0.01";
   function showCopiumBar() {
     const cBar = document.getElementById("copiumBarContainer");
     if (cBar) cBar.style.display = "grid";
-    const copiumBarElem = document.getElementById("copiumBarFill");
-    if (copiumBarElem) {
-      copiumBarElem.setAttribute("data-tooltip",
-        "Copium builds up from tasks with<br>" + copiumSkills.join(", ") +
-        ".<br><br>If it exceeds 9000, your game will reset<br>with all resources and half your knowledge lost!"
-      );
-    }
     updateCopiumDisplay();
   }
 
@@ -1355,12 +1441,6 @@ const CURRENT_GAME_VERSION = "v0.01";
   document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("gameOverScreenEnergy").style.display = "none";
     document.getElementById("gameOverScreenCopium").style.display = "none";
-    const energyBarElem = document.getElementById("energyBarFill");
-    if (energyBarElem) {
-      energyBarElem.setAttribute("data-tooltip",
-        "Energy drains based on each skill used.<br>Stacks multiplicatively."
-      );
-    }
     const kUpg = document.getElementById("knowledgeUpgValue");
     if (kUpg) kUpg.parentElement.style.display = "none";
     loadGameProgress();

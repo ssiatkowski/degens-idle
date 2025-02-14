@@ -119,6 +119,37 @@ body {
   background: #9b59b6;
 }
 
+#energyBarFill.glowing {
+  animation: glowPulse 1s infinite alternate;
+}
+
+/* Glow for low energy (energy below 10% of startingEnergy) */
+#energyBarFill.energy-low {
+  animation: lowEnergyPulse 1s infinite alternate;
+}
+
+@keyframes lowEnergyPulse {
+  from { box-shadow: inset 0 0 5px 2px #dbd834; }
+  to   { box-shadow: inset 0 0 15px 5px rgb(87, 11, 11, 0.8); }
+}
+
+/* Glow for high copium (copium above 8000) */
+#copiumBarFill.copium-high {
+  animation: highCopiumPulse 1s infinite alternate;
+}
+
+@keyframes highCopiumPulse {
+  from { box-shadow: inset 0 0 5px 2px rgba(255, 165, 0, 0.8); }
+  to   { box-shadow: inset 0 0 15px 5px rgb(123, 82, 6); }
+}
+
+
+@keyframes glowPulse {
+  from { box-shadow: inset 0 0 5px 2px #e74c3c; }
+  to { box-shadow: inset 0 0 6px 1px rgba(71, 240, 255, 0.8); }
+}
+
+
 /* The numeric value is positioned in the center of the bar */
 .status-bar-value {
   position: absolute;
@@ -142,9 +173,9 @@ body {
 }
 
 .upgrade-display {
-  background: #444;
+  background: #000000;
   padding: 4px 6px;
-  border-radius: 3px;
+  border-radius: 6px;
   font-size: 0.75em;
   width: 100%;
   text-align: center;
@@ -156,6 +187,11 @@ body {
 .upgrade-display .upgrade-label,
 .upgrade-display .upgrade-value {
   pointer-events: none;
+}
+
+#knowledgeUpgDiv {
+  color: rgb(141, 26, 191);
+  font-weight: bold;
 }
 
 
@@ -545,6 +581,7 @@ footer {
   display: none; /* Hidden by default */
 }
 
+
 /* Media Queries for Mobile Devices */
 @media (max-width: 768px) {
   #topStatus {
@@ -552,13 +589,13 @@ footer {
     gap: 5px; /* optional: adjust gap if needed */
   }
   .bars-container {
-    flex: 0 0 60%;
+    flex: 0 0 55%;
   }
   .upgrades-container {
-    flex: 0 0 24%;  /* 50% wider than 10% (10% * 1.5 = 15%) */
+    flex: 0 0 29%;  /* 50% wider than 10% (10% * 1.5 = 15%) */
   }
   .upgrade-display {
-    font-size: 0.7em;
+    font-size: 0.65em;
   }
   .skill {
     width: 80px;
@@ -596,5 +633,14 @@ footer {
 
   .custom-tooltip {
     font-size: 0.6em;
+  }
+
+  #zoneAutomation {
+    font-size: 0.9em;
+  }
+  
+  #zoneAutomation button {
+    padding: 5px 10px;
+    margin: 3px;
   }
 }

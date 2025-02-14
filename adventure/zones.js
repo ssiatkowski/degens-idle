@@ -56,7 +56,7 @@ var zones = [
       { id: 43, name: "Crunch Financial Numbers", type: "Training", maxReps: 10, count: 0, baseTime: 8e4, description: "Analyze corporate data with intellect and mechanics.", skills: ["intellect", "mechanics"] },
       { id: 44, name: "Tactical Office Skirmish Simulation", type: "Training", maxReps: 5, count: 0, baseTime: 3e5, description: "Engage in simulated corporate conflicts.", skills: ["endurance", "tinkering"], mandatory: true },
       { id: 45, name: "Gacha Machine: Mechanics of Luck", type: "Training", maxReps: 1, count: 0, baseTime: 2e5, description: "Build a simple gacha machine.", skills: ["mechanics"], perk: "gacha_machine" },
-      { id: 46, name: "Battle Agent Smith", type: "Training", maxReps: 1, count: 0, baseTime: 6e8, description: "Take on this Matrix propagator. Might as well practice Combat.<br><br>This button is red - it's a boss fight.<br>Don't worry, you can move to next zone without it.", skills: ["combat"], boss_image: "images/agent_smith.jpg", resources: ["cool_sunglasses"], drainMult: 1.5 },
+      { id: 46, name: "Battle Agent Smith", type: "Training", maxReps: 1, count: 0, baseTime: 2e8, description: "Take on this Matrix propagator. Might as well practice Combat.<br><br>This button is red - it's a boss fight.<br>Don't worry, you can move to next zone without it.", skills: ["combat"], boss_image: "images/agent_smith.jpg", resources: ["cool_sunglasses"], drainMult: 1.5 },
       { id: 47, name: "Travel: Proceed to Cyber Lab", type: "Travel", maxReps: 1, count: 0, baseTime: 4e4, description: "Advance to a high-tech cyber environment.", skills: ["travel"] }
     ]
   },
@@ -71,7 +71,7 @@ var zones = [
       { id: 54, name: "Debug Digital Puzzle", type: "Training", maxReps: 2, count: 0, baseTime: 4e6, description: "Solve a digital puzzle using coding skills.", skills: ["hacking", "mechanics"] },
       { id: 55, name: "Double Timer: System Revamp", type: "Training", maxReps: 2, count: 0, baseTime: 5e8, description: "Revamp a digital system to double its efficiency.", skills: ["hacking", "tinkering", "intellect"], perk: "double_timer" },
       { id: 56, name: "Chemical Simulation", type: "Training", maxReps: 3, count: 0, baseTime: 6e6, description: "Simulate a chemical reaction.", skills: ["alchemy", "tinkering"], mandatory: true },
-      { id: 57, name: "Battle Shao Kahn", type: "Training", maxReps: 1, count: 0, baseTime: 2e9, description: "Some clown challenges you to mortal combat.", skills: ["combat"], boss_image: "images/shao_kahn.jpg", drainMult: 4, resources: ["shiny_helmet"] },
+      { id: 57, name: "Battle Shao Kahn", type: "Training", maxReps: 1, count: 0, baseTime: 4e8, description: "Some clown challenges you to mortal combat.", skills: ["combat"], boss_image: "images/shao_kahn.jpg", drainMult: 4, resources: ["shiny_helmet"] },
       { id: 58, name: "Travel: Proceed to Combat Arena", type: "Travel", maxReps: 1, count: 0, baseTime: 5e4, description: "Step into the arena of combat.", skills: ["travel"] }
     ]
   },
@@ -85,7 +85,7 @@ var zones = [
       { id: 63, name: "Tactical Coordination Group Skirmish", type: "Training", maxReps: 7, count: 0, baseTime: 4e8, description: "Develop team-based combat strategies.", skills: ["combat", "charisma"] },
       { id: 64, name: "Energetic Bliss: Painstaking Training", type: "Training", maxReps: 1, count: 0, baseTime: 4e12, description: "Engage in a grueling training session.", skills: ["combat", "endurance", "perception"], perk: "energetic_bliss" },
       { id: 65, name: "Concoct Some Steroids", type: "Training", maxReps: 4, count: 0, baseTime: 9e9, description: "Create a performance-enhancing steroid.", skills: ["alchemy", "tinkering", "intellect"], resources: ["steroids"] },
-      { id: 66, name: "Challenge Dojo Master Chuck Norris", type: "Training", maxReps: 1, count: 0, baseTime: 5e12, description: "Challenge the legendary martial artist.", skills: ["combat"], boss_image: "images/chuck_norris.jpg", drainMult: 5 },
+      { id: 66, name: "Challenge Dojo Master Chuck Norris", type: "Training", maxReps: 1, count: 0, baseTime: 2e9, description: "Challenge the legendary martial artist.", skills: ["combat"], boss_image: "images/chuck_norris.jpg", drainMult: 8, resources: ["karate_belt"] },
       { id: 67, name: "Travel: Navigate to Abandoned Factory", type: "Travel", maxReps: 1, count: 0, baseTime: 1e5, description: "Descend deeper into the digital realm.", skills: ["travel"] }
     ]
   },
@@ -100,7 +100,7 @@ var zones = [
       { id: 74, name: "Exosuit Upgrade Overhaul", type: "Training", maxReps: 5, count: 0, baseTime: 1e7, description: "Upgrade your cybernetic exosuit.", skills: ["cybernetics", "mechanics"], mandatory: true },
       { id: 75, name: "System Calibration Diagnostic Run", type: "Training", maxReps: 16, count: 0, baseTime: 5e7, description: "Calibrate cybernetic systems.", skills: ["cybernetics", "tinkering"] },
       { id: 76, name: "Futuristic Wrench: Find a Tool", type: "Training", maxReps: 1, count: 0, baseTime: 6e9, description: "Locate a futuristic wrench.", skills: ["perception"], perk: "futuristic_wrench" },
-      { id: 77, name: "Battle Sauron", type: "Training", maxReps: 1, count: 0, baseTime: 1e14, description: "Take on the creator of the One Ring", skills: ["combat"], boss_image: "images/sauron.jpg" },
+      { id: 77, name: "Battle Sauron", type: "Training", maxReps: 1, count: 0, baseTime: 1e14, description: "Take on the creator of just one ring.", skills: ["combat"], boss_image: "images/sauron.jpg" },
       { id: 78, name: "Travel: Proceed to Rooftop Rendezvous", type: "Travel", maxReps: 1, count: 0, baseTime: 3e5, description: "Climb to the city rooftop.", skills: ["travel"] }
     ]
   },
@@ -148,10 +148,11 @@ var zones = [
     name: "AI Research Facility",
     img: "images/zone11.jpg",
     tasks: [
-      { id: 111, name: "Subatomic Experiment", type: "Training", maxReps: 10, count: 0, baseTime: 8e8, description: "Experiment with quantum particles.", skills: ["quantum", "intellect"] },
-      { id: 112, name: "Algorithm Optimization Code Refinement", type: "Training", maxReps: 5, count: 0, baseTime: 1e8, description: "Refine and optimize complex algorithms.", skills: ["aiMastery", "intellect"] },
-      { id: 113, name: "Cyber Defense Digital Barrier", type: "Training", maxReps: 2, count: 0, baseTime: 1e10, description: "Deploy a robust digital defense.", skills: ["hacking", "quantum"], mandatory: true },
-      { id: 114, name: "Travel: Proceed to Forsaken Bastion", type: "Travel", maxReps: 1, count: 0, baseTime: 5e7, description: "Travel to the forsaken bastion.", skills: ["travel"] }
+      { id: 111, name: "Subatomic Experiment", type: "Training", maxReps: 10, count: 0, baseTime: 1e14, description: "Experiment with quantum particles.", skills: ["quantum", "intellect"] },
+      { id: 112, name: "Algorithm Optimization Code Refinement", type: "Training", maxReps: 5, count: 0, baseTime: 1e14, description: "Refine and optimize complex algorithms.", skills: ["aiMastery", "intellect"] },
+      { id: 113, name: "Cyber Defense Digital Barrier", type: "Training", maxReps: 2, count: 0, baseTime: 1e14, description: "Deploy a robust digital defense.", skills: ["hacking", "quantum"], mandatory: true },
+      { id: 114, name: "Random Crystal: Sentience Attempt", type: "Training", maxReps: 2, count: 0, baseTime: 1e14, description: "Attempt to create a sentient crystal.", skills: ["aiMastery", "quantum"], resources: ["random_crystal"] },
+      { id: 115, name: "Travel: Proceed to Forsaken Bastion", type: "Travel", maxReps: 1, count: 0, baseTime: 5e7, description: "Travel to the forsaken bastion.", skills: ["travel"] }
     ]
   },
   {
@@ -159,9 +160,9 @@ var zones = [
     name: "Forsaken Bastion",
     img: "images/zone12.jpg",
     tasks: [
-      { id: 121, name: "Bunker Blitz High-Intensity Drill", type: "Training", maxReps: 10, count: 0, baseTime: 1e9, description: "Push your endurance to the limit in a confined space.", skills: ["endurance", "combat"] },
-      { id: 122, name: "Neural Matrix Debugging System Repair", type: "Training", maxReps: 5, count: 0, baseTime: 2e9, description: "Repair and optimize digital systems.", skills: ["aiMastery", "hacking"] },
-      { id: 123, name: "Secure Vault Access Code Breaker", type: "Training", maxReps: 2, count: 0, baseTime: 8e10, description: "Breach a secure digital vault.", skills: ["hacking", "intellect"], mandatory: true },
+      { id: 121, name: "Bunker Blitz High-Intensity Drill", type: "Training", maxReps: 10, count: 0, baseTime: 1e15, description: "Push your endurance to the limit in a confined space.", skills: ["endurance", "combat"] },
+      { id: 122, name: "Neural Matrix Debugging System Repair", type: "Training", maxReps: 5, count: 0, baseTime: 1e15, description: "Repair and optimize digital systems.", skills: ["aiMastery", "hacking"] },
+      { id: 123, name: "Secure Vault Access Code Breaker", type: "Training", maxReps: 2, count: 0, baseTime: 1e15, description: "Breach a secure digital vault.", skills: ["hacking", "intellect"], mandatory: true },
       { id: 124, name: "Travel: Exit to Shattered Expanse", type: "Travel", maxReps: 1, count: 0, baseTime: 1e8, description: "Journey back to the shattered expanse.", skills: ["travel"] }
     ]
   },
@@ -170,9 +171,9 @@ var zones = [
     name: "Shattered Expanse",
     img: "images/zone13.jpg",
     tasks: [
-      { id: 131, name: "Guerrilla Warfare Sandstorm Sprint", type: "Training", maxReps: 10, count: 0, baseTime: 1e10, description: "Sprint through a raging sandstorm.", skills: ["endurance", "combat"] },
-      { id: 132, name: "Desert Survival Resource Scavenging", type: "Training", maxReps: 10, count: 0, baseTime: 1e10, description: "Scavenge for precious resources.", skills: ["intellect", "perception"], mandatory: true },
-      { id: 133, name: "Outpost Infiltration Silent Breach", type: "Training", maxReps: 5, count: 0, baseTime: 2e10, description: "Breach an enemy outpost undetected.", skills: ["hacking", "endurance"] },
+      { id: 131, name: "Guerrilla Warfare Sandstorm Sprint", type: "Training", maxReps: 10, count: 0, baseTime: 1e16, description: "Sprint through a raging sandstorm.", skills: ["endurance", "combat"] },
+      { id: 132, name: "Desert Survival Resource Scavenging", type: "Training", maxReps: 10, count: 0, baseTime: 1e16, description: "Scavenge for precious resources.", skills: ["intellect", "perception"], mandatory: true },
+      { id: 133, name: "Outpost Infiltration Silent Breach", type: "Training", maxReps: 5, count: 0, baseTime: 1e16, description: "Breach an enemy outpost undetected.", skills: ["hacking", "endurance"] },
       { id: 134, name: "Travel: Journey to Ascendant Metropolis", type: "Travel", maxReps: 1, count: 0, baseTime: 8e8, description: "Approach a dazzling metropolis of the future.", skills: ["travel"] }
     ]
   },
@@ -181,9 +182,9 @@ var zones = [
     name: "Ascendant Metropolis",
     img: "images/zone14.jpg",
     tasks: [
-      { id: 141, name: "Urban Warfare Digital Onslaught", type: "Training", maxReps: 10, count: 0, baseTime: 5e10, description: "Engage in a fast-paced digital battle.", skills: ["combat", "aiMastery"] },
-      { id: 142, name: "City Grid Optimization Neural Sync", type: "Training", maxReps: 5, count: 0, baseTime: 1e11, description: "Optimize urban networks with quantum precision.", skills: ["quantum", "intellect"], mandatory: true },
-      { id: 143, name: "Corporate Espionage Information Heist", type: "Training", maxReps: 2, count: 0, baseTime: 1e13, description: "Steal confidential data using your omniscient insight.", skills: ["negotiation", "hacking", "omniscience"], mandatory: true },
+      { id: 141, name: "Urban Warfare Digital Onslaught", type: "Training", maxReps: 10, count: 0, baseTime: 1e17, description: "Engage in a fast-paced digital battle.", skills: ["combat", "aiMastery"] },
+      { id: 142, name: "City Grid Optimization Neural Sync", type: "Training", maxReps: 5, count: 0, baseTime: 1e17, description: "Optimize urban networks with quantum precision.", skills: ["quantum", "intellect"], mandatory: true },
+      { id: 143, name: "Corporate Espionage Information Heist", type: "Training", maxReps: 2, count: 0, baseTime: 1e17, description: "Steal confidential data using your omniscient insight.", skills: ["negotiation", "hacking", "omniscience"], mandatory: true },
       { id: 144, name: "Travel: Ascend to Nexus of Infinity", type: "Travel", maxReps: 1, count: 0, baseTime: 2e9, description: "Conquer the Nexus of Infinity.", skills: ["travel"] }
     ]
   },
@@ -192,12 +193,12 @@ var zones = [
     name: "Nexus of Infinity",
     img: "images/zone15.jpg",
     tasks: [
-      { id: 151, name: "Final Skirmish Ultimate", type: "Training", maxReps: 10, count: 0, baseTime: 1e12, description: "Engage in a climactic battle to prove your might.", skills: ["combat", "endurance"] },
-      { id: 152, name: "Ultimate Algorithm Challenge", type: "Training", maxReps: 5, count: 0, baseTime: 3e12, description: "Solve a complex algorithmic puzzle that tests your intellect.", skills: ["aiMastery", "intellect"], mandatory: true },
-      { id: 153, name: "Mainframe Break-In Digital Siege", type: "Training", maxReps: 2, count: 0, baseTime: 1e13, description: "Penetrate a heavily fortified digital fortress.", skills: ["hacking", "cybernetics"], mandatory: true },
-      { id: 154, name: "Last Stand Test", type: "Training", maxReps: 20, count: 0, baseTime: 1e12, description: "Withstand an endless onslaught of foes.", skills: ["endurance"] },
-      { id: 155, name: "Code of Destiny Final Puzzle", type: "Training", maxReps: 1, count: 0, baseTime: 1e15, description: "Solve the ultimate puzzle and shape your destiny.", skills: ["aiMastery", "omniscience"], mandatory: true },
-      { id: 156, name: "Cyber Siege Digital Onslaught", type: "Training", maxReps: 10, count: 0, baseTime: 3e13, description: "Launch a final digital assault on enemy systems.", skills: ["hacking", "cybernetics"], mandatory: true },
+      { id: 151, name: "Final Skirmish Ultimate", type: "Training", maxReps: 10, count: 0, baseTime: 1e18, description: "Engage in a climactic battle to prove your might.", skills: ["combat", "endurance"] },
+      { id: 152, name: "Ultimate Algorithm Challenge", type: "Training", maxReps: 5, count: 0, baseTime: 1e18, description: "Solve a complex algorithmic puzzle that tests your intellect.", skills: ["aiMastery", "intellect"], mandatory: true },
+      { id: 153, name: "Mainframe Break-In Digital Siege", type: "Training", maxReps: 2, count: 0, baseTime: 1e18, description: "Penetrate a heavily fortified digital fortress.", skills: ["hacking", "cybernetics"], mandatory: true },
+      { id: 154, name: "Last Stand Test", type: "Training", maxReps: 20, count: 0, baseTime: 1e15, description: "Withstand an endless onslaught of foes.", skills: ["endurance"] },
+      { id: 155, name: "Code of Destiny Final Puzzle", type: "Training", maxReps: 1, count: 0, baseTime: 1e18, description: "Solve the ultimate puzzle and shape your destiny.", skills: ["aiMastery", "omniscience"], mandatory: true },
+      { id: 156, name: "Cyber Siege Digital Onslaught", type: "Training", maxReps: 10, count: 0, baseTime: 1e18, description: "Launch a final digital assault on enemy systems.", skills: ["hacking", "cybernetics"], mandatory: true },
       { id: 157, name: "Travel: Enter the Victory Chamber", type: "Travel", maxReps: 1, count: 0, baseTime: 1e10, description: "Step into the chamber of ultimate triumph.", skills: ["travel"] }
     ]
   }
