@@ -7,7 +7,7 @@ const CURRENT_GAME_VERSION = "v0.02";
   const knowledgeSkills = ["tinkering", "intellect", "hacking"];
   const powerSkills     = ["combat", "endurance"];
   const copiumSkills    = ["endurance", "alchemy", "mechanics"];
-  const delusionSkills  = ["charisma", "perception", "aiMastery", "negotiation", "omniscience"];
+  const delusionSkills  = ["charisma", "perception", "aiMastery", "negotiation"];
 
   /****************************************
    * INITIAL STATE
@@ -40,7 +40,7 @@ const CURRENT_GAME_VERSION = "v0.02";
         cybernetics: { level: 1, xp: 0, visible: false, energyDrain: 12,  progressBoost: 1, drainBoost: 1, xpGainFactor: 0.03 },
         negotiation: { level: 1, xp: 0, visible: false, energyDrain: 20,  progressBoost: 1, drainBoost: 1, xpGainFactor: 0.01 },
         aiMastery:   { level: 1, xp: 0, visible: false, energyDrain: 15,  progressBoost: 1, drainBoost: 1, xpGainFactor: 0.001 },
-        quantum:     { level: 1, xp: 0, visible: false, energyDrain: 50,  progressBoost: 1, drainBoost: 1, xpGainFactor: 0.0001 },
+        quantum:     { level: 1, xp: 0, visible: false, energyDrain: 25,  progressBoost: 1, drainBoost: 1, xpGainFactor: 0.0001 },
         omniscience: { level: 1, xp: 0, visible: false, energyDrain: 100, progressBoost: 1, drainBoost: 1, xpGainFactor: 0.00001 }
       },
       perks: {},
@@ -63,7 +63,7 @@ const CURRENT_GAME_VERSION = "v0.02";
   let currentZoneIndex = 0;
   let currentTasks = [];
   const tickDuration   = 100;
-  const xpScale        = 0.001; // XP per tick
+  let xpScale        = 0.001; // XP per tick
   const skillXpScaling = 1.02;
   const perkDescriptions = {
     brewmaster:             "Alchemy is 25% faster.",
@@ -82,6 +82,8 @@ const CURRENT_GAME_VERSION = "v0.02";
     copious_alchemist:      "Reduce Copium gain by 50%.",
     hoverboard:             "Increase travel speed by 200%.",
     reinforcement_learning: "4x increased AI Mastery XP gain.",
+    immunity_device:        "Reduce minimum energy drain by 75%.",
+    quantum_vitalizer:      "Get +1 starting Energy for each Energy reset."
   };
 
   /****************************************
@@ -94,19 +96,19 @@ const CURRENT_GAME_VERSION = "v0.02";
     },
     "magnifying_glass": {
       onConsume: amt => { gameState.skills["perception"].progressBoost += 0.05 * amt; updateSkillDisplay(); updateTasksHoverInfo(); },
-      tooltip: "Click to boost Perception by 5% per Magnifying Glass.<br>Right-click or Hold to consume all."
+      tooltip: "Boosts Perception by 5%."
     },
     "goggles": {
       onConsume: amt => { gameState.skills["alchemy"].drainBoost += 0.05 * amt; updateSkillDisplay(); updateTasksHoverInfo();},
-      tooltip: "Click to reduce Alchemy energy drain by 5% per Goggles.<br>Right-click or Hold to consume all."
+      tooltip: "Reduces Alchemy energy drain by 5%"
     },
     "cybernetic_potion": {
       onConsume: amt => { gameState.skills["cybernetics"].drainBoost += 0.2 * amt; updateSkillDisplay(); updateTasksHoverInfo(); },
-      tooltip: "Click to reduce Cybernetics energy drain by 20% per Cybernetic Potion.<br>Right-click or Hold to consume all."
+      tooltip: "Reduces Cybernetics energy drain by 20%."
     },
     "cybernetic_armor": {
-      onConsume: amt => { gameState.numCyberneticArmors += amt; updateTasksHoverInfo();  updateTasksHoverInfo();},
-      tooltip: "Click to reduce energy drain by 75% for next task.<br>Stacks with number of tasks, not drain on single task.<br>Right-click or Hold to consume all."
+      onConsume: amt => { gameState.numCyberneticArmors += amt; updateTasksHoverInfo();},
+      tooltip: "Reduces energy drain by 75% for next task."
     },
     "amphetamine_pill": {
       onConsume: amt => {
@@ -115,7 +117,7 @@ const CURRENT_GAME_VERSION = "v0.02";
         updateSkillDisplay();
         updateTasksHoverInfo();
       },
-      tooltip: "Click to boost Tinkering and Hacking by 10% per Amphetamine Pill.<br>Right-click or Hold to consume all."
+      tooltip: "Boosts Tinkering and Hacking by 10%."
     },
     "steroids": {
       onConsume: amt => {
@@ -124,14 +126,14 @@ const CURRENT_GAME_VERSION = "v0.02";
         updateSkillDisplay();
         updateTasksHoverInfo();
       },
-      tooltip: "Click to reduce Endurance and Combat energy drain by 10% per Steroid.<br>Right-click or Hold to consume all."
+      tooltip: "Reduces Endurance and Combat energy drain by 10%."
     },
     "touchable_grass": {
       onConsume: amt => {
         gameState.copium = Math.max(gameState.copium - 100 * amt, 0);
         updateCopiumDisplay();
       },
-      tooltip: "Click to reduce Copium by 100 per Touchable Grass.<br>Right-click or Hold to consume all."
+      tooltip: "Reduces Copium by 100."
     },
     "cool_sunglasses": {
       onConsume: amt => {
@@ -139,7 +141,7 @@ const CURRENT_GAME_VERSION = "v0.02";
         updateSkillDisplay();
         updateTasksHoverInfo();
       },
-      tooltip: "Click to boost Hacking by 100% per Cool Sunglasses.<br>Right-click or Hold to consume all."
+      tooltip: "Boosts Hacking by 100%.<br>And Makes you look cool."
     },
     "omega_resonator": {
       onConsume: amt => {
@@ -147,7 +149,7 @@ const CURRENT_GAME_VERSION = "v0.02";
         updateSkillDisplay();
         updateTasksHoverInfo();
       },
-      tooltip: "Click to boost Combat speed by 20% per Omega Resonator.<br>Right-click or Hold to consume all."
+      tooltip: "Boosts Combat speed by 20%."
     },
     "shiny_helmet": {
       onConsume: amt => {
@@ -155,7 +157,7 @@ const CURRENT_GAME_VERSION = "v0.02";
         updateSkillDisplay();
         updateTasksHoverInfo();
       },
-      tooltip: "Click to reduce Combat energy drain by 100% per Shiny Helmet.<br>Right-click or Hold to consume all."
+      tooltip: "Reduces Combat energy drain by 100%.<br>And makes you look more shiny."
     },
     "karate_belt": {
       onConsume: amt => {
@@ -163,7 +165,7 @@ const CURRENT_GAME_VERSION = "v0.02";
         updateSkillDisplay();
         updateTasksHoverInfo();
       },
-      tooltip: "Click to boost Negotiation by 100% per Karate Belt.<br>Right-click or Hold to consume all."
+      tooltip: "Boosts Negotiation by 100%.<br>By letting them know you are a ninja."
     },
     "random_crystal": {
       onConsume: amt => {
@@ -182,7 +184,7 @@ const CURRENT_GAME_VERSION = "v0.02";
         updateSkillDisplay();
         updateTasksHoverInfo();
       },
-      tooltip: "Click to level a random skill to next level for each Random Crystal.<br>Right-click or Hold to consume all."
+      tooltip: "Levels up a random skill to next level."
     },
     "one_ring": {
       onConsume: amt => {
@@ -190,8 +192,17 @@ const CURRENT_GAME_VERSION = "v0.02";
         updateSkillDisplay();
         updateTasksHoverInfo();
       },
-      tooltip: "Click to boost Quantum by 500% per One Ring.<br>Right-click or Hold to consume all."
+      tooltip: "Boosts Quantum by 500%.<br>And wards off potential mates."
     },
+    "katana": {
+      onConsume: amt => {
+        gameState.skills["combat"].progressBoost += 0.1 * amt;
+        gameState.skills["perception"].progressBoost += 3 * amt;
+        updateSkillDisplay();
+        updateTasksHoverInfo();
+      },
+      tooltip: "Oddly enough, only boosts Combat by 10%.<br>But also boosts Perception by 300%."
+    }
 
   };
   function consumeResource(name, amt) {
@@ -561,7 +572,7 @@ const CURRENT_GAME_VERSION = "v0.02";
       task.skills.forEach(sName => {
         const sk = gameState.skills[sName];
         if (sk) {
-          let sm = Math.pow(1.01, sk.level);
+          let sm = Math.pow(1.01, sk.level - 1);
           if (sName === "alchemy" && gameState.perks["brewmaster"]) sm *= 1.25;
           if (sName === "mechanics" && gameState.perks["futuristic_wrench"]) sm *= 5;
           if (sName === "travel" && gameState.perks["hoverboard"]) sm *= 3;
@@ -601,6 +612,7 @@ const CURRENT_GAME_VERSION = "v0.02";
       Object.keys(gameState.resources).forEach(rName => {
         gameState.resources[rName] = Math.ceil(gameState.resources[rName] / 2);
       });
+      if (gameState.perks["quantum_vitalizer"]) gameState.startingEnergy += 1;
       gameState.numEnergyResets++;
     } else if (reason === "copiumOverflow") {
       gameState.resources = {};
@@ -900,7 +912,7 @@ const CURRENT_GAME_VERSION = "v0.02";
       task.skills.forEach(sName => {
         const sk = gameState.skills[sName];
         if (sk) {
-          let sm = Math.pow(1.01, sk.level);
+          let sm = Math.pow(1.01, sk.level - 1);
           if (sName === "alchemy" && gameState.perks["brewmaster"]) sm *= 1.25;
           if (sName === "mechanics" && gameState.perks["futuristic_wrench"]) sm *= 5;
           if (sName === "travel" && gameState.perks["hoverboard"]) sm *= 3;
@@ -920,9 +932,6 @@ const CURRENT_GAME_VERSION = "v0.02";
     
     // Compute effective drain per tick (includes drainMult and drainBoost):
     let D = getCombinedEnergyDrain(task, zone.id);
-    if (task.drainMult !== undefined) {
-      D *= task.drainMult;
-    }
     if (gameState.numCyberneticArmors > 0) {
       D *= 0.25;
     }
@@ -953,7 +962,7 @@ const CURRENT_GAME_VERSION = "v0.02";
     }
     
     // Total estimated energy drain is drain per tick multiplied by the total ticks.
-    return D * Math.max(1, ticksNeeded);
+    return D * Math.max(gameState.perks["immunity_device"] ? 0.25 : 1, ticksNeeded);
   }
 
 
@@ -1258,6 +1267,7 @@ const CURRENT_GAME_VERSION = "v0.02";
       showConfirmationModal("Cheat Code Activated: BetterStart");
       renderSkills();
       updateSkillDisplay();
+      updateTasksHoverInfo();
     } else if (code === "WhatAboutOtherSkills") {
       // For endurance, tinkering, charisma, and alchemy: ensure level is at least 250
       ["intellect", "perception", "mechanics"].forEach(skillName => {
@@ -1269,6 +1279,7 @@ const CURRENT_GAME_VERSION = "v0.02";
       showConfirmationModal("Cheat Code Activated: WhatAboutOtherSkills");
       renderSkills();
       updateSkillDisplay();
+      updateTasksHoverInfo();
     } else {
       showConfirmationModal("Invalid Cheat Code");
     }
@@ -1310,7 +1321,13 @@ const CURRENT_GAME_VERSION = "v0.02";
       const zone = zones[tData.zoneIndex];
       let speedMult = getCombinedMultiplier(tData.task);
       tData.progress += tickDuration * speedMult;
-      if (tData.progress > tData.totalDuration) tData.progress = tData.totalDuration;
+      let singleTickSkill = false;
+      if (tData.progress > tData.totalDuration) {
+        tData.progress = tData.totalDuration;
+        if(gameState.perks["immunity_device"]) {
+          singleTickSkill = true;
+        }
+      }
       const delta = tData.progress - oldProgress;
       let drain = getCombinedEnergyDrain(tData.task, tData.zoneIndex);
       if (!gameState.cyberneticArmorTaskRunning && gameState.numCyberneticArmors > 0) {
@@ -1318,6 +1335,9 @@ const CURRENT_GAME_VERSION = "v0.02";
         gameState.numCyberneticArmors--;
       }
       if (gameState.cyberneticArmorTaskRunning) {
+        drain *= 0.25;
+      }
+      if (singleTickSkill) {
         drain *= 0.25;
       }
       gameState.energy -= drain;
@@ -1416,6 +1436,7 @@ const CURRENT_GAME_VERSION = "v0.02";
           if (task.perk === "basic_mech") gameState.startingEnergy += 25;
           showMessage("Perk unlocked: " + formatPerkName(task.perk));
           renderPerks();
+          updateSkillDisplay();
         }
         updateTasksHoverInfo();
       }
@@ -1493,7 +1514,7 @@ const CURRENT_GAME_VERSION = "v0.02";
       knowledgeUpg.parentElement.style.display = "inline-block";
       knowledgeUpg.textContent = gameState.knowledge;
       const tooltipStr = "Knowledge increases XP gain by <b>" + formatNumber(gameState.knowledge * 0.1) +
-                         "%</b> for these skills:<br>- " + knowledgeSkills.join("<br>- ");
+                         "%</b><br>for " + knowledgeSkills.join(", ") + ".";
       knowledgeUpg.parentElement.setAttribute("data-tooltip", tooltipStr);
     }
   }
@@ -1503,7 +1524,7 @@ const CURRENT_GAME_VERSION = "v0.02";
     if (gameState.powerUnlocked) {
       powerUpg.parentElement.style.display = "inline-block";
       powerUpg.textContent = gameState.power;
-      const tooltipStr = "Power increases speed by <b>" + formatNumber(gameState.power * 0.1) +
+      const tooltipStr = "Power increases speed by <b>" + formatNumber(gameState.power) +
                          "%</b><br>for Combat and Endurance.";
       powerUpg.parentElement.setAttribute("data-tooltip", tooltipStr);
     }
@@ -1539,4 +1560,6 @@ const CURRENT_GAME_VERSION = "v0.02";
 
   // Expose gameState for debugging.
   window.getGameState = () => gameState;
+  window.getXpScale = () => xpScale;
+  window.setXpScale = (newScale) => xpScale = newScale;
 })();

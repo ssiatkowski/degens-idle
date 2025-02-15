@@ -85,7 +85,7 @@ var zones = [
       { id: 63, name: "Tactical Coordination Group Skirmish", type: "Training", maxReps: 7, count: 0, baseTime: 4e8, description: "Develop team-based combat strategies.", skills: ["combat", "charisma"] },
       { id: 64, name: "Energetic Bliss: Painstaking Training", type: "Training", maxReps: 1, count: 0, baseTime: 4e12, description: "Engage in a grueling training session.", skills: ["combat", "endurance", "perception"], perk: "energetic_bliss" },
       { id: 65, name: "Concoct Some Steroids", type: "Training", maxReps: 4, count: 0, baseTime: 9e9, description: "Create a performance-enhancing steroid.", skills: ["alchemy", "tinkering", "intellect"], resources: ["steroids"] },
-      { id: 66, name: "Challenge Dojo Master Chuck Norris", type: "Training", maxReps: 1, count: 0, baseTime: 5e9, description: "Challenge the legendary martial artist.", skills: ["combat"], boss_image: "images/chuck_norris.jpg", drainMult: 8, resources: ["karate_belt"] },
+      { id: 66, name: "Challenge Dojo Master Chuck Norris", type: "Training", maxReps: 1, count: 0, baseTime: 1e9, description: "Challenge the legendary martial artist.", skills: ["combat"], boss_image: "images/chuck_norris.jpg", drainMult: 8, resources: ["karate_belt"] },
       { id: 67, name: "Travel: Navigate to Abandoned Factory", type: "Travel", maxReps: 1, count: 0, baseTime: 1e5, description: "Descend deeper into the digital realm.", skills: ["travel"] }
     ]
   },
@@ -100,7 +100,7 @@ var zones = [
       { id: 74, name: "Exosuit Upgrade Overhaul", type: "Training", maxReps: 5, count: 0, baseTime: 1e7, description: "Upgrade your cybernetic exosuit.", skills: ["cybernetics", "mechanics"], mandatory: true },
       { id: 75, name: "System Calibration Diagnostic Run", type: "Training", maxReps: 16, count: 0, baseTime: 5e7, description: "Calibrate cybernetic systems.", skills: ["cybernetics", "tinkering"] },
       { id: 76, name: "Futuristic Wrench: Find a Tool", type: "Training", maxReps: 1, count: 0, baseTime: 6e9, description: "Locate a futuristic wrench.", skills: ["perception"], perk: "futuristic_wrench" },
-      { id: 77, name: "Battle Sauron", type: "Training", maxReps: 1, count: 0, baseTime: 1e10, description: "Take on the creator of just one ring.", skills: ["combat"], boss_image: "images/sauron.jpg", drainMult: 12, resources: ["one_ring"] },
+      { id: 77, name: "Battle Sauron", type: "Training", maxReps: 1, count: 0, baseTime: 4e9, description: "Take on the creator of just one ring.", skills: ["combat"], boss_image: "images/sauron.jpg", drainMult: 12, resources: ["one_ring"] },
       { id: 78, name: "Travel: Proceed to Rooftop Rendezvous", type: "Travel", maxReps: 1, count: 0, baseTime: 3e5, description: "Climb to the city rooftop.", skills: ["travel"] }
     ]
   },
@@ -128,7 +128,8 @@ var zones = [
       { id: 93, name: "Deep Data Dive Extract Encrypted Secrets", type: "Training", maxReps: 5, count: 0, baseTime: 1e9, description: "Extract and decode hidden data.", skills: ["aiMastery", "hacking"], mandatory: true },
       { id: 94, name: "Simulation Engine: Ultimate Feat of Engineering", type: "Training", maxReps: 1, count: 0, baseTime: 1e15, description: "Create the ultimate feat of engineering.", skills: ["tinkering", "cybernetics", "hacking"], perk: "simulation_engine" },
       { id: 95, name: "Read Advanced Alchemy Manual", type: "Training", maxReps: 1, count: 0, baseTime: 1e14, description: "Study advanced alchemical techniques.", skills: ["alchemy", "perception"], perk: "copious_alchemist", mandatory: true },
-      { id: 96, name: "Travel: Emerge into Techno District", type: "Travel", maxReps: 1, count: 0, baseTime: 5e6, description: "Climb out to the bustling Techno District.", skills: ["travel"] }
+      { id: 96, name: "Battle Isshin", type: "Training", maxReps: 1, count: 0, baseTime: 1e11, description: "Challenge the master of the blade.", skills: ["combat"], boss_image: "images/isshin.jpg", drainMult: 20, resources: ["katana"] },
+      { id: 97, name: "Travel: Emerge into Techno District", type: "Travel", maxReps: 1, count: 0, baseTime: 5e6, description: "Climb out to the bustling Techno District.", skills: ["travel"] }
     ]
   },
   {
@@ -141,19 +142,22 @@ var zones = [
       { id: 103, name: "System Override the Grid", type: "Training", maxReps: 5, count: 0, baseTime: 2e11, description: "Take control of the city's digital infrastructure.", skills: ["hacking", "intellect"] },
       { id: 104, name: "Hoverboard: Steal One", type: "Training", maxReps: 1, count: 0, baseTime: 1e13, description: "Steal a hoverboard for high-speed travel.", skills: ["combat", "hacking"], perk: "hoverboard" },
       { id: 105, name: "Reinforcement Learning: Decent Algorithm", type: "Training", maxReps: 2, count: 0, baseTime: 2.5e6, description: "Train a reinforcement learning algorithm.", skills: ["aiMastery"], perk: "reinforcement_learning" },
-      { id: 106, name: "Travel: Venture to AI Research Facility", type: "Travel", maxReps: 1, count: 0, baseTime: 1e7, description: "Head to the hub of advanced AI research.", skills: ["travel"] }
+      { id: 106, name: "Travel: Venture to Research Facility", type: "Travel", maxReps: 1, count: 0, baseTime: 1e7, description: "Head to the hub of advanced AI research.", skills: ["travel"] }
     ]
   },
   {
     id: 11,
-    name: "AI Research Facility",
+    name: "Research Facility",
     img: "images/zone11.jpg",
     tasks: [
-      { id: 111, name: "Subatomic Experiment", type: "Training", maxReps: 10, count: 0, baseTime: 1e14, description: "Experiment with quantum particles.", skills: ["quantum", "intellect"] },
-      { id: 112, name: "Algorithm Optimization Code Refinement", type: "Training", maxReps: 5, count: 0, baseTime: 1e14, description: "Refine and optimize complex algorithms.", skills: ["aiMastery", "intellect"] },
-      { id: 113, name: "Cyber Defense Digital Barrier", type: "Training", maxReps: 2, count: 0, baseTime: 1e14, description: "Deploy a robust digital defense.", skills: ["hacking", "quantum"], mandatory: true },
-      { id: 114, name: "Random Crystal: Sentience Attempt", type: "Training", maxReps: 2, count: 0, baseTime: 1e14, description: "Attempt to create a sentient crystal.", skills: ["aiMastery", "quantum"], resources: ["random_crystal"] },
-      { id: 115, name: "Travel: Proceed to Forsaken Bastion", type: "Travel", maxReps: 1, count: 0, baseTime: 5e7, description: "Travel to the forsaken bastion.", skills: ["travel"] }
+      { id: 111, name: "Subatomic Experiment", type: "Training", maxReps: 10, count: 0, baseTime: 1e10, description: "Experiment with quantum particles.", skills: ["quantum", "intellect"] },
+      { id: 112, name: "Algorithm Optimization Code Refinement", type: "Training", maxReps: 5, count: 0, baseTime: 1e11, description: "Refine and optimize complex algorithms.", skills: ["aiMastery", "intellect"] },
+      { id: 113, name: "Immunity Device: Haggle for it", type: "Training", maxReps: 2, count: 0, baseTime: 1e7, description: "Haggle with a science nerd.", skills: ["negotiation"], perk: "immunity_device" },
+      { id: 114, name: "Cyber Defense Digital Barrier", type: "Training", maxReps: 2, count: 0, baseTime: 3e10, description: "Deploy a robust digital defense.", skills: ["hacking", "quantum"], mandatory: true },
+      { id: 115, name: "Random Crystal: Sentience Attempt", type: "Training", maxReps: 2, count: 0, baseTime: 7e7, description: "Attempt to create a sentient crystal.", skills: ["aiMastery", "quantum"], resources: ["random_crystal"] },
+      { id: 116, name: "Find Map to Forsaken Bastion", type: "Training", maxReps: 6, count: 0, baseTime: 1e14, description: "Find a map to the forsaken bastion.", skills: ["perception", "endurance"], mandatory: true},
+      { id: 117, name: "Quantum Vitalizer: Health Galore", type: "Training", maxReps: 1, count: 0, baseTime: 1e6, description: "Create a quantum vitalizer for health benefits.", skills: ["quantum"], perk: "quantum_vitalizer" },
+      { id: 118, name: "Travel: Proceed to Forsaken Bastion", type: "Travel", maxReps: 1, count: 0, baseTime: 5e7, description: "Travel to the forsaken bastion.", skills: ["travel"] }
     ]
   },
   {
