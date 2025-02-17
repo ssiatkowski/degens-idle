@@ -73,6 +73,7 @@ const CURRENT_GAME_VERSION = "v0.02";
     double_timer:           "Allows running two tasks simultaneously.",
     energetic_bliss:        "Doubles progress while energy is above 80%.",
     workaholic:             "All XP gains increased by 50%.",
+    kung_fu_zen:            "All XP gains increased by 25%.",
     copium_reactor:         "Get +5 starting Energy for each Copium reset.",
     gacha_machine:          "25% chance to produce double resources.",
     futuristic_wrench:      "Mechanics drains 3x less energy.",
@@ -161,11 +162,12 @@ const CURRENT_GAME_VERSION = "v0.02";
     },
     "karate_belt": {
       onConsume: amt => {
+        gameState.skills["charisma"].progressBoost += 0.25 * amt;
         gameState.skills["negotiation"].drainBoost += 1 * amt;
         updateSkillDisplay();
         updateTasksHoverInfo();
       },
-      tooltip: "Reduces Negotiation energy drain by 100%.<br>By letting them know you are a ninja."
+      tooltip: "Boosts Charisma speed by 25%.<br>And reduces Negotiation energy drain by 100%.<br>By letting them know you are a ninja."
     },
     "random_crystal": {
       onConsume: amt => {
@@ -178,7 +180,7 @@ const CURRENT_GAME_VERSION = "v0.02";
 
           skill.xp = 0;
           skill.level++;
-          showMessage(capitalize(randomSkillName) + " leveled up to " + skill.level + "!");
+          showMessage(formatStringForDisplay(randomSkillName) + " leveled up to " + skill.level + "!");
         }
         updateSkillDisplay();
         updateTasksHoverInfo();
@@ -289,7 +291,7 @@ const CURRENT_GAME_VERSION = "v0.02";
 
       const div = document.createElement("div");
       div.className = "resource-item";
-      div.setAttribute("data-tooltip", resourceActions[rName]?.tooltip || "Tap to consume resource.");
+      div.setAttribute("data-tooltip", formatStringForDisplay(rName) + ":<br>" + resourceActions[rName]?.tooltip || "Tap to consume resource.");
 
       // Resource icon
       const img = document.createElement("img");
@@ -418,11 +420,16 @@ const CURRENT_GAME_VERSION = "v0.02";
   /****************************************
    * UTILITY FUNCTIONS
    ****************************************/
-  function formatPerkName(str) {
-    return str.split("_").map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(" ");
-  }
-  function capitalize(str) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
+  function formatStringForDisplay(str) {
+    return str
+      // Replace underscores with spaces.
+      .replace(/_/g, ' ')
+      // Split on one or more whitespace characters.
+      .split(/\s+/)
+      // Capitalize each word.
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      // Join the words with a single space.
+      .join(' ');
   }
   function showMessage(msg) {
     const el = document.getElementById("message");
@@ -450,19 +457,19 @@ const CURRENT_GAME_VERSION = "v0.02";
         energyBarFill.classList.add("glowing");
         energyBarFill.classList.remove("energy-low");
         energyBarFill.setAttribute("data-tooltip",
-          "Energy drains based on each skill used.<br>Stacks multiplicatively.<br><br>Energetic Bliss is active!"
+          `Energy: ${formatNumber(gameState.energy)}/${formatNumber(gameState.startingEnergy)}<br>Energy drains based on each skill used.<br>Stacks multiplicatively.<br><br>Energetic Bliss is active!`
         );
       } else if (gameState.energy < gameState.startingEnergy * 0.1) {
         energyBarFill.classList.remove("glowing");
         energyBarFill.classList.add("energy-low");
         energyBarFill.setAttribute("data-tooltip",
-          "Energy drains based on each skill used.<br>Stacks multiplicatively.<br><br>Energy is critically low!"
+          `Energy: ${formatNumber(gameState.energy)}/${formatNumber(gameState.startingEnergy)}<br>Energy drains based on each skill used.<br>Stacks multiplicatively.<br><br>Energy is critically low!`
         );
       } else {
         energyBarFill.classList.remove("glowing");
         energyBarFill.classList.remove("energy-low");
         energyBarFill.setAttribute("data-tooltip",
-          "Energy drains based on each skill used.<br>Stacks multiplicatively."
+          `Energy: ${formatNumber(gameState.energy)}/${formatNumber(gameState.startingEnergy)}<br>Energy drains based on each skill used.<br>Stacks multiplicatively.`
         );
       }
     }
@@ -482,13 +489,39 @@ const CURRENT_GAME_VERSION = "v0.02";
         copiumBarFill.classList.add("copium-high");
         copiumBarFill.setAttribute("data-tooltip",
           "Copium builds up from tasks with<br>" + copiumSkills.join(", ") +
-          ".<br><br>If it exceeds 9000, your game will reset<br>with all resources and half your knowledge lost!"
+          ".<br><br>If it exceeds 9000, your game will reset<br>with all Resources and half your Knowledge lost!"
         );
       } else {
         copiumBarFill.classList.remove("copium-high");
         copiumBarFill.setAttribute("data-tooltip",
           "Copium builds up from tasks with<br>" + copiumSkills.join(", ") +
-          ".<br><br>If it exceeds 9000, your game will reset<br>with all resources and half your knowledge lost!"
+          ".<br><br>If it exceeds 9000, your game will reset<br>with all Resources and half your Knowledge lost!"
+        );
+      }
+    }
+  }
+
+  function updateDelusionDisplay() {
+    const val = Math.max(0, gameState.delusion);
+    const delusionText = document.getElementById("delusionText");
+    if (delusionText) {
+      delusionText.textContent = val.toFixed(0);
+    }
+    const delusionBarFill = document.getElementById("delusionBarFill");
+    if (delusionBarFill) {
+      delusionBarFill.style.width = (val / 90) + "%";
+      // Add high-delusion glow if delusion is above 8000
+      if (gameState.delusion > 8000) {
+        delusionBarFill.classList.add("delusion-high");
+        delusionBarFill.setAttribute("data-tooltip",
+          "Delusion builds up from tasks with<br>" + delusionSkills.join(", ") +
+          ".<br><br>If it exceeds 9000, your game will reset<br>with 25% of your Power lost!"
+        );
+      } else {
+        delusionBarFill.classList.remove("delusion-high");
+        delusionBarFill.setAttribute("data-tooltip",
+          "Delusion builds up from tasks with<br>" + delusionSkills.join(", ") +
+          ".<br><br>If it exceeds 9000, your game will reset<br>with 25% of your Power lost!"
         );
       }
     }
@@ -520,7 +553,7 @@ const CURRENT_GAME_VERSION = "v0.02";
     while (skill.xp >= required) {
       skill.xp -= required;
       skill.level++;
-      showMessage(capitalize(skillName) + " leveled up to " + skill.level + "!");
+      showMessage(formatStringForDisplay(skillName) + " leveled up to " + skill.level + "!");
       required = Math.pow(skillXpScaling, skill.level - 1);
     }
     updateSkillDisplay();
@@ -545,7 +578,7 @@ const CURRENT_GAME_VERSION = "v0.02";
       let baseDrain = sData.energyDrain / (sData.drainBoost || 1);
       if (sName === "mechanics" && gameState.perks.futuristic_wrench) baseDrain /= 3;
       el.setAttribute("data-tooltip",
-        `${capitalize(sName)} (Level: ${formatNumber(sData.level)})<br>
+        `${formatStringForDisplay(sName)} (Level: ${formatNumber(sData.level)})<br>
          XP: ${formatNumber(sData.xp)} / ${formatNumber(xpTot)}<br>
          Speed: x${formatNumber(baseMult)}<br>
          Energy Drain: ${formatNumber(baseDrain)}x`
@@ -566,7 +599,7 @@ const CURRENT_GAME_VERSION = "v0.02";
         // Static display: show only the skill name and level
         div.innerHTML = `
           <div class="skill-name">
-            ${capitalize(sName)}<br>
+            ${formatStringForDisplay(sName)}<br>
             (<span class="skill-level">${formatNumber(s.level)}</span>)
           </div>
           <div class="skill-bar">
@@ -577,14 +610,6 @@ const CURRENT_GAME_VERSION = "v0.02";
       }
     });
     updateSkillDisplay();
-  }
-
-  // Utility to format large numbers (from your formatting.js, presumably)
-  function formatNumber(num) {
-    if (num >= 1e9) return (num / 1e9).toFixed(1) + "B";
-    if (num >= 1e6) return (num / 1e6).toFixed(1) + "M";
-    if (num >= 1e3) return (num / 1e3).toFixed(1) + "K";
-    return num.toFixed(2).replace(/\.00$/, "");
   }
 
   /****************************************
@@ -613,8 +638,12 @@ const CURRENT_GAME_VERSION = "v0.02";
     const scrollY = window.scrollY || window.pageYOffset;
     let x, y;
   
-    // For resources and upgrades: tooltip to the left
-    if (el.classList.contains("resource-item") || el.closest(".upgrade-display")) {
+    // For resources, perks, and upgrades: tooltip to the left
+    if (
+      el.classList.contains("resource-item") ||
+      el.classList.contains("perk-item") ||
+      el.closest(".upgrade-display")
+    ) {
       x = rect.left + scrollX - tooltipEl.offsetWidth - 6; // 6px gap to left
       y = rect.top + scrollY;
     }
@@ -633,9 +662,11 @@ const CURRENT_GAME_VERSION = "v0.02";
       x = rect.left + scrollX;
       y = rect.bottom + scrollY + 6;
     }
+    
     tooltipEl.style.left = x + "px";
     tooltipEl.style.top = y + "px";
   }
+  
   
 
   function hideTooltip() {
@@ -724,6 +755,11 @@ const CURRENT_GAME_VERSION = "v0.02";
         gameState.startingEnergy += 5;
       }
       gameState.numCopiumResets++;
+    } else if (reason === "delusionOverflow") {
+      // lose all resources, half knowledge
+      gameState.power = Math.floor(gameState.power * 0.75);
+      gameState.delusion = 0;
+      gameState.numDelusionResets++;
     }
     zones.forEach(z => z.tasks.forEach(t => t.count = 0));
     Object.keys(gameState.skills).forEach(sName => {
@@ -776,13 +812,20 @@ const CURRENT_GAME_VERSION = "v0.02";
       " Copium reset.";
   }
 
-  function getOrdinalSuffix(num) {
-    // For example: 1 -> '1st', 2 -> '2nd', 3 -> '3rd', 4 -> '4th'
-    const j = num % 10, k = num % 100;
-    if (j === 1 && k !== 11) return "st";
-    if (j === 2 && k !== 12) return "nd";
-    if (j === 3 && k !== 13) return "rd";
-    return "th";
+  function handleDelusionOverflow() {
+    const delusionScreen = document.getElementById("gameOverScreenDelusion");
+    delusionScreen.style.display = "flex";
+    const delusionContent = document.getElementById("gameOverContentDelusion");
+    let resetMsg = delusionContent.querySelector("#delusionResetMsg");
+    if (!resetMsg) {
+      resetMsg = document.createElement("p");
+      resetMsg.id = "delusionResetMsg";
+      delusionContent.appendChild(resetMsg);
+    }
+    resetMsg.textContent = "This is your " +
+      (gameState.numDelusionResets + 1) +
+      getOrdinalSuffix(gameState.numDelusionResets + 1) +
+      " Delusion reset.";
   }
 
   /****************************************
@@ -873,6 +916,10 @@ const CURRENT_GAME_VERSION = "v0.02";
       gameState.copiumUnlocked = true;
       showCopiumModal();
     }
+    if (zone.id >= 12 && !gameState.delusionUnlocked) {
+      gameState.delusionUnlocked = true;
+      showDelusionModal();
+    }
     document.getElementById("zoneName").textContent = `Zone ${zone.id}: ${zone.name}`;
     const zImg = document.getElementById("zoneImage");
     if (zImg && zone.img) {
@@ -961,7 +1008,7 @@ const CURRENT_GAME_VERSION = "v0.02";
                      : (task.skills.length === 2) ? "#9aad32"
                      : (task.skills.length === 3) ? "orange"
                      : "red";
-      const capitalizedSkills = task.skills.map(s => capitalize(s)).join(", ");
+      const capitalizedSkills = task.skills.map(s => formatStringForDisplay(s)).join(", ");
       usesP.innerHTML = `<span style="color:${usesColor};">Uses: ${capitalizedSkills}</span>`;
       div.appendChild(usesP);
 
@@ -1098,6 +1145,7 @@ const CURRENT_GAME_VERSION = "v0.02";
       const numSkills = usedSkills.length || 1;
       let baseXP = (task.baseTime * xpScale) / numSkills;
       if (gameState.perks["workaholic"]) baseXP *= 1.5;
+      if (gameState.perks["kung_fu_zen"]) baseXP *= 1.25;
       let xpText = "";
       usedSkills.forEach(sName => {
         let skillXP = baseXP;
@@ -1114,13 +1162,13 @@ const CURRENT_GAME_VERSION = "v0.02";
         if (gameState.perks["reinforcement_learning"] && sName === "aiMastery") {
           skillXP *= 5;
         }
-        xpText += `<br>${capitalize(sName)}: ` + formatNumber(skillXP) + " XP";
+        xpText += `<br>${formatStringForDisplay(sName)}: ` + formatNumber(skillXP) + " XP";
       });
       
       // --- Extra Info ---
       let extraInfo = "";
       if (gameState.knowledgeUnlocked && usedSkills.some(s => knowledgeSkills.includes(s))) {
-        extraInfo += `<br><br><span style="color:rgb(141, 26, 191)">Knowledge Gain on Completion: ${formatNumber(zone.id)}</span>`;
+        extraInfo += `<br><br><span style="color:rgb(40, 210, 117)">Knowledge Gain on Completion: ${formatNumber(zone.id)}</span>`;
       }
       if (gameState.copiumUnlocked && usedSkills.some(s => copiumSkills.includes(s))) {
         let copiumGain = 10 * zone.id;
@@ -1235,16 +1283,17 @@ const CURRENT_GAME_VERSION = "v0.02";
       const div = document.createElement("div");
       const icon = document.createElement("img");
       icon.src = "images/" + pKey + ".jpg";
-      icon.alt = formatPerkName(pKey);
+      const pStr = formatStringForDisplay(pKey);
+      icon.alt = pStr;
       icon.style.pointerEvents = "none";
       if (gameState.perks[pKey]) {
         div.setAttribute("data-tooltip",
-          formatPerkName(pKey) + ":<br>" + (perkDescriptions[pKey] || "An unknown perk.")
+          pStr + ":<br>" + (perkDescriptions[pKey] || "An unknown perk.")
         );
         div.className = "perk-item unlocked";
       } else {
         div.setAttribute("data-tooltip",
-          formatPerkName(pKey) + ": Unlock perk to see description."
+          pStr + ": Unlock perk to see description."
         );
         div.className = "perk-item locked";
       }
@@ -1282,7 +1331,7 @@ const CURRENT_GAME_VERSION = "v0.02";
     p.innerHTML =
       "Copium unlocked!<br>Tasks using skills below now yield Copium:<br>-" +
       copiumSkills.join("<br>-") +
-      "<br><br>If it exceeds 9000, you reset with all resources and half your knowledge lost!";
+      "<br><br>If it exceeds 9000, you reset with all Resources and half your Knowledge lost!";
     content.appendChild(p);
     const btn = document.createElement("button");
     btn.textContent = "Got It";
@@ -1316,12 +1365,43 @@ const CURRENT_GAME_VERSION = "v0.02";
     document.body.appendChild(modal);
   }
 
+  function showDelusionModal() {
+    const modal = document.createElement("div");
+    modal.className = "modal";
+    modal.id = "delusionModal";
+    const content = document.createElement("div");
+    content.className = "modal-content";
+    const p = document.createElement("p");
+    p.innerHTML =
+      "Delusion unlocked!<br>Tasks using skills below now yield Delusion:<br>-" +
+      delusionSkills.join("<br>-") +
+      "<br><br>If it exceeds 9000, you reset with 25% of Power lost!";
+    content.appendChild(p);
+    const btn = document.createElement("button");
+    btn.textContent = "Ouch!";
+    btn.addEventListener("click", () => {
+      modal.remove();
+    });
+    content.appendChild(btn);
+    modal.appendChild(content);
+    document.body.appendChild(modal);
+    showDelusionBar();
+  }
+
   function showCopiumBar() {
     const cBar = document.getElementById("copiumBarContainer");
     if (cBar) {
       cBar.style.display = "grid";
     }
     updateCopiumDisplay();
+  }
+
+  function showDelusionBar() {
+    const dBar = document.getElementById("delusionBarContainer");
+    if (dBar) {
+      dBar.style.display = "grid";
+    }
+    updateDelusionDisplay();
   }
 
   /****************************************
@@ -1407,6 +1487,11 @@ const CURRENT_GAME_VERSION = "v0.02";
   document.getElementById("restartButtonCopium").addEventListener("click", () => {
     document.getElementById("gameOverScreenCopium").style.display = "none";
     resetGame("copiumOverflow");
+  });
+
+  document.getElementById("restartButtonDelusion").addEventListener("click", () => {
+    document.getElementById("gameOverScreenDelusion").style.display = "none";
+    resetGame("delusionOverflow");
   });
 
   function showCheatCodeModal() {
@@ -1545,6 +1630,7 @@ const CURRENT_GAME_VERSION = "v0.02";
       const usedSkills = tData.task.skills || [];
       let xpEach = baseXP / (usedSkills.length || 1);
       if (gameState.perks["workaholic"]) xpEach *= 1.5;
+      if (gameState.perks["kung_fu_zen"]) xpEach *= 1.25;
       usedSkills.forEach(sName => {
         addXP(sName, xpEach);
       });
@@ -1572,6 +1658,23 @@ const CURRENT_GAME_VERSION = "v0.02";
           }
           updateCopiumDisplay();
         }
+        if (gameState.delusionUnlocked && usedSkills.some(s => delusionSkills.includes(s))) {
+          // Generate a biased random multiplier between 1 and 100.
+          // Math.random() returns a value between 0 and 1.
+          // Raising it to the 2nd power biases the result towards 0 (i.e., closer to 1 after scaling).
+          const randomMultiplier = Math.floor(1 + 99 * Math.pow(Math.random(), 2));
+          
+          gameState.delusion += (randomMultiplier * zone.id);
+          
+          if (gameState.delusion > 9000) {
+            currentTasks = [];
+            gameState.autoRun = false;
+            handleDelusionOverflow();
+            return;
+          }
+          
+          updateDelusionDisplay();
+        }
         updateRepContainer(tData.repContainer, task);
         if (task.mandatory && task.count >= task.maxReps && isTravelAvailable(zone)) {
           enableTravelButtons(tData.zoneIndex);
@@ -1585,7 +1688,7 @@ const CURRENT_GAME_VERSION = "v0.02";
             gameState.zoneFullCompletes[tData.zoneIndex] =
               (gameState.zoneFullCompletes[tData.zoneIndex] || 0) + 1;
           }
-          showMessage("Travel complete: " + task.name);
+          showMessage(task.name + " completed");
           tData.button.classList.remove("active");
           removeTaskFromCurrent(tData);
           nextZone();
@@ -1598,11 +1701,9 @@ const CURRENT_GAME_VERSION = "v0.02";
             removeTaskFromCurrent(tData);
           } else {
             if (gameState.perks["completionist"]) {
-              showMessage(`Repetition complete: ${task.name} (${task.count}/${task.maxReps})`);
               tData.progress = 0;
               tData.progressFill.style.width = "0%";
             } else {
-              showMessage(`Repetition complete: ${task.name} (${task.count}/${task.maxReps}). Click to run again.`);
               removeTaskFromCurrent(tData);
             }
             gameState.cyberneticArmorTaskRunning = false;
@@ -1625,7 +1726,7 @@ const CURRENT_GAME_VERSION = "v0.02";
           if (task.perk === "basic_mech") {
             gameState.startingEnergy += 25;
           }
-          showMessage("Perk unlocked: " + formatPerkName(task.perk));
+          showMessage("Perk unlocked: " + formatStringForDisplay(task.perk));
           renderPerks();
           updatePerksCount();
           updateSkillDisplay();

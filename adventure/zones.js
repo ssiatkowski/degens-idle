@@ -86,7 +86,8 @@ var zones = [
       { id: 64, name: "Energetic Bliss: Painstaking Training", type: "Training", maxReps: 1, count: 0, baseTime: 4e12, description: "Engage in a grueling training session.", skills: ["combat", "endurance", "perception"], perk: "energetic_bliss" },
       { id: 65, name: "Concoct Some Steroids", type: "Training", maxReps: 4, count: 0, baseTime: 9e9, description: "Create a performance-enhancing steroid.", skills: ["alchemy", "tinkering", "intellect"], resources: ["steroids"] },
       { id: 66, name: "Challenge Dojo Master Chuck Norris", type: "Training", maxReps: 1, count: 0, baseTime: 1e9, description: "Challenge the legendary martial artist.", skills: ["combat"], boss_image: "images/chuck_norris.jpg", drainMult: 8, resources: ["karate_belt"] },
-      { id: 67, name: "Travel: Navigate to Abandoned Factory", type: "Travel", maxReps: 1, count: 0, baseTime: 1e5, description: "Descend deeper into the digital realm.", skills: ["travel"] }
+      { id: 67, name: "Kung Fu Zen: Talk Your Way", type: "Training", maxReps: 3, count: 0, baseTime: 4e10, description: "Convince the masters to help you improve your learning.", skills: ["charisma"], perk: "kung_fu_zen" },
+      { id: 68, name: "Travel: Navigate to Abandoned Factory", type: "Travel", maxReps: 1, count: 0, baseTime: 1e5, description: "Descend deeper into the digital realm.", skills: ["travel"] }
     ]
   },
   {
@@ -142,7 +143,7 @@ var zones = [
       { id: 103, name: "System Override the Grid", type: "Training", maxReps: 5, count: 0, baseTime: 2e11, description: "Take control of the city's digital infrastructure.", skills: ["hacking", "intellect"] },
       { id: 104, name: "Hoverboard: Steal One", type: "Training", maxReps: 1, count: 0, baseTime: 1e13, description: "Steal a hoverboard for high-speed travel.", skills: ["combat", "hacking"], perk: "hoverboard" },
       { id: 105, name: "Reinforcement Learning: Decent Algorithm", type: "Training", maxReps: 2, count: 0, baseTime: 2.5e6, description: "Train a reinforcement learning algorithm.", skills: ["aiMastery"], perk: "reinforcement_learning" },
-      { id: 106, name: "Battle Kratos", type: "Travel", maxReps: 1, count: 0, baseTime: 3e11, description: "Challenge the demi-god.", skills: ["combat"], boss_image: "images/kratos.jpg", drainMult: 30, resources: ["blades_of_chaos"] },
+      { id: 106, name: "Battle Kratos", type: "Training", maxReps: 1, count: 0, baseTime: 3e11, description: "Challenge the demi-god.", skills: ["combat"], boss_image: "images/kratos.jpg", drainMult: 30, resources: ["blades_of_chaos"] },
       { id: 107, name: "Travel: Venture to Research Facility", type: "Travel", maxReps: 1, count: 0, baseTime: 1e7, description: "Head to the hub of advanced AI research.", skills: ["travel"] }
     ]
   },

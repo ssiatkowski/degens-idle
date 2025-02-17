@@ -123,6 +123,11 @@ body {
   animation: glowPulse 1s infinite alternate;
 }
 
+@keyframes glowPulse {
+  from { box-shadow: inset 0 0 5px 2px #e74c3c; }
+  to { box-shadow: inset 0 0 6px 1px rgba(71, 240, 255, 0.8); }
+}
+
 /* Glow for low energy (energy below 10% of startingEnergy) */
 #energyBarFill.energy-low {
   animation: lowEnergyPulse 1s infinite alternate;
@@ -144,10 +149,16 @@ body {
 }
 
 
-@keyframes glowPulse {
-  from { box-shadow: inset 0 0 5px 2px #e74c3c; }
-  to { box-shadow: inset 0 0 6px 1px rgba(71, 240, 255, 0.8); }
+/* Glow for high delusion (delusion above 8000) */
+#delusionBarFill.delusion-high {
+  animation: highDelusionPulse 1s infinite alternate;
 }
+
+@keyframes highDelusionPulse {
+  from { box-shadow: inset 0 0 5px 2px #9b59b6; }
+  to   { box-shadow: inset 0 0 15px 5px #361941; }
+}
+
 
 
 /* The numeric value is positioned in the center of the bar */
@@ -190,7 +201,7 @@ body {
 }
 
 #knowledgeUpgDiv {
-  color: rgb(141, 26, 191);
+  color: rgb(40, 210, 117);
   font-weight: bold;
 }
 
@@ -509,7 +520,7 @@ footer {
 /* ---------------------- */
 /* Game Over Overlay */
 /* ---------------------- */
-#gameOverScreenEnergy, #gameOverScreenCopium {
+#gameOverScreenEnergy, #gameOverScreenCopium, #gameOverScreenDelusion {
   position: fixed;
   top: 0;
   left: 0;
@@ -521,14 +532,14 @@ footer {
   align-items: center;
   z-index: 1000;
 }
-#gameOverContentEnergy, #gameOverContentCopium {
+#gameOverContentEnergy, #gameOverContentCopium, #gameOverContentDelusion {
   text-align: center;
 }
-#gameOverContentEnergy h2, #gameOverContentCopium h2 {
+#gameOverContentEnergy h2, #gameOverContentCopium h2, #gameOverContentDelusion h2 {
   font-size: 2em;
   margin-bottom: 20px;
 }
-#gameOverContentEnergy button, #gameOverContentCopium button {
+#gameOverContentEnergy button, #gameOverContentCopium button, #gameOverContentDelusion button {
   margin-top: 20px;
   margin-bottom: 20px;
   padding: 10px 20px;
