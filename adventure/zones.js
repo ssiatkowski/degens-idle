@@ -109,7 +109,7 @@ var zones = [
     name: "Rooftop Rendezvous",
     img: "images/zone8.jpg",
     tasks: [
-      { id: 81, name: "Tactics Broker a Deal", type: "Training", maxReps: 3, count: 0, baseTime: 8e5, description: "Hone your negotiation skills in high places.", skills: ["negotiation"], mandatory: true },
+      { id: 81, name: "Tactics Broker a Deal", type: "Training", maxReps: 3, count: 0, baseTime: 5e5, description: "Hone your negotiation skills in high places.", skills: ["negotiation"], mandatory: true },
       { id: 82, name: "Cybernetic Potion", type: "Training", maxReps: 10, count: 0, baseTime: 1e8, description: "Create a cybernetic potion.", skills: ["alchemy", "cybernetics"], resources: ["cybernetic_potion"] },
       { id: 83, name: "Cybernetic Armor", type: "Training", maxReps: 1, count: 0, baseTime: 1e12, description: "Carefully craft a cybernetic armor.", skills: ["tinkering", "cybernetics"], resources: ["cybernetic_armor"] },
       { id: 84, name: "High-Rise Debate Persuade the Crowd", type: "Training", maxReps: 10, count: 0, baseTime: 9e9, description: "Use your wit to sway opinions.", skills: ["negotiation", "charisma"] },
@@ -142,7 +142,8 @@ var zones = [
       { id: 103, name: "System Override the Grid", type: "Training", maxReps: 5, count: 0, baseTime: 2e11, description: "Take control of the city's digital infrastructure.", skills: ["hacking", "intellect"] },
       { id: 104, name: "Hoverboard: Steal One", type: "Training", maxReps: 1, count: 0, baseTime: 1e13, description: "Steal a hoverboard for high-speed travel.", skills: ["combat", "hacking"], perk: "hoverboard" },
       { id: 105, name: "Reinforcement Learning: Decent Algorithm", type: "Training", maxReps: 2, count: 0, baseTime: 2.5e6, description: "Train a reinforcement learning algorithm.", skills: ["aiMastery"], perk: "reinforcement_learning" },
-      { id: 106, name: "Travel: Venture to Research Facility", type: "Travel", maxReps: 1, count: 0, baseTime: 1e7, description: "Head to the hub of advanced AI research.", skills: ["travel"] }
+      { id: 106, name: "Battle Kratos", type: "Travel", maxReps: 1, count: 0, baseTime: 3e11, description: "Challenge the demi-god.", skills: ["combat"], boss_image: "images/kratos.jpg", drainMult: 30, resources: ["blades_of_chaos"] },
+      { id: 107, name: "Travel: Venture to Research Facility", type: "Travel", maxReps: 1, count: 0, baseTime: 1e7, description: "Head to the hub of advanced AI research.", skills: ["travel"] }
     ]
   },
   {

@@ -305,6 +305,10 @@ body {
   margin-bottom: 10px;
 }
 
+.perk-count {
+  font-size: 0.8em;
+  color: #aaa;
+}
 
 /* Resources grid */
 #resourcesGrid, .perks-grid {
@@ -338,6 +342,36 @@ body {
 
 .resource-item:hover {
   transform: scale(1.1);
+  filter: brightness(1.2);
+}
+
+/* ----- Resource Toggle Styling ----- */
+#resourceToggle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+#resourceToggle button {
+  background: #444;
+  color: #fff;
+  border: 1px solid #666;
+  padding: 3px 5px;
+  font-size: 0.65em;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s, filter 0.2s;
+}
+
+#resourceToggle button.active {
+  background: #27ae60;
+  border-color: #1e8449;
+  color: #fff;
+}
+
+#resourceToggle button:hover {
   filter: brightness(1.2);
 }
 
@@ -620,6 +654,11 @@ footer {
   .rep-container {
     gap: 1px;
   }
+  
+  .perk-count {
+    font-size: 0.6em;
+  }
+
   #resourcesGrid, .perks-grid {
     grid-template-columns: repeat(auto-fill, minmax(46px, 1fr));
     gap: 1px;
@@ -648,4 +687,5 @@ footer {
     padding: 5px 10px;
     margin: 3px;
   }
+  
 }
