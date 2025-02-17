@@ -1612,7 +1612,7 @@ const CURRENT_GAME_VERSION = "v0.02";
           gameState.knowledge += zone.id;
           showKnowledgeIfUnlocked();
         }
-        if (task.count >= task.maxReps && gameState.powerUnlocked && task.boss_image) {
+        if (task.count >= task.maxReps && task.boss_image) {
           if (!gameState.powerUnlocked) {
             gameState.powerUnlocked = true;
             showPowerModal();
