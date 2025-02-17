@@ -1180,6 +1180,9 @@ const CURRENT_GAME_VERSION = "v0.02";
       if (gameState.powerUnlocked && task.boss_image) {
         extraInfo += `<br><br><span style="color:rgb(222, 34, 191)">Power Gain on Completion: ${formatNumber(zone.id - 3)}</span>`;
       }
+      if (gameState.delusionUnlocked && usedSkills.some(s => delusionSkills.includes(s))) {
+        extraInfo += `<br><br><span style="color:#9b59b6">Delusion Gain per Task: 0 - ${formatNumber(zone.id * 100)} (random, skewed to low)</span>`;
+      }
       
       // --- Update Tooltip ---
       btn.setAttribute("data-tooltip", 
@@ -1466,6 +1469,7 @@ const CURRENT_GAME_VERSION = "v0.02";
     currentZoneIndex = 0;
     currentTasks = [];
     document.getElementById("copiumBarContainer").style.display = "none";
+    document.getElementById("delusionBarContainer").style.display = "none";
     updateEnergyDisplay();
     renderSkills();
     updateSkillDisplay();
@@ -1659,10 +1663,10 @@ const CURRENT_GAME_VERSION = "v0.02";
           updateCopiumDisplay();
         }
         if (gameState.delusionUnlocked && usedSkills.some(s => delusionSkills.includes(s))) {
-          // Generate a biased random multiplier between 1 and 100.
+          // Generate a biased random multiplier between 0 and 100.
           // Math.random() returns a value between 0 and 1.
-          // Raising it to the 2nd power biases the result towards 0 (i.e., closer to 1 after scaling).
-          const randomMultiplier = Math.floor(1 + 99 * Math.pow(Math.random(), 2));
+          // Raising it to the 10th power biases the result towards 0 (i.e., closer to 1 after scaling).
+          const randomMultiplier = Math.floor(100 * Math.pow(Math.random(), 10));
           
           gameState.delusion += (randomMultiplier * zone.id);
           
@@ -1780,6 +1784,7 @@ const CURRENT_GAME_VERSION = "v0.02";
   document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("gameOverScreenEnergy").style.display = "none";
     document.getElementById("gameOverScreenCopium").style.display = "none";
+    document.getElementById("gameOverScreenDelusion").style.display = "none";
     const kUpg = document.getElementById("knowledgeUpgValue");
     if (kUpg) kUpg.parentElement.style.display = "none";
 
@@ -1789,6 +1794,9 @@ const CURRENT_GAME_VERSION = "v0.02";
     updateEnergyDisplay();
     if (gameState.copiumUnlocked) {
       showCopiumBar();
+    }
+    if (gameState.delusionUnlocked) {
+      showDelusionBar();
     }
     updateSkillDisplay();
     renderResources();
