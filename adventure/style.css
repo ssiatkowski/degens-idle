@@ -680,10 +680,18 @@ footer {
   }
   
   .task-control button {
-    font-size: 0.7em;
+    padding: 5px;
+    font-size: 0.65em;
   }
+
+  /* Reduce vertical spacing between tasks (margin-bottom reduced from 10px to 7.5px) */
+  #tasks .task {
+    margin-bottom: 7.5px;
+  }
+  
+  /* Also adjust task paragraph text font-size from 0.7em to 0.65em */
   #tasks .task p {
-    font-size: 0.7em;
+    font-size: 0.65em;
   }
 
   .custom-tooltip {

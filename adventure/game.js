@@ -73,7 +73,7 @@ const CURRENT_GAME_VERSION = "v0.02";
     double_timer:           "Allows running two tasks simultaneously.",
     energetic_bliss:        "Doubles progress while energy is above 80%.",
     workaholic:             "All XP gains increased by 50%.",
-    kung_fu_zen:            "All XP gains increased by 25%.",
+    kung_fu_zen:            "All XP gains increased by 25%.<br>And decrease Charisma energy drain by 25%.",
     copium_reactor:         "Get +5 starting Energy for each Copium reset.",
     gacha_machine:          "25% chance to produce double resources.",
     futuristic_wrench:      "Mechanics drains 3x less energy.",
@@ -84,7 +84,8 @@ const CURRENT_GAME_VERSION = "v0.02";
     hoverboard:             "Increase travel speed by 200%.",
     reinforcement_learning: "5x increased AI Mastery XP gain.",
     immunity_device:        "Reduce minimum energy drain by 75%.",
-    quantum_vitalizer:      "Get Zone/10 starting Energy for each Energy reset."
+    quantum_vitalizer:      "Get Zone/10 starting Energy for each Energy reset.",
+    knowledge_preserver:    "Reduce Knowledge loss on copium reset by 80%.",
   };
 
   /****************************************
@@ -180,6 +181,7 @@ const CURRENT_GAME_VERSION = "v0.02";
 
           skill.xp = 0;
           skill.level++;
+          updateSkillMultipliers();
           showMessage(formatStringForDisplay(randomSkillName) + " leveled up to " + skill.level + "!");
         }
         updateSkillDisplay();
@@ -220,7 +222,7 @@ const CURRENT_GAME_VERSION = "v0.02";
   function consumeResource(name, amt) {
     if (!gameState.resources[name] || gameState.resources[name] < amt) return;
     gameState.resources[name] -= amt;
-    showMessage(`Consumed ${amt} ${name}.`);
+    showMessage(`Consumed ${amt} ${formatStringForDisplay(name)}.`);
     renderResources();
   }
 
@@ -323,6 +325,7 @@ const CURRENT_GAME_VERSION = "v0.02";
                 resourceActions[rName].onConsume(1);
               }
             }
+            updateSkillMultipliers();
             hideTooltip();
           }
         });
@@ -332,7 +335,7 @@ const CURRENT_GAME_VERSION = "v0.02";
         div.addEventListener("touchstart", () => {
           touchTimeout = setTimeout(() => {
             showTooltip(div); // Show near the resource
-          }, 800);
+          }, 500);
         });
         div.addEventListener("touchend", () => {
           clearTimeout(touchTimeout);
@@ -489,13 +492,13 @@ const CURRENT_GAME_VERSION = "v0.02";
         copiumBarFill.classList.add("copium-high");
         copiumBarFill.setAttribute("data-tooltip",
           "Copium builds up from tasks with<br>" + copiumSkills.join(", ") +
-          ".<br><br>If it exceeds 9000, your game will reset<br>with all Resources and half your Knowledge lost!"
+          `.<br><br>If it exceeds 9000, your game will reset<br>with all Resources and ${gameState.perks["knowledge_preserver"] ? "half" : "10% of"} your Knowledge lost!`
         );
       } else {
         copiumBarFill.classList.remove("copium-high");
         copiumBarFill.setAttribute("data-tooltip",
           "Copium builds up from tasks with<br>" + copiumSkills.join(", ") +
-          ".<br><br>If it exceeds 9000, your game will reset<br>with all Resources and half your Knowledge lost!"
+          `.<br><br>If it exceeds 9000, your game will reset<br>with all Resources and ${gameState.perks["knowledge_preserver"] ? "half" : "10% of"} your Knowledge lost!`
         );
       }
     }
@@ -553,6 +556,7 @@ const CURRENT_GAME_VERSION = "v0.02";
     while (skill.xp >= required) {
       skill.xp -= required;
       skill.level++;
+      updateSkillMultipliers();
       showMessage(formatStringForDisplay(skillName) + " leveled up to " + skill.level + "!");
       required = Math.pow(skillXpScaling, skill.level - 1);
     }
@@ -577,6 +581,7 @@ const CURRENT_GAME_VERSION = "v0.02";
       baseMult *= (sData.progressBoost);
       let baseDrain = sData.energyDrain / (sData.drainBoost || 1);
       if (sName === "mechanics" && gameState.perks.futuristic_wrench) baseDrain /= 3;
+      if (sName === "charisma" && gameState.perks.kung_fu_zen) baseDrain *= 0.75;
       el.setAttribute("data-tooltip",
         `${formatStringForDisplay(sName)} (Level: ${formatNumber(sData.level)})<br>
          XP: ${formatNumber(sData.xp)} / ${formatNumber(xpTot)}<br>
@@ -692,18 +697,45 @@ const CURRENT_GAME_VERSION = "v0.02";
   /****************************************
    * FORMULAS: COMBINED MULTIPLIERS & ENERGY DRAINS
    ****************************************/
+  function updateSkillMultipliers() {
+    Object.keys(gameState.skills).forEach(sName => {
+      const sk = gameState.skills[sName];
+      
+      // Precompute the base multiplier for the skill.
+      let baseMult = Math.pow(1.01, sk.level - 1) * (sk.progressBoost || 1);
+      
+      // Apply perk effects.
+      if (sName === "alchemy" && gameState.perks["brewmaster"]) {
+        baseMult *= 1.25;
+      }
+      if (sName === "travel" && gameState.perks["hoverboard"]) {
+        baseMult *= 3;
+      }
+      if (gameState.powerUnlocked && powerSkills.includes(sName)) {
+        baseMult *= (1 + 0.01 * gameState.power);
+      }
+      
+      // Store the precomputed value.
+      sk.precomputedMultiplier = baseMult;
+      
+      // Precompute energy drain factor.
+      let drainFactor = sk.energyDrain / (sk.drainBoost || 1);
+      if (sName === "mechanics" && gameState.perks.futuristic_wrench) {
+        drainFactor /= 3;
+      }
+      if (sName === "charisma" && gameState.perks.kung_fu_zen) {
+        drainFactor *= 0.75;
+      }
+      sk.precomputedDrainFactor = drainFactor;
+    });
+  }
   function getCombinedMultiplier(task) {
     let mult = 1;
     if (Array.isArray(task.skills)) {
       task.skills.forEach(sName => {
         const sk = gameState.skills[sName];
-        if (sk) {
-          let sm = Math.pow(1.01, sk.level - 1);
-          if (sName === "alchemy" && gameState.perks["brewmaster"]) sm *= 1.25;
-          if (sName === "travel" && gameState.perks["hoverboard"]) sm *= 3;
-          if (gameState.powerUnlocked && powerSkills.includes(sName)) sm *= (1 + 0.01 * gameState.power);
-          sm *= (sk.progressBoost || 1);
-          mult *= sm;
+        if (sk && sk.precomputedMultiplier) {
+          mult *= sk.precomputedMultiplier;
         }
       });
     }
@@ -712,14 +744,14 @@ const CURRENT_GAME_VERSION = "v0.02";
     }
     return mult;
   }
-
+  
   function getCombinedEnergyDrain(task, zoneIndex) {
     let baseDrain = 0.05;
     if (Array.isArray(task.skills)) {
       task.skills.forEach(sName => {
-        if (gameState.skills[sName]) {
-          baseDrain *= gameState.skills[sName].energyDrain / (gameState.skills[sName].drainBoost || 1);
-          if (sName === "mechanics" && gameState.perks.futuristic_wrench) baseDrain /= 3;
+        const sk = gameState.skills[sName];
+        if (sk && sk.precomputedDrainFactor) {
+          baseDrain *= sk.precomputedDrainFactor;
         }
       });
     }
@@ -732,6 +764,7 @@ const CURRENT_GAME_VERSION = "v0.02";
     }
     return baseDrain;
   }
+  
 
   /****************************************
    * RESTART & GAME OVER FUNCTIONS
@@ -749,14 +782,17 @@ const CURRENT_GAME_VERSION = "v0.02";
     } else if (reason === "copiumOverflow") {
       // lose all resources, half knowledge
       gameState.resources = {};
-      gameState.knowledge = Math.floor(gameState.knowledge / 2);
+      if (gameState.perks["knowledge_preserver"]) {
+        gameState.knowledge = Math.floor(gameState.knowledge * 0.9);
+      } else {
+        gameState.knowledge = Math.floor(gameState.knowledge / 2);
+      }
       gameState.copium = 0;
       if (gameState.perks["copium_reactor"]) {
         gameState.startingEnergy += 5;
       }
       gameState.numCopiumResets++;
     } else if (reason === "delusionOverflow") {
-      // lose all resources, half knowledge
       gameState.power = Math.floor(gameState.power * 0.75);
       gameState.delusion = 0;
       gameState.numDelusionResets++;
@@ -771,6 +807,7 @@ const CURRENT_GAME_VERSION = "v0.02";
     currentTasks = [];
     gameState.autoRun = false;
     gameState.cyberneticArmorTaskRunning = false;
+    updateSkillMultipliers();
     saveGameProgress();
     updateEnergyDisplay();
     updateCopiumDisplay();
@@ -1074,13 +1111,8 @@ const CURRENT_GAME_VERSION = "v0.02";
     if (Array.isArray(task.skills)) {
       task.skills.forEach(sName => {
         const sk = gameState.skills[sName];
-        if (sk) {
-          let sm = Math.pow(1.01, sk.level - 1);
-          if (sName === "alchemy" && gameState.perks["brewmaster"]) sm *= 1.25;
-          if (sName === "travel" && gameState.perks["hoverboard"]) sm *= 3;
-          if (gameState.powerUnlocked && powerSkills.includes(sName)) sm *= (1 + 0.01 * gameState.power);
-          sm *= (sk.progressBoost || 1);
-          mult *= sm;
+        if (sk && sk.precomputedMultiplier) {
+          mult *= sk.precomputedMultiplier;
         }
       });
     }
@@ -1471,10 +1503,11 @@ const CURRENT_GAME_VERSION = "v0.02";
     document.getElementById("copiumBarContainer").style.display = "none";
     document.getElementById("delusionBarContainer").style.display = "none";
     updateEnergyDisplay();
-    renderSkills();
-    updateSkillDisplay();
     renderResources();
     gatherAllPerks();
+    updateSkillMultipliers();
+    renderSkills();
+    updateSkillDisplay();
     const kUpg = document.getElementById("knowledgeUpgValue");
     if (kUpg) kUpg.parentElement.style.display = "none";
     const pUpg = document.getElementById("powerUpgValue");
@@ -1663,11 +1696,20 @@ const CURRENT_GAME_VERSION = "v0.02";
           updateCopiumDisplay();
         }
         if (gameState.delusionUnlocked && usedSkills.some(s => delusionSkills.includes(s))) {
-          // Generate a biased random multiplier between 0 and 100.
-          // Math.random() returns a value between 0 and 1.
-          // Raising it to the 10th power biases the result towards 0 (i.e., closer to 1 after scaling).
-          const randomMultiplier = Math.floor(100 * Math.pow(Math.random(), 10));
+          // Set the lambda parameter to control the steepness.
+          // A larger lambda means the probability declines more quickly.
+          const lambda = 0.4; // Experiment with this value to get your desired shape
           
+          // Generate an exponential random value.
+          let expValue = -Math.log(Math.random()) / lambda;
+          
+          // Clamp the value to a maximum of 100 to keep it in a similar range.
+          expValue = Math.min(expValue, 100);
+          
+          // Convert to an integer multiplier from 0 to 99.
+          const randomMultiplier = Math.floor(expValue);
+          
+          // Apply the multiplier as before.
           gameState.delusion += (randomMultiplier * zone.id);
           
           if (gameState.delusion > 9000) {
@@ -1679,6 +1721,7 @@ const CURRENT_GAME_VERSION = "v0.02";
           
           updateDelusionDisplay();
         }
+        
         updateRepContainer(tData.repContainer, task);
         if (task.mandatory && task.count >= task.maxReps && isTravelAvailable(zone)) {
           enableTravelButtons(tData.zoneIndex);
@@ -1731,6 +1774,7 @@ const CURRENT_GAME_VERSION = "v0.02";
             gameState.startingEnergy += 25;
           }
           showMessage("Perk unlocked: " + formatStringForDisplay(task.perk));
+          updateSkillMultipliers();
           renderPerks();
           updatePerksCount();
           updateSkillDisplay();
@@ -1798,6 +1842,8 @@ const CURRENT_GAME_VERSION = "v0.02";
     if (gameState.delusionUnlocked) {
       showDelusionBar();
     }
+    
+    updateSkillMultipliers();
     updateSkillDisplay();
     renderResources();
     updatePerksCount();

@@ -154,7 +154,7 @@ var zones = [
     tasks: [
       { id: 111, name: "Subatomic Experiment", type: "Training", maxReps: 10, count: 0, baseTime: 1e10, description: "Experiment with quantum particles.", skills: ["quantum", "intellect"] },
       { id: 112, name: "Algorithm Optimization Code Refinement", type: "Training", maxReps: 5, count: 0, baseTime: 1e11, description: "Refine and optimize complex algorithms.", skills: ["aiMastery", "intellect"] },
-      { id: 113, name: "Immunity Device: Haggle for it", type: "Training", maxReps: 2, count: 0, baseTime: 1e7, description: "Haggle with a science nerd.", skills: ["negotiation"], perk: "immunity_device" },
+      { id: 113, name: "Immunity Device: Haggle for it", type: "Training", maxReps: 2, count: 0, baseTime: 1.6e7, description: "Haggle with a science nerd.", skills: ["negotiation"], perk: "immunity_device" },
       { id: 114, name: "Cyber Defense Digital Barrier", type: "Training", maxReps: 2, count: 0, baseTime: 3e10, description: "Deploy a robust digital defense.", skills: ["hacking", "quantum"], mandatory: true },
       { id: 115, name: "Random Crystal: Sentience Attempt", type: "Training", maxReps: 2, count: 0, baseTime: 7e7, description: "Attempt to create a sentient crystal.", skills: ["aiMastery", "quantum"], resources: ["random_crystal"] },
       { id: 116, name: "Find Map to Forsaken Bastion", type: "Training", maxReps: 6, count: 0, baseTime: 1e14, description: "Find a map to the forsaken bastion.", skills: ["perception", "endurance"], mandatory: true},
@@ -168,9 +168,11 @@ var zones = [
     img: "images/zone12.jpg",
     tasks: [
       { id: 121, name: "Bunker Blitz High-Intensity Drill", type: "Training", maxReps: 10, count: 0, baseTime: 1e15, description: "Push your endurance to the limit in a confined space.", skills: ["endurance", "combat"] },
-      { id: 122, name: "Neural Matrix Debugging System Repair", type: "Training", maxReps: 5, count: 0, baseTime: 1e15, description: "Repair and optimize digital systems.", skills: ["aiMastery", "hacking"] },
-      { id: 123, name: "Secure Vault Access Code Breaker", type: "Training", maxReps: 2, count: 0, baseTime: 1e15, description: "Breach a secure digital vault.", skills: ["hacking", "intellect"], mandatory: true },
-      { id: 124, name: "Travel: Exit to Shattered Expanse", type: "Travel", maxReps: 1, count: 0, baseTime: 1e8, description: "Journey back to the shattered expanse.", skills: ["travel"] }
+      { id: 122, name: "Travel Training", type: "Training", maxReps: 20, count: 0, baseTime: 1e8, description: "Train for long-distance travel.", skills: ["travel", "endurance"] },
+      { id: 123, name: "Neural Matrix Debugging System Repair", type: "Training", maxReps: 5, count: 0, baseTime: 1e15, description: "Repair and optimize digital systems.", skills: ["aiMastery", "hacking"] },
+      { id: 124, name: "Secure Vault Access Code Breaker", type: "Training", maxReps: 2, count: 0, baseTime: 1e15, description: "Breach a secure digital vault.", skills: ["hacking", "intellect"], mandatory: true },
+      { id: 125, name: "Knowledge Preserver: New Invention", type: "Training", maxReps: 3, count: 0, baseTime: 4e16, description: "Create a machine that preserves knowledge.", skills: ["tinkering", "intellect"], perk: "knowledge_preserver" },
+      { id: 126, name: "Travel: Exit to Shattered Expanse", type: "Travel", maxReps: 1, count: 0, baseTime: 1e8, description: "Journey back to the shattered expanse.", skills: ["travel"] }
     ]
   },
   {
