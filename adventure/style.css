@@ -454,6 +454,30 @@ body {
 .task.travel-task .task-control button {
   border: 2px solid #3498db;
 }
+/* Prestige Task Button Styling */
+.task.prestige-task .task-control button {
+  background: #3498db;
+  color: #fff;
+  transition: background-color 0.2s, filter 0.2s;
+  animation: prestigeGlow 2s infinite;
+}
+
+@keyframes prestigeGlow {
+  0% {
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.6);
+  }
+  50% {
+    box-shadow: 0 0 15px rgba(52, 152, 219, 0.9);
+  }
+  100% {
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.6);
+  }
+}
+
+.task.prestige-task .task-control button:hover {
+  filter: brightness(1.1);
+}
+
 
 .perk-star {
   position: absolute;
@@ -583,6 +607,37 @@ footer {
   margin: 5px;
 }
 
+/* Additional styling for Prestige Modal */
+.prestige-modal {
+  max-width: 600px;
+  padding: 30px;
+  text-align: center;
+  background: #444; /* Matches your modal-content background */
+  border-radius: 5px;
+}
+
+.prestige-modal h2 {
+  margin-bottom: 20px;
+  color: #eee;
+}
+
+.prestige-modal p {
+  margin-bottom: 20px;
+  line-height: 1.5;
+  color: #eee;
+}
+
+.prestige-modal a {
+  color: #e67e22; /* Use your button/link accent color */
+  text-decoration: underline;
+}
+
+.prestige-btn-wrapper {
+  text-align: center;
+  margin-top: 30px;
+}
+
+
 /* ---------------------- */
 /* Custom Tooltip */
 /* ---------------------- */
@@ -680,8 +735,8 @@ footer {
   }
   
   .task-control button {
-    padding: 5px;
-    font-size: 0.65em;
+    padding: 7.5px;
+    font-size: 0.7em;
   }
 
   /* Reduce vertical spacing between tasks (margin-bottom reduced from 10px to 7.5px) */
@@ -692,6 +747,7 @@ footer {
   /* Also adjust task paragraph text font-size from 0.7em to 0.65em */
   #tasks .task p {
     font-size: 0.65em;
+    margin-bottom: -5px;
   }
 
   .custom-tooltip {

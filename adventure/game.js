@@ -4,10 +4,10 @@ const CURRENT_GAME_VERSION = "v0.02";
   /****************************************
    * DEFINITIONS: Skills affecting knowledge, copium, delusion
    ****************************************/
-  const knowledgeSkills = ["tinkering", "intellect", "hacking"];
-  const powerSkills     = ["combat", "endurance"];
-  const copiumSkills    = ["endurance", "alchemy", "mechanics"];
-  const delusionSkills  = ["charisma", "perception", "aiMastery", "negotiation"];
+  let knowledgeSkills = ["tinkering", "intellect", "hacking"];
+  let powerSkills     = ["combat", "endurance"];
+  let copiumSkills    = ["endurance", "alchemy", "mechanics"];
+  let delusionSkills  = ["charisma", "perception", "aiMastery", "negotiation"];
 
   /****************************************
    * INITIAL STATE
@@ -41,7 +41,7 @@ const CURRENT_GAME_VERSION = "v0.02";
         negotiation: { level: 1, xp: 0, visible: false, energyDrain: 20,  progressBoost: 1, drainBoost: 1, xpGainFactor: 0.01 },
         aiMastery:   { level: 1, xp: 0, visible: false, energyDrain: 15,  progressBoost: 1, drainBoost: 1, xpGainFactor: 0.001 },
         quantum:     { level: 1, xp: 0, visible: false, energyDrain: 25,  progressBoost: 1, drainBoost: 1, xpGainFactor: 0.0001 },
-        omniscience: { level: 1, xp: 0, visible: false, energyDrain: 100, progressBoost: 1, drainBoost: 1, xpGainFactor: 0.00001 }
+        omniscience: { level: 1, xp: 0, visible: false, energyDrain: 100, progressBoost: 1, drainBoost: 1, xpGainFactor: 1 }
       },
       perks: {},
       numEnergyResets: 0,
@@ -64,169 +64,8 @@ const CURRENT_GAME_VERSION = "v0.02";
   let currentTasks = [];
   const tickDuration   = 100;
   let xpScale        = 0.001; // XP per tick
-  const skillXpScaling = 1.02;
-  const perkDescriptions = {
-    brewmaster:             "Alchemy is 25% faster.",
-    healthy_living:         "Reduce energy drain by 25%.",
-    completionist:          "Automatically continue tasks until max reps.",
-    basic_mech:             "Increases starting Energy by 25.",
-    double_timer:           "Allows running two tasks simultaneously.",
-    energetic_bliss:        "Doubles progress while energy is above 80%.",
-    workaholic:             "All XP gains increased by 50%.",
-    kung_fu_zen:            "All XP gains increased by 25%.<br>And decrease Charisma energy drain by 25%.",
-    copium_reactor:         "Get +5 starting Energy for each Copium reset.",
-    gacha_machine:          "25% chance to produce double resources.",
-    futuristic_wrench:      "Mechanics drains 3x less energy.",
-    luck_of_the_irish:      "1% chance to produce 77x resources.",
-    simulation_engine:      "Unlock ability to automate zones after fully completing 10 times.",
-    rex:                    "25x increased charisma XP gain.",
-    copious_alchemist:      "Reduce Copium gain by 50%.",
-    hoverboard:             "Increase travel speed by 200%.",
-    reinforcement_learning: "5x increased AI Mastery XP gain.",
-    immunity_device:        "Reduce minimum energy drain by 75%.",
-    quantum_vitalizer:      "Get Zone/10 starting Energy for each Energy reset.",
-    knowledge_preserver:    "Reduce Knowledge loss on copium reset by 80%.",
-    neural_matrix:          "Reduce Quantum energy drain by 40%.",
-  };
-
-  /****************************************
-   * RESOURCE ACTIONS & RENDERING
-   ****************************************/
-  const resourceActions = {
-    "energy_elixir": {
-      onConsume: amt => { gameState.energy += 3 * amt; updateEnergyDisplay(); updateTasksHoverInfo(); },
-      tooltip: "Click to gain +3 Energy.<br>" + (("ontouchstart" in window || navigator.maxTouchPoints > 0) ? "Use above switch to consume all." : "Right-click to consume all.")
-    },
-    "magnifying_glass": {
-      onConsume: amt => { gameState.skills["perception"].progressBoost += 0.05 * amt; updateSkillDisplay(); updateTasksHoverInfo(); },
-      tooltip: "Boosts Perception speed by 5%."
-    },
-    "goggles": {
-      onConsume: amt => { gameState.skills["alchemy"].drainBoost += 0.05 * amt; updateSkillDisplay(); updateTasksHoverInfo();},
-      tooltip: "Reduces Alchemy energy drain by 5%"
-    },
-    "cybernetic_potion": {
-      onConsume: amt => { gameState.skills["cybernetics"].drainBoost += 0.2 * amt; updateSkillDisplay(); updateTasksHoverInfo(); },
-      tooltip: "Reduces Cybernetics energy drain by 20%."
-    },
-    "cybernetic_armor": {
-      onConsume: amt => { gameState.numCyberneticArmors += amt; updateTasksHoverInfo();},
-      tooltip: "Reduces energy drain by 75% for next task."
-    },
-    "amphetamine_pill": {
-      onConsume: amt => {
-        gameState.skills["tinkering"].drainBoost += 0.05 * amt;
-        gameState.skills["hacking"].drainBoost += 0.05 * amt;
-        updateSkillDisplay();
-        updateTasksHoverInfo();
-      },
-      tooltip: "Reduces Tinkering and Hacking energy drain by 5%."
-    },
-    "steroids": {
-      onConsume: amt => {
-        gameState.skills["endurance"].drainBoost += 0.1 * amt;
-        gameState.skills["combat"].drainBoost += 0.1 * amt;
-        updateSkillDisplay();
-        updateTasksHoverInfo();
-      },
-      tooltip: "Reduces Endurance and Combat energy drain by 10%."
-    },
-    "touchable_grass": {
-      onConsume: amt => {
-        gameState.copium = Math.max(gameState.copium - 100 * amt, 0);
-        updateCopiumDisplay();
-      },
-      tooltip: "Reduces Copium by 100."
-    },
-    "cool_sunglasses": {
-      onConsume: amt => {
-        gameState.skills["hacking"].drainBoost += 1 * amt;
-        updateSkillDisplay();
-        updateTasksHoverInfo();
-      },
-      tooltip: "Reduces Hacking energy drain by 100%.<br>And Makes you look cool."
-    },
-    "omega_resonator": {
-      onConsume: amt => {
-        gameState.skills["combat"].progressBoost += 0.2 * amt;
-        updateSkillDisplay();
-        updateTasksHoverInfo();
-      },
-      tooltip: "Boosts Combat speed by 20%."
-    },
-    "shiny_helmet": {
-      onConsume: amt => {
-        gameState.skills["combat"].drainBoost += 1 * amt;
-        updateSkillDisplay();
-        updateTasksHoverInfo();
-      },
-      tooltip: "Reduces Combat energy drain by 100%.<br>And makes you look more shiny."
-    },
-    "karate_belt": {
-      onConsume: amt => {
-        gameState.skills["charisma"].progressBoost += 0.25 * amt;
-        gameState.skills["negotiation"].drainBoost += 1 * amt;
-        updateSkillDisplay();
-        updateTasksHoverInfo();
-      },
-      tooltip: "Boosts Charisma speed by 25%.<br>And reduces Negotiation energy drain by 100%.<br>By letting them know you are a ninja."
-    },
-    "random_crystal": {
-      onConsume: amt => {
-        for (let i = 0; i < amt; i++) {
-          // Get all visible skills
-          const visibleSkills = Object.keys(gameState.skills).filter(sName => gameState.skills[sName].visible);
-          // Choose a random visible skill
-          const randomSkillName = visibleSkills[Math.floor(Math.random() * visibleSkills.length)];
-          const skill = gameState.skills[randomSkillName];
-
-          skill.xp = 0;
-          skill.level++;
-          updateSkillMultipliers();
-          showMessage(formatStringForDisplay(randomSkillName) + " leveled up to " + skill.level + "!");
-        }
-        updateSkillDisplay();
-        updateTasksHoverInfo();
-      },
-      tooltip: "Levels up a random skill to next level."
-    },
-    "one_ring": {
-      onConsume: amt => {
-        gameState.skills["quantum"].progressBoost += 5 * amt;
-        updateSkillDisplay();
-        updateTasksHoverInfo();
-      },
-      tooltip: "Boosts Quantum speed by 500%.<br>And wards off potential mates."
-    },
-    "katana": {
-      onConsume: amt => {
-        gameState.skills["combat"].progressBoost += 0.1 * amt;
-        gameState.skills["perception"].drainBoost += 3 * amt;
-        updateSkillDisplay();
-        updateTasksHoverInfo();
-      },
-      tooltip: "Oddly enough, only boosts Combat speed by 10%.<br>But also reduces energy drain of Perception by 300%."
-    },
-    "blades_of_chaos": {
-      onConsume: amt => {
-        gameState.skills["combat"].drainBoost += 0.2 * amt;
-        gameState.skills["quantum"].drainBoost += 0.2 * amt;
-        updateSkillDisplay();
-        updateTasksHoverInfo();
-      },
-      tooltip: "Reduces Combat and Quantum energy drain speed by 25%.<br>While looking like a badass."
-    },
-    "sanity_cleanser": {
-      onConsume: amt => {
-        for (let i = 0; i < amt; i++) {
-          gameState.delusion = Math.max(gameState.delusion - Math.floor(Math.random() * 200), 0);
-        }
-        updateDelusionDisplay();
-      },
-      tooltip: "Reduces Delusion by a random number between 1 and 200."
-    }
-
-  };
+  let skillXpScaling = 1.02;
+  let baseEnergyDrain = 0.05;
 
   // Helper to consume resources from gameState
   function consumeResource(name, amt) {
@@ -327,12 +166,12 @@ const CURRENT_GAME_VERSION = "v0.02";
               const amt = gameState.resources[rName];
               consumeResource(rName, amt);
               if (resourceActions[rName]?.onConsume) {
-                resourceActions[rName].onConsume(amt);
+                resourceActions[rName].onConsume(gameState, amt);
               }
             } else {
               consumeResource(rName, 1);
               if (resourceActions[rName]?.onConsume) {
-                resourceActions[rName].onConsume(1);
+                resourceActions[rName].onConsume(gameState, 1);
               }
             }
             updateSkillMultipliers();
@@ -364,7 +203,7 @@ const CURRENT_GAME_VERSION = "v0.02";
           if (gameState.resources[rName] > 0) {
             consumeResource(rName, 1);
             if (resourceActions[rName]?.onConsume) {
-              resourceActions[rName].onConsume(1);
+              resourceActions[rName].onConsume(gameState, 1);
             }
             if (gameState.resources[rName] === 0) {
               hideTooltip();
@@ -379,7 +218,7 @@ const CURRENT_GAME_VERSION = "v0.02";
             const amt = gameState.resources[rName];
             consumeResource(rName, amt);
             if (resourceActions[rName]?.onConsume) {
-              resourceActions[rName].onConsume(amt);
+              resourceActions[rName].onConsume(gameState, amt);
             }
             hideTooltip();
           }
@@ -585,11 +424,12 @@ const CURRENT_GAME_VERSION = "v0.02";
       if (barFill) barFill.style.width = pct + "%";
       const levelSpan = el.querySelector(".skill-level");
       if (levelSpan) levelSpan.textContent = formatNumber(sData.level);
-      let baseMult = Math.pow(1.01, sData.level);
+      let baseMult = Math.pow(1.01, sData.level - 1);
       if (sName === "alchemy" && gameState.perks.brewmaster) baseMult *= 1.25;
       if (sName === "travel" && gameState.perks.hoverboard) baseMult *= 3;
       baseMult *= (sData.progressBoost);
       let baseDrain = sData.energyDrain / (sData.drainBoost || 1);
+      if (sName === "hacking" && gameState.perks.noob_haxor) baseDrain *= 0.9;
       if (sName === "mechanics" && gameState.perks.futuristic_wrench) baseDrain /= 3;
       if (sName === "charisma" && gameState.perks.kung_fu_zen) baseDrain *= 0.75;
       if (sName === "quantum" && gameState.perks.neural_matrix) baseDrain *= 0.6;
@@ -723,7 +563,7 @@ const CURRENT_GAME_VERSION = "v0.02";
         baseMult *= 3;
       }
       if (gameState.powerUnlocked && powerSkills.includes(sName)) {
-        baseMult *= (1 + 0.01 * gameState.power);
+        baseMult *= (1 + (gameState.perks.urban_warfare ? 0.03 : 0.01) * gameState.power);
       }
       
       // Store the precomputed value.
@@ -731,15 +571,10 @@ const CURRENT_GAME_VERSION = "v0.02";
       
       // Precompute energy drain factor.
       let drainFactor = sk.energyDrain / (sk.drainBoost || 1);
-      if (sName === "mechanics" && gameState.perks.futuristic_wrench) {
-        drainFactor /= 3;
-      }
-      if (sName === "charisma" && gameState.perks.kung_fu_zen) {
-        drainFactor *= 0.75;
-      }
-      if (sName === "quantum" && gameState.perks.neural_matrix) {
-        drainFactor *= 0.6;
-      }
+      if (sName === "mechanics" && gameState.perks.futuristic_wrench) drainFactor /= 3;
+      if (sName === "charisma" && gameState.perks.kung_fu_zen) drainFactor *= 0.75;
+      if (sName === "quantum" && gameState.perks.neural_matrix) drainFactor *= 0.6;
+      if (sName === "hacking" && gameState.perks.noob_haxor) drainFactor *= 0.9;
       sk.precomputedDrainFactor = drainFactor;
     });
   }
@@ -760,7 +595,7 @@ const CURRENT_GAME_VERSION = "v0.02";
   }
   
   function getCombinedEnergyDrain(task, zoneIndex) {
-    let baseDrain = 0.05;
+    let baseDrain = baseEnergyDrain;
     if (Array.isArray(task.skills)) {
       task.skills.forEach(sName => {
         const sk = gameState.skills[sName];
@@ -770,9 +605,6 @@ const CURRENT_GAME_VERSION = "v0.02";
       });
     }
     baseDrain *= Math.pow(1.1, zoneIndex - 1);
-    if (gameState.perks["healthy_living"]) {
-      baseDrain *= 0.75;
-    }
     if (task.drainMult !== undefined) {
       baseDrain *= task.drainMult;
     }
@@ -810,7 +642,9 @@ const CURRENT_GAME_VERSION = "v0.02";
       gameState.power = Math.floor(gameState.power * 0.8);
       gameState.delusion = 0;
       gameState.numDelusionResets++;
-    }
+    } else if (reason === "Prestige") {
+      gameState.resources = {};
+    };
     zones.forEach(z => z.tasks.forEach(t => t.count = 0));
     Object.keys(gameState.skills).forEach(sName => {
       gameState.skills[sName].progressBoost = 1;
@@ -989,6 +823,7 @@ const CURRENT_GAME_VERSION = "v0.02";
       div.setAttribute("data-task-index", idx);
       if (task.mandatory) div.classList.add("mandatory-task");
       if (task.type === "Travel") div.classList.add("travel-task");
+      else if (task.type === "Prestige") { div.classList.add("prestige-task"); }
 
       const cDiv = document.createElement("div");
       cDiv.className = "task-control";
@@ -1003,6 +838,7 @@ const CURRENT_GAME_VERSION = "v0.02";
       if (task.boss_image) {
         btn.style.backgroundColor = "rgba(255, 40, 0, 0.5)";
       }
+      
       // If the task yields a resource, add its icon
       if (task.resource) {
         const rIcon = document.createElement("img");
@@ -1266,7 +1102,7 @@ const CURRENT_GAME_VERSION = "v0.02";
   }
 
   function isTravelAvailable(zone) {
-    const mandatory = zone.tasks.filter(t => t.type === "Training" && t.mandatory);
+    const mandatory = zone.tasks.filter(t => t.mandatory);
     return (mandatory.length === 0) || mandatory.every(t => t.count >= t.maxReps);
   }
 
@@ -1306,7 +1142,7 @@ const CURRENT_GAME_VERSION = "v0.02";
       powerUpg.parentElement.style.display = "inline-block";
       powerUpg.textContent = gameState.power;
       const tooltipStr = "Power increases speed by <b>" +
-        formatNumber(gameState.power) +
+        formatNumber((gameState.perks.urban_warfare ? 3 : 1) * gameState.power) +
         "%</b><br>for Combat and Endurance.";
       powerUpg.parentElement.setAttribute("data-tooltip", tooltipStr);
     }
@@ -1322,6 +1158,26 @@ const CURRENT_GAME_VERSION = "v0.02";
     const perkCount = document.getElementById("perkCount");
     if (perkCount) {
       perkCount.textContent = `(${unlocked}/${total})`;
+    }
+  }
+
+  function applyPerks() {
+    baseEnergyDrain = 0.05;
+    if (gameState.perks.healthy_living) {
+      baseEnergyDrain *= 0.75; // 25% reduction
+    }
+    if (gameState.perks.last_stand) {
+      baseEnergyDrain *= 0.8;  // 20% reduction
+    }
+    if(gameState.perks.sandstorm) {
+      skillXpScaling = 1.019;
+    }
+    if(gameState.perks.wise_mechanic) {
+      knowledgeSkills = ["tinkering", "intellect", "hacking", "mechanics"];
+      showKnowledgeIfUnlocked();
+    }
+    if(gameState.perks.master_of_ai) {
+      delusionSkills = ["charisma", "perception", "negotiation"];
     }
   }
   
@@ -1437,6 +1293,53 @@ const CURRENT_GAME_VERSION = "v0.02";
     document.body.appendChild(modal);
     showDelusionBar();
   }
+
+  function showPrestigeModal() {
+    const modal = document.createElement("div");
+    modal.className = "modal";
+    modal.id = "prestigeModal";
+    
+    const content = document.createElement("div");
+    // Using your modal-content class and an additional class for custom Prestige styling
+    content.className = "modal-content prestige-modal";
+    
+    content.innerHTML = `
+      <h2>Congratulations!</h2>
+      <p>
+        You have completed all the current content! Your journey has been nothing short of extraordinary.
+        Every challenge you faced, every strategic decision you made, and all the hard work you put in have led you to this moment.
+        Your perseverance and brilliant strategies have paid off!
+      </p>
+      <p>
+        <strong>Energy Resets:</strong> ${gameState.numEnergyResets}<br>
+        <strong>Copium Resets:</strong> ${gameState.numCopiumResets}<br>
+        <strong>Delusion Resets:</strong> ${gameState.numDelusionResets}
+      </p>
+      <p>
+        This is where the prestige layer will be added in future versions, and many more zones await to be captured.
+        In the meantime, visit <a href="https://www.degensidle.com/" target="_blank"><strong>Degens Idle</strong></a> – my more complete game – and know that I truly appreciate you playing this game.
+        Also, join our <a href="https://discordapp.com/channels/1268685194819538984/1337527757629816933" target="_blank">Discord Channel</a> to follow development!
+      </p>
+    `;
+    
+    // Create a wrapper for the button so it can be centered via CSS
+    const btnWrapper = document.createElement("div");
+    btnWrapper.className = "prestige-btn-wrapper";
+    
+    const btn = document.createElement("button");
+    btn.textContent = "Let me keep going!";
+    btn.addEventListener("click", () => {
+      modal.remove();
+      resetGame("Prestige");
+    });
+    
+    btnWrapper.appendChild(btn);
+    content.appendChild(btnWrapper);
+    modal.appendChild(content);
+    document.body.appendChild(modal);
+  }
+  
+  
 
   function showCopiumBar() {
     const cBar = document.getElementById("copiumBarContainer");
@@ -1594,6 +1497,7 @@ const CURRENT_GAME_VERSION = "v0.02";
         gameState.skills["travel"].xp = 0;
       }
       showConfirmationModal("Cheat Code Activated: BetterStart");
+      updateSkillMultipliers();
       renderSkills();
       updateSkillDisplay();
       updateTasksHoverInfo();
@@ -1605,6 +1509,7 @@ const CURRENT_GAME_VERSION = "v0.02";
         }
       });
       showConfirmationModal("Cheat Code Activated: WhatAboutOtherSkills");
+      updateSkillMultipliers();
       renderSkills();
       updateSkillDisplay();
       updateTasksHoverInfo();
@@ -1753,6 +1658,34 @@ const CURRENT_GAME_VERSION = "v0.02";
           showMessage(task.name + " completed");
           tData.button.classList.remove("active");
           removeTaskFromCurrent(tData);
+          if (gameState.perks.crypto_wallet) {
+            //  crypto_wallet:          "Each time you travel:<br>5% chance to gain 25 Energy<br>5% chance to lose 25 Copium<br>5% chance to lose 25 Delusion<br>2% chance to gain 25 Knowledge<br>0.1% chance to gain 25 Power",
+            if (Math.random() < 0.05) {
+              gameState.energy += 25;
+              showMessage("Crypto Wallet: +25 Energy");
+              updateEnergyDisplay();
+            }
+            if (Math.random() < 0.05) {
+              gameState.copium = Math.max(gameState.copium - 25, 0);
+              showMessage("Crypto Wallet: -25 Copium");
+              updateCopiumDisplay();
+            }
+            if (Math.random() < 0.05) {
+              gameState.delusion = Math.max(gameState.delusion - 25, 0);
+              showMessage("Crypto Wallet: -25 Delusion");
+              updateDelusionDisplay();
+            }
+            if (Math.random() < 0.02) {
+              gameState.knowledge += 25;
+              showMessage("Crypto Wallet: +25 Knowledge");
+              showKnowledgeIfUnlocked();
+            }
+            if (Math.random() < 0.001) {
+              showMessage("Crypto Wallet: +25 Power");
+              gameState.power += 25;
+              showPowerIfUnlocked();
+            }
+          }
           nextZone();
           displayZone();
         } else {
@@ -1789,10 +1722,18 @@ const CURRENT_GAME_VERSION = "v0.02";
             gameState.startingEnergy += 25;
           }
           showMessage("Perk unlocked: " + formatStringForDisplay(task.perk));
+          if (task.perk === "urban_warfare") {
+            showPowerIfUnlocked();
+          }
+          applyPerks();
           updateSkillMultipliers();
           renderPerks();
           updatePerksCount();
           updateSkillDisplay();
+        }
+        // If the task is a Prestige task and it’s now fully completed, show the prestige modal.
+        if (task.type === "Prestige" && task.count >= task.maxReps) {
+          showPrestigeModal();
         }
         updateTasksHoverInfo();
       }
@@ -1807,9 +1748,10 @@ const CURRENT_GAME_VERSION = "v0.02";
       zoneImage.src = zones[currentZoneIndex].img;
     }
 
-    // If autoRun is on and no tasks are running, start the next tasks
-    if (gameState.autoRun && currentTasks.length === 0) {
+    // If autoRun is on, start new tasks if there are available task slots.
+    if (gameState.autoRun) {
       const maxSlots = gameState.perks["double_timer"] ? 2 : 1;
+      // Continue starting tasks while the number of active (not paused) tasks is less than maxSlots.
       while (currentTasks.filter(t => !t.paused).length < maxSlots) {
         let taskStarted = false;
         const zone = zones[currentZoneIndex];
@@ -1849,6 +1791,8 @@ const CURRENT_GAME_VERSION = "v0.02";
 
     loadGameProgress();
     gatherAllPerks();
+    renderPerks();
+    applyPerks();
     renderSkills();
     updateEnergyDisplay();
     if (gameState.copiumUnlocked) {
@@ -1857,6 +1801,9 @@ const CURRENT_GAME_VERSION = "v0.02";
     if (gameState.delusionUnlocked) {
       showDelusionBar();
     }
+
+    //REMOVE: temp fix for omniscience xpFactor to not require full restart
+    gameState.skills.omniscience.xpGainFactor = 1;
     
     updateSkillMultipliers();
     updateSkillDisplay();
@@ -1875,8 +1822,19 @@ const CURRENT_GAME_VERSION = "v0.02";
     }
   });
 
+  // Expose functions for perks_and_resources.js
+  window.updateSkillMultipliers = updateSkillMultipliers;
+  window.updateSkillDisplay = updateSkillDisplay;
+  window.updateTasksHoverInfo = updateTasksHoverInfo;
+  window.updateEnergyDisplay = updateEnergyDisplay;
+  window.updateCopiumDisplay = updateCopiumDisplay;
+  window.updateDelusionDisplay = updateDelusionDisplay;
+  window.showMessage = (msg) => showMessage(msg);
+  window.formatStringForDisplay = (str) => formatStringForDisplay(str);
+
   // Expose some functions for debugging
   window.getGameState = () => gameState;
   window.getXpScale = () => xpScale;
   window.setXpScale = (newScale) => xpScale = newScale;
+  window.showPrestigeModal = () => showPrestigeModal();
 })();
