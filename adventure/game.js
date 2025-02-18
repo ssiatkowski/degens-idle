@@ -86,6 +86,7 @@ const CURRENT_GAME_VERSION = "v0.02";
     immunity_device:        "Reduce minimum energy drain by 75%.",
     quantum_vitalizer:      "Get Zone/10 starting Energy for each Energy reset.",
     knowledge_preserver:    "Reduce Knowledge loss on copium reset by 80%.",
+    neural_matrix:          "Reduce Quantum energy drain by 40%.",
   };
 
   /****************************************
@@ -214,6 +215,15 @@ const CURRENT_GAME_VERSION = "v0.02";
         updateTasksHoverInfo();
       },
       tooltip: "Reduces Combat and Quantum energy drain speed by 25%.<br>While looking like a badass."
+    },
+    "sanity_cleanser": {
+      onConsume: amt => {
+        for (let i = 0; i < amt; i++) {
+          gameState.delusion = Math.max(gameState.delusion - Math.floor(Math.random() * 200), 0);
+        }
+        updateDelusionDisplay();
+      },
+      tooltip: "Reduces Delusion by a random number between 1 and 200."
     }
 
   };
@@ -518,13 +528,13 @@ const CURRENT_GAME_VERSION = "v0.02";
         delusionBarFill.classList.add("delusion-high");
         delusionBarFill.setAttribute("data-tooltip",
           "Delusion builds up from tasks with<br>" + delusionSkills.join(", ") +
-          ".<br><br>If it exceeds 9000, your game will reset<br>with 25% of your Power lost!"
+          ".<br><br>If it exceeds 9000, your game will reset<br>with 20% of your Power lost!"
         );
       } else {
         delusionBarFill.classList.remove("delusion-high");
         delusionBarFill.setAttribute("data-tooltip",
           "Delusion builds up from tasks with<br>" + delusionSkills.join(", ") +
-          ".<br><br>If it exceeds 9000, your game will reset<br>with 25% of your Power lost!"
+          ".<br><br>If it exceeds 9000, your game will reset<br>with 20% of your Power lost!"
         );
       }
     }
@@ -582,6 +592,7 @@ const CURRENT_GAME_VERSION = "v0.02";
       let baseDrain = sData.energyDrain / (sData.drainBoost || 1);
       if (sName === "mechanics" && gameState.perks.futuristic_wrench) baseDrain /= 3;
       if (sName === "charisma" && gameState.perks.kung_fu_zen) baseDrain *= 0.75;
+      if (sName === "quantum" && gameState.perks.neural_matrix) baseDrain *= 0.6;
       el.setAttribute("data-tooltip",
         `${formatStringForDisplay(sName)} (Level: ${formatNumber(sData.level)})<br>
          XP: ${formatNumber(sData.xp)} / ${formatNumber(xpTot)}<br>
@@ -726,6 +737,9 @@ const CURRENT_GAME_VERSION = "v0.02";
       if (sName === "charisma" && gameState.perks.kung_fu_zen) {
         drainFactor *= 0.75;
       }
+      if (sName === "quantum" && gameState.perks.neural_matrix) {
+        drainFactor *= 0.6;
+      }
       sk.precomputedDrainFactor = drainFactor;
     });
   }
@@ -793,7 +807,7 @@ const CURRENT_GAME_VERSION = "v0.02";
       }
       gameState.numCopiumResets++;
     } else if (reason === "delusionOverflow") {
-      gameState.power = Math.floor(gameState.power * 0.75);
+      gameState.power = Math.floor(gameState.power * 0.8);
       gameState.delusion = 0;
       gameState.numDelusionResets++;
     }
@@ -811,6 +825,7 @@ const CURRENT_GAME_VERSION = "v0.02";
     saveGameProgress();
     updateEnergyDisplay();
     updateCopiumDisplay();
+    updateDelusionDisplay();
     renderSkills();
     updateSkillDisplay();
     renderResources();
@@ -1410,7 +1425,7 @@ const CURRENT_GAME_VERSION = "v0.02";
     p.innerHTML =
       "Delusion unlocked!<br>Tasks using skills below now yield Delusion:<br>-" +
       delusionSkills.join("<br>-") +
-      "<br><br>If it exceeds 9000, you reset with 25% of Power lost!";
+      "<br><br>If it exceeds 9000, you reset with 20% of Power lost!";
     content.appendChild(p);
     const btn = document.createElement("button");
     btn.textContent = "Ouch!";
@@ -1698,7 +1713,7 @@ const CURRENT_GAME_VERSION = "v0.02";
         if (gameState.delusionUnlocked && usedSkills.some(s => delusionSkills.includes(s))) {
           // Set the lambda parameter to control the steepness.
           // A larger lambda means the probability declines more quickly.
-          const lambda = 0.4; // Experiment with this value to get your desired shape
+          const lambda = 0.5; // Experiment with this value to get your desired shape
           
           // Generate an exponential random value.
           let expValue = -Math.log(Math.random()) / lambda;

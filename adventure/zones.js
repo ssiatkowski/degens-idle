@@ -168,11 +168,12 @@ var zones = [
     img: "images/zone12.jpg",
     tasks: [
       { id: 121, name: "Bunker Blitz High-Intensity Drill", type: "Training", maxReps: 10, count: 0, baseTime: 1e15, description: "Push your endurance to the limit in a confined space.", skills: ["endurance", "combat"] },
-      { id: 122, name: "Travel Training", type: "Training", maxReps: 20, count: 0, baseTime: 1e8, description: "Train for long-distance travel.", skills: ["travel", "endurance"] },
-      { id: 123, name: "Neural Matrix Debugging System Repair", type: "Training", maxReps: 5, count: 0, baseTime: 1e15, description: "Repair and optimize digital systems.", skills: ["aiMastery", "hacking"] },
-      { id: 124, name: "Secure Vault Access Code Breaker", type: "Training", maxReps: 2, count: 0, baseTime: 1e15, description: "Breach a secure digital vault.", skills: ["hacking", "intellect"], mandatory: true },
-      { id: 125, name: "Knowledge Preserver: New Invention", type: "Training", maxReps: 3, count: 0, baseTime: 4e16, description: "Create a machine that preserves knowledge.", skills: ["tinkering", "intellect"], perk: "knowledge_preserver" },
-      { id: 126, name: "Travel: Exit to Shattered Expanse", type: "Travel", maxReps: 1, count: 0, baseTime: 1e8, description: "Journey back to the shattered expanse.", skills: ["travel"] }
+      { id: 122, name: "Travel Training", type: "Training", maxReps: 20, count: 0, baseTime: 1e8, description: "Train for long-distance travel.", skills: ["travel", "endurance"], mandatory: true },
+      { id: 123, name: "Neural Matrix: System Repair", type: "Training", maxReps: 5, count: 0, baseTime: 3e13, description: "Repair and optimize atomic systems.", skills: ["aiMastery", "hacking"], perk: "neural_matrix" },
+      { id: 124, name: "Infuse a Sanity Cleanser", type: "Training", maxReps: 4, count: 0, baseTime: 1e11, description: "Create a potion that cleanses the mind.", skills: ["alchemy", "quantum"], resources: ["sanity_cleanser"] },
+      { id: 125, name: "Secure Vault Access Code Breaker", type: "Training", maxReps: 2, count: 0, baseTime: 1e15, description: "Breach a secure digital vault.", skills: ["hacking", "intellect"], mandatory: true },
+      { id: 126, name: "Knowledge Preserver: New Invention", type: "Training", maxReps: 3, count: 0, baseTime: 4e16, description: "Create a machine that preserves knowledge.", skills: ["tinkering", "intellect"], perk: "knowledge_preserver" },
+      { id: 127, name: "Travel: Exit to Shattered Expanse", type: "Travel", maxReps: 1, count: 0, baseTime: 1e8, description: "Journey back to the shattered expanse.", skills: ["travel"] }
     ]
   },
   {
