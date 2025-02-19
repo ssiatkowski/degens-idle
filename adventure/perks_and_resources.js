@@ -39,7 +39,7 @@ const perkDescriptions = {
     },
     "magnifying_glass": {
       onConsume: (gameState, amt) => { gameState.skills["perception"].progressBoost += 0.05 * amt; updateSkillMultipliers(); updateSkillDisplay(); updateTasksHoverInfo(); },
-      tooltip: "Boosts Perception speed by 5%.<br>All resources only take effect after they are consumed."
+      tooltip: "Boosts Perception speed by 5%.<br>All resources only take effect after they are consumed<br>and last for all zones until a reset!"
     },
     "goggles": {
       onConsume: (gameState, amt) => { gameState.skills["alchemy"].drainBoost += 0.07 * amt; updateSkillMultipliers(); updateSkillDisplay(); updateTasksHoverInfo();},
