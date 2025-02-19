@@ -341,13 +341,13 @@ const CURRENT_GAME_VERSION = "v0.02";
         copiumBarFill.classList.add("copium-high");
         copiumBarFill.setAttribute("data-tooltip",
           "Copium builds up from tasks with<br>" + copiumSkills.join(", ") +
-          `.<br><br>If it exceeds 9000, your game will reset<br>with all Resources and ${gameState.perks["knowledge_preserver"] ? "half" : "10% of"} your Knowledge lost!`
+          `.<br><br>If it exceeds 9000, your game will reset<br>with all Resources and ${gameState.perks["knowledge_preserver"] ? "10% of" : "half"} your Knowledge lost!`
         );
       } else {
         copiumBarFill.classList.remove("copium-high");
         copiumBarFill.setAttribute("data-tooltip",
           "Copium builds up from tasks with<br>" + copiumSkills.join(", ") +
-          `.<br><br>If it exceeds 9000, your game will reset<br>with all Resources and ${gameState.perks["knowledge_preserver"] ? "half" : "10% of"} your Knowledge lost!`
+          `.<br><br>If it exceeds 9000, your game will reset<br>with all Resources and ${gameState.perks["knowledge_preserver"] ? "10% of" : "half"} your Knowledge lost!`
         );
       }
     }
@@ -1363,53 +1363,118 @@ const CURRENT_GAME_VERSION = "v0.02";
   function createSettingsButton() {
     const sImg = document.getElementById("settingsImage");
     if (!sImg) return;
+  
     sImg.style.cursor = "pointer";
     sImg.addEventListener("click", () => {
       const modal = document.createElement("div");
       modal.id = "settingsModal";
       modal.className = "modal";
+  
       const content = document.createElement("div");
       content.className = "modal-content";
-
-      // vertical layout
       content.style.display = "flex";
       content.style.flexDirection = "column";
+      content.style.alignItems = "center";
       content.style.gap = "10px";
+  
+    // 1) Cheat Codes (Orange)
+    const cheatBtn = document.createElement("button");
+    cheatBtn.classList.add("btn-orange");
+    cheatBtn.textContent = "Cheat Codes";
+    cheatBtn.setAttribute(
+      "data-tooltip",
+      "Cheat Codes (Development Only)<br>" +
+      "This is intended only during development<br>" +
+      "when an update forces Full Restarts<br>" +
+      "to allow players to quickly resume progress.<br>" +
+      "Cheat Codes add sub-optimal numbers of<br>" +
+      "'Energy Restarts' to prevent breaking<br>" +
+      "future prestige content.<br>" +
+      "All current cheat codes can be found in Discord."
+    );
+    cheatBtn.addEventListener("click", () => {
+      showCheatCodeModal();
+    });
+    content.appendChild(cheatBtn);
 
-      // cheat codes
-      const cheatBtn = document.createElement("button");
-      cheatBtn.textContent = "Cheat Codes";
-      cheatBtn.addEventListener("click", () => {
-        showCheatCodeModal();
+    // 2) FULL RESTART (Red)
+    const restartAll = document.createElement("button");
+    restartAll.classList.add("btn-red");
+    restartAll.textContent = "FULL RESTART";
+    restartAll.setAttribute(
+      "data-tooltip",
+      "Warning: This will reset all game progress.<br>" +
+      "Since the only save mechanism is localStorage,<br>" +
+      "all your progress will be lost."
+    );
+    restartAll.addEventListener("click", () => {
+      if (confirm("Are you sure you want to FULL RESTART? This cannot be undone.")) {
+        localStorage.removeItem("degensAdventureProgress");
+        fullRestart();
+        modal.remove();
+      }
+    });
+    content.appendChild(restartAll);
+
+    // 3) Discord (Gray) with image fill
+    const discordBtn = document.createElement("button");
+    discordBtn.classList.add("btn-gray");
+    const discordImg = document.createElement("img");
+    discordImg.src = "images/discord.svg";
+    discordImg.alt = "Discord";
+    discordImg.style.pointerEvents = "none";
+    discordBtn.appendChild(discordImg);
+    discordBtn.setAttribute(
+      "data-tooltip",
+      "The Degens Idle Discord<br>" +
+      "Discussion for this game is in the<br>" +
+      "#adventure-chat channel."
+    );
+    discordBtn.addEventListener("click", () => {
+      window.open("https://discord.gg/kBc4hjQBRg", "_blank");
+    });
+    content.appendChild(discordBtn);
+
+  
+      // 4) Degens Idle (Orange) with image fill and custom tooltip
+      const degensIdleBtn = document.createElement("button");
+      degensIdleBtn.classList.add("btn-degens");
+      const degensIdleImg = document.createElement("img");
+      degensIdleImg.src = "images/degens_idle.jpg";
+      degensIdleImg.alt = "Degens Idle";
+      degensIdleBtn.appendChild(degensIdleImg);
+      degensIdleBtn.setAttribute(
+        "data-tooltip",
+        "Try <b>Degens Idle</b><br>" +
+        "Experience a deeper, more balanced strategy-based incremental game!<br>" +
+        "While Degens Adventure is still in its infancy,<br>" +
+        "Degens Idle is much more mature and refined.<br>" +
+        "It has undergone extensive revisions and community-driven optimizations,<br>" +
+        "offering roughly 2 months of immersive gameplay,<br>" +
+        "packed with surprises and robust prestige layers."
+      );
+      degensIdleBtn.addEventListener("click", () => {
+        window.open("https://www.degensidle.com/", "_blank");
       });
-      content.appendChild(cheatBtn);
-
-      // full restart
-      const restartAll = document.createElement("button");
-      restartAll.textContent = "FULL RESTART";
-      restartAll.style.backgroundColor = "#e74c3c";
-      restartAll.addEventListener("click", () => {
-        if (confirm("Are you sure you want to FULL RESTART? This cannot be undone.")) {
-          localStorage.removeItem("degensAdventureProgress");
-          fullRestart();
-          modal.remove();
-        }
-      });
-      content.appendChild(restartAll);
-
-      // back
+      content.appendChild(degensIdleBtn);
+  
+      // 5) Back (Green)
       const backBtn = document.createElement("button");
+      backBtn.classList.add("btn-green");
       backBtn.textContent = "Back";
-      backBtn.style.backgroundColor = "#27ae60";
       backBtn.addEventListener("click", () => {
         modal.remove();
       });
       content.appendChild(backBtn);
-
+  
       modal.appendChild(content);
       document.body.appendChild(modal);
     });
   }
+  
+  
+  
+  
 
   createSettingsButton();
 
@@ -1486,28 +1551,27 @@ const CURRENT_GAME_VERSION = "v0.02";
 
   function processCheatCode(code) {
     if (code === "BetterStart") {
-      ["endurance", "tinkering", "charisma", "alchemy"].forEach(skillName => {
-        if (gameState.skills[skillName].level < 250) {
-          gameState.skills[skillName].level = 250;
-          gameState.skills[skillName].xp = 0;
-        }
-      });
-      if (gameState.skills["travel"].level < 200) {
-        gameState.skills["travel"].level = 200;
-        gameState.skills["travel"].xp = 0;
-      }
+      gameState.skills["endurance"].level = Math.max(gameState.skills["endurance"].level, 250);
+      gameState.skills["tinkering"].level = Math.max(gameState.skills["tinkering"].level, 200);
+      gameState.skills["charisma"].level = Math.max(gameState.skills["charisma"].level, 250);
+      gameState.skills["alchemy"].level = Math.max(gameState.skills["alchemy"].level, 250);
+      gameState.skills["travel"].level = Math.max(gameState.skills["travel"].level, 150);
+      gameState.numEnergyResets = Math.max(gameState.numEnergyResets, 60);
       showConfirmationModal("Cheat Code Activated: BetterStart");
       updateSkillMultipliers();
       renderSkills();
       updateSkillDisplay();
       updateTasksHoverInfo();
     } else if (code === "WhatAboutOtherSkills") {
-      ["intellect", "perception", "mechanics"].forEach(skillName => {
-        if (gameState.skills[skillName].level < 150) {
-          gameState.skills[skillName].level = 150;
-          gameState.skills[skillName].xp = 0;
-        }
-      });
+      gameState.skills["endurance"].level = Math.max(gameState.skills["endurance"].level, 250);
+      gameState.skills["tinkering"].level = Math.max(gameState.skills["tinkering"].level, 200);
+      gameState.skills["charisma"].level = Math.max(gameState.skills["charisma"].level, 250);
+      gameState.skills["alchemy"].level = Math.max(gameState.skills["alchemy"].level, 250);
+      gameState.skills["travel"].level = Math.max(gameState.skills["travel"].level, 150);
+      gameState.skills["intellect"].level = Math.max(gameState.skills["intellect"].level, 150);
+      gameState.skills["perception"].level = Math.max(gameState.skills["perception"].level, 150);
+      gameState.skills["mechanics"].level = Math.max(gameState.skills["mechanics"].level, 50);
+      gameState.numEnergyResets = Math.max(gameState.numEnergyResets, 100);
       showConfirmationModal("Cheat Code Activated: WhatAboutOtherSkills");
       updateSkillMultipliers();
       renderSkills();
@@ -1516,6 +1580,7 @@ const CURRENT_GAME_VERSION = "v0.02";
     } else {
       showConfirmationModal("Invalid Cheat Code");
     }
+    
   }
 
   function showConfirmationModal(message) {
