@@ -738,6 +738,7 @@ const CURRENT_GAME_VERSION = "v0.02";
         // Pause
         existing.paused = true;
         button.classList.remove("active");
+        gameState.cyberneticArmorTaskRunning = false;
         if (!currentTasks.some(t => !t.paused && t.task.boss_image)) {
           document.getElementById("zoneImage").src = zones[zoneIndex].img;
         }

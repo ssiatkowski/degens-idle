@@ -51,7 +51,7 @@ const perkDescriptions = {
     },
     "cybernetic_armor": {
       onConsume: (gameState, amt) => { gameState.numCyberneticArmors += amt; updateTasksHoverInfo();},
-      tooltip: "Reduces energy drain by 75% for next task."
+      tooltip: "Reduces energy drain by 75% for next task (one square).<br>Pausing task will remove the armor."
     },
     "amphetamine_pill": {
       onConsume: (gameState, amt) => {
