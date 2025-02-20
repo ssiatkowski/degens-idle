@@ -137,7 +137,7 @@ const perkDescriptions = {
 
           skill.xp = 0;
           skill.level++;
-          showMessage(formatStringForDisplay(randomSkillName) + " leveled up to " + skill.level + "!");
+          showMessage(formatStringForDisplay(randomSkillName) + " leveled up to " + skill.level);
         }
         updateSkillMultipliers();
         updateSkillDisplay();

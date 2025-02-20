@@ -74,7 +74,7 @@ const CURRENT_GAME_VERSION = "v0.02";
   function consumeResource(name, amt) {
     if (!gameState.resources[name] || gameState.resources[name] < amt) return;
     gameState.resources[name] -= amt;
-    showMessage(`Consumed ${amt} ${formatStringForDisplay(name)}`);
+    showMessage(`Used ${amt} ${formatStringForDisplay(name)}`);
     renderResources();
   }
 
@@ -272,6 +272,126 @@ const CURRENT_GAME_VERSION = "v0.02";
     }
   }
 
+  function copySave() {
+    const saveData = localStorage.getItem("degensAdventureProgress");
+    if (!saveData) {
+      showMessage("No save data found");
+      return;
+    }
+    // Simple obfuscation using Base64. Replace this with a stronger encryption if desired.
+    const encrypted = btoa(saveData);
+    // Copy to clipboard using the Clipboard API
+    navigator.clipboard.writeText(encrypted).then(() => {
+      showMessage("Save copied to clipboard");
+    }).catch(err => {
+      showMessage("Error copying save: " + err);
+    });
+  }
+  
+  function pasteSave() {
+    // Read text from clipboard
+    navigator.clipboard.readText().then(text => {
+      if (!text) {
+        showMessage("Clipboard is empty");
+        return;
+      }
+      try {
+        // Attempt to decode the save data
+        const decrypted = atob(text);
+  
+        // Show a custom confirmation modal instead of confirm()
+        showPasteConfirmationModal(() => {
+          // On user confirmation:
+          localStorage.setItem("degensAdventureProgress", decrypted);
+          showMessage("Save loaded!");
+          location.reload();
+        });
+  
+      } catch (e) {
+        showMessage("Invalid save data");
+      }
+    }).catch(err => {
+      showMessage("Error reading clipboard: " + err);
+    });
+  }
+  
+  // A helper to show a custom “Load this save?” modal
+  function showPasteConfirmationModal(onConfirm) {
+    // Create the modal overlay
+    const modal = document.createElement("div");
+    modal.className = "modal";
+    modal.id = "pasteSaveModal";
+    
+    // Create the content container
+    const content = document.createElement("div");
+    content.className = "modal-content";
+  
+    // Add a message
+    const msgP = document.createElement("p");
+    msgP.textContent = "Load this save? (Page will refresh after loading)";
+    content.appendChild(msgP);
+  
+    // OK Button
+    const okBtn = document.createElement("button");
+    okBtn.textContent = "OK";
+    okBtn.style.backgroundColor = "#27ae60"; // green, for example
+    okBtn.addEventListener("click", () => {
+      onConfirm();
+      modal.remove();
+    });
+    content.appendChild(okBtn);
+  
+    // Cancel Button
+    const cancelBtn = document.createElement("button");
+    cancelBtn.textContent = "Cancel";
+    cancelBtn.style.backgroundColor = "#e74c3c"; // red, for example
+    cancelBtn.addEventListener("click", () => {
+      modal.remove();
+    });
+    content.appendChild(cancelBtn);
+  
+    modal.appendChild(content);
+    document.body.appendChild(modal);
+  }
+  
+  function showRestartConfirmationModal(onConfirm) {
+    // Create the modal overlay
+    const modal = document.createElement("div");
+    modal.className = "modal";
+    modal.id = "restartConfirmModal";
+    
+    // Create the content container
+    const content = document.createElement("div");
+    content.className = "modal-content";
+    
+    // Add a message
+    const msgP = document.createElement("p");
+    msgP.textContent = "Are you sure you want to FULL RESTART? This cannot be undone.";
+    content.appendChild(msgP);
+    
+    // OK Button
+    const okBtn = document.createElement("button");
+    okBtn.textContent = "OK";
+    okBtn.style.backgroundColor = "#27ae60"; // green
+    okBtn.addEventListener("click", () => {
+      onConfirm();
+      modal.remove();
+    });
+    content.appendChild(okBtn);
+    
+    // Cancel Button
+    const cancelBtn = document.createElement("button");
+    cancelBtn.textContent = "Cancel";
+    cancelBtn.style.backgroundColor = "#e74c3c"; // red
+    cancelBtn.addEventListener("click", () => modal.remove());
+    content.appendChild(cancelBtn);
+    
+    modal.appendChild(content);
+    document.body.appendChild(modal);
+  }
+  
+  
+
   /****************************************
    * UTILITY FUNCTIONS
    ****************************************/
@@ -293,23 +413,26 @@ const CURRENT_GAME_VERSION = "v0.02";
     // Create a new message element.
     const messageElement = document.createElement("div");
     messageElement.className = "message-item";
-    messageElement.textContent = msg;
+    // Use innerHTML so HTML content is rendered.
+    messageElement.innerHTML = msg;
     
     // Insert the new message at the top of the container.
     container.insertBefore(messageElement, container.firstChild);
     
-    // If there are more than 5 messages, remove the oldest (at the bottom)
+    // Ensure there are at most 5 messages.
     while (container.children.length > 5) {
       container.removeChild(container.lastElementChild);
     }
     
-    // Remove this message after 5 seconds.
+    // If the message contains the perk class, use a 10s timeout; otherwise, 5s.
+    const timeoutDuration = msg.includes("perk-unlock-message") ? 10000 : 5000;
     setTimeout(() => {
       if (messageElement.parentNode) {
         container.removeChild(messageElement);
       }
-    }, 5000);
+    }, timeoutDuration);
   }
+  
   
 
   /****************************************
@@ -816,7 +939,7 @@ const CURRENT_GAME_VERSION = "v0.02";
         // Resume
         const activeCount = currentTasks.filter(t => !t.paused).length;
         if (activeCount >= maxSlots) {
-          showMessage("You cannot resume this task because you're already running the maximum number of tasks");
+          showMessage("You cannot start another task right now");
           return;
         }
         existing.paused = false;
@@ -1364,98 +1487,131 @@ const CURRENT_GAME_VERSION = "v0.02";
   }
 
   function showKnowledgeModal() {
+    hideTooltip();
     const modal = document.createElement("div");
     modal.className = "modal";
     modal.id = "knowledgeModal";
+    
     const content = document.createElement("div");
     content.className = "modal-content";
-    const p = document.createElement("p");
-    p.innerHTML = "Knowledge unlocked! +0.1% XP per level for:<br>" + knowledgeSkills.join("<br>");
-    content.appendChild(p);
+    
+    const formattedSkills = knowledgeSkills.map(s => formatStringForDisplay(s)).join("<br>");
+    content.innerHTML = `
+      <h2>Knowledge Unlocked!</h2>
+      <p>
+        You now gain +0.1% XP per level for the following skills:<br>
+        ${formattedSkills}
+      </p>
+    `;
+    
     const btn = document.createElement("button");
-    btn.textContent = "Ok!";
-    btn.addEventListener("click", () => {
-      modal.remove();
-    });
+    btn.textContent = "OK";
+    btn.addEventListener("click", () => modal.remove());
     content.appendChild(btn);
+    
     modal.appendChild(content);
     document.body.appendChild(modal);
   }
-
+  
   function showCopiumModal() {
+    hideTooltip();
     const modal = document.createElement("div");
     modal.className = "modal";
     modal.id = "copiumModal";
+    
     const content = document.createElement("div");
     content.className = "modal-content";
-    const p = document.createElement("p");
-    p.innerHTML =
-      "Copium unlocked!<br>Tasks using skills below now yield Copium:<br>-" +
-      copiumSkills.join("<br>-") +
-      "<br><br>If it exceeds 9000, you reset with all Resources and half your Knowledge lost!<br>But you will permanently gain +2 starting energy.";
-    content.appendChild(p);
+    
+    const formattedSkills = copiumSkills.map(s => formatStringForDisplay(s)).join("<br>");
+    content.innerHTML = `
+      <h2>Copium Unlocked!</h2>
+      <p>
+        Tasks using the following skills now yield Copium:<br>
+        - ${formattedSkills}
+      </p>
+      <p>
+        If it exceeds 9000, you will reset with all Resources and half your Knowledge lost!<br>
+        But you will permanently gain +2 starting energy.
+      </p>
+    `;
+    
     const btn = document.createElement("button");
     btn.textContent = "Got It";
-    btn.addEventListener("click", () => {
-      modal.remove();
-    });
+    btn.addEventListener("click", () => modal.remove());
     content.appendChild(btn);
+    
     modal.appendChild(content);
     document.body.appendChild(modal);
+    
     showCopiumBar();
   }
-
+  
   function showPowerModal() {
+    hideTooltip();
     const modal = document.createElement("div");
     modal.className = "modal";
     modal.id = "powerModal";
+    
     const content = document.createElement("div");
     content.className = "modal-content";
-    const p = document.createElement("p");
-    p.innerHTML =
-      "Power unlocked!<br>Boss wins grant power (zone - 3)." +
-      "<br><br>Power boosts speed of Combat and Endurance!";
-    content.appendChild(p);
+    
+    content.innerHTML = `
+      <h2>Power Unlocked!</h2>
+      <p>
+        Boss wins now grant power (zone - 3).<br>
+        Power increases the speed of Combat and Endurance.
+      </p>
+    `;
+    
     const btn = document.createElement("button");
     btn.textContent = "Roger That";
-    btn.addEventListener("click", () => {
-      modal.remove();
-    });
+    btn.addEventListener("click", () => modal.remove());
     content.appendChild(btn);
+    
     modal.appendChild(content);
     document.body.appendChild(modal);
   }
-
+  
   function showDelusionModal() {
+    hideTooltip();
     const modal = document.createElement("div");
     modal.className = "modal";
     modal.id = "delusionModal";
+    
     const content = document.createElement("div");
     content.className = "modal-content";
-    const p = document.createElement("p");
-    p.innerHTML =
-      "Delusion unlocked!<br>Tasks using skills below now yield Delusion:<br>-" +
-      delusionSkills.join("<br>-") +
-      "<br><br>If it exceeds 9000, you reset with 20% of Power lost!";
-    content.appendChild(p);
+    
+    const formattedSkills = delusionSkills.map(s => formatStringForDisplay(s)).join("<br>");
+    content.innerHTML = `
+      <h2>Delusion Unlocked!</h2>
+      <p>
+        Tasks using the following skills now yield Delusion:<br>
+        - ${formattedSkills}
+      </p>
+      <p>
+        If it exceeds 9000, you will reset with 20% of your Power lost.
+      </p>
+    `;
+    
     const btn = document.createElement("button");
     btn.textContent = "Ouch!";
-    btn.addEventListener("click", () => {
-      modal.remove();
-    });
+    btn.addEventListener("click", () => modal.remove());
     content.appendChild(btn);
+    
     modal.appendChild(content);
     document.body.appendChild(modal);
+    
     showDelusionBar();
   }
-
+  
   function showPrestigeModal() {
+    hideTooltip();
     const modal = document.createElement("div");
     modal.className = "modal";
     modal.id = "prestigeModal";
     
     const content = document.createElement("div");
-    // Using your modal-content class and an additional class for custom Prestige styling
+    // Apply both modal-content and the prestige-modal modifier
     content.className = "modal-content prestige-modal";
     
     content.innerHTML = `
@@ -1472,12 +1628,13 @@ const CURRENT_GAME_VERSION = "v0.02";
       </p>
       <p>
         This is where the prestige layer will be added in future versions, and many more zones await to be captured.
-        In the meantime, visit <a href="https://www.degensidle.com/" target="_blank"><strong>Degens Idle</strong></a> – my more complete game – and know that I truly appreciate you playing this game.
-        Also, join our <a href="https://discordapp.com/channels/1268685194819538984/1337527757629816933" target="_blank">Discord Channel</a> to follow development!
+        In the meantime, visit <a href="https://www.degensidle.com/" target="_blank"><strong>Degens Idle</strong></a>
+        – my more complete game – and know that I truly appreciate you playing this game.
+        Also, join our <a href="https://discordapp.com/channels/1268685194819538984/1337527757629816933" target="_blank">Discord Channel</a>
+        to follow development!
       </p>
     `;
     
-    // Create a wrapper for the button so it can be centered via CSS
     const btnWrapper = document.createElement("div");
     btnWrapper.className = "prestige-btn-wrapper";
     
@@ -1490,9 +1647,11 @@ const CURRENT_GAME_VERSION = "v0.02";
     
     btnWrapper.appendChild(btn);
     content.appendChild(btnWrapper);
+    
     modal.appendChild(content);
     document.body.appendChild(modal);
   }
+  
   
   
 
@@ -1590,6 +1749,28 @@ const CURRENT_GAME_VERSION = "v0.02";
         soundManager.setVolume(vol);
       });
 
+      // Create a container for the save buttons
+      const saveButtonsContainer = document.createElement("div");
+      saveButtonsContainer.className = "save-buttons-container";
+
+      // Create the Copy Save button
+      const copySaveBtn = document.createElement("button");
+      copySaveBtn.classList.add("btn-copy");
+      copySaveBtn.innerHTML = `<img src="images/buttons/copy.png" alt="Copy"><span> Copy</span>`;
+      copySaveBtn.setAttribute("data-tooltip", "Save your game progress to the clipboard.");
+      copySaveBtn.addEventListener("click", copySave);
+      saveButtonsContainer.appendChild(copySaveBtn);
+
+      // Create the Paste Save button
+      const pasteSaveBtn = document.createElement("button");
+      pasteSaveBtn.classList.add("btn-paste");
+      pasteSaveBtn.innerHTML = `<img src="images/buttons/paste.png" alt="Paste"><span> Paste</span>`;
+      pasteSaveBtn.setAttribute("data-tooltip", "Paste a save string from your clipboard to load progress.<br>This will overwrite your current progress.");
+      pasteSaveBtn.addEventListener("click", pasteSave);
+      saveButtonsContainer.appendChild(pasteSaveBtn);
+
+      // Append the container to your settings modal content
+      content.appendChild(saveButtonsContainer);
   
       // 1) Cheat Codes (Orange)
       const cheatBtn = document.createElement("button");
@@ -1622,32 +1803,33 @@ const CURRENT_GAME_VERSION = "v0.02";
         "all your progress will be lost."
       );
       restartAll.addEventListener("click", () => {
-        if (confirm("Are you sure you want to FULL RESTART? This cannot be undone.")) {
+        showRestartConfirmationModal(() => {
           localStorage.removeItem("degensAdventureProgress");
           fullRestart();
-          modal.remove();
-      }
-    });
-    content.appendChild(restartAll);
+          modal.remove(); // remove the settings modal as well, if desired
+        });
+      });
+      content.appendChild(restartAll);
 
-    // 3) Discord (Gray) with image fill
-    const discordBtn = document.createElement("button");
-    discordBtn.classList.add("btn-gray");
-    const discordImg = document.createElement("img");
-    discordImg.src = "images/discord.svg";
-    discordImg.alt = "Discord";
-    discordImg.style.pointerEvents = "none";
-    discordBtn.appendChild(discordImg);
-    discordBtn.setAttribute(
-      "data-tooltip",
-      "The Degens Idle Discord<br>" +
-      "Discussion for this game is in the<br>" +
-      "#adventure-chat channel."
-    );
-    discordBtn.addEventListener("click", () => {
-      window.open("https://discord.gg/kBc4hjQBRg", "_blank");
-    });
-    content.appendChild(discordBtn);
+
+      // 3) Discord (Gray) with image fill
+      const discordBtn = document.createElement("button");
+      discordBtn.classList.add("btn-gray");
+      const discordImg = document.createElement("img");
+      discordImg.src = "images/discord.svg";
+      discordImg.alt = "Discord";
+      discordImg.style.pointerEvents = "none";
+      discordBtn.appendChild(discordImg);
+      discordBtn.setAttribute(
+        "data-tooltip",
+        "The Degens Idle Discord<br>" +
+        "Discussion for this game is in the<br>" +
+        "#adventure-chat channel."
+      );
+      discordBtn.addEventListener("click", () => {
+        window.open("https://discord.gg/kBc4hjQBRg", "_blank");
+      });
+      content.appendChild(discordBtn);
 
   
       // 4) Degens Idle (Orange) with image fill and custom tooltip
@@ -1985,7 +2167,18 @@ const CURRENT_GAME_VERSION = "v0.02";
           if (task.perk === "basic_mech") {
             gameState.startingEnergy += 25;
           }
-          showMessage("Perk unlocked: " + formatStringForDisplay(task.perk));
+          const perkKey = task.perk;
+          const perkName = formatStringForDisplay(perkKey);
+          const perkDesc = perkDescriptions[perkKey] || "No description available.";
+          showMessage(
+            `<div class="perk-unlock-message">
+              <img src="images/${perkKey}.jpg" alt="${perkName}">
+              <div>
+                <strong>${perkName} unlocked!</strong><br>
+                ${perkDesc}
+              </div>
+            </div>`
+          );
           if (task.perk === "urban_warfare") {
             showPowerIfUnlocked();
           }

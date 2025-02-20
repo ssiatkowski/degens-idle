@@ -578,57 +578,85 @@ footer {
 /* ---------------------- */
 /* Settings Modal */
 /* ---------------------- */
+/* Modal overlay */
 .modal {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.8);
+  background: rgba(0, 0, 0, 0.8);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1100;
 }
+
+/* Unified modal content with enhanced style */
 .modal-content {
-  background: #444;
-  padding: 20px;
-  border-radius: 5px;
+  background: linear-gradient(135deg, #555, #333);
+  border: 2px solid #27ae60;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
+  padding: 30px;
+  border-radius: 8px;
   text-align: center;
+  max-width: 500px;
+  width: 90%;
+  color: #fff;
 }
+
+/* Headings inside modals */
+.modal-content h2 {
+  font-size: 1.8em;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+/* Paragraphs and text content */
+.modal-content p {
+  font-size: 1em;
+  margin-bottom: 20px;
+  line-height: 1.4;
+  color: #ddd;
+}
+
+/* Buttons inside modals */
 .modal-content button {
   padding: 10px 20px;
   font-size: 1em;
-  background: #e67e22;
+  background: #27ae60;
   border: none;
   border-radius: 5px;
   color: #fff;
   cursor: pointer;
   margin: 5px;
+  transition: background 0.2s ease, transform 0.2s ease;
 }
 
-/* Additional styling for Prestige Modal */
+.modal-content button:hover {
+  background: #1e8449;
+  transform: scale(1.05);
+}
+
+/* Prestige modal modifier (can be added in addition to modal-content) */
 .prestige-modal {
   max-width: 600px;
-  padding: 30px;
-  text-align: center;
-  background: #444; /* Matches your modal-content background */
-  border-radius: 5px;
+  /* You can override or add additional styles if desired */
 }
 
 .prestige-modal h2 {
-  margin-bottom: 20px;
   color: #eee;
+  margin-bottom: 20px;
 }
 
 .prestige-modal p {
-  margin-bottom: 20px;
-  line-height: 1.5;
   color: #eee;
+  line-height: 1.5;
+  margin-bottom: 20px;
 }
 
 .prestige-modal a {
-  color: #e67e22; /* Use your button/link accent color */
+  color: #e67e22;
   text-decoration: underline;
 }
 
@@ -736,6 +764,58 @@ footer {
   pointer-events: none;
 }
 
+.save-buttons-container {
+  /* Match the width of your other single buttons */
+  width: 200px;
+
+  display: flex;
+  gap: 5px; /* spacing between Copy and Paste */
+  justify-content: space-between;
+  margin: 0 auto; /* center them horizontally if desired */
+}
+
+.save-buttons-container button {
+  flex: 1; /* each button shares half the container */
+  text-align: center;
+}
+
+
+/* Style for copy and paste save buttons with icons and text */
+.modal-content button.btn-copy,
+.modal-content button.btn-paste {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  font-size: 0.9em;
+  background: #5b5b5b;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.modal-content button.btn-copy:hover,
+.modal-content button.btn-paste:hover {
+  transform: scale(1.05);
+  background: #1e8449;
+}
+
+.modal-content button.btn-copy img,
+.modal-content button.btn-paste img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.btn-copy img,
+.btn-copy span,
+.btn-paste img,
+.btn-paste span {
+  pointer-events: none;
+}
+
 /* Base styles for the automation buttons */
 #zoneAutomation button {
   background: linear-gradient(135deg, #27ae60, #2ecc71);
@@ -800,6 +880,25 @@ footer {
   font-size: 0.9em;
 }
 
+.perk-unlock-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  /* Center the content within the message element */
+  text-align: center;
+}
+
+.perk-unlock-message img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.perk-unlock-message .perk-text {
+  text-align: center;
+}
 
 
 
