@@ -52,7 +52,10 @@ const CURRENT_GAME_VERSION = "v0.02";
       zoneFullCompletes: {},
       autoRun: false,
       automationMode: "zone",
-      gameVersion: CURRENT_GAME_VERSION
+      gameVersion: CURRENT_GAME_VERSION,
+      soundEnabled: true,
+      musicEnabled: true,
+      soundVolume: 0.5,
     };
   }
 
@@ -284,13 +287,30 @@ const CURRENT_GAME_VERSION = "v0.02";
       .join(' ');
   }
   function showMessage(msg) {
-    const el = document.getElementById("message");
-    if (!el) return;
-    el.textContent = msg;
+    const container = document.getElementById("message");
+    if (!container) return;
+    
+    // Create a new message element.
+    const messageElement = document.createElement("div");
+    messageElement.className = "message-item";
+    messageElement.textContent = msg;
+    
+    // Insert the new message at the top of the container.
+    container.insertBefore(messageElement, container.firstChild);
+    
+    // If there are more than 5 messages, remove the oldest (at the bottom)
+    while (container.children.length > 5) {
+      container.removeChild(container.lastElementChild);
+    }
+    
+    // Remove this message after 5 seconds.
     setTimeout(() => {
-      if (el.textContent === msg) el.textContent = "";
-    }, 3000);
+      if (messageElement.parentNode) {
+        container.removeChild(messageElement);
+      }
+    }, 5000);
   }
+  
 
   /****************************************
    * ENERGY & COPIUM DISPLAY FUNCTIONS
@@ -341,13 +361,15 @@ const CURRENT_GAME_VERSION = "v0.02";
         copiumBarFill.classList.add("copium-high");
         copiumBarFill.setAttribute("data-tooltip",
           "Copium builds up from tasks with<br>" + copiumSkills.join(", ") +
-          `.<br><br>If it exceeds 9000, your game will reset<br>with all Resources and ${gameState.perks["knowledge_preserver"] ? "10% of" : "half"} your Knowledge lost!`
+          `.<br><br>If it exceeds 9000, your game will reset<br>with all Resources and ${gameState.perks["knowledge_preserver"] ? "10% of" : "half"} your Knowledge lost!` +
+          `<br>But you will permanently gain ${gameState.perks["copium_reactor"] ? 6 : 2} starting energy.`
         );
       } else {
         copiumBarFill.classList.remove("copium-high");
         copiumBarFill.setAttribute("data-tooltip",
           "Copium builds up from tasks with<br>" + copiumSkills.join(", ") +
-          `.<br><br>If it exceeds 9000, your game will reset<br>with all Resources and ${gameState.perks["knowledge_preserver"] ? "10% of" : "half"} your Knowledge lost!`
+          `.<br><br>If it exceeds 9000, your game will reset<br>with all Resources and ${gameState.perks["knowledge_preserver"] ? "10% of" : "half"} your Knowledge lost!` +
+          `<br>But you will permanently gain ${gameState.perks["copium_reactor"] ? 6 : 2} starting energy.`
         );
       }
     }
@@ -406,7 +428,12 @@ const CURRENT_GAME_VERSION = "v0.02";
       skill.xp -= required;
       skill.level++;
       updateSkillMultipliers();
-      showMessage(formatStringForDisplay(skillName) + " leveled up to " + skill.level + "!");
+      showMessage(formatStringForDisplay(skillName) + " leveled up to " + skill.level);
+
+      if (gameState.soundEnabled && skill.level % 100 === 0) {
+        levelUpSound.play();
+      }
+
       required = Math.pow(skillXpScaling, skill.level - 1);
     }
     updateSkillDisplay();
@@ -634,9 +661,7 @@ const CURRENT_GAME_VERSION = "v0.02";
         gameState.knowledge = Math.floor(gameState.knowledge / 2);
       }
       gameState.copium = 0;
-      if (gameState.perks["copium_reactor"]) {
-        gameState.startingEnergy += 5;
-      }
+      gameState.startingEnergy += gameState.perks["copium_reactor"] ? 6 : 2;
       gameState.numCopiumResets++;
     } else if (reason === "delusionOverflow") {
       gameState.power = Math.floor(gameState.power * 0.8);
@@ -667,25 +692,66 @@ const CURRENT_GAME_VERSION = "v0.02";
   }
 
   function handleGameOver() {
-    const energyScreen = document.getElementById("gameOverScreenEnergy");
-    energyScreen.style.display = "flex";
-    const energyContent = document.getElementById("gameOverContentEnergy");
+    // Get or create the overlay container.
+    let energyScreen = document.getElementById("gameOverScreenEnergy");
+    if (!energyScreen) {
+      energyScreen = document.createElement("div");
+      energyScreen.id = "gameOverScreenEnergy";
+      document.body.appendChild(energyScreen);
+    }
+    // Reinitialize its inner HTML so that the expected content is always there.
+    energyScreen.innerHTML = `
+      <div id="gameOverContentEnergy">
+        <h2>Game Over</h2>
+        <p>You ran out of energy.</p>
+        <p>You lose half your resources.</p>
+        <button id="restartButtonEnergy">Restart</button>
+      </div>
+    `;
+    // Attach the restart button listener
+    energyScreen.querySelector("#restartButtonEnergy").addEventListener("click", () => {
+      energyScreen.style.display = "none";
+      resetGame("energyLoss");
+    });
+    // Now update the reset message.
+    const energyContent = energyScreen.querySelector("#gameOverContentEnergy");
     let resetMsg = energyContent.querySelector("#energyResetMsg");
     if (!resetMsg) {
       resetMsg = document.createElement("p");
       resetMsg.id = "energyResetMsg";
       energyContent.appendChild(resetMsg);
     }
-    resetMsg.textContent = "This is your " +
+    resetMsg.textContent =
+      "This is your " +
       (gameState.numEnergyResets + 1) +
       getOrdinalSuffix(gameState.numEnergyResets + 1) +
       " Energy reset.";
+    energyScreen.style.display = "flex";
+    if (gameState.soundEnabled) energyGameOverSound.play();
   }
+  
 
   function handleCopiumOverflow() {
-    const copiumScreen = document.getElementById("gameOverScreenCopium");
-    copiumScreen.style.display = "flex";
-    const copiumContent = document.getElementById("gameOverContentCopium");
+    let copiumScreen = document.getElementById("gameOverScreenCopium");
+    if (!copiumScreen) {
+      copiumScreen = document.createElement("div");
+      copiumScreen.id = "gameOverScreenCopium";
+      document.body.appendChild(copiumScreen);
+    }
+    copiumScreen.innerHTML = `
+      <div id="gameOverContentCopium">
+        <h2>Game Over</h2>
+        <p>It's over 9000! Your copium that is.</p>
+        <p>You lose all your resources and ${gameState.perks["knowledge_preserver"] ? "10% of" : "half"} your knowledge.</p>
+        <p>But you permanently gain ${gameState.perks["copium_reactor"] ? 6 : 2} starting energy.</p>
+        <button id="restartButtonCopium">Restart</button>
+      </div>
+    `;
+    copiumScreen.querySelector("#restartButtonCopium").addEventListener("click", () => {
+      copiumScreen.style.display = "none";
+      resetGame("copiumOverflow");
+    });
+    const copiumContent = copiumScreen.querySelector("#gameOverContentCopium");
     let resetMsg = copiumContent.querySelector("#copiumResetMsg");
     if (!resetMsg) {
       resetMsg = document.createElement("p");
@@ -696,12 +762,32 @@ const CURRENT_GAME_VERSION = "v0.02";
       (gameState.numCopiumResets + 1) +
       getOrdinalSuffix(gameState.numCopiumResets + 1) +
       " Copium reset.";
+    copiumScreen.style.display = "flex";
+    if (gameState.soundEnabled) copiumGameOverSound.play();
   }
+  
+  
 
   function handleDelusionOverflow() {
-    const delusionScreen = document.getElementById("gameOverScreenDelusion");
-    delusionScreen.style.display = "flex";
-    const delusionContent = document.getElementById("gameOverContentDelusion");
+    let delusionScreen = document.getElementById("gameOverScreenDelusion");
+    if (!delusionScreen) {
+      delusionScreen = document.createElement("div");
+      delusionScreen.id = "gameOverScreenDelusion";
+      document.body.appendChild(delusionScreen);
+    }
+    delusionScreen.innerHTML = `
+      <div id="gameOverContentDelusion">
+        <h2>Game Over</h2>
+        <p>Your delusion is over 9000!</p>
+        <p>You lose 25% of your Power.</p>
+        <button id="restartButtonDelusion">Restart</button>
+      </div>
+    `;
+    delusionScreen.querySelector("#restartButtonDelusion").addEventListener("click", () => {
+      delusionScreen.style.display = "none";
+      resetGame("delusionOverflow");
+    });
+    const delusionContent = delusionScreen.querySelector("#gameOverContentDelusion");
     let resetMsg = delusionContent.querySelector("#delusionResetMsg");
     if (!resetMsg) {
       resetMsg = document.createElement("p");
@@ -712,7 +798,11 @@ const CURRENT_GAME_VERSION = "v0.02";
       (gameState.numDelusionResets + 1) +
       getOrdinalSuffix(gameState.numDelusionResets + 1) +
       " Delusion reset.";
+    delusionScreen.style.display = "flex";
+    if (gameState.soundEnabled) delusionGameOverSound.play();
   }
+  
+  
 
   /****************************************
    * TASK TOGGLING FUNCTIONS
@@ -754,6 +844,7 @@ const CURRENT_GAME_VERSION = "v0.02";
       const task = zones[zoneIndex].tasks[taskIndex];
       if (task.boss_image) {
         document.getElementById("zoneImage").src = task.boss_image;
+        if (gameState.soundEnabled && !gameState.autoRun) task.sound.play();
       }
     }
   }
@@ -883,6 +974,9 @@ const CURRENT_GAME_VERSION = "v0.02";
       }
 
       btn.addEventListener("click", () => {
+        if (gameState.musicEnabled && bgMusic.paused) {
+          bgMusic.play().catch(() => {});
+        }
         toggleTask(currentZoneIndex, idx, btn, progressFill, repContainer);
       });
 
@@ -920,8 +1014,16 @@ const CURRENT_GAME_VERSION = "v0.02";
         label.textContent = "Automate: ";
         zoneAutomationEl.appendChild(label);
 
+        // Create both buttons first:
         const zoneBtn = document.createElement("button");
         zoneBtn.textContent = "Zone";
+        zoneBtn.setAttribute("data-automation", "zone");
+        
+        const allBtn = document.createElement("button");
+        allBtn.textContent = "All";
+        allBtn.setAttribute("data-automation", "all");
+
+        // Attach listeners:
         zoneBtn.addEventListener("click", () => {
           if (gameState.autoRun) {
             gameState.autoRun = false;
@@ -931,11 +1033,8 @@ const CURRENT_GAME_VERSION = "v0.02";
             gameState.automationMode = "zone";
             showMessage("Automation set to Zone mode.");
           }
+          updateAutomationButtonStyles(zoneBtn, allBtn);
         });
-        zoneAutomationEl.appendChild(zoneBtn);
-
-        const allBtn = document.createElement("button");
-        allBtn.textContent = "All";
         allBtn.addEventListener("click", () => {
           if (gameState.autoRun) {
             gameState.autoRun = false;
@@ -945,17 +1044,42 @@ const CURRENT_GAME_VERSION = "v0.02";
             gameState.automationMode = "all";
             showMessage("Automation set to All mode.");
           }
+          updateAutomationButtonStyles(zoneBtn, allBtn);
         });
-        zoneAutomationEl.appendChild(allBtn);
 
+        zoneAutomationEl.appendChild(zoneBtn);
+        zoneAutomationEl.appendChild(allBtn);
+        
+        // Set their initial appearance based on gameState.
+        updateAutomationButtonStyles(zoneBtn, allBtn);
       } else {
         zoneAutomationEl.textContent =
-          "Full Completes: " + gameState.zoneFullCompletes[currentZoneIndex] + "/10";
+          "Full Completes: " + gameState.zoneFullCompletes[currentZoneIndex] + " / 10";
       }
     } else {
       zoneAutomationEl.innerHTML = "";
     }
+
   }
+
+  function updateAutomationButtonStyles() {
+    const zoneBtn = document.querySelector("#zoneAutomation button[data-automation='zone']");
+    const allBtn = document.querySelector("#zoneAutomation button[data-automation='all']");
+    if (!zoneBtn || !allBtn) return; // buttons not in DOM
+    if (gameState.autoRun) {
+      if (gameState.automationMode === "zone") {
+        zoneBtn.classList.add("active");
+        allBtn.classList.remove("active");
+      } else if (gameState.automationMode === "all") {
+        allBtn.classList.add("active");
+        zoneBtn.classList.remove("active");
+      }
+    } else {
+      zoneBtn.classList.remove("active");
+      allBtn.classList.remove("active");
+    }
+  }
+  
 
   // Helper: compute the raw base multiplier (without energetic_bliss)
   function getBaseMultiplier(task) {
@@ -1030,24 +1154,55 @@ const CURRENT_GAME_VERSION = "v0.02";
       let baseXP = (task.baseTime * xpScale) / numSkills;
       if (gameState.perks["workaholic"]) baseXP *= 1.5;
       if (gameState.perks["kung_fu_zen"]) baseXP *= 1.25;
-      let xpText = "";
+      let levelText = "";
       usedSkills.forEach(sName => {
-        let skillXP = baseXP;
+        let gainedXP = baseXP;
         const skill = gameState.skills[sName];
         if (skill) {
-          skillXP *= skill.xpGainFactor;
+          // Apply multipliers
+          gainedXP *= skill.xpGainFactor;
+          if (gameState.knowledgeUnlocked && knowledgeSkills.includes(sName)) {
+            gainedXP *= (1 + 0.001 * gameState.knowledge);
+          }
+          if (gameState.perks["rex"] && sName === "charisma") {
+            gainedXP *= 25;
+          }
+          if (gameState.perks["reinforcement_learning"] && sName === "aiMastery") {
+            gainedXP *= 5;
+          }
+          
+          // Get current XP and required XP for the next level.
+          let currentXP = skill.xp;
+          let currentLevel = skill.level;
+          let required = Math.pow(skillXpScaling, currentLevel - 1);
+          let xpNeeded = required - currentXP;
+          
+          if (gainedXP < xpNeeded) {
+            // Calculate percentage of level gained
+            let percentage = (gainedXP / xpNeeded) * 100;
+            if (percentage < 0.01) {
+              levelText += `<br>${formatStringForDisplay(sName)}: <0.01% of a level`;
+            } else {
+              levelText += `<br>${formatStringForDisplay(sName)}: ${formatNumber(percentage)}% of a level`;
+            }
+          } else {
+            // If enough XP to level up, simulate how many full levels would be gained.
+            let levelsGained = 0;
+            let xpRemaining = gainedXP;
+            let simLevel = currentLevel;
+            let simXP = currentXP;
+            while (xpRemaining >= (Math.pow(skillXpScaling, simLevel - 1) - simXP)) {
+              let needed = Math.pow(skillXpScaling, simLevel - 1) - simXP;
+              xpRemaining -= needed;
+              levelsGained++;
+              simLevel++;
+              simXP = 0;
+            }
+            levelText += `<br>${formatStringForDisplay(sName)}: +${levelsGained} level${levelsGained == 1 ? "" : "s"}`;
+          }
         }
-        if (gameState.knowledgeUnlocked && knowledgeSkills.includes(sName)) {
-          skillXP *= (1 + 0.001 * gameState.knowledge);
-        }
-        if (gameState.perks["rex"] && sName === "charisma") {
-          skillXP *= 25;
-        }
-        if (gameState.perks["reinforcement_learning"] && sName === "aiMastery") {
-          skillXP *= 5;
-        }
-        xpText += `<br>${formatStringForDisplay(sName)}: ` + formatNumber(skillXP) + " XP";
       });
+      
       
       // --- Extra Info ---
       let extraInfo = "";
@@ -1068,12 +1223,11 @@ const CURRENT_GAME_VERSION = "v0.02";
         extraInfo += `<br><br><span style="color:#9b59b6">Delusion Gain per Task: 0 - ${formatNumber(zone.id * 100)} (random, skewed to low)</span>`;
       }
       
-      // --- Update Tooltip ---
       btn.setAttribute("data-tooltip", 
         task.description +
         `<br><br><span style="color:gray">Estimated Energy Needed${task.maxReps > 1 ? " per task" : ""}: ` +
         formatNumber(estimatedEnergy) +
-        `<br><br>Estimated XP Gains${task.maxReps > 1 ? " per task" : ""}:${xpText}</span>` +
+        `<br><br>Estimated Levels Gained per task:${levelText}</span>` +
         extraInfo
       );
     });
@@ -1238,7 +1392,7 @@ const CURRENT_GAME_VERSION = "v0.02";
     p.innerHTML =
       "Copium unlocked!<br>Tasks using skills below now yield Copium:<br>-" +
       copiumSkills.join("<br>-") +
-      "<br><br>If it exceeds 9000, you reset with all Resources and half your Knowledge lost!";
+      "<br><br>If it exceeds 9000, you reset with all Resources and half your Knowledge lost!<br>But you will permanently gain +2 starting energy.";
     content.appendChild(p);
     const btn = document.createElement("button");
     btn.textContent = "Got It";
@@ -1377,42 +1531,101 @@ const CURRENT_GAME_VERSION = "v0.02";
       content.style.flexDirection = "column";
       content.style.alignItems = "center";
       content.style.gap = "10px";
-  
-    // 1) Cheat Codes (Orange)
-    const cheatBtn = document.createElement("button");
-    cheatBtn.classList.add("btn-orange");
-    cheatBtn.textContent = "Cheat Codes";
-    cheatBtn.setAttribute(
-      "data-tooltip",
-      "Cheat Codes (Development Only)<br>" +
-      "This is intended only during development<br>" +
-      "when an update forces Full Restarts<br>" +
-      "to allow players to quickly resume progress.<br>" +
-      "Cheat Codes add sub-optimal numbers of<br>" +
-      "'Energy Restarts' to prevent breaking<br>" +
-      "future prestige content.<br>" +
-      "All current cheat codes can be found in Discord."
-    );
-    cheatBtn.addEventListener("click", () => {
-      showCheatCodeModal();
-    });
-    content.appendChild(cheatBtn);
 
-    // 2) FULL RESTART (Red)
-    const restartAll = document.createElement("button");
-    restartAll.classList.add("btn-red");
-    restartAll.textContent = "FULL RESTART";
-    restartAll.setAttribute(
-      "data-tooltip",
-      "Warning: This will reset all game progress.<br>" +
-      "Since the only save mechanism is localStorage,<br>" +
-      "all your progress will be lost."
-    );
-    restartAll.addEventListener("click", () => {
-      if (confirm("Are you sure you want to FULL RESTART? This cannot be undone.")) {
-        localStorage.removeItem("degensAdventureProgress");
-        fullRestart();
-        modal.remove();
+      // Audio Settings Controls
+      const audioSettingsDiv = document.createElement("div");
+      audioSettingsDiv.style.marginBottom = "10px";
+      audioSettingsDiv.innerHTML = `
+        <div>
+          <label>
+            <input type="checkbox" id="musicToggle" checked>
+            Music
+          </label>
+          <label>
+            <input type="checkbox" id="soundToggle" checked>
+            Sound Effects
+          </label>
+        </div>
+        <div>
+          <label>
+            Volume: <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="0.5">
+          </label>
+        </div>
+      `;
+      content.insertBefore(audioSettingsDiv, content.firstChild);
+
+      const musicToggle = audioSettingsDiv.querySelector("#musicToggle");
+      const soundToggle = audioSettingsDiv.querySelector("#soundToggle");
+      const volumeControl = audioSettingsDiv.querySelector("#volumeControl");
+
+      // Set initial state from gameState
+      musicToggle.checked = gameState.musicEnabled;
+      soundToggle.checked = gameState.soundEnabled;
+      volumeControl.value = gameState.soundVolume || 0.5;
+
+      musicToggle.addEventListener("change", function() {
+        // When music is toggled off, mute all sounds.
+        // When toggled on, unmute and (optionally) restart bgMusic.
+        const enabled = this.checked;
+        gameState.musicEnabled = enabled;
+        soundManager.setMute(!enabled);
+        if (enabled && bgMusic.paused) {
+          bgMusic.play().catch(() => {});
+        } else {
+          bgMusic.pause();
+        }
+      });
+
+      soundToggle.addEventListener("change", function() {
+        // Here you can choose to handle sound effects separately if desired.
+        // For now, this example uses the same mute for all sounds.
+        const enabled = this.checked;
+        gameState.soundEnabled = enabled;
+        soundManager.setMute(!enabled);
+      });
+
+      volumeControl.addEventListener("input", function() {
+        const vol = parseFloat(this.value);
+        gameState.soundVolume = vol;
+        soundManager.setVolume(vol);
+      });
+
+  
+      // 1) Cheat Codes (Orange)
+      const cheatBtn = document.createElement("button");
+      cheatBtn.classList.add("btn-orange");
+      cheatBtn.textContent = "Cheat Codes";
+      cheatBtn.setAttribute(
+        "data-tooltip",
+        "Cheat Codes (Development Only)<br>" +
+        "This is intended only during development<br>" +
+        "when an update forces Full Restarts<br>" +
+        "to allow players to quickly resume progress.<br>" +
+        "Cheat Codes add sub-optimal numbers of<br>" +
+        "'Energy Restarts' to prevent breaking<br>" +
+        "future prestige content.<br>" +
+        "All current cheat codes can be found in Discord."
+      );
+      cheatBtn.addEventListener("click", () => {
+        showCheatCodeModal();
+      });
+      content.appendChild(cheatBtn);
+
+      // 2) FULL RESTART (Red)
+      const restartAll = document.createElement("button");
+      restartAll.classList.add("btn-red");
+      restartAll.textContent = "FULL RESTART";
+      restartAll.setAttribute(
+        "data-tooltip",
+        "Warning: This will reset all game progress.<br>" +
+        "Since the only save mechanism is localStorage,<br>" +
+        "all your progress will be lost."
+      );
+      restartAll.addEventListener("click", () => {
+        if (confirm("Are you sure you want to FULL RESTART? This cannot be undone.")) {
+          localStorage.removeItem("degensAdventureProgress");
+          fullRestart();
+          modal.remove();
       }
     });
     content.appendChild(restartAll);
@@ -1499,21 +1712,6 @@ const CURRENT_GAME_VERSION = "v0.02";
     displayZone();
     document.getElementById("versionBanner").style.display = "none";
   }
-
-  document.getElementById("restartButtonEnergy").addEventListener("click", () => {
-    document.getElementById("gameOverScreenEnergy").style.display = "none";
-    resetGame("energyLoss");
-  });
-
-  document.getElementById("restartButtonCopium").addEventListener("click", () => {
-    document.getElementById("gameOverScreenCopium").style.display = "none";
-    resetGame("copiumOverflow");
-  });
-
-  document.getElementById("restartButtonDelusion").addEventListener("click", () => {
-    document.getElementById("gameOverScreenDelusion").style.display = "none";
-    resetGame("delusionOverflow");
-  });
 
   function showCheatCodeModal() {
     const modal = document.createElement("div");
@@ -1796,6 +1994,7 @@ const CURRENT_GAME_VERSION = "v0.02";
           renderPerks();
           updatePerksCount();
           updateSkillDisplay();
+          if (gameState.soundEnabled) perkUnlockSound.play();
         }
         // If the task is a Prestige task and it’s now fully completed, show the prestige modal.
         if (task.type === "Prestige" && task.count >= task.maxReps) {
@@ -1870,6 +2069,9 @@ const CURRENT_GAME_VERSION = "v0.02";
 
     //REMOVE: temp fix for omniscience xpFactor to not require full restart
     gameState.skills.omniscience.xpGainFactor = 1;
+    gameState.soundEnabled = gameState.soundEnabled ?? true;
+    gameState.musicEnabled = gameState.musicEnabled ?? true;
+    gameState.soundVolume = gameState.soundVolume ?? 0.5;
     
     updateSkillMultipliers();
     updateSkillDisplay();

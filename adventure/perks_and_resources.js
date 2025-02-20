@@ -8,7 +8,7 @@ const perkDescriptions = {
     energetic_bliss:        "Doubles progress while energy is above 80%.",
     workaholic:             "All XP gains increased by 50%.",
     kung_fu_zen:            "All XP gains increased by 25%.<br>And decrease Charisma energy drain by 25%.",
-    copium_reactor:         "Get +5 starting Energy for each Copium reset.",
+    copium_reactor:         "Triple starting Energy gained for each Copium reset.",
     gacha_machine:          "25% chance to produce double resources.",
     futuristic_wrench:      "Mechanics drains 3x less energy.",
     luck_of_the_irish:      "1% chance to produce 77x resources.",
@@ -34,7 +34,12 @@ const perkDescriptions = {
    ****************************************/
   const resourceActions = {
     "energy_elixir": {
-      onConsume: (gameState, amt) => { gameState.energy += 3 * amt; updateEnergyDisplay(); updateTasksHoverInfo(); },
+      onConsume: (gameState, amt) => { 
+        gameState.energy += 3 * amt;
+        updateEnergyDisplay();
+        updateTasksHoverInfo();
+        if(gameState.soundEnabled && amt >= 10) gulpSound.play(); 
+      },
       tooltip: "Click to gain +3 Energy.<br>" + (("ontouchstart" in window || navigator.maxTouchPoints > 0) ? "Use above switch to consume all." : "Right-click to consume all.")
     },
     "magnifying_glass": {
@@ -50,7 +55,11 @@ const perkDescriptions = {
       tooltip: "Reduces Cybernetics energy drain by 20%."
     },
     "cybernetic_armor": {
-      onConsume: (gameState, amt) => { gameState.numCyberneticArmors += amt; updateTasksHoverInfo();},
+      onConsume: (gameState, amt) => { 
+        gameState.numCyberneticArmors += amt; 
+        updateTasksHoverInfo();
+        if(gameState.soundEnabled) reinforcementSound.play();
+      },
       tooltip: "Reduces energy drain by 75% for next task (one square).<br>Any task ending or pausing task will remove the armor.<br>Multiple uses stack with # of tasks, not with drain."
     },
     "amphetamine_pill": {
