@@ -74,7 +74,7 @@ const CURRENT_GAME_VERSION = "v0.02";
   function consumeResource(name, amt) {
     if (!gameState.resources[name] || gameState.resources[name] < amt) return;
     gameState.resources[name] -= amt;
-    showMessage(`Consumed ${amt} ${formatStringForDisplay(name)}.`);
+    showMessage(`Consumed ${amt} ${formatStringForDisplay(name)}`);
     renderResources();
   }
 
@@ -816,7 +816,7 @@ const CURRENT_GAME_VERSION = "v0.02";
         // Resume
         const activeCount = currentTasks.filter(t => !t.paused).length;
         if (activeCount >= maxSlots) {
-          showMessage("You cannot resume this task because you're already running the maximum number of tasks!");
+          showMessage("You cannot resume this task because you're already running the maximum number of tasks");
           return;
         }
         existing.paused = false;
@@ -837,7 +837,7 @@ const CURRENT_GAME_VERSION = "v0.02";
       // Start new task
       const activeCount = currentTasks.filter(t => !t.paused).length;
       if (activeCount >= maxSlots) {
-        showMessage("You cannot start another task right now!");
+        showMessage("You cannot start another task right now");
         return;
       }
       startTask(zoneIndex, taskIndex, button, progressFill, repContainer);
@@ -1031,18 +1031,18 @@ const CURRENT_GAME_VERSION = "v0.02";
           } else {
             gameState.autoRun = true;
             gameState.automationMode = "zone";
-            showMessage("Automation set to Zone mode.");
+            showMessage("Automation set to Zone mode");
           }
           updateAutomationButtonStyles(zoneBtn, allBtn);
         });
         allBtn.addEventListener("click", () => {
           if (gameState.autoRun) {
             gameState.autoRun = false;
-            showMessage("Automation disabled.");
+            showMessage("Automation disabled");
           } else {
             gameState.autoRun = true;
             gameState.automationMode = "all";
-            showMessage("Automation set to All mode.");
+            showMessage("Automation set to All mode");
           }
           updateAutomationButtonStyles(zoneBtn, allBtn);
         });
@@ -1053,8 +1053,8 @@ const CURRENT_GAME_VERSION = "v0.02";
         // Set their initial appearance based on gameState.
         updateAutomationButtonStyles(zoneBtn, allBtn);
       } else {
-        zoneAutomationEl.textContent =
-          "Full Completes: " + gameState.zoneFullCompletes[currentZoneIndex] + " / 10";
+        zoneAutomationEl.innerHTML =
+          "Full Completes:<br>" + gameState.zoneFullCompletes[currentZoneIndex] + " / 10";
       }
     } else {
       zoneAutomationEl.innerHTML = "";
