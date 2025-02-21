@@ -3,6 +3,7 @@ const perkDescriptions = {
     healthy_living:         "Reduce all energy drain by 25%.",
     completionist:          "Automatically continue tasks until max reps.",
     basic_mech:             "Increases starting Energy by 25.",
+    self_operating_gadget:  "Unlock ability to automate zones after fully completing 10 times.",
     double_timer:           "Allows running two tasks simultaneously.",
     noob_haxor:             "Reduce Hacking energy drain by 10%.",
     energetic_bliss:        "Doubles progress while energy is above 80%.",
@@ -12,7 +13,7 @@ const perkDescriptions = {
     gacha_machine:          "25% chance to produce double resources.",
     futuristic_wrench:      "Mechanics drains 3x less energy.",
     luck_of_the_irish:      "1% chance to produce 77x resources.",
-    simulation_engine:      "Unlock ability to automate zones after fully completing 10 times.",
+    simulation_engine:      "Adds automation option to repeat previous run.<br>Remembers last path that ended with energy reset.",
     rex:                    "25x increased charisma XP gain.",
     copious_alchemist:      "Reduce Copium gain by 50%.",
     hoverboard:             "Increase travel speed by 200%.",
@@ -27,232 +28,288 @@ const perkDescriptions = {
     master_of_ai:           "Remove AI Mastery from Delusion accumulation.",
     crypto_wallet:          "Each time you travel:<br>5% chance to gain 25 Energy<br>5% chance to lose 25 Copium<br>5% chance to lose 25 Delusion<br>2% chance to gain 25 Knowledge<br>0.1% chance to gain 25 Power",
     last_stand:             "Reduce all energy drain by 20%.",
+    mechanical_genius:      "Remove Copium gain related to Mechanics.",
+    growth_miracle:         "Increase # of resource generating tasks by 50%.",
+    inspired_glow:          "Serenity Gain on Prestige increased by 25%.<br>(not implemented yet)", //TODO: implement
+    quantum_harmony:        "(not implemented yet)", //TODO: implement
   };
 
-  /****************************************
-   * RESOURCE ACTIONS & RENDERING
-   ****************************************/
-  const resourceActions = {
-    "energy_elixir": {
-      onConsume: (gameState, amt) => { 
-        gameState.energy += 3 * amt;
-        updateEnergyDisplay();
-        updateTasksHoverInfo();
-        if(gameState.soundEnabled && amt >= 10) gulpSound.play(); 
-      },
-      tooltip: "Click to gain +3 Energy.<br>" + (("ontouchstart" in window || navigator.maxTouchPoints > 0) ? "Use above switch to consume all." : "Right-click to consume all.")
+/****************************************
+ * RESOURCE ACTIONS & RENDERING
+ ****************************************/
+const resourceActions = {
+  "energy_elixir": {
+    onConsume: (gameState, amt) => { 
+      gameState.energy += 3 * amt;
+      updateEnergyDisplay();
+      updateTasksHoverInfo();
+      if(gameState.soundEnabled && amt >= 25) gulpSound.play(); 
     },
-    "magnifying_glass": {
-      onConsume: (gameState, amt) => { gameState.skills["perception"].progressBoost += 0.05 * amt; updateSkillMultipliers(); updateSkillDisplay(); updateTasksHoverInfo(); },
-      tooltip: "Boosts Perception speed by 5%.<br>All resources only take effect after they are consumed<br>and last for all zones until a reset!"
+    tooltip: "Click to gain +3 Energy.<br>" + (("ontouchstart" in window || navigator.maxTouchPoints > 0) ? "Use above switch to consume all." : "Right-click to consume all.")
+  },
+  "magnifying_glass": {
+    onConsume: (gameState, amt) => { gameState.skills["perception"].progressBoost += 0.05 * amt; updateSkillMultipliers(); updateSkillDisplay(); updateTasksHoverInfo(); },
+    tooltip: "Boosts Perception speed by 5%.<br>All resources only take effect after they are consumed<br>and last for all zones until a reset!"
+  },
+  "goggles": {
+    onConsume: (gameState, amt) => { gameState.skills["alchemy"].drainBoost += 0.07 * amt; updateSkillMultipliers(); updateSkillDisplay(); updateTasksHoverInfo();},
+    tooltip: "Reduces Alchemy energy drain by 7%"
+  },
+  "cybernetic_potion": {
+    onConsume: (gameState, amt) => { gameState.skills["cybernetics"].drainBoost += 0.2 * amt; updateSkillMultipliers(); updateSkillDisplay(); updateTasksHoverInfo(); },
+    tooltip: "Reduces Cybernetics energy drain by 20%."
+  },
+  "cybernetic_armor": {
+    onConsume: (gameState, amt) => { 
+      gameState.numCyberneticArmors += amt; 
+      updateTasksHoverInfo();
+      if(gameState.soundEnabled) reinforcementSound.play();
     },
-    "goggles": {
-      onConsume: (gameState, amt) => { gameState.skills["alchemy"].drainBoost += 0.07 * amt; updateSkillMultipliers(); updateSkillDisplay(); updateTasksHoverInfo();},
-      tooltip: "Reduces Alchemy energy drain by 7%"
+    tooltip: "Reduces energy drain by 75% for next task (one square).<br>Any task ending or pausing task will remove the armor.<br>Multiple uses stack with # of tasks, not with drain."
+  },
+  "amphetamine_pill": {
+    onConsume: (gameState, amt) => {
+      gameState.skills["tinkering"].drainBoost += 0.05 * amt;
+      gameState.skills["hacking"].drainBoost += 0.05 * amt;
+      updateSkillMultipliers();
+      updateSkillDisplay();
+      updateTasksHoverInfo();
     },
-    "cybernetic_potion": {
-      onConsume: (gameState, amt) => { gameState.skills["cybernetics"].drainBoost += 0.2 * amt; updateSkillMultipliers(); updateSkillDisplay(); updateTasksHoverInfo(); },
-      tooltip: "Reduces Cybernetics energy drain by 20%."
+    tooltip: "Reduces Tinkering and Hacking energy drain by 5%."
+  },
+  "steroids": {
+    onConsume: (gameState, amt) => {
+      gameState.skills["endurance"].drainBoost += 0.1 * amt;
+      gameState.skills["combat"].drainBoost += 0.1 * amt;
+      updateSkillMultipliers();
+      updateSkillDisplay();
+      updateTasksHoverInfo();
     },
-    "cybernetic_armor": {
-      onConsume: (gameState, amt) => { 
-        gameState.numCyberneticArmors += amt; 
-        updateTasksHoverInfo();
-        if(gameState.soundEnabled) reinforcementSound.play();
-      },
-      tooltip: "Reduces energy drain by 75% for next task (one square).<br>Any task ending or pausing task will remove the armor.<br>Multiple uses stack with # of tasks, not with drain."
+    tooltip: "Reduces Endurance and Combat energy drain by 10%."
+  },
+  "touchable_grass": {
+    onConsume: (gameState, amt) => {
+      gameState.copium = Math.max(gameState.copium - 100 * amt, 0);
+      updateCopiumDisplay();
     },
-    "amphetamine_pill": {
-      onConsume: (gameState, amt) => {
-        gameState.skills["tinkering"].drainBoost += 0.05 * amt;
-        gameState.skills["hacking"].drainBoost += 0.05 * amt;
-        updateSkillMultipliers();
-        updateSkillDisplay();
-        updateTasksHoverInfo();
-      },
-      tooltip: "Reduces Tinkering and Hacking energy drain by 5%."
+    tooltip: "Reduces Copium by 100."
+  },
+  "cool_sunglasses": {
+    onConsume: (gameState, amt) => {
+      gameState.skills["hacking"].drainBoost += 1 * amt;
+      updateSkillMultipliers();
+      updateSkillDisplay();
+      updateTasksHoverInfo();
     },
-    "steroids": {
-      onConsume: (gameState, amt) => {
-        gameState.skills["endurance"].drainBoost += 0.1 * amt;
-        gameState.skills["combat"].drainBoost += 0.1 * amt;
-        updateSkillMultipliers();
-        updateSkillDisplay();
-        updateTasksHoverInfo();
-      },
-      tooltip: "Reduces Endurance and Combat energy drain by 10%."
+    tooltip: "Reduces Hacking energy drain by 100%.<br>And Makes you look cool."
+  },
+  "omega_resonator": {
+    onConsume: (gameState, amt) => {
+      gameState.skills["combat"].progressBoost += 0.2 * amt;
+      updateSkillMultipliers();
+      updateSkillDisplay();
+      updateTasksHoverInfo();
     },
-    "touchable_grass": {
-      onConsume: (gameState, amt) => {
-        gameState.copium = Math.max(gameState.copium - 100 * amt, 0);
-        updateCopiumDisplay();
-      },
-      tooltip: "Reduces Copium by 100."
+    tooltip: "Boosts Combat speed by 20%."
+  },
+  "shiny_helmet": {
+    onConsume: (gameState, amt) => {
+      gameState.skills["combat"].drainBoost += 1 * amt;
+      updateSkillMultipliers();
+      updateSkillDisplay();
+      updateTasksHoverInfo();
     },
-    "cool_sunglasses": {
-      onConsume: (gameState, amt) => {
-        gameState.skills["hacking"].drainBoost += 1 * amt;
-        updateSkillMultipliers();
-        updateSkillDisplay();
-        updateTasksHoverInfo();
-      },
-      tooltip: "Reduces Hacking energy drain by 100%.<br>And Makes you look cool."
+    tooltip: "Reduces Combat energy drain by 100%.<br>And makes you look more shiny."
+  },
+  "karate_belt": {
+    onConsume: (gameState, amt) => {
+      gameState.skills["charisma"].progressBoost += 0.25 * amt;
+      gameState.skills["negotiation"].drainBoost += 1 * amt;
+      updateSkillMultipliers();
+      updateSkillDisplay();
+      updateTasksHoverInfo();
     },
-    "omega_resonator": {
-      onConsume: (gameState, amt) => {
-        gameState.skills["combat"].progressBoost += 0.2 * amt;
-        updateSkillMultipliers();
-        updateSkillDisplay();
-        updateTasksHoverInfo();
-      },
-      tooltip: "Boosts Combat speed by 20%."
-    },
-    "shiny_helmet": {
-      onConsume: (gameState, amt) => {
-        gameState.skills["combat"].drainBoost += 1 * amt;
-        updateSkillMultipliers();
-        updateSkillDisplay();
-        updateTasksHoverInfo();
-      },
-      tooltip: "Reduces Combat energy drain by 100%.<br>And makes you look more shiny."
-    },
-    "karate_belt": {
-      onConsume: (gameState, amt) => {
-        gameState.skills["charisma"].progressBoost += 0.25 * amt;
-        gameState.skills["negotiation"].drainBoost += 1 * amt;
-        updateSkillMultipliers();
-        updateSkillDisplay();
-        updateTasksHoverInfo();
-      },
-      tooltip: "Boosts Charisma speed by 25%.<br>And reduces Negotiation energy drain by 100%.<br>By letting them know you are a ninja."
-    },
-    "random_crystal": {
-      onConsume: (gameState, amt) => {
-        for (let i = 0; i < amt; i++) {
-          // Get all visible skills
-          const visibleSkills = Object.keys(gameState.skills).filter(sName => gameState.skills[sName].visible);
-          // Choose a random visible skill
-          const randomSkillName = visibleSkills[Math.floor(Math.random() * visibleSkills.length)];
-          const skill = gameState.skills[randomSkillName];
+    tooltip: "Boosts Charisma speed by 25%.<br>And reduces Negotiation energy drain by 100%.<br>By letting them know you are a ninja."
+  },
+  "random_crystal": {
+    onConsume: (gameState, amt) => {
+      for (let i = 0; i < amt; i++) {
+        // Get all visible skills
+        const visibleSkills = Object.keys(gameState.skills).filter(sName => gameState.skills[sName].visible);
+        // Choose a random visible skill
+        const randomSkillName = visibleSkills[Math.floor(Math.random() * visibleSkills.length)];
+        const skill = gameState.skills[randomSkillName];
 
-          skill.xp = 0;
-          skill.level++;
-          showMessage(formatStringForDisplay(randomSkillName) + " leveled up to " + skill.level);
+        skill.xp = 0;
+        skill.level++;
+        showMessage(formatStringForDisplay(randomSkillName) + " leveled up to " + skill.level);
+      }
+      updateSkillMultipliers();
+      updateSkillDisplay();
+      updateTasksHoverInfo();
+    },
+    tooltip: "Levels up a random skill to next level."
+  },
+  "one_ring": {
+    onConsume: (gameState, amt) => {
+      gameState.skills["quantum"].progressBoost += 5 * amt;
+      updateSkillMultipliers();
+      updateSkillDisplay();
+      updateTasksHoverInfo();
+    },
+    tooltip: "Boosts Quantum speed by 500%.<br>And wards off potential mates."
+  },
+  "katana": {
+    onConsume: (gameState, amt) => {
+      gameState.skills["combat"].progressBoost += 0.1 * amt;
+      gameState.skills["perception"].drainBoost += 3 * amt;
+      updateSkillMultipliers();
+      updateSkillDisplay();
+      updateTasksHoverInfo();
+    },
+    tooltip: "Oddly enough, only boosts Combat speed by 10%.<br>But also reduces energy drain of Perception by 300%."
+  },
+  "blades_of_chaos": {
+    onConsume: (gameState, amt) => {
+      gameState.skills["combat"].drainBoost += 0.2 * amt;
+      gameState.skills["quantum"].drainBoost += 0.2 * amt;
+      updateSkillMultipliers();
+      updateSkillDisplay();
+      updateTasksHoverInfo();
+    },
+    tooltip: "Reduces Combat and Quantum energy drain by 25%.<br>While looking like a badass."
+  },
+  "sanity_cleanser": {
+    onConsume: (gameState, amt) => {
+      for (let i = 0; i < amt; i++) {
+        gameState.delusion = Math.max(gameState.delusion - Math.floor(Math.random() * 200), 0);
+      }
+      updateDelusionDisplay();
+    },
+    tooltip: "Reduces Delusion by a random number between 1 and 200."
+  },
+  "augment_fuel": {
+    onConsume: (gameState, amt) => {
+      for (let i = 0; i < amt; i++) {
+        if (Math.random() < 0.5) {
+          gameState.copium = Math.max(gameState.copium - 75, 0);
+          updateCopiumDisplay();
+        } else {
+          gameState.delusion = Math.max(gameState.delusion - 75, 0);
+          updateDelusionDisplay();
         }
-        updateSkillMultipliers();
-        updateSkillDisplay();
-        updateTasksHoverInfo();
-      },
-      tooltip: "Levels up a random skill to next level."
+      }
     },
-    "one_ring": {
-      onConsume: (gameState, amt) => {
-        gameState.skills["quantum"].progressBoost += 5 * amt;
-        updateSkillMultipliers();
-        updateSkillDisplay();
-        updateTasksHoverInfo();
-      },
-      tooltip: "Boosts Quantum speed by 500%.<br>And wards off potential mates."
-    },
-    "katana": {
-      onConsume: (gameState, amt) => {
-        gameState.skills["combat"].progressBoost += 0.1 * amt;
-        gameState.skills["perception"].drainBoost += 3 * amt;
-        updateSkillMultipliers();
-        updateSkillDisplay();
-        updateTasksHoverInfo();
-      },
-      tooltip: "Oddly enough, only boosts Combat speed by 10%.<br>But also reduces energy drain of Perception by 300%."
-    },
-    "blades_of_chaos": {
-      onConsume: (gameState, amt) => {
-        gameState.skills["combat"].drainBoost += 0.2 * amt;
-        gameState.skills["quantum"].drainBoost += 0.2 * amt;
-        updateSkillMultipliers();
-        updateSkillDisplay();
-        updateTasksHoverInfo();
-      },
-      tooltip: "Reduces Combat and Quantum energy drain by 25%.<br>While looking like a badass."
-    },
-    "sanity_cleanser": {
-      onConsume: (gameState, amt) => {
-        for (let i = 0; i < amt; i++) {
-          gameState.delusion = Math.max(gameState.delusion - Math.floor(Math.random() * 200), 0);
+    tooltip: "At random, reduce Copium or Delusion by 75."
+  },
+  "beating_heart": {
+    onConsume: (gameState, amt) => {
+      for (let i = 0; i < amt; i++) {
+        const randVal = Math.random();
+        if (randVal > 0.6667) {
+          gameState.copium = Math.max(gameState.copium - 1500, 0);
+          updateCopiumDisplay();
+        } else if (randVal > 0.3333){
+          gameState.delusion = Math.max(gameState.delusion - 1500, 0);
+          updateDelusionDisplay();
+        } else {
+          gameState.energy += 300;
+          updateEnergyDisplay();
         }
-        updateDelusionDisplay();
-      },
-      tooltip: "Reduces Delusion by a random number between 1 and 200."
+      }
     },
-    "augment_fuel": {
+    tooltip: "At random, either gain 300 Energy,<br>or reduce Copium by 1500<br>or reduce Delusion by 1500."
+  },
+  "saiyan_armor": {
+    onConsume: (gameState, amt) => {
+      gameState.skills["combat"].progressBoost += 0.75 * amt;
+      gameState.skills["combat"].drainBoost += 0.75 * amt;
+      updateSkillMultipliers();
+      updateSkillDisplay();
+      updateTasksHoverInfo();
+    },
+    tooltip: "Reduces Combat energy drain and boosts Combat speed by 75%.<br>"
+  },
+  "hoverboard_fuel": {
+    onConsume: (gameState, amt) => {
+      gameState.skills["travel"].progressBoost += 0.1 * amt;
+      updateSkillMultipliers();
+      updateSkillDisplay();
+      updateTasksHoverInfo();
+    },
+    tooltip: "Boosts Travel speed by 10%."
+  },
+  "surveillance_core": {
+    onConsume: (gameState, amt) => {
+      gameState.skills["perception"].drainBoost += 0.5 * amt;
+      gameState.skills["intellect"].drainBoost += 0.5 * amt;
+      gameState.skills["hacking"].drainBoost += 0.5 * amt;
+      gameState.skills["cybernetics"].drainBoost += 0.5 * amt;
+      updateSkillMultipliers();
+      updateSkillDisplay();
+      updateTasksHoverInfo();
+    },
+    tooltip: "Reduces energy drain by 50%<br>for Perception, Intellect, Hacking, and Cybernetics.<br>And brings about a surveillance state."
+  },
+  "puzzle_piece": {  
       onConsume: (gameState, amt) => {
-        for (let i = 0; i < amt; i++) {
-          if (Math.random() < 0.5) {
-            gameState.copium = Math.max(gameState.copium - 75, 0);
-            updateCopiumDisplay();
-          } else {
-            gameState.delusion = Math.max(gameState.delusion - 75, 0);
-            updateDelusionDisplay();
-          }
+          gameState.skills["omniscience"].progressBoost += 0.02 * amt;
+          updateSkillMultipliers();
+          updateSkillDisplay();
+          updateTasksHoverInfo();
+        },
+        tooltip: "Boosts Omniscience speed by 2%."
+  },
+  "celestial_blossom": {
+    onConsume: (gameState, amt) => {
+      gameState.numCelestialBlossoms += amt;
+      updateTasksHoverInfo();
+    },
+    tooltip: "Reduces Copium gain by 1."
+  },
+  "infinity_gauntlet": {
+    onConsume: (gameState, amt) => {
+      Object.keys(gameState.resources).forEach(resource => {
+        if (gameState.resources[resource] > 0) {
+          addResource(resource, amt);
         }
-      },
-      tooltip: "At random, reduce Copium or Delusion by 75."
+      });
+      updateTasksHoverInfo();
     },
-    "beating_heart": {
-      onConsume: (gameState, amt) => {
-        for (let i = 0; i < amt; i++) {
-          const randVal = Math.random();
-          if (randVal > 0.6667) {
-            gameState.copium = Math.max(gameState.copium - 1500, 0);
-            updateCopiumDisplay();
-          } else if (randVal > 0.3333){
-            gameState.delusion = Math.max(gameState.delusion - 1500, 0);
-            updateDelusionDisplay();
-          } else {
-            gameState.energy += 300;
-            updateEnergyDisplay();
-          }
+    tooltip: "Gain +1 of every resource you currently have."
+  },
+  "stardust": {
+    onConsume: (gameState, amt) => {
+      // Get an array of resource names, excluding "infinity_gauntlet"
+      const usedResources = Object.keys(gameState.resourcesUsed).filter(r => r !== "infinity_gauntlet" && r !== "stardust");
+      // For each stardust unit consumed...
+      for (let i = 0; i < amt; i++) {
+        if (usedResources.length > 0) {
+          const randomIndex = Math.floor(Math.random() * usedResources.length);
+          const randomResource = usedResources[randomIndex];
+          addResource(randomResource, 1);
         }
-      },
-      tooltip: "At random, either gain 300 Energy,<br>or reduce Copium by 1500<br>or reduce Delusion by 1500."
+      }
+      saveGameProgress();
     },
-    "saiyan_armor": {
-      onConsume: (gameState, amt) => {
-        gameState.skills["combat"].progressBoost += 0.75 * amt;
-        gameState.skills["combat"].drainBoost += 0.75 * amt;
-        updateSkillMultipliers();
-        updateSkillDisplay();
-        updateTasksHoverInfo();
-      },
-      tooltip: "Reduces Combat energy drain and boosts Combat speed by 75%.<br>"
+    tooltip: "Create 1 of a random resource that you used this run.<br>Cannot create Infinity Gauntlet."
+  },
+  "lightsaber": {
+    onConsume: (gameState, amt) => {
+      updateSkillDisplay();
     },
-    "hoverboard_fuel": {
-      onConsume: (gameState, amt) => {
-        gameState.skills["travel"].progressBoost += 0.1 * amt;
-        updateSkillMultipliers();
-        updateSkillDisplay();
-        updateTasksHoverInfo();
-      },
-      tooltip: "Boosts Travel speed by 10%."
+    tooltip: "Not implemented yet."
+  },
+  "quantum_residue": {
+    onConsume: (gameState, amt) => {
+      updateSkillDisplay();
     },
-    "surveillance_core": {
-      onConsume: (gameState, amt) => {
-        gameState.skills["perception"].drainBoost += 0.5 * amt;
-        gameState.skills["intellect"].drainBoost += 0.5 * amt;
-        gameState.skills["hacking"].drainBoost += 0.5 * amt;
-        gameState.skills["cybernetics"].drainBoost += 0.5 * amt;
-        updateSkillMultipliers();
-        updateSkillDisplay();
-        updateTasksHoverInfo();
-      },
-      tooltip: "Reduces energy drain by 50%<br>for Perception, Intellect, Hacking, and Cybernetics.<br>And brings about a surveillance state."
+    tooltip: "Not implemented yet."
+  },
+  "adamantium": {
+    onConsume: (gameState, amt) => {
+      updateSkillDisplay();
     },
-    "puzzle_piece": {  
-        onConsume: (gameState, amt) => {
-            gameState.skills["omniscience"].progressBoost += 0.02 * amt;
-            updateSkillMultipliers();
-            updateSkillDisplay();
-            updateTasksHoverInfo();
-          },
-          tooltip: "Boosts Omniscience speed by 2%."
-    },
-  };
+    tooltip: "Not implemented yet."
+  },
+};

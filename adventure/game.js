@@ -47,15 +47,21 @@ const CURRENT_GAME_VERSION = "v0.02";
       numEnergyResets: 0,
       numCopiumResets: 0,
       numDelusionResets: 0,
-      numCyberneticArmors: 0,
-      cyberneticArmorTaskRunning: false,
       zoneFullCompletes: {},
       autoRun: false,
       automationMode: "zone",
+      current_path: [],
+      last_path: [],
       gameVersion: CURRENT_GAME_VERSION,
       soundEnabled: true,
       musicEnabled: true,
       soundVolume: 0.5,
+
+      //resource related      
+      resourcesUsed: {},
+      numCyberneticArmors: 0,
+      cyberneticArmorTaskRunning: false,
+      numCelestialBlossoms: 0,
     };
   }
 
@@ -69,23 +75,54 @@ const CURRENT_GAME_VERSION = "v0.02";
   let xpScale        = 0.001; // XP per tick
   let skillXpScaling = 1.02;
   let baseEnergyDrain = 0.05;
+  let autoPathRepeatActive = false;
+  let autoPathRepeatQueue = [];
+  let growthMiracleApplied = false;
+  let resourceConsumeMode = "one";
 
   // Helper to consume resources from gameState
   function consumeResource(name, amt) {
     if (!gameState.resources[name] || gameState.resources[name] < amt) return;
     gameState.resources[name] -= amt;
+    // Record resource usage (if not "infinity_gauntlet")
+    if (name !== "infinity_gauntlet") {
+      gameState.resourcesUsed[name] = true;
+    }
     showMessage(`Used ${amt} ${formatStringForDisplay(name)}`);
-    renderResources();
+    // Instead of re-rendering everything, update only this resource.
+    updateResourceDisplay(name);
   }
-
-  // Helper to add resources
+  
   function addResource(name, amt) {
     if (!gameState.resources[name]) gameState.resources[name] = 0;
     gameState.resources[name] += amt;
-    renderResources();
+    // Instead of full re-render, update only this resource.
+    updateResourceDisplay(name);
   }
+  
 
-  let resourceConsumeMode = "one";
+  function updateResourceDisplay(name) {
+    if ((gameState.resources[name] || 0) <= 0) {
+      // If the resource count is 0, re-render the entire grid.
+      renderResources();
+    } else {
+      const grid = document.getElementById("resourcesGrid");
+      if (!grid) return;
+      // Find the resource item by its data-resource attribute.
+      const resourceDiv = grid.querySelector(`.resource-item[data-resource="${name}"]`);
+      if (resourceDiv) {
+        const cnt = resourceDiv.querySelector(".resource-count");
+        if (cnt) {
+          cnt.textContent = gameState.resources[name] || 0;
+        }
+      } else {
+        // If the resource element isn't found, re-render everything.
+        renderResources();
+      }
+    }
+  }
+  
+  
 
   // The main function to render resources & (on mobile) show the Use One / Use All toggle
   function renderResources() {
@@ -142,19 +179,21 @@ const CURRENT_GAME_VERSION = "v0.02";
     Object.keys(gameState.resources).forEach(rName => {
       const count = gameState.resources[rName] || 0;
       if (count <= 0) return;
-
+    
       const div = document.createElement("div");
       div.className = "resource-item";
-      div.setAttribute("data-tooltip", formatStringForDisplay(rName) + ":<br>" + resourceActions[rName]?.tooltip || "Tap to consume resource.");
-
+      // NEW: tag this element with the resource name.
+      div.dataset.resource = rName;
+      div.setAttribute("data-tooltip", formatStringForDisplay(rName) + ":<br>" + (resourceActions[rName]?.tooltip || "Tap to consume resource."));
+      
       // Resource icon
       const img = document.createElement("img");
-      img.src = "images/" + rName + ".jpg";
+      img.src = "images/resources/" + rName + ".jpg";
       img.alt = rName;
       img.style.pointerEvents = "none";
       img.style.userSelect = "none";
       img.setAttribute("draggable", "false");
-
+    
       // Count text
       const cnt = document.createElement("div");
       cnt.className = "resource-count";
@@ -551,11 +590,18 @@ const CURRENT_GAME_VERSION = "v0.02";
       skill.xp -= required;
       skill.level++;
       updateSkillMultipliers();
-      showMessage(formatStringForDisplay(skillName) + " leveled up to " + skill.level);
 
-      if (gameState.soundEnabled && skill.level % 100 === 0) {
-        levelUpSound.play();
+      var message = formatStringForDisplay(skillName) + " leveled up to " + skill.level;
+
+      if (skill.level % 100 === 0) {
+        if (gameState.soundEnabled) {
+          levelUpSound.play();
+        }
+        showMessage('<span style="color: rgb(63, 202, 212);">' + message + '</span>');
+      } else {
+        showMessage(message);
       }
+      
 
       required = Math.pow(skillXpScaling, skill.level - 1);
     }
@@ -775,6 +821,7 @@ const CURRENT_GAME_VERSION = "v0.02";
         gameState.startingEnergy += (currentZoneIndex+1)/10;
       }
       gameState.numEnergyResets++;
+      gameState.last_path = gameState.current_path.slice();
     } else if (reason === "copiumOverflow") {
       // lose all resources, half knowledge
       gameState.resources = {};
@@ -790,7 +837,7 @@ const CURRENT_GAME_VERSION = "v0.02";
       gameState.power = Math.floor(gameState.power * 0.8);
       gameState.delusion = 0;
       gameState.numDelusionResets++;
-    } else if (reason === "Prestige") {
+    } else if (reason === "ContentComplete") {
       gameState.resources = {};
     };
     zones.forEach(z => z.tasks.forEach(t => t.count = 0));
@@ -798,11 +845,16 @@ const CURRENT_GAME_VERSION = "v0.02";
       gameState.skills[sName].progressBoost = 1;
       gameState.skills[sName].drainBoost = 1;
     });
+    gameState.current_path = [];
+    gameState.resourcesUsed = {};
     gameState.energy = gameState.startingEnergy;
     currentZoneIndex = 0;
     currentTasks = [];
     gameState.autoRun = false;
+    autoPathRepeatActive = false;
     gameState.cyberneticArmorTaskRunning = false;
+    gameState.numCyberneticArmors = 0;
+    gameState.numCelestialBlossoms = 0;
     updateSkillMultipliers();
     saveGameProgress();
     updateEnergyDisplay();
@@ -902,7 +954,7 @@ const CURRENT_GAME_VERSION = "v0.02";
       <div id="gameOverContentDelusion">
         <h2>Game Over</h2>
         <p>Your delusion is over 9000!</p>
-        <p>You lose 25% of your Power.</p>
+        <p>You lose 20% of your Power.</p>
         <button id="restartButtonDelusion">Restart</button>
       </div>
     `;
@@ -967,7 +1019,7 @@ const CURRENT_GAME_VERSION = "v0.02";
       const task = zones[zoneIndex].tasks[taskIndex];
       if (task.boss_image) {
         document.getElementById("zoneImage").src = task.boss_image;
-        if (gameState.soundEnabled && !gameState.autoRun) task.sound.play();
+        if (gameState.soundEnabled && !gameState.autoRun && !autoPathRepeatActive) task.sound.play();
       }
     }
   }
@@ -992,7 +1044,12 @@ const CURRENT_GAME_VERSION = "v0.02";
     };
     button.classList.add("active");
     currentTasks.push(data);
+    // NEW: Record this task in current_path if not already present.
+    if (!gameState.current_path.some(item => item.zoneIndex === zoneIndex && item.taskIndex === taskIndex) && gameState.zoneFullCompletes[zoneIndex] >= 10) {
+      gameState.current_path.push({ zoneIndex, taskIndex });
+    }
   }
+  
 
   function updateRepContainer(repContainer, task) {
     repContainer.innerHTML = "";
@@ -1055,17 +1112,10 @@ const CURRENT_GAME_VERSION = "v0.02";
       }
       
       // If the task yields a resource, add its icon
-      if (task.resource) {
-        const rIcon = document.createElement("img");
-        rIcon.src = "images/" + task.resource + ".jpg";
-        rIcon.alt = task.resource;
-        rIcon.className = "resource-icon";
-        rIcon.style.pointerEvents = "none";
-        btn.appendChild(rIcon);
-      } else if (task.resources && Array.isArray(task.resources)) {
+      if (task.resources && Array.isArray(task.resources)) {
         task.resources.forEach(rName => {
           const rIcon = document.createElement("img");
-          rIcon.src = "images/" + rName + ".jpg";
+          rIcon.src = "images/resources/" + rName + ".jpg";
           rIcon.alt = rName;
           rIcon.className = "resource-icon";
           rIcon.style.pointerEvents = "none";
@@ -1073,7 +1123,6 @@ const CURRENT_GAME_VERSION = "v0.02";
         });
       }
 
-      updateTasksHoverInfo();
       if (task.type === "Travel" && !isTravelAvailable(zone)) {
         btn.disabled = true;
       }
@@ -1121,13 +1170,14 @@ const CURRENT_GAME_VERSION = "v0.02";
       tasksContainer.appendChild(div);
     });
 
+    updateTasksHoverInfo();
     renderPerks();
     showKnowledgeIfUnlocked();
     showPowerIfUnlocked();
 
     // Simulation Engine automation
     const zoneAutomationEl = document.getElementById("zoneAutomation");
-    if (gameState.perks["simulation_engine"]) {
+    if (gameState.perks["self_operating_gadget"]) {
       if (typeof gameState.zoneFullCompletes[currentZoneIndex] !== "number") {
         gameState.zoneFullCompletes[currentZoneIndex] = 0;
       }
@@ -1181,6 +1231,37 @@ const CURRENT_GAME_VERSION = "v0.02";
       }
     } else {
       zoneAutomationEl.innerHTML = "";
+    }
+    // NEW: Add Repeat Last Path button if simulation_engine is unlocked.
+    if (gameState.perks["simulation_engine"] && gameState.zoneFullCompletes[currentZoneIndex] >= 10) {
+      // Create the Repeat Last Path button
+      const repeatBtn = document.createElement("button");
+      repeatBtn.textContent = "Repeat Last Path";
+      repeatBtn.id = "repeatPathBtn";
+      // If autoPathRepeat is active, mark it as such
+      if (autoPathRepeatActive) repeatBtn.classList.add("active");
+      // Add event listener to toggle autoPathRepeat mode.
+      repeatBtn.addEventListener("click", () => {
+        if (!autoPathRepeatActive) {
+          // Activate autoPathRepeat: copy the last_path into the repeat queue.
+          if (gameState.last_path.length === 0) {
+            showMessage("No previous path to repeat.");
+            return;
+          }
+          autoPathRepeatQueue = gameState.last_path.slice();
+          autoPathRepeatActive = true;
+          repeatBtn.classList.add("active");
+          showMessage("Repeat Last Path activated.");
+        } else {
+          // Deactivate autoPathRepeat.
+          autoPathRepeatActive = false;
+          autoPathRepeatQueue = [];
+          repeatBtn.classList.remove("active");
+          showMessage("Repeat Last Path deactivated.");
+        }
+      });
+      // Append the button to the zoneAutomation element.
+      zoneAutomationEl.appendChild(repeatBtn);
     }
 
   }
@@ -1337,6 +1418,7 @@ const CURRENT_GAME_VERSION = "v0.02";
         if (gameState.perks["copious_alchemist"]) {
           copiumGain *= 0.5;
         }
+        copiumGain = Math.max(copiumGain - gameState.numCelestialBlossoms, 0);
         extraInfo += `<br><br><span style="color:#dbd834">Copium Gain per Task: ${formatNumber(copiumGain)}</span>`;
       }
       if (gameState.powerUnlocked && task.boss_image) {
@@ -1372,10 +1454,7 @@ const CURRENT_GAME_VERSION = "v0.02";
     }
     if (currentZoneIndex < zones.length) displayZone();
     else {
-      const scenario = document.getElementById("scenarioText");
-      if (scenario) scenario.innerHTML = "<h2>Congratulations! You have completed the adventure!</h2>";
-      const tasksEl = document.getElementById("tasks");
-      if (tasksEl) tasksEl.innerHTML = "";
+      showEndOfContentModal();
     }
   }
 
@@ -1457,6 +1536,20 @@ const CURRENT_GAME_VERSION = "v0.02";
     if(gameState.perks.master_of_ai) {
       delusionSkills = ["charisma", "perception", "negotiation"];
     }
+    if(gameState.perks.mechanical_genius) {
+      copiumSkills = ["endurance", "alchemy"];
+      updateCopiumDisplay();
+    }
+    if (gameState.perks.growth_miracle && !growthMiracleApplied) {
+      zones.forEach(zone => {
+        zone.tasks.forEach(task => {
+          if (task.resources && Array.isArray(task.resources) && task.resources.length > 0) {
+            task.maxReps = Math.floor(1.5 * task.maxReps);
+          }
+        });
+      });
+      growthMiracleApplied = true;
+    }
   }
   
   function renderPerks() {
@@ -1466,7 +1559,7 @@ const CURRENT_GAME_VERSION = "v0.02";
     Object.keys(gameState.perks).forEach(pKey => {
       const div = document.createElement("div");
       const icon = document.createElement("img");
-      icon.src = "images/" + pKey + ".jpg";
+      icon.src = "images/perks/" + pKey + ".jpg";
       const pStr = formatStringForDisplay(pKey);
       icon.alt = pStr;
       icon.style.pointerEvents = "none";
@@ -1527,7 +1620,7 @@ const CURRENT_GAME_VERSION = "v0.02";
       <h2>Copium Unlocked!</h2>
       <p>
         Tasks using the following skills now yield Copium:<br>
-        - ${formattedSkills}
+        ${formattedSkills}
       </p>
       <p>
         If it exceeds 9000, you will reset with all Resources and half your Knowledge lost!<br>
@@ -1586,7 +1679,7 @@ const CURRENT_GAME_VERSION = "v0.02";
       <h2>Delusion Unlocked!</h2>
       <p>
         Tasks using the following skills now yield Delusion:<br>
-        - ${formattedSkills}
+        ${formattedSkills}
       </p>
       <p>
         If it exceeds 9000, you will reset with 20% of your Power lost.
@@ -1603,7 +1696,7 @@ const CURRENT_GAME_VERSION = "v0.02";
     
     showDelusionBar();
   }
-  
+
   function showPrestigeModal() {
     hideTooltip();
     const modal = document.createElement("div");
@@ -1611,15 +1704,61 @@ const CURRENT_GAME_VERSION = "v0.02";
     modal.id = "prestigeModal";
     
     const content = document.createElement("div");
-    // Apply both modal-content and the prestige-modal modifier
     content.className = "modal-content prestige-modal";
+    
+    content.innerHTML = `
+      <h2>Prestige</h2>
+      <p>
+        This is where the prestige layer will reside. Pushing further may be impossible without prestige.
+      </p>
+      <p>
+        <strong>Energy Resets:</strong> ${gameState.numEnergyResets}<br>
+        <strong>Copium Resets:</strong> ${gameState.numCopiumResets}<br>
+        <strong>Delusion Resets:</strong> ${gameState.numDelusionResets}
+      </p>
+    `;
+    
+    const btnWrapper = document.createElement("div");
+    btnWrapper.className = "prestige-btn-wrapper";
+    
+    // Create the Prestige button (disabled with tooltip info)
+    const prestigeBtn = document.createElement("button");
+    prestigeBtn.textContent = "Prestige";
+    prestigeBtn.style.backgroundColor = "#3498db";
+    prestigeBtn.disabled = true;
+    // Using our tooltip system via the data-tooltip attribute
+    prestigeBtn.setAttribute("data-tooltip", "This feature is not yet available");
+    
+    // Create the "Let me keep going!" button which simply closes the modal.
+    const keepGoingBtn = document.createElement("button");
+    keepGoingBtn.textContent = "Let me keep going!";
+    keepGoingBtn.addEventListener("click", () => {
+      modal.remove();
+    });
+    
+    btnWrapper.appendChild(prestigeBtn);
+    btnWrapper.appendChild(keepGoingBtn);
+    content.appendChild(btnWrapper);
+    
+    modal.appendChild(content);
+    document.body.appendChild(modal);
+  }
+  
+  function showEndOfContentModal() {
+    hideTooltip();
+    const modal = document.createElement("div");
+    modal.className = "modal";
+    modal.id = "endOfContentModal";
+    
+    const content = document.createElement("div");
+    // Apply both modal-content and an "end-of-content-modal" modifier (for custom styling, if desired)
+    content.className = "modal-content end-of-content-modal";
     
     content.innerHTML = `
       <h2>Congratulations!</h2>
       <p>
         You have completed all the current content! Your journey has been nothing short of extraordinary.
-        Every challenge you faced, every strategic decision you made, and all the hard work you put in have led you to this moment.
-        Your perseverance and brilliant strategies have paid off!
+        Every challenge you faced and every decision you made has led you to this milestone.
       </p>
       <p>
         <strong>Energy Resets:</strong> ${gameState.numEnergyResets}<br>
@@ -1627,11 +1766,10 @@ const CURRENT_GAME_VERSION = "v0.02";
         <strong>Delusion Resets:</strong> ${gameState.numDelusionResets}
       </p>
       <p>
-        This is where the prestige layer will be added in future versions, and many more zones await to be captured.
-        In the meantime, visit <a href="https://www.degensidle.com/" target="_blank"><strong>Degens Idle</strong></a>
-        – my more complete game – and know that I truly appreciate you playing this game.
-        Also, join our <a href="https://discordapp.com/channels/1268685194819538984/1337527757629816933" target="_blank">Discord Channel</a>
-        to follow development!
+        More content and challenges are on the horizon in future updates.
+        In the meantime, you can explore <a href="https://www.degensidle.com/" target="_blank"><strong>Degens Idle</strong></a>
+        and join our <a href="https://discordapp.com/channels/1268685194819538984/1337527757629816933" target="_blank">Discord Channel</a>
+        to keep up with development!
       </p>
     `;
     
@@ -1639,10 +1777,10 @@ const CURRENT_GAME_VERSION = "v0.02";
     btnWrapper.className = "prestige-btn-wrapper";
     
     const btn = document.createElement("button");
-    btn.textContent = "Let me keep going!";
+    btn.textContent = "Back to zone 1!";
     btn.addEventListener("click", () => {
       modal.remove();
-      resetGame("Prestige");
+      resetGame("ContentComplete");
     });
     
     btnWrapper.appendChild(btn);
@@ -1652,8 +1790,7 @@ const CURRENT_GAME_VERSION = "v0.02";
     document.body.appendChild(modal);
   }
   
-  
-  
+
 
   function showCopiumBar() {
     const cBar = document.getElementById("copiumBarContainer");
@@ -1993,7 +2130,7 @@ const CURRENT_GAME_VERSION = "v0.02";
    * MAIN GAME LOOP
    ****************************************/
   function gameLoop() {
-    if (currentTasks.length === 0 && !gameState.autoRun) return;
+    if (currentTasks.length === 0 && !gameState.autoRun && !autoPathRepeatActive) return;
     currentTasks.forEach((tData) => {
       if (tData.paused) return;
       const oldProgress = tData.progress;
@@ -2025,6 +2162,7 @@ const CURRENT_GAME_VERSION = "v0.02";
         gameState.energy = 0;
         updateEnergyDisplay();
         gameState.autoRun = false;
+        autoPathRepeatActive = false;
         currentTasks = [];
         handleGameOver();
         return;
@@ -2052,10 +2190,11 @@ const CURRENT_GAME_VERSION = "v0.02";
           }
         }
         if (gameState.copiumUnlocked && usedSkills.some(s => copiumSkills.includes(s))) {
-          gameState.copium += (10 * zone.id) * (gameState.perks["copious_alchemist"] ? 0.5 : 1);
+          gameState.copium += Math.max((10 * zone.id) * (gameState.perks["copious_alchemist"] ? 0.5 : 1) - gameState.numCelestialBlossoms, 0);
           if (gameState.copium > 9000) {
             currentTasks = [];
             gameState.autoRun = false;
+            autoPathRepeatActive = false;
             handleCopiumOverflow();
             return;
           }
@@ -2081,6 +2220,7 @@ const CURRENT_GAME_VERSION = "v0.02";
           if (gameState.delusion > 9000) {
             currentTasks = [];
             gameState.autoRun = false;
+            autoPathRepeatActive = false;
             handleDelusionOverflow();
             return;
           }
@@ -2172,7 +2312,7 @@ const CURRENT_GAME_VERSION = "v0.02";
           const perkDesc = perkDescriptions[perkKey] || "No description available.";
           showMessage(
             `<div class="perk-unlock-message">
-              <img src="images/${perkKey}.jpg" alt="${perkName}">
+              <img src="images/perks/${perkKey}.jpg" alt="${perkName}">
               <div>
                 <strong>${perkName} unlocked!</strong><br>
                 ${perkDesc}
@@ -2199,23 +2339,30 @@ const CURRENT_GAME_VERSION = "v0.02";
 
     // Update zone image if a boss is active
     const zoneImage = document.getElementById("zoneImage");
+    let newSrc;
     const activeBossTask = currentTasks.find(t => !t.paused && t.task.boss_image);
     if (activeBossTask) {
-      zoneImage.src = activeBossTask.task.boss_image;
+      newSrc = activeBossTask.task.boss_image;
     } else {
-      zoneImage.src = zones[currentZoneIndex].img;
+      newSrc = zones[currentZoneIndex].img;
+    }
+    if (zoneImage.getAttribute("src") !== newSrc) {
+      zoneImage.src = newSrc;
     }
 
     // If autoRun is on, start new tasks if there are available task slots.
     if (gameState.autoRun) {
       const maxSlots = gameState.perks["double_timer"] ? 2 : 1;
-      // Continue starting tasks while the number of active (not paused) tasks is less than maxSlots.
+      // Continue starting tasks until the number of active tasks reaches maxSlots.
       while (currentTasks.filter(t => !t.paused).length < maxSlots) {
         let taskStarted = false;
         const zone = zones[currentZoneIndex];
+    
+        // First, try to start non-Travel tasks.
         for (let idx = 0; idx < zone.tasks.length; idx++) {
           const task = zone.tasks[idx];
-          if (task.count < task.maxReps &&
+          if (task.type !== "Travel" &&
+              task.count < task.maxReps &&
               !currentTasks.some(t => t.zoneIndex === currentZoneIndex && t.taskIndex === idx)) {
             const taskDiv = document.querySelector(`.task[data-zone-index="${currentZoneIndex}"][data-task-index="${idx}"]`);
             if (taskDiv) {
@@ -2230,9 +2377,83 @@ const CURRENT_GAME_VERSION = "v0.02";
             }
           }
         }
+        
+        // If no non-Travel task was started, then try to start a Travel task.
+        if (!taskStarted) {
+          for (let idx = 0; idx < zone.tasks.length; idx++) {
+            const task = zone.tasks[idx];
+            if (task.type === "Travel" &&
+                task.count < task.maxReps &&
+                !currentTasks.some(t => t.zoneIndex === currentZoneIndex && t.taskIndex === idx)) {
+              const taskDiv = document.querySelector(`.task[data-zone-index="${currentZoneIndex}"][data-task-index="${idx}"]`);
+              if (taskDiv) {
+                const btn = taskDiv.querySelector("button");
+                const progressFill = taskDiv.querySelector(".current-progress-fill");
+                const repContainer = taskDiv.querySelector(".rep-container");
+                if (btn && progressFill && repContainer) {
+                  startTask(currentZoneIndex, idx, btn, progressFill, repContainer);
+                  taskStarted = true;
+                  break;
+                }
+              }
+            }
+          }
+        }
+        
+        // If no task could be started, exit the loop.
         if (!taskStarted) break;
       }
     }
+
+    // Auto Repeat Last Path handling
+    if (autoPathRepeatActive) {
+      const maxSlots = gameState.perks["double_timer"] ? 2 : 1;
+      if (currentTasks.filter(t => !t.paused).length < maxSlots) {
+        // Find an eligible task in the autoPathRepeatQueue:
+        const nextTaskIndex = autoPathRepeatQueue.findIndex(t => {
+          // Check if the task is already running.
+          const isRunning = currentTasks.some(ct => ct.zoneIndex === t.zoneIndex && ct.taskIndex === t.taskIndex);
+          // Retrieve the task object.
+          const taskObj = zones[t.zoneIndex].tasks[t.taskIndex];
+          // Eligible if not running and not fully repeated.
+          return !isRunning && taskObj.count < taskObj.maxReps;
+        });
+        if (nextTaskIndex >= 0) {
+          // Remove the found task from the queue.
+          const nextTask = autoPathRepeatQueue.splice(nextTaskIndex, 1)[0];
+          // If the zone differs, update currentZoneIndex and re-display zone.
+          if (nextTask.zoneIndex !== currentZoneIndex) {
+            currentZoneIndex = nextTask.zoneIndex;
+            displayZone();
+          }
+          // Find the corresponding DOM elements.
+          const taskDiv = document.querySelector(`.task[data-zone-index="${nextTask.zoneIndex}"][data-task-index="${nextTask.taskIndex}"]`);
+          if (taskDiv) {
+            const btn = taskDiv.querySelector("button");
+            const progressFill = taskDiv.querySelector(".current-progress-fill");
+            const repContainer = taskDiv.querySelector(".rep-container");
+            if (btn && progressFill && repContainer) {
+              startTask(nextTask.zoneIndex, nextTask.taskIndex, btn, progressFill, repContainer);
+            }
+          }
+          // After starting, if the task is still incomplete, re-add it to the end of the queue.
+          const taskObj = zones[nextTask.zoneIndex].tasks[nextTask.taskIndex];
+          if (taskObj.count < taskObj.maxReps) {
+            autoPathRepeatQueue.push(nextTask);
+          }
+        } else {
+          // No eligible task found: disable auto–repeat.
+          autoPathRepeatActive = false;
+          const repeatBtn = document.getElementById("repeatPathBtn");
+          if (repeatBtn) repeatBtn.classList.remove("active");
+          showMessage("Repeat Last Path complete.");
+        }
+      }
+    }
+
+
+
+    
     saveGameProgress();
   }
   setInterval(gameLoop, tickDuration);
@@ -2265,6 +2486,10 @@ const CURRENT_GAME_VERSION = "v0.02";
     gameState.soundEnabled = gameState.soundEnabled ?? true;
     gameState.musicEnabled = gameState.musicEnabled ?? true;
     gameState.soundVolume = gameState.soundVolume ?? 0.5;
+    gameState.numCelestialBlossoms = gameState.numCelestialBlossoms ?? 0;
+    gameState.current_path = gameState.current_path ?? [];
+    gameState.last_path = gameState.last_path ?? [];
+    gameState.resourcesUsed = gameState.resourcesUsed ?? {};
     
     updateSkillMultipliers();
     updateSkillDisplay();
@@ -2292,6 +2517,8 @@ const CURRENT_GAME_VERSION = "v0.02";
   window.updateDelusionDisplay = updateDelusionDisplay;
   window.showMessage = (msg) => showMessage(msg);
   window.formatStringForDisplay = (str) => formatStringForDisplay(str);
+  window.addResource = (name, amt) => addResource(name, amt);
+  window.saveGameProgress = saveGameProgress;
 
   // Expose some functions for debugging
   window.getGameState = () => gameState;

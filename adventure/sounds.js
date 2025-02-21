@@ -58,6 +58,9 @@ const soundManager = {
   const deadpoolSound = soundManager.register("deadpool", "sounds/deadpool.wav", { type: 'sfx' });
   const vegetaSound = soundManager.register("vegeta", "sounds/vegeta.wav", { type: 'sfx' });
   const bigBrotherSound = soundManager.register("bigBrother", "sounds/big_brother.wav", { type: 'sfx' });
+  const thanosSound = soundManager.register("thanos", "sounds/thanos.wav", { type: 'sfx' });
+  const darthVaderSound = soundManager.register("darthVader", "sounds/darth_vader.wav", { type: 'sfx' });
+  const ultronSound = soundManager.register("ultron", "sounds/ultron.wav", { type: 'sfx' });
   // Register additional sounds as needed:
   // const someOtherSound = soundManager.register("other", "sounds/other_sound.wav", { type: 'sfx' });
   
