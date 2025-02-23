@@ -3040,6 +3040,7 @@ const CURRENT_GAME_VERSION = "v0.2";
     //TODO: remove - fixed for missing variables
     gameState.serenityUnlockables = gameState.serenityUnlockables || {};
     gameState.serenityInfinite = gameState.serenityInfinite || {};
+    gameState.automationOverrides = gameState.automationOverrides || {};
 
     applySerenityUpgrades();
     gatherAllPerks();
