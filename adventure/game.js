@@ -1840,10 +1840,6 @@ const CURRENT_GAME_VERSION = "v0.2";
   }
   
   function applySerenityUpgrades() {
-    // Ensure these objects are defined even if missing in the loaded save.
-    gameState.serenityUnlockables = gameState.serenityUnlockables || {};
-    gameState.serenityInfinite = gameState.serenityInfinite || {};
-  
     // Process all unlockable upgrades.
     Object.keys(gameState.serenityUnlockables).forEach(upgName => {
       if (gameState.serenityUnlockables[upgName]) {
@@ -3070,6 +3066,10 @@ const CURRENT_GAME_VERSION = "v0.2";
       }
     }
   });
+
+  //TODO: remove - fixed for missing variables
+  gameState.serenityUnlockables = gameState.serenityUnlockables || {};
+  gameState.serenityInfinite = gameState.serenityInfinite || {};
 
   // Expose functions for perks_and_resources.js
   window.updateSkillMultipliers = updateSkillMultipliers;
