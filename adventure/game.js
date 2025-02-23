@@ -3056,6 +3056,10 @@ const CURRENT_GAME_VERSION = "v0.2";
     displayZone();
     initializeSerenityUpgrades();
 
+    //TODO: remove - fixed for missing variables
+    gameState.serenityUnlockables = gameState.serenityUnlockables || {};
+    gameState.serenityInfinite = gameState.serenityInfinite || {};
+
     // Version check
     if (gameState.gameVersion !== CURRENT_GAME_VERSION) {
       const banner = document.getElementById("versionBanner");
