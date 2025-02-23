@@ -210,6 +210,189 @@ body {
   font-weight: bold;
 }
 
+/* Style the Serenity upgrade display to be blue and taller */
+#serenityUpgDiv {
+  background: linear-gradient(135deg, #3498db, #176aa1);
+  transition: background-color 0.2s, filter 0.2s;
+  animation: prestigeGlow 2s infinite;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 0.9em;
+  color: #ffffff; /* choose a color that fits your theme */
+  padding: 5px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: filter 0.2s ease;
+}
+
+#serenityUpgDiv:hover {
+  filter: brightness(1.1);
+}
+/************************************/
+/* Additional or revised CSS rules: */
+/************************************/
+
+/* A “blue” border for the modal */
+.prestige-modal-blueborder {
+  border: 2px solid #3498db !important; /* override green border */
+}
+
+/* Centered header, “X” top-right */
+.modal-header-centered {
+  position: relative;
+  display: flex;
+  justify-content: center; /* center the title horizontally */
+  align-items: center;
+  margin-bottom: 10px;
+}
+.modal-header-centered h2 {
+  margin: 0;
+}
+.modal-close-topright {
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+  font-size: 1.4em;
+  font-weight: bold;
+  padding: 0 6px;
+}
+
+/* Info container for Serenity & Gains */
+.serenity-info-container {
+  margin-bottom: 10px;
+}
+
+/* “Section” wrapper, each with a row for 2 columns */
+.serenity-section {
+  margin: 20px 0;
+  border-top: 1px solid #555;
+  padding-top: 10px;
+}
+.serenity-section h3 {
+  margin-bottom: 10px;
+  text-align: center;
+}
+.serenity-section-row {
+  display: flex;
+  gap: 20px;
+}
+
+.serenity-upgrade-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+
+/* Each column for Unlockables/Infinite in that section */
+.serenity-upgrades-col {
+  flex: 1;
+  background: #444;
+  padding: 10px;
+  border-radius: 4px;
+}
+.serenity-upgrades-col h4 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* The final row with the “Prestige” and “Exit” buttons */
+.serenity-buttons-container {
+  margin-top: 20px;
+  text-align: center;
+}
+
+/* Make each upgrade slot look like a “button”: */
+.serenity-upgrade-slot {
+  background: #555;
+  margin: 5px 0;
+  padding: 10px;
+  border-radius: 6px;
+  text-align: center;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: background 0.2s, transform 0.2s;
+}
+.serenity-upgrade-slot:hover {
+  transform: scale(1.02);
+}
+
+/* Sub-elements for name & cost on separate lines */
+.serenity-upgrade-name {
+  font-weight: bold;
+  margin-bottom: 3px;
+  pointer-events: none;
+}
+.serenity-upgrade-cost {
+  font-size: 0.85em;
+  color: #ddd;
+  pointer-events: none;
+}
+
+/* Color-coded states: locked, affordable, purchased */
+.upgrade-slot-locked {
+  background: #666 !important; /* gray, not affordable or locked */
+  color: #aaa;
+}
+.upgrade-slot-affordable {
+  background: #27ae60 !important; /* green if user can afford */
+  color: #fff;
+}
+.upgrade-slot-purchased {
+  background: #1e90ff !important; /* light-blue if purchased */
+  color: #fff;
+}
+
+/* “Prestige” button in the modal, styled like your Prestige Task: */
+.prestige-task-button {
+  background: linear-gradient(135deg, #3498db, #176aa1) !important;
+  color: #fff !important;
+  animation: prestigeGlow 2s infinite;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  margin: 0 5px;
+  cursor: pointer;
+  transition: filter 0.2s ease;
+}
+.prestige-task-button:hover:not([disabled]) {
+  filter: brightness(1.1);
+}
+.prestige-task-button[disabled] {
+  background: #444 !important; /* gray out if disabled */
+  animation: none !important;
+  cursor: not-allowed;
+}
+
+.task-control button.big-x {
+  position: relative;          /* For the pseudo-element to position correctly */
+  border: 2px dashed red;      /* Red dashed border on the button */
+}
+
+/* Overlay the SVG with two dashed red lines */
+.task-control button.big-x::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* The SVG draws two lines: one from top-left to bottom-right, and the other from top-right to bottom-left */
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'%3E%3Cline x1='0' y1='0' x2='100%25' y2='100%25' stroke='red' stroke-dasharray='4,4' stroke-width='2'/%3E%3Cline x1='100%25' y1='0' x2='0' y2='100%25' stroke='red' stroke-dasharray='4,4' stroke-width='2'/%3E%3C/svg%3E");
+  background-size: cover;
+  pointer-events: none;        /* Allows clicks to pass through */
+  z-index: 1;
+}
+
+
+
 
 /* ---------------------- */
 /* Skills Display (50% smaller) */
@@ -314,6 +497,8 @@ body {
 #resourcesContainer h3,
 #perksContainer h3 {
   margin-bottom: 10px;
+  display: inline-block;
+  margin-right: 10px; /* add some spacing */
 }
 
 .perk-count {
@@ -404,6 +589,33 @@ body {
   filter: brightness(1.3);
 }
 
+/* For toggleable perks that are enabled */
+.perk-item.toggleable-enabled::after {
+  content: "ON";
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  background: green;
+  color: white;
+  font-size: 10px;
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+
+/* Badge for toggleable perks that are disabled */
+.perk-item.disabled::after {
+  content: "OFF";
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  background: red;
+  color: white;
+  font-size: 10px;
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+
+
 /* ---------------------- */
 /* Tasks Styling */
 /* ---------------------- */
@@ -423,7 +635,7 @@ body {
   width: 50%;
   padding: 10px;
   font-size: 0.9em;
-  background: #27ae60;
+  background: linear-gradient(145deg, #27ae60, #247646);
   border: none;
   border-radius: 5px;
   color: #fff;
@@ -449,14 +661,19 @@ body {
   vertical-align: middle;
 }
 .task.mandatory-task .task-control button {
-  border: 2px dashed #f39c12;
+  background: linear-gradient(135deg, #a46b16, #744b0d);
 }
-.task.travel-task .task-control button {
-  border: 2px solid #3498db;
+
+.task.boss-task .task-control button {
+  background: linear-gradient(135deg, #801010, #5f0808);
+}
+
+.task.travel-task .task-control button:enabled {
+  background: linear-gradient(135deg, #194731, #123926);
 }
 /* Prestige Task Button Styling */
 .task.prestige-task .task-control button {
-  background: #3498db;
+  background: linear-gradient(135deg, #3498db, #176aa1);
   color: #fff;
   transition: background-color 0.2s, filter 0.2s;
   animation: prestigeGlow 2s infinite;
@@ -640,7 +857,7 @@ footer {
 
 /* Prestige modal modifier (can be added in addition to modal-content) */
 .prestige-modal {
-  max-width: 600px;
+  max-width: 75%;
   /* You can override or add additional styles if desired */
 }
 
@@ -680,29 +897,6 @@ footer {
   opacity: 0;
   transition: opacity 0.1s;
   z-index: 1200;
-}
-
-#zoneAutomation {
-  margin-top: 5px;
-  font-size: 1.2em;
-  text-align: center;
-  color: #eee;
-}
-
-#zoneAutomation button {
-  background: #27ae60;
-  color: #fff;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 3px;
-  cursor: pointer;
-  margin: 5px;
-}
-
-
-#zoneAutomation button:hover {
-  transform: scale(1.02);
-  filter: brightness(0.9);
 }
 
 #versionBanner {
@@ -747,6 +941,10 @@ footer {
 .modal-content button.btn-gray {
   background-color: rgb(200, 200, 200) !important;
   color: #000 !important;
+}
+
+.modal-content button.btn-gray {
+  object-fit: fill;
 }
 
 .modal-content button.btn-degens {
@@ -816,9 +1014,29 @@ footer {
   pointer-events: none;
 }
 
+#zoneAutomation {
+  margin-top: 5px;
+  font-size: 1.2em;
+  text-align: center;
+  color: #eee;
+}
+
+#zoneAutomation button {
+  background: linear-gradient(135deg, #27ae60, #567764);
+  padding: 10px 15px;
+  border-radius: 3px;
+  cursor: pointer;
+  margin: 5px;
+}
+
+
+#zoneAutomation button:hover {
+  transform: scale(1.02);
+  filter: brightness(0.9);
+}
+
 /* Base styles for the automation buttons */
 #zoneAutomation button {
-  background: linear-gradient(135deg, #27ae60, #2ecc71);
   border: none;
   color: #fff;
   padding: 10px 20px;
@@ -835,7 +1053,7 @@ footer {
 
 /* Active state: darker gradient, pulsing animation, and stronger glow */
 #zoneAutomation button.active {
-  background: linear-gradient(135deg, #1e8449, #27ae60);
+  background: linear-gradient(135deg, #27ae60, #567764);
   animation: pulseAnimation 1.5s infinite;
   box-shadow: 0 0 15px rgba(46, 204, 113, 0.8);
 }
@@ -844,17 +1062,41 @@ footer {
 @keyframes pulseAnimation {
   0% {
     transform: scale(1.05);
-    box-shadow: 0 0 10px rgba(46, 204, 113, 0.5);
+    box-shadow: 0 0 10px rgba(17, 72, 40, 0.5);
   }
   50% {
     transform: scale(1.1);
-    box-shadow: 0 0 20px rgba(46, 204, 113, 1);
+    box-shadow: 0 0 20px rgb(158, 199, 175);
   }
   100% {
     transform: scale(1.05);
     box-shadow: 0 0 10px rgba(46, 204, 113, 0.5);
   }
 }
+
+.resource-automation-btn {
+  background: linear-gradient(135deg, #27ae60, #567764);
+  padding: 3px 8px;
+  border-radius: 3px;
+  cursor: pointer;
+  margin: 3px;
+  border: none;
+  color: #fff;
+  transition: transform 0.2s ease, filter 0.2s ease;
+  outline: none;
+}
+
+.resource-automation-btn:hover {
+  transform: scale(1.02);
+  filter: brightness(0.9);
+}
+
+.resource-automation-btn.active {
+  background: linear-gradient(135deg, #1e8449, #27ae60);
+  animation: pulseAnimation 1.5s infinite;
+  box-shadow: 0 0 15px rgba(46, 204, 113, 0.8);
+}
+
 
 footer {
   background-color: transparent;
@@ -902,6 +1144,7 @@ footer {
 
 
 
+
 /* Media Queries for Mobile Devices */
 @media (max-width: 768px) {
   #topStatus {
@@ -916,6 +1159,9 @@ footer {
   }
   .upgrade-display {
     font-size: 0.65em;
+  }
+  #serenityUpgDiv {
+    font-size: 0.7em;
   }
   .skill {
     width: 80px;
@@ -977,5 +1223,12 @@ footer {
     padding: 5px 10px;
     margin: 3px;
   }
-  
+
+  .prestige-modal {
+    max-width: 90%;
+  }
+
+  .serenity-upgrade-grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
 }

@@ -1,4 +1,4 @@
-const CURRENT_GAME_VERSION = "v0.02";
+const CURRENT_GAME_VERSION = "v0.2";
 
 (function() {
   /****************************************
@@ -21,10 +21,13 @@ const CURRENT_GAME_VERSION = "v0.02";
       resources: {},
       knowledge: 0,
       power: 0,
+      serenity: 0,
       knowledgeUnlocked: false,
       powerUnlocked: false,
       copiumUnlocked: false,
       delusionUnlocked: false,
+      serenityUnlocked: false,
+      prestigeAvailable: false,
       // Note: Default boost values are now 1.
       skills: {
         endurance:   { level: 1, xp: 0, visible: true,  energyDrain: 2,   progressBoost: 1, drainBoost: 1, xpGainFactor: 1 },
@@ -50,18 +53,29 @@ const CURRENT_GAME_VERSION = "v0.02";
       zoneFullCompletes: {},
       autoRun: false,
       automationMode: "zone",
-      current_path: [],
-      last_path: [],
       gameVersion: CURRENT_GAME_VERSION,
       soundEnabled: true,
       musicEnabled: true,
       soundVolume: 0.5,
+      automationOverrides : {},
+
+      serenityUnlockables: {},
+      serenityInfinite: {},
+
+      highestCompletedZone: 0,
+      resetsForHighestZone: 1e100,
 
       //resource related      
       resourcesUsed: {},
       numCyberneticArmors: 0,
       cyberneticArmorTaskRunning: false,
       numCelestialBlossoms: 0,
+
+      //serenity upgrades related
+      delusionEnjoyerMultiplier: 1,
+      entropyShieldMultiplier: 1,
+      powerGainMultiplier: 1,
+      autoConsumeResources: false,
     };
   }
 
@@ -71,12 +85,11 @@ const CURRENT_GAME_VERSION = "v0.02";
   let gameState = getInitialGameState();
   let currentZoneIndex = 0;
   let currentTasks = [];
-  const tickDuration   = 100;
+  let runTickDuration   = 100;
+  let effTickDuration   = 100;
   let xpScale        = 0.001; // XP per tick
   let skillXpScaling = 1.02;
   let baseEnergyDrain = 0.05;
-  let autoPathRepeatActive = false;
-  let autoPathRepeatQueue = [];
   let growthMiracleApplied = false;
   let resourceConsumeMode = "one";
 
@@ -123,17 +136,12 @@ const CURRENT_GAME_VERSION = "v0.02";
   }
   
   
-
-  // The main function to render resources & (on mobile) show the Use One / Use All toggle
   function renderResources() {
     const resourcesContainer = document.getElementById("resourcesContainer");
     const grid = document.getElementById("resourcesGrid");
     if (!resourcesContainer || !grid) return;
 
     grid.innerHTML = "";
-
-    // Detect mobile devices.
-    const isMobile = "ontouchstart" in window || navigator.maxTouchPoints > 0;
 
     // For mobile, place a toggle switch right below the "Resources" header (i.e., in #resourcesContainer, above the grid).
     // We only want to create it once, so let's check if it's already there.
@@ -523,14 +531,14 @@ const CURRENT_GAME_VERSION = "v0.02";
         copiumBarFill.classList.add("copium-high");
         copiumBarFill.setAttribute("data-tooltip",
           "Copium builds up from tasks with<br>" + copiumSkills.join(", ") +
-          `.<br><br>If it exceeds 9000, your game will reset<br>with all Resources and ${gameState.perks["knowledge_preserver"] ? "10% of" : "half"} your Knowledge lost!` +
+          `.<br><br>If it exceeds 9000, your game will reset<br>with all${gameState.serenityInfinite["Resource Saver"] > 0 ? " but " + gameState.serenityInfinite["Resource Saver"]: ""} Resources and ${gameState.perks["knowledge_preserver"] ? "10% of" : "half"} your Knowledge lost!` +
           `<br>But you will permanently gain ${gameState.perks["copium_reactor"] ? 6 : 2} starting energy.`
         );
       } else {
         copiumBarFill.classList.remove("copium-high");
         copiumBarFill.setAttribute("data-tooltip",
           "Copium builds up from tasks with<br>" + copiumSkills.join(", ") +
-          `.<br><br>If it exceeds 9000, your game will reset<br>with all Resources and ${gameState.perks["knowledge_preserver"] ? "10% of" : "half"} your Knowledge lost!` +
+          `.<br><br>If it exceeds 9000, your game will reset<br>with all${gameState.serenityInfinite["Resource Saver"] > 0 ? " but " + gameState.serenityInfinite["Resource Saver"]: ""} Resources and ${gameState.perks["knowledge_preserver"] ? "10% of" : "half"} your Knowledge lost!` +
           `<br>But you will permanently gain ${gameState.perks["copium_reactor"] ? 6 : 2} starting energy.`
         );
       }
@@ -807,7 +815,6 @@ const CURRENT_GAME_VERSION = "v0.02";
     return baseDrain;
   }
   
-
   /****************************************
    * RESTART & GAME OVER FUNCTIONS
    ****************************************/
@@ -821,10 +828,8 @@ const CURRENT_GAME_VERSION = "v0.02";
         gameState.startingEnergy += (currentZoneIndex+1)/10;
       }
       gameState.numEnergyResets++;
-      gameState.last_path = gameState.current_path.slice();
     } else if (reason === "copiumOverflow") {
-      // lose all resources, half knowledge
-      gameState.resources = {};
+      applyResourceSaver();
       if (gameState.perks["knowledge_preserver"]) {
         gameState.knowledge = Math.floor(gameState.knowledge * 0.9);
       } else {
@@ -837,7 +842,29 @@ const CURRENT_GAME_VERSION = "v0.02";
       gameState.power = Math.floor(gameState.power * 0.8);
       gameState.delusion = 0;
       gameState.numDelusionResets++;
-    } else if (reason === "ContentComplete") {
+    } else if (reason === "prestige") {
+      gameState.startingEnergy = 100;
+      gameState.copium = 0;
+      gameState.delusion = 0;
+      gameState.knowledge = 0;
+      gameState.power = 0;
+      gameState.prestigeAvailable = false;
+      Object.keys(gameState.skills).forEach(sName => {
+        gameState.skills[sName].level = 1;
+        gameState.skills[sName].xp = 0;
+      });
+      gameState.resources = {};
+      gameState.perks = {};
+      gatherAllPerks();
+      applyPerks();
+      gameState.numEnergyResets = 0;
+      gameState.numCopiumResets = 0;
+      gameState.numDelusionResets = 0;
+      gameState.highestCompletedZone = 0;
+      gameState.resetsForHighestZone = 1e100;
+      gameState.zoneFullCompletes = {};
+      applySerenityUpgrades();
+    } else if (reason === "contentComplete") {
       gameState.resources = {};
     };
     zones.forEach(z => z.tasks.forEach(t => t.count = 0));
@@ -845,16 +872,17 @@ const CURRENT_GAME_VERSION = "v0.02";
       gameState.skills[sName].progressBoost = 1;
       gameState.skills[sName].drainBoost = 1;
     });
-    gameState.current_path = [];
     gameState.resourcesUsed = {};
     gameState.energy = gameState.startingEnergy;
     currentZoneIndex = 0;
     currentTasks = [];
     gameState.autoRun = false;
-    autoPathRepeatActive = false;
     gameState.cyberneticArmorTaskRunning = false;
     gameState.numCyberneticArmors = 0;
     gameState.numCelestialBlossoms = 0;
+    if (gameState.serenityUnlockables["Delusion Enjoyer"]) {
+      gameState.delusionEnjoyerMultiplier = Math.max(1, gameState.delusion / 100);
+    }
     updateSkillMultipliers();
     saveGameProgress();
     updateEnergyDisplay();
@@ -1019,7 +1047,7 @@ const CURRENT_GAME_VERSION = "v0.02";
       const task = zones[zoneIndex].tasks[taskIndex];
       if (task.boss_image) {
         document.getElementById("zoneImage").src = task.boss_image;
-        if (gameState.soundEnabled && !gameState.autoRun && !autoPathRepeatActive) task.sound.play();
+        if (gameState.soundEnabled && !gameState.autoRun) task.sound.play();
       }
     }
   }
@@ -1044,10 +1072,6 @@ const CURRENT_GAME_VERSION = "v0.02";
     };
     button.classList.add("active");
     currentTasks.push(data);
-    // NEW: Record this task in current_path if not already present.
-    if (!gameState.current_path.some(item => item.zoneIndex === zoneIndex && item.taskIndex === taskIndex) && gameState.zoneFullCompletes[zoneIndex] >= 10) {
-      gameState.current_path.push({ zoneIndex, taskIndex });
-    }
   }
   
 
@@ -1089,6 +1113,7 @@ const CURRENT_GAME_VERSION = "v0.02";
     tasksContainer.innerHTML = "";
 
     zone.tasks.forEach((task, idx) => {
+      if (task.count >= task.maxReps) return;
       const div = document.createElement("div");
       div.className = "task";
       div.setAttribute("data-zone-index", currentZoneIndex);
@@ -1101,6 +1126,7 @@ const CURRENT_GAME_VERSION = "v0.02";
       cDiv.className = "task-control";
       const btn = document.createElement("button");
       btn.style.width = "50%";
+
       if (task.perk && !gameState.perks[task.perk]) {
         btn.innerHTML = `${task.name} <span class="perk-star">★</span>`;
       } else {
@@ -1108,7 +1134,7 @@ const CURRENT_GAME_VERSION = "v0.02";
       }
       // If the task has a boss_image, give the button a red tint
       if (task.boss_image) {
-        btn.style.backgroundColor = "rgba(255, 40, 0, 0.5)";
+        div.classList.add("boss-task");
       }
       
       // If the task yields a resource, add its icon
@@ -1145,6 +1171,49 @@ const CURRENT_GAME_VERSION = "v0.02";
         }
       }
 
+      if (gameState.perks["simulation_engine"] && gameState.zoneFullCompletes[currentZoneIndex] >= 10) {
+        const key = `${currentZoneIndex}-${idx}`;
+        // Ensure a default value is set if none exists:
+        if (gameState.automationOverrides[key] === undefined) {
+          gameState.automationOverrides[key] = true;
+        }
+        // Update the button’s appearance based on the override:
+        updateTaskAutomationUI(btn, key);
+        
+        // For mobile: long-press (0.8s) toggles automation.
+        let longPressTriggered = false;
+        let touchTimeout;
+        btn.addEventListener("touchstart", (e) => {
+          longPressTriggered = false;
+          touchTimeout = setTimeout(() => {
+            longPressTriggered = true;
+            toggleTaskAutomation(key, btn, task);
+          }, 800);
+        });
+        btn.addEventListener("touchend", (e) => {
+          clearTimeout(touchTimeout);
+          if (longPressTriggered) {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        });
+        btn.addEventListener("touchcancel", () => clearTimeout(touchTimeout));
+
+        btn.addEventListener("contextmenu", (e) => {
+          e.preventDefault();
+          toggleTaskAutomation(key, btn, task);
+          return false;
+        });
+      } else {
+        // For desktop: right-click toggles automation.
+        btn.addEventListener("contextmenu", (e) => {
+          e.preventDefault();
+          return false;
+        });
+      }
+      
+
+
       btn.addEventListener("click", () => {
         if (gameState.musicEnabled && bgMusic.paused) {
           bgMusic.play().catch(() => {});
@@ -1174,6 +1243,7 @@ const CURRENT_GAME_VERSION = "v0.02";
     renderPerks();
     showKnowledgeIfUnlocked();
     showPowerIfUnlocked();
+    showSerenityIfUnlocked();
 
     // Simulation Engine automation
     const zoneAutomationEl = document.getElementById("zoneAutomation");
@@ -1191,10 +1261,17 @@ const CURRENT_GAME_VERSION = "v0.02";
         const zoneBtn = document.createElement("button");
         zoneBtn.textContent = "Zone";
         zoneBtn.setAttribute("data-automation", "zone");
+        zoneBtn.setAttribute("data-tooltip", "Run all tasks in current zone.");
         
         const allBtn = document.createElement("button");
         allBtn.textContent = "All";
         allBtn.setAttribute("data-automation", "all");
+        allBtn.setAttribute("data-tooltip", "Run all tasks in automated zones.");
+
+        if (gameState.perks.simulation_engine) {
+          zoneBtn.setAttribute("data-tooltip", `Run selected tasks in current zone.<br>${isMobile ? "Long press a task to toggle automation." : "Right click a task to toggle automation."}`);
+          allBtn.setAttribute("data-tooltip", `Run selected tasks in automated zones.<br>${isMobile ? "Long press a task to toggle automation." : "Right click a task to toggle automation."}`);
+        }
 
         // Attach listeners:
         zoneBtn.addEventListener("click", () => {
@@ -1232,38 +1309,6 @@ const CURRENT_GAME_VERSION = "v0.02";
     } else {
       zoneAutomationEl.innerHTML = "";
     }
-    // NEW: Add Repeat Last Path button if simulation_engine is unlocked.
-    if (gameState.perks["simulation_engine"] && gameState.zoneFullCompletes[currentZoneIndex] >= 10) {
-      // Create the Repeat Last Path button
-      const repeatBtn = document.createElement("button");
-      repeatBtn.textContent = "Repeat Last Path";
-      repeatBtn.id = "repeatPathBtn";
-      // If autoPathRepeat is active, mark it as such
-      if (autoPathRepeatActive) repeatBtn.classList.add("active");
-      // Add event listener to toggle autoPathRepeat mode.
-      repeatBtn.addEventListener("click", () => {
-        if (!autoPathRepeatActive) {
-          // Activate autoPathRepeat: copy the last_path into the repeat queue.
-          if (gameState.last_path.length === 0) {
-            showMessage("No previous path to repeat.");
-            return;
-          }
-          autoPathRepeatQueue = gameState.last_path.slice();
-          autoPathRepeatActive = true;
-          repeatBtn.classList.add("active");
-          showMessage("Repeat Last Path activated.");
-        } else {
-          // Deactivate autoPathRepeat.
-          autoPathRepeatActive = false;
-          autoPathRepeatQueue = [];
-          repeatBtn.classList.remove("active");
-          showMessage("Repeat Last Path deactivated.");
-        }
-      });
-      // Append the button to the zoneAutomation element.
-      zoneAutomationEl.appendChild(repeatBtn);
-    }
-
   }
 
   function updateAutomationButtonStyles() {
@@ -1283,6 +1328,25 @@ const CURRENT_GAME_VERSION = "v0.02";
       allBtn.classList.remove("active");
     }
   }
+  function toggleTaskAutomation(key, btn, task) {
+    // Toggle the stored value:
+    gameState.automationOverrides[key] = !gameState.automationOverrides[key];
+    updateTaskAutomationUI(btn, key);
+    showMessage(`Automation ${gameState.automationOverrides[key] ? "enabled" : "disabled"} for ${task.name}`);
+    saveGameProgress();
+  }
+  
+
+  function updateTaskAutomationUI(btn, key) {
+    if (gameState.automationOverrides[key]) {
+      // If automation is enabled, remove the big gray X overlay
+      btn.classList.remove('big-x');
+    } else {
+      // If automation is disabled, add the big gray X overlay
+      btn.classList.add('big-x');
+    }
+  }
+  
   
 
   // Helper: compute the raw base multiplier (without energetic_bliss)
@@ -1302,7 +1366,7 @@ const CURRENT_GAME_VERSION = "v0.02";
   // Analytic estimate of total energy drained to complete a task,
   // using a two-phase model (bonus multiplier then base multiplier).
   function estimateEnergyDrain(task, zone) {
-    const tick = tickDuration;
+    const tick = effTickDuration;
     
     // Compute effective drain per tick (includes drainMult and drainBoost):
     let D = getCombinedEnergyDrain(task, zone.id);
@@ -1336,7 +1400,7 @@ const CURRENT_GAME_VERSION = "v0.02";
     }
     
     // Total estimated energy drain is drain per tick multiplied by the total ticks.
-    return D * Math.max(gameState.perks["immunity_device"] ? 0.25 : 1, ticksNeeded);
+    return D * Math.max((gameState.perks["immunity_device"] ? 0.25 : 1) * gameState.entropyShieldMultiplier, ticksNeeded);
   }
 
 
@@ -1411,18 +1475,18 @@ const CURRENT_GAME_VERSION = "v0.02";
       // --- Extra Info ---
       let extraInfo = "";
       if (gameState.knowledgeUnlocked && usedSkills.some(s => knowledgeSkills.includes(s))) {
-        extraInfo += `<br><br><span style="color:rgb(40, 210, 117)">Knowledge Gain on Completion: ${formatNumber(zone.id)}</span>`;
+        extraInfo += `<br><br><span style="color:rgb(40, 210, 117)">Knowledge Gain on Completion: ${formatNumber(zone.id * gameState.delusionEnjoyerMultiplier)}</span>`;
       }
       if (gameState.copiumUnlocked && usedSkills.some(s => copiumSkills.includes(s))) {
         let copiumGain = 10 * zone.id;
-        if (gameState.perks["copious_alchemist"]) {
+        if (gameState.perks["copious_alchemist"] && gameState.perks["copious_alchemist"] !== "disabled") {
           copiumGain *= 0.5;
         }
         copiumGain = Math.max(copiumGain - gameState.numCelestialBlossoms, 0);
         extraInfo += `<br><br><span style="color:#dbd834">Copium Gain per Task: ${formatNumber(copiumGain)}</span>`;
       }
       if (gameState.powerUnlocked && task.boss_image) {
-        extraInfo += `<br><br><span style="color:rgb(222, 34, 191)">Power Gain on Completion: ${formatNumber(zone.id - 3)}</span>`;
+        extraInfo += `<br><br><span style="color:rgb(222, 34, 191)">Power Gain on Completion: ${formatNumber((zone.id - 3) * gameState.powerGainMultiplier)}</span>`;
       }
       if (gameState.delusionUnlocked && usedSkills.some(s => delusionSkills.includes(s))) {
         extraInfo += `<br><br><span style="color:#9b59b6">Delusion Gain per Task: 0 - ${formatNumber(zone.id * 100)} (random, skewed to low)</span>`;
@@ -1484,7 +1548,7 @@ const CURRENT_GAME_VERSION = "v0.02";
     if (!knowledgeUpg) return;
     if (gameState.knowledgeUnlocked) {
       knowledgeUpg.parentElement.style.display = "inline-block";
-      knowledgeUpg.textContent = gameState.knowledge;
+      knowledgeUpg.textContent = formatNumber(gameState.knowledge);
       const tooltipStr = "Knowledge increases XP gain by <b>" +
         formatNumber(gameState.knowledge * 0.1) +
         "%</b><br>for " + knowledgeSkills.join(", ") + ".";
@@ -1497,7 +1561,7 @@ const CURRENT_GAME_VERSION = "v0.02";
     if (!powerUpg) return;
     if (gameState.powerUnlocked) {
       powerUpg.parentElement.style.display = "inline-block";
-      powerUpg.textContent = gameState.power;
+      powerUpg.textContent = formatNumber(gameState.power);
       const tooltipStr = "Power increases speed by <b>" +
         formatNumber((gameState.perks.urban_warfare ? 3 : 1) * gameState.power) +
         "%</b><br>for Combat and Endurance.";
@@ -1534,10 +1598,19 @@ const CURRENT_GAME_VERSION = "v0.02";
       showKnowledgeIfUnlocked();
     }
     if(gameState.perks.master_of_ai) {
-      delusionSkills = ["charisma", "perception", "negotiation"];
+      if (gameState.perks.master_of_ai === "disabled") {
+        delusionSkills = ["charisma", "perception", "aiMastery", "negotiation"];
+      } else {
+        delusionSkills = ["charisma", "perception", "negotiation"];
+      }
+      updateDelusionDisplay();
     }
     if(gameState.perks.mechanical_genius) {
-      copiumSkills = ["endurance", "alchemy"];
+      if (gameState.perks.mechanical_genius === "disabled") {
+        copiumSkills = ["endurance", "alchemy", "mechanics"];
+      } else {
+        copiumSkills = ["endurance", "alchemy"];
+      }
       updateCopiumDisplay();
     }
     if (gameState.perks.growth_miracle && !growthMiracleApplied) {
@@ -1552,6 +1625,7 @@ const CURRENT_GAME_VERSION = "v0.02";
     }
   }
   
+  // Modify your renderPerks function:
   function renderPerks() {
     const grid = document.querySelector("#perksContainer .perks-grid");
     if (!grid) return;
@@ -1563,21 +1637,37 @@ const CURRENT_GAME_VERSION = "v0.02";
       const pStr = formatStringForDisplay(pKey);
       icon.alt = pStr;
       icon.style.pointerEvents = "none";
-      if (gameState.perks[pKey]) {
-        div.setAttribute("data-tooltip",
-          pStr + ":<br>" + (perkDescriptions[pKey] || "An unknown perk.")
-        );
-        div.className = "perk-item unlocked";
+  
+      // If perk is unlocked (i.e. not false)
+      if (gameState.perks[pKey] !== false) {
+        if (toggleablePerks.includes(pKey)) {
+          // For toggleable perks:
+          if (gameState.perks[pKey] === "disabled") {
+            div.className = "perk-item unlocked disabled";
+          } else {
+            div.className = "perk-item unlocked toggleable-enabled";
+          }
+          // Allow clicking to toggle.
+          div.addEventListener("click", () => {
+            gameState.perks[pKey] = (gameState.perks[pKey] === "disabled") ? true : "disabled";
+            applyPerks();
+            renderPerks();
+            updateTasksHoverInfo();
+          });
+          div.setAttribute("data-tooltip", pStr + ":<br>" + (perkDescriptions[pKey] + "<br>Click to Toggle this perk." || "An unknown perk."));
+        } else {
+          div.className = "perk-item unlocked";
+          div.setAttribute("data-tooltip", pStr + ":<br>" + (perkDescriptions[pKey] || "An unknown perk."));
+        }
       } else {
-        div.setAttribute("data-tooltip",
-          pStr + ": Unlock perk to see description."
-        );
+        div.setAttribute("data-tooltip", pStr + ": Unlock perk to see description.");
         div.className = "perk-item locked";
       }
       div.appendChild(icon);
       grid.appendChild(div);
     });
   }
+  
 
   function showKnowledgeModal() {
     hideTooltip();
@@ -1697,52 +1787,520 @@ const CURRENT_GAME_VERSION = "v0.02";
     showDelusionBar();
   }
 
-  function showPrestigeModal() {
+  function applySerenityUnlockable(upgName) {
+    switch (upgName) {
+      case "Always a Workaholic":
+        if (!gameState.perks["workaholic"]){
+          gameState.perks["workaholic"] = true;
+          renderPerks();
+        }
+        break;
+      case "Delusion Enjoyer":
+        gameState.delusionEnjoyerMultiplier = Math.max(1, gameState.delusion / 100);
+        break;
+      case "Resource Consumer":
+        gameState.autoConsumeResources = true;
+        showAutoConsumeButton();  // Make the Auto-Use button appear.
+        break;
+      case "Instant Simulation":
+        if (!gameState.perks["instant_simulation"]) {
+          gameState.perks["simulation_engine"] = true;
+          renderPerks();
+        }
+        zones.forEach((zone, i) => {
+          gameState.zoneFullCompletes[i] = Math.max(gameState.zoneFullCompletes[i] || 0, 10);
+        });
+        break;
+      default:
+        console.log(`No effect defined for unlockable: ${upgName}`);
+        break;
+    }
+  }
+  
+  function applySerenityInfinite(upgName) {
+    const level = gameState.serenityInfinite[upgName] || 0;
+    if (level <= 0) return;
+    switch (upgName) {
+      case "Wisdom Seeker":
+        xpScale = 0.001 * (1 + 0.5 * level);
+        break;
+      case "Entropy Shield":
+        gameState.entropyShieldMultiplier = Math.pow(0.98, level);
+        break;
+      case "Resource Saver":
+        // Effect is applied elsewhere.
+        break;
+      case "Power Doubler":
+        gameState.powerGainMultiplier = Math.pow(2, level);
+        break;
+      default:
+        console.log(`No effect defined for infinite upgrade: ${upgName}`);
+        break;
+    }
+  }
+  
+  function applySerenityUpgrades() {
+    // Process all unlockable upgrades.
+    Object.keys(gameState.serenityUnlockables).forEach(upgName => {
+      if (gameState.serenityUnlockables[upgName]) {
+        applySerenityUnlockable(upgName);
+      }
+    });
+    // Process all infinite upgrades.
+    Object.keys(gameState.serenityInfinite).forEach(upgName => {
+      if (gameState.serenityInfinite[upgName] > 0) {
+        applySerenityInfinite(upgName);
+      }
+    });
+  }
+
+  // Helper function to apply Resource Saver
+  function applyResourceSaver() {
+    // The total number of resource units to keep is the current level of Resource Saver.
+    const keepCount = gameState.serenityInfinite["Resource Saver"] || 0;
+    if (keepCount <= 0) {
+      gameState.resources = {};
+      return;
+    }
+    // Build an array where each resource appears once per unit available.
+    let resourcePool = [];
+    Object.keys(gameState.resources).forEach(name => {
+      // Only consider resources with a positive count.
+      const count = gameState.resources[name];
+      for (let i = 0; i < count; i++) {
+        resourcePool.push(name);
+      }
+    });
+    
+    // Randomly select keepCount items from the resourcePool without replacement.
+    let keptResources = {};
+    for (let i = 0; i < keepCount; i++) {
+      if (resourcePool.length === 0) break;
+      const idx = Math.floor(Math.random() * resourcePool.length);
+      const resName = resourcePool[idx];
+      if (!keptResources[resName]) {
+        keptResources[resName] = 0;
+      }
+      keptResources[resName]++;
+      // Remove this unit from the pool.
+      resourcePool.splice(idx, 1);
+    }
+    gameState.resources = keptResources;
+  }
+
+  function showAutoConsumeButton() {
+    const resourcesContainer = document.getElementById("resourcesContainer");
+    if (!resourcesContainer) return;
+    
+    // Check if the button already exists.
+    let autoBtn = document.getElementById("autoConsumeBtn");
+    if (!autoBtn) {
+      // Create the button.
+      autoBtn = document.createElement("button");
+      autoBtn.id = "autoConsumeBtn";
+      autoBtn.textContent = "Auto-Use";
+      // Reuse the same CSS class as your zone automation buttons.
+      autoBtn.className = "resource-automation-btn";
+
+      autoBtn.setAttribute("data-tooltip", "Auto-use all resources except:<br>" + 
+        Array.from(EXCLUDED_AUTO_RESOURCES)
+          .filter(r => gameState.resources.hasOwnProperty(r))
+          .map(r => formatStringForDisplay(r))
+          .join("<br>"));
+      
+
+      // Insert the button right after the <h3>Resources</h3> header.
+      const header = resourcesContainer.querySelector("h3");
+      if (header && header.nextSibling) {
+        header.parentNode.insertBefore(autoBtn, header.nextSibling);
+      } else {
+        resourcesContainer.appendChild(autoBtn);
+      }
+      
+      // Initialize the auto-consume flag.
+      gameState.autoConsumeEnabled = false;
+      
+      // Toggle auto-consume mode on click.
+      autoBtn.addEventListener("click", () => {
+        gameState.autoConsumeEnabled = !gameState.autoConsumeEnabled;
+        if (gameState.autoConsumeEnabled) {
+          autoBtn.classList.add("active");
+          showMessage("Resource Auto-Use enabled");
+        } else {
+          autoBtn.classList.remove("active");
+          showMessage("Resource Auto-Use disabled");
+        }
+      });
+    }
+  }
+  
+
+  
+
+  // When a Prestige task finishes, unlock Serenity.
+  function showSerenityUnlockedModal() {
     hideTooltip();
+    // Mark Serenity as unlocked.
+    gameState.serenityUnlocked = true;
+    // Update the Serenity button display.
+    showSerenityIfUnlocked();
+
     const modal = document.createElement("div");
     modal.className = "modal";
-    modal.id = "prestigeModal";
+    modal.id = "serenityUnlockedModal";
     
     const content = document.createElement("div");
     content.className = "modal-content prestige-modal";
     
     content.innerHTML = `
-      <h2>Prestige</h2>
+      <h2>Serenity Unlocked!</h2>
       <p>
-        This is where the prestige layer will reside. Pushing further may be impossible without prestige.
+        Prestige complete! Serenity is now unlocked.<br>
       </p>
       <p>
-        <strong>Energy Resets:</strong> ${gameState.numEnergyResets}<br>
-        <strong>Copium Resets:</strong> ${gameState.numCopiumResets}<br>
-        <strong>Delusion Resets:</strong> ${gameState.numDelusionResets}
+        Click the Serenity button (top right) to access the Prestige menu and purchase upgrades.
       </p>
     `;
     
-    const btnWrapper = document.createElement("div");
-    btnWrapper.className = "prestige-btn-wrapper";
-    
-    // Create the Prestige button (disabled with tooltip info)
-    const prestigeBtn = document.createElement("button");
-    prestigeBtn.textContent = "Prestige";
-    prestigeBtn.style.backgroundColor = "#3498db";
-    prestigeBtn.disabled = true;
-    // Using our tooltip system via the data-tooltip attribute
-    prestigeBtn.setAttribute("data-tooltip", "This feature is not yet available");
-    
-    // Create the "Let me keep going!" button which simply closes the modal.
-    const keepGoingBtn = document.createElement("button");
-    keepGoingBtn.textContent = "Let me keep going!";
-    keepGoingBtn.addEventListener("click", () => {
+    const btn = document.createElement("button");
+    btn.textContent = "Awesome!";
+    btn.addEventListener("click", () => {
       modal.remove();
     });
     
-    btnWrapper.appendChild(prestigeBtn);
-    btnWrapper.appendChild(keepGoingBtn);
-    content.appendChild(btnWrapper);
-    
+    content.appendChild(btn);
     modal.appendChild(content);
     document.body.appendChild(modal);
   }
+
+  function showSerenityIfUnlocked() {
+    const serenityUpg = document.getElementById("serenityUpgDiv");
+    if (!serenityUpg) return;
+    if (gameState.serenityUnlocked) {
+      serenityUpg.style.display = "inline-block";
+      // Calculate potential serenity gain on prestige:
+      const serenityGainPotential = (gameState.highestCompletedZone ** 3) / gameState.resetsForHighestZone;
+      // Set the inner HTML: first line shows current Serenity, second line (in gray) shows potential gain.
+      serenityUpg.innerHTML = `Serenity: ${formatNumber(gameState.serenity)}`
+      if(gameState.prestigeAvailable) {
+        serenityUpg.innerHTML += `<br><span style="color:rgb(200, 200, 200); font-size: 0.9em;">+(${formatNumber(serenityGainPotential)})</span>`;
+      }
+      serenityUpg.setAttribute("data-tooltip", "Click to access the Prestige menu.");
+      // Replace the element to remove any duplicate listeners, then add a click listener.
+      const newSerenityUpg = serenityUpg.cloneNode(true);
+      newSerenityUpg.addEventListener("click", showSerenityPrestigeModal);
+      serenityUpg.parentNode.replaceChild(newSerenityUpg, serenityUpg);
+    }
+  }
+  
+  // calculat somewhere else and just display here
+  function getCurrentInfiniteEffect(upgName, level) {
+    switch (upgName) {
+      case "Wisdom Seeker":
+        return `Current Effect: ${formatNumber(level * 50)}%`;
+      case "Entropy Shield":
+        return `Current Effect: ${formatNumber(gameState.entropyShieldMultiplier * 100)}%`;
+      case "Resource Saver":
+        // For example, calculate the percentage of resources retained.
+        return `Current Effect: ${formatNumber(level)}`;
+      case "Power Doubler":
+        // For example, you might calculate the effective boss power multiplier.
+        return `Current Effect: ${formatNumber(gameState.powerGainMultiplier)}x`;
+      default:
+        return "Current Effect: (to be calculated)";
+    }
+  }
+  
+  function showSerenityPrestigeModal() {
+    hideTooltip();
+  
+    const serenityGainPotential = (gameState.highestCompletedZone ** 3) / gameState.resetsForHighestZone;
+  
+    // Main modal
+    const modal = document.createElement("div");
+    modal.className = "modal";
+    modal.id = "serenityModal";
+  
+    // Content container with blue border and scrollability.
+    const content = document.createElement("div");
+    content.className = "modal-content prestige-modal prestige-modal-blueborder";
+    content.style.maxHeight = "80vh";
+    content.style.overflowY = "auto";
+  
+    // Header with “Prestige” and close button.
+    const header = document.createElement("div");
+    header.className = "modal-header-centered";
+  
+    const title = document.createElement("h2");
+    title.textContent = "Prestige";
+  
+    header.appendChild(title);
+    content.appendChild(header);
+  
+    // Serenity info + formula.
+    const serenityInfo = document.createElement("div");
+    serenityInfo.className = "serenity-info-container";
+    serenityInfo.innerHTML = `
+      <p>
+        <strong>Serenity:</strong> ${formatNumber(gameState.serenity)}
+        <span style="color: gray; font-size: 0.9em;">(+${formatNumber(serenityGainPotential)})</span>
+      </p>
+      <p style="color: gray; margin-top: -10px;">
+        Serenity Gain = (<strong>Max Zone</strong> ^ 3) / (<strong>Total Resets</strong>)
+      </p>
+    `;
+    content.appendChild(serenityInfo);
+  
+    // Combined line with Max Zone and resets.
+    const combinedLine = document.createElement("p");
+    combinedLine.style.fontSize = "0.9em";
+    combinedLine.innerHTML = `
+      Max Zone Completed: ${gameState.highestCompletedZone} | 
+      Resets on Completion: ${gameState.resetsForHighestZone}<br>
+      Energy Resets: ${gameState.numEnergyResets} |
+      Copium Resets: ${gameState.numCopiumResets} |
+      Delusion Resets: ${gameState.numDelusionResets}
+    `;
+    combinedLine.style.marginTop = "5px";
+    content.appendChild(combinedLine);
+
+    // Buttons row: Prestige and Exit
+    const buttonContainer = document.createElement("div");
+    buttonContainer.className = "serenity-buttons-container";
+  
+    const prestigeBtn = document.createElement("button");
+    prestigeBtn.className = "prestige-task-button";
+    prestigeBtn.textContent = "Prestige";
+    if (!gameState.prestigeAvailable) {
+      prestigeBtn.disabled = true;
+      prestigeBtn.title = "Prestige becomes available after completing a prestige task.";
+    } else {
+      prestigeBtn.addEventListener("click", () => {
+        showPrestigeConfirmationModal(serenityGainPotential);
+      });
+    }
+  
+    const exitBtn = document.createElement("button");
+    exitBtn.textContent = "Exit";
+    exitBtn.addEventListener("click", () => modal.remove());
+  
+    buttonContainer.appendChild(prestigeBtn);
+    buttonContainer.appendChild(exitBtn);
+  
+    content.appendChild(buttonContainer);
+  
+    // For each section in SERENITY_UPGRADES.
+    for (const sectionName of Object.keys(SERENITY_UPGRADES.unlockables)) {
+      const sectionDiv = document.createElement("div");
+      sectionDiv.className = "serenity-section";
+  
+      const sectionTitle = document.createElement("h3");
+      sectionTitle.textContent = sectionName;
+      sectionDiv.appendChild(sectionTitle);
+  
+      // Create a row container.
+      const row = document.createElement("div");
+      row.className = "serenity-section-row";
+      
+      // Left column: Unlockables.
+      const leftCol = document.createElement("div");
+      leftCol.className = "serenity-upgrades-col";
+      const leftTitle = document.createElement("h4");
+      leftTitle.textContent = "Unlockables";
+      leftCol.appendChild(leftTitle);
+      // Create a grid container for upgrade slots.
+      const leftGrid = document.createElement("div");
+      leftGrid.className = "serenity-upgrade-grid"; // Define CSS to use grid layout with 2 columns.
+      
+      const unlockables = SERENITY_UPGRADES.unlockables[sectionName] || {};
+      for (const [upgName, details] of Object.entries(unlockables)) {
+        const slot = document.createElement("div");
+        slot.className = "serenity-upgrade-slot";
+        
+        const nameDiv = document.createElement("div");
+        nameDiv.className = "serenity-upgrade-name";
+        nameDiv.textContent = upgName;
+        
+        const costDiv = document.createElement("div");
+        costDiv.className = "serenity-upgrade-cost";
+        
+        if (gameState.serenityUnlockables[upgName]) {
+          slot.classList.add("upgrade-slot-purchased");
+        } else {
+          if (gameState.serenity >= details.cost) {
+            slot.classList.add("upgrade-slot-affordable");
+          } else {
+            slot.classList.add("upgrade-slot-locked");
+          }
+          costDiv.textContent = `Cost: ${details.cost}`;
+          slot.addEventListener("click", () => {
+            if (gameState.serenity >= details.cost) {
+              gameState.serenity -= details.cost;
+              gameState.serenityUnlockables[upgName] = true;
+              applySerenityUnlockable(upgName);
+              showSerenityIfUnlocked();
+              document.getElementById("serenityModal").remove();
+              showSerenityPrestigeModal();
+            }
+          });
+        }
+        
+        // Set tooltip info: for unlockables, show description, cost, and scaling info.
+        let tooltipText = details.description || "";
+        slot.setAttribute("data-tooltip", tooltipText);
+        
+        slot.appendChild(nameDiv);
+        if (!gameState.serenityUnlockables[upgName]) {
+          slot.appendChild(costDiv);
+        }
+        leftGrid.appendChild(slot);
+      }
+      leftCol.appendChild(leftGrid);
+  
+      // Right column: Infinite Upgrades.
+      const rightCol = document.createElement("div");
+      rightCol.className = "serenity-upgrades-col";
+      const rightTitle = document.createElement("h4");
+      rightTitle.textContent = "Infinites";
+      rightCol.appendChild(rightTitle);
+      const rightGrid = document.createElement("div");
+      rightGrid.className = "serenity-upgrade-grid"; // grid layout with 2 columns.
+      
+      const infinite = SERENITY_UPGRADES.infinite[sectionName] || {};
+      for (const [upgName, details] of Object.entries(infinite)) {
+        const slot = document.createElement("div");
+        slot.className = "serenity-upgrade-slot";
+        
+        const level = gameState.serenityInfinite[upgName] || 0;
+        const nameDiv = document.createElement("div");
+        nameDiv.className = "serenity-upgrade-name";
+        nameDiv.innerHTML = `${upgName}`;
+        
+        const cost = details.initialCost * details.scaling ** level;
+        const costDiv = document.createElement("div");
+        costDiv.className = "serenity-upgrade-cost";
+        
+        if (cost > 0) {
+          if (gameState.serenity >= cost) {
+            slot.classList.add("upgrade-slot-affordable");
+          } else {
+            slot.classList.add("upgrade-slot-locked");
+          }
+          costDiv.textContent = `Level: ${level}, Cost: ${formatNumber(cost)}`;
+        } else {
+          slot.classList.add("upgrade-slot-purchased");
+        }
+        
+        slot.addEventListener("click", () => {
+          if (cost > 0 && gameState.serenity >= cost) {
+            gameState.serenity -= cost;
+            gameState.serenityInfinite[upgName] = level + 1;
+            applySerenityInfinite(upgName);
+            showSerenityIfUnlocked();
+            document.getElementById("serenityModal").remove();
+            showSerenityPrestigeModal();
+          }
+        });
+        
+        // For infinite upgrades, tooltip includes description plus "Current Effect"
+        let tooltipTextInfinite = details.description || "";
+        tooltipTextInfinite += `<br><br>${getCurrentInfiniteEffect(upgName, level)}`;
+        slot.setAttribute("data-tooltip", tooltipTextInfinite);
+        
+        slot.appendChild(nameDiv);
+        if (cost > 0) slot.appendChild(costDiv);
+        
+        rightGrid.appendChild(slot);
+      }
+      rightCol.appendChild(rightGrid);
+  
+      row.appendChild(leftCol);
+      row.appendChild(rightCol);
+      sectionDiv.appendChild(row);
+      content.appendChild(sectionDiv);
+    }
+  
+    modal.appendChild(content);
+    document.body.appendChild(modal);
+
+    modal.addEventListener("click", (e) => {
+      // If the clicked element is the modal overlay (and not its inner content), close the modal.
+      if (e.target === modal) {
+        modal.remove();
+      }
+    });
+  }
+  
+  
+
+  // Example confirmation modal for actually prestiging
+  function showPrestigeConfirmationModal(serenityGain) {
+    const confirmModal = document.createElement("div");
+    confirmModal.className = "modal";
+    confirmModal.id = "prestigeConfirmModal";
+
+    const content = document.createElement("div");
+    content.className = "modal-content prestige-modal prestige-modal-blueborder";
+
+    content.innerHTML = `
+      <h2>Confirm Prestige</h2>
+      <p>All progress will reset, but you gain +${formatNumber(serenityGain)} Serenity.</p>
+    `;
+
+    const confirmBtn = document.createElement("button");
+    confirmBtn.textContent = "Confirm";
+    confirmBtn.className = "prestige-task-button";
+    confirmBtn.style.fontWeight = "bold";
+    confirmBtn.addEventListener("click", () => {
+      // Add serenity, reset, close modal
+      gameState.serenity += serenityGain;
+      gameState.prestigeAvailable = false;
+      resetGame("prestige");
+      confirmModal.remove();
+      // Also close the main serenity modal if it's still open
+      const mainModal = document.getElementById("serenityModal");
+      if (mainModal) mainModal.remove();
+    });
+
+    const cancelBtn = document.createElement("button");
+    cancelBtn.textContent = "Cancel";
+    cancelBtn.addEventListener("click", () => confirmModal.remove());
+
+    content.appendChild(confirmBtn);
+    content.appendChild(cancelBtn);
+    confirmModal.appendChild(content);
+    document.body.appendChild(confirmModal);
+  }
+
+  
+  
+  // Call this function at load to initialize missing upgrades in gameState.
+  function initializeSerenityUpgrades() {
+    // For unlockable upgrades:
+    if (!gameState.serenityUnlockables) {
+      gameState.serenityUnlockables = {};
+    }
+    for (const section in SERENITY_UPGRADES.unlockables) {
+      for (const upgName in SERENITY_UPGRADES.unlockables[section]) {
+        if (!(upgName in gameState.serenityUnlockables)) {
+          gameState.serenityUnlockables[upgName] = false;
+        }
+      }
+    }
+    
+    // For infinite upgrades:
+    if (!gameState.serenityInfinite) {
+      gameState.serenityInfinite = {};
+    }
+    for (const section in SERENITY_UPGRADES.infinite) {
+      for (const upgName in SERENITY_UPGRADES.infinite[section]) {
+        if (!(upgName in gameState.serenityInfinite)) {
+          gameState.serenityInfinite[upgName] = 0;
+        }
+      }
+    }
+  }
+
   
   function showEndOfContentModal() {
     hideTooltip();
@@ -1780,7 +2338,7 @@ const CURRENT_GAME_VERSION = "v0.02";
     btn.textContent = "Back to zone 1!";
     btn.addEventListener("click", () => {
       modal.remove();
-      resetGame("ContentComplete");
+      resetGame("contentComplete");
     });
     
     btnWrapper.appendChild(btn);
@@ -2002,6 +2560,13 @@ const CURRENT_GAME_VERSION = "v0.02";
   
       modal.appendChild(content);
       document.body.appendChild(modal);
+      
+      modal.addEventListener("click", (e) => {
+        // If the clicked element is the modal overlay (and not its inner content), close the modal.
+        if (e.target === modal) {
+          modal.remove();
+        }
+      });
     });
   }
   
@@ -2028,6 +2593,8 @@ const CURRENT_GAME_VERSION = "v0.02";
     if (kUpg) kUpg.parentElement.style.display = "none";
     const pUpg = document.getElementById("powerUpgValue");
     if (pUpg) pUpg.parentElement.style.display = "none";
+    const sUpg = document.getElementById("serenityUpgValue");
+    if (sUpg) sUpg.parentElement.style.display = "none";
     displayZone();
     document.getElementById("versionBanner").style.display = "none";
   }
@@ -2068,7 +2635,7 @@ const CURRENT_GAME_VERSION = "v0.02";
   }
 
   function processCheatCode(code) {
-    if (code === "BetterStart") {
+    if (code === "BetterStart" && gameState.serenity !== 0) {
       gameState.skills["endurance"].level = Math.max(gameState.skills["endurance"].level, 250);
       gameState.skills["tinkering"].level = Math.max(gameState.skills["tinkering"].level, 200);
       gameState.skills["charisma"].level = Math.max(gameState.skills["charisma"].level, 250);
@@ -2080,7 +2647,7 @@ const CURRENT_GAME_VERSION = "v0.02";
       renderSkills();
       updateSkillDisplay();
       updateTasksHoverInfo();
-    } else if (code === "WhatAboutOtherSkills") {
+    } else if (code === "WhatAboutOtherSkills" && gameState.serenity !== 0) {
       gameState.skills["endurance"].level = Math.max(gameState.skills["endurance"].level, 250);
       gameState.skills["tinkering"].level = Math.max(gameState.skills["tinkering"].level, 200);
       gameState.skills["charisma"].level = Math.max(gameState.skills["charisma"].level, 250);
@@ -2130,19 +2697,35 @@ const CURRENT_GAME_VERSION = "v0.02";
    * MAIN GAME LOOP
    ****************************************/
   function gameLoop() {
-    if (currentTasks.length === 0 && !gameState.autoRun && !autoPathRepeatActive) return;
+    // Auto-Use resources if enabled:
+    if (gameState.autoConsumeEnabled) {
+      // Loop over resources and pick the first usable one.
+      for (const resName in gameState.resources) {
+        if (gameState.resources[resName] > 0 && !EXCLUDED_AUTO_RESOURCES.has(resName)) {
+          // Consume all units of that resource.
+          const amt = gameState.resources[resName];
+          consumeResource(resName, amt);
+          // Optionally trigger any onConsume action:
+          if (resourceActions[resName] && typeof resourceActions[resName].onConsume === "function") {
+            resourceActions[resName].onConsume(gameState, amt);
+          }
+          // Only process one resource per tick.
+          break;
+        }
+      }
+    }
+
+    if (currentTasks.length === 0 && !gameState.autoRun) return;
     currentTasks.forEach((tData) => {
       if (tData.paused) return;
       const oldProgress = tData.progress;
       const zone = zones[tData.zoneIndex];
       let speedMult = getCombinedMultiplier(tData.task);
-      tData.progress += tickDuration * speedMult;
+      tData.progress += effTickDuration * speedMult;
       let singleTickSkill = false;
       if (tData.progress > tData.totalDuration) {
         tData.progress = tData.totalDuration;
-        if (gameState.perks["immunity_device"]) {
-          singleTickSkill = true;
-        }
+        singleTickSkill = true;
       }
       const delta = tData.progress - oldProgress;
       let drain = getCombinedEnergyDrain(tData.task, tData.zoneIndex);
@@ -2154,7 +2737,8 @@ const CURRENT_GAME_VERSION = "v0.02";
         drain *= 0.25;
       }
       if (singleTickSkill) {
-        drain *= 0.25;
+        drain *= gameState.entropyShieldMultiplier;
+        if (gameState.perks["immunity_device"]) drain *= 0.25;
       }
       gameState.energy -= drain;
       updateEnergyDisplay();
@@ -2162,7 +2746,6 @@ const CURRENT_GAME_VERSION = "v0.02";
         gameState.energy = 0;
         updateEnergyDisplay();
         gameState.autoRun = false;
-        autoPathRepeatActive = false;
         currentTasks = [];
         handleGameOver();
         return;
@@ -2181,8 +2764,8 @@ const CURRENT_GAME_VERSION = "v0.02";
         const task = zone.tasks[tData.taskIndex];
         if (task.count < task.maxReps) task.count++;
         if (task.resources && Array.isArray(task.resources)) {
-          if (gameState.perks["luck_of_the_irish"] && Math.random() < 0.01) {
-            task.resources.forEach(r => addResource(r, 77));
+          if (gameState.perks["luck_of_the_irish"] && Math.random() < 0.07) {
+            task.resources.forEach(r => addResource(r, 7));
           } else if (gameState.perks["gacha_machine"] && Math.random() < 0.25) {
             task.resources.forEach(r => addResource(r, 2));
           } else {
@@ -2190,11 +2773,10 @@ const CURRENT_GAME_VERSION = "v0.02";
           }
         }
         if (gameState.copiumUnlocked && usedSkills.some(s => copiumSkills.includes(s))) {
-          gameState.copium += Math.max((10 * zone.id) * (gameState.perks["copious_alchemist"] ? 0.5 : 1) - gameState.numCelestialBlossoms, 0);
+          gameState.copium += Math.max((10 * zone.id) * ((gameState.perks["copious_alchemist"]  && gameState.perks["copious_alchemist"] !== "disabled") ? 0.5 : 1) - gameState.numCelestialBlossoms, 0);
           if (gameState.copium > 9000) {
             currentTasks = [];
             gameState.autoRun = false;
-            autoPathRepeatActive = false;
             handleCopiumOverflow();
             return;
           }
@@ -2217,10 +2799,13 @@ const CURRENT_GAME_VERSION = "v0.02";
           // Apply the multiplier as before.
           gameState.delusion += (randomMultiplier * zone.id);
           
+          if (gameState.serenityUnlockables["Delusion Enjoyer"] && randomMultiplier !== 0) {
+            gameState.delusionEnjoyerMultiplier = Math.max(1, gameState.delusion / 100);
+          }
+          
           if (gameState.delusion > 9000) {
             currentTasks = [];
             gameState.autoRun = false;
-            autoPathRepeatActive = false;
             handleDelusionOverflow();
             return;
           }
@@ -2228,7 +2813,12 @@ const CURRENT_GAME_VERSION = "v0.02";
           updateDelusionDisplay();
         }
         
-        updateRepContainer(tData.repContainer, task);
+        const repContainer = document.querySelector(
+          `.task[data-zone-index="${tData.zoneIndex}"][data-task-index="${tData.taskIndex}"] .rep-container`
+        );
+        if (repContainer) {
+          updateRepContainer(repContainer, task);
+        }
         if (task.mandatory && task.count >= task.maxReps && isTravelAvailable(zone)) {
           enableTravelButtons(tData.zoneIndex);
         }
@@ -2240,6 +2830,11 @@ const CURRENT_GAME_VERSION = "v0.02";
             // Full completion
             gameState.zoneFullCompletes[tData.zoneIndex] =
               (gameState.zoneFullCompletes[tData.zoneIndex] || 0) + 1;
+            if (gameState.highestCompletedZone < tData.zoneIndex + 1) {
+              gameState.highestCompletedZone = tData.zoneIndex + 1;
+              gameState.resetsForHighestZone = Math.max(gameState.numEnergyResets + gameState.numCopiumResets + gameState.numDelusionResets, 1);
+              showMessage(`<span style="color: rgb(28, 106, 233);">New highest fully compeleted: Zone ${gameState.highestCompletedZone} with ${gameState.resetsForHighestZone} resets</span>`);
+            }
           }
           showMessage(task.name + " completed");
           tData.button.classList.remove("active");
@@ -2258,6 +2853,9 @@ const CURRENT_GAME_VERSION = "v0.02";
             }
             if (Math.random() < 0.05) {
               gameState.delusion = Math.max(gameState.delusion - 25, 0);
+              if (gameState.serenityUnlockables["Delusion Enjoyer"]) {
+                gameState.delusionEnjoyerMultiplier = Math.max(1, gameState.delusion / 100);
+              }
               showMessage("Crypto Wallet: -25 Delusion");
               updateDelusionDisplay();
             }
@@ -2281,7 +2879,7 @@ const CURRENT_GAME_VERSION = "v0.02";
             tData.button.parentElement.parentElement.style.display = "none";
             removeTaskFromCurrent(tData);
           } else {
-            if (gameState.perks["completionist"]) {
+            if (gameState.perks["completionist"] && gameState.perks["completionist"] !== "disabled") {
               tData.progress = 0;
               tData.progressFill.style.width = "0%";
             } else {
@@ -2291,7 +2889,7 @@ const CURRENT_GAME_VERSION = "v0.02";
           }
         }
         if (task.count >= task.maxReps && gameState.knowledgeUnlocked && usedSkills.some(s => knowledgeSkills.includes(s))) {
-          gameState.knowledge += zone.id;
+          gameState.knowledge += zone.id * gameState.delusionEnjoyerMultiplier;
           showKnowledgeIfUnlocked();
         }
         if (task.count >= task.maxReps && task.boss_image) {
@@ -2299,7 +2897,7 @@ const CURRENT_GAME_VERSION = "v0.02";
             gameState.powerUnlocked = true;
             showPowerModal();
           }
-          gameState.power += (zone.id - 3);
+          gameState.power += (zone.id - 3) * gameState.powerGainMultiplier;
           showPowerIfUnlocked();
         }
         if (task.perk && !gameState.perks[task.perk] && task.count >= task.maxReps) {
@@ -2331,7 +2929,8 @@ const CURRENT_GAME_VERSION = "v0.02";
         }
         // If the task is a Prestige task and it’s now fully completed, show the prestige modal.
         if (task.type === "Prestige" && task.count >= task.maxReps) {
-          showPrestigeModal();
+          gameState.prestigeAvailable = true;
+          showSerenityUnlockedModal();
         }
         updateTasksHoverInfo();
       }
@@ -2350,17 +2949,23 @@ const CURRENT_GAME_VERSION = "v0.02";
       zoneImage.src = newSrc;
     }
 
-    // If autoRun is on, start new tasks if there are available task slots.
     if (gameState.autoRun) {
       const maxSlots = gameState.perks["double_timer"] ? 2 : 1;
-      // Continue starting tasks until the number of active tasks reaches maxSlots.
-      while (currentTasks.filter(t => !t.paused).length < maxSlots) {
+      if (currentTasks.filter(t => !t.paused).length < maxSlots) {
         let taskStarted = false;
         const zone = zones[currentZoneIndex];
-    
-        // First, try to start non-Travel tasks.
+        
+        // Try to start a non‑Travel task that is automation enabled.
         for (let idx = 0; idx < zone.tasks.length; idx++) {
           const task = zone.tasks[idx];
+          const key = `${currentZoneIndex}-${idx}`;
+          // If no override exists, default it to true.
+          if (gameState.automationOverrides[key] === undefined) {
+            gameState.automationOverrides[key] = true;
+          }
+          // Skip tasks that are explicitly disabled.
+          if (gameState.automationOverrides[key] === false) continue;
+          
           if (task.type !== "Travel" &&
               task.count < task.maxReps &&
               !currentTasks.some(t => t.zoneIndex === currentZoneIndex && t.taskIndex === idx)) {
@@ -2378,85 +2983,47 @@ const CURRENT_GAME_VERSION = "v0.02";
           }
         }
         
-        // If no non-Travel task was started, then try to start a Travel task.
+        // If no non‑Travel task was started and all non‑Travel and mandatory tasks are complete,
+        // then try to start a Travel task.
         if (!taskStarted) {
-          for (let idx = 0; idx < zone.tasks.length; idx++) {
-            const task = zone.tasks[idx];
-            if (task.type === "Travel" &&
-                task.count < task.maxReps &&
-                !currentTasks.some(t => t.zoneIndex === currentZoneIndex && t.taskIndex === idx)) {
-              const taskDiv = document.querySelector(`.task[data-zone-index="${currentZoneIndex}"][data-task-index="${idx}"]`);
-              if (taskDiv) {
-                const btn = taskDiv.querySelector("button");
-                const progressFill = taskDiv.querySelector(".current-progress-fill");
-                const repContainer = taskDiv.querySelector(".rep-container");
-                if (btn && progressFill && repContainer) {
-                  startTask(currentZoneIndex, idx, btn, progressFill, repContainer);
-                  taskStarted = true;
-                  break;
+          const nonTravelTasks = zone.tasks.filter((task, idx) =>
+            task.type !== "Travel" &&
+            (gameState.automationOverrides[`${currentZoneIndex}-${idx}`] !== false)
+          );
+          const allNonTravelCompleted = nonTravelTasks.every(task => task.count >= task.maxReps);
+          const mandatoryTasks = zone.tasks.filter(task => task.mandatory);
+          const allMandatoryCompleted = mandatoryTasks.every(task => task.count >= task.maxReps);
+          
+          if (allNonTravelCompleted && allMandatoryCompleted) {
+            for (let idx = 0; idx < zone.tasks.length; idx++) {
+              const task = zone.tasks[idx];
+              const key = `${currentZoneIndex}-${idx}`;
+              if (task.type === "Travel" &&
+                  task.count < task.maxReps &&
+                  (gameState.automationOverrides[key] !== false) &&
+                  !currentTasks.some(t => t.zoneIndex === currentZoneIndex && t.taskIndex === idx)) {
+                const taskDiv = document.querySelector(`.task[data-zone-index="${currentZoneIndex}"][data-task-index="${idx}"]`);
+                if (taskDiv) {
+                  const btn = taskDiv.querySelector("button");
+                  const progressFill = taskDiv.querySelector(".current-progress-fill");
+                  const repContainer = taskDiv.querySelector(".rep-container");
+                  if (btn && progressFill && repContainer) {
+                    startTask(currentZoneIndex, idx, btn, progressFill, repContainer);
+                    taskStarted = true;
+                    break;
+                  }
                 }
               }
             }
           }
         }
-        
-        // If no task could be started, exit the loop.
-        if (!taskStarted) break;
       }
     }
-
-    // Auto Repeat Last Path handling
-    if (autoPathRepeatActive) {
-      const maxSlots = gameState.perks["double_timer"] ? 2 : 1;
-      if (currentTasks.filter(t => !t.paused).length < maxSlots) {
-        // Find an eligible task in the autoPathRepeatQueue:
-        const nextTaskIndex = autoPathRepeatQueue.findIndex(t => {
-          // Check if the task is already running.
-          const isRunning = currentTasks.some(ct => ct.zoneIndex === t.zoneIndex && ct.taskIndex === t.taskIndex);
-          // Retrieve the task object.
-          const taskObj = zones[t.zoneIndex].tasks[t.taskIndex];
-          // Eligible if not running and not fully repeated.
-          return !isRunning && taskObj.count < taskObj.maxReps;
-        });
-        if (nextTaskIndex >= 0) {
-          // Remove the found task from the queue.
-          const nextTask = autoPathRepeatQueue.splice(nextTaskIndex, 1)[0];
-          // If the zone differs, update currentZoneIndex and re-display zone.
-          if (nextTask.zoneIndex !== currentZoneIndex) {
-            currentZoneIndex = nextTask.zoneIndex;
-            displayZone();
-          }
-          // Find the corresponding DOM elements.
-          const taskDiv = document.querySelector(`.task[data-zone-index="${nextTask.zoneIndex}"][data-task-index="${nextTask.taskIndex}"]`);
-          if (taskDiv) {
-            const btn = taskDiv.querySelector("button");
-            const progressFill = taskDiv.querySelector(".current-progress-fill");
-            const repContainer = taskDiv.querySelector(".rep-container");
-            if (btn && progressFill && repContainer) {
-              startTask(nextTask.zoneIndex, nextTask.taskIndex, btn, progressFill, repContainer);
-            }
-          }
-          // After starting, if the task is still incomplete, re-add it to the end of the queue.
-          const taskObj = zones[nextTask.zoneIndex].tasks[nextTask.taskIndex];
-          if (taskObj.count < taskObj.maxReps) {
-            autoPathRepeatQueue.push(nextTask);
-          }
-        } else {
-          // No eligible task found: disable auto–repeat.
-          autoPathRepeatActive = false;
-          const repeatBtn = document.getElementById("repeatPathBtn");
-          if (repeatBtn) repeatBtn.classList.remove("active");
-          showMessage("Repeat Last Path complete.");
-        }
-      }
-    }
-
-
-
+    
     
     saveGameProgress();
   }
-  setInterval(gameLoop, tickDuration);
+  setInterval(gameLoop, runTickDuration);
 
   /****************************************
    * INIT
@@ -2469,6 +3036,7 @@ const CURRENT_GAME_VERSION = "v0.02";
     if (kUpg) kUpg.parentElement.style.display = "none";
 
     loadGameProgress();
+    applySerenityUpgrades();
     gatherAllPerks();
     renderPerks();
     applyPerks();
@@ -2480,22 +3048,13 @@ const CURRENT_GAME_VERSION = "v0.02";
     if (gameState.delusionUnlocked) {
       showDelusionBar();
     }
-
-    //REMOVE: temp fix for omniscience xpFactor to not require full restart
-    gameState.skills.omniscience.xpGainFactor = 1;
-    gameState.soundEnabled = gameState.soundEnabled ?? true;
-    gameState.musicEnabled = gameState.musicEnabled ?? true;
-    gameState.soundVolume = gameState.soundVolume ?? 0.5;
-    gameState.numCelestialBlossoms = gameState.numCelestialBlossoms ?? 0;
-    gameState.current_path = gameState.current_path ?? [];
-    gameState.last_path = gameState.last_path ?? [];
-    gameState.resourcesUsed = gameState.resourcesUsed ?? {};
     
     updateSkillMultipliers();
     updateSkillDisplay();
     renderResources();
     updatePerksCount();
     displayZone();
+    initializeSerenityUpgrades();
 
     // Version check
     if (gameState.gameVersion !== CURRENT_GAME_VERSION) {
@@ -2524,5 +3083,6 @@ const CURRENT_GAME_VERSION = "v0.02";
   window.getGameState = () => gameState;
   window.getXpScale = () => xpScale;
   window.setXpScale = (newScale) => xpScale = newScale;
-  window.showPrestigeModal = () => showPrestigeModal();
+  window.showSerenityUnlockedModal = () => showSerenityUnlockedModal();
+  window.displayZone = () => displayZone();
 })();

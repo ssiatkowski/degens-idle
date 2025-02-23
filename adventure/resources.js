@@ -1,3 +1,5 @@
+const isMobile = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+
 const perkDescriptions = {
     brewmaster:             "Alchemy is 25% faster.",
     healthy_living:         "Reduce all energy drain by 25%.",
@@ -6,20 +8,20 @@ const perkDescriptions = {
     self_operating_gadget:  "Unlock ability to automate zones after fully completing 10 times.",
     double_timer:           "Allows running two tasks simultaneously.",
     noob_haxor:             "Reduce Hacking energy drain by 10%.",
-    energetic_bliss:        "Doubles progress while energy is above 80%.",
+    energetic_bliss:        "While energy is above 80%, task progress is doubled.",
     workaholic:             "All XP gains increased by 50%.",
     kung_fu_zen:            "All XP gains increased by 25%.<br>And decrease Charisma energy drain by 25%.",
     copium_reactor:         "Triple starting Energy gained for each Copium reset.",
     gacha_machine:          "25% chance to produce double resources.",
     futuristic_wrench:      "Mechanics drains 3x less energy.",
-    luck_of_the_irish:      "1% chance to produce 77x resources.",
-    simulation_engine:      "Adds automation option to repeat previous run.<br>Remembers last path that ended with energy reset.",
+    luck_of_the_irish:      "7% chance to produce 7x resources.",
+    simulation_engine:      `Improves automation to allow selecting individual tasks.<br>${isMobile ? "Long press a task to toggle automation." : "Right click a task to toggle automation."}`,
     rex:                    "25x increased charisma XP gain.",
     copious_alchemist:      "Reduce Copium gain by 50%.",
     hoverboard:             "Increase travel speed by 200%.",
     reinforcement_learning: "5x increased AI Mastery XP gain.",
     immunity_device:        "Reduce minimum energy drain by 75%.",
-    quantum_vitalizer:      "Get Zone/10 starting Energy for each Energy reset.",
+    quantum_vitalizer:      "Get Zone / 10 starting Energy for each Energy reset.<br>Ex: energy reset on zone 8 gives +0.8 starting energy.",
     knowledge_preserver:    "Reduce Knowledge loss on copium reset by 80%.",
     neural_matrix:          "Reduce Quantum energy drain by 40%.",
     sandstorm:              "Reduce all skill XP scaling from 2% to 1.9%.",
@@ -33,6 +35,8 @@ const perkDescriptions = {
     inspired_glow:          "Serenity Gain on Prestige increased by 25%.<br>(not implemented yet)", //TODO: implement
     quantum_harmony:        "(not implemented yet)", //TODO: implement
   };
+
+const toggleablePerks = ["completionist", "copious_alchemist", "master_of_ai", "mechanical_genius"];
 
 /****************************************
  * RESOURCE ACTIONS & RENDERING
@@ -207,18 +211,18 @@ const resourceActions = {
       for (let i = 0; i < amt; i++) {
         const randVal = Math.random();
         if (randVal > 0.6667) {
-          gameState.copium = Math.max(gameState.copium - 1500, 0);
+          gameState.copium = Math.max(gameState.copium - 1000, 0);
           updateCopiumDisplay();
         } else if (randVal > 0.3333){
-          gameState.delusion = Math.max(gameState.delusion - 1500, 0);
+          gameState.delusion = Math.max(gameState.delusion - 1000, 0);
           updateDelusionDisplay();
         } else {
-          gameState.energy += 300;
+          gameState.energy += 100;
           updateEnergyDisplay();
         }
       }
     },
-    tooltip: "At random, either gain 300 Energy,<br>or reduce Copium by 1500<br>or reduce Delusion by 1500."
+    tooltip: "At random, either gain 100 Energy,<br>or reduce Copium by 1000<br>or reduce Delusion by 1000."
   },
   "saiyan_armor": {
     onConsume: (gameState, amt) => {
@@ -270,7 +274,7 @@ const resourceActions = {
   "infinity_gauntlet": {
     onConsume: (gameState, amt) => {
       Object.keys(gameState.resources).forEach(resource => {
-        if (gameState.resources[resource] > 0) {
+        if (gameState.resources[resource] > 0 && resource !== "infinity_gauntlet") {
           addResource(resource, amt);
         }
       });
@@ -312,4 +316,72 @@ const resourceActions = {
     },
     tooltip: "Not implemented yet."
   },
+};
+
+const EXCLUDED_AUTO_RESOURCES = new Set(["cybernetic_armor", "infinity_gauntlet"]);
+
+const SERENITY_UPGRADES = {
+  unlockables: {
+    "Discover Serenity": {
+      "Always a Workaholic": { 
+        cost: 1,
+        description: "On Prestige, start with workaholic unlocked."
+      },
+      "Delusion Enjoyer": {
+        cost: 10,
+        description: "Multiply Knowledge gain by percentage equal to current level of Delusion (min 100%)."
+      },
+      "Resource Consumer": { 
+        cost: 100,
+        description: "Adds toggle for auto consuming resources.<br>Only consumes resources that affect whole run."
+      },
+      "Instant Simulation": { 
+        cost: 1000,
+        description: "On Prestige, start with Simulation Engine unlocked<br>and all zones ready at 10 Full Clears."
+      }
+    },
+
+    "Embrace Stillness (not available yet)": {
+    },
+    "Transcend Chaos (not available yet)": {
+    },
+    "Attain Equilibrium (not available yet)": {
+    },
+    "Become the Void (not available yet)": {
+    }
+  },
+
+  infinite: {
+    "Discover Serenity": {
+      "Wisdom Seeker": { 
+        initialCost: 1, 
+        scaling: 1.2,
+        description: "Increase all XP gains by 50% (additively)."
+      },
+      "Entropy Shield": { 
+        initialCost: 1, 
+        scaling: 2,
+        description: "Reduce minimum energy drain by 2% (multiplicatively).<br>This affects tasks that are completed instantly."
+      },
+      "Resource Saver": { 
+        initialCost: 1,
+        scaling: 1.1,
+        description: "On Copium reset, keep one random random resource per level."
+      },
+      "Power Doubler": {
+        initialCost: 2,
+        scaling: 5,
+        description: "Multiply power gained from defeating bosses by 2x (multiplicatively)."
+      }
+    },
+
+    "Embrace Stillness": {
+    },
+    "Transcend Chaos": {
+    },
+    "Attain Equilibrium": {
+    },
+    "Become the Void": {
+    }
+  }
 };

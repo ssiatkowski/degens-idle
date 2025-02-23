@@ -7,9 +7,9 @@ var zones = [
     name: "Beginner’s Bootcamp",
     img: "images/zones/zone1.jpg",
     tasks: [
-      { id: 11, name: "Travel: Exit Bootcamp", type: "Travel", maxReps: 1, count: 0, baseTime: 1e4, description: "Leave bootcamp and begin your journey.<br><br>The blue border indicates that travel to the next zone.", skills: ["travel"] },
-      { id: 12, name: "Combined Assembly Drill", type: "Training", maxReps: 1, count: 0, baseTime: 3e4, description: "A challenging drill combining physical<br>stamina and careful assembly.<br><br>The orange border indicates that this task is<br>mandatory to progress to next zone.", skills: ["endurance", "tinkering"], mandatory: true },
-      { id: 13, name: "Small Talk Practice", type: "Training", maxReps: 4, count: 0, baseTime: 3e3, description: "Polish your social skills with casual chat.<br><br>The orange border indicates that this task is<br>mandatory to progress to next zone.", skills: ["charisma"], mandatory: true },
+      { id: 11, name: "Travel: Exit Bootcamp", type: "Travel", maxReps: 1, count: 0, baseTime: 1e4, description: "Leave bootcamp and begin your journey.<br><br>The dark green button indicates travel to the next zone.", skills: ["travel"] },
+      { id: 12, name: "Combined Assembly Drill", type: "Training", maxReps: 1, count: 0, baseTime: 3e4, description: "A challenging drill combining physical<br>stamina and careful assembly.<br><br>The orange button indicates that this task is<br>mandatory to progress to next zone.", skills: ["endurance", "tinkering"], mandatory: true },
+      { id: 13, name: "Small Talk Practice", type: "Training", maxReps: 4, count: 0, baseTime: 3e3, description: "Polish your social skills with casual chat.<br><br>The orange button indicates that this task is<br>mandatory to progress to next zone.", skills: ["charisma"], mandatory: true },
       { id: 14, name: "Warm-Up Jog in Place", type: "Training", maxReps: 7, count: 0, baseTime: 6e3, description: "Boost your stamina with a simple jog.", skills: ["endurance"] },
       { id: 15, name: "Assemble a Clockwork Toy", type: "Training", maxReps: 5, count: 0, baseTime: 6e3, description: "Practice assembling basic mechanisms.", skills: ["tinkering"] },
       { id: 16, name: "Practice Mirror Warmup", type: "Training", maxReps: 2, count: 0, baseTime: 9e3, description: "Engage in a friendly conversation with a mirror.", skills: ["charisma"] },
@@ -183,9 +183,9 @@ var zones = [
     name: "Shattered Expanse",
     img: "images/zones/zone13.jpg",
     tasks: [
-      { id: 131, name: "Travel: Journey to Ascendant Metropolis", type: "Travel", maxReps: 1, count: 0, baseTime: 8e8, description: "Approach a dazzling metropolis of the future.", skills: ["travel"] },
+      { id: 131, name: "Travel: Journey to Ascendant Metropolis", type: "Travel", maxReps: 1, count: 0, baseTime: 7e8, description: "Approach a dazzling metropolis of the future.", skills: ["travel"] },
       { id: 132, name: "Beg for Ascension", type: "Training", maxReps: 3, count: 0, baseTime: 1e19, description: "Convince ascended beings to let you access their metropolis.", skills: ["intellect", "negotiation"], mandatory: true },
-      { id: 133, name: "Guerrilla Warfare Sandstorm Sprint", type: "Training", maxReps: 4, count: 0, baseTime: 9e16, description: "Sprint through a raging sandstorm.", skills: ["endurance", "combat"], perk: "sandstorm" },
+      { id: 133, name: "Sandstorm: Guerrilla Warfare Sprint", type: "Training", maxReps: 4, count: 0, baseTime: 9e16, description: "Sprint through a raging sandstorm.", skills: ["endurance", "combat"], perk: "sandstorm" },
       { id: 134, name: "Outpost Infiltration Silent Breach", type: "Training", maxReps: 5, count: 0, baseTime: 1e16, description: "Breach an enemy outpost undetected.", skills: ["hacking", "endurance"] },
       { id: 135, name: "Produce Augment Fuel", type: "Training", maxReps: 4, count: 0, baseTime: 1e18, description: "Synethesize some augment fuel.", skills: ["cybernetics", "mechanics"], resources: ["augment_fuel"] },
       { id: 136, name: "Wise Mechanic: Knowledge Expansion", type: "Training", maxReps: 1, count: 0, baseTime: 1e22, description: "Expand your knowledge of mechanics.", skills: ["tinkering", "intellect", "mechanics"], perk: "wise_mechanic" },
@@ -200,7 +200,7 @@ var zones = [
       { id: 141, name: "Travel: Ascend to Nexus of Infinity", type: "Travel", maxReps: 1, count: 0, baseTime: 2e9, description: "Conquer the Nexus of Infinity.", skills: ["travel"] },
       { id: 142, name: "City Grid Optimization Neural Sync", type: "Training", maxReps: 5, count: 0, baseTime: 1e16, description: "Optimize urban networks with quantum precision.", skills: ["quantum", "intellect"], mandatory: true },
       { id: 143, name: "Corporate Espionage Information Heist", type: "Training", maxReps: 2, count: 0, baseTime: 3e17, description: "Steal confidential data using your omniscient insight.", skills: ["negotiation", "hacking"], mandatory: true },
-      { id: 144, name: "Urban Warfare Digital Onslaught", type: "Training", maxReps: 10, count: 0, baseTime: 1e16, description: "Engage in a fast-paced digital battle.", skills: ["combat", "aiMastery"], perk: "urban_warfare" },
+      { id: 144, name: "Urban Warfare: Digital Onslaught", type: "Training", maxReps: 10, count: 0, baseTime: 1e16, description: "Engage in a fast-paced digital battle.", skills: ["combat", "aiMastery"], perk: "urban_warfare" },
       { id: 145, name: "Prepare Hoverboard Fuel", type: "Training", maxReps: 16, count: 0, baseTime: 1e20, description: "Synthesize some fuel for your hoverboard.", skills: ["tinkering", "alchemy"], resources: ["hoverboard_fuel"] },
       { id: 146, name: "Cryto Wallet: Find on Street", type: "Training", maxReps: 1, count: 0, baseTime: 1e12, description: "Find a lost crypto wallet.", skills: ["perception"], perk: "crypto_wallet" },
       { id: 147, name: "Challenge Big Brother", type: "Training", maxReps: 1, count: 0, baseTime: 1e13, description: "Challenge Big Brother.", skills: ["combat"], boss_image: "images/bosses/big_brother.jpg", drainMult: 55, resources: ["surveillance_core"], sound: bigBrotherSound }
@@ -225,7 +225,7 @@ var zones = [
     name: "The Garden",
     img: "images/zones/zone16.jpg",
     tasks: [
-      { id: 161, name: "Travel: Journey to Nebular Nexus", type: "Travel", maxReps: 1, count: 0, baseTime: 1e11, description: "Leave The Garden behind and step into cosmic wonder.", skills: ["travel"] },
+      { id: 161, name: "Travel: Journey to Nebular Nexus", type: "Travel", maxReps: 1, count: 0, baseTime: 3e10, description: "Leave The Garden behind and step into cosmic wonder.", skills: ["travel"] },
       { id: 162, name: "Plant the Seeds of Creation", type: "Training", maxReps: 10, count: 0, baseTime: 1.1e23, description: "Sow the first seeds in fertile soil.", skills: ["alchemy", "intellect"], mandatory: true },
       { id: 163, name: "Nurture the Cosmic Flora", type: "Training", maxReps: 1, count: 0, baseTime: 4e16, description: "Cultivate the garden with care and vigor.", skills: ["tinkering"], mandatory: true },
       { id: 164, name: "Mechanical Genius: Radiodynamic Gardening", type: "Training", maxReps: 4, count: 0, baseTime: 2e17, description: "Harness the power of mechanical gardening.", skills: ["mechanics"], perk: "mechanical_genius" },
@@ -240,7 +240,7 @@ var zones = [
     name: "Nebular Nexus",
     img: "images/zones/zone17.jpg",
     tasks: [
-      { id: 171, name: "Travel: Journey to Quantum Abyss", type: "Travel", maxReps: 1, count: 0, baseTime: 2e11, description: "Depart the Nebular Nexus and approach the realm of probabilities.", skills: ["travel"] },
+      { id: 171, name: "Travel: Journey to Quantum Abyss", type: "Travel", maxReps: 1, count: 0, baseTime: 1e11, description: "Depart the Nebular Nexus and approach the realm of probabilities.", skills: ["travel"] },
       { id: 172, name: "Map the Celestial Grid", type: "Training", maxReps: 10, count: 0, baseTime: 1.5e23, description: "Chart the intricate network of nebular pathways.", skills: ["intellect", "perception"], mandatory: true },
       { id: 173, name: "Align the Nebula Currents", type: "Training", maxReps: 1, count: 0, baseTime: 4e17, description: "Adjust the flow of cosmic energies to create balance.", skills: ["intellect"], mandatory: true },
       { id: 174, name: "Collect Stardust Samples", type: "Training", maxReps: 2, count: 0, baseTime: 1e24, description: "Gather sparkling particles scattered across the void.", skills: ["alchemy", "perception"], resources: ["stardust"] },
@@ -254,7 +254,7 @@ var zones = [
     name: "Quantum Abyss",
     img: "images/zones/zone18.jpg",
     tasks: [
-      { id: 181, name: "Travel: Warp to Cybernetic Olympus", type: "Travel", maxReps: 1, count: 0, baseTime: 1e12, description: "Bend the fabric of space-time as you leave the abyss.", skills: ["travel"] },
+      { id: 181, name: "Travel: Warp to Cybernetic Olympus", type: "Travel", maxReps: 1, count: 0, baseTime: 3e11, description: "Bend the fabric of space-time as you leave the abyss.", skills: ["travel"] },
       { id: 182, name: "Embrace Quantum Uncertainty", type: "Training", maxReps: 2, count: 0, baseTime: 1e17, description: "Dive into the realm of probabilistic wonders.", skills: ["quantum"], mandatory: true },
       { id: 183, name: "Stabilize the Particle Field", type: "Training", maxReps: 10, count: 0, baseTime: 1.2e22, description: "Harness subatomic forces with precise adjustments.", skills: ["tinkering", "quantum"], mandatory: true },
       { id: 184, name: "Collect Quantum Residue", type: "Training", maxReps: 7, count: 0, baseTime: 1.3e22, description: "Retrieve fleeting particles left in the void.", skills: ["alchemy", "quantum"], resources: ["quantum_residue"] },

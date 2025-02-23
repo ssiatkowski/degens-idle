@@ -788,7 +788,7 @@ const loveHallSkills = [
     name: "Overwhelming Mercy",
     cost: 13,
     description:
-      "Spare opponents who are far weaker than you and auto unlock the upgrades.",
+      "Spare opponents who are far weaker than you. (Automate Battles)",
     unlocked: false,
     level: "Dimensional Shift (27x)",
     pair: 30,
