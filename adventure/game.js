@@ -3035,6 +3035,12 @@ const CURRENT_GAME_VERSION = "v0.2";
     const kUpg = document.getElementById("knowledgeUpgValue");
     if (kUpg) kUpg.parentElement.style.display = "none";
 
+    
+    //TODO: remove - fixed for missing variables
+    gameState.serenityUnlockables = gameState.serenityUnlockables || {};
+    gameState.serenityInfinite = gameState.serenityInfinite || {};
+
+
     loadGameProgress();
     applySerenityUpgrades();
     gatherAllPerks();
@@ -3056,10 +3062,6 @@ const CURRENT_GAME_VERSION = "v0.2";
     displayZone();
     initializeSerenityUpgrades();
 
-    //TODO: remove - fixed for missing variables
-    gameState.serenityUnlockables = gameState.serenityUnlockables || {};
-    gameState.serenityInfinite = gameState.serenityInfinite || {};
-
     // Version check
     if (gameState.gameVersion !== CURRENT_GAME_VERSION) {
       const banner = document.getElementById("versionBanner");
@@ -3070,10 +3072,6 @@ const CURRENT_GAME_VERSION = "v0.2";
       }
     }
   });
-
-  //TODO: remove - fixed for missing variables
-  gameState.serenityUnlockables = gameState.serenityUnlockables || {};
-  gameState.serenityInfinite = gameState.serenityInfinite || {};
 
   // Expose functions for perks_and_resources.js
   window.updateSkillMultipliers = updateSkillMultipliers;
