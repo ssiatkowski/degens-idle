@@ -3035,13 +3035,12 @@ const CURRENT_GAME_VERSION = "v0.2";
     const kUpg = document.getElementById("knowledgeUpgValue");
     if (kUpg) kUpg.parentElement.style.display = "none";
 
+    loadGameProgress();
     
     //TODO: remove - fixed for missing variables
     gameState.serenityUnlockables = gameState.serenityUnlockables || {};
     gameState.serenityInfinite = gameState.serenityInfinite || {};
 
-
-    loadGameProgress();
     applySerenityUpgrades();
     gatherAllPerks();
     renderPerks();
