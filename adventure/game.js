@@ -2635,7 +2635,7 @@ const CURRENT_GAME_VERSION = "v0.2";
   }
 
   function processCheatCode(code) {
-    if (code === "BetterStart" && gameState.serenity !== 0) {
+    if (code === "BetterStart" && gameState.serenity === 0) {
       gameState.skills["endurance"].level = Math.max(gameState.skills["endurance"].level, 250);
       gameState.skills["tinkering"].level = Math.max(gameState.skills["tinkering"].level, 200);
       gameState.skills["charisma"].level = Math.max(gameState.skills["charisma"].level, 250);
@@ -2647,7 +2647,7 @@ const CURRENT_GAME_VERSION = "v0.2";
       renderSkills();
       updateSkillDisplay();
       updateTasksHoverInfo();
-    } else if (code === "WhatAboutOtherSkills" && gameState.serenity !== 0) {
+    } else if (code === "WhatAboutOtherSkills" && gameState.serenity === 0) {
       gameState.skills["endurance"].level = Math.max(gameState.skills["endurance"].level, 250);
       gameState.skills["tinkering"].level = Math.max(gameState.skills["tinkering"].level, 200);
       gameState.skills["charisma"].level = Math.max(gameState.skills["charisma"].level, 250);
