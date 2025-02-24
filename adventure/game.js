@@ -630,7 +630,7 @@ const CURRENT_GAME_VERSION = "v0.2";
       if (levelSpan) levelSpan.textContent = formatNumber(sData.level);
       let baseMult = Math.pow(1.01, sData.level - 1);
       if (sName === "alchemy" && gameState.perks.brewmaster) baseMult *= 1.25;
-      if (sName === "travel" && gameState.perks.hoverboard) baseMult *= 3;
+      if (sName === "travel" && gameState.perks.hoverboard) baseMult *= 3.5;
       baseMult *= (sData.progressBoost);
       let baseDrain = sData.energyDrain / (sData.drainBoost || 1);
       if (sName === "hacking" && gameState.perks.noob_haxor) baseDrain *= 0.9;
@@ -764,7 +764,7 @@ const CURRENT_GAME_VERSION = "v0.2";
         baseMult *= 1.25;
       }
       if (sName === "travel" && gameState.perks["hoverboard"]) {
-        baseMult *= 3;
+        baseMult *= 3.5;
       }
       if (gameState.powerUnlocked && powerSkills.includes(sName)) {
         baseMult *= (1 + (gameState.perks.urban_warfare ? 0.03 : 0.01) * gameState.power);
@@ -863,6 +863,9 @@ const CURRENT_GAME_VERSION = "v0.2";
       gameState.highestCompletedZone = 0;
       gameState.resetsForHighestZone = 1e100;
       gameState.zoneFullCompletes = {};
+      if (!gameState.serenityUnlockables["Instant Simulation"]) {
+        gameState.automationOverrides = {};
+      }
       applySerenityUpgrades();
     } else if (reason === "contentComplete") {
       gameState.resources = {};
@@ -1180,7 +1183,7 @@ const CURRENT_GAME_VERSION = "v0.2";
         // Update the button’s appearance based on the override:
         updateTaskAutomationUI(btn, key);
         
-        // For mobile: long-press (0.8s) toggles automation.
+        // For mobile: long-press (1s) toggles automation.
         let longPressTriggered = false;
         let touchTimeout;
         btn.addEventListener("touchstart", (e) => {
@@ -1188,7 +1191,7 @@ const CURRENT_GAME_VERSION = "v0.2";
           touchTimeout = setTimeout(() => {
             longPressTriggered = true;
             toggleTaskAutomation(key, btn, task);
-          }, 800);
+          }, 1000);
         });
         btn.addEventListener("touchend", (e) => {
           clearTimeout(touchTimeout);
@@ -1447,7 +1450,7 @@ const CURRENT_GAME_VERSION = "v0.2";
           
           if (gainedXP < xpNeeded) {
             // Calculate percentage of level gained
-            let percentage = (gainedXP / xpNeeded) * 100;
+            let percentage = (gainedXP / required) * 100;
             if (percentage < 0.01) {
               levelText += `<br>${formatStringForDisplay(sName)}: <0.01% of a level`;
             } else {
@@ -1466,7 +1469,7 @@ const CURRENT_GAME_VERSION = "v0.2";
               simLevel++;
               simXP = 0;
             }
-            levelText += `<br>${formatStringForDisplay(sName)}: +${levelsGained} level${levelsGained == 1 ? "" : "s"}`;
+            levelText += `<br>${formatStringForDisplay(sName)}: <span style="color:rgb(${Math.max(128 - levelsGained * 10, 0)}, ${Math.min(128 + levelsGained * 10, 255)}, ${Math.min(128 + levelsGained * 10, 255)})">+${levelsGained} level${levelsGained == 1 ? "" : "s"}</span>`;
           }
         }
       });
@@ -1491,11 +1494,12 @@ const CURRENT_GAME_VERSION = "v0.2";
       if (gameState.delusionUnlocked && usedSkills.some(s => delusionSkills.includes(s))) {
         extraInfo += `<br><br><span style="color:#9b59b6">Delusion Gain per Task: 0 - ${formatNumber(zone.id * 100)} (random, skewed to low)</span>`;
       }
+
+      const energyColorOffset = (estimatedEnergy/gameState.energy) * 60;
       
       btn.setAttribute("data-tooltip", 
         task.description +
-        `<br><br><span style="color:gray">Estimated Energy Needed${task.maxReps > 1 ? " per task" : ""}: ` +
-        formatNumber(estimatedEnergy) +
+        `<br><br><span style="color:gray">Estimated Energy Needed${task.maxReps > 1 ? " per task" : ""}: <span style="color:rgb(${Math.min(128 +energyColorOffset, 255)}, ${Math.max(128 - energyColorOffset, 0)}, ${Math.max(128 - energyColorOffset, 0)})">${formatNumber(estimatedEnergy)}</span>` +
         `<br><br>Estimated Levels Gained per task:${levelText}</span>` +
         extraInfo
       );
@@ -2570,9 +2574,6 @@ const CURRENT_GAME_VERSION = "v0.2";
     });
   }
   
-  
-  
-  
 
   createSettingsButton();
 
@@ -2593,7 +2594,7 @@ const CURRENT_GAME_VERSION = "v0.2";
     if (kUpg) kUpg.parentElement.style.display = "none";
     const pUpg = document.getElementById("powerUpgValue");
     if (pUpg) pUpg.parentElement.style.display = "none";
-    const sUpg = document.getElementById("serenityUpgValue");
+    const sUpg = document.getElementById("serenityUpgDiv");
     if (sUpg) sUpg.parentElement.style.display = "none";
     displayZone();
     document.getElementById("versionBanner").style.display = "none";

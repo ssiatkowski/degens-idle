@@ -18,7 +18,7 @@ const perkDescriptions = {
     simulation_engine:      `Improves automation to allow selecting individual tasks.<br>${isMobile ? "Long press a task to toggle automation." : "Right click a task to toggle automation."}`,
     rex:                    "25x increased charisma XP gain.",
     copious_alchemist:      "Reduce Copium gain by 50%.",
-    hoverboard:             "Increase travel speed by 200%.",
+    hoverboard:             "Increase travel speed by 3.5x.",
     reinforcement_learning: "5x increased AI Mastery XP gain.",
     immunity_device:        "Reduce minimum energy drain by 75%.",
     quantum_vitalizer:      "Get Zone / 10 starting Energy for each Energy reset.<br>Ex: energy reset on zone 8 gives +0.8 starting energy.",
@@ -332,12 +332,12 @@ const SERENITY_UPGRADES = {
         description: "Multiply Knowledge gain by percentage equal to current level of Delusion (min 100%)."
       },
       "Resource Consumer": { 
-        cost: 100,
+        cost: 50,
         description: "Adds toggle for auto consuming resources.<br>Only consumes resources that affect whole run."
       },
       "Instant Simulation": { 
-        cost: 1000,
-        description: "On Prestige, start with Simulation Engine unlocked<br>and all zones ready at 10 Full Clears."
+        cost: 500,
+        description: "On Prestige, start with Simulation Engine unlocked,<br>all zones start at 10 Full Clears, and automation settings preserved."
       }
     },
 
@@ -364,8 +364,8 @@ const SERENITY_UPGRADES = {
         description: "Reduce minimum energy drain by 2% (multiplicatively).<br>This affects tasks that are completed instantly."
       },
       "Resource Saver": { 
-        initialCost: 1,
-        scaling: 1.1,
+        initialCost: 0.1,
+        scaling: 1.15,
         description: "On Copium reset, keep one random random resource per level."
       },
       "Power Doubler": {

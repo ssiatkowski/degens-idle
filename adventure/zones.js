@@ -56,7 +56,7 @@ var zones = [
       { id: 44, name: "Workaholic: Finance Bro Advice", type: "Training", maxReps: 1, count: 0, baseTime: 3e7, description: "Learn how workaholics function.", skills: ["endurance", "charisma", "perception"], perk: "workaholic" },
       { id: 45, name: "Crunch Financial Numbers", type: "Training", maxReps: 10, count: 0, baseTime: 8e4, description: "Analyze corporate data with intellect and mechanics.", skills: ["intellect", "mechanics"] },
       { id: 46, name: "Gacha Machine: Mechanics of Luck", type: "Training", maxReps: 1, count: 0, baseTime: 2e5, description: "Build a simple gacha machine.", skills: ["mechanics"], perk: "gacha_machine" },
-      { id: 47, name: "Battle Agent Smith", type: "Training", maxReps: 1, count: 0, baseTime: 2e8, description: "Take on this Matrix propagator. Might as well practice Combat.<br><br>This button is red - it's a boss fight.<br>Don't worry, you can move to next zone without it.", skills: ["combat"], boss_image: "images/bosses/agent_smith.jpg", resources: ["cool_sunglasses"], drainMult: 1.5, sound: agentSmithSound }
+      { id: 47, name: "Battle Agent Smith", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "Take on this Matrix propagator. Might as well practice Combat.<br><br>This button is red - it's a boss fight.<br>Don't worry, you can move to next zone without it.", skills: ["combat"], boss_image: "images/bosses/agent_smith.jpg", resources: ["cool_sunglasses"], drainMult: 1.5, sound: agentSmithSound }
     ]
   },
   {
@@ -72,7 +72,7 @@ var zones = [
       { id: 56, name: "Debug Digital Puzzle", type: "Training", maxReps: 2, count: 0, baseTime: 4e6, description: "Solve a digital puzzle using coding skills.", skills: ["hacking", "mechanics"] },
       { id: 57, name: "Double Timer: System Revamp", type: "Training", maxReps: 2, count: 0, baseTime: 5e8, description: "Revamp a digital system to double its efficiency.", skills: ["hacking", "tinkering", "intellect"], perk: "double_timer" },
       { id: 58, name: "Noob Haxor: Study the Basics", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "Study the basics of hacking.", skills: ["hacking", "perception"], perk: "noob_haxor" },
-      { id: 59, name: "Battle Shao Kahn", type: "Training", maxReps: 1, count: 0, baseTime: 1.5e8, description: "Some clown challenges you to mortal combat.", skills: ["combat"], boss_image: "images/bosses/shao_kahn.jpg", drainMult: 4, resources: ["shiny_helmet"], sound: shaoKahnSound }
+      { id: 59, name: "Battle Shao Kahn", type: "Training", maxReps: 1, count: 0, baseTime: 1.3e8, description: "Some clown challenges you to mortal combat.", skills: ["combat"], boss_image: "images/bosses/shao_kahn.jpg", drainMult: 4, resources: ["shiny_helmet"], sound: shaoKahnSound }
     ]
   },
   {
@@ -110,7 +110,7 @@ var zones = [
     name: "Rooftop Rendezvous",
     img: "images/zones/zone8.jpg",
     tasks: [
-      { id: 81, name: "Travel: Descend to Digital Underground", type: "Travel", maxReps: 1, count: 0, baseTime: 1e6, description: "Head back into the digital depths.", skills: ["travel"] },
+      { id: 81, name: "Travel: Descend to Digital Underground", type: "Travel", maxReps: 1, count: 0, baseTime: 9e5, description: "Head back into the digital depths.", skills: ["travel"] },
       { id: 82, name: "Tactics Broker a Deal", type: "Training", maxReps: 3, count: 0, baseTime: 5e5, description: "Hone your negotiation skills in high places.", skills: ["negotiation"], mandatory: true },
       { id: 83, name: "Cybernetic Potion", type: "Training", maxReps: 10, count: 0, baseTime: 1e8, description: "Create a cybernetic potion.", skills: ["alchemy", "cybernetics"], resources: ["cybernetic_potion"] },
       { id: 84, name: "Cybernetic Armor", type: "Training", maxReps: 1, count: 0, baseTime: 1e12, description: "Carefully craft a cybernetic armor.", skills: ["tinkering", "cybernetics"], resources: ["cybernetic_armor"] },
@@ -124,9 +124,9 @@ var zones = [
     name: "Digital Underground",
     img: "images/zones/zone9.jpg",
     tasks: [
-      { id: 91, name: "Travel: Emerge into Techno District", type: "Travel", maxReps: 1, count: 0, baseTime: 5e6, description: "Climb out to the bustling Techno District.", skills: ["travel"] },
+      { id: 91, name: "Travel: Emerge into Techno District", type: "Travel", maxReps: 1, count: 0, baseTime: 4e6, description: "Climb out to the bustling Techno District.", skills: ["travel"] },
       { id: 92, name: "Deep Data Dive Extract Encrypted Secrets", type: "Training", maxReps: 5, count: 0, baseTime: 1e9, description: "Extract and decode hidden data.", skills: ["aiMastery", "hacking"], mandatory: true },
-      { id: 93, name: "Read Advanced Alchemy Manual", type: "Training", maxReps: 1, count: 0, baseTime: 1e14, description: "Study advanced alchemical techniques.", skills: ["alchemy", "perception"], perk: "copious_alchemist", mandatory: true },
+      { id: 93, name: "Copius Alchemist: Advanced Manual", type: "Training", maxReps: 1, count: 0, baseTime: 1e14, description: "Study advanced alchemical techniques.", skills: ["alchemy", "perception"], perk: "copious_alchemist", mandatory: true },
       { id: 94, name: "Neural Net Optimize the System", type: "Training", maxReps: 10, count: 0, baseTime: 1e8, description: "Enhance and optimize neural networks.", skills: ["aiMastery", "intellect"] },
       { id: 95, name: "Virtual Simulated Skirmish", type: "Training", maxReps: 2, count: 0, baseTime: 3e8, description: "Engage in simulated digital battles.", skills: ["aiMastery", "combat"] },
       { id: 96, name: "Simulation Engine: Ultimate Feat of Engineering", type: "Training", maxReps: 1, count: 0, baseTime: 1e15, description: "Create the ultimate feat of engineering.", skills: ["tinkering", "cybernetics", "hacking"], perk: "simulation_engine" },
