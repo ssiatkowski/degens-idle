@@ -515,7 +515,7 @@ const SERENITY_UPGRADES = {
       },
       "Instant Simulation": { 
         cost: 50,
-        description: "On Prestige, start with Simulation Engine unlocked,<br>all zones start at 10 Full Clears, and automation settings preserved."
+        description: "On Prestige, start with Self Operating Gadget and Simulation Engine unlocked,<br>all zones start at 10 Full Clears, and automation settings preserved."
       }
     },
 
@@ -533,22 +533,22 @@ const SERENITY_UPGRADES = {
     "Discover Serenity": {
       "Wisdom Seeker": { 
         initialCost: 1, 
-        scaling: 1.15,
+        scaling: 1.12,
         description: "Increase all XP gains by 50% (additively)."
       },
       "Entropy Shield": { 
         initialCost: 1, 
-        scaling: 1.8,
+        scaling: 1.5,
         description: "Reduce minimum energy drain by 2% (multiplicatively).<br>This affects tasks that are completed instantly."
       },
       "Resource Saver": { 
         initialCost: 0.1,
-        scaling: 1.12,
+        scaling: 1.1,
         description: "On Copium reset, keep one random random resource per level."
       },
       "Power Doubler": {
         initialCost: 2,
-        scaling: 4,
+        scaling: 3,
         description: "Multiply power gained from defeating bosses by 2x (multiplicatively)."
       }
     },

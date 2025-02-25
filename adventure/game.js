@@ -885,7 +885,9 @@ const CURRENT_GAME_VERSION = "v0.2";
       gameState.resetsForBestZone = 1e100;
       gameState.zoneFullCompletes = {};
       if (!gameState.serenityUnlockables["Instant Simulation"]) {
-        gameState.automationOverrides = {};
+        Object.keys(gameState.automationOverrides).forEach(key => {
+          gameState.automationOverrides[key] = true;
+        });
       }
       applySerenityUpgrades();
     } else if (reason === "contentComplete") {
@@ -1072,6 +1074,7 @@ const CURRENT_GAME_VERSION = "v0.2";
       if (task.boss_image) {
         document.getElementById("zoneImage").src = task.boss_image;
         if (gameState.soundEnabled && !gameState.autoRun) task.sound.play();
+        else if (!gameState.autoRun && zoneIndex < 9) showMessage("Sound Effects are recommended for boss fights. Just for fun!");
       }
     }
   }
@@ -1199,7 +1202,7 @@ const CURRENT_GAME_VERSION = "v0.2";
         const key = `${currentZoneIndex}-${idx}`;
         // Ensure a default value is set if none exists:
         if (gameState.automationOverrides[key] === undefined) {
-          gameState.automationOverrides[key] = false;
+          gameState.automationOverrides[key] = true;
         }
         // Update the button’s appearance based on the override:
         updateTaskAutomationUI(btn, key);
@@ -1357,7 +1360,6 @@ const CURRENT_GAME_VERSION = "v0.2";
     gameState.automationOverrides[key] = !gameState.automationOverrides[key];
     updateTaskAutomationUI(btn, key);
     showMessage(`Automation ${gameState.automationOverrides[key] ? "enabled" : "disabled"} for ${task.name}`);
-    saveGameProgress();
   }
   
 
@@ -1507,23 +1509,43 @@ const CURRENT_GAME_VERSION = "v0.2";
           copiumGain *= 0.4;
         }
         copiumGain = Math.max(copiumGain - gameState.numCelestialBlossoms, 0);
-        extraInfo += `<br><br><span style="color:#dbd834">Copium Gain per Task: ${formatNumber(copiumGain)}</span>`;
+        extraInfo += `<br><br><span style="color:#dbd834">Copium Gain for next Task: ${formatNumber(copiumGain)}</span>`;
       }
       if (gameState.powerUnlocked && task.boss_image) {
         extraInfo += `<br><br><span style="color:rgb(222, 34, 191)">Power Gain on Completion: ${formatNumber((zone.id - 3) * gameState.powerGainMultiplier)}</span>`;
       }
       if (gameState.delusionUnlocked && usedSkills.some(s => delusionSkills.includes(s))) {
-        extraInfo += `<br><br><span style="color:#9b59b6">Delusion Gain per Task: 0 - ${formatNumber(zone.id * 100)} (random, skewed to low)</span>`;
+        extraInfo += `<br><br><span style="color:#9b59b6">Delusion Gain for next Task: 0 - ${formatNumber(zone.id * 100)} (random, skewed to low)</span>`;
       }
+
+      // --- Real Time Duration Estimate ---
+      const combinedMult = getCombinedMultiplier(task);
+      const estimatedTicks = task.baseTime / (effTickDuration * combinedMult);
+      const estimatedRealTimeMs = estimatedTicks * runTickDuration;
+      const estimatedRealTimeSeconds = estimatedRealTimeMs / 1000;
+
+      let timeInfo = "";
+      if (estimatedRealTimeSeconds >= 0.1) {
+        if (estimatedRealTimeSeconds < 60) {
+          timeInfo = `<br><br><span style="color:gray;">Estimated Time: ${estimatedRealTimeSeconds.toFixed(1)} s</span>`;
+        } else {
+          const minutes = Math.floor(estimatedRealTimeSeconds / 60);
+          const seconds = Math.floor(estimatedRealTimeSeconds % 60);
+          timeInfo = `<br><br><span style="color:rgb(136, 72, 0);">Estimated Time: ${minutes} m ${seconds} s</span>`;
+        }
+      }
+
 
       const energyColorOffset = (estimatedEnergy/gameState.energy) * 60;
       
       btn.setAttribute("data-tooltip", 
         task.description +
-        `<br><br><span style="color:gray">Estimated Energy Needed${task.maxReps > 1 ? " per task" : ""}: <span style="color:rgb(${Math.min(128 +energyColorOffset, 255)}, ${Math.max(128 - energyColorOffset, 0)}, ${Math.max(128 - energyColorOffset, 0)})">${formatNumber(estimatedEnergy)}</span>` +
-        `<br><br>Estimated Levels Gained per task:${levelText}</span>` +
+        `<br><br><span style="color:gray">Estimated Energy Needed${task.maxReps > 1 ? " for next task" : ""}: <span style="color:rgb(${Math.min(128 + energyColorOffset, 255)}, ${Math.max(128 - energyColorOffset, 0)}, ${Math.max(128 - energyColorOffset, 0)})">${formatNumber(estimatedEnergy)}</span>` +
+        `<br><br>Estimated Levels Gained${task.maxReps > 1 ? " for next task" : ""}:${levelText}</span>` +
+        timeInfo +
         extraInfo
       );
+      
     });
   }
 
@@ -1841,7 +1863,8 @@ const CURRENT_GAME_VERSION = "v0.2";
         showAutoConsumeButton();  // Make the Auto-Use button appear.
         break;
       case "Instant Simulation":
-        if (!gameState.perks["instant_simulation"]) {
+        if (!gameState.perks["simulation_engine"]) {
+          gameState.perks["self_operating_gadget"] = true;
           gameState.perks["simulation_engine"] = true;
           renderPerks();
         }
@@ -2920,6 +2943,7 @@ const CURRENT_GAME_VERSION = "v0.2";
               showPowerIfUnlocked();
             }
           }
+          currentTasks = [];
           nextZone();
           displayZone();
         } else {
@@ -2954,6 +2978,17 @@ const CURRENT_GAME_VERSION = "v0.2";
           gameState.perks[task.perk] = true;
           if (task.perk === "basic_mech") {
             gameState.startingEnergy += 25;
+          }
+          if (task.perk === "simulation_engine") {
+            if (!gameState.serenityUnlockables["Instant Simulation"]) {
+              // For every zone and task, mark automation as enabled (true)
+              zones.forEach((zone, zIndex) => {
+                zone.tasks.forEach((task, tIndex) => {
+                  const key = `${zIndex}-${tIndex}`;
+                  gameState.automationOverrides[key] = false;
+                });
+              });
+            }
           }
           const perkKey = task.perk;
           const perkName = formatStringForDisplay(perkKey);
@@ -3011,7 +3046,7 @@ const CURRENT_GAME_VERSION = "v0.2";
           const key = `${currentZoneIndex}-${idx}`;
           // If no override exists, default it to false.
           if (gameState.automationOverrides[key] === undefined) {
-            gameState.automationOverrides[key] = false;
+            gameState.automationOverrides[key] = true;
           }
           // Skip tasks that are explicitly disabled.
           if (gameState.automationOverrides[key] === false) continue;
