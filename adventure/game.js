@@ -111,7 +111,7 @@ const CURRENT_GAME_VERSION = "v0.2";
     if (!gameState.resources[name]) {
       gameState.resources[name] = 0;
       let autoBtn = document.getElementById("autoConsumeBtn");
-      if (!autoBtn) {
+      if (autoBtn) {
         autoBtn.setAttribute("data-tooltip", "Auto-use all resources except:<br>" + 
           Array.from(EXCLUDED_AUTO_RESOURCES)
             .filter(r => gameState.resources.hasOwnProperty(r))
