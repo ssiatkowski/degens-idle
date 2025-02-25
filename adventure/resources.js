@@ -532,7 +532,7 @@ const SERENITY_UPGRADES = {
   infinite: {
     "Discover Serenity": {
       "Wisdom Seeker": { 
-        initialCost: 1, 
+        initialCost: 2, 
         scaling: 1.12,
         description: "Increase all XP gains by 50% (additively)."
       },

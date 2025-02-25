@@ -1527,11 +1527,11 @@ const CURRENT_GAME_VERSION = "v0.2";
       let timeInfo = "";
       if (estimatedRealTimeSeconds >= 0.1) {
         if (estimatedRealTimeSeconds < 60) {
-          timeInfo = `<br><br><span style="color:gray;">Estimated Time: ${estimatedRealTimeSeconds.toFixed(1)} s</span>`;
+          timeInfo = `<br><br><span style="color:gray;">Estimated Time${task.maxReps > 1 ? " for next task" : ""}: ${estimatedRealTimeSeconds.toFixed(1)} s</span>`;
         } else {
           const minutes = Math.floor(estimatedRealTimeSeconds / 60);
           const seconds = Math.floor(estimatedRealTimeSeconds % 60);
-          timeInfo = `<br><br><span style="color:rgb(136, 72, 0);">Estimated Time: ${minutes} m ${seconds} s</span>`;
+          timeInfo = `<br><br><span style="color:rgb(136, 72, 0);">Estimated Time${task.maxReps > 1 ? " for next task" : ""}: ${minutes} m ${seconds} s</span>`;
         }
       }
 
