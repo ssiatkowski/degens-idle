@@ -63,7 +63,9 @@ const CURRENT_GAME_VERSION = "v0.2";
       serenityInfinite: {},
 
       highestCompletedZone: 0,
+      bestCompletedZone: 0,
       resetsForHighestZone: 1e100,
+      resetsForBestZone: 1e100,
 
       //resource related      
       resourcesUsed: {},
@@ -101,13 +103,22 @@ const CURRENT_GAME_VERSION = "v0.2";
     if (name !== "infinity_gauntlet") {
       gameState.resourcesUsed[name] = true;
     }
-    showMessage(`Used ${amt} ${formatStringForDisplay(name)}`);
     // Instead of re-rendering everything, update only this resource.
     updateResourceDisplay(name);
   }
   
   function addResource(name, amt) {
-    if (!gameState.resources[name]) gameState.resources[name] = 0;
+    if (!gameState.resources[name]) {
+      gameState.resources[name] = 0;
+      let autoBtn = document.getElementById("autoConsumeBtn");
+      if (!autoBtn) {
+        autoBtn.setAttribute("data-tooltip", "Auto-use all resources except:<br>" + 
+          Array.from(EXCLUDED_AUTO_RESOURCES)
+            .filter(r => gameState.resources.hasOwnProperty(r))
+            .map(r => formatStringForDisplay(r))
+            .join("<br>"));
+      }
+    }
     gameState.resources[name] += amt;
     // Instead of full re-render, update only this resource.
     updateResourceDisplay(name);
@@ -559,13 +570,13 @@ const CURRENT_GAME_VERSION = "v0.2";
         delusionBarFill.classList.add("delusion-high");
         delusionBarFill.setAttribute("data-tooltip",
           "Delusion builds up from tasks with<br>" + delusionSkills.join(", ") +
-          ".<br><br>If it exceeds 9000, your game will reset<br>with 20% of your Power lost!"
+          `.<br><br>If it exceeds 9000, your game will reset<br>with 20% of your Power lost!${gameState.serenityUnlockables["Delusion Enjoyer"] ? "<br><br>Multiplies knowledge gain by " + gameState.delusionEnjoyerMultiplier * 100 + "%"  : ""}`
         );
       } else {
         delusionBarFill.classList.remove("delusion-high");
         delusionBarFill.setAttribute("data-tooltip",
           "Delusion builds up from tasks with<br>" + delusionSkills.join(", ") +
-          ".<br><br>If it exceeds 9000, your game will reset<br>with 20% of your Power lost!"
+          `.<br><br>If it exceeds 9000, your game will reset<br>with 20% of your Power lost!${gameState.serenityUnlockables["Delusion Enjoyer"] ? "<br><br>Multiplies knowledge gain by " + gameState.delusionEnjoyerMultiplier * 100 + "%"  : ""}`
         );
       }
     }
@@ -630,12 +641,12 @@ const CURRENT_GAME_VERSION = "v0.2";
       if (levelSpan) levelSpan.textContent = formatNumber(sData.level);
       let baseMult = Math.pow(1.01, sData.level - 1);
       if (sName === "alchemy" && gameState.perks.brewmaster) baseMult *= 1.25;
-      if (sName === "travel" && gameState.perks.hoverboard) baseMult *= 3.5;
+      if (sName === "travel" && gameState.perks.hoverboard) baseMult *= 4;
       baseMult *= (sData.progressBoost);
       let baseDrain = sData.energyDrain / (sData.drainBoost || 1);
       if (sName === "hacking" && gameState.perks.noob_haxor) baseDrain *= 0.9;
       if (sName === "mechanics" && gameState.perks.futuristic_wrench) baseDrain /= 3;
-      if (sName === "charisma" && gameState.perks.kung_fu_zen) baseDrain *= 0.75;
+      if (sName === "charisma" && gameState.perks.kung_fu_zen) baseDrain *= 0.72;
       if (sName === "quantum" && gameState.perks.neural_matrix) baseDrain *= 0.6;
       el.setAttribute("data-tooltip",
         `${formatStringForDisplay(sName)} (Level: ${formatNumber(sData.level)})<br>
@@ -764,7 +775,7 @@ const CURRENT_GAME_VERSION = "v0.2";
         baseMult *= 1.25;
       }
       if (sName === "travel" && gameState.perks["hoverboard"]) {
-        baseMult *= 3.5;
+        baseMult *= 4;
       }
       if (gameState.powerUnlocked && powerSkills.includes(sName)) {
         baseMult *= (1 + (gameState.perks.urban_warfare ? 0.03 : 0.01) * gameState.power);
@@ -776,7 +787,7 @@ const CURRENT_GAME_VERSION = "v0.2";
       // Precompute energy drain factor.
       let drainFactor = sk.energyDrain / (sk.drainBoost || 1);
       if (sName === "mechanics" && gameState.perks.futuristic_wrench) drainFactor /= 3;
-      if (sName === "charisma" && gameState.perks.kung_fu_zen) drainFactor *= 0.75;
+      if (sName === "charisma" && gameState.perks.kung_fu_zen) drainFactor *= 0.72;
       if (sName === "quantum" && gameState.perks.neural_matrix) drainFactor *= 0.6;
       if (sName === "hacking" && gameState.perks.noob_haxor) drainFactor *= 0.9;
       sk.precomputedDrainFactor = drainFactor;
@@ -853,6 +864,15 @@ const CURRENT_GAME_VERSION = "v0.2";
         gameState.skills[sName].level = 1;
         gameState.skills[sName].xp = 0;
       });
+      zones.forEach(zone => {
+        zone.tasks.forEach(task => {
+          if (task.originalMaxReps !== undefined) {
+            task.maxReps = task.originalMaxReps;
+            delete task.originalMaxReps;
+          }
+        });
+      });
+      growthMiracleApplied = false;
       gameState.resources = {};
       gameState.perks = {};
       gatherAllPerks();
@@ -861,7 +881,8 @@ const CURRENT_GAME_VERSION = "v0.2";
       gameState.numCopiumResets = 0;
       gameState.numDelusionResets = 0;
       gameState.highestCompletedZone = 0;
-      gameState.resetsForHighestZone = 1e100;
+      gameState.bestCompletedZone = 0;
+      gameState.resetsForBestZone = 1e100;
       gameState.zoneFullCompletes = {};
       if (!gameState.serenityUnlockables["Instant Simulation"]) {
         gameState.automationOverrides = {};
@@ -1178,7 +1199,7 @@ const CURRENT_GAME_VERSION = "v0.2";
         const key = `${currentZoneIndex}-${idx}`;
         // Ensure a default value is set if none exists:
         if (gameState.automationOverrides[key] === undefined) {
-          gameState.automationOverrides[key] = true;
+          gameState.automationOverrides[key] = false;
         }
         // Update the button’s appearance based on the override:
         updateTaskAutomationUI(btn, key);
@@ -1424,7 +1445,7 @@ const CURRENT_GAME_VERSION = "v0.2";
       const numSkills = usedSkills.length || 1;
       let baseXP = (task.baseTime * xpScale) / numSkills;
       if (gameState.perks["workaholic"]) baseXP *= 1.5;
-      if (gameState.perks["kung_fu_zen"]) baseXP *= 1.25;
+      if (gameState.perks["kung_fu_zen"]) baseXP *= 1.28;
       let levelText = "";
       usedSkills.forEach(sName => {
         let gainedXP = baseXP;
@@ -1483,7 +1504,7 @@ const CURRENT_GAME_VERSION = "v0.2";
       if (gameState.copiumUnlocked && usedSkills.some(s => copiumSkills.includes(s))) {
         let copiumGain = 10 * zone.id;
         if (gameState.perks["copious_alchemist"] && gameState.perks["copious_alchemist"] !== "disabled") {
-          copiumGain *= 0.5;
+          copiumGain *= 0.4;
         }
         copiumGain = Math.max(copiumGain - gameState.numCelestialBlossoms, 0);
         extraInfo += `<br><br><span style="color:#dbd834">Copium Gain per Task: ${formatNumber(copiumGain)}</span>`;
@@ -1568,7 +1589,7 @@ const CURRENT_GAME_VERSION = "v0.2";
       powerUpg.textContent = formatNumber(gameState.power);
       const tooltipStr = "Power increases speed by <b>" +
         formatNumber((gameState.perks.urban_warfare ? 3 : 1) * gameState.power) +
-        "%</b><br>for Combat and Endurance.";
+        "%</b><br>for " + powerSkills.join(", ") + ".";
       powerUpg.parentElement.setAttribute("data-tooltip", tooltipStr);
     }
   }
@@ -1617,16 +1638,24 @@ const CURRENT_GAME_VERSION = "v0.2";
       }
       updateCopiumDisplay();
     }
+    if(gameState.perks.quantum_teleportation) {
+      powerSkills = ["combat", "endurance", "travel"];
+      showPowerIfUnlocked();
+    }
     if (gameState.perks.growth_miracle && !growthMiracleApplied) {
       zones.forEach(zone => {
         zone.tasks.forEach(task => {
           if (task.resources && Array.isArray(task.resources) && task.resources.length > 0) {
-            task.maxReps = Math.floor(1.5 * task.maxReps);
+            // Save the original value if not already saved.
+            if (task.originalMaxReps === undefined) {
+              task.originalMaxReps = task.maxReps;
+            }
+            task.maxReps = Math.floor(1.5 * task.originalMaxReps);
           }
         });
       });
       growthMiracleApplied = true;
-    }
+    }    
   }
   
   // Modify your renderPerks function:
@@ -1698,6 +1727,8 @@ const CURRENT_GAME_VERSION = "v0.2";
     
     modal.appendChild(content);
     document.body.appendChild(modal);
+
+    showKnowledgeIfUnlocked();
   }
   
   function showCopiumModal() {
@@ -1757,6 +1788,8 @@ const CURRENT_GAME_VERSION = "v0.2";
     
     modal.appendChild(content);
     document.body.appendChild(modal);
+
+    showPowerIfUnlocked();
   }
   
   function showDelusionModal() {
@@ -1793,8 +1826,9 @@ const CURRENT_GAME_VERSION = "v0.2";
 
   function applySerenityUnlockable(upgName) {
     switch (upgName) {
-      case "Always a Workaholic":
-        if (!gameState.perks["workaholic"]){
+      case "Complete Workaholic":
+        if (!gameState.perks["workaholic"] || !gameState.perks["completionist"]) {
+          gameState.perks["completionist"] = true;
           gameState.perks["workaholic"] = true;
           renderPerks();
         }
@@ -1983,7 +2017,7 @@ const CURRENT_GAME_VERSION = "v0.2";
     if (gameState.serenityUnlocked) {
       serenityUpg.style.display = "inline-block";
       // Calculate potential serenity gain on prestige:
-      const serenityGainPotential = (gameState.highestCompletedZone ** 3) / gameState.resetsForHighestZone;
+      const serenityGainPotential = ((gameState.bestCompletedZone ** 3) / gameState.resetsForBestZone) * (gameState.perks.inspired_glow ? 1.25 : 1);
       // Set the inner HTML: first line shows current Serenity, second line (in gray) shows potential gain.
       serenityUpg.innerHTML = `Serenity: ${formatNumber(gameState.serenity)}`
       if(gameState.prestigeAvailable) {
@@ -2018,7 +2052,7 @@ const CURRENT_GAME_VERSION = "v0.2";
   function showSerenityPrestigeModal() {
     hideTooltip();
   
-    const serenityGainPotential = (gameState.highestCompletedZone ** 3) / gameState.resetsForHighestZone;
+    const serenityGainPotential = ((gameState.bestCompletedZone ** 3) / gameState.resetsForBestZone) * (gameState.perks.inspired_glow ? 1.25 : 1);
   
     // Main modal
     const modal = document.createElement("div");
@@ -2050,7 +2084,7 @@ const CURRENT_GAME_VERSION = "v0.2";
         <span style="color: gray; font-size: 0.9em;">(+${formatNumber(serenityGainPotential)})</span>
       </p>
       <p style="color: gray; margin-top: -10px;">
-        Serenity Gain = (<strong>Max Zone</strong> ^ 3) / (<strong>Total Resets</strong>)
+        Serenity Gain = (<strong>Best Full Zone</strong> ^ 3 / <strong>Total Resets</strong>)${gameState.perks.inspired_glow ? " * 1.25" : ""}
       </p>
     `;
     content.appendChild(serenityInfo);
@@ -2059,11 +2093,11 @@ const CURRENT_GAME_VERSION = "v0.2";
     const combinedLine = document.createElement("p");
     combinedLine.style.fontSize = "0.9em";
     combinedLine.innerHTML = `
-      Max Zone Completed: ${gameState.highestCompletedZone} | 
-      Resets on Completion: ${gameState.resetsForHighestZone}<br>
-      Energy Resets: ${gameState.numEnergyResets} |
-      Copium Resets: ${gameState.numCopiumResets} |
-      Delusion Resets: ${gameState.numDelusionResets}
+      Best Zone Completed: ${gameState.bestCompletedZone} | 
+      Resets on Completion: ${gameState.resetsForBestZone}<br><br>Current Resets:<br>
+      Energy: ${gameState.numEnergyResets} |
+      Copium: ${gameState.numCopiumResets} |
+      Delusion: ${gameState.numDelusionResets}
     `;
     combinedLine.style.marginTop = "5px";
     content.appendChild(combinedLine);
@@ -2580,6 +2614,17 @@ const CURRENT_GAME_VERSION = "v0.2";
   function fullRestart() {
     gameState = getInitialGameState();
     zones.forEach(z => z.tasks.forEach(t => t.count = 0));
+    zones.forEach(z => {
+      z.tasks.forEach(t => {
+        // Restore original maxReps if they were modified by growth_miracle.
+        if (t.originalMaxReps !== undefined) {
+          t.maxReps = t.originalMaxReps;
+          delete t.originalMaxReps;
+        }
+        t.count = 0;
+      });
+    });
+    growthMiracleApplied = false;
     currentZoneIndex = 0;
     currentTasks = [];
     document.getElementById("copiumBarContainer").style.display = "none";
@@ -2590,12 +2635,12 @@ const CURRENT_GAME_VERSION = "v0.2";
     updateSkillMultipliers();
     renderSkills();
     updateSkillDisplay();
-    const kUpg = document.getElementById("knowledgeUpgValue");
-    if (kUpg) kUpg.parentElement.style.display = "none";
-    const pUpg = document.getElementById("powerUpgValue");
-    if (pUpg) pUpg.parentElement.style.display = "none";
+    const kUpg = document.getElementById("knowledgeUpgDiv");
+    if (kUpg) kUpg.style.display = "none";
+    const pUpg = document.getElementById("powerUpgDiv");
+    if (pUpg) pUpg.style.display = "none";
     const sUpg = document.getElementById("serenityUpgDiv");
-    if (sUpg) sUpg.parentElement.style.display = "none";
+    if (sUpg) sUpg.style.display = "none";
     displayZone();
     document.getElementById("versionBanner").style.display = "none";
   }
@@ -2755,7 +2800,7 @@ const CURRENT_GAME_VERSION = "v0.2";
       const usedSkills = tData.task.skills || [];
       let xpEach = baseXP / (usedSkills.length || 1);
       if (gameState.perks["workaholic"]) xpEach *= 1.5;
-      if (gameState.perks["kung_fu_zen"]) xpEach *= 1.25;
+      if (gameState.perks["kung_fu_zen"]) xpEach *= 1.28;
       usedSkills.forEach(sName => {
         addXP(sName, xpEach);
       });
@@ -2774,7 +2819,7 @@ const CURRENT_GAME_VERSION = "v0.2";
           }
         }
         if (gameState.copiumUnlocked && usedSkills.some(s => copiumSkills.includes(s))) {
-          gameState.copium += Math.max((10 * zone.id) * ((gameState.perks["copious_alchemist"]  && gameState.perks["copious_alchemist"] !== "disabled") ? 0.5 : 1) - gameState.numCelestialBlossoms, 0);
+          gameState.copium += Math.max((10 * zone.id) * ((gameState.perks["copious_alchemist"]  && gameState.perks["copious_alchemist"] !== "disabled") ? 0.4 : 1) - gameState.numCelestialBlossoms, 0);
           if (gameState.copium > 9000) {
             currentTasks = [];
             gameState.autoRun = false;
@@ -2834,7 +2879,11 @@ const CURRENT_GAME_VERSION = "v0.2";
             if (gameState.highestCompletedZone < tData.zoneIndex + 1) {
               gameState.highestCompletedZone = tData.zoneIndex + 1;
               gameState.resetsForHighestZone = Math.max(gameState.numEnergyResets + gameState.numCopiumResets + gameState.numDelusionResets, 1);
-              showMessage(`<span style="color: rgb(28, 106, 233);">New highest fully compeleted: Zone ${gameState.highestCompletedZone} with ${gameState.resetsForHighestZone} resets</span>`);
+              if (gameState.bestCompletedZone ** 3 / gameState.resetsForBestZone < gameState.highestCompletedZone ** 3 / gameState.resetsForHighestZone) {
+                gameState.bestCompletedZone = gameState.highestCompletedZone;
+                gameState.resetsForBestZone = gameState.resetsForHighestZone;
+                showMessage(`<span style="color: rgb(28, 106, 233);">New best fully compeleted: Zone ${gameState.bestCompletedZone} with ${gameState.resetsForBestZone} resets</span>`);
+              }
             }
           }
           showMessage(task.name + " completed");
@@ -2929,7 +2978,7 @@ const CURRENT_GAME_VERSION = "v0.2";
           if (gameState.soundEnabled) perkUnlockSound.play();
         }
         // If the task is a Prestige task and it’s now fully completed, show the prestige modal.
-        if (task.type === "Prestige" && task.count >= task.maxReps) {
+        if (task.type === "Prestige" && task.count >= task.maxReps && !gameState.prestigeAvailable) {
           gameState.prestigeAvailable = true;
           showSerenityUnlockedModal();
         }
@@ -2960,9 +3009,9 @@ const CURRENT_GAME_VERSION = "v0.2";
         for (let idx = 0; idx < zone.tasks.length; idx++) {
           const task = zone.tasks[idx];
           const key = `${currentZoneIndex}-${idx}`;
-          // If no override exists, default it to true.
+          // If no override exists, default it to false.
           if (gameState.automationOverrides[key] === undefined) {
-            gameState.automationOverrides[key] = true;
+            gameState.automationOverrides[key] = false;
           }
           // Skip tasks that are explicitly disabled.
           if (gameState.automationOverrides[key] === false) continue;
@@ -3024,7 +3073,13 @@ const CURRENT_GAME_VERSION = "v0.2";
     
     saveGameProgress();
   }
-  setInterval(gameLoop, runTickDuration);
+  let gameLoopInterval = setInterval(gameLoop, runTickDuration);
+
+  function setRunTickDuration(newDuration) {
+    clearInterval(gameLoopInterval);
+    runTickDuration = newDuration;
+    gameLoopInterval = setInterval(gameLoop, runTickDuration);
+  }
 
   /****************************************
    * INIT
@@ -3033,8 +3088,6 @@ const CURRENT_GAME_VERSION = "v0.2";
     document.getElementById("gameOverScreenEnergy").style.display = "none";
     document.getElementById("gameOverScreenCopium").style.display = "none";
     document.getElementById("gameOverScreenDelusion").style.display = "none";
-    const kUpg = document.getElementById("knowledgeUpgValue");
-    if (kUpg) kUpg.parentElement.style.display = "none";
 
     loadGameProgress();
     
@@ -3042,6 +3095,8 @@ const CURRENT_GAME_VERSION = "v0.2";
     gameState.serenityUnlockables = gameState.serenityUnlockables || {};
     gameState.serenityInfinite = gameState.serenityInfinite || {};
     gameState.automationOverrides = gameState.automationOverrides || {};
+    gameState.bestCompletedZone = gameState.bestCompletedZone || gameState.highestCompletedZone;
+    gameState.resetsForBestZone = gameState.resetsForBestZone || gameState.resetsForHighestZone;
 
     applySerenityUpgrades();
     gatherAllPerks();
@@ -3091,5 +3146,6 @@ const CURRENT_GAME_VERSION = "v0.2";
   window.getXpScale = () => xpScale;
   window.setXpScale = (newScale) => xpScale = newScale;
   window.showSerenityUnlockedModal = () => showSerenityUnlockedModal();
+  window.setRunTickDuration = (newTickDuration) => setRunTickDuration(newTickDuration);
   window.displayZone = () => displayZone();
 })();

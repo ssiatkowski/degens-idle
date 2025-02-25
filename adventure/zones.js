@@ -86,7 +86,7 @@ var zones = [
       { id: 64, name: "Tactical Coordination Group Skirmish", type: "Training", maxReps: 7, count: 0, baseTime: 4e8, description: "Develop team-based combat strategies.", skills: ["combat", "charisma"] },
       { id: 65, name: "Energetic Bliss: Painstaking Training", type: "Training", maxReps: 1, count: 0, baseTime: 4e12, description: "Engage in a grueling training session.", skills: ["combat", "endurance", "perception"], perk: "energetic_bliss" },
       { id: 66, name: "Concoct Some Steroids", type: "Training", maxReps: 4, count: 0, baseTime: 9e9, description: "Create a performance-enhancing steroid.", skills: ["alchemy", "tinkering", "intellect"], resources: ["steroids"] },
-      { id: 67, name: "Kung Fu Zen: Talk Your Way", type: "Training", maxReps: 3, count: 0, baseTime: 4e10, description: "Convince the masters to help you improve your learning.", skills: ["charisma"], perk: "kung_fu_zen" },
+      { id: 67, name: "Kung Fu Zen: Talk Your Way", type: "Training", maxReps: 3, count: 0, baseTime: 3e10, description: "Convince the masters to help you improve your learning.", skills: ["charisma"], perk: "kung_fu_zen" },
       { id: 68, name: "Challenge Dojo Master Chuck Norris", type: "Training", maxReps: 1, count: 0, baseTime: 1e9, description: "Challenge the legendary martial artist.", skills: ["combat"], boss_image: "images/bosses/chuck_norris.jpg", drainMult: 8, resources: ["karate_belt"], sound: chuckNorrisSound },
     ]
   },
@@ -125,7 +125,7 @@ var zones = [
     img: "images/zones/zone9.jpg",
     tasks: [
       { id: 91, name: "Travel: Emerge into Techno District", type: "Travel", maxReps: 1, count: 0, baseTime: 4e6, description: "Climb out to the bustling Techno District.", skills: ["travel"] },
-      { id: 92, name: "Deep Data Dive Extract Encrypted Secrets", type: "Training", maxReps: 5, count: 0, baseTime: 1e9, description: "Extract and decode hidden data.", skills: ["aiMastery", "hacking"], mandatory: true },
+      { id: 92, name: "Extract Encrypted Secrets", type: "Training", maxReps: 5, count: 0, baseTime: 1e9, description: "Extract and decode hidden data.", skills: ["aiMastery", "hacking"], mandatory: true },
       { id: 93, name: "Copius Alchemist: Advanced Manual", type: "Training", maxReps: 1, count: 0, baseTime: 1e14, description: "Study advanced alchemical techniques.", skills: ["alchemy", "perception"], perk: "copious_alchemist", mandatory: true },
       { id: 94, name: "Neural Net Optimize the System", type: "Training", maxReps: 10, count: 0, baseTime: 1e8, description: "Enhance and optimize neural networks.", skills: ["aiMastery", "intellect"] },
       { id: 95, name: "Virtual Simulated Skirmish", type: "Training", maxReps: 2, count: 0, baseTime: 3e8, description: "Engage in simulated digital battles.", skills: ["aiMastery", "combat"] },
@@ -169,7 +169,7 @@ var zones = [
     img: "images/zones/zone12.jpg",
     tasks: [
       { id: 121, name: "Travel: Exit to Shattered Expanse", type: "Travel", maxReps: 1, count: 0, baseTime: 1e8, description: "Journey back to the shattered expanse.", skills: ["travel"] },
-      { id: 122, name: "Travel Training", type: "Training", maxReps: 20, count: 0, baseTime: 1e8, description: "Train for long-distance travel.", skills: ["travel", "endurance"], mandatory: true },
+      { id: 122, name: "Travel Training", type: "Training", maxReps: 16, count: 0, baseTime: 1.3e8, description: "Train for long-distance travel.", skills: ["travel", "endurance"], mandatory: true },
       { id: 123, name: "Secure Vault Access Code Breaker", type: "Training", maxReps: 2, count: 0, baseTime: 1e15, description: "Breach a secure digital vault.", skills: ["hacking", "intellect"], mandatory: true },
       { id: 124, name: "Bunker Blitz High-Intensity Drill", type: "Training", maxReps: 7, count: 0, baseTime: 2e14, description: "Push your endurance to the limit in a confined space.", skills: ["endurance", "combat"] },
       { id: 125, name: "Neural Matrix: System Repair", type: "Training", maxReps: 5, count: 0, baseTime: 1e13, description: "Repair and optimize atomic systems.", skills: ["aiMastery", "hacking"], perk: "neural_matrix" },
@@ -183,7 +183,7 @@ var zones = [
     name: "Shattered Expanse",
     img: "images/zones/zone13.jpg",
     tasks: [
-      { id: 131, name: "Travel: Journey to Ascendant Metropolis", type: "Travel", maxReps: 1, count: 0, baseTime: 7e8, description: "Approach a dazzling metropolis of the future.", skills: ["travel"] },
+      { id: 131, name: "Travel: Journey to Ascendant Metropolis", type: "Travel", maxReps: 1, count: 0, baseTime: 4e8, description: "Approach a dazzling metropolis of the future.", skills: ["travel"] },
       { id: 132, name: "Beg for Ascension", type: "Training", maxReps: 3, count: 0, baseTime: 1e19, description: "Convince ascended beings to let you access their metropolis.", skills: ["intellect", "negotiation"], mandatory: true },
       { id: 133, name: "Sandstorm: Guerrilla Warfare Sprint", type: "Training", maxReps: 4, count: 0, baseTime: 2e16, description: "Sprint through a raging sandstorm.", skills: ["endurance", "combat"], perk: "sandstorm" },
       { id: 134, name: "Outpost Infiltration Silent Breach", type: "Training", maxReps: 5, count: 0, baseTime: 1e16, description: "Breach an enemy outpost undetected.", skills: ["hacking", "endurance"] },
@@ -197,7 +197,7 @@ var zones = [
     name: "Ascendant Metropolis",
     img: "images/zones/zone14.jpg",
     tasks: [
-      { id: 141, name: "Travel: Ascend to Nexus of Infinity", type: "Travel", maxReps: 1, count: 0, baseTime: 2e9, description: "Conquer the Nexus of Infinity.", skills: ["travel"] },
+      { id: 141, name: "Travel: Ascend to Nexus of Infinity", type: "Travel", maxReps: 1, count: 0, baseTime: 1.5e9, description: "Conquer the Nexus of Infinity.", skills: ["travel"] },
       { id: 142, name: "City Grid Optimization Neural Sync", type: "Training", maxReps: 5, count: 0, baseTime: 1e16, description: "Optimize urban networks with quantum precision.", skills: ["quantum", "intellect"], mandatory: true },
       { id: 143, name: "Corporate Espionage Information Heist", type: "Training", maxReps: 2, count: 0, baseTime: 3e17, description: "Steal confidential data using your omniscient insight.", skills: ["negotiation", "hacking"], mandatory: true },
       { id: 144, name: "Urban Warfare: Digital Onslaught", type: "Training", maxReps: 10, count: 0, baseTime: 1e16, description: "Engage in a fast-paced digital battle.", skills: ["combat", "aiMastery"], perk: "urban_warfare" },
@@ -211,12 +211,12 @@ var zones = [
     name: "Nexus of Infinity",
     img: "images/zones/zone15.jpg",
     tasks: [
-      { id: 151, name: "Travel: Enter The Garden", type: "Travel", maxReps: 1, count: 0, baseTime: 1e10, description: "Where could the journey take you next?", skills: ["travel"] },
+      { id: 151, name: "Travel: Enter The Garden", type: "Travel", maxReps: 1, count: 0, baseTime: 4e9, description: "Where could the journey take you next?", skills: ["travel"] },
       { id: 152, name: "Mainframe Break-In Digital Siege", type: "Training", maxReps: 2, count: 0, baseTime: 5e19, description: "Penetrate a heavily fortified digital fortress.", skills: ["cybernetics", "mechanics"], mandatory: true },
       { id: 153, name: "Cyber Siege Digital Onslaught", type: "Training", maxReps: 10, count: 0, baseTime: 2e18, description: "Launch a final digital assault on enemy systems.", skills: ["hacking", "cybernetics"], mandatory: true },
-      { id: 154, name: "Discover Serenity", type: "Prestige", maxReps: 1, count: 0, baseTime: 1e6, description: "Find inner peace and serenity.", skills: ["omniscience"], mandatory: true },
+      { id: 154, name: "Discover Serenity", type: "Prestige", maxReps: 1, count: 0, baseTime: 5e5, description: "Find inner peace and serenity.", skills: ["omniscience"], mandatory: true },
       { id: 155, name: "Master of AI: Ultimate Challenge", type: "Training", maxReps: 5, count: 0, baseTime: 1e19, description: "Solve a complex algorithm that tests your intellect.", skills: ["aiMastery", "intellect"], perk: "master_of_ai" },
-      { id: 156, name: "Last Stand: Test of Endurance", type: "Training", maxReps: 5, count: 0, baseTime: 1e14, description: "Withstand an endless onslaught of foes.", skills: ["endurance"], perk: "last_stand" },
+      { id: 156, name: "Last Stand: Test of Endurance", type: "Training", maxReps: 4, count: 0, baseTime: 7e14, description: "Withstand an endless onslaught of foes.", skills: ["endurance"], perk: "last_stand" },
       { id: 157, name: "Puzzle Piece: Destiny", type: "Training", maxReps: 10, count: 0, baseTime: 1e17, description: "Find a piece of the ultimate puzzle to shape your destiny.", skills: ["aiMastery", "perception"], resources: ["puzzle_piece"] }
     ]
   },
@@ -225,13 +225,13 @@ var zones = [
     name: "The Garden",
     img: "images/zones/zone16.jpg",
     tasks: [
-      { id: 161, name: "Travel: Journey to Nebular Nexus", type: "Travel", maxReps: 1, count: 0, baseTime: 3e10, description: "Leave The Garden behind and step into cosmic wonder.", skills: ["travel"] },
+      { id: 161, name: "Travel: Journey to Nebular Nexus", type: "Travel", maxReps: 1, count: 0, baseTime: 8e9, description: "Leave The Garden behind and step into cosmic wonder.", skills: ["travel"] },
       { id: 162, name: "Plant the Seeds of Creation", type: "Training", maxReps: 10, count: 0, baseTime: 1.1e23, description: "Sow the first seeds in fertile soil.", skills: ["alchemy", "intellect"], mandatory: true },
-      { id: 163, name: "Nurture the Cosmic Flora", type: "Training", maxReps: 1, count: 0, baseTime: 4e16, description: "Cultivate the garden with care and vigor.", skills: ["tinkering"], mandatory: true },
-      { id: 164, name: "Mechanical Genius: Radiodynamic Gardening", type: "Training", maxReps: 4, count: 0, baseTime: 2e17, description: "Harness the power of mechanical gardening.", skills: ["mechanics"], perk: "mechanical_genius" },
+      { id: 163, name: "Nurture the Cosmic Flora", type: "Training", maxReps: 1, count: 0, baseTime: 1e16, description: "Cultivate the garden with care and vigor.", skills: ["tinkering"], mandatory: true },
+      { id: 164, name: "Mechanical Genius: Radiodynamic Gardening", type: "Training", maxReps: 2, count: 0, baseTime: 2e17, description: "Harness the power of mechanical gardening.", skills: ["mechanics"], perk: "mechanical_genius" },
       { id: 165, name: "Prune the Stellar Vines", type: "Training", maxReps: 7, count: 0, baseTime: 1e23, description: "Trim and shape the living tendrils of cosmic life.", skills: ["tinkering", "perception"] },
       { id: 166, name: "Harvest the Celestial Blossoms", type: "Training", maxReps: 7, count: 0, baseTime: 1.4e22, description: "Gather rare blossoms that glow with otherworldly light.", skills: ["alchemy", "charisma"], resources: ["celestial_blossom"] },
-      { id: 167, name: "Growth Miracle: Nebula Soil", type: "Training", maxReps: 7, count: 0, baseTime: 1.5e19, description: "Study the soil here to learn how to accelerate growth.", skills: ["alchemy"], perk: "growth_miracle" },
+      { id: 167, name: "Growth Miracle: Nebula Soil", type: "Training", maxReps: 3, count: 0, baseTime: 1e17, description: "Study the soil here to learn how to accelerate growth.", skills: ["alchemy"], perk: "growth_miracle" },
       { id: 168, name: "Battle Thanos (with hair)", type: "Training", maxReps: 1, count: 0, baseTime: 1e15, description: "Engage the Mad Titan in a clash of cosmic might. Maybe even take his glove.", skills: ["combat"], boss_image: "images/bosses/thanos.jpg", drainMult: 65, resources: ["infinity_gauntlet"], sound: thanosSound },
     ]
   },
@@ -240,13 +240,15 @@ var zones = [
     name: "Nebular Nexus",
     img: "images/zones/zone17.jpg",
     tasks: [
-      { id: 171, name: "Travel: Journey to Quantum Abyss", type: "Travel", maxReps: 1, count: 0, baseTime: 1e11, description: "Depart the Nebular Nexus and approach the realm of probabilities.", skills: ["travel"] },
+      { id: 171, name: "Travel: Journey to Quantum Abyss", type: "Travel", maxReps: 1, count: 0, baseTime: 1.5e10, description: "Depart the Nebular Nexus and approach the realm of probabilities.", skills: ["travel"] },
       { id: 172, name: "Map the Celestial Grid", type: "Training", maxReps: 10, count: 0, baseTime: 1.5e23, description: "Chart the intricate network of nebular pathways.", skills: ["intellect", "perception"], mandatory: true },
-      { id: 173, name: "Align the Nebula Currents", type: "Training", maxReps: 1, count: 0, baseTime: 4e17, description: "Adjust the flow of cosmic energies to create balance.", skills: ["intellect"], mandatory: true },
+      { id: 173, name: "Align the Nebula Currents", type: "Training", maxReps: 1, count: 0, baseTime: 1e17, description: "Adjust the flow of cosmic energies to create balance.", skills: ["intellect"], mandatory: true },
       { id: 174, name: "Collect Stardust Samples", type: "Training", maxReps: 2, count: 0, baseTime: 1e24, description: "Gather sparkling particles scattered across the void.", skills: ["alchemy", "perception"], resources: ["stardust"] },
       { id: 175, name: "Calibrate Luminous Instruments", type: "Training", maxReps: 7, count: 0, baseTime: 7e23, description: "Fine-tune devices to capture the brilliance of nebular light.", skills: ["tinkering", "intellect"] },
       { id: 176, name: "Inspired Glow: Nebular Inspiration", type: "Training", maxReps: 3, count: 0, baseTime: 1e19, description: "Let the glow of the cosmos spark creative genius.", skills: ["charisma"], perk: "inspired_glow" },
-      { id: 177, name: "Battle Darth Vader", type: "Training", maxReps: 1, count: 0, baseTime: 3e15, description: "Engage the dark enforcer in an intergalactic duel.", skills: ["combat"], boss_image: "images/bosses/darth_vader.jpg", drainMult: 70, resources: ["lightsaber"], sound: darthVaderSound },
+      { id: 177, name: "Intergallactic Farming", type: "Training", maxReps: 8, count: 0, baseTime: 2e24, description: "Learn to grow crops that thrive in the vast expanse of the nebula.", skills: ["mechanics", "alchemy"] },
+      { id: 178, name: "Quantum Teleportation: Early Research", type: "Training", maxReps: 1, count: 0, baseTime: 2e19, description: "Navigate the nebula with the power of quantum teleportation.", skills: ["aiMastery", "quantum"], perk: "quantum_teleportation" },
+      { id: 179, name: "Battle Darth Vader", type: "Training", maxReps: 1, count: 0, baseTime: 3e15, description: "Engage the dark enforcer in an intergalactic duel.", skills: ["combat"], boss_image: "images/bosses/darth_vader.jpg", drainMult: 70, resources: ["lightsaber"], sound: darthVaderSound },
     ]
   },
   {
@@ -254,10 +256,10 @@ var zones = [
     name: "Quantum Abyss",
     img: "images/zones/zone18.jpg",
     tasks: [
-      { id: 181, name: "Travel: Warp to Cybernetic Olympus", type: "Travel", maxReps: 1, count: 0, baseTime: 3e11, description: "Bend the fabric of space-time as you leave the abyss.", skills: ["travel"] },
-      { id: 182, name: "Embrace Quantum Uncertainty", type: "Training", maxReps: 2, count: 0, baseTime: 1e17, description: "Dive into the realm of probabilistic wonders.", skills: ["quantum"], mandatory: true },
-      { id: 183, name: "Stabilize the Particle Field", type: "Training", maxReps: 10, count: 0, baseTime: 1.2e22, description: "Harness subatomic forces with precise adjustments.", skills: ["tinkering", "quantum"], mandatory: true },
-      { id: 184, name: "Collect Quantum Residue", type: "Training", maxReps: 7, count: 0, baseTime: 1.3e22, description: "Retrieve fleeting particles left in the void.", skills: ["alchemy", "quantum"], resources: ["quantum_residue"] },
+      { id: 181, name: "Travel: Warp to Cybernetic Olympus", type: "Travel", maxReps: 1, count: 0, baseTime: 1e12, description: "Bend the fabric of space-time as you leave the abyss.", skills: ["travel"] },
+      { id: 182, name: "Embrace Quantum Uncertainty", type: "Training", maxReps: 2, count: 0, baseTime: 2e15, description: "Dive into the realm of probabilistic wonders.", skills: ["quantum"], mandatory: true },
+      { id: 183, name: "Stabilize the Particle Field", type: "Training", maxReps: 10, count: 0, baseTime: 1.3e22, description: "Harness subatomic forces with precise adjustments.", skills: ["tinkering", "quantum"], mandatory: true },
+      { id: 184, name: "Collect Quantum Residue", type: "Training", maxReps: 3, count: 0, baseTime: 2.5e22, description: "Retrieve fleeting particles left in the void.", skills: ["alchemy", "quantum"], resources: ["quantum_residue"] },
       { id: 185, name: "Calibrate Waveform Oscillations", type: "Training", maxReps: 9, count: 0, baseTime: 2e25, description: "Adjust the frequencies of unseen oscillations.", skills: ["intellect", "mechanics"] },
       { id: 186, name: "Quantum Harmony: Uncertainty Principle", type: "Training", maxReps: 1, count: 0, baseTime: 1e20, description: "Blend chaos and order into perfect symmetry.", skills: ["intellect"], perk: "quantum_harmony" },
       { id: 187, name: "Battle Ultron", type: "Training", maxReps: 1, count: 0, baseTime: 1e16, description: "Confront the synthetic menace in a clash of logic.", skills: ["combat"], boss_image: "images/bosses/ultron.jpg", drainMult: 75, resources: ["adamantium"], sound: ultronSound },
