@@ -612,7 +612,7 @@ const CURRENT_GAME_VERSION = "v0.2";
 
       var message = formatStringForDisplay(skillName) + " leveled up to " + skill.level;
 
-      if (skill.level % 100 === 0) {
+      if (skill.level % 100 === 0 && false) { //TODO: only show color after relevant upgrade unlocked
         if (gameState.soundEnabled) {
           levelUpSound.play();
         }
@@ -1685,7 +1685,28 @@ const CURRENT_GAME_VERSION = "v0.2";
     const grid = document.querySelector("#perksContainer .perks-grid");
     if (!grid) return;
     grid.innerHTML = "";
-    Object.keys(gameState.perks).forEach(pKey => {
+  
+    // Get all perk keys and sort them.
+    const perkKeys = Object.keys(gameState.perks).sort((a, b) => {
+      const aUnlocked = gameState.perks[a] !== false;
+      const bUnlocked = gameState.perks[b] !== false;
+      const aToggle = toggleablePerks.includes(a);
+      const bToggle = toggleablePerks.includes(b);
+  
+      // Unlocked perks come before locked perks.
+      if (aUnlocked && !bUnlocked) return -1;
+      if (!aUnlocked && bUnlocked) return 1;
+  
+      // Among unlocked perks, toggleable perks come first.
+      if (aUnlocked && bUnlocked) {
+        if (aToggle && !bToggle) return -1;
+        if (!aToggle && bToggle) return 1;
+      }
+      // If same group, sort alphabetically.
+      return a.localeCompare(b);
+    });
+  
+    perkKeys.forEach(pKey => {
       const div = document.createElement("div");
       const icon = document.createElement("img");
       icon.src = "images/perks/" + pKey + ".jpg";
@@ -1693,16 +1714,15 @@ const CURRENT_GAME_VERSION = "v0.2";
       icon.alt = pStr;
       icon.style.pointerEvents = "none";
   
-      // If perk is unlocked (i.e. not false)
       if (gameState.perks[pKey] !== false) {
         if (toggleablePerks.includes(pKey)) {
-          // For toggleable perks:
+          // Toggleable perk unlocked.
           if (gameState.perks[pKey] === "disabled") {
             div.className = "perk-item unlocked disabled";
           } else {
             div.className = "perk-item unlocked toggleable-enabled";
           }
-          // Allow clicking to toggle.
+          // Add click event to toggle perk.
           div.addEventListener("click", () => {
             gameState.perks[pKey] = (gameState.perks[pKey] === "disabled") ? true : "disabled";
             applyPerks();
@@ -1711,17 +1731,20 @@ const CURRENT_GAME_VERSION = "v0.2";
           });
           div.setAttribute("data-tooltip", pStr + ":<br>" + (perkDescriptions[pKey] + "<br>Click to Toggle this perk." || "An unknown perk."));
         } else {
+          // Unlocked but not toggleable.
           div.className = "perk-item unlocked";
           div.setAttribute("data-tooltip", pStr + ":<br>" + (perkDescriptions[pKey] || "An unknown perk."));
         }
       } else {
-        div.setAttribute("data-tooltip", pStr + ": Unlock perk to see description.");
+        // Locked perk.
         div.className = "perk-item locked";
+        div.setAttribute("data-tooltip", pStr + ": Unlock perk to see description.");
       }
       div.appendChild(icon);
       grid.appendChild(div);
     });
   }
+  
   
 
   function showKnowledgeModal() {
@@ -2043,9 +2066,7 @@ const CURRENT_GAME_VERSION = "v0.2";
       const serenityGainPotential = ((gameState.bestCompletedZone ** 3) / gameState.resetsForBestZone) * (gameState.perks.inspired_glow ? 1.25 : 1);
       // Set the inner HTML: first line shows current Serenity, second line (in gray) shows potential gain.
       serenityUpg.innerHTML = `Serenity: ${formatNumber(gameState.serenity)}`
-      if(gameState.prestigeAvailable) {
-        serenityUpg.innerHTML += `<br><span style="color:rgb(200, 200, 200); font-size: 0.9em;">+(${formatNumber(serenityGainPotential)})</span>`;
-      }
+      serenityUpg.innerHTML += `<br><span style="color:rgb(200, 200, 200); font-size: 0.9em;">+(${formatNumber(serenityGainPotential)})</span>`;
       serenityUpg.setAttribute("data-tooltip", "Click to access the Prestige menu.");
       // Replace the element to remove any duplicate listeners, then add a click listener.
       const newSerenityUpg = serenityUpg.cloneNode(true);
@@ -2117,7 +2138,7 @@ const CURRENT_GAME_VERSION = "v0.2";
     combinedLine.style.fontSize = "0.9em";
     combinedLine.innerHTML = `
       Best Zone Completed: ${gameState.bestCompletedZone} | 
-      Resets on Completion: ${gameState.resetsForBestZone}<br><br>Current Resets:<br>
+      Resets on Completion: ${gameState.resetsForBestZone == 1e100 ? "N/A": gameState.resetsForBestZone}<br><br>Current Resets:<br>
       Energy: ${gameState.numEnergyResets} |
       Copium: ${gameState.numCopiumResets} |
       Delusion: ${gameState.numDelusionResets}
@@ -2134,7 +2155,7 @@ const CURRENT_GAME_VERSION = "v0.2";
     prestigeBtn.textContent = "Prestige";
     if (!gameState.prestigeAvailable) {
       prestigeBtn.disabled = true;
-      prestigeBtn.title = "Prestige becomes available after completing a prestige task.";
+      prestigeBtn.setAttribute("data-tooltip", "Prestige becomes available after completing a prestige task.");
     } else {
       prestigeBtn.addEventListener("click", () => {
         showPrestigeConfirmationModal(serenityGainPotential);

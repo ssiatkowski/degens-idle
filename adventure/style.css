@@ -1231,4 +1231,8 @@ footer {
   .serenity-upgrade-grid {
     grid-template-columns: repeat(1, 1fr);
   }
+
+  #zoneName {
+    min-height: 3.9em; /* reserves space for three lines */
+  }
 }

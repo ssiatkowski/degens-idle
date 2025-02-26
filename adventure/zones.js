@@ -185,7 +185,7 @@ var zones = [
     tasks: [
       { id: 131, name: "Travel: Journey to Ascendant Metropolis", type: "Travel", maxReps: 1, count: 0, baseTime: 4e8, description: "Approach a dazzling metropolis of the future.", skills: ["travel"] },
       { id: 132, name: "Beg for Ascension", type: "Training", maxReps: 3, count: 0, baseTime: 1e19, description: "Convince ascended beings to let you access their metropolis.", skills: ["intellect", "negotiation"], mandatory: true },
-      { id: 133, name: "Sandstorm: Guerrilla Warfare Sprint", type: "Training", maxReps: 4, count: 0, baseTime: 2e16, description: "Sprint through a raging sandstorm.", skills: ["endurance", "combat"], perk: "sandstorm" },
+      { id: 133, name: "Sandstorm: Guerrilla Warfare Sprint", type: "Training", maxReps: 4, count: 0, baseTime: 2.2e16, description: "Sprint through a raging sandstorm.", skills: ["endurance", "combat"], perk: "sandstorm" },
       { id: 134, name: "Outpost Infiltration Silent Breach", type: "Training", maxReps: 5, count: 0, baseTime: 1e16, description: "Breach an enemy outpost undetected.", skills: ["hacking", "endurance"] },
       { id: 135, name: "Produce Augment Fuel", type: "Training", maxReps: 4, count: 0, baseTime: 1e18, description: "Synethesize some augment fuel.", skills: ["cybernetics", "mechanics"], resources: ["augment_fuel"] },
       { id: 136, name: "Wise Mechanic: Knowledge Expansion", type: "Training", maxReps: 1, count: 0, baseTime: 1e22, description: "Expand your knowledge of mechanics.", skills: ["tinkering", "intellect", "mechanics"], perk: "wise_mechanic" },
@@ -214,9 +214,9 @@ var zones = [
       { id: 151, name: "Travel: Enter The Garden", type: "Travel", maxReps: 1, count: 0, baseTime: 4e9, description: "Where could the journey take you next?", skills: ["travel"] },
       { id: 152, name: "Mainframe Break-In Digital Siege", type: "Training", maxReps: 2, count: 0, baseTime: 5e19, description: "Penetrate a heavily fortified digital fortress.", skills: ["cybernetics", "mechanics"], mandatory: true },
       { id: 153, name: "Cyber Siege Digital Onslaught", type: "Training", maxReps: 10, count: 0, baseTime: 2e18, description: "Launch a final digital assault on enemy systems.", skills: ["hacking", "cybernetics"], mandatory: true },
-      { id: 154, name: "Discover Serenity", type: "Prestige", maxReps: 1, count: 0, baseTime: 5e5, description: "Find inner peace and serenity.", skills: ["omniscience"], mandatory: true },
+      { id: 154, name: "Discover Serenity", type: "Prestige", maxReps: 1, count: 0, baseTime: 4.8e5, description: "Find inner peace and serenity.", skills: ["omniscience"], mandatory: true },
       { id: 155, name: "Master of AI: Ultimate Challenge", type: "Training", maxReps: 5, count: 0, baseTime: 1e19, description: "Solve a complex algorithm that tests your intellect.", skills: ["aiMastery", "intellect"], perk: "master_of_ai" },
-      { id: 156, name: "Last Stand: Test of Endurance", type: "Training", maxReps: 4, count: 0, baseTime: 7e14, description: "Withstand an endless onslaught of foes.", skills: ["endurance"], perk: "last_stand" },
+      { id: 156, name: "Last Stand: Test of Endurance", type: "Training", maxReps: 4, count: 0, baseTime: 6e14, description: "Withstand an endless onslaught of foes.", skills: ["endurance"], perk: "last_stand" },
       { id: 157, name: "Puzzle Piece: Destiny", type: "Training", maxReps: 10, count: 0, baseTime: 1e17, description: "Find a piece of the ultimate puzzle to shape your destiny.", skills: ["aiMastery", "perception"], resources: ["puzzle_piece"] }
     ]
   },
@@ -256,7 +256,7 @@ var zones = [
     name: "Quantum Abyss",
     img: "images/zones/zone18.jpg",
     tasks: [
-      { id: 181, name: "Travel: Warp to Cybernetic Olympus", type: "Travel", maxReps: 1, count: 0, baseTime: 1e12, description: "Bend the fabric of space-time as you leave the abyss.", skills: ["travel"] },
+      { id: 181, name: "Travel: Warp to Cybernetic Olympus", type: "Travel", maxReps: 1, count: 0, baseTime: 2e12, description: "Bend the fabric of space-time as you leave the abyss.", skills: ["travel"] },
       { id: 182, name: "Embrace Quantum Uncertainty", type: "Training", maxReps: 2, count: 0, baseTime: 2e15, description: "Dive into the realm of probabilistic wonders.", skills: ["quantum"], mandatory: true },
       { id: 183, name: "Stabilize the Particle Field", type: "Training", maxReps: 10, count: 0, baseTime: 1.3e22, description: "Harness subatomic forces with precise adjustments.", skills: ["tinkering", "quantum"], mandatory: true },
       { id: 184, name: "Collect Quantum Residue", type: "Training", maxReps: 3, count: 0, baseTime: 2.5e22, description: "Retrieve fleeting particles left in the void.", skills: ["alchemy", "quantum"], resources: ["quantum_residue"] },
@@ -265,20 +265,20 @@ var zones = [
       { id: 187, name: "Battle Ultron", type: "Training", maxReps: 1, count: 0, baseTime: 1e16, description: "Confront the synthetic menace in a clash of logic.", skills: ["combat"], boss_image: "images/bosses/ultron.jpg", drainMult: 75, resources: ["adamantium"], sound: ultronSound },
     ]
   },
-  // {
-  //   id: 19,
-  //   name: "Cybernetic Olympus",
-  //   img: "images/zones/zone19.jpg",
-  //   tasks: [
-  //     { id: 191, name: "Travel: Ascend from Cybernetic Olympus to Cosmic Forge", type: "Travel", maxReps: 1, count: 0, baseTime: 1.0e23, description: "Leave the realm of circuits for the fires of creation.", skills: ["travel"] },
-  //     { id: 192, name: "Interface with Machine Spirits", type: "Training", maxReps: 10, count: 0, baseTime: 1.1e23, description: "Merge your mind with digital deities.", skills: ["cybernetics", "intellect"], mandatory: true },
-  //     { id: 193, name: "Optimize Circuitry Harmony", type: "Training", maxReps: 10, count: 0, baseTime: 1.2e23, description: "Refine the balance of mechanical precision.", skills: ["tinkering", "mechanics"], mandatory: true },
-  //     { id: 194, name: "Extract Nano Components", type: "Training", maxReps: 7, count: 0, baseTime: 1.3e23, description: "Scavenge vital microchips from abandoned systems.", skills: ["mechanics", "hacking"], resources: ["nano_chip"] },
-  //     { id: 195, name: "Synchronize Data Streams", type: "Training", maxReps: 7, count: 0, baseTime: 1.4e23, description: "Align the flow of digital information.", skills: ["intellect", "hacking"] },
-  //     { id: 196, name: "Empower Digital Resonance", type: "Training", maxReps: 7, count: 0, baseTime: 1.5e23, description: "Amplify the power of cybernetic energy.", skills: ["cybernetics", "intellect"], perk: "cyber_boost" },
-  //     { id: 197, name: "Battle Unicron", type: "Training", maxReps: 1, count: 0, baseTime: 1.6e23, description: "Confront the colossal force of cosmic destruction.", skills: ["combat", "intellect", "cybernetics"], resources: ["cosmic_shard"] }
-  //   ]
-  // },
+  {
+    id: 19,
+    name: "Cybernetic Olympus",
+    img: "images/zones/zone19.jpg",
+    tasks: [
+      { id: 191, name: "Travel: Ascend from Cybernetic Olympus to Cosmic Forge", type: "Travel", maxReps: 1, count: 0, baseTime: 1.0e23, description: "Leave the realm of circuits for the fires of creation.", skills: ["travel"] },
+      { id: 192, name: "Interface with Machine Spirits", type: "Training", maxReps: 10, count: 0, baseTime: 1.1e23, description: "Merge your mind with digital deities.", skills: ["cybernetics", "intellect"], mandatory: true },
+      { id: 193, name: "Optimize Circuitry Harmony", type: "Training", maxReps: 10, count: 0, baseTime: 1.2e23, description: "Refine the balance of mechanical precision.", skills: ["tinkering", "mechanics"], mandatory: true },
+      { id: 194, name: "Extract Nano Components", type: "Training", maxReps: 7, count: 0, baseTime: 1.3e23, description: "Scavenge vital microchips from abandoned systems.", skills: ["mechanics", "hacking"], resources: ["nano_chip"] },
+      { id: 195, name: "Synchronize Data Streams", type: "Training", maxReps: 7, count: 0, baseTime: 1.4e23, description: "Align the flow of digital information.", skills: ["intellect", "hacking"] },
+      { id: 196, name: "Empower Digital Resonance", type: "Training", maxReps: 7, count: 0, baseTime: 1.5e23, description: "Amplify the power of cybernetic energy.", skills: ["cybernetics", "intellect"], perk: "cyber_boost" },
+      { id: 197, name: "Battle Unicron", type: "Training", maxReps: 1, count: 0, baseTime: 1.6e23, description: "Confront the colossal force of cosmic destruction.", skills: ["combat"], resources: ["cosmic_shard"] }
+    ]
+  },
   // {
   //   id: 20,
   //   name: "Cosmic Forge",
