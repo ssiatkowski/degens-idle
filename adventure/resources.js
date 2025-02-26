@@ -531,7 +531,7 @@ const resourceActions = {
   },
 };
 
-const EXCLUDED_AUTO_RESOURCES = new Set(["cybernetic_armor", "infinity_gauntlet", "stardust", "celestial_blossom"]);
+const EXCLUDED_AUTO_RESOURCES = new Set(["cybernetic_armor", "infinity_gauntlet", "stardust"]);
 
 const SERENITY_UPGRADES = {
   unlockables: {

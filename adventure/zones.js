@@ -216,7 +216,7 @@ var zones = [
       { id: 153, name: "Cyber Siege Digital Onslaught", type: "Training", maxReps: 10, count: 0, baseTime: 2e18, description: "Launch a final digital assault on enemy systems.", skills: ["hacking", "cybernetics"], mandatory: true },
       { id: 154, name: "Discover Serenity", type: "Prestige", maxReps: 1, count: 0, baseTime: 4.8e5, description: "Find inner peace and serenity.", skills: ["omniscience"], mandatory: true },
       { id: 155, name: "Master of AI: Ultimate Challenge", type: "Training", maxReps: 5, count: 0, baseTime: 1e19, description: "Solve a complex algorithm that tests your intellect.", skills: ["aiMastery", "intellect"], perk: "master_of_ai" },
-      { id: 156, name: "Last Stand: Test of Endurance", type: "Training", maxReps: 4, count: 0, baseTime: 6e14, description: "Withstand an endless onslaught of foes.", skills: ["endurance"], perk: "last_stand" },
+      { id: 156, name: "Last Stand: Test of Endurance", type: "Training", maxReps: 4, count: 0, baseTime: 2e14, drainMult: 3, description: "Withstand an endless onslaught of foes.", skills: ["endurance"], perk: "last_stand" },
       { id: 157, name: "Puzzle Piece: Destiny", type: "Training", maxReps: 10, count: 0, baseTime: 1e17, description: "Find a piece of the ultimate puzzle to shape your destiny.", skills: ["aiMastery", "perception"], resources: ["puzzle_piece"] }
     ]
   },
@@ -270,7 +270,7 @@ var zones = [
     name: "Cybernetic Olympus",
     img: "images/zones/zone19.jpg",
     tasks: [
-      { id: 191, name: "Travel: Ascend from Cybernetic Olympus to Cosmic Forge", type: "Travel", maxReps: 1, count: 0, baseTime: 1e14, description: "Leave the realm of circuits for the fires of creation.", skills: ["travel"] },
+      { id: 191, name: "Travel: Ascend to Cosmic Forge", type: "Travel", maxReps: 1, count: 0, baseTime: 1e14, description: "Leave the realm of circuits for the fires of creation.", skills: ["travel"] },
       { id: 192, name: "Interface with Machine Spirits", type: "Training", maxReps: 5, count: 0, baseTime: 1e24, description: "Merge your mind with digital deities.", skills: ["cybernetics", "intellect"], mandatory: true },
       { id: 193, name: "Optimize Circuitry Harmony", type: "Training", maxReps: 2, count: 0, baseTime: 2e18, drainMult: 10, description: "Refine the balance of celestial circuits with precision.", skills: ["tinkering"], mandatory: true },
       { id: 194, name: "Extract Nano Components", type: "Training", maxReps: 4, count: 0, baseTime: 1e22, description: "Scavenge vital microchips from abandoned systems.", skills: ["mechanics", "hacking"], resources: ["nano_component"] },
