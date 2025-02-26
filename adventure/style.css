@@ -376,21 +376,6 @@ body {
   border: 2px dashed red;      /* Red dashed border on the button */
 }
 
-/* Overlay the SVG with two dashed red lines */
-.task-control button.big-x::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  /* The SVG draws two lines: one from top-left to bottom-right, and the other from top-right to bottom-left */
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'%3E%3Cline x1='0' y1='0' x2='100%25' y2='100%25' stroke='red' stroke-dasharray='4,4' stroke-width='2'/%3E%3Cline x1='100%25' y1='0' x2='0' y2='100%25' stroke='red' stroke-dasharray='4,4' stroke-width='2'/%3E%3C/svg%3E");
-  background-size: cover;
-  pointer-events: none;        /* Allows clicks to pass through */
-  z-index: 1;
-}
-
 
 
 
@@ -938,13 +923,21 @@ footer {
   background-color: #27ae60 !important;
   color: #fff !important;
 }
-.modal-content button.btn-gray {
+.modal-content button.btn-discord {
   background-color: rgb(200, 200, 200) !important;
   color: #000 !important;
+  object-fit: fill;
 }
 
-.modal-content button.btn-gray {
-  object-fit: fill;
+.modal-content button.btn-discord img {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.modal-content button.btn-yellow {
+  background-color: #cfc210 !important;
+  color: #fff !important;
 }
 
 .modal-content button.btn-degens {
@@ -963,20 +956,25 @@ footer {
 }
 
 .save-buttons-container {
-  /* Match the width of your other single buttons */
-  width: 200px;
-
-  display: flex;
-  gap: 5px; /* spacing between Copy and Paste */
-  justify-content: space-between;
-  margin: 0 auto; /* center them horizontally if desired */
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 200px;  /* or whatever fits best */
+  justify-items: center; /* each cell stretches horizontally */
+  align-items: center;     /* vertically center in each cell */
 }
 
 .save-buttons-container button {
-  flex: 1; /* each button shares half the container */
+  width: 100%; 
+  display: flex;          /* make icon+text center nicely */
+  justify-content: center;
+  align-items: center;
   text-align: center;
+  box-sizing: border-box; /* ensures no unexpected padding shift */
+  padding: 6px;           /* adjust as you like */
 }
-
 
 /* Style for copy and paste save buttons with icons and text */
 .modal-content button.btn-copy,
@@ -984,7 +982,6 @@ footer {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 20px;
   font-size: 0.9em;
   background: #5b5b5b;
   border: none;

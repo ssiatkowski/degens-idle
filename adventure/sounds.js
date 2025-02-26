@@ -61,6 +61,7 @@ const soundManager = {
   const thanosSound = soundManager.register("thanos", "sounds/thanos.wav", { type: 'sfx' });
   const darthVaderSound = soundManager.register("darthVader", "sounds/darth_vader.wav", { type: 'sfx' });
   const ultronSound = soundManager.register("ultron", "sounds/ultron.wav", { type: 'sfx' });
+  const unicronSound = soundManager.register("unicron", "sounds/unicron.wav", { type: 'sfx' });
   // Register additional sounds as needed:
   // const someOtherSound = soundManager.register("other", "sounds/other_sound.wav", { type: 'sfx' });
   

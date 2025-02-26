@@ -35,6 +35,7 @@ const perkDescriptions = {
     inspired_glow:          "Serenity Gain on Prestige increased by 25%.",
     quantum_teleportation:  "Travel is now affected by Power.",
     quantum_harmony:        "(not implemented yet)", //TODO: implement
+    cyber_boost:            "Each time Cybernetics levels up,<br>another random skill also levels up."
   };
 
 const toggleablePerks = ["completionist", "copious_alchemist", "master_of_ai", "mechanical_genius"];
@@ -48,7 +49,7 @@ const resourceActions = {
       gameState.energy += 3 * amt;
       updateEnergyDisplay();
       updateTasksHoverInfo();
-      if(gameState.soundEnabled && amt >= 25) gulpSound.play(); 
+      //if(gameState.soundEnabled && amt >= 25) gulpSound.play(); 
       showMessage(`Used ${amt} Energy Elixir${amt > 1 ? "s" : ""}.<br>Gained ${3 * amt} Energy.`);
     },
     tooltip: "Click to gain +3 Energy.<br>" + (("ontouchstart" in window || navigator.maxTouchPoints > 0) ? "Use above switch to consume all." : "Right-click to consume all.")
@@ -167,17 +168,15 @@ const resourceActions = {
     onConsume: (gameState, amt) => {
       // Object to track how many times each skill was leveled up
       let groupedSkills = {};
+      // Get all visible skills
+      const visibleSkills = Object.keys(gameState.skills).filter(sName => gameState.skills[sName].visible);
 
       for (let i = 0; i < amt; i++) {
-        // Get all visible skills
-        const visibleSkills = Object.keys(gameState.skills).filter(sName => gameState.skills[sName].visible);
         // Choose a random visible skill
         const randomSkillName = visibleSkills[Math.floor(Math.random() * visibleSkills.length)];
         const skill = gameState.skills[randomSkillName];
 
-        // Reset XP and level up the skill
-        skill.xp = 0;
-        skill.level++;
+        addXP(randomSkillName, 0, "", true, Math.pow(getSkillXpScaling(), skill.level - 1) - skill.xp);
 
         // Group the level-up for this skill
         groupedSkills[randomSkillName] = (groupedSkills[randomSkillName] || 0) + 1;
@@ -417,9 +416,28 @@ const resourceActions = {
   },
   "lightsaber": {
     onConsume: (gameState, amt) => {
+      let extraSpawned = 0;
+      for (let i = 0; i < amt; i++) {
+        // Increase all skills' speed by 3% for each lightsaber consumed.
+        Object.keys(gameState.skills).forEach(skill => {
+          gameState.skills[skill].progressBoost += 0.03;
+        });
+        // 50% chance to spawn an extra lightsaber.
+        if (Math.random() < 0.5) {
+          addResource("lightsaber", 1);
+          extraSpawned++;
+        }
+      }
+      updateSkillMultipliers();
       updateSkillDisplay();
+      updateTasksHoverInfo();
+      let msg = `Used ${amt} Lightsaber${amt > 1 ? "s" : ""}.<br>All skills' speed increased by ${3 * amt}%.`;
+      if (extraSpawned > 0) {
+        msg += `<br>${extraSpawned} extra lightsaber${extraSpawned !== 1 ? "s" : ""} spawned!`;
+      }
+      showMessage(msg);
     },
-    tooltip: "Not implemented yet."
+    tooltip: "Boosts speed for all skills by 3% per use.<br>50% chance to spawn an extra Lightsaber."
   },
   "quantum_residue": {
     onConsume: (gameState, amt) => {
@@ -494,6 +512,23 @@ const resourceActions = {
     },
     tooltip: "Not implemented yet."
   },
+  "nano_component": {
+    onConsume: (gameState, amt) => {
+      gameState.skills["charisma"].progressBoost += 0.15 * amt;
+      gameState.skills["tinkering"].progressBoost += 0.15 * amt;
+      updateSkillMultipliers();
+      updateSkillDisplay();
+      updateTasksHoverInfo();
+      showMessage(`Used ${amt} Nano Component${amt > 1 ? "s" : ""}.<br>Boosted speed by ${15 * amt}% for Charisma and Tinkering.`);
+    },
+    tooltip: "Boosts speed by 15% for Charisma and Tinkering."
+  },
+  "cosmic_shard": {
+    onConsume: (gameState, amt) => {
+      updateSkillDisplay();
+    },
+    tooltip: "Not implemented yet."
+  },
 };
 
 const EXCLUDED_AUTO_RESOURCES = new Set(["cybernetic_armor", "infinity_gauntlet", "stardust", "celestial_blossom"]);
@@ -515,7 +550,7 @@ const SERENITY_UPGRADES = {
       },
       "Instant Simulation": { 
         cost: 50,
-        description: "On Prestige, start with Self Operating Gadget and Simulation Engine unlocked,<br>all zones start at 10 Full Clears, and automation settings preserved."
+        description: "On Prestige, start with Self Operating Gadget and Simulation Engine unlocked,<br>fully cleared zones and automation settings preserved."
       }
     },
 

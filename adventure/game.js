@@ -126,25 +126,108 @@ const CURRENT_GAME_VERSION = "v0.2";
   
 
   function updateResourceDisplay(name) {
-    if ((gameState.resources[name] || 0) <= 0) {
-      // If the resource count is 0, re-render the entire grid.
-      renderResources();
-    } else {
-      const grid = document.getElementById("resourcesGrid");
-      if (!grid) return;
-      // Find the resource item by its data-resource attribute.
-      const resourceDiv = grid.querySelector(`.resource-item[data-resource="${name}"]`);
-      if (resourceDiv) {
-        const cnt = resourceDiv.querySelector(".resource-count");
-        if (cnt) {
-          cnt.textContent = gameState.resources[name] || 0;
-        }
-      } else {
-        // If the resource element isn't found, re-render everything.
-        renderResources();
+    const grid = document.getElementById("resourcesGrid");
+    if (!grid) return;
+    const currentCount = gameState.resources[name] || 0;
+    // If count is 0, remove any existing element.
+    if (currentCount <= 0) {
+      const existing = grid.querySelector(`.resource-item[data-resource="${name}"]`);
+      if (existing) {
+        existing.remove();
       }
+      return;
+    }
+    // Check if an element for this resource already exists.
+    let resourceDiv = grid.querySelector(`.resource-item[data-resource="${name}"]`);
+    if (resourceDiv) {
+      // Just update the count.
+      const cnt = resourceDiv.querySelector(".resource-count");
+      if (cnt) {
+        cnt.textContent = currentCount;
+      }
+    } else {
+      // It doesn't exist—create a new resource element and append it to the bottom.
+      const div = document.createElement("div");
+      div.className = "resource-item";
+      div.dataset.resource = name;
+      div.setAttribute("data-tooltip", 
+        formatStringForDisplay(name) + ":<br>" + (resourceActions[name]?.tooltip || "Tap to consume resource.")
+      );
+      
+      // Create the resource icon.
+      const img = document.createElement("img");
+      img.src = "images/resources/" + name + ".jpg";
+      img.alt = name;
+      img.style.pointerEvents = "none";
+      img.style.userSelect = "none";
+      img.setAttribute("draggable", "false");
+      
+      // Create the count element.
+      const cnt = document.createElement("div");
+      cnt.className = "resource-count";
+      cnt.textContent = currentCount;
+      
+      // Attach event listeners.
+      if (isMobile) {
+        div.addEventListener("click", () => {
+          if (gameState.resources[name] > 0) {
+            if (resourceConsumeMode === "all") {
+              const amt = gameState.resources[name];
+              consumeResource(name, amt);
+              if (resourceActions[name]?.onConsume) {
+                resourceActions[name].onConsume(gameState, amt);
+              }
+            } else {
+              consumeResource(name, 1);
+              if (resourceActions[name]?.onConsume) {
+                resourceActions[name].onConsume(gameState, 1);
+              }
+            }
+            updateSkillMultipliers();
+            hideTooltip();
+          }
+        });
+        let touchTimeout;
+        div.addEventListener("touchstart", () => {
+          touchTimeout = setTimeout(() => { showTooltip(div); }, 500);
+        });
+        div.addEventListener("touchend", () => {
+          clearTimeout(touchTimeout);
+          hideTooltip();
+        });
+        div.addEventListener("touchcancel", () => {
+          clearTimeout(touchTimeout);
+          hideTooltip();
+        });
+      } else {
+        div.addEventListener("click", () => {
+          if (gameState.resources[name] > 0) {
+            consumeResource(name, 1);
+            if (resourceActions[name]?.onConsume) {
+              resourceActions[name].onConsume(gameState, 1);
+            }
+            if (gameState.resources[name] === 0) hideTooltip();
+          }
+        });
+        div.addEventListener("contextmenu", e => {
+          e.preventDefault();
+          if (gameState.resources[name] > 0) {
+            const amt = gameState.resources[name];
+            consumeResource(name, amt);
+            if (resourceActions[name]?.onConsume) {
+              resourceActions[name].onConsume(gameState, amt);
+            }
+            hideTooltip();
+          }
+        });
+      }
+      
+      div.appendChild(img);
+      div.appendChild(cnt);
+      grid.appendChild(div); // Appends at the bottom.
     }
   }
+  
   
   
   function renderResources() {
@@ -303,6 +386,29 @@ const CURRENT_GAME_VERSION = "v0.2";
     perkSet.forEach(pk => { if (!gameState.perks.hasOwnProperty(pk)) gameState.perks[pk] = false; });
   }
 
+  function getZonePerkOrder() {
+    const perkList = [];
+    zones.forEach(zone => {
+      zone.tasks.forEach(task => {
+        if (task.perk && !perkList.includes(task.perk)) {
+          perkList.push(task.perk);
+        }
+      });
+    });
+    return perkList;
+  }
+
+  function getPerkGroup(perkKey) {
+    const isUnlocked = gameState.perks[perkKey] !== false;
+    const isToggleable = toggleablePerks.includes(perkKey);
+  
+    if (isUnlocked && isToggleable) return 0; // unlocked & toggleable
+    if (isUnlocked)               return 1; // unlocked but not toggleable
+    return 2; // locked
+  }
+  
+  
+
   function saveGameProgress() {
     const zonesProgress = zones.map(z => z.tasks.map(t => t.count));
     const data = { gameState, currentZoneIndex, zonesProgress };
@@ -372,6 +478,43 @@ const CURRENT_GAME_VERSION = "v0.2";
       showMessage("Error reading clipboard: " + err);
     });
   }
+
+  function computeSerenityTotalValue() {
+    let total = gameState.serenity; // Base serenity
+  
+    // Sum the cost of purchased unlockable upgrades.
+    if (typeof SERENITY_UPGRADES !== "undefined" && SERENITY_UPGRADES.unlockables) {
+      for (const section in SERENITY_UPGRADES.unlockables) {
+        const upgrades = SERENITY_UPGRADES.unlockables[section];
+        for (const upgName in upgrades) {
+          if (gameState.serenityUnlockables[upgName]) {
+            total += upgrades[upgName].cost;
+          }
+        }
+      }
+    }
+  
+    // Sum the total cost spent on infinite upgrades.
+    if (typeof SERENITY_UPGRADES !== "undefined" && SERENITY_UPGRADES.infinite) {
+      for (const section in SERENITY_UPGRADES.infinite) {
+        const upgrades = SERENITY_UPGRADES.infinite[section];
+        for (const upgName in upgrades) {
+          const details = upgrades[upgName];
+          const level = gameState.serenityInfinite[upgName] || 0;
+          if (level > 0) {
+            if (details.scaling !== 1) {
+              total += details.initialCost * (Math.pow(details.scaling, level) - 1) / (details.scaling - 1);
+            } else {
+              total += details.initialCost * level;
+            }
+          }
+        }
+      }
+    }
+  
+    return total;
+  }
+  
   
   // A helper to show a custom “Load this save?” modal
   function showPasteConfirmationModal(onConfirm) {
@@ -585,15 +728,22 @@ const CURRENT_GAME_VERSION = "v0.2";
   /****************************************
    * SKILLS & XP FUNCTIONS
    ****************************************/
-  function addXP(skillName, rawXP) {
-    if (rawXP <= 0) return;
+  function addXP(skillName, rawXP, prePendMessage, suppressMessage, overwriteXP) {
+    // Set default values if not provided
+    prePendMessage = (typeof prePendMessage !== "undefined") ? prePendMessage : "";
+    suppressMessage = (typeof suppressMessage !== "undefined") ? suppressMessage : false;
+    overwriteXP = (typeof overwriteXP !== "undefined") ? overwriteXP : -1;
+  
+    if (rawXP <= 0 && overwriteXP === -1) return;
     const skill = gameState.skills[skillName];
     if (!skill) return;
-    // Reveal hidden skills on first use
+  
+    // Reveal hidden skills on first use.
     if (!skill.visible) {
       skill.visible = true;
       renderSkills();
     }
+  
     if (gameState.knowledgeUnlocked && knowledgeSkills.includes(skillName)) {
       rawXP *= (1 + 0.001 * gameState.knowledge);
     }
@@ -603,29 +753,51 @@ const CURRENT_GAME_VERSION = "v0.2";
     if (gameState.perks["reinforcement_learning"] && skillName === "aiMastery") {
       rawXP *= 5;
     }
-    skill.xp += rawXP * skill.xpGainFactor;
+  
+    if (overwriteXP === -1) {
+      skill.xp += rawXP * skill.xpGainFactor;
+    } else {
+      skill.xp += overwriteXP;
+    }
+  
     let required = Math.pow(skillXpScaling, skill.level - 1);
+    const visibleSkills = Object.keys(gameState.skills).filter(sName => gameState.skills[sName].visible && sName !== "cybernetics");
+  
     while (skill.xp >= required) {
       skill.xp -= required;
       skill.level++;
+  
+      if (gameState.perks.cyber_boost && skillName === "cybernetics") {
+        // Choose a random visible skill (excluding cybernetics)
+        const randomSkillName = visibleSkills[Math.floor(Math.random() * visibleSkills.length)];
+        const randomSkill = gameState.skills[randomSkillName];
+        addXP(
+          randomSkillName,
+          0,
+          "Cyber Boost: ",
+          false,
+          Math.pow(skillXpScaling, randomSkill.level - 1) - randomSkill.xp
+        );
+      }
       updateSkillMultipliers();
-
+  
       var message = formatStringForDisplay(skillName) + " leveled up to " + skill.level;
-
-      if (skill.level % 100 === 0 && false) { //TODO: only show color after relevant upgrade unlocked
+  
+      if (skill.level % 100 === 0 && false) { // TODO: Only show color after upgrade unlocked.
         if (gameState.soundEnabled) {
           levelUpSound.play();
         }
-        showMessage('<span style="color: rgb(63, 202, 212);">' + message + '</span>');
+        showMessage(prePendMessage + '<span style="color: rgb(63, 202, 212);">' + message + '</span>');
       } else {
-        showMessage(message);
+        if (!suppressMessage) {
+          showMessage(prePendMessage + message);
+        }
       }
-      
-
       required = Math.pow(skillXpScaling, skill.level - 1);
     }
     updateSkillDisplay();
   }
+  
 
   function updateSkillDisplay() {
     document.querySelectorAll(".skill").forEach(el => {
@@ -1202,7 +1374,7 @@ const CURRENT_GAME_VERSION = "v0.2";
         const key = `${currentZoneIndex}-${idx}`;
         // Ensure a default value is set if none exists:
         if (gameState.automationOverrides[key] === undefined) {
-          gameState.automationOverrides[key] = true;
+          gameState.automationOverrides[key] = false;
         }
         // Update the button’s appearance based on the override:
         updateTaskAutomationUI(btn, key);
@@ -1517,13 +1689,17 @@ const CURRENT_GAME_VERSION = "v0.2";
       if (gameState.delusionUnlocked && usedSkills.some(s => delusionSkills.includes(s))) {
         extraInfo += `<br><br><span style="color:#9b59b6">Delusion Gain for next Task: 0 - ${formatNumber(zone.id * 100)} (random, skewed to low)</span>`;
       }
-
+      // --- New: Drain Multiplier Info ---
+      if (task.drainMult !== undefined) {
+        extraInfo += `<br><br><span style="color:gray;">Task Drain Multiplier: ${formatNumber(task.drainMult)}</span>`;
+      }
+      
       // --- Real Time Duration Estimate ---
       const combinedMult = getCombinedMultiplier(task);
       const estimatedTicks = task.baseTime / (effTickDuration * combinedMult);
       const estimatedRealTimeMs = estimatedTicks * runTickDuration;
       const estimatedRealTimeSeconds = estimatedRealTimeMs / 1000;
-
+  
       let timeInfo = "";
       if (estimatedRealTimeSeconds >= 0.1) {
         if (estimatedRealTimeSeconds < 60) {
@@ -1534,9 +1710,8 @@ const CURRENT_GAME_VERSION = "v0.2";
           timeInfo = `<br><br><span style="color:rgb(136, 72, 0);">Estimated Time${task.maxReps > 1 ? " for next task" : ""}: ${minutes} m ${seconds} s</span>`;
         }
       }
-
-
-      const energyColorOffset = (estimatedEnergy/gameState.energy) * 60;
+  
+      const energyColorOffset = (estimatedEnergy / gameState.energy) * 60;
       
       btn.setAttribute("data-tooltip", 
         task.description +
@@ -1548,6 +1723,7 @@ const CURRENT_GAME_VERSION = "v0.2";
       
     });
   }
+  
 
   function nextZone() {
     currentZoneIndex++;
@@ -1686,26 +1862,31 @@ const CURRENT_GAME_VERSION = "v0.2";
     if (!grid) return;
     grid.innerHTML = "";
   
-    // Get all perk keys and sort them.
-    const perkKeys = Object.keys(gameState.perks).sort((a, b) => {
-      const aUnlocked = gameState.perks[a] !== false;
-      const bUnlocked = gameState.perks[b] !== false;
-      const aToggle = toggleablePerks.includes(a);
-      const bToggle = toggleablePerks.includes(b);
+    // 1) Build the zone order array once (or store it globally).
+    const zoneOrder = getZonePerkOrder();
   
-      // Unlocked perks come before locked perks.
-      if (aUnlocked && !bUnlocked) return -1;
-      if (!aUnlocked && bUnlocked) return 1;
+    // 2) Grab all perk keys from gameState.
+    const perkKeys = Object.keys(gameState.perks);
   
-      // Among unlocked perks, toggleable perks come first.
-      if (aUnlocked && bUnlocked) {
-        if (aToggle && !bToggle) return -1;
-        if (!aToggle && bToggle) return 1;
-      }
-      // If same group, sort alphabetically.
-      return a.localeCompare(b);
+    // 3) Sort them using a custom function.
+    perkKeys.sort((a, b) => {
+      // Compare by group first
+      const groupA = getPerkGroup(a);
+      const groupB = getPerkGroup(b);
+      if (groupA !== groupB) return groupA - groupB;
+  
+      // If same group, compare by index in zoneOrder
+      let idxA = zoneOrder.indexOf(a);
+      let idxB = zoneOrder.indexOf(b);
+  
+      // If a perk doesn't appear in zoneOrder for some reason, push it to the end
+      if (idxA < 0) idxA = 999999;
+      if (idxB < 0) idxB = 999999;
+  
+      return idxA - idxB;
     });
   
+    // 4) Now perkKeys is in the desired order. Then build the DOM.
     perkKeys.forEach(pKey => {
       const div = document.createElement("div");
       const icon = document.createElement("img");
@@ -1714,36 +1895,43 @@ const CURRENT_GAME_VERSION = "v0.2";
       icon.alt = pStr;
       icon.style.pointerEvents = "none";
   
+      // Determine locked/unlocked/toggleable classes & tooltips
       if (gameState.perks[pKey] !== false) {
+        // unlocked
         if (toggleablePerks.includes(pKey)) {
-          // Toggleable perk unlocked.
+          // toggleable
           if (gameState.perks[pKey] === "disabled") {
             div.className = "perk-item unlocked disabled";
           } else {
             div.className = "perk-item unlocked toggleable-enabled";
           }
-          // Add click event to toggle perk.
+          // On click, toggle it
           div.addEventListener("click", () => {
             gameState.perks[pKey] = (gameState.perks[pKey] === "disabled") ? true : "disabled";
             applyPerks();
             renderPerks();
             updateTasksHoverInfo();
           });
-          div.setAttribute("data-tooltip", pStr + ":<br>" + (perkDescriptions[pKey] + "<br>Click to Toggle this perk." || "An unknown perk."));
+          div.setAttribute("data-tooltip",
+            pStr + ":<br>" +
+            (perkDescriptions[pKey] + "<br>Click to Toggle this perk." || "An unknown perk.")
+          );
         } else {
-          // Unlocked but not toggleable.
+          // unlocked but not toggleable
           div.className = "perk-item unlocked";
           div.setAttribute("data-tooltip", pStr + ":<br>" + (perkDescriptions[pKey] || "An unknown perk."));
         }
       } else {
-        // Locked perk.
+        // locked
         div.className = "perk-item locked";
         div.setAttribute("data-tooltip", pStr + ": Unlock perk to see description.");
       }
+  
       div.appendChild(icon);
       grid.appendChild(div);
     });
   }
+  
   
   
 
@@ -1892,9 +2080,12 @@ const CURRENT_GAME_VERSION = "v0.2";
           renderPerks();
         }
         zones.forEach((zone, i) => {
-          gameState.zoneFullCompletes[i] = Math.max(gameState.zoneFullCompletes[i] || 0, 10);
+          const current = gameState.zoneFullCompletes[i] || 0;
+          if (current >= 10) {
+            gameState.zoneFullCompletes[i] = 10;
+          }
         });
-        break;
+        break;       
       default:
         console.log(`No effect defined for unlockable: ${upgName}`);
         break;
@@ -2546,8 +2737,76 @@ const CURRENT_GAME_VERSION = "v0.2";
       pasteSaveBtn.addEventListener("click", pasteSave);
       saveButtonsContainer.appendChild(pasteSaveBtn);
 
+      // Create the Save to File button.
+      const saveFileBtn = document.createElement("button");
+      saveFileBtn.classList.add("btn-copy");
+      saveFileBtn.innerHTML = `<img src="images/buttons/upload.png" alt="Save"><span> Save</span>`;
+      saveFileBtn.setAttribute("data-tooltip", "Save your game progress to a file.");
+      saveFileBtn.addEventListener("click", () => {
+        // Ensure progress is saved.
+        saveGameProgress();
+        const saveData = localStorage.getItem("degensAdventureProgress");
+        if (!saveData) {
+          showMessage("No save data found");
+          return;
+        }
+        // Compute file name.
+        const totalSerenity = computeSerenityTotalValue();
+        const perkCount = Object.keys(gameState.perks).filter(key => gameState.perks[key] !== false).length;
+        let fileName = "Degens Adventure - ";
+        if (totalSerenity > 0) {
+          fileName += "Serenity_" + formatNumber(totalSerenity) + ", ";
+        }
+        fileName += "Perks_" + perkCount;
+        // Create a blob and trigger the download.
+        const blob = new Blob([saveData], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = fileName + ".json";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      });
+      saveButtonsContainer.appendChild(saveFileBtn);
+
+      // Create the Load from File button.
+      const loadFileBtn = document.createElement("button");
+      loadFileBtn.classList.add("btn-paste");
+      loadFileBtn.innerHTML = `<img src="images/buttons/download.png" alt="Load"><span> Load</span>`;
+      loadFileBtn.setAttribute("data-tooltip", "Load game progress from a file.");
+      loadFileBtn.addEventListener("click", () => {
+        // Create a hidden file input.
+        const input = document.createElement("input");
+        input.type = "file";
+        input.accept = "application/json";
+        input.addEventListener("change", (e) => {
+          const file = e.target.files[0];
+          if (!file) return;
+          const reader = new FileReader();
+          reader.onload = (event) => {
+            try {
+              const data = event.target.result;
+              // Optionally, you can show a confirmation modal before overwriting.
+              showPasteConfirmationModal(() => {
+                localStorage.setItem("degensAdventureProgress", data);
+                showMessage("Save loaded from file!");
+                location.reload();
+              });
+            } catch (err) {
+              showMessage("Invalid save file");
+            }
+          };
+          reader.readAsText(file);
+        });
+        input.click();
+      });
+      saveButtonsContainer.appendChild(loadFileBtn);
+
       // Append the container to your settings modal content
       content.appendChild(saveButtonsContainer);
+
   
       // 1) Cheat Codes (Orange)
       const cheatBtn = document.createElement("button");
@@ -2589,9 +2848,9 @@ const CURRENT_GAME_VERSION = "v0.2";
       content.appendChild(restartAll);
 
 
-      // 3) Discord (Gray) with image fill
+      // 3) Discord with image fill
       const discordBtn = document.createElement("button");
-      discordBtn.classList.add("btn-gray");
+      discordBtn.classList.add("btn-discord");
       const discordImg = document.createElement("img");
       discordImg.src = "images/discord.svg";
       discordImg.alt = "Discord";
@@ -2608,6 +2867,20 @@ const CURRENT_GAME_VERSION = "v0.2";
       });
       content.appendChild(discordBtn);
 
+      /**
+       * New Buy Me a Coffee button (Yellow).
+       */
+      const coffeeBtn = document.createElement("button");
+      coffeeBtn.classList.add("btn-yellow");
+      coffeeBtn.textContent = "Buy Me a Coffee";
+      coffeeBtn.setAttribute(
+        "data-tooltip",
+        "If you enjoy Degens Adventure and want to see more,<br>feel free to support the developer!"
+      );
+      coffeeBtn.addEventListener("click", () => {
+        window.open("https://buymeacoffee.com/ssiatkowski", "_blank");
+      });
+      content.appendChild(coffeeBtn);
   
       // 4) Degens Idle (Orange) with image fill and custom tooltip
       const degensIdleBtn = document.createElement("button");
@@ -2673,6 +2946,8 @@ const CURRENT_GAME_VERSION = "v0.2";
     currentTasks = [];
     document.getElementById("copiumBarContainer").style.display = "none";
     document.getElementById("delusionBarContainer").style.display = "none";
+    //if autoConsumeBtn exists set it to none
+    if (document.getElementById("autoConsumeBtn")) document.getElementById("autoConsumeBtn").style.display = "none";
     updateEnergyDisplay();
     renderResources();
     gatherAllPerks();
@@ -3196,6 +3471,8 @@ const CURRENT_GAME_VERSION = "v0.2";
   window.formatStringForDisplay = (str) => formatStringForDisplay(str);
   window.addResource = (name, amt) => addResource(name, amt);
   window.saveGameProgress = saveGameProgress;
+  window.addXP = (skillName, rawXP, prePendMessage, suppressMessage, overwriteXP) => addXP(skillName, rawXP, prePendMessage, suppressMessage, overwriteXP);
+  window.getSkillXpScaling = () => skillXpScaling;
 
   // Expose some functions for debugging
   window.getGameState = () => gameState;

@@ -86,7 +86,7 @@ var zones = [
       { id: 64, name: "Tactical Coordination Group Skirmish", type: "Training", maxReps: 7, count: 0, baseTime: 4e8, description: "Develop team-based combat strategies.", skills: ["combat", "charisma"] },
       { id: 65, name: "Energetic Bliss: Painstaking Training", type: "Training", maxReps: 1, count: 0, baseTime: 4e12, description: "Engage in a grueling training session.", skills: ["combat", "endurance", "perception"], perk: "energetic_bliss" },
       { id: 66, name: "Concoct Some Steroids", type: "Training", maxReps: 4, count: 0, baseTime: 9e9, description: "Create a performance-enhancing steroid.", skills: ["alchemy", "tinkering", "intellect"], resources: ["steroids"] },
-      { id: 67, name: "Kung Fu Zen: Talk Your Way", type: "Training", maxReps: 3, count: 0, baseTime: 3e10, description: "Convince the masters to help you improve your learning.", skills: ["charisma"], perk: "kung_fu_zen" },
+      { id: 67, name: "Kung Fu Zen: Talk Your Way", type: "Training", maxReps: 3, count: 0, baseTime: 1e10, drainMult: 3, description: "Convince the masters to help you improve your learning.", skills: ["charisma"], perk: "kung_fu_zen" },
       { id: 68, name: "Challenge Dojo Master Chuck Norris", type: "Training", maxReps: 1, count: 0, baseTime: 1e9, description: "Challenge the legendary martial artist.", skills: ["combat"], boss_image: "images/bosses/chuck_norris.jpg", drainMult: 8, resources: ["karate_belt"], sound: chuckNorrisSound },
     ]
   },
@@ -245,7 +245,7 @@ var zones = [
       { id: 173, name: "Align the Nebula Currents", type: "Training", maxReps: 1, count: 0, baseTime: 1e17, description: "Adjust the flow of cosmic energies to create balance.", skills: ["intellect"], mandatory: true },
       { id: 174, name: "Collect Stardust Samples", type: "Training", maxReps: 2, count: 0, baseTime: 1e24, description: "Gather sparkling particles scattered across the void.", skills: ["alchemy", "perception"], resources: ["stardust"] },
       { id: 175, name: "Calibrate Luminous Instruments", type: "Training", maxReps: 7, count: 0, baseTime: 7e23, description: "Fine-tune devices to capture the brilliance of nebular light.", skills: ["tinkering", "intellect"] },
-      { id: 176, name: "Inspired Glow: Nebular Inspiration", type: "Training", maxReps: 3, count: 0, baseTime: 1e19, description: "Let the glow of the cosmos spark creative genius.", skills: ["charisma"], perk: "inspired_glow" },
+      { id: 176, name: "Inspired Glow: Nebular Inspiration", type: "Training", maxReps: 3, count: 0, baseTime: 2e18, drainMult: 5, description: "Let the glow of the cosmos spark creative genius.", skills: ["charisma"], perk: "inspired_glow" },
       { id: 177, name: "Intergallactic Farming", type: "Training", maxReps: 8, count: 0, baseTime: 2e24, description: "Learn to grow crops that thrive in the vast expanse of the nebula.", skills: ["mechanics", "alchemy"] },
       { id: 178, name: "Quantum Teleportation: Early Research", type: "Training", maxReps: 1, count: 0, baseTime: 2e19, description: "Navigate the nebula with the power of quantum teleportation.", skills: ["aiMastery", "quantum"], perk: "quantum_teleportation" },
       { id: 179, name: "Battle Darth Vader", type: "Training", maxReps: 1, count: 0, baseTime: 3e15, description: "Engage the dark enforcer in an intergalactic duel.", skills: ["combat"], boss_image: "images/bosses/darth_vader.jpg", drainMult: 70, resources: ["lightsaber"], sound: darthVaderSound },
@@ -256,12 +256,12 @@ var zones = [
     name: "Quantum Abyss",
     img: "images/zones/zone18.jpg",
     tasks: [
-      { id: 181, name: "Travel: Warp to Cybernetic Olympus", type: "Travel", maxReps: 1, count: 0, baseTime: 2e12, description: "Bend the fabric of space-time as you leave the abyss.", skills: ["travel"] },
-      { id: 182, name: "Embrace Quantum Uncertainty", type: "Training", maxReps: 2, count: 0, baseTime: 2e15, description: "Dive into the realm of probabilistic wonders.", skills: ["quantum"], mandatory: true },
+      { id: 181, name: "Travel: Warp to Cybernetic Olympus", type: "Travel", maxReps: 1, count: 0, baseTime: 1e13, description: "Bend the fabric of space-time as you leave the abyss.", skills: ["travel"] },
+      { id: 182, name: "Embrace Quantum Uncertainty", type: "Training", maxReps: 2, count: 0, baseTime: 5e14, description: "Dive into the realm of probabilistic wonders.", skills: ["quantum"], drainMult: 2, mandatory: true },
       { id: 183, name: "Stabilize the Particle Field", type: "Training", maxReps: 10, count: 0, baseTime: 1.3e22, description: "Harness subatomic forces with precise adjustments.", skills: ["tinkering", "quantum"], mandatory: true },
       { id: 184, name: "Collect Quantum Residue", type: "Training", maxReps: 3, count: 0, baseTime: 2.5e22, description: "Retrieve fleeting particles left in the void.", skills: ["alchemy", "quantum"], resources: ["quantum_residue"] },
       { id: 185, name: "Calibrate Waveform Oscillations", type: "Training", maxReps: 9, count: 0, baseTime: 2e25, description: "Adjust the frequencies of unseen oscillations.", skills: ["intellect", "mechanics"] },
-      { id: 186, name: "Quantum Harmony: Uncertainty Principle", type: "Training", maxReps: 1, count: 0, baseTime: 1e20, description: "Blend chaos and order into perfect symmetry.", skills: ["intellect"], perk: "quantum_harmony" },
+      { id: 186, name: "Quantum Harmony: Uncertainty Principle", type: "Training", maxReps: 1, count: 0, baseTime: 1e19, drainMult: 10, description: "Blend chaos and order into perfect symmetry.", skills: ["intellect"], perk: "quantum_harmony" },
       { id: 187, name: "Battle Ultron", type: "Training", maxReps: 1, count: 0, baseTime: 1e16, description: "Confront the synthetic menace in a clash of logic.", skills: ["combat"], boss_image: "images/bosses/ultron.jpg", drainMult: 75, resources: ["adamantium"], sound: ultronSound },
     ]
   },
@@ -270,13 +270,13 @@ var zones = [
     name: "Cybernetic Olympus",
     img: "images/zones/zone19.jpg",
     tasks: [
-      { id: 191, name: "Travel: Ascend from Cybernetic Olympus to Cosmic Forge", type: "Travel", maxReps: 1, count: 0, baseTime: 1.0e23, description: "Leave the realm of circuits for the fires of creation.", skills: ["travel"] },
-      { id: 192, name: "Interface with Machine Spirits", type: "Training", maxReps: 10, count: 0, baseTime: 1.1e23, description: "Merge your mind with digital deities.", skills: ["cybernetics", "intellect"], mandatory: true },
-      { id: 193, name: "Optimize Circuitry Harmony", type: "Training", maxReps: 10, count: 0, baseTime: 1.2e23, description: "Refine the balance of mechanical precision.", skills: ["tinkering", "mechanics"], mandatory: true },
-      { id: 194, name: "Extract Nano Components", type: "Training", maxReps: 7, count: 0, baseTime: 1.3e23, description: "Scavenge vital microchips from abandoned systems.", skills: ["mechanics", "hacking"], resources: ["nano_chip"] },
-      { id: 195, name: "Synchronize Data Streams", type: "Training", maxReps: 7, count: 0, baseTime: 1.4e23, description: "Align the flow of digital information.", skills: ["intellect", "hacking"] },
-      { id: 196, name: "Empower Digital Resonance", type: "Training", maxReps: 7, count: 0, baseTime: 1.5e23, description: "Amplify the power of cybernetic energy.", skills: ["cybernetics", "intellect"], perk: "cyber_boost" },
-      { id: 197, name: "Battle Unicron", type: "Training", maxReps: 1, count: 0, baseTime: 1.6e23, description: "Confront the colossal force of cosmic destruction.", skills: ["combat"], resources: ["cosmic_shard"] }
+      { id: 191, name: "Travel: Ascend from Cybernetic Olympus to Cosmic Forge", type: "Travel", maxReps: 1, count: 0, baseTime: 1e14, description: "Leave the realm of circuits for the fires of creation.", skills: ["travel"] },
+      { id: 192, name: "Interface with Machine Spirits", type: "Training", maxReps: 5, count: 0, baseTime: 1e24, description: "Merge your mind with digital deities.", skills: ["cybernetics", "intellect"], mandatory: true },
+      { id: 193, name: "Optimize Circuitry Harmony", type: "Training", maxReps: 2, count: 0, baseTime: 2e18, drainMult: 10, description: "Refine the balance of celestial circuits with precision.", skills: ["tinkering"], mandatory: true },
+      { id: 194, name: "Extract Nano Components", type: "Training", maxReps: 4, count: 0, baseTime: 1e22, description: "Scavenge vital microchips from abandoned systems.", skills: ["mechanics", "hacking"], resources: ["nano_component"] },
+      { id: 195, name: "Charm the Data Streams", type: "Training", maxReps: 7, count: 0, baseTime: 5e24, description: "Use your intellect and charisma to infuse digital data with a harmonious energy.", skills: ["intellect", "charisma"] },
+      { id: 196, name: "Cyber Boost: Digital Resonance", type: "Training", maxReps: 5, count: 0, baseTime: 1e15, description: "Amplify the power of cybernetic energy.", skills: ["cybernetics"], perk: "cyber_boost" },
+      { id: 198, name: "Battle Unicron", type: "Training", maxReps: 1, count: 0, baseTime: 1e17, description: "Confront the colossal force of cosmic destruction.", skills: ["combat"], boss_image: "images/bosses/unicron.jpg", drainMult: 80, resources: ["cosmic_shard"], sound: unicronSound },
     ]
   },
   // {
@@ -435,3 +435,5 @@ var zones = [
   // }
 ];
 
+
+//{ id: 197, name: "Practice Kamui", type: "Training", maxReps: 6, count: 0, baseTime: 1e15, description: "Kakashi is here for some reason.", skills: ["travel", "combat"] },
