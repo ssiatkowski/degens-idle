@@ -2944,6 +2944,7 @@ const CURRENT_GAME_VERSION = "v0.2";
     growthMiracleApplied = false;
     currentZoneIndex = 0;
     currentTasks = [];
+    skillXpScaling = 1.02;
     document.getElementById("copiumBarContainer").style.display = "none";
     document.getElementById("delusionBarContainer").style.display = "none";
     //if autoConsumeBtn exists set it to none
