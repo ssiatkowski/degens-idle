@@ -2123,7 +2123,7 @@ CURRENT_GAME_VERSION = "v0.2";
           renderPerks();
         }
       case "Stronger Mech":
-        perkDescriptions.basic_mech = "Increases starting Energy by 250.";
+        perkDescriptions.basic_mech = "Increases starting Energy by 100.";
         // Effect is applied elsewhere.
         break;
       case "Copiouser Alchemist":
@@ -3354,7 +3354,7 @@ CURRENT_GAME_VERSION = "v0.2";
         if (task.perk && !gameState.perks[task.perk] && task.count >= task.maxReps) {
           gameState.perks[task.perk] = true;
           if (task.perk === "basic_mech") {
-            if (gameState.serenityUnlockables["Stronger Mech"]) gameState.startingEnergy += 250;
+            if (gameState.serenityUnlockables["Stronger Mech"]) gameState.startingEnergy += 100;
             else gameState.startingEnergy += 25;
           }
           if (task.perk === "simulation_engine") {

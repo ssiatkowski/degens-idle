@@ -573,7 +573,7 @@ const SERENITY_UPGRADES = {
     "Embrace Stillness": {
       "Stronger Mech": {
         cost: 75,
-        description: "Basic Mech gives +250 energy instead of +25.<br>Must be purchased before getting perk."
+        description: "Basic Mech gives +100 energy instead of +25.<br>Must be purchased before getting perk."
       },
       "Copiouser Alchemist": {
         cost: 200,
@@ -592,17 +592,17 @@ const SERENITY_UPGRADES = {
     "Discover Serenity": {
       "Wisdom Seeker": { 
         initialCost: 2, 
-        scaling: 1.12,
+        scaling: 1.125,
         description: "Increase all XP gains by 50% (additively)."
       },
       "Entropy Shield": { 
         initialCost: 1, 
-        scaling: 1.5,
+        scaling: 1.6,
         description: "Reduce minimum energy drain by 2% (multiplicatively).<br>This affects tasks that are completed instantly."
       },
       "Resource Saver": { 
         initialCost: 0.1,
-        scaling: 1.1,
+        scaling: 1.11,
         description: "On Copium reset, keep one random random resource per level."
       },
       "Power Doubler": {
@@ -614,8 +614,8 @@ const SERENITY_UPGRADES = {
 
     "Embrace Stillness": {
       "Better Elixirs": {
-        initialCost: 1,
-        scaling: 1.8,
+        initialCost: 2,
+        scaling: 2,
         description: "Increase effect of Energy Elixir by +1."
       },
       "Game Speed": {
