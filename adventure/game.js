@@ -1,4 +1,4 @@
-const CURRENT_GAME_VERSION = "v0.2";
+CURRENT_GAME_VERSION = "v0.2";
 
 (function() {
   /****************************************
@@ -28,6 +28,7 @@ const CURRENT_GAME_VERSION = "v0.2";
       delusionUnlocked: false,
       serenityUnlocked: false,
       prestigeAvailable: false,
+      secondSectionUnlocked: false,
       // Note: Default boost values are now 1.
       skills: {
         endurance:   { level: 1, xp: 0, visible: true,  energyDrain: 2,   progressBoost: 1, drainBoost: 1, xpGainFactor: 1 },
@@ -71,6 +72,8 @@ const CURRENT_GAME_VERSION = "v0.2";
       resourcesUsed: {},
       numCyberneticArmors: 0,
       cyberneticArmorTaskRunning: false,
+      numCosmicShards: 0,
+      cosmicShardTaskRunning: false,
       numCelestialBlossoms: 0,
 
       //serenity upgrades related
@@ -78,6 +81,7 @@ const CURRENT_GAME_VERSION = "v0.2";
       entropyShieldMultiplier: 1,
       powerGainMultiplier: 1,
       autoConsumeResources: false,
+      elixirEnergy: 3,
     };
   }
 
@@ -462,7 +466,11 @@ const CURRENT_GAME_VERSION = "v0.2";
       try {
         // Attempt to decode the save data
         const decrypted = atob(text);
-  
+        // Parse the JSON and check for gameState
+        const data = JSON.parse(decrypted);
+        if (!data.gameState) {
+          throw new Error("Missing gameState");
+        }
         // Show a custom confirmation modal instead of confirm()
         showPasteConfirmationModal(() => {
           // On user confirmation:
@@ -470,7 +478,6 @@ const CURRENT_GAME_VERSION = "v0.2";
           showMessage("Save loaded!");
           location.reload();
         });
-  
       } catch (e) {
         showMessage("Invalid save data");
       }
@@ -478,6 +485,7 @@ const CURRENT_GAME_VERSION = "v0.2";
       showMessage("Error reading clipboard: " + err);
     });
   }
+  
 
   function computeSerenityTotalValue() {
     let total = gameState.serenity; // Base serenity
@@ -756,6 +764,9 @@ const CURRENT_GAME_VERSION = "v0.2";
   
     if (overwriteXP === -1) {
       skill.xp += rawXP * skill.xpGainFactor;
+      if(skillName !== "quantum"){
+        addXP("quantum", rawXP * skill.xpGainFactor * 0.01, "Quantum Harmony: ");
+      }
     } else {
       skill.xp += overwriteXP;
     }
@@ -820,6 +831,7 @@ const CURRENT_GAME_VERSION = "v0.2";
       if (sName === "mechanics" && gameState.perks.futuristic_wrench) baseDrain /= 3;
       if (sName === "charisma" && gameState.perks.kung_fu_zen) baseDrain *= 0.72;
       if (sName === "quantum" && gameState.perks.neural_matrix) baseDrain *= 0.6;
+      if (sName === "combat" && gameState.perks.forge_fervor) baseDrain *= 1/3;
       el.setAttribute("data-tooltip",
         `${formatStringForDisplay(sName)} (Level: ${formatNumber(sData.level)})<br>
          XP: ${formatNumber(sData.xp)} / ${formatNumber(xpTot)}<br>
@@ -962,6 +974,7 @@ const CURRENT_GAME_VERSION = "v0.2";
       if (sName === "charisma" && gameState.perks.kung_fu_zen) drainFactor *= 0.72;
       if (sName === "quantum" && gameState.perks.neural_matrix) drainFactor *= 0.6;
       if (sName === "hacking" && gameState.perks.noob_haxor) drainFactor *= 0.9;
+      if (sName === "combat" && gameState.perks.forge_fervor) drainFactor *= 1/3;
       sk.precomputedDrainFactor = drainFactor;
     });
   }
@@ -977,6 +990,9 @@ const CURRENT_GAME_VERSION = "v0.2";
     }
     if (gameState.perks["energetic_bliss"] && gameState.energy > (gameState.startingEnergy * 0.8)) {
       mult *= 2;
+    }
+    if (task.speedMult !== undefined) {
+      mult *= task.speedMult;
     }
     return mult;
   }
@@ -1055,13 +1071,25 @@ const CURRENT_GAME_VERSION = "v0.2";
       gameState.highestCompletedZone = 0;
       gameState.bestCompletedZone = 0;
       gameState.resetsForBestZone = 1e100;
-      gameState.zoneFullCompletes = {};
       if (!gameState.serenityUnlockables["Instant Simulation"]) {
         Object.keys(gameState.automationOverrides).forEach(key => {
           gameState.automationOverrides[key] = true;
         });
       }
       applySerenityUpgrades();
+      if(!gameState.serenityUnlockables["Instant Simulation"]) {
+        gameState.zoneFullCompletes = {};
+      }
+      else {
+        zones.forEach((zone, i) => {
+          const current = gameState.zoneFullCompletes[i] || 0;
+          if (current >= 10) {
+            gameState.zoneFullCompletes[i] = 10;
+          } else {
+            gameState.zoneFullCompletes[i] = 0;
+          }
+        });
+      }
     } else if (reason === "contentComplete") {
       gameState.resources = {};
     };
@@ -1077,6 +1105,8 @@ const CURRENT_GAME_VERSION = "v0.2";
     gameState.autoRun = false;
     gameState.cyberneticArmorTaskRunning = false;
     gameState.numCyberneticArmors = 0;
+    gameState.cosmicShardTaskRunning = false;
+    gameState.numCosmicShards = 0;
     gameState.numCelestialBlossoms = 0;
     if (gameState.serenityUnlockables["Delusion Enjoyer"]) {
       gameState.delusionEnjoyerMultiplier = Math.max(1, gameState.delusion / 100);
@@ -1230,6 +1260,7 @@ const CURRENT_GAME_VERSION = "v0.2";
         existing.paused = true;
         button.classList.remove("active");
         gameState.cyberneticArmorTaskRunning = false;
+        gameState.cosmicShardTaskRunning = false;
         if (!currentTasks.some(t => !t.paused && t.task.boss_image)) {
           document.getElementById("zoneImage").src = zones[zoneIndex].img;
         }
@@ -1558,6 +1589,9 @@ const CURRENT_GAME_VERSION = "v0.2";
         }
       });
     }
+    if (task.speedMult !== undefined) {
+      mult *= task.speedMult;
+    }
     return mult;
   }
   
@@ -1566,7 +1600,6 @@ const CURRENT_GAME_VERSION = "v0.2";
   function estimateEnergyDrain(task, zone) {
     const tick = effTickDuration;
     
-    // Compute effective drain per tick (includes drainMult and drainBoost):
     let D = getCombinedEnergyDrain(task, zone.id);
     if (gameState.numCyberneticArmors > 0) {
       D *= 0.25;
@@ -1636,6 +1669,9 @@ const CURRENT_GAME_VERSION = "v0.2";
           if (gameState.perks["reinforcement_learning"] && sName === "aiMastery") {
             gainedXP *= 5;
           }
+          if (gameState.numCosmicShards > 0) {
+            gainedXP *= 5;
+          }
           
           // Get current XP and required XP for the next level.
           let currentXP = skill.xp;
@@ -1678,7 +1714,7 @@ const CURRENT_GAME_VERSION = "v0.2";
       if (gameState.copiumUnlocked && usedSkills.some(s => copiumSkills.includes(s))) {
         let copiumGain = 10 * zone.id;
         if (gameState.perks["copious_alchemist"] && gameState.perks["copious_alchemist"] !== "disabled") {
-          copiumGain *= 0.4;
+          copiumGain *= (gameState.serenityUnlockables["Copiouser Alchemist"] ? 0.2 : 0.4);
         }
         copiumGain = Math.max(copiumGain - gameState.numCelestialBlossoms, 0);
         extraInfo += `<br><br><span style="color:#dbd834">Copium Gain for next Task: ${formatNumber(copiumGain)}</span>`;
@@ -1690,18 +1726,25 @@ const CURRENT_GAME_VERSION = "v0.2";
         extraInfo += `<br><br><span style="color:#9b59b6">Delusion Gain for next Task: 0 - ${formatNumber(zone.id * 100)} (random, skewed to low)</span>`;
       }
       // --- New: Drain Multiplier Info ---
-      if (task.drainMult !== undefined) {
-        extraInfo += `<br><br><span style="color:gray;">Task Drain Multiplier: ${formatNumber(task.drainMult)}</span>`;
+      if (task.drainMult !== undefined || task.speedMult !== undefined) {
+        extraInfo += `<br>`
+        if (task.drainMult !== undefined) {
+          extraInfo += `<br><span style="color:gray;">Task Drain Multiplier: ${formatNumber(task.drainMult)}</span>`;
+        }
+        if (task.speedMult !== undefined) {
+          extraInfo += `<br><span style="color:gray;">Task Speed Multiplier: ${formatNumber(task.speedMult)}</span>`;
+        }
       }
       
       // --- Real Time Duration Estimate ---
       const combinedMult = getCombinedMultiplier(task);
       const estimatedTicks = task.baseTime / (effTickDuration * combinedMult);
-      const estimatedRealTimeMs = estimatedTicks * runTickDuration;
-      const estimatedRealTimeSeconds = estimatedRealTimeMs / 1000;
-  
       let timeInfo = "";
-      if (estimatedRealTimeSeconds >= 0.1) {
+      if (estimatedTicks < 1) {
+        timeInfo = `<br><br><span style="color:gray;">Estimated Time${task.maxReps > 1 ? " for next task" : ""}: 1 tick</span>`;
+      } else {
+        const estimatedRealTimeMs = estimatedTicks * runTickDuration;
+        const estimatedRealTimeSeconds = estimatedRealTimeMs / 1000;
         if (estimatedRealTimeSeconds < 60) {
           timeInfo = `<br><br><span style="color:gray;">Estimated Time${task.maxReps > 1 ? " for next task" : ""}: ${estimatedRealTimeSeconds.toFixed(1)} s</span>`;
         } else {
@@ -2079,13 +2122,13 @@ const CURRENT_GAME_VERSION = "v0.2";
           gameState.perks["simulation_engine"] = true;
           renderPerks();
         }
-        zones.forEach((zone, i) => {
-          const current = gameState.zoneFullCompletes[i] || 0;
-          if (current >= 10) {
-            gameState.zoneFullCompletes[i] = 10;
-          }
-        });
-        break;       
+      case "Stronger Mech":
+        perkDescriptions.basic_mech = "Increases starting Energy by 250.";
+        // Effect is applied elsewhere.
+        break;
+      case "Copiouser Alchemist":
+        perkDescriptions.copious_alchemist = "Reduce Copium gain by 80%.";
+        break;
       default:
         console.log(`No effect defined for unlockable: ${upgName}`);
         break;
@@ -2107,6 +2150,13 @@ const CURRENT_GAME_VERSION = "v0.2";
         break;
       case "Power Doubler":
         gameState.powerGainMultiplier = Math.pow(2, level);
+        break;
+      case "Better Elixirs":
+        resourceActions["energy_elixir"].tooltip = "Click to gain +" + gameState.elixirEnergy + " Energy.<br>" + (("ontouchstart" in window || navigator.maxTouchPoints > 0) ? "Use above switch to consume all." : "Right-click to consume all.");
+        gameState.elixirEnergy = 3 + level;
+        break;
+      case "Game Speed":
+        setRunTickDuration(100 * Math.pow(0.99, level));
         break;
       default:
         console.log(`No effect defined for infinite upgrade: ${upgName}`);
@@ -2279,6 +2329,10 @@ const CURRENT_GAME_VERSION = "v0.2";
       case "Power Doubler":
         // For example, you might calculate the effective boss power multiplier.
         return `Current Effect: ${formatNumber(gameState.powerGainMultiplier)}x`;
+      case "Better Elixirs":
+        return `Current Effect: +${formatNumber(gameState.elixirEnergy)}`;
+      case "Game Speed":
+        return `Current Effect: Tick speed: ${formatNumber(runTickDuration)}ms`;
       default:
         return "Current Effect: (to be calculated)";
     }
@@ -2287,7 +2341,8 @@ const CURRENT_GAME_VERSION = "v0.2";
   function showSerenityPrestigeModal() {
     hideTooltip();
   
-    const serenityGainPotential = ((gameState.bestCompletedZone ** 3) / gameState.resetsForBestZone) * (gameState.perks.inspired_glow ? 1.25 : 1);
+    const serenityGainPotential = ((gameState.bestCompletedZone ** 3) / gameState.resetsForBestZone) *
+      (gameState.perks.inspired_glow ? 1.25 : 1);
   
     // Main modal
     const modal = document.createElement("div");
@@ -2303,10 +2358,8 @@ const CURRENT_GAME_VERSION = "v0.2";
     // Header with “Prestige” and close button.
     const header = document.createElement("div");
     header.className = "modal-header-centered";
-  
     const title = document.createElement("h2");
     title.textContent = "Prestige";
-  
     header.appendChild(title);
     content.appendChild(header);
   
@@ -2314,33 +2367,33 @@ const CURRENT_GAME_VERSION = "v0.2";
     const serenityInfo = document.createElement("div");
     serenityInfo.className = "serenity-info-container";
     serenityInfo.innerHTML = `
-      <p>
-        <strong>Serenity:</strong> ${formatNumber(gameState.serenity)}
-        <span style="color: gray; font-size: 0.9em;">(+${formatNumber(serenityGainPotential)})</span>
-      </p>
-      <p style="color: gray; margin-top: -10px;">
-        Serenity Gain = (<strong>Best Full Zone</strong> ^ 3 / <strong>Total Resets</strong>)${gameState.perks.inspired_glow ? " * 1.25" : ""}
-      </p>
-    `;
+        <p>
+          <strong>Serenity:</strong> ${formatNumber(gameState.serenity)}
+          <span style="color: gray; font-size: 0.9em;">(+${formatNumber(serenityGainPotential)})</span>
+        </p>
+        <p style="color: gray; margin-top: -10px;">
+          Serenity Gain = (<strong>Best Full Zone</strong> ^ 3 / <strong>Total Resets</strong>)${gameState.perks.inspired_glow ? " * 1.25" : ""}
+        </p>
+      `;
     content.appendChild(serenityInfo);
   
     // Combined line with Max Zone and resets.
     const combinedLine = document.createElement("p");
     combinedLine.style.fontSize = "0.9em";
     combinedLine.innerHTML = `
-      Best Zone Completed: ${gameState.bestCompletedZone} | 
-      Resets on Completion: ${gameState.resetsForBestZone == 1e100 ? "N/A": gameState.resetsForBestZone}<br><br>Current Resets:<br>
-      Energy: ${gameState.numEnergyResets} |
-      Copium: ${gameState.numCopiumResets} |
-      Delusion: ${gameState.numDelusionResets}
-    `;
+        Best Zone Completed: ${gameState.bestCompletedZone} | 
+        Resets on Completion: ${gameState.resetsForBestZone == 1e100 ? "N/A" : gameState.resetsForBestZone}<br><br>
+        Current Resets:<br>
+        Energy: ${gameState.numEnergyResets} |
+        Copium: ${gameState.numCopiumResets} |
+        Delusion: ${gameState.numDelusionResets}
+      `;
     combinedLine.style.marginTop = "5px";
     content.appendChild(combinedLine);
-
-    // Buttons row: Prestige and Exit
+  
+    // Buttons row: Prestige and Exit.
     const buttonContainer = document.createElement("div");
     buttonContainer.className = "serenity-buttons-container";
-  
     const prestigeBtn = document.createElement("button");
     prestigeBtn.className = "prestige-task-button";
     prestigeBtn.textContent = "Prestige";
@@ -2352,21 +2405,20 @@ const CURRENT_GAME_VERSION = "v0.2";
         showPrestigeConfirmationModal(serenityGainPotential);
       });
     }
-  
     const exitBtn = document.createElement("button");
     exitBtn.textContent = "Exit";
     exitBtn.addEventListener("click", () => modal.remove());
-  
     buttonContainer.appendChild(prestigeBtn);
     buttonContainer.appendChild(exitBtn);
-  
     content.appendChild(buttonContainer);
   
-    // For each section in SERENITY_UPGRADES.
+    // For each section in SERENITY_UPGRADES.unlockables.
     for (const sectionName of Object.keys(SERENITY_UPGRADES.unlockables)) {
+      // Determine if this section should be locked.
+      const sectionLocked = (sectionName === "Embrace Stillness" && !gameState.secondSectionUnlocked);
+  
       const sectionDiv = document.createElement("div");
       sectionDiv.className = "serenity-section";
-  
       const sectionTitle = document.createElement("h3");
       sectionTitle.textContent = sectionName;
       sectionDiv.appendChild(sectionTitle);
@@ -2374,7 +2426,7 @@ const CURRENT_GAME_VERSION = "v0.2";
       // Create a row container.
       const row = document.createElement("div");
       row.className = "serenity-section-row";
-      
+  
       // Left column: Unlockables.
       const leftCol = document.createElement("div");
       leftCol.className = "serenity-upgrades-col";
@@ -2383,45 +2435,53 @@ const CURRENT_GAME_VERSION = "v0.2";
       leftCol.appendChild(leftTitle);
       // Create a grid container for upgrade slots.
       const leftGrid = document.createElement("div");
-      leftGrid.className = "serenity-upgrade-grid"; // Define CSS to use grid layout with 2 columns.
-      
+      leftGrid.className = "serenity-upgrade-grid";
+  
       const unlockables = SERENITY_UPGRADES.unlockables[sectionName] || {};
       for (const [upgName, details] of Object.entries(unlockables)) {
         const slot = document.createElement("div");
         slot.className = "serenity-upgrade-slot";
-        
+  
         const nameDiv = document.createElement("div");
         nameDiv.className = "serenity-upgrade-name";
         nameDiv.textContent = upgName;
-        
+  
         const costDiv = document.createElement("div");
         costDiv.className = "serenity-upgrade-cost";
-        
+  
         if (gameState.serenityUnlockables[upgName]) {
           slot.classList.add("upgrade-slot-purchased");
         } else {
-          if (gameState.serenity >= details.cost) {
-            slot.classList.add("upgrade-slot-affordable");
-          } else {
+          if (sectionLocked) {
+            // Force locked state regardless of affordability.
             slot.classList.add("upgrade-slot-locked");
-          }
-          costDiv.textContent = `Cost: ${details.cost}`;
-          slot.addEventListener("click", () => {
+            costDiv.textContent = `Cost: ${details.cost}`;
+            slot.setAttribute("data-tooltip", (details.description || "") + "<br><br>This section is locked.");
+          } else {
             if (gameState.serenity >= details.cost) {
-              gameState.serenity -= details.cost;
-              gameState.serenityUnlockables[upgName] = true;
-              applySerenityUnlockable(upgName);
-              showSerenityIfUnlocked();
-              document.getElementById("serenityModal").remove();
-              showSerenityPrestigeModal();
+              slot.classList.add("upgrade-slot-affordable");
+            } else {
+              slot.classList.add("upgrade-slot-locked");
             }
-          });
+            costDiv.textContent = `Cost: ${details.cost}`;
+            slot.addEventListener("click", () => {
+              if (gameState.serenity >= details.cost) {
+                gameState.serenity -= details.cost;
+                gameState.serenityUnlockables[upgName] = true;
+                applySerenityUnlockable(upgName);
+                showSerenityIfUnlocked();
+                document.getElementById("serenityModal").remove();
+                showSerenityPrestigeModal();
+              }
+            });
+          }
         }
-        
-        // Set tooltip info: for unlockables, show description, cost, and scaling info.
-        let tooltipText = details.description || "";
-        slot.setAttribute("data-tooltip", tooltipText);
-        
+  
+        if (!slot.hasAttribute("data-tooltip")) {
+          let tooltipText = details.description || "";
+          slot.setAttribute("data-tooltip", tooltipText);
+        }
+  
         slot.appendChild(nameDiv);
         if (!gameState.serenityUnlockables[upgName]) {
           slot.appendChild(costDiv);
@@ -2437,52 +2497,61 @@ const CURRENT_GAME_VERSION = "v0.2";
       rightTitle.textContent = "Infinites";
       rightCol.appendChild(rightTitle);
       const rightGrid = document.createElement("div");
-      rightGrid.className = "serenity-upgrade-grid"; // grid layout with 2 columns.
-      
+      rightGrid.className = "serenity-upgrade-grid";
+  
       const infinite = SERENITY_UPGRADES.infinite[sectionName] || {};
       for (const [upgName, details] of Object.entries(infinite)) {
         const slot = document.createElement("div");
         slot.className = "serenity-upgrade-slot";
-        
+  
         const level = gameState.serenityInfinite[upgName] || 0;
         const nameDiv = document.createElement("div");
         nameDiv.className = "serenity-upgrade-name";
         nameDiv.innerHTML = `${upgName}`;
-        
+  
         const cost = details.initialCost * details.scaling ** level;
         const costDiv = document.createElement("div");
         costDiv.className = "serenity-upgrade-cost";
-        
+  
         if (cost > 0) {
-          if (gameState.serenity >= cost) {
-            slot.classList.add("upgrade-slot-affordable");
-          } else {
+          if (sectionLocked) {
             slot.classList.add("upgrade-slot-locked");
+            costDiv.textContent = `Level: ${level}, Cost: ${formatNumber(cost)}`;
+            slot.setAttribute("data-tooltip", (details.description || "") + "<br><br>This section is locked.");
+          } else {
+            if (gameState.serenity >= cost) {
+              slot.classList.add("upgrade-slot-affordable");
+            } else {
+              slot.classList.add("upgrade-slot-locked");
+            }
+            costDiv.textContent = `Level: ${level}, Cost: ${formatNumber(cost)}`;
+            slot.addEventListener("click", () => {
+              if (cost > 0 && gameState.serenity >= cost) {
+                gameState.serenity -= cost;
+                gameState.serenityInfinite[upgName] = level + 1;
+                applySerenityInfinite(upgName);
+                showSerenityIfUnlocked();
+                document.getElementById("serenityModal").remove();
+                showSerenityPrestigeModal();
+              }
+            });
           }
-          costDiv.textContent = `Level: ${level}, Cost: ${formatNumber(cost)}`;
         } else {
           slot.classList.add("upgrade-slot-purchased");
         }
-        
-        slot.addEventListener("click", () => {
-          if (cost > 0 && gameState.serenity >= cost) {
-            gameState.serenity -= cost;
-            gameState.serenityInfinite[upgName] = level + 1;
-            applySerenityInfinite(upgName);
-            showSerenityIfUnlocked();
-            document.getElementById("serenityModal").remove();
-            showSerenityPrestigeModal();
-          }
-        });
-        
-        // For infinite upgrades, tooltip includes description plus "Current Effect"
+  
         let tooltipTextInfinite = details.description || "";
-        tooltipTextInfinite += `<br><br>${getCurrentInfiniteEffect(upgName, level)}`;
+        if (sectionLocked) {
+          tooltipTextInfinite += "<br><br>This section is locked.";
+        } else {
+          tooltipTextInfinite += `<br><br>${getCurrentInfiniteEffect(upgName, level)}`;
+        }
         slot.setAttribute("data-tooltip", tooltipTextInfinite);
-        
+        slot.setAttribute("data-tooltip", tooltipTextInfinite);
+  
         slot.appendChild(nameDiv);
         if (cost > 0) slot.appendChild(costDiv);
-        
+  
         rightGrid.appendChild(slot);
       }
       rightCol.appendChild(rightGrid);
@@ -2495,14 +2564,16 @@ const CURRENT_GAME_VERSION = "v0.2";
   
     modal.appendChild(content);
     document.body.appendChild(modal);
-
+  
     modal.addEventListener("click", (e) => {
-      // If the clicked element is the modal overlay (and not its inner content), close the modal.
       if (e.target === modal) {
         modal.remove();
       }
     });
   }
+  
+  
+  
   
   
 
@@ -3086,8 +3157,7 @@ const CURRENT_GAME_VERSION = "v0.2";
       if (tData.paused) return;
       const oldProgress = tData.progress;
       const zone = zones[tData.zoneIndex];
-      let speedMult = getCombinedMultiplier(tData.task);
-      tData.progress += effTickDuration * speedMult;
+      tData.progress += effTickDuration * getCombinedMultiplier(tData.task);
       let singleTickSkill = false;
       if (tData.progress > tData.totalDuration) {
         tData.progress = tData.totalDuration;
@@ -3098,6 +3168,10 @@ const CURRENT_GAME_VERSION = "v0.2";
       if (!gameState.cyberneticArmorTaskRunning && gameState.numCyberneticArmors > 0) {
         gameState.cyberneticArmorTaskRunning = true;
         gameState.numCyberneticArmors--;
+      }
+      if (!gameState.cosmicShardTaskRunning && gameState.numCosmicShards > 0) {
+        gameState.cosmicShardTaskRunning = true;
+        gameState.numCosmicShards--;
       }
       if (gameState.cyberneticArmorTaskRunning) {
         drain *= 0.25;
@@ -3121,6 +3195,7 @@ const CURRENT_GAME_VERSION = "v0.2";
       let xpEach = baseXP / (usedSkills.length || 1);
       if (gameState.perks["workaholic"]) xpEach *= 1.5;
       if (gameState.perks["kung_fu_zen"]) xpEach *= 1.28;
+      if (gameState.cosmicShardTaskRunning) xpEach *= 5;
       usedSkills.forEach(sName => {
         addXP(sName, xpEach);
       });
@@ -3139,7 +3214,12 @@ const CURRENT_GAME_VERSION = "v0.2";
           }
         }
         if (gameState.copiumUnlocked && usedSkills.some(s => copiumSkills.includes(s))) {
-          gameState.copium += Math.max((10 * zone.id) * ((gameState.perks["copious_alchemist"]  && gameState.perks["copious_alchemist"] !== "disabled") ? 0.4 : 1) - gameState.numCelestialBlossoms, 0);
+          const copiousAlchemistMultiplier = 
+            (gameState.perks["copious_alchemist"] && gameState.perks["copious_alchemist"] !== "disabled")
+              ? (gameState.serenityUnlockables["Copiouser Alchemist"] ? 0.2 : 0.4)
+              : 1;
+          gameState.copium += Math.max((10 * zone.id) * copiousAlchemistMultiplier - gameState.numCelestialBlossoms, 0);
+
           if (gameState.copium > 9000) {
             currentTasks = [];
             gameState.autoRun = false;
@@ -3206,7 +3286,6 @@ const CURRENT_GAME_VERSION = "v0.2";
               }
             }
           }
-          showMessage(task.name + " completed");
           tData.button.classList.remove("active");
           removeTaskFromCurrent(tData);
           if (gameState.perks.crypto_wallet) {
@@ -3257,6 +3336,7 @@ const CURRENT_GAME_VERSION = "v0.2";
               removeTaskFromCurrent(tData);
             }
             gameState.cyberneticArmorTaskRunning = false;
+            gameState.cosmicShardTaskRunning = false;
           }
         }
         if (task.count >= task.maxReps && gameState.knowledgeUnlocked && usedSkills.some(s => knowledgeSkills.includes(s))) {
@@ -3274,7 +3354,8 @@ const CURRENT_GAME_VERSION = "v0.2";
         if (task.perk && !gameState.perks[task.perk] && task.count >= task.maxReps) {
           gameState.perks[task.perk] = true;
           if (task.perk === "basic_mech") {
-            gameState.startingEnergy += 25;
+            if (gameState.serenityUnlockables["Stronger Mech"]) gameState.startingEnergy += 250;
+            else gameState.startingEnergy += 25;
           }
           if (task.perk === "simulation_engine") {
             if (!gameState.serenityUnlockables["Instant Simulation"]) {
@@ -3302,6 +3383,9 @@ const CURRENT_GAME_VERSION = "v0.2";
           if (task.perk === "urban_warfare") {
             showPowerIfUnlocked();
           }
+          if (task.perk === "inspired_glow") {
+            showSerenityIfUnlocked();
+          }
           applyPerks();
           updateSkillMultipliers();
           renderPerks();
@@ -3310,9 +3394,15 @@ const CURRENT_GAME_VERSION = "v0.2";
           if (gameState.soundEnabled) perkUnlockSound.play();
         }
         // If the task is a Prestige task and it’s now fully completed, show the prestige modal.
-        if (task.type === "Prestige" && task.count >= task.maxReps && !gameState.prestigeAvailable) {
-          gameState.prestigeAvailable = true;
-          showSerenityUnlockedModal();
+        if (task.type === "Prestige" && task.count >= task.maxReps) {
+          if (task.name === "Embrace Stillness") {
+            gameState.secondSectionUnlocked = true;
+            showMessage("Second prestige section unlocked!");
+          }
+          if(!gameState.prestigeAvailable){
+            showSerenityUnlockedModal();
+            gameState.prestigeAvailable = true;
+          }
         }
         updateTasksHoverInfo();
       }
@@ -3429,6 +3519,10 @@ const CURRENT_GAME_VERSION = "v0.2";
     gameState.automationOverrides = gameState.automationOverrides || {};
     gameState.bestCompletedZone = gameState.bestCompletedZone || gameState.highestCompletedZone;
     gameState.resetsForBestZone = gameState.resetsForBestZone || gameState.resetsForHighestZone;
+    gameState.numCosmicShards = gameState.numCosmicShards || 0;
+    gameState.cosmicShardTaskRunning = gameState.cosmicShardTaskRunning || false;
+    gameState.secondSectionUnlocked = gameState.secondSectionUnlocked || false;
+    gameState.elixirEnergy = gameState.elixirEnergy || 3;
 
     applySerenityUpgrades();
     gatherAllPerks();

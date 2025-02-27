@@ -1,5 +1,5 @@
 
-var currentNumberFormat = "Suffixes";
+var currentNumberFormat = "Mixed";
 
 // const formatSignificant = new Intl.NumberFormat("en-US", { maximumFractionDigits: 3 });
 const formatFraction = new Intl.NumberFormat("en-US", { maximumSignificantDigits: 3 });
@@ -20,6 +20,8 @@ function formatNumIntl(num, formatType = 0) {
     // fortmatTpe: 0 = suffixes, 1 = scientific, 2 = engineering
     const absNum = Math.abs(num);
     if (num === 0) return "0";
+    // For very small numbers, always use scientific notation.
+    if (absNum < 0.001) return formatScientific.format(num).toLowerCase();
     else if (absNum < 1000 && (absNum > 0.001 || formatType == 0)) return formatFraction.format(num);
     else if (formatType == 1) return formatScientific.format(num).toLowerCase();
     else if (formatType == 2) return formatEngineering.format(num).toLowerCase();

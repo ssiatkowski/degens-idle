@@ -1,6 +1,6 @@
 const isMobile = "ontouchstart" in window || navigator.maxTouchPoints > 0;
 
-const perkDescriptions = {
+let perkDescriptions = {
     brewmaster:             "Alchemy is 25% faster.",
     healthy_living:         "Reduce all energy drain by 25%.",
     completionist:          "Automatically continue tasks until max reps.",
@@ -34,8 +34,11 @@ const perkDescriptions = {
     growth_miracle:         "Increase # of resource generating tasks by 50%.",
     inspired_glow:          "Serenity Gain on Prestige increased by 25%.",
     quantum_teleportation:  "Travel is now affected by Power.",
-    quantum_harmony:        "(not implemented yet)", //TODO: implement
-    cyber_boost:            "Each time Cybernetics levels up,<br>another random skill also levels up."
+    quantum_harmony:        "Whenever another skill gains xp, Quantum gains 1% of that xp.",
+    cyber_boost:            "Each time Cybernetics levels up,<br>another random skill also levels up.",
+    universal_alloy:        "<not implemented yet>", //TODO: implement
+    forge_fervor:           "Reduce Combat energy drain by 3x.",
+
   };
 
 const toggleablePerks = ["completionist", "copious_alchemist", "master_of_ai", "mechanical_genius"];
@@ -43,14 +46,14 @@ const toggleablePerks = ["completionist", "copious_alchemist", "master_of_ai", "
 /****************************************
  * RESOURCE ACTIONS & RENDERING
  ****************************************/
-const resourceActions = {
+let resourceActions = {
   "energy_elixir": {
     onConsume: (gameState, amt) => { 
-      gameState.energy += 3 * amt;
+      gameState.energy += gameState.elixirEnergy * amt;
       updateEnergyDisplay();
       updateTasksHoverInfo();
       //if(gameState.soundEnabled && amt >= 25) gulpSound.play(); 
-      showMessage(`Used ${amt} Energy Elixir${amt > 1 ? "s" : ""}.<br>Gained ${3 * amt} Energy.`);
+      showMessage(`Used ${amt} Energy Elixir${amt > 1 ? "s" : ""}.<br>Gained ${gameState.elixirEnergy * amt} Energy.`);
     },
     tooltip: "Click to gain +3 Energy.<br>" + (("ontouchstart" in window || navigator.maxTouchPoints > 0) ? "Use above switch to consume all." : "Right-click to consume all.")
   },
@@ -524,11 +527,24 @@ const resourceActions = {
     tooltip: "Boosts speed by 15% for Charisma and Tinkering."
   },
   "cosmic_shard": {
-    onConsume: (gameState, amt) => {
-      updateSkillDisplay();
+    onConsume: (gameState, amt) => { 
+      gameState.numCosmicShards += amt; 
+      updateTasksHoverInfo();
+      if(gameState.soundEnabled) experienceSound.play();
+      showMessage(`Used ${amt} Cosmic Shard${amt > 1 ? "s" : ""}.<br>5x experience gain next ${amt > 1 ? amt + " tasks" : "task"}`);
     },
-    tooltip: "Not implemented yet."
+    tooltip: "Increases experience gain by 5x for next task (one square).<br>Any task ending or pausing task will remove the shard.<br>Multiple uses stack with # of tasks, not with xp gain."
   },
+  "celestial_ore": {
+    onConsume: (gameState, amt) => {
+      gameState.skills['endurance'].drainBoost += 10 * amt;
+      updateSkillMultipliers();
+      updateSkillDisplay();
+      updateTasksHoverInfo();
+      showMessage(`Used ${amt} Celestial Ore${amt > 1 ? "s" : ""}.<br>Reduced Endurance energy drain by ${1000 * amt}%.`);
+    },
+    tooltip: "Reduces energy drain by 1000% for Endurance."
+  }
 };
 
 const EXCLUDED_AUTO_RESOURCES = new Set(["cybernetic_armor", "infinity_gauntlet", "stardust"]);
@@ -554,7 +570,15 @@ const SERENITY_UPGRADES = {
       }
     },
 
-    "Embrace Stillness (not available yet)": {
+    "Embrace Stillness": {
+      "Stronger Mech": {
+        cost: 75,
+        description: "Basic Mech gives +250 energy instead of +25.<br>Must be purchased before getting perk."
+      },
+      "Copiouser Alchemist": {
+        cost: 200,
+        description: "Copious Alchemist reduces Copium drain by 80% instead of 60%."
+      }
     },
     "Transcend Chaos (not available yet)": {
     },
@@ -589,12 +613,22 @@ const SERENITY_UPGRADES = {
     },
 
     "Embrace Stillness": {
+      "Better Elixirs": {
+        initialCost: 1,
+        scaling: 1.8,
+        description: "Increase effect of Energy Elixir by +1."
+      },
+      "Game Speed": {
+        initialCost: 5,
+        scaling: 3,
+        description: "Reduce game tick duration by 1% (multiplicatively)."
+      }
     },
-    "Transcend Chaos": {
+    "Transcend Chaos (not available yet)": {
     },
-    "Attain Equilibrium": {
+    "Attain Equilibrium (not available yet)": {
     },
-    "Become the Void": {
+    "Become the Void (not available yet)": {
     }
   }
 };
