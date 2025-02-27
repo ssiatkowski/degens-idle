@@ -764,7 +764,7 @@ CURRENT_GAME_VERSION = "v0.2";
   
     if (overwriteXP === -1) {
       skill.xp += rawXP * skill.xpGainFactor;
-      if(skillName !== "quantum"){
+      if(gameState.perks["quantum_harmony"] && skillName !== "quantum"){
         addXP("quantum", rawXP * skill.xpGainFactor * 0.01, "Quantum Harmony: ");
       }
     } else {
