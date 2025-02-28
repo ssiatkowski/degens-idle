@@ -12,7 +12,7 @@ var zones = [
       { id: 13, name: "Small Talk Practice", type: "Training", maxReps: 4, count: 0, baseTime: 3e3, description: "Polish your social skills with casual chat.<br><br>The orange button indicates that this task is<br>mandatory to progress to next zone.", skills: ["charisma"], mandatory: true },
       { id: 14, name: "Warm-Up Jog in Place", type: "Training", maxReps: 7, count: 0, baseTime: 6e3, description: "Boost your stamina with a simple jog.", skills: ["endurance"] },
       { id: 15, name: "Assemble a Clockwork Toy", type: "Training", maxReps: 5, count: 0, baseTime: 6e3, description: "Practice assembling basic mechanisms.", skills: ["tinkering"] },
-      { id: 16, name: "Practice Mirror Warmup", type: "Training", maxReps: 2, count: 0, baseTime: 9e3, description: "Engage in a friendly conversation with a mirror.", skills: ["charisma"] },
+      { id: 16, name: "Mirror Mojo", type: "Training", maxReps: 2, count: 0, baseTime: 1e4, description: "Tinker with your mirror’s mechanics while engaging in charismatic banter to unlock its potential.", skills: ["tinkering", "charisma"] },
       { id: 17, name: "Brewmaster: Read an Alchemy Book", type: "Training", maxReps: 1, count: 0, baseTime: 5e4, description: "Study the ancient art of alchemy.<br><br>The ★ indicates that completing this task<br>for the first time will grant a perk.", skills: ["alchemy"], perk: "brewmaster" },
       { id: 18, name: "Brew a Simple Potion", type: "Training", maxReps: 18, count: 0, baseTime: 8e3, description: "Experiment with ingredients to create a potion.<br><br>The resource icon indicates that each completion<br>of this task will produce a resource.", skills: ["alchemy"], resources: ["energy_elixir"] }
     ]
@@ -116,7 +116,7 @@ var zones = [
       { id: 84, name: "Cybernetic Armor", type: "Training", maxReps: 1, count: 0, baseTime: 1e12, description: "Carefully craft a cybernetic armor.", skills: ["tinkering", "cybernetics"], resources: ["cybernetic_armor"] },
       { id: 85, name: "High-Rise Debate Persuade the Crowd", type: "Training", maxReps: 10, count: 0, baseTime: 9e9, description: "Use your wit to sway opinions.", skills: ["negotiation", "charisma"] },
       { id: 86, name: "Rex: Adopt a Dog", type: "Training", maxReps: 1, count: 0, baseTime: 3e12, description: "Adopt a loyal dog.", skills: ["perception", "charisma"], perk: "rex" },
-      { id: 87, name: "Luck of the Irish: Find the Clover", type: "Training", maxReps: 1, count: 0, baseTime: 7.77e10, description: "Locate a lucky clover.", skills: ["perception"], perk: "luck_of_the_irish" }
+      { id: 87, name: "Luck of the Irish: Find the Clover", type: "Training", maxReps: 1, count: 0, baseTime: 3.9e10, energyDrain: 2, description: "Locate a lucky clover.", skills: ["perception"], perk: "luck_of_the_irish" }
     ]
   },
   {
@@ -202,7 +202,7 @@ var zones = [
       { id: 143, name: "Corporate Espionage Information Heist", type: "Training", maxReps: 2, count: 0, baseTime: 3e17, description: "Steal confidential data using your omniscient insight.", skills: ["negotiation", "hacking"], mandatory: true },
       { id: 144, name: "Urban Warfare: Digital Onslaught", type: "Training", maxReps: 10, count: 0, baseTime: 1e16, description: "Engage in a fast-paced digital battle.", skills: ["combat", "aiMastery"], perk: "urban_warfare" },
       { id: 145, name: "Prepare Hoverboard Fuel", type: "Training", maxReps: 16, count: 0, baseTime: 1e20, description: "Synthesize some fuel for your hoverboard.", skills: ["tinkering", "alchemy"], resources: ["hoverboard_fuel"] },
-      { id: 146, name: "Cryto Wallet: Find on Street", type: "Training", maxReps: 1, count: 0, baseTime: 1e12, description: "Find a lost crypto wallet.", skills: ["perception"], perk: "crypto_wallet" },
+      { id: 146, name: "Cryto Wallet: Find on Street", type: "Training", maxReps: 1, count: 0, baseTime: 4e11, drainMult: 2.5, description: "Find a lost crypto wallet.", skills: ["perception"], perk: "crypto_wallet" },
       { id: 147, name: "Challenge Big Brother", type: "Training", maxReps: 1, count: 0, baseTime: 1e13, description: "Challenge Big Brother.", skills: ["combat"], boss_image: "images/bosses/big_brother.jpg", drainMult: 55, resources: ["surveillance_core"], sound: bigBrotherSound }
     ]
   },

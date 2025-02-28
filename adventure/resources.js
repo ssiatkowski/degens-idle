@@ -20,7 +20,7 @@ let perkDescriptions = {
     copious_alchemist:      "Reduce Copium gain by 60%.",
     hoverboard:             "Increase travel speed by 4x.",
     reinforcement_learning: "5x increased AI Mastery XP gain.",
-    immunity_device:        "Reduce minimum energy drain by 75%.",
+    immunity_device:        "Reduce minimum energy drain by 75%.<br>This affects tasks that are completed in one tick.",
     quantum_vitalizer:      "Get Zone / 10 starting Energy for each Energy reset.<br>Ex: energy reset on zone 8 gives +0.8 starting energy.",
     knowledge_preserver:    "Reduce Knowledge loss on copium reset by 80%.",
     neural_matrix:          "Reduce Quantum energy drain by 40%.",
