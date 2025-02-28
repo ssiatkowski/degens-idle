@@ -1672,6 +1672,9 @@ CURRENT_GAME_VERSION = "v0.2";
           if (gameState.numCosmicShards > 0) {
             gainedXP *= 5;
           }
+          if (task.xpMult !== undefined) {
+            gainedXP *= task.xpMult;
+          }
           
           // Get current XP and required XP for the next level.
           let currentXP = skill.xp;
@@ -1726,13 +1729,16 @@ CURRENT_GAME_VERSION = "v0.2";
         extraInfo += `<br><br><span style="color:#9b59b6">Delusion Gain for next Task: 0 - ${formatNumber(zone.id * 100)} (random, skewed to low)</span>`;
       }
       // --- New: Drain Multiplier Info ---
-      if (task.drainMult !== undefined || task.speedMult !== undefined) {
+      if (task.drainMult !== undefined || task.speedMult !== undefined || task.xpMult !== undefined) {
         extraInfo += `<br>`
         if (task.drainMult !== undefined) {
           extraInfo += `<br><span style="color:gray;">Task Drain Multiplier: ${formatNumber(task.drainMult)}</span>`;
         }
         if (task.speedMult !== undefined) {
           extraInfo += `<br><span style="color:gray;">Task Speed Multiplier: ${formatNumber(task.speedMult)}</span>`;
+        }
+        if (task.xpMult !== undefined) {
+          extraInfo += `<br><span style="color:gray;">Task XP Multiplier: ${formatNumber(task.xpMult)}</span>`;
         }
       }
       
@@ -3201,6 +3207,9 @@ CURRENT_GAME_VERSION = "v0.2";
       if (gameState.perks["workaholic"]) xpEach *= 1.5;
       if (gameState.perks["kung_fu_zen"]) xpEach *= 1.28;
       if (gameState.cosmicShardTaskRunning) xpEach *= 5;
+      if (tData.task.xpMult !== undefined) {
+        xpEach *= tData.task.xpMult;
+      }
       usedSkills.forEach(sName => {
         addXP(sName, xpEach);
       });
