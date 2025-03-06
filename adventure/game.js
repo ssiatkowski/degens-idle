@@ -825,6 +825,7 @@ CURRENT_GAME_VERSION = "v0.2";
       let baseMult = Math.pow(1.01, sData.level - 1);
       if (sName === "alchemy" && gameState.perks.brewmaster) baseMult *= 1.25;
       if (sName === "travel" && gameState.perks.hoverboard) baseMult *= 4;
+      if (sName === "combat" && gameState.perks.universal_alloy) baseMult *= Math.max(1, gameState.serenity ** (1/2));
       baseMult *= (sData.progressBoost);
       let baseDrain = sData.energyDrain / (sData.drainBoost || 1);
       if (sName === "hacking" && gameState.perks.noob_haxor) baseDrain *= 0.9;
@@ -897,7 +898,9 @@ CURRENT_GAME_VERSION = "v0.2";
     if (
       el.classList.contains("resource-item") ||
       el.classList.contains("perk-item") ||
-      el.closest(".upgrade-display")
+      el.closest(".upgrade-display") ||
+      el.closest("#zoneAutomation") ||
+      el.id === "autoConsumeBtn"
     ) {
       x = rect.left + scrollX - tooltipEl.offsetWidth - 6; // 6px gap to left
       y = rect.top + scrollY;
@@ -964,6 +967,8 @@ CURRENT_GAME_VERSION = "v0.2";
       if (gameState.powerUnlocked && powerSkills.includes(sName)) {
         baseMult *= (1 + (gameState.perks.urban_warfare ? 0.03 : 0.01) * gameState.power);
       }
+      
+      if (sName === "combat" && gameState.perks.universal_alloy) baseMult *= Math.max(1, gameState.serenity ** (1/2));
       
       // Store the precomputed value.
       sk.precomputedMultiplier = baseMult;
@@ -1792,6 +1797,7 @@ CURRENT_GAME_VERSION = "v0.2";
     else {
       showEndOfContentModal();
     }
+    saveGameProgress();
   }
 
   function isTravelAvailable(zone) {
@@ -2128,6 +2134,7 @@ CURRENT_GAME_VERSION = "v0.2";
           gameState.perks["simulation_engine"] = true;
           renderPerks();
         }
+        break;
       case "Stronger Mech":
         perkDescriptions.basic_mech = "Increases starting Energy by 100.";
         // Effect is applied elsewhere.
@@ -2158,8 +2165,8 @@ CURRENT_GAME_VERSION = "v0.2";
         gameState.powerGainMultiplier = Math.pow(2, level);
         break;
       case "Better Elixirs":
-        resourceActions["energy_elixir"].tooltip = "Click to gain +" + gameState.elixirEnergy + " Energy.<br>" + (("ontouchstart" in window || navigator.maxTouchPoints > 0) ? "Use above switch to consume all." : "Right-click to consume all.");
         gameState.elixirEnergy = 3 + level;
+        resourceActions["energy_elixir"].tooltip = "Click to gain +" + gameState.elixirEnergy + " Energy.<br>" + (("ontouchstart" in window || navigator.maxTouchPoints > 0) ? "Use above switch to consume all." : "Right-click to consume all.");
         break;
       case "Game Speed":
         setRunTickDuration(100 * Math.pow(0.99, level));
@@ -2232,14 +2239,21 @@ CURRENT_GAME_VERSION = "v0.2";
       autoBtn.textContent = "Auto-Use";
       // Reuse the same CSS class as your zone automation buttons.
       autoBtn.className = "resource-automation-btn";
-
+  
       autoBtn.setAttribute("data-tooltip", "Auto-use all resources except:<br>" + 
         Array.from(EXCLUDED_AUTO_RESOURCES)
           .filter(r => gameState.resources.hasOwnProperty(r))
           .map(r => formatStringForDisplay(r))
-          .join("<br>"));
+          .join("<br>")
+      );
       
-
+      // Center the button horizontally and add margin on mobile.
+      if (isMobile) {
+        autoBtn.style.display = "block";
+        autoBtn.style.margin = "0 auto";
+        autoBtn.style.marginBottom = "12px";
+      }
+  
       // Insert the button right after the <h3>Resources</h3> header.
       const header = resourcesContainer.querySelector("h3");
       if (header && header.nextSibling) {
@@ -2264,6 +2278,7 @@ CURRENT_GAME_VERSION = "v0.2";
       });
     }
   }
+  
   
 
   
@@ -2350,6 +2365,12 @@ CURRENT_GAME_VERSION = "v0.2";
     const serenityGainPotential = ((gameState.bestCompletedZone ** 3) / gameState.resetsForBestZone) *
       (gameState.perks.inspired_glow ? 1.25 : 1);
   
+    // Calculate total resets from energy, copium, and delusion resets.
+    const totalResets = gameState.numEnergyResets + gameState.numCopiumResets + gameState.numDelusionResets;
+    // Calculate next zone potential using highestCompletedZone + 1 divided by the total resets.
+    const nextZonePotential = (((gameState.highestCompletedZone + 1) ** 3) / totalResets) *
+      (gameState.perks.inspired_glow ? 1.25 : 1);
+
     // Main modal
     const modal = document.createElement("div");
     modal.className = "modal";
@@ -2388,7 +2409,8 @@ CURRENT_GAME_VERSION = "v0.2";
     combinedLine.style.fontSize = "0.9em";
     combinedLine.innerHTML = `
         Best Zone Completed: ${gameState.bestCompletedZone} | 
-        Resets on Completion: ${gameState.resetsForBestZone == 1e100 ? "N/A" : gameState.resetsForBestZone}<br><br>
+        Resets on Completion: ${gameState.resetsForBestZone == 1e100 ? "N/A" : gameState.resetsForBestZone}<br>
+        Highest Zone Completed: ${gameState.highestCompletedZone} | Next Zone Potential Serenity: ${formatNumber(nextZonePotential)}<br><br>
         Current Resets:<br>
         Energy: ${gameState.numEnergyResets} |
         Copium: ${gameState.numCopiumResets} |
@@ -3290,6 +3312,9 @@ CURRENT_GAME_VERSION = "v0.2";
             // Full completion
             gameState.zoneFullCompletes[tData.zoneIndex] =
               (gameState.zoneFullCompletes[tData.zoneIndex] || 0) + 1;
+            if (gameState.zoneFullCompletes[tData.zoneIndex] < 10) {
+              showMessage(`Zone ${tData.zoneIndex + 1} completed ${gameState.zoneFullCompletes[tData.zoneIndex]}/10 times.`);
+            }
             if (gameState.highestCompletedZone < tData.zoneIndex + 1) {
               gameState.highestCompletedZone = tData.zoneIndex + 1;
               gameState.resetsForHighestZone = Math.max(gameState.numEnergyResets + gameState.numCopiumResets + gameState.numDelusionResets, 1);
@@ -3297,6 +3322,8 @@ CURRENT_GAME_VERSION = "v0.2";
                 gameState.bestCompletedZone = gameState.highestCompletedZone;
                 gameState.resetsForBestZone = gameState.resetsForHighestZone;
                 showMessage(`<span style="color: rgb(28, 106, 233);">New best fully compeleted: Zone ${gameState.bestCompletedZone} with ${gameState.resetsForBestZone} resets</span>`);
+              } else {
+                showMessage(`New highest fully compeleted: Zone ${gameState.highestCompletedZone} would yield less Serenity than previous best Zone ${gameState.bestCompletedZone}`);
               }
             }
           }
@@ -3352,6 +3379,7 @@ CURRENT_GAME_VERSION = "v0.2";
             gameState.cyberneticArmorTaskRunning = false;
             gameState.cosmicShardTaskRunning = false;
           }
+          if (!gameState.autoRun) saveGameProgress();
         }
         if (task.count >= task.maxReps && gameState.knowledgeUnlocked && usedSkills.some(s => knowledgeSkills.includes(s))) {
           gameState.knowledge += zone.id * gameState.delusionEnjoyerMultiplier;
@@ -3363,6 +3391,7 @@ CURRENT_GAME_VERSION = "v0.2";
             showPowerModal();
           }
           gameState.power += (zone.id - 3) * gameState.powerGainMultiplier;
+          showMessage(`<span style="color: rgb(222, 34, 191);">${task.name.replace(/^[^ ]+ /, "")} defeated! +${(zone.id - 3) * gameState.powerGainMultiplier} Power</span>`);
           showPowerIfUnlocked();
         }
         if (task.perk && !gameState.perks[task.perk] && task.count >= task.maxReps) {
@@ -3505,9 +3534,6 @@ CURRENT_GAME_VERSION = "v0.2";
         }
       }
     }
-    
-    
-    saveGameProgress();
   }
   let gameLoopInterval = setInterval(gameLoop, runTickDuration);
 

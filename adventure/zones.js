@@ -42,7 +42,7 @@ var zones = [
       { id: 34, name: "Basic Mech: Rudimentary Upgrade", type: "Training", maxReps: 1, count: 0, baseTime: 4e5, description: "Construct a basic biomechanical upgrade.", skills: ["mechanics", "intellect"], perk: "basic_mech" },
       { id: 35, name: "Study Urban Traffic Flow", type: "Training", maxReps: 10, count: 0, baseTime: 8e4, description: "Analyze traffic patterns using perception and intellect.", skills: ["perception", "intellect"] },
       { id: 36, name: "Assemble Goggles", type: "Training", maxReps: 12, count: 0, baseTime: 1.4e5, description: "Build yourself some eye protection.", skills: ["tinkering"], resources: ["goggles"] },
-      { id: 37, name: "Self-Operating Gadget: Simple Automation", type: "Training", maxReps: 2, count: 0, baseTime: 1e7, description: "Utilize your mechanical expertise and tinkering skills to build a basic automated system that streamlines routine tasks.", skills: ["mechanics", "tinkering"], perk: "self_operating_gadget" }
+      { id: 37, name: "Self-Operating Gadget: Simple Automation", type: "Training", maxReps: 2, count: 0, baseTime: 1e7, speedMult: 1.2, description: "Utilize your mechanical expertise and tinkering skills to build a basic automated system that streamlines routine tasks.", skills: ["mechanics", "tinkering"], perk: "self_operating_gadget" }
     ]
   },
   {
@@ -188,7 +188,7 @@ var zones = [
       { id: 133, name: "Sandstorm: Guerrilla Warfare Sprint", type: "Training", maxReps: 4, count: 0, baseTime: 2.2e16, description: "Sprint through a raging sandstorm.", skills: ["endurance", "combat"], perk: "sandstorm" },
       { id: 134, name: "Outpost Infiltration Silent Breach", type: "Training", maxReps: 5, count: 0, baseTime: 1e16, description: "Breach an enemy outpost undetected.", skills: ["hacking", "endurance"] },
       { id: 135, name: "Produce Augment Fuel", type: "Training", maxReps: 4, count: 0, baseTime: 1e18, description: "Synethesize some augment fuel.", skills: ["cybernetics", "mechanics"], resources: ["augment_fuel"] },
-      { id: 136, name: "Wise Mechanic: Knowledge Expansion", type: "Training", maxReps: 1, count: 0, baseTime: 1e22, description: "Expand your knowledge of mechanics.", skills: ["tinkering", "intellect", "mechanics"], perk: "wise_mechanic" },
+      { id: 136, name: "Wise Mechanic: Knowledge Expansion", type: "Training", maxReps: 1, count: 0, baseTime: 1e22, xpMult: 0.5, description: "Expand your knowledge of mechanics.", skills: ["tinkering", "intellect", "mechanics"], perk: "wise_mechanic" },
       { id: 137, name: "Battle Vegeta", type: "Training", maxReps: 1, count: 0, baseTime: 1e12, description: "Challenge the prince of all Saiyans.", skills: ["combat"], boss_image: "images/bosses/vegeta.jpg", drainMult: 50, resources: ["saiyan_armor"], sound: vegetaSound }
     ]
   },
@@ -227,7 +227,7 @@ var zones = [
     tasks: [
       { id: 161, name: "Travel: Journey to Nebular Nexus", type: "Travel", maxReps: 1, count: 0, baseTime: 8e9, description: "Leave The Garden behind and step into cosmic wonder.", skills: ["travel"] },
       { id: 162, name: "Plant the Seeds of Creation", type: "Training", maxReps: 10, count: 0, baseTime: 1.1e23, description: "Sow the first seeds in fertile soil.", skills: ["alchemy", "intellect"], mandatory: true },
-      { id: 163, name: "Nurture the Cosmic Flora", type: "Training", maxReps: 1, count: 0, baseTime: 1e16, description: "Cultivate the garden with care and vigor.", skills: ["tinkering"], mandatory: true },
+      { id: 163, name: "Nurture the Cosmic Flora", type: "Training", maxReps: 1, count: 0, baseTime: 5e15, drainMult: 2, description: "Cultivate the garden with care and vigor.", skills: ["tinkering"], mandatory: true },
       { id: 164, name: "Mechanical Genius: Radiodynamic Gardening", type: "Training", maxReps: 2, count: 0, baseTime: 2e17, description: "Harness the power of mechanical gardening.", skills: ["mechanics"], perk: "mechanical_genius" },
       { id: 165, name: "Prune the Stellar Vines", type: "Training", maxReps: 7, count: 0, baseTime: 1e23, description: "Trim and shape the living tendrils of cosmic life.", skills: ["tinkering", "perception"] },
       { id: 166, name: "Harvest the Celestial Blossoms", type: "Training", maxReps: 7, count: 0, baseTime: 1.4e22, description: "Gather rare blossoms that glow with otherworldly light.", skills: ["alchemy", "charisma"], resources: ["celestial_blossom"] },
@@ -241,7 +241,7 @@ var zones = [
     img: "images/zones/zone17.jpg",
     tasks: [
       { id: 171, name: "Travel: Journey to Quantum Abyss", type: "Travel", maxReps: 1, count: 0, baseTime: 1.5e10, description: "Depart the Nebular Nexus and approach the realm of probabilities.", skills: ["travel"] },
-      { id: 172, name: "Map the Celestial Grid", type: "Training", maxReps: 10, count: 0, baseTime: 1.5e23, description: "Chart the intricate network of nebular pathways.", skills: ["intellect", "perception"], mandatory: true },
+      { id: 172, name: "Map the Celestial Grid", type: "Training", maxReps: 10, count: 0, baseTime: 1.5e23, speedMult: 0.5, description: "Chart the intricate network of nebular pathways.", skills: ["intellect", "perception"], mandatory: true },
       { id: 173, name: "Align the Nebula Currents", type: "Training", maxReps: 1, count: 0, baseTime: 1e17, description: "Adjust the flow of cosmic energies to create balance.", skills: ["intellect"], mandatory: true },
       { id: 174, name: "Collect Stardust Samples", type: "Training", maxReps: 2, count: 0, baseTime: 1e24, description: "Gather sparkling particles scattered across the void.", skills: ["alchemy", "perception"], resources: ["stardust"] },
       { id: 175, name: "Calibrate Luminous Instruments", type: "Training", maxReps: 7, count: 0, baseTime: 7e23, description: "Fine-tune devices to capture the brilliance of nebular light.", skills: ["tinkering", "intellect"] },
@@ -257,7 +257,7 @@ var zones = [
     img: "images/zones/zone18.jpg",
     tasks: [
       { id: 181, name: "Travel: Warp to Cybernetic Olympus", type: "Travel", maxReps: 1, count: 0, baseTime: 1e13, description: "Bend the fabric of space-time as you leave the abyss.", skills: ["travel"] },
-      { id: 182, name: "Embrace Quantum Uncertainty", type: "Training", maxReps: 2, count: 0, baseTime: 1.5e14, drainMult: 7, description: "Dive into the realm of probabilistic wonders.", skills: ["quantum"], mandatory: true },
+      { id: 182, name: "Embrace Quantum Uncertainty", type: "Training", maxReps: 2, count: 0, baseTime: 1e14, drainMult: 7, description: "Dive into the realm of probabilistic wonders.", skills: ["quantum"], mandatory: true },
       { id: 183, name: "Stabilize the Particle Field", type: "Training", maxReps: 10, count: 0, baseTime: 1.3e22, description: "Harness subatomic forces with precise adjustments.", skills: ["tinkering", "quantum"], mandatory: true },
       { id: 184, name: "Collect Quantum Residue", type: "Training", maxReps: 3, count: 0, baseTime: 2.5e22, description: "Retrieve fleeting particles left in the void.", skills: ["alchemy", "quantum"], resources: ["quantum_residue"] },
       { id: 185, name: "Calibrate Waveform Oscillations", type: "Training", maxReps: 9, count: 0, baseTime: 2e25, description: "Adjust the frequencies of unseen oscillations.", skills: ["intellect", "mechanics"] },

@@ -36,7 +36,7 @@ let perkDescriptions = {
     quantum_teleportation:  "Travel is now affected by Power.",
     quantum_harmony:        "Whenever another skill gains xp, Quantum gains 1% of that xp.",
     cyber_boost:            "Each time Cybernetics levels up,<br>another random skill also levels up.",
-    universal_alloy:        "<not implemented yet>", //TODO: implement
+    universal_alloy:        "Multiply Combat speed by square root of current Serenity (unspent).",
     forge_fervor:           "Reduce Combat energy drain by 3x.",
 
   };
@@ -547,7 +547,7 @@ let resourceActions = {
   }
 };
 
-const EXCLUDED_AUTO_RESOURCES = new Set(["cybernetic_armor", "infinity_gauntlet", "stardust"]);
+const EXCLUDED_AUTO_RESOURCES = new Set(["cybernetic_armor", "infinity_gauntlet", "stardust", "cosmic_shard"]);
 
 const SERENITY_UPGRADES = {
   unlockables: {
