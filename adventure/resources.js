@@ -28,7 +28,7 @@ let perkDescriptions = {
     wise_mechanic:          "Knowledge also levels with and boosts Mechanics.",
     urban_warfare:          "Triples effect of Power.",
     master_of_ai:           "Remove AI Mastery from Delusion accumulation.",
-    crypto_wallet:          "Each time you travel:<br>5% chance to gain 25 Energy<br>5% chance to lose 25 Copium<br>5% chance to lose 25 Delusion<br>2% chance to gain 25 Knowledge<br>0.1% chance to gain 25 Power",
+    crypto_wallet:          "Each time you travel:<br>5% chance to gain 25 Energy<br>5% chance to lose 25 Copium<br>5% chance to lose 25 Delusion<br>2.5% chance to gain 25 Knowledge<br>0.5% chance to gain 25 Power",
     last_stand:             "Reduce all energy drain by 20%.",
     mechanical_genius:      "Remove Copium gain related to Mechanics.",
     growth_miracle:         "Increase # of resource generating tasks by 50%.",
@@ -450,7 +450,7 @@ let resourceActions = {
 
       for (let i = 0; i < amt; i++) {
         // Get all visible skills.
-        const visibleSkills = Object.keys(gameState.skills).filter(s => gameState.skills[s].visible);
+        const visibleSkills = Object.keys(gameState.skills).filter(s => gameState.skills[s].visible && s !== "omniscience");
         if (visibleSkills.length === 0) continue;
         
         // Choose a random skill.
@@ -459,8 +459,8 @@ let resourceActions = {
         // Randomly choose which attribute to affect: speed (progressBoost) or energy drain (drainBoost).
         const effectType = Math.random() < 0.5 ? "speed" : "drain";
         
-        // Generate a random effect percentage between -25 and +125.
-        let effectPercent = Math.floor(Math.random() * 151) - 25;
+        // Generate a random effect percentage between -10 and +50.
+        let effectPercent = Math.floor(Math.random() * 61) - 10;
         let effectValue = effectPercent / 100;
         
         // Apply the effect.
@@ -507,14 +507,35 @@ let resourceActions = {
       
       showMessage(messageLines.join("<br>"));
     },
-    tooltip: "Unexpectedly affect speed or energy drain of a random skill<br>by anywhere from -25% to +150%."
+    tooltip: "Unexpectedly affect speed or energy drain of<br>a random skill by anywhere from -10% to +50%.<br>(cannot affect Omniscience)"
   },
-  "adamantium": {
-    onConsume: (gameState, amt) => {
-      updateSkillDisplay();
-    },
-    tooltip: "Not implemented yet."
+"adamantium": {
+  onConsume: (gameState, amt) => {
+    let totalProgressBoostPercent = 0;
+    let totalDrainBoostPercent = 0;
+    for (let i = 0; i < amt; i++) {
+      // Generate a random integer between 1 and 50 for each use.
+      const progressBoostPercent = Math.floor(Math.random() * 50) + 1;
+      const drainBoostPercent = Math.floor(Math.random() * 50) + 1;
+      totalProgressBoostPercent += progressBoostPercent;
+      totalDrainBoostPercent += drainBoostPercent;
+    }
+    // Convert the total percentages into decimal values.
+    const progressBoost = totalProgressBoostPercent / 100;
+    const drainBoost = totalDrainBoostPercent / 100;
+    
+    // Apply the boosts to the "tinkering" skill.
+    gameState.skills["tinkering"].progressBoost += progressBoost;
+    gameState.skills["tinkering"].drainBoost += drainBoost;
+    
+    updateSkillMultipliers();
+    updateSkillDisplay();
+    updateTasksHoverInfo();
+    
+    showMessage(`Used ${amt} Adamantium${amt > 1 ? "s" : ""}.<br>Boosted Tinkering progress by ${totalProgressBoostPercent}%<br>and reduced energy drain by ${totalDrainBoostPercent}%.`);
   },
+  tooltip: "Boosts Tinkering progress and reduces its energy drain<br>by a random percentage (1%-50%) per use."
+},
   "nano_component": {
     onConsume: (gameState, amt) => {
       gameState.skills["charisma"].progressBoost += 0.15 * amt;
@@ -575,15 +596,26 @@ const SERENITY_UPGRADES = {
         cost: 75,
         description: "Basic Mech gives +100 energy instead of +25.<br>Must be purchased before getting perk."
       },
+      "Smarter Automation": {
+        cost: 100,
+        description: "Automation performs resource producing tasks first."
+      },
       "Copiouser Alchemist": {
         cost: 200,
         description: "Copious Alchemist reduces Copium drain by 80% instead of 60%."
+      },
+      "Gacha Overdrive": {
+        cost: 500,
+        description: "Gacha Machine produces triple resources instead of double."
       }
     },
+
     "Transcend Chaos (not available yet)": {
     },
+
     "Attain Equilibrium (not available yet)": {
     },
+
     "Become the Void (not available yet)": {
     }
   },
@@ -613,6 +645,11 @@ const SERENITY_UPGRADES = {
     },
 
     "Embrace Stillness": {
+      "Starting Level": {
+        initialCost: 1.5,
+        scaling: 1.5,
+        description: "Increase starting level of all skills after Prestige by +1."
+      },
       "Better Elixirs": {
         initialCost: 2,
         scaling: 2,
@@ -622,12 +659,20 @@ const SERENITY_UPGRADES = {
         initialCost: 5,
         scaling: 3,
         description: "Reduce game tick duration by 1% (multiplicatively)."
+      },
+      "Zone Pusher": {
+        initialCost: 4,
+        scaling: 4,
+        description: "Increase exponent of zone in serenity gain function by +0.1."
       }
     },
+
     "Transcend Chaos (not available yet)": {
     },
+
     "Attain Equilibrium (not available yet)": {
     },
+
     "Become the Void (not available yet)": {
     }
   }

@@ -81,7 +81,7 @@ var zones = [
     img: "images/zones/zone5.jpg",
     tasks: [
       { id: 61, name: "Travel: Navigate to Abandoned Factory", type: "Travel", maxReps: 1, count: 0, baseTime: 1e5, description: "Descend deeper into the digital realm.", skills: ["travel"] },
-      { id: 62, name: "Training Sparring Session", type: "Training", maxReps: 10, count: 0, baseTime: 1e5, description: "Learn the fundamentals of combat.", skills: ["combat"], mandatory: true },
+      { id: 62, name: "Training Sparring Session", type: "Training", maxReps: 10, count: 0, baseTime: 1e5, speedMult: 0.8, description: "Learn the fundamentals of combat.", skills: ["combat"], mandatory: true },
       { id: 63, name: "Weapon Drills Simulated Battle", type: "Training", maxReps: 5, count: 0, baseTime: 8e6, description: "Practice with simulated weapons.", skills: ["combat", "hacking"] },
       { id: 64, name: "Tactical Coordination Group Skirmish", type: "Training", maxReps: 7, count: 0, baseTime: 4e8, description: "Develop team-based combat strategies.", skills: ["combat", "charisma"] },
       { id: 65, name: "Energetic Bliss: Painstaking Training", type: "Training", maxReps: 1, count: 0, baseTime: 4e12, description: "Engage in a grueling training session.", skills: ["combat", "endurance", "perception"], perk: "energetic_bliss" },
@@ -188,7 +188,7 @@ var zones = [
       { id: 133, name: "Sandstorm: Guerrilla Warfare Sprint", type: "Training", maxReps: 4, count: 0, baseTime: 2.2e16, description: "Sprint through a raging sandstorm.", skills: ["endurance", "combat"], perk: "sandstorm" },
       { id: 134, name: "Outpost Infiltration Silent Breach", type: "Training", maxReps: 5, count: 0, baseTime: 1e16, description: "Breach an enemy outpost undetected.", skills: ["hacking", "endurance"] },
       { id: 135, name: "Produce Augment Fuel", type: "Training", maxReps: 4, count: 0, baseTime: 1e18, description: "Synethesize some augment fuel.", skills: ["cybernetics", "mechanics"], resources: ["augment_fuel"] },
-      { id: 136, name: "Wise Mechanic: Knowledge Expansion", type: "Training", maxReps: 1, count: 0, baseTime: 1e22, xpMult: 0.5, description: "Expand your knowledge of mechanics.", skills: ["tinkering", "intellect", "mechanics"], perk: "wise_mechanic" },
+      { id: 136, name: "Wise Mechanic: Knowledge Expansion", type: "Training", maxReps: 1, count: 0, baseTime: 1e22, xpMult: 0.1, description: "Expand your knowledge of mechanics.", skills: ["tinkering", "intellect", "mechanics"], perk: "wise_mechanic" },
       { id: 137, name: "Battle Vegeta", type: "Training", maxReps: 1, count: 0, baseTime: 1e12, description: "Challenge the prince of all Saiyans.", skills: ["combat"], boss_image: "images/bosses/vegeta.jpg", drainMult: 50, resources: ["saiyan_armor"], sound: vegetaSound }
     ]
   },
@@ -215,7 +215,7 @@ var zones = [
       { id: 152, name: "Mainframe Break-In Digital Siege", type: "Training", maxReps: 2, count: 0, baseTime: 5e19, description: "Penetrate a heavily fortified digital fortress.", skills: ["cybernetics", "mechanics"], mandatory: true },
       { id: 153, name: "Cyber Siege Digital Onslaught", type: "Training", maxReps: 10, count: 0, baseTime: 2e18, description: "Launch a final digital assault on enemy systems.", skills: ["hacking", "cybernetics"], mandatory: true },
       { id: 154, name: "Discover Serenity", type: "Prestige", maxReps: 1, count: 0, baseTime: 4.8e5, description: "Find inner peace and serenity.", skills: ["omniscience"], mandatory: true },
-      { id: 155, name: "Master of AI: Ultimate Challenge", type: "Training", maxReps: 5, count: 0, baseTime: 1e19, description: "Solve a complex algorithm that tests your intellect.", skills: ["aiMastery", "intellect"], perk: "master_of_ai" },
+      { id: 155, name: "Master of AI: Ultimate Challenge", type: "Training", maxReps: 5, count: 0, baseTime: 1e19, xpMult: 0.5, description: "Solve a complex algorithm that tests your intellect.", skills: ["aiMastery", "intellect"], perk: "master_of_ai" },
       { id: 156, name: "Last Stand: Test of Endurance", type: "Training", maxReps: 4, count: 0, baseTime: 2e14, drainMult: 3, description: "Withstand an endless onslaught of foes.", skills: ["endurance"], perk: "last_stand" },
       { id: 157, name: "Puzzle Piece: Destiny", type: "Training", maxReps: 10, count: 0, baseTime: 1e17, description: "Find a piece of the ultimate puzzle to shape your destiny.", skills: ["aiMastery", "perception"], resources: ["puzzle_piece"] }
     ]
@@ -228,10 +228,10 @@ var zones = [
       { id: 161, name: "Travel: Journey to Nebular Nexus", type: "Travel", maxReps: 1, count: 0, baseTime: 8e9, description: "Leave The Garden behind and step into cosmic wonder.", skills: ["travel"] },
       { id: 162, name: "Plant the Seeds of Creation", type: "Training", maxReps: 10, count: 0, baseTime: 1.1e23, description: "Sow the first seeds in fertile soil.", skills: ["alchemy", "intellect"], mandatory: true },
       { id: 163, name: "Nurture the Cosmic Flora", type: "Training", maxReps: 1, count: 0, baseTime: 5e15, drainMult: 2, description: "Cultivate the garden with care and vigor.", skills: ["tinkering"], mandatory: true },
-      { id: 164, name: "Mechanical Genius: Radiodynamic Gardening", type: "Training", maxReps: 2, count: 0, baseTime: 2e17, description: "Harness the power of mechanical gardening.", skills: ["mechanics"], perk: "mechanical_genius" },
+      { id: 164, name: "Mechanical Genius: Radiodynamic Gardening", type: "Training", maxReps: 2, count: 0, baseTime: 1e17, drainMult: 2, description: "Harness the power of mechanical gardening.", skills: ["mechanics"], perk: "mechanical_genius" },
       { id: 165, name: "Prune the Stellar Vines", type: "Training", maxReps: 7, count: 0, baseTime: 1e23, description: "Trim and shape the living tendrils of cosmic life.", skills: ["tinkering", "perception"] },
       { id: 166, name: "Harvest the Celestial Blossoms", type: "Training", maxReps: 7, count: 0, baseTime: 1.4e22, description: "Gather rare blossoms that glow with otherworldly light.", skills: ["alchemy", "charisma"], resources: ["celestial_blossom"] },
-      { id: 167, name: "Growth Miracle: Nebula Soil", type: "Training", maxReps: 3, count: 0, baseTime: 1e17, description: "Study the soil here to learn how to accelerate growth.", skills: ["alchemy"], perk: "growth_miracle" },
+      { id: 167, name: "Growth Miracle: Nebula Soil", type: "Training", maxReps: 3, count: 0, baseTime: 4e16, drainMult: 2.5, description: "Study the soil here to learn how to accelerate growth.", skills: ["alchemy"], perk: "growth_miracle" },
       { id: 168, name: "Battle Thanos (with hair)", type: "Training", maxReps: 1, count: 0, baseTime: 1e15, description: "Engage the Mad Titan in a clash of cosmic might. Maybe even take his glove.", skills: ["combat"], boss_image: "images/bosses/thanos.jpg", drainMult: 65, resources: ["infinity_gauntlet"], sound: thanosSound },
     ]
   },
@@ -241,7 +241,7 @@ var zones = [
     img: "images/zones/zone17.jpg",
     tasks: [
       { id: 171, name: "Travel: Journey to Quantum Abyss", type: "Travel", maxReps: 1, count: 0, baseTime: 1.5e10, description: "Depart the Nebular Nexus and approach the realm of probabilities.", skills: ["travel"] },
-      { id: 172, name: "Map the Celestial Grid", type: "Training", maxReps: 10, count: 0, baseTime: 1.5e23, speedMult: 0.5, description: "Chart the intricate network of nebular pathways.", skills: ["intellect", "perception"], mandatory: true },
+      { id: 172, name: "Map the Celestial Grid", type: "Training", maxReps: 10, count: 0, baseTime: 1.5e23, speedMult: 0.2, description: "Chart the intricate network of nebular pathways.", skills: ["intellect", "perception"], mandatory: true },
       { id: 173, name: "Align the Nebula Currents", type: "Training", maxReps: 1, count: 0, baseTime: 1e17, description: "Adjust the flow of cosmic energies to create balance.", skills: ["intellect"], mandatory: true },
       { id: 174, name: "Collect Stardust Samples", type: "Training", maxReps: 2, count: 0, baseTime: 1e24, description: "Gather sparkling particles scattered across the void.", skills: ["alchemy", "perception"], resources: ["stardust"] },
       { id: 175, name: "Calibrate Luminous Instruments", type: "Training", maxReps: 7, count: 0, baseTime: 7e23, description: "Fine-tune devices to capture the brilliance of nebular light.", skills: ["tinkering", "intellect"] },
@@ -261,7 +261,7 @@ var zones = [
       { id: 183, name: "Stabilize the Particle Field", type: "Training", maxReps: 10, count: 0, baseTime: 1.3e22, description: "Harness subatomic forces with precise adjustments.", skills: ["tinkering", "quantum"], mandatory: true },
       { id: 184, name: "Collect Quantum Residue", type: "Training", maxReps: 3, count: 0, baseTime: 2.5e22, description: "Retrieve fleeting particles left in the void.", skills: ["alchemy", "quantum"], resources: ["quantum_residue"] },
       { id: 185, name: "Calibrate Waveform Oscillations", type: "Training", maxReps: 9, count: 0, baseTime: 2e25, description: "Adjust the frequencies of unseen oscillations.", skills: ["intellect", "mechanics"] },
-      { id: 186, name: "Quantum Harmony: Uncertainty Principle", type: "Training", maxReps: 1, count: 0, baseTime: 1e19, drainMult: 10, description: "Blend chaos and order into perfect symmetry.", skills: ["intellect"], perk: "quantum_harmony" },
+      { id: 186, name: "Quantum Harmony: Uncertainty Principle", type: "Training", maxReps: 1, count: 0, baseTime: 5e18, drainMult: 20, description: "Blend chaos and order into perfect symmetry.", skills: ["intellect"], perk: "quantum_harmony" },
       { id: 187, name: "Battle Ultron", type: "Training", maxReps: 1, count: 0, baseTime: 2e16, speedMult: 0.7, description: "Confront the synthetic menace in a clash of logic.", skills: ["combat"], boss_image: "images/bosses/ultron.jpg", drainMult: 75, resources: ["adamantium"], sound: ultronSound },
     ]
   },
@@ -272,7 +272,7 @@ var zones = [
     tasks: [
       { id: 191, name: "Travel: Ascend to Cosmic Forge", type: "Travel", maxReps: 1, count: 0, baseTime: 1e14, description: "Leave the realm of circuits for the fires of creation.", skills: ["travel"] },
       { id: 192, name: "Interface with Machine Spirits", type: "Training", maxReps: 5, count: 0, baseTime: 1e24, description: "Merge your mind with digital deities.", skills: ["cybernetics", "intellect"], mandatory: true },
-      { id: 193, name: "Optimize Circuitry Harmony", type: "Training", maxReps: 2, count: 0, baseTime: 2e18, drainMult: 10, description: "Refine the balance of celestial circuits with precision.", skills: ["tinkering"], mandatory: true },
+      { id: 193, name: "Optimize Circuitry Harmony", type: "Training", maxReps: 2, count: 0, baseTime: 1e18, drainMult: 15, description: "Refine the balance of celestial circuits with precision.", skills: ["tinkering"], mandatory: true },
       { id: 194, name: "Extract Nano Components", type: "Training", maxReps: 4, count: 0, baseTime: 1e22, description: "Scavenge vital microchips from abandoned systems.", skills: ["mechanics", "hacking"], resources: ["nano_component"] },
       { id: 195, name: "Charm the Data Streams", type: "Training", maxReps: 7, count: 0, baseTime: 5e24, description: "Use your intellect and charisma to infuse digital data with a harmonious energy.", skills: ["intellect", "charisma"] },
       { id: 196, name: "Cyber Boost: Digital Resonance", type: "Training", maxReps: 5, count: 0, baseTime: 7e14, drainMult: 2, description: "Amplify the power of cybernetic energy.", skills: ["cybernetics"], perk: "cyber_boost" },
@@ -286,29 +286,30 @@ var zones = [
     tasks: [
       { id: 201, name: "Travel: Emerge into Celestial Dominion", type: "Travel", maxReps: 1, count: 0, baseTime: 1e16, drainMult: 4, description: "Exit the blazing forge and ascend toward divine realms.", skills: ["travel"] },
       { id: 202, name: "Hammer the Celestial Anvil", type: "Training", maxReps: 4, count: 0, baseTime: 1e18, drainMult: 100, speedMult: 1e-10, description: "Shape raw cosmic materials with divine precision.", skills: ["tinkering", "endurance"], mandatory: true },
-      { id: 203, name: "Heat the Stellar Crucible", type: "Training", maxReps: 20, count: 0, baseTime: 2e17, drainMult: 3, sdescription: "Ignite the furnace of creation to mold the universe.", skills: ["alchemy"], mandatory: true },
+      { id: 203, name: "Heat the Stellar Crucible", type: "Training", maxReps: 20, count: 0, baseTime: 2e17, drainMult: 3, description: "Ignite the furnace of creation to mold the universe.", skills: ["alchemy"], mandatory: true },
       { id: 204, name: "Embrace Stillness", type: "Prestige", maxReps: 1, count: 0, baseTime: 5e6, speedMult: 0.5, description: "Comprehend the stillness of the cosmos.", skills: ["omniscience"], mandatory: true },
       { id: 205, name: "Extract Celestial Ore", type: "Training", maxReps: 1, count: 0, baseTime: 1e27, drainMult: 5, speedMult: 1e-3, description: "Mine rare metals from the heart of a star.", skills: ["mechanics", "alchemy"], resources: ["celestial_ore"] },
       { id: 206, name: "Universal Alloy: Mold Strength", type: "Training", maxReps: 7, count: 0, baseTime: 5e19, drainMult: 5, description: "Combine elements to form structures of eternal strength.", skills: ["tinkering"], perk: "universal_alloy" },
-      { id: 207, name: "Forge Fervor: Resonate with Flames", type: "Training", maxReps: 7, count: 0, baseTime: 1e18, drainMult: 10, description: "Let the heat of creation empower your spirit.", skills: ["endurance"], perk: "forge_fervor" },
+      { id: 207, name: "Forge Fervor: Resonate with Flames", type: "Training", maxReps: 7, count: 0, baseTime: 1e17, drainMult: 100, description: "Let the heat of creation empower your spirit.", skills: ["endurance"], perk: "forge_fervor" },
       { id: 208, name: "Sparring with Dwarf King", type: "Training", maxReps: 12, count: 0, baseTime: 5e18, drainMult: 8, speedMult: 8e-8, description: "Test your strength against the might of the dwarf king.", skills: ["combat", "endurance"] },
       { id: 209, name: "Battle Doctor Manhattan", type: "Training", maxReps: 1, count: 0, baseTime: 1e19, speedMult: 0.5, description: "Contend with the enigmatic force of atomic power.", skills: ["combat"], boss_image: "images/bosses/doctor_manhattan.jpg", drainMult: 90, resources: ["atomic_particle"], sound: doctorManhattanSound },
     ]
   },
-  // {
-  //   id: 21,
-  //   name: "Celestial Dominion",
-  //   img: "images/zones/zone21.jpg",
-  //   tasks: [
-  //     { id: 211, name: "Travel: Exit Celestial Dominion to Neon Hypergrid", type: "Travel", maxReps: 1, count: 0, baseTime: 1.0e25, description: "Leave divine order behind and step into radiant energy.", skills: ["travel"] },
-  //     { id: 212, name: "Proclaim Divine Edicts", type: "Training", maxReps: 10, count: 0, baseTime: 1.1e25, description: "Establish your authority over celestial forces.", skills: ["charisma", "intellect"], mandatory: true },
-  //     { id: 213, name: "Unify Stellar Legions", type: "Training", maxReps: 10, count: 0, baseTime: 1.2e25, description: "Rally celestial forces into one harmonious chorus.", skills: ["charisma", "intellect"], mandatory: true },
-  //     { id: 214, name: "Collect Star Fragments", type: "Training", maxReps: 7, count: 0, baseTime: 1.3e25, description: "Gather shimmering remnants of ancient stars.", skills: ["alchemy", "perception"], resources: ["star_fragment"] },
-  //     { id: 215, name: "Harmonize Celestial Chants", type: "Training", maxReps: 7, count: 0, baseTime: 1.4e25, description: "Blend cosmic sounds to maintain universal balance.", skills: ["charisma", "intellect"] },
-  //     { id: 216, name: "Invoke Divine Radiance", type: "Training", maxReps: 7, count: 0, baseTime: 1.5e25, description: "Channel celestial light to inspire greatness.", skills: ["charisma", "intellect"], perk: "celestial_glory" },
-  //     { id: 217, name: "Battle Galactus", type: "Training", maxReps: 1, count: 0, baseTime: 1.6e25, description: "Engage the devourer of worlds in an epic showdown.", skills: ["combat", "intellect", "endurance"], resources: ["cosmic_energy"] }
-  //   ]
-  // },
+  {
+    id: 21,
+    name: "Celestial Dominion",
+    img: "images/zones/zone21.jpg",
+    tasks: [
+      { id: 211, name: "Travel: Exit to Neon Hypergrid", type: "Travel", maxReps: 1, count: 0, baseTime: 3e16, drainMult: 8, description: "Leave divine order behind and step into radiant energy.", skills: ["travel"] },
+      { id: 212, name: "Proclaim Divine Edicts", type: "Training", maxReps: 7, count: 0, baseTime: 1e20, drainMult: 10, description: "Establish your authority over celestial forces.", skills: ["charisma"], mandatory: true },
+      { id: 216, name: "Advanced Potion Making", type: "Training", maxReps: 20, count: 0, baseTime: 1e21, drainMult: 10, speedMult: 1e-15, description: "Create potions to enhance your combat prowess.", skills: ["alchemy", "tinkering", "intellect"], resources: ["energy_elixir","steroids","augment_fuel"]},
+      // { id: 213, name: "Unify Stellar Legions", type: "Training", maxReps: 10, count: 0, baseTime: 1.2e25, description: "Rally celestial forces into one harmonious chorus.", skills: ["charisma", "intellect"], mandatory: true },
+      // { id: 214, name: "Collect Star Fragments", type: "Training", maxReps: 7, count: 0, baseTime: 1.3e25, description: "Gather shimmering remnants of ancient stars.", skills: ["alchemy", "perception"], resources: ["star_fragment"] },
+      // { id: 215, name: "Harmonize Celestial Chants", type: "Training", maxReps: 7, count: 0, baseTime: 1.4e25, description: "Blend cosmic sounds to maintain universal balance.", skills: ["charisma", "intellect"] },
+      // { id: 216, name: "Invoke Divine Radiance", type: "Training", maxReps: 7, count: 0, baseTime: 1.5e25, description: "Channel celestial light to inspire greatness.", skills: ["charisma", "intellect"], perk: "celestial_glory" },
+      // { id: 217, name: "Battle Galactus", type: "Training", maxReps: 1, count: 0, baseTime: 1.6e25, description: "Engage the devourer of worlds in an epic showdown.", skills: ["combat", "intellect", "endurance"], resources: ["cosmic_energy"] }
+    ]
+  },
   // {
   //   id: 22,
   //   name: "Neon Hypergrid",

@@ -82,6 +82,8 @@ CURRENT_GAME_VERSION = "v0.2";
       powerGainMultiplier: 1,
       autoConsumeResources: false,
       elixirEnergy: 3,
+      startingLevel: 1,
+      serenityGainZoneExponent: 3,
     };
   }
 
@@ -98,6 +100,15 @@ CURRENT_GAME_VERSION = "v0.2";
   let baseEnergyDrain = 0.05;
   let growthMiracleApplied = false;
   let resourceConsumeMode = "one";
+
+  let perkZoneMapping = {};
+  zones.forEach(zone => {
+    zone.tasks.forEach(task => {
+      if (task.perk && perkZoneMapping[task.perk] === undefined) {
+        perkZoneMapping[task.perk] = zone.id;
+      }
+    });
+  });
 
   // Helper to consume resources from gameState
   function consumeResource(name, amt) {
@@ -651,7 +662,11 @@ CURRENT_GAME_VERSION = "v0.2";
     const val = Math.max(0, gameState.energy);
     const energyText = document.getElementById("energyText");
     if (energyText) {
-      energyText.textContent = val.toFixed(0);
+      if (val < 10 && val > 0) {
+        energyText.textContent = val.toFixed(1);
+      } else {
+        energyText.textContent = val.toFixed(0);
+      }
     }
     const energyBarFill = document.getElementById("energyBarFill");
     if (energyBarFill) {
@@ -1054,7 +1069,7 @@ CURRENT_GAME_VERSION = "v0.2";
       gameState.power = 0;
       gameState.prestigeAvailable = false;
       Object.keys(gameState.skills).forEach(sName => {
-        gameState.skills[sName].level = 1;
+        gameState.skills[sName].level = gameState.startingLevel;
         gameState.skills[sName].xp = 0;
       });
       zones.forEach(zone => {
@@ -1788,6 +1803,10 @@ CURRENT_GAME_VERSION = "v0.2";
         gameState.autoRun = true;
       } else {
         gameState.autoRun = false;
+        showMessage("Automation ended.");
+        if (gameState.soundEnabled) {
+          automationEndSound.play();
+        }
       }
     } else {
       // In "Zone" mode (or if no automation mode set), turn autoRun off.
@@ -1979,7 +1998,8 @@ CURRENT_GAME_VERSION = "v0.2";
       } else {
         // locked
         div.className = "perk-item locked";
-        div.setAttribute("data-tooltip", pStr + ": Unlock perk to see description.");
+        const zoneNum = perkZoneMapping[pKey] || "?";
+        div.setAttribute("data-tooltip", pStr + ": Unlock perk on Zone " + zoneNum + ".");
       }
   
       div.appendChild(icon);
@@ -2139,8 +2159,14 @@ CURRENT_GAME_VERSION = "v0.2";
         perkDescriptions.basic_mech = "Increases starting Energy by 100.";
         // Effect is applied elsewhere.
         break;
+      case "Smarter Automation":
+        // Effect is applied elsewhere.
+        break;
       case "Copiouser Alchemist":
         perkDescriptions.copious_alchemist = "Reduce Copium gain by 80%.";
+        break;
+      case "Gacha Overdrive":
+        perkDescriptions.gacha_machine = "25% chance to produce triple resources.";
         break;
       default:
         console.log(`No effect defined for unlockable: ${upgName}`);
@@ -2168,8 +2194,19 @@ CURRENT_GAME_VERSION = "v0.2";
         gameState.elixirEnergy = 3 + level;
         resourceActions["energy_elixir"].tooltip = "Click to gain +" + gameState.elixirEnergy + " Energy.<br>" + (("ontouchstart" in window || navigator.maxTouchPoints > 0) ? "Use above switch to consume all." : "Right-click to consume all.");
         break;
+      case "Starting Level":
+        gameState.startingLevel = 1 + level;
+        Object.keys(gameState.skills).forEach(sName => {
+          gameState.skills[sName].level = Math.max(gameState.skills[sName].level, gameState.startingLevel);
+        });
+        updateSkillDisplay();
+        updateTasksHoverInfo();
+        break;
       case "Game Speed":
         setRunTickDuration(100 * Math.pow(0.99, level));
+        break;
+      case "Zone Pusher":
+        gameState.serenityGainZoneExponent = 3 + (level * 0.1);
         break;
       default:
         console.log(`No effect defined for infinite upgrade: ${upgName}`);
@@ -2325,7 +2362,7 @@ CURRENT_GAME_VERSION = "v0.2";
     if (gameState.serenityUnlocked) {
       serenityUpg.style.display = "inline-block";
       // Calculate potential serenity gain on prestige:
-      const serenityGainPotential = ((gameState.bestCompletedZone ** 3) / gameState.resetsForBestZone) * (gameState.perks.inspired_glow ? 1.25 : 1);
+      const serenityGainPotential = ((gameState.bestCompletedZone ** gameState.serenityGainZoneExponent) / gameState.resetsForBestZone) * (gameState.perks.inspired_glow ? 1.25 : 1);
       // Set the inner HTML: first line shows current Serenity, second line (in gray) shows potential gain.
       serenityUpg.innerHTML = `Serenity: ${formatNumber(gameState.serenity)}`
       serenityUpg.innerHTML += `<br><span style="color:rgb(200, 200, 200); font-size: 0.9em;">+(${formatNumber(serenityGainPotential)})</span>`;
@@ -2352,8 +2389,12 @@ CURRENT_GAME_VERSION = "v0.2";
         return `Current Effect: ${formatNumber(gameState.powerGainMultiplier)}x`;
       case "Better Elixirs":
         return `Current Effect: +${formatNumber(gameState.elixirEnergy)}`;
+      case "Starting Level":
+        return `Current Effect: ${formatNumber(gameState.startingLevel)}`;
       case "Game Speed":
         return `Current Effect: Tick speed: ${formatNumber(runTickDuration)}ms`;
+      case "Zone Pusher":
+        return `Current Effect: ^${formatNumber(gameState.serenityGainZoneExponent)}`;
       default:
         return "Current Effect: (to be calculated)";
     }
@@ -2362,126 +2403,125 @@ CURRENT_GAME_VERSION = "v0.2";
   function showSerenityPrestigeModal() {
     hideTooltip();
   
-    const serenityGainPotential = ((gameState.bestCompletedZone ** 3) / gameState.resetsForBestZone) *
+    const serenityGainPotential = ((gameState.bestCompletedZone ** gameState.serenityGainZoneExponent) / gameState.resetsForBestZone) *
       (gameState.perks.inspired_glow ? 1.25 : 1);
   
     // Calculate total resets from energy, copium, and delusion resets.
     const totalResets = gameState.numEnergyResets + gameState.numCopiumResets + gameState.numDelusionResets;
-    // Calculate next zone potential using highestCompletedZone + 1 divided by the total resets.
-    const nextZonePotential = (((gameState.highestCompletedZone + 1) ** 3) / totalResets) *
+    // Calculate next zone potential using (highestCompletedZone + 1) divided by total resets.
+    const nextZonePotential = (((gameState.highestCompletedZone + 1) ** gameState.serenityGainZoneExponent) / totalResets) *
       (gameState.perks.inspired_glow ? 1.25 : 1);
-
-    // Main modal
-    const modal = document.createElement("div");
-    modal.className = "modal";
-    modal.id = "serenityModal";
   
-    // Content container with blue border and scrollability.
-    const content = document.createElement("div");
-    content.className = "modal-content prestige-modal prestige-modal-blueborder";
-    content.style.maxHeight = "80vh";
-    content.style.overflowY = "auto";
+    // Check if the modal already exists.
+    let modal = document.getElementById("serenityModal");
+    let content;
+    if (!modal) {
+      modal = document.createElement("div");
+      modal.className = "modal";
+      modal.id = "serenityModal";
+      modal.addEventListener("click", (e) => {
+        if (e.target === modal) {
+          modal.remove();
+        }
+      });
+      document.body.appendChild(modal);
   
-    // Header with “Prestige” and close button.
-    const header = document.createElement("div");
-    header.className = "modal-header-centered";
-    const title = document.createElement("h2");
-    title.textContent = "Prestige";
-    header.appendChild(title);
-    content.appendChild(header);
+      content = document.createElement("div");
+      content.className = "modal-content prestige-modal prestige-modal-blueborder";
+      content.style.maxHeight = "80vh";
+      content.style.overflowY = "auto";
+      modal.appendChild(content);
+    } else {
+      content = modal.querySelector(".modal-content");
+    }
   
-    // Serenity info + formula.
-    const serenityInfo = document.createElement("div");
-    serenityInfo.className = "serenity-info-container";
-    serenityInfo.innerHTML = `
+    // Save the current scroll position.
+    const currentScroll = content.scrollTop;
+  
+    // Build header.
+    let html = `
+      <div class="modal-header-centered">
+        <h2>Prestige</h2>
+      </div>
+      <div class="serenity-info-container">
         <p>
           <strong>Serenity:</strong> ${formatNumber(gameState.serenity)}
           <span style="color: gray; font-size: 0.9em;">(+${formatNumber(serenityGainPotential)})</span>
         </p>
         <p style="color: gray; margin-top: -10px;">
-          Serenity Gain = (<strong>Best Full Zone</strong> ^ 3 / <strong>Total Resets</strong>)${gameState.perks.inspired_glow ? " * 1.25" : ""}
+          Serenity Gain = (<strong>Best Full Zone</strong> ^ ${gameState.serenityGainZoneExponent} / <strong>Total Resets</strong>)${gameState.perks.inspired_glow ? " * 1.25" : ""}
         </p>
-      `;
-    content.appendChild(serenityInfo);
-  
-    // Combined line with Max Zone and resets.
-    const combinedLine = document.createElement("p");
-    combinedLine.style.fontSize = "0.9em";
-    combinedLine.innerHTML = `
+      </div>
+      <p style="font-size: 0.9em; margin-top: 5px;">
         Best Zone Completed: ${gameState.bestCompletedZone} | 
         Resets on Completion: ${gameState.resetsForBestZone == 1e100 ? "N/A" : gameState.resetsForBestZone}<br>
-        Highest Zone Completed: ${gameState.highestCompletedZone} | Next Zone Potential Serenity: ${formatNumber(nextZonePotential)}<br><br>
+        <span style="color: gray;">
+          Highest Zone Completed: ${gameState.highestCompletedZone} | Next Zone Potential Serenity: 
+          <span style="color: ${nextZonePotential > serenityGainPotential ? "green" : "gray"};">${formatNumber(nextZonePotential)}</span>
+        </span><br><br>
         Current Resets:<br>
-        Energy: ${gameState.numEnergyResets} |
-        Copium: ${gameState.numCopiumResets} |
-        Delusion: ${gameState.numDelusionResets}
-      `;
-    combinedLine.style.marginTop = "5px";
-    content.appendChild(combinedLine);
+        Energy: ${gameState.numEnergyResets} | Copium: ${gameState.numCopiumResets} | Delusion: ${gameState.numDelusionResets}
+      </p>
+      <div class="serenity-buttons-container">
+        <button class="prestige-task-button" ${!gameState.prestigeAvailable ? "disabled data-tooltip='Prestige becomes available after completing a prestige task.'" : ""}>Prestige</button>
+        <button class="exit-btn">Exit</button>
+      </div>
+    `;
+    content.innerHTML = html;
   
-    // Buttons row: Prestige and Exit.
-    const buttonContainer = document.createElement("div");
-    buttonContainer.className = "serenity-buttons-container";
-    const prestigeBtn = document.createElement("button");
-    prestigeBtn.className = "prestige-task-button";
-    prestigeBtn.textContent = "Prestige";
-    if (!gameState.prestigeAvailable) {
-      prestigeBtn.disabled = true;
-      prestigeBtn.setAttribute("data-tooltip", "Prestige becomes available after completing a prestige task.");
-    } else {
+    // Attach event listeners to the Prestige and Exit buttons.
+    const prestigeBtn = content.querySelector(".prestige-task-button");
+    if (prestigeBtn && gameState.prestigeAvailable) {
       prestigeBtn.addEventListener("click", () => {
         showPrestigeConfirmationModal(serenityGainPotential);
       });
     }
-    const exitBtn = document.createElement("button");
-    exitBtn.textContent = "Exit";
-    exitBtn.addEventListener("click", () => modal.remove());
-    buttonContainer.appendChild(prestigeBtn);
-    buttonContainer.appendChild(exitBtn);
-    content.appendChild(buttonContainer);
+    const exitBtn = content.querySelector(".exit-btn");
+    if (exitBtn) {
+      exitBtn.addEventListener("click", () => modal.remove());
+    }
   
-    // For each section in SERENITY_UPGRADES.unlockables.
+    // Append each upgrade section.
     for (const sectionName of Object.keys(SERENITY_UPGRADES.unlockables)) {
       // Determine if this section should be locked.
       const sectionLocked = (sectionName === "Embrace Stillness" && !gameState.secondSectionUnlocked);
   
-      const sectionDiv = document.createElement("div");
+      // Create a container for the section.
+      let sectionDiv = document.createElement("div");
       sectionDiv.className = "serenity-section";
       const sectionTitle = document.createElement("h3");
       sectionTitle.textContent = sectionName;
       sectionDiv.appendChild(sectionTitle);
   
       // Create a row container.
-      const row = document.createElement("div");
+      let row = document.createElement("div");
       row.className = "serenity-section-row";
   
       // Left column: Unlockables.
-      const leftCol = document.createElement("div");
+      let leftCol = document.createElement("div");
       leftCol.className = "serenity-upgrades-col";
       const leftTitle = document.createElement("h4");
       leftTitle.textContent = "Unlockables";
       leftCol.appendChild(leftTitle);
-      // Create a grid container for upgrade slots.
-      const leftGrid = document.createElement("div");
+      let leftGrid = document.createElement("div");
       leftGrid.className = "serenity-upgrade-grid";
   
       const unlockables = SERENITY_UPGRADES.unlockables[sectionName] || {};
       for (const [upgName, details] of Object.entries(unlockables)) {
-        const slot = document.createElement("div");
+        let slot = document.createElement("div");
         slot.className = "serenity-upgrade-slot";
   
-        const nameDiv = document.createElement("div");
+        let nameDiv = document.createElement("div");
         nameDiv.className = "serenity-upgrade-name";
         nameDiv.textContent = upgName;
   
-        const costDiv = document.createElement("div");
+        let costDiv = document.createElement("div");
         costDiv.className = "serenity-upgrade-cost";
   
         if (gameState.serenityUnlockables[upgName]) {
           slot.classList.add("upgrade-slot-purchased");
         } else {
           if (sectionLocked) {
-            // Force locked state regardless of affordability.
             slot.classList.add("upgrade-slot-locked");
             costDiv.textContent = `Cost: ${details.cost}`;
             slot.setAttribute("data-tooltip", (details.description || "") + "<br><br>This section is locked.");
@@ -2494,12 +2534,14 @@ CURRENT_GAME_VERSION = "v0.2";
             costDiv.textContent = `Cost: ${details.cost}`;
             slot.addEventListener("click", () => {
               if (gameState.serenity >= details.cost) {
+                const prevScroll = content.scrollTop;
                 gameState.serenity -= details.cost;
                 gameState.serenityUnlockables[upgName] = true;
                 applySerenityUnlockable(upgName);
                 showSerenityIfUnlocked();
-                document.getElementById("serenityModal").remove();
+                // Instead of removing the modal, update it:
                 showSerenityPrestigeModal();
+                content.scrollTop = prevScroll;
               }
             });
           }
@@ -2519,26 +2561,26 @@ CURRENT_GAME_VERSION = "v0.2";
       leftCol.appendChild(leftGrid);
   
       // Right column: Infinite Upgrades.
-      const rightCol = document.createElement("div");
+      let rightCol = document.createElement("div");
       rightCol.className = "serenity-upgrades-col";
       const rightTitle = document.createElement("h4");
       rightTitle.textContent = "Infinites";
       rightCol.appendChild(rightTitle);
-      const rightGrid = document.createElement("div");
+      let rightGrid = document.createElement("div");
       rightGrid.className = "serenity-upgrade-grid";
   
       const infinite = SERENITY_UPGRADES.infinite[sectionName] || {};
       for (const [upgName, details] of Object.entries(infinite)) {
-        const slot = document.createElement("div");
+        let slot = document.createElement("div");
         slot.className = "serenity-upgrade-slot";
   
         const level = gameState.serenityInfinite[upgName] || 0;
-        const nameDiv = document.createElement("div");
+        let nameDiv = document.createElement("div");
         nameDiv.className = "serenity-upgrade-name";
         nameDiv.innerHTML = `${upgName}`;
   
         const cost = details.initialCost * details.scaling ** level;
-        const costDiv = document.createElement("div");
+        let costDiv = document.createElement("div");
         costDiv.className = "serenity-upgrade-cost";
   
         if (cost > 0) {
@@ -2555,12 +2597,13 @@ CURRENT_GAME_VERSION = "v0.2";
             costDiv.textContent = `Level: ${level}, Cost: ${formatNumber(cost)}`;
             slot.addEventListener("click", () => {
               if (cost > 0 && gameState.serenity >= cost) {
+                const prevScroll = content.scrollTop;
                 gameState.serenity -= cost;
                 gameState.serenityInfinite[upgName] = level + 1;
                 applySerenityInfinite(upgName);
                 showSerenityIfUnlocked();
-                document.getElementById("serenityModal").remove();
                 showSerenityPrestigeModal();
+                content.scrollTop = prevScroll;
               }
             });
           }
@@ -2574,7 +2617,6 @@ CURRENT_GAME_VERSION = "v0.2";
         } else {
           tooltipTextInfinite += `<br><br>${getCurrentInfiniteEffect(upgName, level)}`;
         }
-        slot.setAttribute("data-tooltip", tooltipTextInfinite);
         slot.setAttribute("data-tooltip", tooltipTextInfinite);
   
         slot.appendChild(nameDiv);
@@ -2590,15 +2632,10 @@ CURRENT_GAME_VERSION = "v0.2";
       content.appendChild(sectionDiv);
     }
   
-    modal.appendChild(content);
-    document.body.appendChild(modal);
-  
-    modal.addEventListener("click", (e) => {
-      if (e.target === modal) {
-        modal.remove();
-      }
-    });
+    // Restore the previous scroll position.
+    content.scrollTop = currentScroll;
   }
+  
   
   
   
@@ -3244,7 +3281,11 @@ CURRENT_GAME_VERSION = "v0.2";
           if (gameState.perks["luck_of_the_irish"] && Math.random() < 0.07) {
             task.resources.forEach(r => addResource(r, 7));
           } else if (gameState.perks["gacha_machine"] && Math.random() < 0.25) {
-            task.resources.forEach(r => addResource(r, 2));
+            if (gameState.serenityUnlockables["Gacha Overdrive"]) {
+              task.resources.forEach(r => addResource(r, 3));
+            } else {
+              task.resources.forEach(r => addResource(r, 2));
+            }
           } else {
             task.resources.forEach(r => addResource(r, 1));
           }
@@ -3318,7 +3359,7 @@ CURRENT_GAME_VERSION = "v0.2";
             if (gameState.highestCompletedZone < tData.zoneIndex + 1) {
               gameState.highestCompletedZone = tData.zoneIndex + 1;
               gameState.resetsForHighestZone = Math.max(gameState.numEnergyResets + gameState.numCopiumResets + gameState.numDelusionResets, 1);
-              if (gameState.bestCompletedZone ** 3 / gameState.resetsForBestZone < gameState.highestCompletedZone ** 3 / gameState.resetsForHighestZone) {
+              if (gameState.bestCompletedZone ** 3 / gameState.resetsForBestZone < gameState.highestCompletedZone ** gameState.serenityGainZoneExponent / gameState.resetsForHighestZone) {
                 gameState.bestCompletedZone = gameState.highestCompletedZone;
                 gameState.resetsForBestZone = gameState.resetsForHighestZone;
                 showMessage(`<span style="color: rgb(28, 106, 233);">New best fully compeleted: Zone ${gameState.bestCompletedZone} with ${gameState.resetsForBestZone} resets</span>`);
@@ -3349,12 +3390,12 @@ CURRENT_GAME_VERSION = "v0.2";
               showMessage("Crypto Wallet: -25 Delusion");
               updateDelusionDisplay();
             }
-            if (Math.random() < 0.02) {
+            if (Math.random() < 0.025) {
               gameState.knowledge += 25;
               showMessage("Crypto Wallet: +25 Knowledge");
               showKnowledgeIfUnlocked();
             }
-            if (Math.random() < 0.001) {
+            if (Math.random() < 0.005) {
               showMessage("Crypto Wallet: +25 Power");
               gameState.power += 25;
               showPowerIfUnlocked();
@@ -3402,7 +3443,6 @@ CURRENT_GAME_VERSION = "v0.2";
           }
           if (task.perk === "simulation_engine") {
             if (!gameState.serenityUnlockables["Instant Simulation"]) {
-              // For every zone and task, mark automation as enabled (true)
               zones.forEach((zone, zIndex) => {
                 zone.tasks.forEach((task, tIndex) => {
                   const key = `${zIndex}-${tIndex}`;
@@ -3470,30 +3510,40 @@ CURRENT_GAME_VERSION = "v0.2";
         let taskStarted = false;
         const zone = zones[currentZoneIndex];
         
-        // Try to start a non‑Travel task that is automation enabled.
+        let candidateTasks = [];
         for (let idx = 0; idx < zone.tasks.length; idx++) {
           const task = zone.tasks[idx];
           const key = `${currentZoneIndex}-${idx}`;
-          // If no override exists, default it to false.
           if (gameState.automationOverrides[key] === undefined) {
             gameState.automationOverrides[key] = true;
           }
-          // Skip tasks that are explicitly disabled.
           if (gameState.automationOverrides[key] === false) continue;
           
           if (task.type !== "Travel" &&
               task.count < task.maxReps &&
               !currentTasks.some(t => t.zoneIndex === currentZoneIndex && t.taskIndex === idx)) {
-            const taskDiv = document.querySelector(`.task[data-zone-index="${currentZoneIndex}"][data-task-index="${idx}"]`);
-            if (taskDiv) {
-              const btn = taskDiv.querySelector("button");
-              const progressFill = taskDiv.querySelector(".current-progress-fill");
-              const repContainer = taskDiv.querySelector(".rep-container");
-              if (btn && progressFill && repContainer) {
-                startTask(currentZoneIndex, idx, btn, progressFill, repContainer);
-                taskStarted = true;
-                break;
-              }
+            candidateTasks.push({
+              idx,
+              // resourcePriority is 1 if the task has resources, 0 otherwise.
+              resourcePriority: (task.resources && Array.isArray(task.resources) && task.resources.length > 0 && !task.boss_image) ? 1 : 0
+            });
+          }
+        }
+        
+        if (candidateTasks.length > 0) {
+          // If Smarter Automation is unlocked, sort candidates so that tasks with resources come first.
+          if (gameState.serenityUnlockables["Smarter Automation"]) {
+            candidateTasks.sort((a, b) => b.resourcePriority - a.resourcePriority);
+          }
+          const chosenIdx = candidateTasks[0].idx;
+          const taskDiv = document.querySelector(`.task[data-zone-index="${currentZoneIndex}"][data-task-index="${chosenIdx}"]`);
+          if (taskDiv) {
+            const btn = taskDiv.querySelector("button");
+            const progressFill = taskDiv.querySelector(".current-progress-fill");
+            const repContainer = taskDiv.querySelector(".rep-container");
+            if (btn && progressFill && repContainer) {
+              startTask(currentZoneIndex, chosenIdx, btn, progressFill, repContainer);
+              taskStarted = true;
             }
           }
         }
@@ -3563,6 +3613,8 @@ CURRENT_GAME_VERSION = "v0.2";
     gameState.cosmicShardTaskRunning = gameState.cosmicShardTaskRunning || false;
     gameState.secondSectionUnlocked = gameState.secondSectionUnlocked || false;
     gameState.elixirEnergy = gameState.elixirEnergy || 3;
+    gameState.startingLevel = gameState.startingLevel || 1;
+    gameState.serenityGainZoneExponent = gameState.serenityGainZoneExponent || 3;
 
     applySerenityUpgrades();
     gatherAllPerks();

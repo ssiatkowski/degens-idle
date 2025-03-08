@@ -49,6 +49,7 @@ const soundManager = {
   const perkUnlockSound = soundManager.register("perkUnlock", "sounds/perk_unlock.wav", { type: 'sfx' });
   const reinforcementSound = soundManager.register("reinforcement", "sounds/reinforcement.wav", { type: 'sfx' });
   const experienceSound = soundManager.register("experience", "sounds/experience.mp3", { type: 'sfx' });
+  const automationEndSound = soundManager.register("automationEnd", "sounds/automation_end.wav", { type: 'sfx' });
 
   const agentSmithSound = soundManager.register("agentSmith", "sounds/agent_smith.mp3", { type: 'sfx' });
   const shaoKahnSound = soundManager.register("shaoKahn", "sounds/shao_kahn.mp3", { type: 'sfx' });
