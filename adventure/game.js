@@ -1893,6 +1893,9 @@ CURRENT_GAME_VERSION = "v0.2";
     if(gameState.perks.wise_mechanic) {
       knowledgeSkills = ["tinkering", "intellect", "hacking", "mechanics"];
       showKnowledgeIfUnlocked();
+    } else {
+      knowledgeSkills = ["tinkering", "intellect", "hacking"];
+      showKnowledgeIfUnlocked();
     }
     if(gameState.perks.master_of_ai) {
       if (gameState.perks.master_of_ai === "disabled") {
@@ -1900,6 +1903,9 @@ CURRENT_GAME_VERSION = "v0.2";
       } else {
         delusionSkills = ["charisma", "perception", "negotiation"];
       }
+      updateDelusionDisplay();
+    } else {
+      delusionSkills = ["charisma", "perception", "negotiation"];
       updateDelusionDisplay();
     }
     if(gameState.perks.mechanical_genius) {
@@ -1909,9 +1915,15 @@ CURRENT_GAME_VERSION = "v0.2";
         copiumSkills = ["endurance", "alchemy"];
       }
       updateCopiumDisplay();
+    } else {
+      copiumSkills = ["endurance", "alchemy"];
+      updateCopiumDisplay();
     }
     if(gameState.perks.quantum_teleportation) {
       powerSkills = ["combat", "endurance", "travel"];
+      showPowerIfUnlocked();
+    } else {
+      powerSkills = ["combat", "endurance"];
       showPowerIfUnlocked();
     }
     if (gameState.perks.growth_miracle && !growthMiracleApplied) {
@@ -3440,6 +3452,7 @@ CURRENT_GAME_VERSION = "v0.2";
           if (task.perk === "basic_mech") {
             if (gameState.serenityUnlockables["Stronger Mech"]) gameState.startingEnergy += 100;
             else gameState.startingEnergy += 25;
+            updateEnergyDisplay();
           }
           if (task.perk === "simulation_engine") {
             if (!gameState.serenityUnlockables["Instant Simulation"]) {
