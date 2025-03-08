@@ -657,7 +657,7 @@ const SERENITY_UPGRADES = {
       },
       "Game Speed": {
         initialCost: 5,
-        scaling: 3,
+        scaling: 1.5,
         description: "Reduce game tick duration by 1% (multiplicatively)."
       },
       "Zone Pusher": {
