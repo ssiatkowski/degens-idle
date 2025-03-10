@@ -3487,6 +3487,7 @@ CURRENT_GAME_VERSION = "v0.2";
           renderPerks();
           updatePerksCount();
           updateSkillDisplay();
+          saveGameProgress();
           if (gameState.soundEnabled) perkUnlockSound.play();
         }
         // If the task is a Prestige task and it’s now fully completed, show the prestige modal.
