@@ -1905,7 +1905,7 @@ CURRENT_GAME_VERSION = "v0.2";
       }
       updateDelusionDisplay();
     } else {
-      delusionSkills = ["charisma", "perception", "negotiation"];
+      delusionSkills = ["charisma", "perception", "aiMastery", "negotiation"];
       updateDelusionDisplay();
     }
     if(gameState.perks.mechanical_genius) {
@@ -1916,7 +1916,7 @@ CURRENT_GAME_VERSION = "v0.2";
       }
       updateCopiumDisplay();
     } else {
-      copiumSkills = ["endurance", "alchemy"];
+      copiumSkills = ["endurance", "alchemy", "mechanics"];
       updateCopiumDisplay();
     }
     if(gameState.perks.quantum_teleportation) {
@@ -3371,7 +3371,7 @@ CURRENT_GAME_VERSION = "v0.2";
             if (gameState.highestCompletedZone < tData.zoneIndex + 1) {
               gameState.highestCompletedZone = tData.zoneIndex + 1;
               gameState.resetsForHighestZone = Math.max(gameState.numEnergyResets + gameState.numCopiumResets + gameState.numDelusionResets, 1);
-              if (gameState.bestCompletedZone ** 3 / gameState.resetsForBestZone < gameState.highestCompletedZone ** gameState.serenityGainZoneExponent / gameState.resetsForHighestZone) {
+              if (gameState.bestCompletedZone ** gameState.serenityGainZoneExponent / gameState.resetsForBestZone < gameState.highestCompletedZone ** gameState.serenityGainZoneExponent / gameState.resetsForHighestZone) {
                 gameState.bestCompletedZone = gameState.highestCompletedZone;
                 gameState.resetsForBestZone = gameState.resetsForHighestZone;
                 showMessage(`<span style="color: rgb(28, 106, 233);">New best fully compeleted: Zone ${gameState.bestCompletedZone} with ${gameState.resetsForBestZone} resets</span>`);

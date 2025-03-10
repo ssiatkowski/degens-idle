@@ -565,7 +565,16 @@ let resourceActions = {
       showMessage(`Used ${amt} Celestial Ore${amt > 1 ? "s" : ""}.<br>Reduced Endurance energy drain by ${1000 * amt}%.`);
     },
     tooltip: "Reduces energy drain by 1000% for Endurance."
-  }
+  },
+  "hunger_shard": {
+    onConsume: (gameState, amt) => { 
+      gameState.energy += 300 * amt;
+      updateEnergyDisplay();
+      updateTasksHoverInfo();
+      showMessage(`Used ${amt} Hunger Shard${amt > 1 ? "s" : ""}.<br>Gained ${300 * amt} Energy.`);
+    },
+    tooltip: "Consume a nearby world and gain +300 Energy.<br>"
+  },
 };
 
 const EXCLUDED_AUTO_RESOURCES = new Set(["cybernetic_armor", "infinity_gauntlet", "stardust", "cosmic_shard"]);
@@ -624,7 +633,7 @@ const SERENITY_UPGRADES = {
     "Discover Serenity": {
       "Wisdom Seeker": { 
         initialCost: 2, 
-        scaling: 1.125,
+        scaling: 1.18,
         description: "Increase all XP gains by 50% (additively)."
       },
       "Entropy Shield": { 
@@ -634,7 +643,7 @@ const SERENITY_UPGRADES = {
       },
       "Resource Saver": { 
         initialCost: 0.1,
-        scaling: 1.11,
+        scaling: 1.2,
         description: "On Copium reset, keep one random random resource per level."
       },
       "Power Doubler": {

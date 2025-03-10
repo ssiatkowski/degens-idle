@@ -65,6 +65,7 @@ const soundManager = {
   const ultronSound = soundManager.register("ultron", "sounds/ultron.wav", { type: 'sfx' });
   const unicronSound = soundManager.register("unicron", "sounds/unicron.wav", { type: 'sfx' });
   const doctorManhattanSound = soundManager.register("doctorManhattan", "sounds/doctor_manhattan.wav", { type: 'sfx' });
+  const galactusSound = soundManager.register("galactus", "sounds/galactus.wav", { type: 'sfx' });
   // Register additional sounds as needed:
   // const someOtherSound = soundManager.register("other", "sounds/other_sound.wav", { type: 'sfx' });
   
