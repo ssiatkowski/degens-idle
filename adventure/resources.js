@@ -38,6 +38,7 @@ let perkDescriptions = {
     cyber_boost:            "Each time Cybernetics levels up,<br>another random skill also levels up.",
     universal_alloy:        "Multiply Combat speed by square root of current Serenity (unspent).",
     forge_fervor:           "Reduce Combat energy drain by 3x.",
+    celestial_light:        "All XP gains increased by 2x."
 
   };
 
@@ -566,6 +567,25 @@ let resourceActions = {
     },
     tooltip: "Reduces energy drain by 1000% for Endurance."
   },
+  "atomic_particle": {
+    onConsume: (gameState, amt) => {
+      gameState.numAtomicParticles += amt;
+      updateTasksHoverInfo();
+      if(gameState.soundEnabled) atomicParticleSound.play();
+      showMessage(`Used ${amt} Atomic Particle${amt > 1 ? "s" : ""}.<br>Double resource production next ${amt > 1 ? amt + " tasks" : "task"}`);
+    },
+    tooltip: "Doubles resource production next time a resource is produced.<br>Stacks with other multipliers.<br>Multiple uses stack with # of tasks, not with production."
+  },
+  "star_fragment": {
+    onConsume: (gameState, amt) => {
+      gameState.skills['charisma'].drainBoost += 0.25 * amt;
+      updateSkillMultipliers();
+      updateSkillDisplay();
+      updateTasksHoverInfo();
+      showMessage(`Used ${amt} Star Fragment${amt > 1 ? "s" : ""}.<br>Reduced Charisma energy drain by ${25 * amt}%.`);
+    },
+    tooltip: "Reduces energy drain by 25% for Charisma."
+  },
   "hunger_shard": {
     onConsume: (gameState, amt) => { 
       gameState.energy += 300 * amt;
@@ -577,7 +597,7 @@ let resourceActions = {
   },
 };
 
-const EXCLUDED_AUTO_RESOURCES = new Set(["cybernetic_armor", "infinity_gauntlet", "stardust", "cosmic_shard"]);
+const EXCLUDED_AUTO_RESOURCES = new Set(["cybernetic_armor", "infinity_gauntlet", "stardust", "cosmic_shard","atomic_particle"]);
 
 const SERENITY_UPGRADES = {
   unlockables: {
@@ -633,7 +653,7 @@ const SERENITY_UPGRADES = {
     "Discover Serenity": {
       "Wisdom Seeker": { 
         initialCost: 2, 
-        scaling: 1.18,
+        scaling: 1.2,
         description: "Increase all XP gains by 50% (additively)."
       },
       "Entropy Shield": { 
@@ -643,7 +663,7 @@ const SERENITY_UPGRADES = {
       },
       "Resource Saver": { 
         initialCost: 0.1,
-        scaling: 1.2,
+        scaling: 1.25,
         description: "On Copium reset, keep one random random resource per level."
       },
       "Power Doubler": {

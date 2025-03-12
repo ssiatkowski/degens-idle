@@ -75,6 +75,7 @@ CURRENT_GAME_VERSION = "v0.2";
       numCosmicShards: 0,
       cosmicShardTaskRunning: false,
       numCelestialBlossoms: 0,
+      numAtomicParticles: 0,
 
       //serenity upgrades related
       delusionEnjoyerMultiplier: 1,
@@ -1128,6 +1129,7 @@ CURRENT_GAME_VERSION = "v0.2";
     gameState.cosmicShardTaskRunning = false;
     gameState.numCosmicShards = 0;
     gameState.numCelestialBlossoms = 0;
+    gameState.numAtomicParticles = 0;
     if (gameState.serenityUnlockables["Delusion Enjoyer"]) {
       gameState.delusionEnjoyerMultiplier = Math.max(1, gameState.delusion / 100);
     }
@@ -1673,6 +1675,7 @@ CURRENT_GAME_VERSION = "v0.2";
       let baseXP = (task.baseTime * xpScale) / numSkills;
       if (gameState.perks["workaholic"]) baseXP *= 1.5;
       if (gameState.perks["kung_fu_zen"]) baseXP *= 1.28;
+      if (gameState.perks["celestial_light"]) baseXP *= 2;
       let levelText = "";
       usedSkills.forEach(sName => {
         let gainedXP = baseXP;
@@ -2471,7 +2474,7 @@ CURRENT_GAME_VERSION = "v0.2";
           Highest Zone Completed: ${gameState.highestCompletedZone} | Next Zone Potential Serenity: 
           <span style="color: ${nextZonePotential > serenityGainPotential ? "green" : "gray"};">${formatNumber(nextZonePotential)}</span>
         </span><br><br>
-        Current Resets:<br>
+        Current Resets: ${totalResets}<br>
         Energy: ${gameState.numEnergyResets} | Copium: ${gameState.numCopiumResets} | Delusion: ${gameState.numDelusionResets}
       </p>
       <div class="serenity-buttons-container">
@@ -2740,6 +2743,7 @@ CURRENT_GAME_VERSION = "v0.2";
         Every challenge you faced and every decision you made has led you to this milestone.
       </p>
       <p>
+        <strong>Total Serenity:</strong> ${formatNumber(computeSerenityTotalValue())}<br>
         <strong>Energy Resets:</strong> ${gameState.numEnergyResets}<br>
         <strong>Copium Resets:</strong> ${gameState.numCopiumResets}<br>
         <strong>Delusion Resets:</strong> ${gameState.numDelusionResets}
@@ -3277,6 +3281,7 @@ CURRENT_GAME_VERSION = "v0.2";
       let xpEach = baseXP / (usedSkills.length || 1);
       if (gameState.perks["workaholic"]) xpEach *= 1.5;
       if (gameState.perks["kung_fu_zen"]) xpEach *= 1.28;
+      if (gameState.perks["celestial_light"]) xpEach *= 2;
       if (gameState.cosmicShardTaskRunning) xpEach *= 5;
       if (tData.task.xpMult !== undefined) {
         xpEach *= tData.task.xpMult;
@@ -3291,15 +3296,35 @@ CURRENT_GAME_VERSION = "v0.2";
         if (task.count < task.maxReps) task.count++;
         if (task.resources && Array.isArray(task.resources)) {
           if (gameState.perks["luck_of_the_irish"] && Math.random() < 0.07) {
-            task.resources.forEach(r => addResource(r, 7));
+            if(gameState.numAtomicParticles > 0) {
+              task.resources.forEach(r => addResource(r, 14));
+              gameState.numAtomicParticles--;
+            } else {
+              task.resources.forEach(r => addResource(r, 7));
+            } 
           } else if (gameState.perks["gacha_machine"] && Math.random() < 0.25) {
             if (gameState.serenityUnlockables["Gacha Overdrive"]) {
-              task.resources.forEach(r => addResource(r, 3));
+              if (gameState.numAtomicParticles > 0) {
+                task.resources.forEach(r => addResource(r, 6));
+                gameState.numAtomicParticles--;
+              } else {
+                task.resources.forEach(r => addResource(r, 3));
+              }
             } else {
-              task.resources.forEach(r => addResource(r, 2));
+              if (gameState.numAtomicParticles > 0) {
+                task.resources.forEach(r => addResource(r, 4));
+                gameState.numAtomicParticles--;
+              } else {
+                task.resources.forEach(r => addResource(r, 2));
+              }
             }
           } else {
-            task.resources.forEach(r => addResource(r, 1));
+            if (gameState.numAtomicParticles > 0) {
+              task.resources.forEach(r => addResource(r, 2));
+              gameState.numAtomicParticles--;
+            } else {
+              task.resources.forEach(r => addResource(r, 1));
+            }
           }
         }
         if (gameState.copiumUnlocked && usedSkills.some(s => copiumSkills.includes(s))) {
@@ -3629,6 +3654,7 @@ CURRENT_GAME_VERSION = "v0.2";
     gameState.elixirEnergy = gameState.elixirEnergy || 3;
     gameState.startingLevel = gameState.startingLevel || 1;
     gameState.serenityGainZoneExponent = gameState.serenityGainZoneExponent || 3;
+    gameState.numAtomicParticles = gameState.numAtomicParticles || 0;
 
     applySerenityUpgrades();
     gatherAllPerks();
@@ -3683,4 +3709,5 @@ CURRENT_GAME_VERSION = "v0.2";
   window.setRunTickDuration = (newTickDuration) => setRunTickDuration(newTickDuration);
   window.getRunTickDuration = () => runTickDuration;
   window.displayZone = () => displayZone();
+  window.resetGame = (reason) => resetGame("energy");
 })();

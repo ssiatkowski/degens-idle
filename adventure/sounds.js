@@ -50,6 +50,7 @@ const soundManager = {
   const reinforcementSound = soundManager.register("reinforcement", "sounds/reinforcement.wav", { type: 'sfx' });
   const experienceSound = soundManager.register("experience", "sounds/experience.mp3", { type: 'sfx' });
   const automationEndSound = soundManager.register("automationEnd", "sounds/automation_end.wav", { type: 'sfx' });
+  const atomicParticleSound = soundManager.register("atomicParticle", "sounds/atomic_particle.wav", { type: 'sfx' });
 
   const agentSmithSound = soundManager.register("agentSmith", "sounds/agent_smith.mp3", { type: 'sfx' });
   const shaoKahnSound = soundManager.register("shaoKahn", "sounds/shao_kahn.mp3", { type: 'sfx' });
@@ -66,6 +67,7 @@ const soundManager = {
   const unicronSound = soundManager.register("unicron", "sounds/unicron.wav", { type: 'sfx' });
   const doctorManhattanSound = soundManager.register("doctorManhattan", "sounds/doctor_manhattan.wav", { type: 'sfx' });
   const galactusSound = soundManager.register("galactus", "sounds/galactus.wav", { type: 'sfx' });
+  const doomsdaySound = soundManager.register("doomsday", "sounds/doomsday.wav", { type: 'sfx' });
   // Register additional sounds as needed:
   // const someOtherSound = soundManager.register("other", "sounds/other_sound.wav", { type: 'sfx' });
   

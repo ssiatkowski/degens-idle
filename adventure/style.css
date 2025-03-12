@@ -1232,4 +1232,9 @@ footer {
   #zoneName {
     min-height: 3.9em; /* reserves space for three lines */
   }
+
+.modal-content button {
+  height: 40px;
+  margin: 3px;
+}
 }
