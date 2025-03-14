@@ -33,6 +33,7 @@ let numConsecutiveMemoryFailures = 0;
 let numMathFailures = 0;
 let numMathWins = 0;
 let numConsecutiveMathFailures = 0;
+let numMiniGameSkips = 0;
 
 let lastClickedBoxIndex = null;
 let consecutiveClicks = 0;
@@ -223,7 +224,7 @@ function playMiniGame(gameType) {
                         if (numSoftCaps >= 50) {
                             unlockAchievement(`Can't Hold Me Back`);
                         }
-                        resultMessage += `<br><span style="color: orange;">Soft cap reached: Maximum reward of ${miniGamesSoftCapHrs} hours effective Copium applied. This was your ${numSoftCaps}${getOrdinalSuffix(numSoftCaps)} soft cap.</span>`;
+                        resultMessage += `<br><br><span style="color: orange;">Soft cap reached: Maximum reward of ${miniGamesSoftCapHrs} hours effective Copium applied. This was your ${numSoftCaps}${getOrdinalSuffix(numSoftCaps)} soft cap.</span>`;
                     }
     
                     resultMessage += cooldownMessage;
@@ -239,13 +240,13 @@ function playMiniGame(gameType) {
                     softCapReached = true;
                 }
 
-                reward *= (sereneExtortionSkill ? 0.1 : 0.05);
+                reward *= (sereneExtortionSkill ? 0.2 : 0.1);
 
                 copium += reward;
 
-                speedTapsDelta = duration * 1.5 * (sereneExtortionSkill ? 0.1 : 0.05)
+                speedTapsDelta = duration * 1.5 * (sereneExtortionSkill ? 0.2 : 0.1)
 
-                let resultMessage = `You got rewards equivalent to (${(1.5 * (sereneExtortionSkill ? 0.1 : 0.05)).toFixed(2)} points per second). Your reward is <span style="color: green;">${formatNumber(reward)}</span> copium! <br><br>You added ${formatNumber(speedTapsDelta)} taps to for a total of ${formatNumber(numSpeedTaps)} taps in winning games.`;
+                let resultMessage = `You got rewards equivalent to (${(1.5 * (sereneExtortionSkill ? 0.2 : 0.1)).toFixed(2)} points per second). Your reward is <span style="color: green;">${formatNumber(reward)}</span> copium! <br><br>You added ${formatNumber(speedTapsDelta)} taps to for a total of ${formatNumber(numSpeedTaps)} taps in winning games.`;
 
                 if(cosmicGamekeeperSkill){
                     resultMessage += `<br><br>Cosmic Gamekeeper mult has permanently increased by <span style="color: #90EE90;">+${formatNumber(applyProgressiveScaling(numSpeedTaps + speedTapsDelta, 0.0001) - applyProgressiveScaling(numSpeedTaps, 0.0001))}</span>!`;
@@ -254,9 +255,16 @@ function playMiniGame(gameType) {
                 numSpeedTaps += speedTapsDelta;
                 localStorage.setItem('numSpeedTaps', numSpeedTaps);
                 calculateMiniGamesMultiplier();
+                
+                numMiniGameSkips++;
+                localStorage.setItem('numMiniGameSkips', numMiniGameSkips);
+                resultMessage += `<br><br>You have now skipped ${numMiniGameSkips} mini games.`;
+                if (numMiniGameSkips >= 5000) {
+                    unlockAchievement('Skip Master 5000');
+                }
 
                 if (softCapReached) {
-                    resultMessage += `<br><span style="color: orange;">Soft cap reached: Maximum reward of ${miniGamesSoftCapHrs} hours effective Copium applied.</span>`;
+                    resultMessage += `<br><br><span style="color: orange;">Soft cap reached: Maximum reward of ${miniGamesSoftCapHrs} hours effective Copium applied.</span>`;
                 }
 
                 if (!(pricyTranquilitySkill && enableQuickModeMiniGameSkip)) {
@@ -474,7 +482,7 @@ function playMiniGame(gameType) {
                         if (numSoftCaps >= 50) {
                             unlockAchievement(`Can't Hold Me Back`);
                         }
-                        resultMessage += `<br><span style="color: orange;">Soft cap reached: Maximum reward of ${miniGamesSoftCapHrs} hours effective Delusion applied. This was your ${numSoftCaps}${getOrdinalSuffix(numSoftCaps)} soft cap.</span>`;
+                        resultMessage += `<br><br><span style="color: orange;">Soft cap reached: Maximum reward of ${miniGamesSoftCapHrs} hours effective Delusion applied. This was your ${numSoftCaps}${getOrdinalSuffix(numSoftCaps)} soft cap.</span>`;
                     }
     
                     resultMessage += cooldownMessage;
@@ -499,22 +507,29 @@ function playMiniGame(gameType) {
                     reward = softCaps.memory;
                     softCapReached = true;
                 }
-                reward *= (sereneExtortionSkill ? 0.1 : 0.05);
+                reward *= (sereneExtortionSkill ? 0.2 : 0.1);
 
                 delusion += reward;
 
-                let resultMessage = `You got rewards equivalent to ${(sequenceLength * (sereneExtortionSkill ? 0.1 : 0.05)).toFixed(2)} sequence length. Your reward is <span style="color: green;">${formatNumber(reward)}</span> delusion! You have now memorized ${formatNumber(numMemorizedDots)} dots in winning games.`;
+                let resultMessage = `You got rewards equivalent to ${(sequenceLength * (sereneExtortionSkill ? 0.2 : 0.1)).toFixed(2)} sequence length. Your reward is <span style="color: green;">${formatNumber(reward)}</span> delusion! You have now memorized ${formatNumber(numMemorizedDots)} dots in winning games.`;
 
                 if (cosmicGamekeeperSkill) {
-                    resultMessage += `<br><br>Cosmic Gamekeeper mult has permanently increased by <span style="color: #90EE90;">+${formatNumber(applyProgressiveScaling(numMemorizedDots + (sequenceLength * (sereneExtortionSkill ? 0.1 : 0.05)), 0.0003) - applyProgressiveScaling(numMemorizedDots, 0.0003))}</span>!`;
+                    resultMessage += `<br><br>Cosmic Gamekeeper mult has permanently increased by <span style="color: #90EE90;">+${formatNumber(applyProgressiveScaling(numMemorizedDots + (sequenceLength * (sereneExtortionSkill ? 0.2 : 0.1)), 0.0003) - applyProgressiveScaling(numMemorizedDots, 0.0003))}</span>!`;
                 }
 
-                numMemorizedDots += sequenceLength * (sereneExtortionSkill ? 0.1 : 0.05);
+                numMemorizedDots += sequenceLength * (sereneExtortionSkill ? 0.2 : 0.1);
                 localStorage.setItem('numMemorizedDots', numMemorizedDots);
                 calculateMiniGamesMultiplier();
 
+                numMiniGameSkips++;
+                localStorage.setItem('numMiniGameSkips', numMiniGameSkips);
+                resultMessage += `<br><br>You have now skipped ${numMiniGameSkips} mini games.`;
+                if (numMiniGameSkips >= 5000) {
+                    unlockAchievement('Skip Master 5000');
+                }
+
                 if (softCapReached) {
-                    resultMessage += `<br><span style="color: orange;">Soft cap reached: Maximum reward of ${miniGamesSoftCapHrs} hours effective Delusion applied.</span>`;
+                    resultMessage += `<br><br><span style="color: orange;">Soft cap reached: Maximum reward of ${miniGamesSoftCapHrs} hours effective Delusion applied.</span>`;
                 }
 
                 resultMessage += cooldownMessage;
@@ -876,7 +891,7 @@ function playMiniGame(gameType) {
                         if (numSoftCaps >= 50) {
                             unlockAchievement(`Can't Hold Me Back`);
                         }
-                        resultMessage += `<br><span style="color: orange;">Soft cap reached: Maximum reward of ${miniGamesSoftCapHrs} hours effective Yacht Money applied. This was your ${numSoftCaps}${getOrdinalSuffix(numSoftCaps)} soft cap.</span>`;
+                        resultMessage += `<br><br><span style="color: orange;">Soft cap reached: Maximum reward of ${miniGamesSoftCapHrs} hours effective Yacht Money applied. This was your ${numSoftCaps}${getOrdinalSuffix(numSoftCaps)} soft cap.</span>`;
                     }
 
                     resultMessage += cooldownMessage;
@@ -896,22 +911,29 @@ function playMiniGame(gameType) {
                     reward = softCaps.math;
                     softCapReached = true;
                 }
-                reward *= (sereneExtortionSkill ? 0.1 : 0.05);
+                reward *= (sereneExtortionSkill ? 0.2 : 0.1);
 
                 yachtMoney += reward;
 
-                let resultMessage = `You got rewards equivalent to ${(2.5 * (sereneExtortionSkill ? 0.1 : 0.05)).toFixed(3)} math portals. Your reward is <span style="color: green;">${formatNumber(reward)}</span> yacht money! You have now selected ${formatNumber(numMathPortals)} correct math portals.`;
+                let resultMessage = `You got rewards equivalent to ${(2.5 * (sereneExtortionSkill ? 0.2 : 0.1)).toFixed(3)} math portals. Your reward is <span style="color: green;">${formatNumber(reward)}</span> yacht money! You have now selected ${formatNumber(numMathPortals)} correct math portals.`;
 
                 if (cosmicGamekeeperSkill) {
-                    resultMessage += `<br><br>Cosmic Gamekeeper mult has permanently increased by <span style="color: #90EE90;">+${formatNumber(applyProgressiveScaling(numMathPortals + (2.5 * (sereneExtortionSkill ? 0.1 : 0.05)), 0.0005) - applyProgressiveScaling(numMathPortals, 0.0005))}</span>!`;
+                    resultMessage += `<br><br>Cosmic Gamekeeper mult has permanently increased by <span style="color: #90EE90;">+${formatNumber(applyProgressiveScaling(numMathPortals + (2.5 * (sereneExtortionSkill ? 0.2 : 0.1)), 0.0005) - applyProgressiveScaling(numMathPortals, 0.0005))}</span>!`;
                 }
 
-                numMathPortals += 2.5 * (sereneExtortionSkill ? 0.1 : 0.05);
+                numMathPortals += 2.5 * (sereneExtortionSkill ? 0.2 : 0.1);
                 localStorage.setItem('numMathPortals', numMathPortals);
                 calculateMiniGamesMultiplier();
 
+                numMiniGameSkips++;
+                localStorage.setItem('numMiniGameSkips', numMiniGameSkips);
+                resultMessage += `<br><br>You have now skipped ${numMiniGameSkips} mini games.`;
+                if (numMiniGameSkips >= 5000) {
+                    unlockAchievement('Skip Master 5000');
+                }
+
                 if (softCapReached) {
-                    resultMessage += `<br><span style="color: orange;">Soft cap reached: Maximum reward of ${miniGamesSoftCapHrs} hours effective Yacht Money applied.</span>`;
+                    resultMessage += `<br><br><span style="color: orange;">Soft cap reached: Maximum reward of ${miniGamesSoftCapHrs} hours effective Yacht Money applied.</span>`;
                 }
 
                 resultMessage += cooldownMessage;
@@ -1124,7 +1146,7 @@ function playMiniGame(gameType) {
                             if (numSoftCaps >= 50) {
                                 unlockAchievement(`Can't Hold Me Back`);
                             }
-                            resultMessage += `<br><span style="color: orange;">Soft cap reached: Maximum reward of ${miniGamesSoftCapHrs} hours effective Troll Points applied. This was your ${numSoftCaps}${getOrdinalSuffix(numSoftCaps)} soft cap.</span>`;
+                            resultMessage += `<br><br><span style="color: orange;">Soft cap reached: Maximum reward of ${miniGamesSoftCapHrs} hours effective Troll Points applied. This was your ${numSoftCaps}${getOrdinalSuffix(numSoftCaps)} soft cap.</span>`;
                         }
 
                         resultMessage += cooldownMessage;
@@ -1248,7 +1270,7 @@ function showMiniGameStartModal(title, message, showSkipButton = false) {
         // Optionally add "Skip for 5% reward" button
         if (showSkipButton) {
             const skipButton = document.createElement('button');
-            skipButton.textContent = `Skip for ${sereneExtortionSkill ? 10 : 5}% reward`;
+            skipButton.textContent = `Skip for ${sereneExtortionSkill ? 20 : 10}% reward`;
             skipButton.className = 'modal-button skip-button';
             skipButton.style.backgroundColor = '#FFA500'; // Orange color
             skipButton.onclick = () => {
@@ -1527,9 +1549,8 @@ function setupMiniGameTooltips() {
                     <strong># Unlucky Boxes:</strong> ${formatNumber(numUnluckyBoxes)}
                     ${cooldownText}`
                     : `Try your fortune in the Luck Game!<br>
-                    <strong>Luck Level:</strong> ${formatNumber(numUnluckyBoxes)}<br>
-                    <strong>Wins:</strong> ${formatNumber(numLuckWins)}<br>
-                    <strong>Losses:</strong> ${formatNumber(numLuckFailures)}
+                    <strong># Lucky Boxes:</strong> ${formatNumber(numLuckyBoxes)}<br>
+                    <strong># Unlucky Boxes:</strong> ${formatNumber(numUnluckyBoxes)}
                     ${cooldownText}`
             }
         }

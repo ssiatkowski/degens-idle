@@ -358,6 +358,12 @@ document.getElementById('feedbackButton').addEventListener('click', function() {
     window.open('https://docs.google.com/forms/d/e/1FAIpQLSfaQdxaBFCdT789rVTSvFuScEEzlu4rDabjFUX0zkCKinyvKA/viewform?usp=sf_link', '_blank');
 });
 
+// Add event listener for Discord button
+document.getElementById('degensAdventureButton').addEventListener('click', function() {
+    unlockAchievement('Degens Adventure');
+    window.open('https://www.degensidle.com/adventure/', '_blank');
+});
+
 function toggleAllBuyMarkers(targetState) {
     purchasedUpgrades.forEach(upgrade => {
         const name = upgrade.name;

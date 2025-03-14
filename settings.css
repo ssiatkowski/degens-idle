@@ -164,6 +164,42 @@
     background-color: #5e285e; /* Slightly darker theme color on hover */
 }
 
+/* Degens Adventure Button */
+#degensAdventureButton {
+    background: repeating-linear-gradient(
+        45deg,
+        #1e1e1e,
+        #1e1e1e 10px,
+        #2a2a2a 10px,
+        #2a2a2a 20px
+    );
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    color: #f0f0f0;
+    cursor: pointer;
+    padding: 12px 20px;
+    margin: 20px 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#degensAdventureButton:hover {
+    background: repeating-linear-gradient(
+        45deg,
+        #2a2a2a,
+        #2a2a2a 10px,
+        #1e1e1e 10px,
+        #1e1e1e 20px
+    );
+    transform: translateY(-3px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.7);
+}
+
+
 #donateButton:hover {
     background-color: #e6b800; /* Darker yellow on hover */
     box-shadow: 0 0 10px rgba(255, 204, 0, 0.8), 0 0 20px rgba(255, 204, 0, 0.6);
@@ -251,7 +287,7 @@
 
 /* Donate Small Button */
 #donateSmallButton {
-    background-color: #ffcc00; /* Yellow background */
+    background-color: #e6b800; /* Yellow background */
     border: none;
     cursor: pointer;
     padding: 10px 20px;
@@ -260,13 +296,14 @@
     display: block;
     text-align: center;
     font-size: 16px;
+    font-weight: bold;
     border-radius: 5px; /* Rounded corners */
     transition: background-color 0.2s;
     animation: grow 3s infinite; /* Continuous grow animation */
 }
 
 #donateSmallButton:hover {
-    background-color: #e6b800; /* Darker yellow on hover */
+    background-color: #b38f00; /* Darker yellow on hover */
     transform: scale(1.1); /* Slightly grow on hover */
 }
 
@@ -281,6 +318,7 @@
     display: block;
     text-align: center;
     font-size: 16px;
+    font-weight: bold;
     border-radius: 5px; /* Rounded corners */
     transition: background-color 0.2s;
     color: white;
@@ -302,6 +340,7 @@
     display: block;
     text-align: center;
     font-size: 16px;
+    font-weight: bold;
     border-radius: 5px; /* Rounded corners */
     transition: background-color 0.2s;
     color: white;
@@ -322,7 +361,7 @@
         transform: scale(1);
     }
     50% {
-        transform: scale(1.05);
+        transform: scale(1.03);
     }
     100% {
         transform: scale(1);

@@ -695,7 +695,7 @@ const loveHallSkills = [
       "Spare opponents who are far weaker than you. (Automate Battles)",
     unlocked: false,
     level: "Dimensional Shift (27x)",
-    pair: 30,
+    pair: 27,
     requirement: "Celestial Precision",
     onUnlock: () => {
       autoFightSkill = true;
@@ -710,7 +710,7 @@ const loveHallSkills = [
     description: "Fix Hopium in the same way Delusion is cured.",
     unlocked: false,
     level: "Dimensional Shift (27x)",
-    pair: 30,
+    pair: 27,
     onUnlock: (duringLoad) => {
       document.getElementById('toggleHopiumLabel').classList.remove('hidden');
       // Check the state of hopium and update the switch position accordingly
@@ -733,7 +733,7 @@ const loveHallSkills = [
     description: "Reduce meditation focus lost per ball by 1. (min 1)",
     unlocked: false,
     level: "Dimensional Shift (27x)",
-    pair: 27,
+    pair: 28,
     onUnlock: () => {
       steadyFocusSkill = true;
     },
@@ -747,7 +747,7 @@ const loveHallSkills = [
     description: `Keep Hall of Knowledge automation skills unlocked and preserve settings on Embrace.`,
     unlocked: false,
     level: "Dimensional Shift (27x)",
-    pair: 27,
+    pair: 28,
     requirement: "First-Wave Automation",
     onUnlock: () => {
       secondWaveAutomationSkill = true;
@@ -771,7 +771,7 @@ const loveHallSkills = [
     description: "Reduce Meditation Wind Speed by 50%",
     unlocked: false,
     level: "Dimensional Shift (27x)",
-    pair: 28,
+    pair: 29,
     onUnlock: () => {
       masterOfElementsSkill = true;
     },
@@ -785,7 +785,7 @@ const loveHallSkills = [
     description: "Increase Meditation Arena Size by 10%",
     unlocked: false,
     level: "Dimensional Shift (27x)",
-    pair: 28,
+    pair: 29,
     onUnlock: () => {
       spaceContinuumStretchSkill = true;
     },
@@ -800,7 +800,7 @@ const loveHallSkills = [
     description: "Prestige Base skill increases from 1.75 base to 1.775 base.",
     unlocked: false,
     level: "Dimensional Shift (27x)",
-    pair: 29,
+    pair: 30,
     onUnlock: () => {
       enlightenedPrestigeSkill = true;
     },
@@ -814,7 +814,7 @@ const loveHallSkills = [
     description: "Start with 1M Hopium after any prestige layer.",
     unlocked: false,
     level: "Dimensional Shift (27x)",
-    pair: 29,
+    pair: 30,
     onUnlock: () => {
       hopefulBeginningSkill = true;
     },
@@ -971,7 +971,7 @@ const loveHallSkills = [
   {
     name: "Serene Extortion",
     cost: 3703.7,
-    description: "Increase mini game skip reward from 5% to 10%",
+    description: "Increase mini game skip reward from 10% to 20%",
     unlocked: false,
     level: "Dimensional Shift (27x)",
     pair: 35,

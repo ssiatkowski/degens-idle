@@ -182,13 +182,6 @@ const achievements = [
         type: 'puzzle',
     },
     {
-        name: '42 Misclicks',
-        isUnlocked: false,
-        hoverText: '???',
-        img: 'imgs/achievements/misfire.jpg',
-        type: 'skill',
-    },
-    {
         name: `Can't Fix Crazy`,
         isUnlocked: false,
         hoverText: 'fast delusion toggles',
@@ -252,6 +245,13 @@ const achievements = [
         type: 'puzzle',
     },
     {
+        name: 'Degens Adventure',
+        isUnlocked: false,
+        hoverText: "try the dev's other game",
+        img: 'imgs/achievements/degens_adventure.jpg',
+        type: 'freebie',
+    },
+    {
         name: 'Degens Idle Purist',
         isUnlocked: false,
         hoverText: 'one game at a time',
@@ -306,6 +306,13 @@ const achievements = [
         hoverText: '???',
         img: 'imgs/achievements/invalid_data.jpg',
         type: 'puzzle',
+    },
+    {
+        name: '42 Misclicks',
+        isUnlocked: false,
+        hoverText: '???',
+        img: 'imgs/achievements/misfire.jpg',
+        type: 'skill',
     },
     {
         name: 'Transcend',
@@ -553,6 +560,13 @@ const achievements = [
         type: 'puzzle',
     },
     {
+        name: 'Battle Analyst',
+        isUnlocked: false,
+        hoverText: '???',
+        img: 'imgs/achievements/battle_analyst.jpg',
+        type: 'puzzle',
+    },
+    {
         name: 'Chuck Norris Kidney',
         isUnlocked: false,
         hoverText: 'find a way to distract Chuck Norris',
@@ -628,6 +642,13 @@ const achievements = [
         hoverText: 'who needs smarts, when you have power',
         img: 'imgs/achievements/vegeta_power.jpg',
         type: 'puzzle',
+    },
+    {
+        name: 'Daytrader',
+        isUnlocked: false,
+        hoverText: 'make 1000 resource trades',
+        img: 'imgs/achievements/daytrader.jpg',
+        type: 'freebie'
     },
     {
         name: 'That is some Bad Luck',
@@ -1339,6 +1360,13 @@ const achievements = [
         respecPoint: true,
     },
     {
+        name: 'Skip Master 5000',
+        isUnlocked: false,
+        hoverText: `skip 5000 mini games`,
+        img: 'imgs/achievements/skip_master_5000.jpg',
+        type: 'freebie',
+    },
+    {
         name: 'Ego Death',
         isUnlocked: false,
         hoverText: `defeat your ego`,
@@ -1494,7 +1522,7 @@ function unlockAchievement(name, duringLoad = false) {
             saveGameState();
             updateMultipliersDisplay();
             updateEffectiveMultipliers();
-            showPopupTooltip(`Unlocked Achievement: ${name}`, color='#1B4D3E', durationSeconds=6);
+            showPopupTooltip(`Achievement: ${name}`, color='#1B4D3E', durationSeconds=6, imageSrc=achievement.img);
         }
     }
 }

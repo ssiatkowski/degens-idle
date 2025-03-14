@@ -208,6 +208,9 @@ let quantumBastionSkill = false;
 let enemiesFoughtManually = new Set();
 let numBattleGimmicks = new Set();
 
+let numTotalTrades = 0;
+let numFightLogScrolls = 0;
+
 let nebulaOverdriveSkill = false;
 let stellarHarvestSkill = false;
 let celestialCollectorSkill = false;
@@ -574,6 +577,10 @@ function loadGameState() {
     numMathFailures = parseFloat(localStorage.getItem('numMathFailures')) || 0;
     numMathWins = parseFloat(localStorage.getItem('numMathWins')) || 0;
     numConsecutiveMathFailures = parseFloat(localStorage.getItem('numConsecutiveMathFailures')) || 0;
+    numMiniGameSkips = parseFloat(localStorage.getItem('numMiniGameSkips')) || 0;
+
+    numTotalTrades = parseFloat(localStorage.getItem('numTotalTrades')) || 0;
+    numFightLogScrolls = parseFloat(localStorage.getItem('numFightLogScrolls')) || 0;
 
     numLoveHallFreeRespecs = localStorage.getItem('numLoveHallFreeRespecs') !== null ? parseFloat(localStorage.getItem('numLoveHallFreeRespecs')) : 1;
 
@@ -1337,6 +1344,9 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
                 numMathFailures = 0;
                 numMathWins = 0;
                 numConsecutiveMathFailures = 0;
+                numMiniGameSkips = 0;
+                numTotalTrades = 0;
+                numFightLogScrolls = 0;
 
                 suppressBalanceSkills = false;
                 localStorage.clear();
@@ -1760,6 +1770,12 @@ function tradeResources(tradeAmountInput = null) {
     hopium = resourceAmount.hopium;
 
     unlockAchievement('Trade Resources');
+
+    numTotalTrades++;
+    localStorage.setItem('numTotalTrades', numTotalTrades);
+    if (numTotalTrades >= 1000) {
+        unlockAchievement('Daytrader');
+    }
 
     // Update the display to reflect the new resource values
     updateDisplay();
@@ -4826,25 +4842,44 @@ class CountdownTimer {
 
 let currentPopupTooltipTimeoutId = null;
 
-function showPopupTooltip(message, color = 'gray', durationSeconds = 2) {
+function showPopupTooltip(message, color = 'gray', durationSeconds = 2, imageSrc = null) {
     const tooltip = document.getElementById('popup-tooltip');
-    tooltip.textContent = message;
+    
+    // Clear any previous content
+    tooltip.innerHTML = '';
+
+    // If an image URL is provided, create an image element and add it first.
+    if (imageSrc) {
+        const img = document.createElement('img');
+        img.src = imageSrc;
+        img.alt = 'Achievement icon';
+        img.classList.add('tooltip-achievement-icon'); // Add CSS for sizing/spacing as needed
+        tooltip.appendChild(img);
+    }
+    
+    // Create a span for the text message and append it
+    const textSpan = document.createElement('span');
+    textSpan.textContent = message;
+    tooltip.appendChild(textSpan);
+    
+    // Set the background color and display the tooltip
     tooltip.style.backgroundColor = color;
     tooltip.classList.add('visible-popup-tooltip');
     tooltip.classList.remove('hidden-popup-tooltip');
-
+    
     // Clear any existing timeout to avoid closing the current tooltip prematurely
     if (currentPopupTooltipTimeoutId) {
         clearTimeout(currentPopupTooltipTimeoutId);
     }
-
-    // Set a new timeout and store its ID
+    
+    // Hide the tooltip after the specified duration
     currentPopupTooltipTimeoutId = setTimeout(() => {
         tooltip.classList.remove('visible-popup-tooltip');
         tooltip.classList.add('hidden-popup-tooltip');
-        currentPopupTooltipTimeoutId = null; // Clear the timeout ID after it completes
+        currentPopupTooltipTimeoutId = null;
     }, durationSeconds * 1000);
 }
+
 
 
 const resourceToolTips = new Map();

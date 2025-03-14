@@ -1406,8 +1406,11 @@ input:checked + .slider:before {
     opacity: 0;
     transition: opacity 1.0s ease;
     max-width: 80%; /* Optional: Restrict the max width */
-    text-align: center; /* Center text inside the tooltip */
     pointer-events: none; /* Ensure no blocking when hidden or visible */
+    
+    /* Use flex to align children (image and text) */
+    display: flex;
+    align-items: center;
 }
 
 #popup-tooltip.visible-popup-tooltip {
@@ -1418,6 +1421,16 @@ input:checked + .slider:before {
     opacity: 0;
 }
 
+.tooltip-achievement-icon {
+    width: 50px;           /* Scale image to 50px width */
+    height: 50px;          /* Scale image to 50px height */
+    margin-right: 12px;    /* Add space between image and text */
+    background-color: #fff; /* Set a white background */
+    border: 1px solid #ccc; /* Add a light border */
+    border-radius: 4px;    /* Slight rounding on corners */
+    object-fit: cover;     /* Maintain aspect ratio of the image */
+    vertical-align: middle;
+}
 
 .heart-mask {
     position: fixed;
