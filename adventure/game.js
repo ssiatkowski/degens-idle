@@ -2993,26 +2993,16 @@ CURRENT_GAME_VERSION = "v0.2";
       // Append the container to your settings modal content
       content.appendChild(saveButtonsContainer);
 
-  
-      // 1) Cheat Codes (Orange)
-      const cheatBtn = document.createElement("button");
-      cheatBtn.classList.add("btn-orange");
-      cheatBtn.textContent = "Cheat Codes";
-      cheatBtn.setAttribute(
-        "data-tooltip",
-        "Cheat Codes (Development Only)<br>" +
-        "This is intended only during development<br>" +
-        "when an update forces Full Restarts<br>" +
-        "to allow players to quickly resume progress.<br>" +
-        "Cheat Codes add sub-optimal numbers of<br>" +
-        "'Energy Restarts' to prevent breaking<br>" +
-        "future prestige content.<br>" +
-        "All current cheat codes can be found in Discord."
-      );
-      cheatBtn.addEventListener("click", () => {
-        showCheatCodeModal();
+
+      // Tutorial button
+      const tutorialBtn = document.createElement("button");
+      tutorialBtn.classList.add("btn-tutorial"); // (Ensure you have styling for .btn-tutorial or use an existing class)
+      tutorialBtn.textContent = "Tutorial";
+      tutorialBtn.setAttribute("data-tooltip", "Learn the basics of gameplay, scaling, and tips to improve your efficiency.");
+      tutorialBtn.addEventListener("click", () => {
+        showTutorialModal();
       });
-      content.appendChild(cheatBtn);
+      content.appendChild(tutorialBtn);
 
       // 2) FULL RESTART (Red)
       const restartAll = document.createElement("button");
@@ -3111,7 +3101,6 @@ CURRENT_GAME_VERSION = "v0.2";
     });
   }
   
-
   createSettingsButton();
 
   function fullRestart() {
@@ -3156,99 +3145,106 @@ CURRENT_GAME_VERSION = "v0.2";
     document.getElementById("versionBanner").style.display = "none";
   }
 
-  function showCheatCodeModal() {
+  function showTutorialModal() {
     const modal = document.createElement("div");
-    modal.id = "cheatCodeModal";
     modal.className = "modal";
+    modal.id = "tutorialModal";
+  
     const content = document.createElement("div");
     content.className = "modal-content";
-    content.style.display = "flex";
-    content.style.flexDirection = "column";
-    content.style.gap = "10px";
+    content.style.maxHeight = "80vh";
+    content.style.overflowY = "auto";
+  
+    content.innerHTML = `
+      <h2>Tutorial & Tips</h2>
+      <p>
+        This game does not require a tutorial, but here it is if you need extra guidance. Warning: this guide contains spoilers.
+      </p>
+      
+      <h3>Skills:</h3>
+      <p>
+        Each skill controls two key factors: speed (how fast tasks progress) and energy drain (how much energy a task uses). Skill speed improves with level (XP requirements scale exponentially at about 1% per level), and various resources, perks, and upgrades can further affect speed, energy drain, or XP scaling.
+      </p>
+      
+      <h3>Tasks:</h3>
+      <p>
+        Tasks are the actions you perform. You can start a task and pause it at any time—initially, only one task can run simultaneously. Tasks may use one, two, or three skills, with the speed and energy drain determined by multiplying the speed and drain multipliers from each selected skill.
+      </p>
+      <p>
+        Gold tasks are mandatory because they unlock travel to the next zone, while optional tasks allow you to choose the ones that best suit your strategy. Other task colors will be explained as you encounter them.
+      </p>
+      
+      <h3>Resources:</h3>
+      <p>
+        Some tasks produce resources instead. Resources must be consumed to take effect - nearly all effects last until you run out of energy or experience a copium/delusion reset. On an energy reset, you lose 50% of your resources (rounded up).
+      </p>
+      
+      <h3>Perks:</h3>
+      <p>
+        Some tasks grant perks that persist through resets until you prestige. Tasks with perks that have not been unlocked yet are marked with a star. Some perks also have effects that you can toggle on or off.
+      </p>
 
-    const input = document.createElement("input");
-    input.type = "text";
-    input.placeholder = "Enter Cheat Code";
-    content.appendChild(input);
+      <h3>Automation:</h3>
+      <p>
+        As you progress, many layers of automation become available through perks and prestige upgrades, streamlining task management and resource usage.
+      </p>
+      
+      <h3 style="color: green;">Knowledge:</h3>
+      <p>
+        Knowledge increases your XP gain for related skills. It is earned from tasks that use knowledge-based skills and is crucial for fast leveling and overall progress.
+      </p>
 
-    const submitBtn = document.createElement("button");
-    submitBtn.textContent = "Submit";
-    submitBtn.addEventListener("click", () => {
-      processCheatCode(input.value.trim());
-      modal.remove();
-    });
-    content.appendChild(submitBtn);
+      <h3 style="color: yellow;">Copium:</h3>
+      <p>
+        Copium builds up from tasks that use copium-related skills, and reaching max copium will reset the game. Keep in mind that copium can be used to your advantage. Later in the game, strategies utilizing copium become essential.
+      </p>
 
-    const cancelBtn = document.createElement("button");
-    cancelBtn.textContent = "Cancel";
-    cancelBtn.style.backgroundColor = "#27ae60";
-    cancelBtn.addEventListener("click", () => {
-      modal.remove();
-    });
-    content.appendChild(cancelBtn);
+      <h3 style="color: magenta;">Power:</h3>
+      <p>
+        Power boosts the speed of power-related tasks (initially Combat and Endurance) and is obtained by defeating bosses.
+      </p>
 
+      <h3 style="color: purple;">Delusion:</h3>
+      <p>
+        Delusion, like copium, builds up through tasks using delusion-related skills and reaching max will reset the game. Throughout the game, more delusion-related features will unlock, and keeping it balanced will be very beneficial. Though initially it may seem only negative, a delusion reset causes no resource loss, which can help build powerful runs.
+      </p>
+
+      <h3 style="color: blue;">Serenity:</h3>
+      <p>
+        Serenity is tied to the prestige mechanic. Your prestige bonus depends on how efficiently you reset—fewer resets yield a higher bonus. Prestige can be performed as many times as you want, and serenity gains stack—so don't worry too much about being inefficient on your first few prestiges.
+      </p>
+      
+      <h3 style="text-align: center;">Game Tips</h3>
+      <ul style="text-align: left;">
+        <li>Hover over tasks, skills, resources, perks to view details about them.</li>
+        <li>Multi-skill tasks are generally better for grinding XP, especially tasks that use three skills.</li>
+        <li>Alternate between "Farm Runs" (saving resources) and "Push Runs" (using both old and new resources for maximum progress).</li>
+        <li>You lose 50% of your resources (rounded up) on an energy reset. You can always freely use a resource if you have an even number of it. (for example: 4 Energy Elixirs = 2 after reset, 3 Energy Elixirs = 2 also after reset)</li>
+        <li>Once Energy Elixir cost is under 3 per task, it’s usually worth it to produce the max amount on every run.</li>
+        <li>Don't dwell on completing everything in a zone. Often something in later zones will help a lot more.</li>
+        <li>Keep in mind that energy requirements for tasks account for Energetic Bliss (when this perk is unlocked); when your energy drops below 80%, tasks may require more energy.</li>
+        <li>Source code is open so if you are interested in details of how formulas work, feel free to dive in and explore.</li>
+      </ul>
+      
+      <button id="tutorialCloseBtn">Close</button>
+    `;
+  
     modal.appendChild(content);
     document.body.appendChild(modal);
-  }
-
-  function processCheatCode(code) {
-    if (code === "BetterStart" && gameState.serenity === 0) {
-      gameState.skills["endurance"].level = Math.max(gameState.skills["endurance"].level, 250);
-      gameState.skills["tinkering"].level = Math.max(gameState.skills["tinkering"].level, 200);
-      gameState.skills["charisma"].level = Math.max(gameState.skills["charisma"].level, 250);
-      gameState.skills["alchemy"].level = Math.max(gameState.skills["alchemy"].level, 250);
-      gameState.skills["travel"].level = Math.max(gameState.skills["travel"].level, 150);
-      gameState.numEnergyResets = Math.max(gameState.numEnergyResets, 60);
-      showConfirmationModal("Cheat Code Activated: BetterStart");
-      updateSkillMultipliers();
-      renderSkills();
-      updateSkillDisplay();
-      updateTasksHoverInfo();
-    } else if (code === "WhatAboutOtherSkills" && gameState.serenity === 0) {
-      gameState.skills["endurance"].level = Math.max(gameState.skills["endurance"].level, 250);
-      gameState.skills["tinkering"].level = Math.max(gameState.skills["tinkering"].level, 200);
-      gameState.skills["charisma"].level = Math.max(gameState.skills["charisma"].level, 250);
-      gameState.skills["alchemy"].level = Math.max(gameState.skills["alchemy"].level, 250);
-      gameState.skills["travel"].level = Math.max(gameState.skills["travel"].level, 150);
-      gameState.skills["intellect"].level = Math.max(gameState.skills["intellect"].level, 150);
-      gameState.skills["perception"].level = Math.max(gameState.skills["perception"].level, 150);
-      gameState.skills["mechanics"].level = Math.max(gameState.skills["mechanics"].level, 50);
-      gameState.numEnergyResets = Math.max(gameState.numEnergyResets, 100);
-      showConfirmationModal("Cheat Code Activated: WhatAboutOtherSkills");
-      updateSkillMultipliers();
-      renderSkills();
-      updateSkillDisplay();
-      updateTasksHoverInfo();
-    } else {
-      showConfirmationModal("Invalid Cheat Code");
-    }
+  
+    document.getElementById("tutorialCloseBtn").addEventListener("click", () => {
+      modal.remove();
+    });
     
-  }
-
-  function showConfirmationModal(message) {
-    const modal = document.createElement("div");
-    modal.className = "modal";
-    const content = document.createElement("div");
-    content.className = "modal-content";
-    content.style.display = "flex";
-    content.style.flexDirection = "column";
-    content.style.gap = "10px";
-
-    const msgP = document.createElement("p");
-    msgP.textContent = message;
-    content.appendChild(msgP);
-
-    const okBtn = document.createElement("button");
-    okBtn.textContent = "OK";
-    okBtn.style.backgroundColor = "#27ae60";
-    okBtn.addEventListener("click", () => {
-      modal.remove();
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) {
+        modal.remove();
+      }
     });
-    content.appendChild(okBtn);
-
-    modal.appendChild(content);
-    document.body.appendChild(modal);
   }
+  
+  
+  
 
   /****************************************
    * MAIN GAME LOOP

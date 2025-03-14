@@ -724,17 +724,17 @@ const SERENITY_UPGRADES = {
     "Discover Serenity": {
       "Wisdom Seeker": { 
         initialCost: 2, 
-        scaling: 1.2,
+        scaling: 1.21,
         description: "Increase all XP gains by 50% (additively)."
       },
       "Entropy Shield": { 
         initialCost: 1, 
-        scaling: 1.6,
+        scaling: 1.7,
         description: "Reduce minimum energy drain by 2% (multiplicatively).<br>This affects tasks that are completed instantly."
       },
       "Resource Saver": { 
         initialCost: 0.1,
-        scaling: 1.25,
+        scaling: 1.26,
         description: "On Copium reset, keep one random random resource per level."
       },
       "Power Doubler": {
@@ -752,7 +752,7 @@ const SERENITY_UPGRADES = {
       },
       "Better Elixirs": {
         initialCost: 2,
-        scaling: 2,
+        scaling: 2.5,
         description: "Increase effect of Energy Elixir by +1."
       },
       "Game Speed": {

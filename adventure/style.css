@@ -911,7 +911,7 @@ footer {
 }
 
 /* Specific button colors with higher specificity */
-.modal-content button.btn-orange {
+.modal-content button.btn-tutorial {
   background-color: #e67e22 !important;
   color: #fff !important;
 }
