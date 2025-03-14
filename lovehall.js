@@ -689,6 +689,45 @@ const loveHallSkills = [
   },
 
   {
+    name: "Overwhelming Mercy",
+    cost: 3,
+    description:
+      "Spare opponents who are far weaker than you. (Automate Battles)",
+    unlocked: false,
+    level: "Dimensional Shift (27x)",
+    pair: 30,
+    requirement: "Celestial Precision",
+    onUnlock: () => {
+      autoFightSkill = true;
+    },
+    onRespec: () => {
+      autoFightSkill = false;
+    },
+  },
+  {
+    name: "Hopium Fix",
+    cost: 3,
+    description: "Fix Hopium in the same way Delusion is cured.",
+    unlocked: false,
+    level: "Dimensional Shift (27x)",
+    pair: 30,
+    onUnlock: (duringLoad) => {
+      document.getElementById('toggleHopiumLabel').classList.remove('hidden');
+      // Check the state of hopium and update the switch position accordingly
+      const toggleHopium = document.getElementById('toggleHopium');
+      toggleHopium.checked = true;
+      hopiumPerSecond = Math.abs(hopiumPerSecond);
+      if (!duringLoad){
+          updateEffectiveMultipliers();
+          updateDisplay();
+      }
+    },
+    onRespec: () => {
+      document.getElementById('toggleHopiumLabel').classList.add('hidden');
+    },
+  },
+
+  {
     name: "Steady Focus",
     cost: 4,
     description: "Reduce meditation focus lost per ball by 1. (min 1)",
@@ -781,46 +820,6 @@ const loveHallSkills = [
     },
     onRespec: () => {
       hopefulBeginningSkill = false;
-    },
-  },
-
-  {
-    name: "Overwhelming Mercy",
-    cost: 13,
-    description:
-      "Spare opponents who are far weaker than you. (Automate Battles)",
-    unlocked: false,
-    level: "Dimensional Shift (27x)",
-    pair: 30,
-    requirement: "Celestial Precision",
-    onUnlock: () => {
-      autoFightSkill = true;
-    },
-    onRespec: () => {
-      autoFightSkill = false;
-    },
-  },
-  {
-    name: "Hopium Fix",
-    cost: 13,
-    description: "Fix Hopium in the same way Delusion is cured.",
-    unlocked: false,
-    level: "Dimensional Shift (27x)",
-    pair: 30,
-    onUnlock: (duringLoad) => {
-      document.getElementById('toggleHopiumLabel').classList.remove('hidden');
-      // Check the state of hopium and update the switch position accordingly
-      const toggleHopium = document.getElementById('toggleHopium');
-      toggleHopium.checked = true;
-      hopiumPerSecond = Math.abs(hopiumPerSecond);
-      if (!duringLoad){
-          updateEffectiveMultipliers();
-          updateDisplay();
-      }
-
-    },
-    onRespec: () => {
-      document.getElementById('toggleHopiumLabel').classList.add('hidden');
     },
   },
 

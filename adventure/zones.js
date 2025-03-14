@@ -314,12 +314,12 @@ var zones = [
     name: "Neon Hypergrid",
     img: "images/zones/zone22.jpg",
     tasks: [
-      { id: 221, name: "Travel: Shift from Neon Hypergrid to Omega Expanse", type: "Travel", maxReps: 1, count: 0, baseTime: 4e16, drainMult: 16, description: "Escape the dazzling glow and step into the ultimate frontier.", skills: ["travel"] },
+      { id: 221, name: "Travel: Shift to Omega Expanse", type: "Travel", maxReps: 1, count: 0, baseTime: 4e16, drainMult: 16, description: "Escape the dazzling glow and step into the ultimate frontier.", skills: ["travel"] },
       { id: 222, name: "Sync with Digital Frequencies", type: "Training", maxReps: 2, count: 0, baseTime: 1e25, speedMult: 4e-6, drainMult: 500, description: "Tune into the electric pulse of the grid.", skills: ["intellect", "hacking"], mandatory: true },
       { id: 223, name: "Illuminate Virtual Vistas", type: "Training", maxReps: 20, count: 0, baseTime: 5e16, xpMult: 5e8, drainMult: 10, description: "Unleash radiant creativity through digital artistry.", skills: ["cybernetics"], mandatory: true },
       // { id: 224, name: "Extract Pixel Data", type: "Training", maxReps: 7, count: 0, baseTime: 1.3e26, description: "Gather fragmented bits of digital information.", skills: ["hacking", "perception"], resources: ["data_bit"] },
       // { id: 225, name: "Overclock Digital Circuits", type: "Training", maxReps: 7, count: 0, baseTime: 1.4e26, description: "Boost the power of virtual infrastructures.", skills: ["mechanics", "endurance"] },
-      // { id: 226, name: "Neon Energy: Electric Vigor", type: "Training", maxReps: 7, count: 0, baseTime: 1.5e26, description: "Channel the raw force of electric vibrance.", skills: ["tinkering"], perk: "neon_energy" },
+      { id: 226, name: "Neon Energy: Electric Vigor", type: "Training", maxReps: 4, count: 0, baseTime: 1e22, drainMult: 100, description: "Channel the raw force of electric vibrance.", skills: ["tinkering"], perk: "neon_energy" },
       { id: 227, name: "Battle Doomsday", type: "Training", maxReps: 1, count: 0, baseTime: 2e20, speedMult: 0.3, drainMult: 400, description: "Face the unstoppable force of destruction.", skills: ["combat"], boss_image: "images/bosses/doomsday.jpg", resources: ["energy_core"], sound: doomsdaySound }
     ]
   },
@@ -328,13 +328,13 @@ var zones = [
   //   name: "Omega Expanse",
   //   img: "images/zones/zone23.jpg",
   //   tasks: [
-  //     { id: 231, name: "Travel: Venture from Omega Expanse to Digital Nebula", type: "Travel", maxReps: 1, count: 0, baseTime: 1.0e27, description: "Step from the vast expanse into an enigmatic digital cloud.", skills: ["travel"] },
+  //     { id: 231, name: "Travel: Venture to Digital Nebula", type: "Travel", maxReps: 1, count: 0, baseTime: 1.0e27, description: "Step from the vast expanse into an enigmatic digital cloud.", skills: ["travel"] },
   //     { id: 232, name: "Decode Alien Frequencies", type: "Training", maxReps: 10, count: 0, baseTime: 1.1e27, description: "Interpret mysterious signals from beyond.", skills: ["intellect", "perception"], mandatory: true },
   //     { id: 233, name: "Harness Expanse Energy", type: "Training", maxReps: 10, count: 0, baseTime: 1.2e27, description: "Channel raw cosmic power into your arsenal.", skills: ["endurance", "intellect"], mandatory: true },
   //     { id: 234, name: "Scavenge Cyber Relics", type: "Training", maxReps: 7, count: 0, baseTime: 1.3e27, description: "Recover valuable remnants from forgotten networks.", skills: ["mechanics", "hacking"], resources: ["cyber_scrap"] },
   //     { id: 235, name: "Stabilize Dimensional Shifts", type: "Training", maxReps: 7, count: 0, baseTime: 1.4e27, description: "Ensure harmony amid chaotic energies.", skills: ["tinkering", "quantum"] },
   //     { id: 236, name: "Resonate with Cosmic Pulse", type: "Training", maxReps: 7, count: 0, baseTime: 1.5e27, description: "Feel the heartbeat of the universe.", skills: ["intellect", "perception"], perk: "expanse_echo" },
-  //     { id: 237, name: "Battle T-800", type: "Training", maxReps: 1, count: 0, baseTime: 1.6e27, description: "Engage the relentless cyborg in a test of survival.", skills: ["combat", "hacking", "intellect"], resources: ["cybernetic_implant"] }
+  //     { id: 237, name: "Battle T-800", type: "Training", maxReps: 1, count: 0, baseTime: 1.6e27, description: "Engage the relentless cyborg in a test of survival.", skills: ["combat"], boss_image: "images/bosses/t800.jpg", sound: t800Sound, resources: ["cybernetic_implant"] }
   //   ]
   // },
   // {
@@ -342,13 +342,13 @@ var zones = [
   //   name: "Digital Nebula",
   //   img: "images/zones/zone24.jpg",
   //   tasks: [
-  //     { id: 241, name: "Travel: Depart Digital Nebula to Infinite Horizon", type: "Travel", maxReps: 1, count: 0, baseTime: 1.0e28, description: "Exit the digital cloud and step toward endless possibility.", skills: ["travel"] },
+  //     { id: 241, name: "Travel: Depart to Infinite Horizon", type: "Travel", maxReps: 1, count: 0, baseTime: 1.0e28, description: "Exit the digital cloud and step toward endless possibility.", skills: ["travel"] },
   //     { id: 242, name: "Decrypt Virtual Codes", type: "Training", maxReps: 10, count: 0, baseTime: 1.1e28, description: "Unlock hidden messages in streams of data.", skills: ["hacking", "intellect"], mandatory: true },
-  //     { id: 243, name: "Sync with Pixel Patterns", type: "Training", maxReps: 10, count: 0, baseTime: 1.2e28, description: "Merge your vision with digital artistry.", skills: ["creativity", "perception"], mandatory: true },
+  //     { id: 243, name: "Sync with Pixel Patterns", type: "Training", maxReps: 10, count: 0, baseTime: 1.2e28, description: "Merge your vision with digital artistry.", skills: ["perception"], mandatory: true },
   //     { id: 244, name: "Compile Data Clusters", type: "Training", maxReps: 7, count: 0, baseTime: 1.3e28, description: "Gather and organize fragmented digital info.", skills: ["tinkering", "hacking"], resources: ["data_cluster"] },
   //     { id: 245, name: "Streamline Virtual Networks", type: "Training", maxReps: 7, count: 0, baseTime: 1.4e28, description: "Enhance connectivity within the digital realm.", skills: ["cybernetics", "intellect"] },
-  //     { id: 246, name: "Evoke Digital Dreams", type: "Training", maxReps: 7, count: 0, baseTime: 1.5e28, description: "Let visions of code inspire new realities.", skills: ["charisma", "creativity"], perk: "cyber_inspiration" },
-  //     { id: 247, name: "Battle HAL 9000", type: "Training", maxReps: 1, count: 0, baseTime: 1.6e28, description: "Challenge the legendary AI in a clash of wits.", skills: ["combat", "hacking", "intellect"], resources: ["system_core"] }
+  //     { id: 246, name: "Evoke Digital Dreams", type: "Training", maxReps: 7, count: 0, baseTime: 1.5e28, description: "Let visions of code inspire new realities.", skills: ["charisma"], perk: "cyber_inspiration" },
+  //     { id: 247, name: "Battle HAL 9000", type: "Training", maxReps: 1, count: 0, baseTime: 1.6e28, description: "Challenge the legendary AI in a clash of wits.", skills: ["combat"], boss_image: "images/bosses/hal9000.jpg", sound: hal9000Sound, resources: ["system_core"] }
   //   ]
   // },
   // {
@@ -356,13 +356,13 @@ var zones = [
   //   name: "Infinite Horizon",
   //   img: "images/zones/zone25.jpg",
   //   tasks: [
-  //     { id: 251, name: "Travel: Breakthrough from Infinite Horizon to Ethereal Matrix", type: "Travel", maxReps: 1, count: 0, baseTime: 1.0e29, description: "Shatter your limits and cross into the unknown.", skills: ["travel"] },
+  //     { id: 251, name: "Travel: Breakthrough to Ethereal Matrix", type: "Travel", maxReps: 1, count: 0, baseTime: 1.0e29, description: "Shatter your limits and cross into the unknown.", skills: ["travel"] },
   //     { id: 252, name: "Transcend Finite Limits", type: "Training", maxReps: 10, count: 0, baseTime: 1.1e29, description: "Push beyond the boundaries of the known universe.", skills: ["intellect", "endurance"], mandatory: true },
   //     { id: 253, name: "Embody Cosmic Potential", type: "Training", maxReps: 10, count: 0, baseTime: 1.2e29, description: "Channel the energy of infinity into your being.", skills: ["alchemy", "charisma"], mandatory: true },
   //     { id: 254, name: "Harvest Celestial Wisdom", type: "Training", maxReps: 7, count: 0, baseTime: 1.3e29, description: "Collect ancient insights from the cosmos.", skills: ["intellect", "perception"], resources: ["cosmic_scroll"] },
   //     { id: 255, name: "Drift Through Stellar Dreams", type: "Training", maxReps: 7, count: 0, baseTime: 1.4e29, description: "Float among the endless expanse of space.", skills: ["tinkering", "charisma"] },
-  //     { id: 256, name: "Ignite the Spark of Infinity", type: "Training", maxReps: 7, count: 0, baseTime: 1.5e29, description: "Let the boundless energy of the universe fuel you.", skills: ["intellect", "creativity"], perk: "limitless_drive" },
-  //     { id: 257, name: "Battle Godzilla", type: "Training", maxReps: 1, count: 0, baseTime: 1.6e29, description: "Engage the king of monsters in a titanic struggle.", skills: ["combat", "endurance", "intellect"], resources: ["kaiju_scale"] }
+  //     { id: 256, name: "Ignite the Spark of Infinity", type: "Training", maxReps: 7, count: 0, baseTime: 1.5e29, description: "Let the boundless energy of the universe fuel you.", skills: ["intellect", "totality"], perk: "limitless_drive" },
+  //     { id: 257, name: "Battle Godzilla", type: "Training", maxReps: 1, count: 0, baseTime: 1.6e29, description: "Engage the king of monsters in a titanic struggle.", skills: ["combat"], boss_image: "images/bosses/godzilla.jpg", sound: godzillaSound, resources: ["kaiju_scale"] }
   //   ]
   // },
   // {
@@ -370,13 +370,13 @@ var zones = [
   //   name: "Ethereal Matrix",
   //   img: "images/zones/zone26.jpg",
   //   tasks: [
-  //     { id: 261, name: "Travel: Leap from Ethereal Matrix to Temporal Paradox", type: "Travel", maxReps: 1, count: 0, baseTime: 1.0e30, description: "Exit the digital realm and jump into time’s mysterious currents.", skills: ["travel"] },
+  //     { id: 261, name: "Travel: Leap to Temporal Paradox", type: "Travel", maxReps: 1, count: 0, baseTime: 1.0e30, description: "Exit the digital realm and jump into time’s mysterious currents.", skills: ["travel"] },
   //     { id: 262, name: "Merge with the Digital Spirit", type: "Training", maxReps: 10, count: 0, baseTime: 1.1e30, description: "Harmonize with the underlying code of existence.", skills: ["hacking", "intellect"], mandatory: true },
   //     { id: 263, name: "Decode Ethereal Enigmas", type: "Training", maxReps: 10, count: 0, baseTime: 1.2e30, description: "Solve the riddles of a shifting digital realm.", skills: ["intellect", "perception"], mandatory: true },
   //     { id: 264, name: "Extract Dream Fragments", type: "Training", maxReps: 7, count: 0, baseTime: 1.3e30, description: "Gather rare remnants of lucid dreams.", skills: ["alchemy", "intellect"], resources: ["dream_fragment"] },
-  //     { id: 265, name: "Synthesize Virtual Realities", type: "Training", maxReps: 7, count: 0, baseTime: 1.4e30, description: "Blend imagination with binary data.", skills: ["creativity", "hacking"] },
+  //     { id: 265, name: "Synthesize Virtual Realities", type: "Training", maxReps: 7, count: 0, baseTime: 1.4e30, description: "Blend imagination with binary data.", skills: ["hacking"] },
   //     { id: 266, name: "Invoke Matrix Miracles", type: "Training", maxReps: 7, count: 0, baseTime: 1.5e30, description: "Manifest unexpected wonders from the code.", skills: ["charisma", "intellect"], perk: "spectral_glow" },
-  //     { id: 267, name: "Battle Cthulhu", type: "Training", maxReps: 1, count: 0, baseTime: 1.6e30, description: "Confront the ancient horror from beyond reality.", skills: ["combat", "intellect", "hacking"], resources: ["eldritch_tentacle"] }
+  //     { id: 267, name: "Battle Googol Smith", type: "Training", maxReps: 1, count: 0, baseTime: 1.6e30, description: "Confront the ancient horror from beyond reality.", skills: ["combat"], boss_image: "images/bosses/googol_smith.jpg", sound: googolSmithSound, resources: ["eldritch_tentacle"] }
   //   ]
   // },
   // {
@@ -384,13 +384,13 @@ var zones = [
   //   name: "Temporal Paradox",
   //   img: "images/zones/zone27.jpg",
   //   tasks: [
-  //     { id: 271, name: "Travel: Navigate from Temporal Paradox to Ultra Dimension", type: "Travel", maxReps: 1, count: 0, baseTime: 1.0e31, description: "Step from warped time into a realm of infinite possibilities.", skills: ["travel"] },
+  //     { id: 271, name: "Travel: Navigate to Ultra Dimension", type: "Travel", maxReps: 1, count: 0, baseTime: 1.0e31, description: "Step from warped time into a realm of infinite possibilities.", skills: ["travel"] },
   //     { id: 272, name: "Measure Shifting Chronologies", type: "Training", maxReps: 10, count: 0, baseTime: 1.1e31, description: "Analyze the distortions in time’s fabric.", skills: ["intellect", "perception"], mandatory: true },
   //     { id: 273, name: "Synchronize Lost Moments", type: "Training", maxReps: 10, count: 0, baseTime: 1.2e31, description: "Align fragmented memories across eras.", skills: ["tinkering", "intellect"], mandatory: true },
   //     { id: 274, name: "Capture Temporal Residue", type: "Training", maxReps: 7, count: 0, baseTime: 1.3e31, description: "Secure remnants of fleeting time.", skills: ["alchemy", "perception"], resources: ["time_fragment"] },
   //     { id: 275, name: "Rewind Digital Echoes", type: "Training", maxReps: 7, count: 0, baseTime: 1.4e31, description: "Manipulate echoes of the past.", skills: ["hacking", "intellect"] },
-  //     { id: 276, name: "Amplify Chrono Clarity", type: "Training", maxReps: 7, count: 0, baseTime: 1.5e31, description: "Focus your mind to see through time.", skills: ["intellect", "creativity"], perk: "time_glimpse" },
-  //     { id: 277, name: "Battle Dr. Doom", type: "Training", maxReps: 1, count: 0, baseTime: 1.6e31, description: "Face the master of misfortune in a clash of wills.", skills: ["combat", "intellect", "tinkering"], resources: ["doom_relic"] }
+  //     { id: 276, name: "Amplify Chrono Clarity", type: "Training", maxReps: 7, count: 0, baseTime: 1.5e31, description: "Focus your mind to see through time.", skills: ["intellect"], perk: "time_glimpse" },
+  //     { id: 277, name: "Battle Pudge", type: "Training", maxReps: 1, count: 0, baseTime: 1.6e31, description: "Face the master of misfortune in a clash of wills.", skills: ["combat"], boss_image: "images/bosses/pudge.jpg", sound: pudgeSound, resources: ["doom_relic"] }
   //   ]
   // },
   // {
@@ -398,13 +398,13 @@ var zones = [
   //   name: "Ultra Dimension",
   //   img: "images/zones/zone28.jpg",
   //   tasks: [
-  //     { id: 281, name: "Travel: Traverse from Ultra Dimension to Transcendent Void", type: "Travel", maxReps: 1, count: 0, baseTime: 1.0e32, description: "Cross into a realm beyond conventional space and time.", skills: ["travel"] },
+  //     { id: 281, name: "Travel: Traverse to Transcendent Void", type: "Travel", maxReps: 1, count: 0, baseTime: 1.0e32, description: "Cross into a realm beyond conventional space and time.", skills: ["travel"] },
   //     { id: 282, name: "Align Multiversal Realms", type: "Training", maxReps: 10, count: 0, baseTime: 1.1e32, description: "Bridge the gaps between infinite dimensions.", skills: ["intellect", "quantum"], mandatory: true },
   //     { id: 283, name: "Decode Dimensional Signatures", type: "Training", maxReps: 10, count: 0, baseTime: 1.2e32, description: "Interpret the signals of alternate realities.", skills: ["perception", "intellect"], mandatory: true },
   //     { id: 284, name: "Collect Interdimensional Ore", type: "Training", maxReps: 7, count: 0, baseTime: 1.3e32, description: "Mine rare materials from shifting planes.", skills: ["mechanics", "alchemy"], resources: ["dimensional_ore"] },
   //     { id: 285, name: "Synthesize Reality Fragments", type: "Training", maxReps: 7, count: 0, baseTime: 1.4e32, description: "Merge elements from multiple realms into a new whole.", skills: ["tinkering", "intellect"] },
-  //     { id: 286, name: "Harmonize the Multiverse", type: "Training", maxReps: 7, count: 0, baseTime: 1.5e32, description: "Attune yourself to the symphony of infinite realities.", skills: ["intellect", "creativity"], perk: "dimension_mastery" },
-  //     { id: 287, name: "Battle Darkseid", type: "Training", maxReps: 1, count: 0, baseTime: 1.6e32, description: "Challenge the tyrant of apocalyptic power.", skills: ["combat", "intellect", "quantum"], resources: ["omega_force"] }
+  //     { id: 286, name: "Harmonize the Multiverse", type: "Training", maxReps: 7, count: 0, baseTime: 1.5e32, description: "Attune yourself to the symphony of infinite realities.", skills: ["intellect", "nihility"], perk: "dimension_mastery" },
+  //     { id: 287, name: "Battle Arceus", type: "Training", maxReps: 1, count: 0, baseTime: 1.6e32, description: "Challenge the tyrant of apocalyptic power.", skills: ["combat"], boss_image: "images/bosses/arceus.jpg", sound: arceusSound, resources: ["omega_force"] }
   //   ]
   // },
   // {
@@ -412,13 +412,14 @@ var zones = [
   //   name: "Transcendent Void",
   //   img: "images/zones/zone29.jpg",
   //   tasks: [
-  //     { id: 291, name: "Travel: Soar from Transcendent Void to Eternal Apex", type: "Travel", maxReps: 1, count: 0, baseTime: 1.0e33, description: "Leave the emptiness behind and ascend toward ultimate revelation.", skills: ["travel"] },
+  //     { id: 291, name: "Travel: Soar to Eternal Apex", type: "Travel", maxReps: 1, count: 0, baseTime: 1.0e33, description: "Leave the emptiness behind and ascend toward ultimate revelation.", skills: ["travel"] },
   //     { id: 292, name: "Embrace the Void's Wisdom", type: "Training", maxReps: 10, count: 0, baseTime: 1.1e33, description: "Absorb the profound silence and insights of nothingness.", skills: ["intellect", "meditation"], mandatory: true },
-  //     { id: 293, name: "Distill Absurdity", type: "Training", maxReps: 10, count: 0, baseTime: 1.2e33, description: "Extract meaning from the chaos of the void.", skills: ["creativity", "intellect"], mandatory: true },
+  //     { id: 293, name: "Distill Absurdity", type: "Training", maxReps: 10, count: 0, baseTime: 1.2e33, description: "Extract meaning from the chaos of the void.", skills: ["intellect"], mandatory: true },
   //     { id: 294, name: "Harvest Void Residue", type: "Training", maxReps: 7, count: 0, baseTime: 1.3e33, description: "Collect remnants left behind in the emptiness.", skills: ["alchemy", "perception"], resources: ["void_residue"] },
-  //     { id: 295, name: "Resonate with Nihilistic Beats", type: "Training", maxReps: 7, count: 0, baseTime: 1.4e33, description: "Vibrate with the rhythm of utter nothingness.", skills: ["tinkering", "intellect"] },
-  //     { id: 296, name: "Invoke the Echo of Nothing", type: "Training", maxReps: 7, count: 0, baseTime: 1.5e33, description: "Channel the void’s mysterious reverberations.", skills: ["intellect", "meditation"], perk: "void_echo" },
-  //     { id: 297, name: "Battle Saitama", type: "Training", maxReps: 1, count: 0, baseTime: 1.6e33, description: "Face the one-punch legend in an absurd trial of strength.", skills: ["combat", "intellect", "endurance"], resources: ["heroic_spirit"] }
+  //     { id: 295, name: "Practice Kamui with Kakashi", type: "Training", maxReps: 6, count: 0, baseTime: 1e15, description: "", skills: ["travel", "combat", "intellect"] },
+  //     { id: 296, name: "Resonate with Nihilistic Beats", type: "Training", maxReps: 7, count: 0, baseTime: 1.4e33, description: "Vibrate with the rhythm of utter nothingness.", skills: ["tinkering", "intellect"] },
+  //     { id: 297, name: "Invoke the Echo of Nothing", type: "Training", maxReps: 7, count: 0, baseTime: 1.5e33, description: "Channel the void’s mysterious reverberations.", skills: ["intellect", "meditation"], perk: "void_echo" },
+  //     { id: 298, name: "Battle Kaguya", type: "Training", maxReps: 1, count: 0, baseTime: 1.6e33, description: "Engage in an epic confrontation with Kaguya.", skills: ["combat"], boss_image: "images/bosses/kaguya.jpg", sound: kaguyaSound }
   //   ]
   // },
   // {
@@ -430,12 +431,42 @@ var zones = [
   //     { id: 302, name: "Achieve Ultimate Ascension", type: "Training", maxReps: 10, count: 0, baseTime: 1.1e34, description: "Surpass mortal limitations and embrace divinity.", skills: ["omniscience", "intellect"], mandatory: true },
   //     { id: 303, name: "Merge with Cosmic Eternity", type: "Training", maxReps: 10, count: 0, baseTime: 1.2e34, description: "Unite your essence with the fabric of the infinite.", skills: ["alchemy", "intellect"], mandatory: true },
   //     { id: 304, name: "Collect Divine Radiance", type: "Training", maxReps: 7, count: 0, baseTime: 1.3e34, description: "Harvest luminous energy from the cosmos.", skills: ["charisma", "alchemy"], resources: ["divine_fragment"] },
-  //     { id: 305, name: "Synthesize Universal Harmony", type: "Training", maxReps: 7, count: 0, baseTime: 1.4e34, description: "Craft a masterpiece of cosmic balance.", skills: ["tinkering", "creativity"] },
-  //     { id: 306, name: "Ignite the Spark of Revelation", type: "Training", maxReps: 7, count: 0, baseTime: 1.5e34, description: "Unleash the inner light of infinite wisdom.", skills: ["intellect", "creativity"], perk: "cosmic_oneness" },
-  //     { id: 307, name: "Battle One Above All", type: "Training", maxReps: 1, count: 0, baseTime: 1.6e34, description: "Confront the supreme force that transcends all realities.", skills: ["combat", "omniscience", "intellect"], resources: ["divine_core"] }
+  //     { id: 305, name: "Synthesize Universal Harmony", type: "Training", maxReps: 7, count: 0, baseTime: 1.4e34, description: "Craft a masterpiece of cosmic balance.", skills: ["tinkering"] },
+  //     { id: 306, name: "Ignite the Spark of Revelation", type: "Training", maxReps: 7, count: 0, baseTime: 1.5e34, description: "Unleash the inner light of infinite wisdom.", skills: ["intellect"], perk: "cosmic_oneness" },
+  //     { id: 307, name: "Battle One Above All", type: "Training", maxReps: 1, count: 0, baseTime: 1.6e34, description: "Confront the supreme force that transcends all realities.", skills: ["combat"], boss_image: "images/bosses/one_above_all.jpg", sound: oneAboveAllSound, resources: ["divine_core"] }
+  //   ]
+  // },
+  // {
+  //   id: 31,
+  //   name: "Mount Olympus",
+  //   img: "images/zones/zone31.jpg",
+  //   tasks: [
+  //     { id: 311, name: "Battle Apollo", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "God of the sun, music, and prophecy.", skills: ["combat", "charisma"], boss_image: "images/bosses/apollo.jpg", drainMult: 10, sound: apolloSound },
+  //     { id: 312, name: "Battle Athena", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "Goddess of wisdom, war, and strategy.", skills: ["combat", "tinering"], boss_image: "images/bosses/athena.jpg", drainMult: 12, sound: athenaSound },
+  //     { id: 313, name: "Battle Hera", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "Queen of the gods and goddess of marriage and family.", skills: ["combat", "negotiation"], boss_image: "images/bosses/hera.jpg", drainMult: 14, sound: heraSound },
+  //     { id: 314, name: "Battle Poseidon", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "God of the sea, earthquakes, and horses.", skills: ["combat", "endurance"], boss_image: "images/bosses/poseidon.jpg", drainMult: 16, sound: poseidonSound },
+  //     { id: 315, name: "Battle Hades", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "God of the underworld and the dead.", skills: ["combat", "perception"], boss_image: "images/bosses/hades.jpg", drainMult: 18, sound: hadesSound },
+  //     { id: 316, name: "Battle Uranus", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "Primordial god of the sky, and father of the Titans.", skills: ["combat", "cybernetics"], boss_image: "images/bosses/uranus.jpg", drainMult: 20, sound: uranusSound },
+  //     { id: 317, name: "Battle Gaia", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "Primordial goddess of the earth and mother of many gods and Titans.", skills: ["combat", "quantum"], boss_image: "images/bosses/gaia.jpg", drainMult: 22, sound: gaiaSound },
+  //     { id: 318, name: "Battle Cronus", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "The leader of the Titans and father of Zeus, Poseidon, and Hades.", skills: ["combat", "omniscience"], boss_image: "images/bosses/cronus.jpg", drainMult: 24, sound: cronusSound },
+  //     { id: 319, name: "Battle Typhon", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "The deadliest monster, often considered a major threat to the Olympian gods.", skills: ["combat", "totality"], boss_image: "images/bosses/typhon.jpg", drainMult: 26, sound: typhonSound },
+  //     { id: 320, name: "Battle Zeus", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "King of the gods, ruler of the sky and thunder.", skills: ["combat", "nihility"], boss_image: "images/bosses/zeus.jpg", drainMult: 28, sound: zeusSound }
+  //   ]
+  // },
+  // {
+  //   id: 32,
+  //   name: "Final Convergence",
+  //   img: "images/zones/zone32.jpg",
+  //   tasks: [
+  //     { id: 330, name: "Battle Saitama", type: "Training", maxReps: 1, count: 0, baseTime: 1e9, description: "Engage in a final showdown with Saitama.", skills: ["combat"], boss_image: "images/bosses/saitama.jpg", drainMult: 50, sound: saitamaSound }
+  //   ]
+  // },
+  // {
+  //   id: 33,
+  //   name: "The Origin Core",
+  //   img: "images/zones/zone33.jpg",
+  //   tasks: [
+  //     { id: 340, name: "Battle Future You", type: "Training", maxReps: 1, count: 0, baseTime: 1e9, description: "Face your future self in a climactic battle.", skills: ["combat"], boss_image: "images/bosses/future_you.jpg", drainMult: 60, sound: futureYouSound }
   //   ]
   // }
 ];
-
-
-//{ id: 197, name: "Practice Kamui", type: "Training", maxReps: 6, count: 0, baseTime: 1e15, description: "Kakashi is here for some reason.", skills: ["travel", "combat"] },

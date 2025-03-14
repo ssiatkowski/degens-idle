@@ -68,6 +68,16 @@ const soundManager = {
   const doctorManhattanSound = soundManager.register("doctorManhattan", "sounds/doctor_manhattan.wav", { type: 'sfx' });
   const galactusSound = soundManager.register("galactus", "sounds/galactus.wav", { type: 'sfx' });
   const doomsdaySound = soundManager.register("doomsday", "sounds/doomsday.wav", { type: 'sfx' });
+  const t800Sound = soundManager.register("t800", "sounds/t800.wav", { type: 'sfx' });
+  const hal9000Sound = soundManager.register("hal9000", "sounds/hal9000.wav", { type: 'sfx' });
+  const godzillaSound = soundManager.register("godzilla", "sounds/godzilla.wav", { type: 'sfx' });
+  const googolSmithSound = soundManager.register("googolSmith", "sounds/googol_smith.wav", { type: 'sfx' });
+  const pudgeSound = soundManager.register("pudge", "sounds/pudge.wav", { type: 'sfx' });
+  const arceusSound = soundManager.register("arceus", "sounds/arceus.wav", { type: 'sfx' });
+  const kaguyaSound = soundManager.register("kaguya", "sounds/kaguya.wav", { type: 'sfx' });
+  const oneAboveAllSound = soundManager.register("oneAboveAll", "sounds/one_above_all.wav", { type: 'sfx' });
+  const saitamaSound = soundManager.register("saitama", "sounds/saitama.wav", { type: 'sfx' });
+
   // Register additional sounds as needed:
   // const someOtherSound = soundManager.register("other", "sounds/other_sound.wav", { type: 'sfx' });
   

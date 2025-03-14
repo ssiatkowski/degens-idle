@@ -38,7 +38,8 @@ let perkDescriptions = {
     cyber_boost:            "Each time Cybernetics levels up,<br>another random skill also levels up.",
     universal_alloy:        "Multiply Combat speed by square root of current Serenity (unspent).",
     forge_fervor:           "Reduce Combat energy drain by 3x.",
-    celestial_light:        "All XP gains increased by 2x."
+    celestial_light:        "All XP gains increased by 2x.",
+    neon_energy:            "Not implemented yet.",
 
   };
 
@@ -595,6 +596,12 @@ let resourceActions = {
     },
     tooltip: "Consume a nearby world and gain +300 Energy.<br>"
   },
+  "energy_core": {
+    onConsume: (gameState, amt) => { 
+      showMessage(`Used ${amt} Energy Core${amt > 1 ? "s" : ""}.<br>Gained nothing.`);
+    },
+    tooltip: "Not Implemented Yet."
+  },
 };
 
 const EXCLUDED_AUTO_RESOURCES = new Set(["cybernetic_armor", "infinity_gauntlet", "stardust", "cosmic_shard","atomic_particle"]);
@@ -639,13 +646,13 @@ const SERENITY_UPGRADES = {
       }
     },
 
-    "Transcend Chaos (not available yet)": {
+    "Transcend Chaos (not available yet)": { //25
     },
 
-    "Attain Equilibrium (not available yet)": {
+    "Attain Equilibrium (not available yet)": { //30
     },
 
-    "Become the Void (not available yet)": {
+    "Become the Void (not available yet)": { //32
     }
   },
 

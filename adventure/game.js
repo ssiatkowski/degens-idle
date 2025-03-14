@@ -45,7 +45,9 @@ CURRENT_GAME_VERSION = "v0.2";
         negotiation: { level: 1, xp: 0, visible: false, energyDrain: 20,  progressBoost: 1, drainBoost: 1, xpGainFactor: 0.01 },
         aiMastery:   { level: 1, xp: 0, visible: false, energyDrain: 15,  progressBoost: 1, drainBoost: 1, xpGainFactor: 0.001 },
         quantum:     { level: 1, xp: 0, visible: false, energyDrain: 25,  progressBoost: 1, drainBoost: 1, xpGainFactor: 0.0001 },
-        omniscience: { level: 1, xp: 0, visible: false, energyDrain: 100, progressBoost: 1, drainBoost: 1, xpGainFactor: 1 }
+        omniscience: { level: 1, xp: 0, visible: false, energyDrain: 100, progressBoost: 1, drainBoost: 1, xpGainFactor: 1 },
+        //totality:    { level: 1, xp: 0, visible: false, energyDrain: 1000,  progressBoost: 1, drainBoost: 1, xpGainFactor: 1e-10 },
+        //nihility:    { level: 1, xp: 0, visible: false, energyDrain: 1e10,  progressBoost: 1, drainBoost: 1, xpGainFactor: 1e-25 },
       },
       perks: {},
       numEnergyResets: 0,
@@ -1818,6 +1820,7 @@ CURRENT_GAME_VERSION = "v0.2";
     if (currentZoneIndex < zones.length) displayZone();
     else {
       showEndOfContentModal();
+      currentZoneIndex = 1;
     }
     saveGameProgress();
   }
