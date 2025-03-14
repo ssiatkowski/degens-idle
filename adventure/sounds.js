@@ -51,6 +51,7 @@ const soundManager = {
   const experienceSound = soundManager.register("experience", "sounds/experience.mp3", { type: 'sfx' });
   const automationEndSound = soundManager.register("automationEnd", "sounds/automation_end.wav", { type: 'sfx' });
   const atomicParticleSound = soundManager.register("atomicParticle", "sounds/atomic_particle.wav", { type: 'sfx' });
+  const energyCoreSound = soundManager.register("energyCore", "sounds/energy_core.mp3", { type: 'sfx' });
 
   const agentSmithSound = soundManager.register("agentSmith", "sounds/agent_smith.mp3", { type: 'sfx' });
   const shaoKahnSound = soundManager.register("shaoKahn", "sounds/shao_kahn.mp3", { type: 'sfx' });

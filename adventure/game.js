@@ -78,6 +78,7 @@ CURRENT_GAME_VERSION = "v0.2";
       cosmicShardTaskRunning: false,
       numCelestialBlossoms: 0,
       numAtomicParticles: 0,
+      energyCoreMultiplier: 1,
 
       //serenity upgrades related
       delusionEnjoyerMultiplier: 1,
@@ -844,6 +845,7 @@ CURRENT_GAME_VERSION = "v0.2";
       if (sName === "alchemy" && gameState.perks.brewmaster) baseMult *= 1.25;
       if (sName === "travel" && gameState.perks.hoverboard) baseMult *= 4;
       if (sName === "combat" && gameState.perks.universal_alloy) baseMult *= Math.max(1, gameState.serenity ** (1/2));
+      if (sName === "omniscience" && gameState.perks.omega_harmony) baseMult *= 1.5;
       baseMult *= (sData.progressBoost);
       let baseDrain = sData.energyDrain / (sData.drainBoost || 1);
       if (sName === "hacking" && gameState.perks.noob_haxor) baseDrain *= 0.9;
@@ -987,6 +989,8 @@ CURRENT_GAME_VERSION = "v0.2";
       }
       
       if (sName === "combat" && gameState.perks.universal_alloy) baseMult *= Math.max(1, gameState.serenity ** (1/2));
+
+      if (sName === "omniscience" && gameState.perks.omega_harmony) baseMult *= 1.5;
       
       // Store the precomputed value.
       sk.precomputedMultiplier = baseMult;
@@ -1123,6 +1127,9 @@ CURRENT_GAME_VERSION = "v0.2";
     });
     gameState.resourcesUsed = {};
     gameState.energy = gameState.startingEnergy;
+    if (reason == "prestige" && gameState.perks["neon_energy"]) {
+      gameState.energy += 300;
+    }
     currentZoneIndex = 0;
     currentTasks = [];
     gameState.autoRun = false;
@@ -1132,6 +1139,7 @@ CURRENT_GAME_VERSION = "v0.2";
     gameState.numCosmicShards = 0;
     gameState.numCelestialBlossoms = 0;
     gameState.numAtomicParticles = 0;
+    gameState.energyCoreMultiplier = 1;
     if (gameState.serenityUnlockables["Delusion Enjoyer"]) {
       gameState.delusionEnjoyerMultiplier = Math.max(1, gameState.delusion / 100);
     }
@@ -1697,6 +1705,9 @@ CURRENT_GAME_VERSION = "v0.2";
           if (gameState.numCosmicShards > 0) {
             gainedXP *= 5;
           }
+          if (task.boss_image) {
+            gainedXP *= gameState.energyCoreMultiplier;
+          }
           if (task.xpMult !== undefined) {
             gainedXP *= task.xpMult;
           }
@@ -1946,6 +1957,11 @@ CURRENT_GAME_VERSION = "v0.2";
       });
       growthMiracleApplied = true;
     }    
+    if (gameState.perks.expanse_echo) {
+      effTickDuration = 110;
+    } else {
+      effTickDuration = 100;
+    }
   }
   
   // Modify your renderPerks function:
@@ -2905,6 +2921,8 @@ CURRENT_GAME_VERSION = "v0.2";
           showMessage("No save data found");
           return;
         }
+        // Encrypt the save using Base64 (same as copySave)
+        const encryptedSaveData = btoa(saveData);
         // Compute file name.
         const totalSerenity = computeSerenityTotalValue();
         const perkCount = Object.keys(gameState.perks).filter(key => gameState.perks[key] !== false).length;
@@ -2914,7 +2932,7 @@ CURRENT_GAME_VERSION = "v0.2";
         }
         fileName += "Perks_" + perkCount;
         // Create a blob and trigger the download.
-        const blob = new Blob([saveData], { type: "application/json" });
+        const blob = new Blob([encryptedSaveData], { type: "application/json" });
         const url = URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = url;
@@ -2941,20 +2959,33 @@ CURRENT_GAME_VERSION = "v0.2";
           if (!file) return;
           const reader = new FileReader();
           reader.onload = (event) => {
+            const fileText = event.target.result;
+            let saveString;
             try {
-              const data = event.target.result;
-              // Optionally, you can show a confirmation modal before overwriting.
-              showPasteConfirmationModal(() => {
-                localStorage.setItem("degensAdventureProgress", data);
-                showMessage("Save loaded from file!");
-                location.reload();
-              });
-            } catch (err) {
-              showMessage("Invalid save file");
+              // First, try to decode as Base64.
+              saveString = atob(fileText);
+              // Validate by attempting to parse JSON.
+              JSON.parse(saveString);
+            } catch (e) {
+              try {
+                // If Base64 decoding fails, try to parse the fileText directly.
+                JSON.parse(fileText);
+                saveString = fileText;
+              } catch (e2) {
+                showMessage("Invalid save file");
+                return;
+              }
             }
+            // On user confirmation, set the save data.
+            showPasteConfirmationModal(() => {
+              localStorage.setItem("degensAdventureProgress", saveString);
+              showMessage("Save loaded from file!");
+              location.reload();
+            });
           };
           reader.readAsText(file);
         });
+        
         input.click();
       });
       saveButtonsContainer.appendChild(loadFileBtn);
@@ -3286,6 +3317,7 @@ CURRENT_GAME_VERSION = "v0.2";
       if (gameState.perks["kung_fu_zen"]) xpEach *= 1.28;
       if (gameState.perks["celestial_light"]) xpEach *= 2;
       if (gameState.cosmicShardTaskRunning) xpEach *= 5;
+      if (tData.boss_image) xpEach *= gameState.energyCoreMultiplier;
       if (tData.task.xpMult !== undefined) {
         xpEach *= tData.task.xpMult;
       }
@@ -3471,6 +3503,7 @@ CURRENT_GAME_VERSION = "v0.2";
             gameState.powerUnlocked = true;
             showPowerModal();
           }
+          gameState.energyCoreMultiplier = 1;
           gameState.power += (zone.id - 3) * gameState.powerGainMultiplier;
           showMessage(`<span style="color: rgb(222, 34, 191);">${task.name.replace(/^[^ ]+ /, "")} defeated! +${(zone.id - 3) * gameState.powerGainMultiplier} Power</span>`);
           showPowerIfUnlocked();
@@ -3658,6 +3691,7 @@ CURRENT_GAME_VERSION = "v0.2";
     gameState.startingLevel = gameState.startingLevel || 1;
     gameState.serenityGainZoneExponent = gameState.serenityGainZoneExponent || 3;
     gameState.numAtomicParticles = gameState.numAtomicParticles || 0;
+    gameState.energyCoreMultiplier = gameState.energyCoreMultiplier || 1;
 
     applySerenityUpgrades();
     gatherAllPerks();

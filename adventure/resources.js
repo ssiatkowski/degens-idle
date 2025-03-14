@@ -36,10 +36,13 @@ let perkDescriptions = {
     quantum_teleportation:  "Travel is now affected by Power.",
     quantum_harmony:        "Whenever another skill gains xp, Quantum gains 1% of that xp.",
     cyber_boost:            "Each time Cybernetics levels up,<br>another random skill also levels up.",
-    universal_alloy:        "Multiply Combat speed by square root of current Serenity (unspent).",
+    universal_alloy:        "Multiply Combat speed by square root of unspent Serenity.",
     forge_fervor:           "Reduce Combat energy drain by 3x.",
     celestial_light:        "All XP gains increased by 2x.",
-    neon_energy:            "Not implemented yet.",
+    neon_energy:            "Next time you prestige, start with +300 energy (first run only).",
+    omega_harmony:          "Omniscience is 50% faster.",
+    expanse_echo:           "Make every game tick count as 10% more.",
+    digital_dreams:         "",
 
   };
 
@@ -596,15 +599,76 @@ let resourceActions = {
     },
     tooltip: "Consume a nearby world and gain +300 Energy.<br>"
   },
-  "energy_core": {
-    onConsume: (gameState, amt) => { 
-      showMessage(`Used ${amt} Energy Core${amt > 1 ? "s" : ""}.<br>Gained nothing.`);
+  "data_bit": {
+    onConsume: (gameState, amt) => {
+      const skill = gameState.skills["cybernetics"];
+      let lowered = 0;
+      // Lower the Cybernetics level one per data_bit, but not below level 1.
+      for (let i = 0; i < amt; i++) {
+        if (skill.level > 1) {
+          skill.level--;
+          // Option: Reset XP so progress for that level is lost.
+          skill.xp = 0;
+          lowered++;
+        }
+      }
+      updateSkillMultipliers();
+      updateSkillDisplay();
+      updateTasksHoverInfo();
+      showMessage(`Used ${amt} Data Bit${amt > 1 ? "s" : ""}.<br>Lowered Cybernetics by ${lowered} level${lowered === 1 ? "" : "s"}.`);
     },
-    tooltip: "Not Implemented Yet."
+    tooltip: "Lowers Cybernetics level by 1 per Data Bit used."
   },
+  "energy_core": {
+    onConsume: (gameState, amt) => {
+      gameState.energyCoreMultiplier += (gameState.energy / 5000) * amt;
+      
+      updateTasksHoverInfo();
+      if (gameState.soundEnabled) {
+        energyCoreSound.play();
+      }
+      
+      showMessage(`Used ${amt} Energy Core${amt > 1 ? "s" : ""}.<br>
+        Next battle XP gain multiplier is now ${formatNumber(gameState.energyCoreMultiplier)}x.`);
+    },
+    tooltip: "Increases next battle XP gain additively<br>by (current energy / 5000)x per Energy Core used."
+  },
+  "cyber_relic": {
+    onConsume: (gameState, amt) => {
+      const intellectSkill = gameState.skills["intellect"];
+      const cyberSkill = gameState.skills["cybernetics"];
+      
+      // Increase progressBoost (speed) by 10% per relic for both Intellect and Cybernetics.
+      intellectSkill.progressBoost += 0.10 * amt;
+      cyberSkill.progressBoost += 0.10 * amt;
+      
+      updateSkillMultipliers();
+      updateSkillDisplay();
+      updateTasksHoverInfo();
+      
+      showMessage(`Used ${amt} Cyber Relic${amt > 1 ? "s" : ""}.<br>Boosted Intellect and Cybernetics speed by ${10 * amt}% each.`);
+    },
+    tooltip: "Boosts speed by 10% for Intellect and Cybernetics."
+  },
+  "cybernetic_implant": {
+    onConsume: (gameState, amt) => {
+      // Increase starting energy by (current Cybernetics level / 8192) per implant.
+      const energyIncrease = (gameState.skills["cybernetics"].level / 8192) * amt;
+      gameState.startingEnergy += energyIncrease;
+      
+      updateSkillMultipliers();
+      updateSkillDisplay();
+      updateTasksHoverInfo();
+      
+      showMessage(`Used ${amt} Cybernetic Implant${amt > 1 ? "s" : ""}.<br>Increased Starting Energy by ${formatNumber(energyIncrease)}.`);
+    },
+    tooltip: "Increases Starting Energy by (Cybernetics level / 8192) per implant."
+  },
+
+
 };
 
-const EXCLUDED_AUTO_RESOURCES = new Set(["cybernetic_armor", "infinity_gauntlet", "stardust", "cosmic_shard","atomic_particle"]);
+const EXCLUDED_AUTO_RESOURCES = new Set(["cybernetic_armor", "infinity_gauntlet", "stardust", "cosmic_shard","atomic_particle","energy_core"]);
 
 const SERENITY_UPGRADES = {
   unlockables: {
