@@ -53,6 +53,7 @@ CURRENT_GAME_VERSION = "v0.2";
       numEnergyResets: 0,
       numCopiumResets: 0,
       numDelusionResets: 0,
+      numPrestiges: 0,
       zoneFullCompletes: {},
       autoRun: false,
       automationMode: "zone",
@@ -1095,6 +1096,7 @@ CURRENT_GAME_VERSION = "v0.2";
       gameState.numEnergyResets = 0;
       gameState.numCopiumResets = 0;
       gameState.numDelusionResets = 0;
+      gameState.numPrestiges++;
       gameState.highestCompletedZone = 0;
       gameState.bestCompletedZone = 0;
       gameState.resetsForBestZone = 1e100;
@@ -2763,12 +2765,14 @@ CURRENT_GAME_VERSION = "v0.2";
       </p>
       <p>
         <strong>Total Serenity:</strong> ${formatNumber(computeSerenityTotalValue())}<br>
+        <strong># Prestiges:</strong> ${gameState.numPrestiges}<br>
+        <Strong>Current Run:</strong><br>
         <strong>Energy Resets:</strong> ${gameState.numEnergyResets}<br>
         <strong>Copium Resets:</strong> ${gameState.numCopiumResets}<br>
         <strong>Delusion Resets:</strong> ${gameState.numDelusionResets}
       </p>
       <p>
-        More content and challenges are on the horizon in future updates.
+        More content and challenges are on the horizon in future updates. The complete v1.0 game will have 33 zones.
         In the meantime, you can explore <a href="https://www.degensidle.com/" target="_blank"><strong>Degens Idle</strong></a>
         and join our <a href="https://discordapp.com/channels/1268685194819538984/1337527757629816933" target="_blank">Discord Channel</a>
         to keep up with development!
@@ -3007,7 +3011,7 @@ CURRENT_GAME_VERSION = "v0.2";
       // 2) FULL RESTART (Red)
       const restartAll = document.createElement("button");
       restartAll.classList.add("btn-red");
-      restartAll.textContent = "FULL RESTART";
+      restartAll.textContent = "Full Restart";
       restartAll.setAttribute(
         "data-tooltip",
         "Warning: This will reset all game progress.<br>" +
@@ -3159,6 +3163,10 @@ CURRENT_GAME_VERSION = "v0.2";
       <h2>Tutorial & Tips</h2>
       <p>
         This game does not require a tutorial, but here it is if you need extra guidance. Warning: this guide contains spoilers.
+        As you progress, you'll discover that different stages of the game demand different strategies—what works in the early zones might not be as effective later on.
+        The complexity of resources and their interactions with skills, tasks, and resets scale up very quickly, so if you're looking for a chill, passive idle experience, this may not be the game for you.
+        Instead, be prepared to constantly adapt your strategy to optimize your resource management and efficiency.
+        And hey, if you manage to solve all the strategic puzzles and beat zone 33 with ease, send me your resume!
       </p>
       
       <h3>Skills:</h3>
@@ -3176,7 +3184,7 @@ CURRENT_GAME_VERSION = "v0.2";
       
       <h3>Resources:</h3>
       <p>
-        Some tasks produce resources instead. Resources must be consumed to take effect - nearly all effects last until you run out of energy or experience a copium/delusion reset. On an energy reset, you lose 50% of your resources (rounded up).
+        Some tasks produce resources. Resources must be consumed to take effect - nearly all effects last until you run out of energy or experience a copium/delusion reset. On an energy reset, you lose half of your resources.
       </p>
       
       <h3>Perks:</h3>
