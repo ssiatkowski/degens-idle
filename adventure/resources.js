@@ -827,7 +827,7 @@ const SERENITY_UPGRADES = {
       },
       "Repurpose Perks": {
         cost: 25000,
-        description: "Divide all energy drain by 1 + (# perks unlocked / 10)."
+        description: "Divide all energy drain by (# perks unlocked / 10)."
       },
       "Experience Junkie": {
         cost: 50000,
@@ -866,7 +866,7 @@ const SERENITY_UPGRADES = {
       },
       "Resource Saver": { 
         initialCost: 0.1,
-        scaling: 1.3,
+        scaling: 1.4,
         description: "On Copium reset, keep one random random resource per level."
       },
       "Power Doubler": {
@@ -884,7 +884,7 @@ const SERENITY_UPGRADES = {
       },
       "Better Elixirs": {
         initialCost: 2,
-        scaling: 2.5,
+        scaling: 3,
         description: "Increase effect of Energy Elixir by +1."
       },
       "Game Speed": {

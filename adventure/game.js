@@ -659,6 +659,7 @@
         energyText.textContent = val.toFixed(0);
       }
     }
+    const energyBar = document.getElementById("energyBar");
     const energyBarFill = document.getElementById("energyBarFill");
     if (energyBarFill) {
       energyBarFill.style.width = (val * 100 / gameState.startingEnergy) + "%";
@@ -666,19 +667,19 @@
       if (gameState.perks["energetic_bliss"] && gameState.energy > (gameState.startingEnergy * 0.8)) {
         energyBarFill.classList.add("glowing");
         energyBarFill.classList.remove("energy-low");
-        energyBarFill.setAttribute("data-tooltip",
+        energyBar.setAttribute("data-tooltip",
           `Energy: ${formatNumber(gameState.energy)}/${formatNumber(gameState.startingEnergy)}<br>Energy drains based on each skill used.<br>Stacks multiplicatively.<br><br>Energetic Bliss is active!`
         );
       } else if (gameState.energy < gameState.startingEnergy * 0.1) {
         energyBarFill.classList.remove("glowing");
         energyBarFill.classList.add("energy-low");
-        energyBarFill.setAttribute("data-tooltip",
+        energyBar.setAttribute("data-tooltip",
           `Energy: ${formatNumber(gameState.energy)}/${formatNumber(gameState.startingEnergy)}<br>Energy drains based on each skill used.<br>Stacks multiplicatively.<br><br>Energy is critically low!`
         );
       } else {
         energyBarFill.classList.remove("glowing");
         energyBarFill.classList.remove("energy-low");
-        energyBarFill.setAttribute("data-tooltip",
+        energyBar.setAttribute("data-tooltip",
           `Energy: ${formatNumber(gameState.energy)}/${formatNumber(gameState.startingEnergy)}<br>Energy drains based on each skill used.<br>Stacks multiplicatively.`
         );
       }
@@ -691,20 +692,21 @@
     if (copiumText) {
       copiumText.textContent = val.toFixed(0);
     }
+    const copiumBar = document.getElementById("copiumBar");
     const copiumBarFill = document.getElementById("copiumBarFill");
     if (copiumBarFill) {
       copiumBarFill.style.width = (val / 90) + "%";
       // Add high-copium glow if copium is above 8000
       if (gameState.copium > 8000) {
         copiumBarFill.classList.add("copium-high");
-        copiumBarFill.setAttribute("data-tooltip",
+        copiumBar.setAttribute("data-tooltip",
           "Copium builds up from tasks with<br>" + copiumSkills.join(", ") +
           `.<br><br>If it exceeds 9000, your game will reset<br>with all${gameState.serenityInfinite["Resource Saver"] > 0 ? " but " + gameState.serenityInfinite["Resource Saver"]: ""} Resources and ${gameState.perks["knowledge_preserver"] ? "10% of" : "half"} your Knowledge lost!` +
           `<br>But you will permanently gain ${gameState.perks["copium_reactor"] ? gameState.copiumReactorEnergy : 2} starting energy.`
         );
       } else {
         copiumBarFill.classList.remove("copium-high");
-        copiumBarFill.setAttribute("data-tooltip",
+        copiumBar.setAttribute("data-tooltip",
           "Copium builds up from tasks with<br>" + copiumSkills.join(", ") +
           `.<br><br>If it exceeds 9000, your game will reset<br>with all${gameState.serenityInfinite["Resource Saver"] > 0 ? " but " + gameState.serenityInfinite["Resource Saver"]: ""} Resources and ${gameState.perks["knowledge_preserver"] ? "10% of" : "half"} your Knowledge lost!` +
           `<br>But you will permanently gain ${gameState.perks["copium_reactor"] ? gameState.copiumReactorEnergy : 2} starting energy.`
@@ -719,19 +721,20 @@
     if (delusionText) {
       delusionText.textContent = val.toFixed(0);
     }
+    const delusionBar = document.getElementById("delusionBar");
     const delusionBarFill = document.getElementById("delusionBarFill");
     if (delusionBarFill) {
       delusionBarFill.style.width = (val / (gameState.maxDelusion/100)) + "%";
       // Add high-delusion glow if delusion is above 8000
       if (gameState.delusion > 8000) {
         delusionBarFill.classList.add("delusion-high");
-        delusionBarFill.setAttribute("data-tooltip",
+        delusionBar.setAttribute("data-tooltip",
           "Delusion builds up from tasks with<br>" + delusionSkills.join(", ") +
           `.<br><br>If it exceeds ${gameState.maxDelusion}, your game will reset<br>with 20% of your Power lost!${gameState.serenityUnlockables["Delusion Enjoyer"] ? "<br><br>Multiplies knowledge gain by " + formatNumber(gameState.delusionEnjoyerMultiplier * 100) + "%"  : ""}`
         );
       } else {
         delusionBarFill.classList.remove("delusion-high");
-        delusionBarFill.setAttribute("data-tooltip",
+        delusionBar.setAttribute("data-tooltip",
           "Delusion builds up from tasks with<br>" + delusionSkills.join(", ") +
           `.<br><br>If it exceeds ${gameState.maxDelusion}, your game will reset<br>with 20% of your Power lost!${gameState.serenityUnlockables["Delusion Enjoyer"] ? "<br><br>Multiplies knowledge gain by " + formatNumber(gameState.delusionEnjoyerMultiplier * 100) + "%"  : ""}`
         );
@@ -1040,7 +1043,7 @@
     }
     // If "Repurpose Perks" is unlocked, reduce energy drain.
     if (gameState.serenityUnlockables["Repurpose Perks"]) {
-      baseDrain /= (1 + gameState.perksUnlocked / 10);
+      baseDrain /= Math.max(gameState.perksUnlocked / 10, 1);
     }
     return baseDrain;
   }
@@ -3765,7 +3768,7 @@
           }
           gameState.energyCoreMultiplier = 1;
           gameState.power += (zone.id - 3) * gameState.powerGainMultiplier;
-          showMessage(`<span style="color: rgb(222, 34, 191);">${task.name.replace(/^[^ ]+ /, "")} defeated! +${(zone.id - 3) * gameState.powerGainMultiplier} Power</span>`);
+          showMessage(`<span style="color: rgb(222, 34, 191);">${task.name.replace(/^[^ ]+ /, "")} defeated! +${formatNumber((zone.id - 3) * gameState.powerGainMultiplier)} Power</span>`);
           showPowerIfUnlocked();
 
           if (task.name === "Battle Agent Smith" && Object.keys(gameState.resourcesUsed).length == 0) {
