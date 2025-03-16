@@ -181,7 +181,7 @@
       div.className = "resource-item";
       div.dataset.resource = name;
       div.setAttribute("data-tooltip", 
-        formatStringForDisplay(name) + ":<br>" + (resourceActions[name]?.tooltip || "Tap to consume resource.")
+        formatStringForDisplay(name) + ":<br>" + (resourceActions[name]?.tooltip || "Not implemented yet.")
       );
       
       // Create the resource icon.
@@ -778,23 +778,25 @@
     }
   
     let required = Math.pow(skillXpScaling, skill.level - 1);
-    const visibleSkills = Object.keys(gameState.skills).filter(sName => gameState.skills[sName].visible && sName !== "cybernetics");
+    const filteredVisibleSkills = Object.keys(gameState.skills).filter(sName => gameState.skills[sName].visible && sName !== "cybernetics" && sName !== "totality" && sName !== "nihility");
   
     while (skill.xp >= required) {
       skill.xp -= required;
       skill.level++;
   
       if (gameState.perks.cyber_boost && skillName === "cybernetics") {
-        // Choose a random visible skill (excluding cybernetics)
-        const randomSkillName = visibleSkills[Math.floor(Math.random() * visibleSkills.length)];
-        const randomSkill = gameState.skills[randomSkillName];
-        addXP(
-          randomSkillName,
-          0,
-          "Cyber Boost: ",
-          false,
-          Math.pow(skillXpScaling, randomSkill.level - 1) - randomSkill.xp
-        );
+        // Filter visible skills to exclude "cybernetics", "totality", and "nihility"
+        if (filteredVisibleSkills.length > 0) {
+          const randomSkillName = filteredVisibleSkills[Math.floor(Math.random() * filteredVisibleSkills.length)];
+          const randomSkill = gameState.skills[randomSkillName];
+          addXP(
+            randomSkillName,
+            0,
+            "Cyber Boost: ",
+            false,
+            Math.pow(skillXpScaling, randomSkill.level - 1) - randomSkill.xp
+          );
+        }
       }
 
       if (gameState.perks.digital_dreams){
@@ -1984,6 +1986,10 @@
     if (!grid) return;
     grid.innerHTML = "";
   
+    if (gameState.skills["totality"].visible){
+      perkDescriptions["cyber_boost"] = "Each time Cybernetics levels up,<br>another random skill also levels up.<br>(does not affect Totality)";
+    }
+
     // 1) Build the zone order array once (or store it globally).
     const zoneOrder = getZonePerkOrder();
   
@@ -2284,7 +2290,11 @@
         break;
       case "Crystal Collector":
         gameState.randomCrystalLevels = 1 + level;
+        //if "totality is in visible skills"
         resourceActions["random_crystal"].tooltip = `Levels up a random skill by ${gameState.randomCrystalLevels} levels.`;
+        if (gameState.skills["totality"].visible){
+          resourceActions["random_crystal"].tooltip += "<br>(does not affect Totality)";
+        }
         break;
       case "Fortune's Favor":
         gameState.fortunesFavorValue = 7 + level;
@@ -3372,7 +3382,7 @@
     // Header with count and multiplier
     const header = document.createElement("div");
     header.innerHTML = `<h2>Achievements</h2>
-      <p>${unlockedCount} / ${totalAch} unlocked &nbsp;&nbsp; (Task Progress Mult: ${formatNumber(gameState.achievementsMultiplier)}x)</p>`;
+      <p>${unlockedCount} / ${totalAch} unlocked<br>(Task Progress Mult: ${formatNumber(gameState.achievementsMultiplier)}x)</p>`;
     content.appendChild(header);
     
     // Create grid container for achievements

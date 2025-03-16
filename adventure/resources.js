@@ -178,8 +178,10 @@ let resourceActions = {
     onConsume: (gameState, amt) => {
       // Object to track how many levels each skill was leveled up by
       let groupedSkills = {};
-      // Get all visible skills
-      const visibleSkills = Object.keys(gameState.skills).filter(sName => gameState.skills[sName].visible);
+      // Get all visible skills, excluding "totality" and "nihility"
+      const visibleSkills = Object.keys(gameState.skills).filter(sName => 
+        gameState.skills[sName].visible && sName !== "totality" && sName !== "nihility"
+      );
 
       for (let i = 0; i < amt; i++) {
         // Choose a random visible skill
