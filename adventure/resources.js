@@ -11,10 +11,10 @@ let perkDescriptions = {
     energetic_bliss:        "While energy is above 80%, task progress is doubled.",
     workaholic:             "All XP gains increased by 50%.",
     kung_fu_zen:            "All XP gains increased by 28%.<br>And decrease Charisma energy drain by 28%.",
-    copium_reactor:         "Triple starting Energy gained for each Copium reset.",
+    copium_reactor:         "Increase starting Energy gained for each Copium reset to +6.",
     gacha_machine:          "25% chance to produce double resources.",
     futuristic_wrench:      "Mechanics drains 3x less energy.",
-    luck_of_the_irish:      "7% chance to produce 7x resources.",
+    four_leaf_clover:       "7% chance to produce 7x resources.",
     simulation_engine:      `Improves automation to allow selecting individual tasks.<br>${isMobile ? "Long press a task to toggle automation." : "Right click a task to toggle automation."}`,
     rex:                    "25x increased charisma XP gain.",
     copious_alchemist:      "Reduce Copium gain by 60%.",
@@ -40,13 +40,15 @@ let perkDescriptions = {
     forge_fervor:           "Reduce Combat energy drain by 3x.",
     celestial_light:        "All XP gains increased by 2x.",
     neon_energy:            "Next time you prestige, start with +300 energy (first run only).",
-    omega_harmony:          "Omniscience is 50% faster.",
+    omega_stability:        "Omniscience is 50% faster.",
     expanse_echo:           "Make every game tick count as 10% more.",
-    digital_dreams:         "",
+    digital_dreams:         "When hacking levels up, 10% chance for tinkering to also level up.<br>When tinkering levels up, 10% chance for hacking to also level up.<br>(in theory can propagate infinitely)",
+    stellar_dreams:         "Changes lambda parameter for delusion gain from 0.5 to 0.3.<br>This increases delusion gain.",
+    spark_of_infinity:      "Knowledge also levels with and boosts Cybernetics.",
 
   };
 
-const toggleablePerks = ["completionist", "copious_alchemist", "master_of_ai", "mechanical_genius"];
+const toggleablePerks = ["completionist", "copious_alchemist", "master_of_ai", "crypto_wallet", "mechanical_genius", "stellar_dreams"];
 
 /****************************************
  * RESOURCE ACTIONS & RENDERING
@@ -174,7 +176,7 @@ let resourceActions = {
   },
   "random_crystal": {
     onConsume: (gameState, amt) => {
-      // Object to track how many times each skill was leveled up
+      // Object to track how many levels each skill was leveled up by
       let groupedSkills = {};
       // Get all visible skills
       const visibleSkills = Object.keys(gameState.skills).filter(sName => gameState.skills[sName].visible);
@@ -183,38 +185,36 @@ let resourceActions = {
         // Choose a random visible skill
         const randomSkillName = visibleSkills[Math.floor(Math.random() * visibleSkills.length)];
         const skill = gameState.skills[randomSkillName];
-
-        addXP(randomSkillName, 0, "", true, Math.pow(getSkillXpScaling(), skill.level - 1) - skill.xp);
-
-        // Group the level-up for this skill
-        groupedSkills[randomSkillName] = (groupedSkills[randomSkillName] || 0) + 1;
+        
+        // Determine how many levels to add for this use.
+        let levelsToAdd = gameState.randomCrystalLevels || 1;
+        
+        // For each level, force the level-up by adding enough XP.
+        for (let j = 0; j < levelsToAdd; j++) {
+          addXP(randomSkillName, 0, "", true, Math.pow(getSkillXpScaling(), skill.level - 1) - skill.xp);
+        }
+        
+        // Group the total level increase for this skill.
+        groupedSkills[randomSkillName] = (groupedSkills[randomSkillName] || 0) + levelsToAdd;
       }
 
       updateSkillMultipliers();
       updateSkillDisplay();
       updateTasksHoverInfo();
-
       saveGameProgress();
 
-      // Build a list of messages for the grouped skills
+      // Build a list of messages for the grouped skills.
       let messages = [];
       for (const skillName in groupedSkills) {
-        const count = groupedSkills[skillName];
+        const totalIncrease = groupedSkills[skillName];
         const skill = gameState.skills[skillName];
-        // If leveled up more than once, add the "+<count>" indicator
-        if (count > 1) {
-          messages.push(`${formatStringForDisplay(skillName)} +${count} (Lvl ${skill.level})`);
-        } else {
-          messages.push(`${formatStringForDisplay(skillName)} (Lvl ${skill.level})`);
-        }
+        messages.push(`${formatStringForDisplay(skillName)} +${totalIncrease} (Lvl ${skill.level})`);
       }
 
-      // Display a single aggregated message
       showMessage(`Used ${amt} Random Crystal${amt > 1 ? "s" : ""}. Leveled up:<br>${messages.join("<br>")}.`);
     },
     tooltip: "Levels up a random skill to next level."
   },
-
   "one_ring": {
     onConsume: (gameState, amt) => {
       gameState.skills["quantum"].progressBoost += 5 * amt;
@@ -650,25 +650,133 @@ let resourceActions = {
     },
     tooltip: "Boosts speed by 10% for Intellect and Cybernetics."
   },
+  "data_cluster": {
+    onConsume: (gameState, amt) => {
+      // Object to track aggregated effects
+      let effects = {
+        hackingLevel: 0,
+        perceptionLevel: 0,
+        tinkeringLevel: 0,
+        hackingDrain: 0,
+        perceptionDrain: 0,
+        tinkeringDrain: 0
+      };
+
+      for (let i = 0; i < amt; i++) {
+        // Randomly select one of 6 effects (0 to 5)
+        const rand = Math.floor(Math.random() * 6);
+        switch (rand) {
+          case 0:
+            gameState.skills["hacking"].level++;
+            effects.hackingLevel++;
+            break;
+          case 1:
+            gameState.skills["perception"].level++;
+            effects.perceptionLevel++;
+            break;
+          case 2:
+            gameState.skills["tinkering"].level++;
+            effects.tinkeringLevel++;
+            break;
+          case 3:
+            gameState.skills["hacking"].drainBoost += 0.15;
+            effects.hackingDrain++;
+            break;
+          case 4:
+            gameState.skills["perception"].drainBoost += 0.15;
+            effects.perceptionDrain++;
+            break;
+          case 5:
+            gameState.skills["tinkering"].drainBoost += 0.15;
+            effects.tinkeringDrain++;
+            break;
+        }
+      }
+
+      updateSkillMultipliers();
+      updateSkillDisplay();
+      updateTasksHoverInfo();
+
+      // Build an aggregated message summarizing the effects
+      let messages = [];
+      if (effects.hackingLevel > 0) {
+        messages.push(`Hacking leveled up by ${effects.hackingLevel}`);
+      }
+      if (effects.perceptionLevel > 0) {
+        messages.push(`Perception leveled up by ${effects.perceptionLevel}`);
+      }
+      if (effects.tinkeringLevel > 0) {
+        messages.push(`Tinkering leveled up by ${effects.tinkeringLevel}`);
+      }
+      if (effects.hackingDrain > 0) {
+        messages.push(`Hacking energy drain reduced by ${15 * effects.hackingDrain}%`);
+      }
+      if (effects.perceptionDrain > 0) {
+        messages.push(`Perception energy drain reduced by ${15 * effects.perceptionDrain}%`);
+      }
+      if (effects.tinkeringDrain > 0) {
+        messages.push(`Tinkering energy drain reduced by ${15 * effects.tinkeringDrain}%`);
+      }
+
+      let message = `Used ${amt} Data Cluster${amt > 1 ? "s" : ""}.`;
+      if (messages.length > 0) {
+        message += `<br>Effects:<br>${messages.join("<br>")}`;
+      }
+      showMessage(message);
+    },
+    tooltip: "Randomly either increases the level of Hacking, Perception, or Tinkering by 1,<br>or reduces the energy drain of Hacking, Perception, or Tinkering by 15% per use."
+  },
   "cybernetic_implant": {
     onConsume: (gameState, amt) => {
       // Increase starting energy by (current Cybernetics level / 8192) per implant.
       const energyIncrease = (gameState.skills["cybernetics"].level / 8192) * amt;
       gameState.startingEnergy += energyIncrease;
       
-      updateSkillMultipliers();
-      updateSkillDisplay();
-      updateTasksHoverInfo();
+      updateEnergyDisplay();
       
       showMessage(`Used ${amt} Cybernetic Implant${amt > 1 ? "s" : ""}.<br>Increased Starting Energy by ${formatNumber(energyIncrease)}.`);
     },
     tooltip: "Increases Starting Energy by (Cybernetics level / 8192) per implant."
   },
-
-
+  "cosmic_scroll": {
+    onConsume: (gameState, amt) => {
+      const knowledgeIncrease = gameState.highestCompletedZone ** 2 * amt;
+      gameState.knowledge += knowledgeIncrease;
+      updateTasksHoverInfo();
+      showKnowledgeIfUnlocked();
+      showMessage(`Used ${amt} Cosmic Scroll${amt > 1 ? "s" : ""}.<br>Increased Knowledge by ${knowledgeIncrease}.`);
+    },
+    tooltip: "Increases Knowledge by (Highest Fully Completed Zone ^ 2) per Cosmic Scroll used."
+  },
+  "kaiju_scale": {
+    onConsume: (gameState, amt) => {
+      if (gameState.skills["totality"]) {
+        gameState.skills["totality"].drainBoost += 0.15 * amt;
+        updateSkillMultipliers();
+        updateSkillDisplay();
+        updateTasksHoverInfo();
+        showMessage(`Used ${amt} Kaiju Scale${amt > 1 ? "s" : ""}.<br>Reduced Totality energy drain by ${15 * amt}%.`);
+      } else {
+        showMessage("Totality skill not unlocked.");
+      }
+    },
+    tooltip: "Reduces Totality energy drain by 15%."
+  },
 };
 
 const EXCLUDED_AUTO_RESOURCES = new Set(["cybernetic_armor", "infinity_gauntlet", "stardust", "cosmic_shard","atomic_particle","energy_core"]);
+
+const achievements = [
+  { name: "Baby Steps", description: "Full clear Zone 3.", img: "images/achievements/baby_steps.jpg" },
+  { name: "Toggler", description: "Toggle a perk to disable it.", img: "images/achievements/toggler.jpg" },
+  { name: "Take a Breather", description: "Pause a boss fight.", img: "images/achievements/take_a_breather.jpg" },
+  { name: "Mano a Mano", description: "Defeat Agent Smith without using any resources.", img: "images/achievements/mano_a_mano.jpg" },
+  { name: "First Prestige", description: "Complete your first Prestige.", img: "images/achievements/first_prestige.jpg" },
+  { name: "Empty Pockets", description: "Reach Zone 15 without any resources (used or held).", img: "images/achievements/empty_pockets.jpg" },
+];
+
+const achievementsMap = new Map();
+achievements.forEach(ach => achievementsMap.set(ach.name, ach));
 
 const SERENITY_UPGRADES = {
   unlockables: {
@@ -710,7 +818,29 @@ const SERENITY_UPGRADES = {
       }
     },
 
-    "Transcend Chaos (not available yet)": { //25
+    "Transcend Chaos": { 
+      "Resource Guru": {
+        cost: 1000,
+        description: "Add auto consume option that leaves 1 of every resource<br>and on Prestige, start with growth miracle perk unlocked."
+      },
+      "Repurpose Perks": {
+        cost: 25000,
+        description: "Divide all energy drain by 1 + (# perks unlocked / 10)."
+      },
+      "Experience Junkie": {
+        cost: 50000,
+        description: "Triple effect of Workaholic and Celestial Light perks."
+      },
+      "Satoshi's Wallet": {
+        cost: 250000,
+        description: "Improves Crypto Wallet:<br>" +
+                    "• Energy: 10% chance to gain 50 Energy (<del>was 5% chance to gain 25 Energy</del>)<br>" +
+                    "• Knowledge: 5% chance to gain 50 Knowledge (<del>was 2.5% chance to gain 25 Knowledge</del>)<br>" +
+                    "• Power: 5% chance to gain 50 Power (<del>was 0.5% chance to gain 25 Power</del>)<br>" +
+                    "• Serenity: 1% chance to stash 1% of base potential Serenity<br>" +
+                    "• Data Bit: 1% chance to find 1 Data Bit"
+      }
+
     },
 
     "Attain Equilibrium (not available yet)": { //30
@@ -724,7 +854,7 @@ const SERENITY_UPGRADES = {
     "Discover Serenity": {
       "Wisdom Seeker": { 
         initialCost: 2, 
-        scaling: 1.21,
+        scaling: 1.25,
         description: "Increase all XP gains by 50% (additively)."
       },
       "Entropy Shield": { 
@@ -734,7 +864,7 @@ const SERENITY_UPGRADES = {
       },
       "Resource Saver": { 
         initialCost: 0.1,
-        scaling: 1.26,
+        scaling: 1.3,
         description: "On Copium reset, keep one random random resource per level."
       },
       "Power Doubler": {
@@ -757,7 +887,7 @@ const SERENITY_UPGRADES = {
       },
       "Game Speed": {
         initialCost: 5,
-        scaling: 1.5,
+        scaling: 1.3,
         description: "Reduce game tick duration by 1% (multiplicatively)."
       },
       "Zone Pusher": {
@@ -767,7 +897,28 @@ const SERENITY_UPGRADES = {
       }
     },
 
-    "Transcend Chaos (not available yet)": {
+    "Transcend Chaos": {
+      "Delusion Immune": {
+        initialCost: 50,
+        scaling: 1.15,
+        description: "Increase max Delusion by 1000."
+      },
+      "Greater Reactor": {
+        initialCost: 200,
+        scaling: 1.8,
+        description: "Increase copium reactor starting energy gain by +1."
+      },
+      "Crystal Collector": {
+        initialCost: 300,
+        scaling: 3,
+        description: "Random Crystal gives +1 more level."
+      },
+      "Fortune's Favor": {
+        initialCost: 777,
+        scaling: 7,
+        description: "Improve four leaf clover perk by +1% chance and +1 resource."
+      }
+
     },
 
     "Attain Equilibrium (not available yet)": {

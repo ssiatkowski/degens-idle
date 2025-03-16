@@ -116,7 +116,7 @@ var zones = [
       { id: 84, name: "Cybernetic Armor", type: "Training", maxReps: 1, count: 0, baseTime: 1e12, drainMult: 1.5, description: "Carefully craft a cybernetic armor.", skills: ["tinkering", "cybernetics"], resources: ["cybernetic_armor"] },
       { id: 85, name: "High-Rise Debate Persuade the Crowd", type: "Training", maxReps: 10, count: 0, baseTime: 9e9, description: "Use your wit to sway opinions.", skills: ["negotiation", "charisma"] },
       { id: 86, name: "Rex: Adopt a Dog", type: "Training", maxReps: 1, count: 0, baseTime: 3e12, description: "Adopt a loyal dog.", skills: ["perception", "charisma"], perk: "rex" },
-      { id: 87, name: "Luck of the Irish: Find the Clover", type: "Training", maxReps: 1, count: 0, baseTime: 3.9e10, drainMult: 2, description: "Locate a lucky clover.", skills: ["perception"], perk: "luck_of_the_irish" }
+      { id: 87, name: "Four Leaf Clover: Find the Clover", type: "Training", maxReps: 1, count: 0, baseTime: 3.9e10, drainMult: 2, description: "Locate a lucky clover.", skills: ["perception"], perk: "four_leaf_clover" }
     ]
   },
   {
@@ -183,7 +183,7 @@ var zones = [
     name: "Shattered Expanse",
     img: "images/zones/zone13.jpg",
     tasks: [
-      { id: 131, name: "Travel: Journey to Ascendant Metropolis", type: "Travel", maxReps: 1, count: 0, baseTime: 4e8, description: "Approach a dazzling metropolis of the future.", skills: ["travel"] },
+      { id: 131, name: "Travel: Journey to Exalting Metropolis", type: "Travel", maxReps: 1, count: 0, baseTime: 4e8, description: "Approach a dazzling metropolis of the future.", skills: ["travel"] },
       { id: 132, name: "Beg for Ascension", type: "Training", maxReps: 3, count: 0, baseTime: 1e19, description: "Convince ascended beings to let you access their metropolis.", skills: ["intellect", "negotiation"], mandatory: true },
       { id: 133, name: "Sandstorm: Guerrilla Warfare Sprint", type: "Training", maxReps: 4, count: 0, baseTime: 2.2e16, description: "Sprint through a raging sandstorm.", skills: ["endurance", "combat"], perk: "sandstorm" },
       { id: 134, name: "Outpost Infiltration Silent Breach", type: "Training", maxReps: 5, count: 0, baseTime: 1e16, description: "Breach an enemy outpost undetected.", skills: ["hacking", "endurance"] },
@@ -194,7 +194,7 @@ var zones = [
   },
   {
     id: 14,
-    name: "Ascendant Metropolis",
+    name: "Exalting Metropolis",
     img: "images/zones/zone14.jpg",
     tasks: [
       { id: 141, name: "Travel: Ascend to Nexus of Infinity", type: "Travel", maxReps: 1, count: 0, baseTime: 1.5e9, description: "Conquer the Nexus of Infinity.", skills: ["travel"] },
@@ -272,7 +272,7 @@ var zones = [
     tasks: [
       { id: 191, name: "Travel: Ascend to Cosmic Forge", type: "Travel", maxReps: 1, count: 0, baseTime: 1e14, description: "Leave the realm of circuits for the fires of creation.", skills: ["travel"] },
       { id: 192, name: "Interface with Machine Spirits", type: "Training", maxReps: 5, count: 0, baseTime: 1e24, description: "Merge your mind with digital deities.", skills: ["cybernetics", "intellect"], mandatory: true },
-      { id: 193, name: "Optimize Circuitry Harmony", type: "Training", maxReps: 2, count: 0, baseTime: 1e18, drainMult: 15, description: "Refine the balance of celestial circuits with precision.", skills: ["tinkering"], mandatory: true },
+      { id: 193, name: "Optimize Circuitry Harmony", type: "Training", maxReps: 2, count: 0, baseTime: 7.5e17, drainMult: 20, description: "Refine the balance of celestial circuits with precision.", skills: ["tinkering"], mandatory: true },
       { id: 194, name: "Extract Nano Components", type: "Training", maxReps: 4, count: 0, baseTime: 1e22, description: "Scavenge vital microchips from abandoned systems.", skills: ["mechanics", "hacking"], resources: ["nano_component"] },
       { id: 195, name: "Charm the Data Streams", type: "Training", maxReps: 7, count: 0, baseTime: 5e24, description: "Use your intellect and charisma to infuse digital data with a harmonious energy.", skills: ["intellect", "charisma"] },
       { id: 196, name: "Cyber Boost: Digital Resonance", type: "Training", maxReps: 5, count: 0, baseTime: 7e14, drainMult: 2, description: "Amplify the power of cybernetic energy.", skills: ["cybernetics"], perk: "cyber_boost" },
@@ -302,8 +302,8 @@ var zones = [
     tasks: [
       { id: 211, name: "Travel: Exit to Neon Hypergrid", type: "Travel", maxReps: 1, count: 0, baseTime: 3e16, drainMult: 16, description: "Leave divine order behind and step into radiant energy.", skills: ["travel"] },
       { id: 212, name: "Proclaim Divine Edicts", type: "Training", maxReps: 7, count: 0, baseTime: 5e18, drainMult: 15, xpMult: 1e5, description: "Establish your authority over celestial forces.", skills: ["charisma"], mandatory: true },
-      { id: 213, name: "Unify Stellar Legions", type: "Training", maxReps: 10, count: 0, baseTime: 1e24, speedMult: 1e-3, xpMult: 0.01, description: "Rally celestial forces into one harmonious chorus.", skills: ["charisma", "negotiation"], mandatory: true },
-      { id: 214, name: "Advanced Potion Making", type: "Training", maxReps: 20, count: 0, baseTime: 1e25, speedMult: 1e-19, drainMult: 100, xpMult: 2, description: "Create potions to enhance your combat prowess.", skills: ["alchemy", "tinkering", "intellect"], resources: ["energy_elixir","steroids","augment_fuel"]},
+      { id: 213, name: "Unify Stellar Legions", type: "Training", maxReps: 10, count: 0, baseTime: 1e24, speedMult: 9e-4, xpMult: 0.01, description: "Rally celestial forces into one harmonious chorus.", skills: ["charisma", "negotiation"], mandatory: true },
+      { id: 214, name: "Advanced Potion Making", type: "Training", maxReps: 10, count: 0, baseTime: 1e25, speedMult: 1e-19, drainMult: 100, xpMult: 2, description: "Create potions to enhance your combat prowess.", skills: ["alchemy", "tinkering", "intellect"], resources: ["energy_elixir","steroids","augment_fuel"]},
       { id: 215, name: "Barter for Star Fragments", type: "Training", maxReps: 6, count: 0, baseTime: 1e13, drainMult: 10, xpMult: 1e9, description: "Gather shimmering remnants of ancient stars.", skills: ["negotiation"], resources: ["star_fragment"] },
       { id: 216, name: "Celestial Light: Invoke Glory", type: "Training", maxReps: 3, count: 0, baseTime: 5e26, speedMult: 1e-6, drainMult: 100, description: "Channel celestial light to inspire greatness.", skills: ["charisma", "intellect"], perk: "celestial_light" },
       { id: 217, name: "Battle Galactus", type: "Training", maxReps: 1, count: 0, baseTime: 5e19, speedMult: 0.4, drainMult: 250, description: "Engage the devourer of worlds in an epic showdown.", skills: ["combat"], boss_image: "images/bosses/galactus.jpg", resources: ["hunger_shard"], sound: galactusSound }
@@ -317,10 +317,10 @@ var zones = [
       { id: 221, name: "Travel: Shift to Omega Expanse", type: "Travel", maxReps: 1, count: 0, baseTime: 4e16, drainMult: 32, description: "Escape the dazzling glow and step into the ultimate frontier.", skills: ["travel"] },
       { id: 222, name: "Sync with Digital Frequencies", type: "Training", maxReps: 2, count: 0, baseTime: 1e25, speedMult: 4e-6, drainMult: 500, description: "Tune into the electric pulse of the grid.", skills: ["intellect", "hacking"], mandatory: true },
       { id: 223, name: "Illuminate Virtual Vistas", type: "Training", maxReps: 20, count: 0, baseTime: 5e16, xpMult: 5e8, drainMult: 10, description: "Unleash radiant creativity through digital artistry.", skills: ["cybernetics"], mandatory: true },
-      { id: 224, name: "Extract Pixel Data", type: "Training", maxReps: 2, count: 0, baseTime: 1.3e23, speedMult: 2.5e-6,drainMult: 8192, description: "Gather fragmented bits of digital information.", skills: ["hacking", "perception"], resources: ["data_bit"] },
+      { id: 224, name: "Extract Pixel Data", type: "Training", maxReps: 2, count: 0, baseTime: 1.5e23, speedMult: 3e-6,drainMult: 8192, description: "Gather fragmented bits of digital information.", skills: ["hacking", "perception"], resources: ["data_bit"] },
       { id: 225, name: "Overclock Digital Circuits", type: "Training", maxReps: 5, count: 0, baseTime: 1e22, speedMult: 1e-10, drainMult: 1000, xpMult: 0.01, description: "Boost the power of virtual infrastructures.", skills: ["mechanics", "endurance"] },
       { id: 226, name: "Neon Energy: Electric Vigor", type: "Training", maxReps: 4, count: 0, baseTime: 1e22, drainMult: 100, description: "Channel the raw force of electric vibrance.", skills: ["tinkering"], perk: "neon_energy" },
-      { id: 227, name: "Battle Doomsday", type: "Training", maxReps: 1, count: 0, baseTime: 2e20, speedMult: 0.3, drainMult: 400, description: "Face the unstoppable force of destruction.", skills: ["combat"], boss_image: "images/bosses/doomsday.jpg", resources: ["energy_core"], sound: doomsdaySound }
+      { id: 227, name: "Battle Doomsday", type: "Training", maxReps: 1, count: 0, baseTime: 3e20, speedMult: 0.4, drainMult: 400, description: "Face the unstoppable force of destruction.", skills: ["combat"], boss_image: "images/bosses/doomsday.jpg", resources: ["energy_core"], sound: doomsdaySound }
     ]
   },
   {
@@ -332,9 +332,9 @@ var zones = [
       { id: 232, name: "Decode Alien Frequencies", type: "Training", maxReps: 7, count: 0, baseTime: 2.5e18, xpMult: 1e9, drainMult: 1000, description: "Interpret mysterious signals from beyond.", skills: ["intellect"], mandatory: true },
       { id: 233, name: "Harness Expanse Energy", type: "Training", maxReps: 1, count: 0, baseTime: 2e25, speedMult: 3e-9, drainMult: 16000, xpMult: 1e-5, description: "Channel raw cosmic power into your arsenal.", skills: ["endurance", "intellect"], mandatory: true },
       { id: 234, name: "Scavenge Cyber Relics", type: "Training", maxReps: 5, count: 0, baseTime: 1e23, speedMult: 2e-8, drainMult: 75, description: "Recover valuable remnants from forgotten networks.", skills: ["mechanics", "hacking"], resources: ["cyber_relic"] },
-      { id: 235, name: "Omega Stability: Harmonize Chaos", type: "Training", maxReps: 6, count: 0, baseTime: 1.4e27, speedMult: 3e-6, drainMult: 1000, description: "Ensure harmony amid chaotic energies.", skills: ["tinkering", "quantum"], perk: "omega_stability" },
-      { id: 236, name: "Expanse Echo: Resonate with Cosmos", type: "Training", maxReps: 16, count: 0, baseTime: 3e17, xpMult: 1e8, drainMult: 1500, description: "Feel the heartbeat of the universe.", skills: ["perception"], perk: "expanse_echo" },
-      { id: 237, name: "Battle T-800", type: "Training", maxReps: 1, count: 0, baseTime: 5e20, speedMult: 0.2, drainMult: 600, description: "Engage the relentless cyborg in a test of survival.", skills: ["combat"], boss_image: "images/bosses/t800.jpg", sound: t800Sound, resources: ["cybernetic_implant"] }
+      { id: 235, name: "Omega Stability: Harmonize Chaos", type: "Training", maxReps: 6, count: 0, baseTime: 1.6e27, speedMult: 2e-6, drainMult: 1500, description: "Ensure harmony amid chaotic energies.", skills: ["tinkering", "quantum"], perk: "omega_stability" },
+      { id: 236, name: "Expanse Echo: Resonate with Cosmos", type: "Training", maxReps: 16, count: 0, baseTime: 3e17, xpMult: 1.5e8, drainMult: 1500, description: "Feel the heartbeat of the universe.", skills: ["perception"], perk: "expanse_echo" },
+      { id: 237, name: "Battle T-800", type: "Training", maxReps: 1, count: 0, baseTime: 5e20, speedMult: 0.3, drainMult: 600, description: "Engage the relentless cyborg in a test of survival.", skills: ["combat"], boss_image: "images/bosses/t800.jpg", sound: t800Sound, resources: ["cybernetic_implant"] }
     ]
   },
   {
@@ -343,42 +343,43 @@ var zones = [
     img: "images/zones/zone24.jpg",
     tasks: [
       { id: 241, name: "Travel: Depart to Infinite Horizon", type: "Travel", maxReps: 1, count: 0, baseTime: 4e17, speedMult: 0.5, drainMult: 128, description: "Exit the digital cloud and step toward endless possibility.", skills: ["travel"] },
-      { id: 242, name: "Decrypt Virtual Codes", type: "Training", maxReps: 10, count: 0, baseTime: 1e18, xpMult: 1e9, drainMult: 1024, description: "Unlock hidden messages in streams of data.", skills: ["hacking"], mandatory: true },
-      // { id: 243, name: "Sync with Pixel Patterns", type: "Training", maxReps: 10, count: 0, baseTime: 1.2e28, description: "Merge your vision with digital artistry.", skills: ["perception"], mandatory: true },
-      // { id: 244, name: "Compile Data Clusters", type: "Training", maxReps: 7, count: 0, baseTime: 1.3e28, description: "Gather and organize fragmented digital info.", skills: ["tinkering", "hacking"], resources: ["data_cluster"] },
-      // { id: 245, name: "Streamline Virtual Networks", type: "Training", maxReps: 7, count: 0, baseTime: 1.4e28, description: "Enhance connectivity within the digital realm.", skills: ["cybernetics", "intellect"] },
-      { id: 246, name: "Digital Dreams: Evoke Inspiration", type: "Training", maxReps: 7, count: 0, baseTime: 2e19, xpMult: 1e8, drainMult: 2500, description: "Let visions of code inspire new realities.", skills: ["charisma"], perk: "digital_dreams" },
-      { id: 247, name: "Battle HAL 9000", type: "Training", maxReps: 1, count: 0, baseTime: 7e20, speedMult: 0.15, drainMult: 1500, description: "Challenge the legendary AI in a clash of wits.", skills: ["combat"], boss_image: "images/bosses/hal9000.jpg", sound: hal9000Sound, resources: ["system_core"] }
+      { id: 242, name: "Decrypt Virtual Codes", type: "Training", maxReps: 8, count: 0, baseTime: 1e17, xpMult: 2e9, drainMult: 512, description: "Unlock hidden messages in streams of data.", skills: ["hacking"], mandatory: true },
+      { id: 243, name: "Sync with Pixel Patterns", type: "Training", maxReps: 3, count: 0, baseTime: 1e18, xpMult: 5e8, drainMult: 1024,description: "Merge your vision with digital artistry.", skills: ["perception"], mandatory: true },
+      { id: 244, name: "Compile Data Clusters", type: "Training", maxReps: 7, count: 0, baseTime: 1e25, speedMult: 1e-7, drainMult: 256, description: "Gather and organize fragmented digital info.", skills: ["tinkering", "hacking"], resources: ["data_cluster"] },
+      { id: 245, name: "Streamline Virtual Networks", type: "Training", maxReps: 4, count: 0, baseTime: 2e26, speedMult: 2e-7, drainMult: 32, description: "Enhance connectivity within the digital realm.", skills: ["cybernetics", "intellect"] },
+      { id: 246, name: "Digital Dreams: Evoke Inspiration", type: "Training", maxReps: 1, count: 0, baseTime: 2e19, xpMult: 1e8, drainMult: 2500, description: "Let visions of code inspire new realities.", skills: ["charisma"], perk: "digital_dreams" },
+      { id: 247, name: "Battle HAL 9000", type: "Training", maxReps: 1, count: 0, baseTime: 7e20, speedMult: 0.3, drainMult: 1500, description: "Challenge the legendary AI in a clash of wits.", skills: ["combat"], boss_image: "images/bosses/hal9000.jpg", sound: hal9000Sound, resources: ["system_core"] }
     ]
   },
-  // {
-  //   id: 25,
-  //   name: "Infinite Horizon",
-  //   img: "images/zones/zone25.jpg",
-  //   tasks: [
-  //     { id: 251, name: "Travel: Breakthrough to Ethereal Matrix", type: "Travel", maxReps: 1, count: 0, baseTime: 1.0e29, description: "Shatter your limits and cross into the unknown.", skills: ["travel"] },
-  //     { id: 252, name: "Transcend Finite Limits", type: "Training", maxReps: 10, count: 0, baseTime: 1.1e29, description: "Push beyond the boundaries of the known universe.", skills: ["intellect", "endurance"], mandatory: true },
-  //     { id: 253, name: "Embody Cosmic Potential", type: "Training", maxReps: 10, count: 0, baseTime: 1.2e29, description: "Channel the energy of infinity into your being.", skills: ["alchemy", "charisma"], mandatory: true },
-  //     { id: 254, name: "Harvest Celestial Wisdom", type: "Training", maxReps: 7, count: 0, baseTime: 1.3e29, description: "Collect ancient insights from the cosmos.", skills: ["intellect", "perception"], resources: ["cosmic_scroll"] },
-  //     { id: 255, name: "Drift Through Stellar Dreams", type: "Training", maxReps: 7, count: 0, baseTime: 1.4e29, description: "Float among the endless expanse of space.", skills: ["tinkering", "charisma"] },
-  //     { id: 256, name: "Ignite the Spark of Infinity", type: "Training", maxReps: 7, count: 0, baseTime: 1.5e29, description: "Let the boundless energy of the universe fuel you.", skills: ["intellect", "totality"], perk: "limitless_drive" },
-  //     { id: 257, name: "Battle Godzilla", type: "Training", maxReps: 1, count: 0, baseTime: 1.6e29, description: "Engage the king of monsters in a titanic struggle.", skills: ["combat"], boss_image: "images/bosses/godzilla.jpg", sound: godzillaSound, resources: ["kaiju_scale"] }
-  //   ]
-  // },
-  // {
-  //   id: 26,
-  //   name: "Ethereal Matrix",
-  //   img: "images/zones/zone26.jpg",
-  //   tasks: [
-  //     { id: 261, name: "Travel: Leap to Temporal Paradox", type: "Travel", maxReps: 1, count: 0, baseTime: 1.0e30, description: "Exit the digital realm and jump into time’s mysterious currents.", skills: ["travel"] },
-  //     { id: 262, name: "Merge with the Digital Spirit", type: "Training", maxReps: 10, count: 0, baseTime: 1.1e30, description: "Harmonize with the underlying code of existence.", skills: ["hacking", "intellect"], mandatory: true },
-  //     { id: 263, name: "Decode Ethereal Enigmas", type: "Training", maxReps: 10, count: 0, baseTime: 1.2e30, description: "Solve the riddles of a shifting digital realm.", skills: ["intellect", "perception"], mandatory: true },
-  //     { id: 264, name: "Extract Dream Fragments", type: "Training", maxReps: 7, count: 0, baseTime: 1.3e30, description: "Gather rare remnants of lucid dreams.", skills: ["alchemy", "intellect"], resources: ["dream_fragment"] },
-  //     { id: 265, name: "Synthesize Virtual Realities", type: "Training", maxReps: 7, count: 0, baseTime: 1.4e30, description: "Blend imagination with binary data.", skills: ["hacking"] },
-  //     { id: 266, name: "Invoke Matrix Miracles", type: "Training", maxReps: 7, count: 0, baseTime: 1.5e30, description: "Manifest unexpected wonders from the code.", skills: ["charisma", "intellect"], perk: "spectral_glow" },
-  //     { id: 267, name: "Battle Googol Smith", type: "Training", maxReps: 1, count: 0, baseTime: 1.6e30, description: "Confront the ancient horror from beyond reality.", skills: ["combat"], boss_image: "images/bosses/googol_smith.jpg", sound: googolSmithSound, resources: ["eldritch_tentacle"] }
-  //   ]
-  // },
+  {
+    id: 25,
+    name: "Infinite Horizon",
+    img: "images/zones/zone25.jpg",
+    tasks: [
+      { id: 251, name: "Travel: Breakthrough to Ethereal Matrix", type: "Travel", maxReps: 1, count: 0, baseTime: 1e18, speedMult: 0.25, drainMult: 256, description: "Shatter your limits and cross into the unknown.", skills: ["travel"] },
+      { id: 252, name: "Break Finite Limits", type: "Training", maxReps: 14, count: 0, baseTime: 1e25, speedMult: 1e-5, drainMult: 100, xpMult: 1e-3, description: "Push beyond the boundaries of the known universe.", skills: ["aiMastery", "endurance"], mandatory: true },
+      { id: 253, name: "Embody Cosmic Potential", type: "Training", maxReps: 1, count: 0, baseTime: 1e28, speedMult: 1e-7, drainMult: 150, description: "Channel the energy of infinity into your being.", skills: ["alchemy", "charisma"], mandatory: true },
+      { id: 254, name: "Transcend Chaos", type: "Prestige", maxReps: 1, count: 0, baseTime: 1e9, speedMult: 0.3, xpMult: 2, description: "Embark on the ultimate rebirth by transcending chaos - a ritual that reshapes your destiny.", skills: ["omniscience"], mandatory: true },
+      { id: 255, name: "Harvest Cosmic Scrolls", type: "Training", maxReps: 2, count: 0, baseTime: 1e28, speedMult: 1e-7, drainMult: 7500, description: "Collect ancient insights from the cosmos.", skills: ["intellect", "perception"], resources: ["cosmic_scroll"] },
+      { id: 256, name: "Stellar Dreams: Drift Through", type: "Training", maxReps: 7, count: 0, baseTime: 1e27, speedMult: 3e-8, drainMult: 2000, description: "Float among the endless expanse of space.", skills: ["tinkering", "charisma"], perk: "stellar_dreams" },
+      { id: 257, name: "Spark of Infinity: Cyber Enhancement", type: "Training", maxReps: 1, count: 0, baseTime: 5e5, xpMult: 1e7, description: "Let the boundless energy of the universe fuel your knowledge of cybernetics.", skills: ["totality"], perk: "spark_of_infinity" },
+      { id: 258, name: "Battle Godzilla", type: "Training", maxReps: 1, count: 0, baseTime: 1e21, speedMult: 0.2, drainMult: 2500, description: "Engage the king of monsters in a titanic struggle.", skills: ["combat"], boss_image: "images/bosses/godzilla.jpg", sound: godzillaSound, resources: ["kaiju_scale"] }
+    ]
+  },
+  {
+    id: 26,
+    name: "Ethereal Matrix",
+    img: "images/zones/zone26.jpg",
+    tasks: [
+      { id: 261, name: "Travel: Leap to Temporal Paradox", type: "Travel", maxReps: 1, count: 0, baseTime: 5e18, speedMult: 0.1, drainMult: 512, description: "Exit the digital realm and jump into time’s mysterious currents.", skills: ["travel"] },
+      // { id: 262, name: "Merge with the Digital Spirit", type: "Training", maxReps: 10, count: 0, baseTime: 1.1e30, description: "Harmonize with the underlying code of existence.", skills: ["hacking", "intellect"], mandatory: true },
+      // { id: 263, name: "Decode Ethereal Enigmas", type: "Training", maxReps: 10, count: 0, baseTime: 1.2e30, description: "Solve the riddles of a shifting digital realm.", skills: ["intellect", "perception"], mandatory: true },
+      // { id: 264, name: "Extract Dream Fragments", type: "Training", maxReps: 7, count: 0, baseTime: 1.3e30, description: "Gather rare remnants of lucid dreams.", skills: ["alchemy", "intellect"], resources: ["dream_fragment"] },
+      // { id: 265, name: "Synthesize Virtual Realities", type: "Training", maxReps: 7, count: 0, baseTime: 1.4e30, description: "Blend imagination with binary data.", skills: ["hacking"] },
+      // { id: 266, name: "Invoke Matrix Miracles", type: "Training", maxReps: 7, count: 0, baseTime: 1.5e30, description: "Manifest unexpected wonders from the code.", skills: ["charisma", "intellect"], perk: "spectral_glow" },
+      { id: 267, name: "Battle Googol Smith", type: "Training", maxReps: 1, count: 0, baseTime: 1e23, speedMult: 0.2, drainMult: 5000, description: "Confront the ancient horror from beyond reality.", skills: ["combat"], boss_image: "images/bosses/googol_smith.jpg", sound: googolSmithSound, resources: ["googol"] }
+    ]
+  },
   // {
   //   id: 27,
   //   name: "Temporal Paradox",

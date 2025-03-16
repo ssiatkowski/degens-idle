@@ -1,5 +1,3 @@
-CURRENT_GAME_VERSION = "v0.2";
-
 (function() {
   /****************************************
    * DEFINITIONS: Skills affecting knowledge, copium, delusion
@@ -29,7 +27,10 @@ CURRENT_GAME_VERSION = "v0.2";
       serenityUnlocked: false,
       prestigeAvailable: false,
       secondSectionUnlocked: false,
-      // Note: Default boost values are now 1.
+      thirdSectionUnlocked: false,
+      
+      unlockedAchievements: {},
+      achievementsMultiplier: 1,
       skills: {
         endurance:   { level: 1, xp: 0, visible: true,  energyDrain: 2,   progressBoost: 1, drainBoost: 1, xpGainFactor: 1 },
         tinkering:   { level: 1, xp: 0, visible: true,  energyDrain: 2.5, progressBoost: 1, drainBoost: 1, xpGainFactor: 1 },
@@ -46,10 +47,11 @@ CURRENT_GAME_VERSION = "v0.2";
         aiMastery:   { level: 1, xp: 0, visible: false, energyDrain: 15,  progressBoost: 1, drainBoost: 1, xpGainFactor: 0.001 },
         quantum:     { level: 1, xp: 0, visible: false, energyDrain: 25,  progressBoost: 1, drainBoost: 1, xpGainFactor: 0.0001 },
         omniscience: { level: 1, xp: 0, visible: false, energyDrain: 100, progressBoost: 1, drainBoost: 1, xpGainFactor: 1 },
-        //totality:    { level: 1, xp: 0, visible: false, energyDrain: 1000,  progressBoost: 1, drainBoost: 1, xpGainFactor: 1e-10 },
+        totality:    { level: 1, xp: 0, visible: false, energyDrain: 1000,  progressBoost: 1, drainBoost: 1, xpGainFactor: 1e-10 },
         //nihility:    { level: 1, xp: 0, visible: false, energyDrain: 1e10,  progressBoost: 1, drainBoost: 1, xpGainFactor: 1e-25 },
       },
       perks: {},
+      perksUnlocked: 0,
       numEnergyResets: 0,
       numCopiumResets: 0,
       numDelusionResets: 0,
@@ -57,7 +59,6 @@ CURRENT_GAME_VERSION = "v0.2";
       zoneFullCompletes: {},
       autoRun: false,
       automationMode: "zone",
-      gameVersion: CURRENT_GAME_VERSION,
       soundEnabled: true,
       musicEnabled: true,
       soundVolume: 0.5,
@@ -85,10 +86,16 @@ CURRENT_GAME_VERSION = "v0.2";
       delusionEnjoyerMultiplier: 1,
       entropyShieldMultiplier: 1,
       powerGainMultiplier: 1,
-      autoConsumeResources: false,
+      autoConsumeEnabled: false,
+      consumeMinusOneEnabled: false,
       elixirEnergy: 3,
       startingLevel: 1,
       serenityGainZoneExponent: 3,
+      satoshiSerenity: 0,
+      maxDelusion: 9000,
+      copiumReactorEnergy: 6,
+      randomCrystalLevels: 1,
+      fortunesFavorValue: 7,
     };
   }
 
@@ -122,6 +129,9 @@ CURRENT_GAME_VERSION = "v0.2";
     // Record resource usage (if not "infinity_gauntlet")
     if (name !== "infinity_gauntlet") {
       gameState.resourcesUsed[name] = true;
+    }
+    if (resourceActions[name]?.onConsume) {
+      resourceActions[name].onConsume(gameState, amt);
     }
     // Instead of re-rendering everything, update only this resource.
     updateResourceDisplay(name);
@@ -194,14 +204,8 @@ CURRENT_GAME_VERSION = "v0.2";
             if (resourceConsumeMode === "all") {
               const amt = gameState.resources[name];
               consumeResource(name, amt);
-              if (resourceActions[name]?.onConsume) {
-                resourceActions[name].onConsume(gameState, amt);
-              }
             } else {
               consumeResource(name, 1);
-              if (resourceActions[name]?.onConsume) {
-                resourceActions[name].onConsume(gameState, 1);
-              }
             }
             updateSkillMultipliers();
             hideTooltip();
@@ -223,9 +227,6 @@ CURRENT_GAME_VERSION = "v0.2";
         div.addEventListener("click", () => {
           if (gameState.resources[name] > 0) {
             consumeResource(name, 1);
-            if (resourceActions[name]?.onConsume) {
-              resourceActions[name].onConsume(gameState, 1);
-            }
             if (gameState.resources[name] === 0) hideTooltip();
           }
         });
@@ -234,9 +235,6 @@ CURRENT_GAME_VERSION = "v0.2";
           if (gameState.resources[name] > 0) {
             const amt = gameState.resources[name];
             consumeResource(name, amt);
-            if (resourceActions[name]?.onConsume) {
-              resourceActions[name].onConsume(gameState, amt);
-            }
             hideTooltip();
           }
         });
@@ -329,14 +327,8 @@ CURRENT_GAME_VERSION = "v0.2";
             if (resourceConsumeMode === "all") {
               const amt = gameState.resources[rName];
               consumeResource(rName, amt);
-              if (resourceActions[rName]?.onConsume) {
-                resourceActions[rName].onConsume(gameState, amt);
-              }
             } else {
               consumeResource(rName, 1);
-              if (resourceActions[rName]?.onConsume) {
-                resourceActions[rName].onConsume(gameState, 1);
-              }
             }
             updateSkillMultipliers();
             hideTooltip();
@@ -366,9 +358,6 @@ CURRENT_GAME_VERSION = "v0.2";
         div.addEventListener("click", () => {
           if (gameState.resources[rName] > 0) {
             consumeResource(rName, 1);
-            if (resourceActions[rName]?.onConsume) {
-              resourceActions[rName].onConsume(gameState, 1);
-            }
             if (gameState.resources[rName] === 0) {
               hideTooltip();
             }
@@ -381,9 +370,6 @@ CURRENT_GAME_VERSION = "v0.2";
           if (gameState.resources[rName] > 0) {
             const amt = gameState.resources[rName];
             consumeResource(rName, amt);
-            if (resourceActions[rName]?.onConsume) {
-              resourceActions[rName].onConsume(gameState, amt);
-            }
             hideTooltip();
           }
         });
@@ -714,14 +700,14 @@ CURRENT_GAME_VERSION = "v0.2";
         copiumBarFill.setAttribute("data-tooltip",
           "Copium builds up from tasks with<br>" + copiumSkills.join(", ") +
           `.<br><br>If it exceeds 9000, your game will reset<br>with all${gameState.serenityInfinite["Resource Saver"] > 0 ? " but " + gameState.serenityInfinite["Resource Saver"]: ""} Resources and ${gameState.perks["knowledge_preserver"] ? "10% of" : "half"} your Knowledge lost!` +
-          `<br>But you will permanently gain ${gameState.perks["copium_reactor"] ? 6 : 2} starting energy.`
+          `<br>But you will permanently gain ${gameState.perks["copium_reactor"] ? gameState.copiumReactorEnergy : 2} starting energy.`
         );
       } else {
         copiumBarFill.classList.remove("copium-high");
         copiumBarFill.setAttribute("data-tooltip",
           "Copium builds up from tasks with<br>" + copiumSkills.join(", ") +
           `.<br><br>If it exceeds 9000, your game will reset<br>with all${gameState.serenityInfinite["Resource Saver"] > 0 ? " but " + gameState.serenityInfinite["Resource Saver"]: ""} Resources and ${gameState.perks["knowledge_preserver"] ? "10% of" : "half"} your Knowledge lost!` +
-          `<br>But you will permanently gain ${gameState.perks["copium_reactor"] ? 6 : 2} starting energy.`
+          `<br>But you will permanently gain ${gameState.perks["copium_reactor"] ? gameState.copiumReactorEnergy : 2} starting energy.`
         );
       }
     }
@@ -735,19 +721,19 @@ CURRENT_GAME_VERSION = "v0.2";
     }
     const delusionBarFill = document.getElementById("delusionBarFill");
     if (delusionBarFill) {
-      delusionBarFill.style.width = (val / 90) + "%";
+      delusionBarFill.style.width = (val / (gameState.maxDelusion/100)) + "%";
       // Add high-delusion glow if delusion is above 8000
       if (gameState.delusion > 8000) {
         delusionBarFill.classList.add("delusion-high");
         delusionBarFill.setAttribute("data-tooltip",
           "Delusion builds up from tasks with<br>" + delusionSkills.join(", ") +
-          `.<br><br>If it exceeds 9000, your game will reset<br>with 20% of your Power lost!${gameState.serenityUnlockables["Delusion Enjoyer"] ? "<br><br>Multiplies knowledge gain by " + gameState.delusionEnjoyerMultiplier * 100 + "%"  : ""}`
+          `.<br><br>If it exceeds ${gameState.maxDelusion}, your game will reset<br>with 20% of your Power lost!${gameState.serenityUnlockables["Delusion Enjoyer"] ? "<br><br>Multiplies knowledge gain by " + formatNumber(gameState.delusionEnjoyerMultiplier * 100) + "%"  : ""}`
         );
       } else {
         delusionBarFill.classList.remove("delusion-high");
         delusionBarFill.setAttribute("data-tooltip",
           "Delusion builds up from tasks with<br>" + delusionSkills.join(", ") +
-          `.<br><br>If it exceeds 9000, your game will reset<br>with 20% of your Power lost!${gameState.serenityUnlockables["Delusion Enjoyer"] ? "<br><br>Multiplies knowledge gain by " + gameState.delusionEnjoyerMultiplier * 100 + "%"  : ""}`
+          `.<br><br>If it exceeds ${gameState.maxDelusion}, your game will reset<br>with 20% of your Power lost!${gameState.serenityUnlockables["Delusion Enjoyer"] ? "<br><br>Multiplies knowledge gain by " + formatNumber(gameState.delusionEnjoyerMultiplier * 100) + "%"  : ""}`
         );
       }
     }
@@ -810,6 +796,16 @@ CURRENT_GAME_VERSION = "v0.2";
           Math.pow(skillXpScaling, randomSkill.level - 1) - randomSkill.xp
         );
       }
+
+      if (gameState.perks.digital_dreams){
+        //10% chance
+        if (skillName === "hacking" && Math.random() < 0.1){
+          addXP("tinkering", 0, "Digital Dreams: ", false, Math.pow(skillXpScaling, gameState.skills["tinkering"].level - 1) - gameState.skills["tinkering"].xp);
+        }
+        if (skillName === "tinkering" && Math.random() < 0.1){
+          addXP("hacking", 0, "Digital Dreams: ", false, Math.pow(skillXpScaling, gameState.skills["hacking"].level - 1) - gameState.skills["hacking"].xp);
+        }
+      }
       updateSkillMultipliers();
   
       var message = formatStringForDisplay(skillName) + " leveled up to " + skill.level;
@@ -846,7 +842,7 @@ CURRENT_GAME_VERSION = "v0.2";
       if (sName === "alchemy" && gameState.perks.brewmaster) baseMult *= 1.25;
       if (sName === "travel" && gameState.perks.hoverboard) baseMult *= 4;
       if (sName === "combat" && gameState.perks.universal_alloy) baseMult *= Math.max(1, gameState.serenity ** (1/2));
-      if (sName === "omniscience" && gameState.perks.omega_harmony) baseMult *= 1.5;
+      if (sName === "omniscience" && gameState.perks.omega_stability) baseMult *= 1.5;
       baseMult *= (sData.progressBoost);
       let baseDrain = sData.energyDrain / (sData.drainBoost || 1);
       if (sName === "hacking" && gameState.perks.noob_haxor) baseDrain *= 0.9;
@@ -991,7 +987,7 @@ CURRENT_GAME_VERSION = "v0.2";
       
       if (sName === "combat" && gameState.perks.universal_alloy) baseMult *= Math.max(1, gameState.serenity ** (1/2));
 
-      if (sName === "omniscience" && gameState.perks.omega_harmony) baseMult *= 1.5;
+      if (sName === "omniscience" && gameState.perks.omega_stability) baseMult *= 1.5;
       
       // Store the precomputed value.
       sk.precomputedMultiplier = baseMult;
@@ -1019,6 +1015,7 @@ CURRENT_GAME_VERSION = "v0.2";
     if (gameState.perks["energetic_bliss"] && gameState.energy > (gameState.startingEnergy * 0.8)) {
       mult *= 2;
     }
+    mult *= gameState.achievementsMultiplier;
     if (task.speedMult !== undefined) {
       mult *= task.speedMult;
     }
@@ -1038,6 +1035,10 @@ CURRENT_GAME_VERSION = "v0.2";
     baseDrain *= Math.pow(1.1, zoneIndex - 1);
     if (task.drainMult !== undefined) {
       baseDrain *= task.drainMult;
+    }
+    // If "Repurpose Perks" is unlocked, reduce energy drain.
+    if (gameState.serenityUnlockables["Repurpose Perks"]) {
+      baseDrain /= (1 + gameState.perksUnlocked / 10);
     }
     return baseDrain;
   }
@@ -1063,7 +1064,7 @@ CURRENT_GAME_VERSION = "v0.2";
         gameState.knowledge = Math.floor(gameState.knowledge / 2);
       }
       gameState.copium = 0;
-      gameState.startingEnergy += gameState.perks["copium_reactor"] ? 6 : 2;
+      gameState.startingEnergy += gameState.perks["copium_reactor"] ? gameState.copiumReactorEnergy : 2;
       gameState.numCopiumResets++;
     } else if (reason === "delusionOverflow") {
       gameState.power = Math.floor(gameState.power * 0.8);
@@ -1100,6 +1101,7 @@ CURRENT_GAME_VERSION = "v0.2";
       gameState.highestCompletedZone = 0;
       gameState.bestCompletedZone = 0;
       gameState.resetsForBestZone = 1e100;
+      gameState.satoshiSerenity = 0;
       if (!gameState.serenityUnlockables["Instant Simulation"]) {
         Object.keys(gameState.automationOverrides).forEach(key => {
           gameState.automationOverrides[key] = true;
@@ -1119,6 +1121,7 @@ CURRENT_GAME_VERSION = "v0.2";
           }
         });
       }
+      unlockAchievement("First Prestige");
     } else if (reason === "contentComplete") {
       gameState.resources = {};
     };
@@ -1208,7 +1211,7 @@ CURRENT_GAME_VERSION = "v0.2";
         <h2>Game Over</h2>
         <p>It's over 9000! Your copium that is.</p>
         <p>You lose all your resources and ${gameState.perks["knowledge_preserver"] ? "10% of" : "half"} your knowledge.</p>
-        <p>But you permanently gain ${gameState.perks["copium_reactor"] ? 6 : 2} starting energy.</p>
+        <p>But you permanently gain ${gameState.perks["copium_reactor"] ? gameState.copiumReactorEnergy : 2} starting energy.</p>
         <button id="restartButtonCopium">Restart</button>
       </div>
     `;
@@ -1243,7 +1246,7 @@ CURRENT_GAME_VERSION = "v0.2";
     delusionScreen.innerHTML = `
       <div id="gameOverContentDelusion">
         <h2>Game Over</h2>
-        <p>Your delusion is over 9000!</p>
+        <p>Your delusion is over ${gameState.maxDelusion}!</p>
         <p>You lose 20% of your Power.</p>
         <button id="restartButtonDelusion">Restart</button>
       </div>
@@ -1295,6 +1298,9 @@ CURRENT_GAME_VERSION = "v0.2";
         button.classList.remove("active");
         gameState.cyberneticArmorTaskRunning = false;
         gameState.cosmicShardTaskRunning = false;
+        if (existing.task.boss_image) {
+          unlockAchievement("Take a Breather");
+        }
         if (!currentTasks.some(t => !t.paused && t.task.boss_image)) {
           document.getElementById("zoneImage").src = zones[zoneIndex].img;
         }
@@ -1685,9 +1691,9 @@ CURRENT_GAME_VERSION = "v0.2";
       const usedSkills = task.skills;
       const numSkills = usedSkills.length || 1;
       let baseXP = (task.baseTime * xpScale) / numSkills;
-      if (gameState.perks["workaholic"]) baseXP *= 1.5;
+      if (gameState.perks["workaholic"]) baseXP *= gameState.serenityUnlockables["Experience Junkie"] ? 2.5 : 1.5;
       if (gameState.perks["kung_fu_zen"]) baseXP *= 1.28;
-      if (gameState.perks["celestial_light"]) baseXP *= 2;
+      if (gameState.perks["celestial_light"]) baseXP *= gameState.serenityUnlockables["Experience Junkie"] ? 6 : 2;
       let levelText = "";
       usedSkills.forEach(sName => {
         let gainedXP = baseXP;
@@ -1835,6 +1841,10 @@ CURRENT_GAME_VERSION = "v0.2";
       showEndOfContentModal();
       currentZoneIndex = 1;
     }
+    if (currentZoneIndex == 14 && Object.keys(gameState.resourcesUsed).length == 0 
+        && Object.values(gameState.resources).reduce((sum, value) => sum + value, 0) == 0) {
+          unlockAchievement("Empty Pockets");
+    }
     saveGameProgress();
   }
 
@@ -1891,10 +1901,10 @@ CURRENT_GAME_VERSION = "v0.2";
 
   function updatePerksCount() {
     const total = Object.keys(gameState.perks).length;
-    const unlocked = Object.keys(gameState.perks).filter(key => gameState.perks[key]).length;
+    gameState.perksUnlocked = Object.keys(gameState.perks).filter(key => gameState.perks[key]).length;
     const perkCount = document.getElementById("perkCount");
     if (perkCount) {
-      perkCount.textContent = `(${unlocked}/${total})`;
+      perkCount.textContent = `(${gameState.perksUnlocked}/${total})`;
     }
   }
 
@@ -1909,13 +1919,15 @@ CURRENT_GAME_VERSION = "v0.2";
     if(gameState.perks.sandstorm) {
       skillXpScaling = 1.019;
     }
-    if(gameState.perks.wise_mechanic) {
+    if (gameState.perks.wise_mechanic) {
       knowledgeSkills = ["tinkering", "intellect", "hacking", "mechanics"];
-      showKnowledgeIfUnlocked();
     } else {
       knowledgeSkills = ["tinkering", "intellect", "hacking"];
-      showKnowledgeIfUnlocked();
     }
+    if (gameState.perks.spark_of_infinity && !knowledgeSkills.includes("cybernetics")) {
+      knowledgeSkills.push("cybernetics");
+    }
+    showKnowledgeIfUnlocked();
     if(gameState.perks.master_of_ai) {
       if (gameState.perks.master_of_ai === "disabled") {
         delusionSkills = ["charisma", "perception", "aiMastery", "negotiation"];
@@ -2018,6 +2030,7 @@ CURRENT_GAME_VERSION = "v0.2";
           // On click, toggle it
           div.addEventListener("click", () => {
             gameState.perks[pKey] = (gameState.perks[pKey] === "disabled") ? true : "disabled";
+            unlockAchievement("Toggler");
             applyPerks();
             renderPerks();
             updateTasksHoverInfo();
@@ -2153,7 +2166,7 @@ CURRENT_GAME_VERSION = "v0.2";
         ${formattedSkills}
       </p>
       <p>
-        If it exceeds 9000, you will reset with 20% of your Power lost.
+        If it exceeds ${gameState.maxDelusion}, you will reset with 20% of your Power lost.
       </p>
     `;
     
@@ -2181,7 +2194,6 @@ CURRENT_GAME_VERSION = "v0.2";
         gameState.delusionEnjoyerMultiplier = Math.max(1, gameState.delusion / 100);
         break;
       case "Resource Consumer":
-        gameState.autoConsumeResources = true;
         showAutoConsumeButton();  // Make the Auto-Use button appear.
         break;
       case "Instant Simulation":
@@ -2203,6 +2215,25 @@ CURRENT_GAME_VERSION = "v0.2";
         break;
       case "Gacha Overdrive":
         perkDescriptions.gacha_machine = "25% chance to produce triple resources.";
+        break;
+      case "Resource Guru":
+        if (!gameState.perks["growth_miracle"]) {
+          gameState.perks["growth_miracle"] = true;
+          renderPerks();
+        }
+        showAutoConsumeButton();
+        break;
+      case "Repurpose Perks":
+        // Effect is applied elsewhere.
+        updateTasksHoverInfo();
+        break;
+      case "Experience Junkie":
+        perkDescriptions.workaholic = "All XP gains increased by 150%.";
+        perkDescriptions.celestial_light = "All XP gains increased by 6x.";
+        renderPerks();
+        break;
+      case "Satoshi's Wallet":
+        perkDescriptions.crypto_wallet = "Each time you travel:<br>10% chance to gain 50 Energy<br>5% chance to lose 25 Copium<br>5% chance to lose 25 Delusion<br>5% chance to gain 50 Knowledge<br>5% chance to gain 50 Power<br>1% chance to stash 1% of base potential Serenity<br>1% chance to find 1 Data Bit";
         break;
       default:
         console.log(`No effect defined for unlockable: ${upgName}`);
@@ -2243,6 +2274,21 @@ CURRENT_GAME_VERSION = "v0.2";
         break;
       case "Zone Pusher":
         gameState.serenityGainZoneExponent = 3 + (level * 0.1);
+        break;
+      case "Delusion Immune":
+        gameState.maxDelusion = 9000 + level * 1000;
+        showDelusionBar();
+        break;
+      case "Greater Reactor":
+        gameState.copiumReactorEnergy = 6 + level;
+        break;
+      case "Crystal Collector":
+        gameState.randomCrystalLevels = 1 + level;
+        resourceActions["random_crystal"].tooltip = `Levels up a random skill by ${gameState.randomCrystalLevels} levels.`;
+        break;
+      case "Fortune's Favor":
+        gameState.fortunesFavorValue = 7 + level;
+        perkDescriptions.four_leaf_clover = `${gameState.fortunesFavorValue}% chance to produce ${gameState.fortunesFavorValue}x resources.`; 
         break;
       default:
         console.log(`No effect defined for infinite upgrade: ${upgName}`);
@@ -2335,9 +2381,8 @@ CURRENT_GAME_VERSION = "v0.2";
         resourcesContainer.appendChild(autoBtn);
       }
       
-      // Initialize the auto-consume flag.
       gameState.autoConsumeEnabled = false;
-      
+
       // Toggle auto-consume mode on click.
       autoBtn.addEventListener("click", () => {
         gameState.autoConsumeEnabled = !gameState.autoConsumeEnabled;
@@ -2350,10 +2395,45 @@ CURRENT_GAME_VERSION = "v0.2";
         }
       });
     }
-  }
-  
-  
 
+    if (gameState.serenityUnlockables["Resource Guru"]) {
+      // Only create the checkbox if it hasn't been added yet.
+      if (!document.getElementById("consumeMinusOneCheckbox")) {
+        // Create a container for the checkbox
+        let leaveOneContainer = document.createElement("div");
+        leaveOneContainer.style.display = "inline-flex";
+        leaveOneContainer.style.alignItems = "center";
+        leaveOneContainer.style.marginLeft = "10px"; // spacing from the Auto-Use button
+    
+        // Create the checkbox input with our custom class.
+        let leaveOneCheckbox = document.createElement("input");
+        leaveOneCheckbox.type = "checkbox";
+        leaveOneCheckbox.id = "consumeMinusOneCheckbox";
+        leaveOneCheckbox.checked = gameState.consumeMinusOneEnabled;
+        leaveOneCheckbox.classList.add("custom-checkbox");
+        leaveOneCheckbox.addEventListener("change", () => {
+          gameState.consumeMinusOneEnabled = leaveOneCheckbox.checked;
+          showMessage("Leave 1 mode " + (gameState.consumeMinusOneEnabled ? "enabled" : "disabled"));
+        });
+    
+        // Create a label for the checkbox with gray text.
+        let leaveOneLabel = document.createElement("label");
+        leaveOneLabel.setAttribute("for", "consumeMinusOneCheckbox");
+        leaveOneLabel.textContent = "Leave 1";
+        leaveOneLabel.style.fontSize = "14px";
+        leaveOneLabel.style.marginLeft = "5px";
+        leaveOneLabel.style.color = "gray";
+    
+        // Append the checkbox and label into the container
+        leaveOneContainer.appendChild(leaveOneCheckbox);
+        leaveOneContainer.appendChild(leaveOneLabel);
+    
+        // Insert the container right after the Auto-Use button (assume autoBtn exists)
+        autoBtn.parentNode.insertBefore(leaveOneContainer, autoBtn.nextSibling);
+      }
+    }
+    
+  }
   
 
   // When a Prestige task finishes, unlock Serenity.
@@ -2398,7 +2478,7 @@ CURRENT_GAME_VERSION = "v0.2";
     if (gameState.serenityUnlocked) {
       serenityUpg.style.display = "inline-block";
       // Calculate potential serenity gain on prestige:
-      const serenityGainPotential = ((gameState.bestCompletedZone ** gameState.serenityGainZoneExponent) / gameState.resetsForBestZone) * (gameState.perks.inspired_glow ? 1.25 : 1);
+      const serenityGainPotential = ((gameState.bestCompletedZone ** gameState.serenityGainZoneExponent) / gameState.resetsForBestZone) * (gameState.perks.inspired_glow ? 1.25 : 1) + gameState.satoshiSerenity;
       // Set the inner HTML: first line shows current Serenity, second line (in gray) shows potential gain.
       serenityUpg.innerHTML = `Serenity: ${formatNumber(gameState.serenity)}`
       serenityUpg.innerHTML += `<br><span style="color:rgb(200, 200, 200); font-size: 0.9em;">+(${formatNumber(serenityGainPotential)})</span>`;
@@ -2431,6 +2511,14 @@ CURRENT_GAME_VERSION = "v0.2";
         return `Current Effect: Tick speed: ${formatNumber(runTickDuration)}ms`;
       case "Zone Pusher":
         return `Current Effect: ^${formatNumber(gameState.serenityGainZoneExponent)}`;
+      case "Delusion Immune":
+        return `Current Effect: ${formatNumber(gameState.maxDelusion)}`;
+      case "Greater Reactor":
+        return `Current Effect: ${formatNumber(gameState.copiumReactorEnergy)}`;
+      case "Crystal Collector":
+        return `Current Effect: ${formatNumber(gameState.randomCrystalLevels)}`;
+      case "Fortune's Favor":
+        return `Current Effect: ${formatNumber(gameState.fortunesFavorValue)}`;
       default:
         return "Current Effect: (to be calculated)";
     }
@@ -2440,13 +2528,13 @@ CURRENT_GAME_VERSION = "v0.2";
     hideTooltip();
   
     const serenityGainPotential = ((gameState.bestCompletedZone ** gameState.serenityGainZoneExponent) / gameState.resetsForBestZone) *
-      (gameState.perks.inspired_glow ? 1.25 : 1);
+      (gameState.perks.inspired_glow ? 1.25 : 1) + gameState.satoshiSerenity;;
   
     // Calculate total resets from energy, copium, and delusion resets.
     const totalResets = gameState.numEnergyResets + gameState.numCopiumResets + gameState.numDelusionResets;
     // Calculate next zone potential using (highestCompletedZone + 1) divided by total resets.
     const nextZonePotential = (((gameState.highestCompletedZone + 1) ** gameState.serenityGainZoneExponent) / totalResets) *
-      (gameState.perks.inspired_glow ? 1.25 : 1);
+      (gameState.perks.inspired_glow ? 1.25 : 1) + gameState.satoshiSerenity;
   
     // Check if the modal already exists.
     let modal = document.getElementById("serenityModal");
@@ -2485,7 +2573,7 @@ CURRENT_GAME_VERSION = "v0.2";
           <span style="color: gray; font-size: 0.9em;">(+${formatNumber(serenityGainPotential)})</span>
         </p>
         <p style="color: gray; margin-top: -10px;">
-          Serenity Gain = (<strong>Best Full Zone</strong> ^ ${gameState.serenityGainZoneExponent} / <strong>Total Resets</strong>)${gameState.perks.inspired_glow ? " * 1.25" : ""}
+          Serenity Gain = (<strong>Best Full Zone</strong> ^ ${gameState.serenityGainZoneExponent} / <strong>Total Resets</strong>)${gameState.perks.inspired_glow ? " * 1.25" : ""}${gameState.serenityUnlockables["Satoshi's Wallet"] ? " + Wallet(" + formatNumber(gameState.satoshiSerenity) + ")" : ""}
         </p>
       </div>
       <p style="font-size: 0.9em; margin-top: 5px;">
@@ -2520,7 +2608,8 @@ CURRENT_GAME_VERSION = "v0.2";
     // Append each upgrade section.
     for (const sectionName of Object.keys(SERENITY_UPGRADES.unlockables)) {
       // Determine if this section should be locked.
-      const sectionLocked = (sectionName === "Embrace Stillness" && !gameState.secondSectionUnlocked);
+      const sectionLocked = (sectionName === "Embrace Stillness" && !gameState.secondSectionUnlocked)
+                           || (sectionName === "Transcend Chaos" && !gameState.thirdSectionUnlocked);
   
       // Create a container for the section.
       let sectionDiv = document.createElement("div");
@@ -3008,7 +3097,17 @@ CURRENT_GAME_VERSION = "v0.2";
       });
       content.appendChild(tutorialBtn);
 
-      // 2) FULL RESTART (Red)
+      // Achievements button
+      const achievementsBtn = document.createElement("button");
+      achievementsBtn.classList.add("btn-achievements");
+      achievementsBtn.textContent = "Achievements";
+      achievementsBtn.setAttribute("data-tooltip", "View your achievements.");
+      achievementsBtn.addEventListener("click", () => {
+        showAchievementsModal();
+      });
+      content.appendChild(achievementsBtn);
+
+      // Full Restart button
       const restartAll = document.createElement("button");
       restartAll.classList.add("btn-red");
       restartAll.textContent = "Full Restart";
@@ -3251,30 +3350,141 @@ CURRENT_GAME_VERSION = "v0.2";
     });
   }
   
+  function showAchievementsModal() {
+    // Create the modal overlay
+    const modal = document.createElement("div");
+    modal.className = "modal";
+    modal.id = "achievementsModal";
+    
+    // Create content container
+    const content = document.createElement("div");
+    content.className = "modal-content";
+    
+    // Count unlocked achievements (gameState.unlockedAchievements is an object keyed by achievement name)
+    const totalAch = achievementsMap.size;
+    let unlockedCount = 0;
+    achievementsMap.forEach((ach, name) => {
+      if (gameState.unlockedAchievements && gameState.unlockedAchievements[name]) {
+        unlockedCount++;
+      }
+    });
+    
+    // Header with count and multiplier
+    const header = document.createElement("div");
+    header.innerHTML = `<h2>Achievements</h2>
+      <p>${unlockedCount} / ${totalAch} unlocked &nbsp;&nbsp; (Task Progress Mult: ${formatNumber(gameState.achievementsMultiplier)}x)</p>`;
+    content.appendChild(header);
+    
+    // Create grid container for achievements
+    const grid = document.createElement("div");
+    grid.id = "achievementsGrid";
+    
+    // For each achievement, add a cell
+    achievementsMap.forEach((ach, name) => {
+      const cell = document.createElement("div");
+      cell.className = "achievement-cell";
+      // Set tooltip: if unlocked, use the achievement description; otherwise, show "Locked Achievement"
+      cell.setAttribute("data-tooltip", '<strong>' + ach.name + '</strong><br>' + ach.description);
+
+      const img = document.createElement("img");
+      // If unlocked, use the achievement image; otherwise show locked image
+      if (gameState.unlockedAchievements && gameState.unlockedAchievements[name]) {
+        img.src = ach.img;
+        img.alt = ach.name;
+      } else {
+        img.src = "images/achievements/locked_achievement.jpg";
+        img.alt = "Locked Achievement";
+      }
+      cell.appendChild(img);
+      grid.appendChild(cell);
+    });
+    
+    content.appendChild(grid);
+    
+    // Close button
+    const closeBtn = document.createElement("button");
+    closeBtn.textContent = "Close";
+    closeBtn.addEventListener("click", () => modal.remove());
+    content.appendChild(closeBtn);
+    
+    modal.appendChild(content);
+    document.body.appendChild(modal);
+    
+    // Clicking outside content closes the modal
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) {
+        modal.remove();
+      }
+    });
+  }
   
+
+  function unlockAchievement(achievementName) {
+    // If the achievement is already unlocked, do nothing.
+    if (gameState.unlockedAchievements[achievementName]) return;
+    
+    // Mark achievement as unlocked
+    gameState.unlockedAchievements[achievementName] = true;
+    
+    // Retrieve the achievement details from your achievements map.
+    // (If not found, use a fallback image.)
+    let achievement = achievementsMap.get(achievementName);
+    if (!achievement) {
+      achievement = { name: achievementName, img: "images/achievements/locked_achievement.jpg" };
+    }
+
+    if (gameState.soundEnabled) {
+      achievementSound.play();
+    }
+    
+    let unlockedCount = 0;
+    achievementsMap.forEach((ach, name) => {
+      if (gameState.unlockedAchievements && gameState.unlockedAchievements[name]) {
+        unlockedCount++;
+      }
+    });
+
+    gameState.achievementsMultiplier = 1 + unlockedCount / 100;
+
+    showMessage(
+      `<div class="perk-unlock-message">
+        <img src="${achievement.img}" alt="${achievementName}">
+        <div>
+          <strong>Achievement: ${achievementName}</strong><br>
+          ${achievement.description}
+        </div>
+      </div>`
+    );
+  }
   
 
   /****************************************
    * MAIN GAME LOOP
    ****************************************/
   function gameLoop() {
-    // Auto-Use resources if enabled:
-    if (gameState.autoConsumeEnabled) {
-      // Loop over resources and pick the first usable one.
-      for (const resName in gameState.resources) {
-        if (gameState.resources[resName] > 0 && !EXCLUDED_AUTO_RESOURCES.has(resName)) {
-          // Consume all units of that resource.
-          const amt = gameState.resources[resName];
-          consumeResource(resName, amt);
-          // Optionally trigger any onConsume action:
-          if (resourceActions[resName] && typeof resourceActions[resName].onConsume === "function") {
-            resourceActions[resName].onConsume(gameState, amt);
+  // Auto-Use resources if enabled:
+  if (gameState.autoConsumeEnabled) {
+    // Loop over resources and pick the first usable one.
+    for (const resName in gameState.resources) {
+      let available = gameState.resources[resName];
+      if (available > 0 && !EXCLUDED_AUTO_RESOURCES.has(resName)) {
+        let amt;
+        if (gameState.consumeMinusOneEnabled) {
+          // Only consume if more than 1 exists, leaving 1 behind.
+          if (available > 1) {
+            amt = available - 1;
+          } else {
+            continue; // Skip this resource if only 1 is available.
           }
-          // Only process one resource per tick.
-          break;
+        } else {
+          amt = available;
         }
+        consumeResource(resName, amt);
+        // Only process one resource per tick.
+        break;
       }
     }
+  }
 
     if (currentTasks.length === 0 && !gameState.autoRun) return;
     currentTasks.forEach((tData) => {
@@ -3317,9 +3527,9 @@ CURRENT_GAME_VERSION = "v0.2";
       const baseXP = delta * xpScale;
       const usedSkills = tData.task.skills || [];
       let xpEach = baseXP / (usedSkills.length || 1);
-      if (gameState.perks["workaholic"]) xpEach *= 1.5;
+      if (gameState.perks["workaholic"]) xpEach *= gameState.serenityUnlockables["Experience Junkie"] ? 2.5 : 1.5;
       if (gameState.perks["kung_fu_zen"]) xpEach *= 1.28;
-      if (gameState.perks["celestial_light"]) xpEach *= 2;
+      if (gameState.perks["celestial_light"]) xpEach *= gameState.serenityUnlockables["Experience Junkie"] ? 6 : 2;
       if (gameState.cosmicShardTaskRunning) xpEach *= 5;
       if (tData.boss_image) xpEach *= gameState.energyCoreMultiplier;
       if (tData.task.xpMult !== undefined) {
@@ -3334,12 +3544,12 @@ CURRENT_GAME_VERSION = "v0.2";
         const task = zone.tasks[tData.taskIndex];
         if (task.count < task.maxReps) task.count++;
         if (task.resources && Array.isArray(task.resources)) {
-          if (gameState.perks["luck_of_the_irish"] && Math.random() < 0.07) {
+          if (gameState.perks["four_leaf_clover"] && Math.random() < gameState.fortunesFavorValue / 100) {
             if(gameState.numAtomicParticles > 0) {
-              task.resources.forEach(r => addResource(r, 14));
+              task.resources.forEach(r => addResource(r, gameState.fortunesFavorValue * 2));
               gameState.numAtomicParticles--;
             } else {
-              task.resources.forEach(r => addResource(r, 7));
+              task.resources.forEach(r => addResource(r, gameState.fortunesFavorValue));
             } 
           } else if (gameState.perks["gacha_machine"] && Math.random() < 0.25) {
             if (gameState.serenityUnlockables["Gacha Overdrive"]) {
@@ -3384,7 +3594,11 @@ CURRENT_GAME_VERSION = "v0.2";
         if (gameState.delusionUnlocked && usedSkills.some(s => delusionSkills.includes(s))) {
           // Set the lambda parameter to control the steepness.
           // A larger lambda means the probability declines more quickly.
-          const lambda = 0.5; // Experiment with this value to get your desired shape
+          let lambda = 0.5; // Experiment with this value to get your desired shape
+          
+          if (gameState.perks.stellar_dreams && gameState.perks.stellar_dreams !== "disabled") {
+            lambda = 0.3;
+          }
           
           // Generate an exponential random value.
           let expValue = -Math.log(Math.random()) / lambda;
@@ -3402,7 +3616,7 @@ CURRENT_GAME_VERSION = "v0.2";
             gameState.delusionEnjoyerMultiplier = Math.max(1, gameState.delusion / 100);
           }
           
-          if (gameState.delusion > 9000) {
+          if (gameState.delusion > gameState.maxDelusion) {
             currentTasks = [];
             gameState.autoRun = false;
             handleDelusionOverflow();
@@ -3432,6 +3646,9 @@ CURRENT_GAME_VERSION = "v0.2";
             if (gameState.zoneFullCompletes[tData.zoneIndex] < 10) {
               showMessage(`Zone ${tData.zoneIndex + 1} completed ${gameState.zoneFullCompletes[tData.zoneIndex]}/10 times.`);
             }
+            if(tData.zoneIndex == 2) {
+              unlockAchievement("Baby Steps");
+            }
             if (gameState.highestCompletedZone < tData.zoneIndex + 1) {
               gameState.highestCompletedZone = tData.zoneIndex + 1;
               gameState.resetsForHighestZone = Math.max(gameState.numEnergyResets + gameState.numCopiumResets + gameState.numDelusionResets, 1);
@@ -3447,36 +3664,65 @@ CURRENT_GAME_VERSION = "v0.2";
           tData.button.classList.remove("active");
           removeTaskFromCurrent(tData);
           if (gameState.perks.crypto_wallet) {
-            //  crypto_wallet:          "Each time you travel:<br>5% chance to gain 25 Energy<br>5% chance to lose 25 Copium<br>5% chance to lose 25 Delusion<br>2% chance to gain 25 Knowledge<br>0.1% chance to gain 25 Power",
-            if (Math.random() < 0.05) {
-              gameState.energy += 25;
-              showMessage("Crypto Wallet: +25 Energy");
-              updateEnergyDisplay();
-            }
-            if (Math.random() < 0.05) {
-              gameState.copium = Math.max(gameState.copium - 25, 0);
-              showMessage("Crypto Wallet: -25 Copium");
-              updateCopiumDisplay();
-            }
-            if (Math.random() < 0.05) {
-              gameState.delusion = Math.max(gameState.delusion - 25, 0);
-              if (gameState.serenityUnlockables["Delusion Enjoyer"]) {
-                gameState.delusionEnjoyerMultiplier = Math.max(1, gameState.delusion / 100);
+            if (gameState.serenityUnlockables && gameState.serenityUnlockables["Satoshi's Wallet"]) {
+              // Upgraded Satoshi's Wallet behavior:
+              if (Math.random() < 0.10) {
+                gameState.energy += 50;
+                showMessage("Satoshi's Wallet: +50 Energy");
+                updateEnergyDisplay();
               }
-              showMessage("Crypto Wallet: -25 Delusion");
-              updateDelusionDisplay();
-            }
-            if (Math.random() < 0.025) {
-              gameState.knowledge += 25;
-              showMessage("Crypto Wallet: +25 Knowledge");
-              showKnowledgeIfUnlocked();
-            }
-            if (Math.random() < 0.005) {
-              showMessage("Crypto Wallet: +25 Power");
-              gameState.power += 25;
-              showPowerIfUnlocked();
+              if (Math.random() < 0.05) {
+                gameState.knowledge += 50;
+                showMessage("Satoshi's Wallet: +50 Knowledge");
+                showKnowledgeIfUnlocked();
+              }
+              if (Math.random() < 0.05) {
+                gameState.power += 50;
+                showMessage("Satoshi's Wallet: +50 Power");
+                showPowerIfUnlocked();
+              }
+              if (Math.random() < 0.01) {
+                const serenityGainPotential = ((gameState.bestCompletedZone ** gameState.serenityGainZoneExponent) / gameState.resetsForBestZone)
+                gameState.satoshiSerenity += serenityGainPotential * 0.01;
+                showMessage(`Satoshi's Wallet: +${formatNumber(serenityGainPotential * 0.01)} Wallet Serenity`);
+              }
+              if (Math.random() < 0.01) {
+                addResource("data_bit", 1);
+                showMessage("Satoshi's Wallet: Found 1 Data Bit");
+              }
+            } else {
+              // Default crypto_wallet behavior:
+              if (Math.random() < 0.05) {
+                gameState.energy += 25;
+                showMessage("Crypto Wallet: +25 Energy");
+                updateEnergyDisplay();
+              }
+              if (Math.random() < 0.05) {
+                gameState.copium = Math.max(gameState.copium - 25, 0);
+                showMessage("Crypto Wallet: -25 Copium");
+                updateCopiumDisplay();
+              }
+              if (Math.random() < 0.05) {
+                gameState.delusion = Math.max(gameState.delusion - 25, 0);
+                if (gameState.serenityUnlockables["Delusion Enjoyer"]) {
+                  gameState.delusionEnjoyerMultiplier = Math.max(1, gameState.delusion / 100);
+                }
+                showMessage("Crypto Wallet: -25 Delusion");
+                updateDelusionDisplay();
+              }
+              if (Math.random() < 0.025) {
+                gameState.knowledge += 25;
+                showMessage("Crypto Wallet: +25 Knowledge");
+                showKnowledgeIfUnlocked();
+              }
+              if (Math.random() < 0.005) {
+                gameState.power += 25;
+                showMessage("Crypto Wallet: +25 Power");
+                showPowerIfUnlocked();
+              }
             }
           }
+          
           currentTasks = [];
           nextZone();
           displayZone();
@@ -3511,6 +3757,10 @@ CURRENT_GAME_VERSION = "v0.2";
           gameState.power += (zone.id - 3) * gameState.powerGainMultiplier;
           showMessage(`<span style="color: rgb(222, 34, 191);">${task.name.replace(/^[^ ]+ /, "")} defeated! +${(zone.id - 3) * gameState.powerGainMultiplier} Power</span>`);
           showPowerIfUnlocked();
+
+          if (task.name === "Battle Agent Smith" && Object.keys(gameState.resourcesUsed).length == 0) {
+            unlockAchievement("Mano a Mano");
+          }
         }
         if (task.perk && !gameState.perks[task.perk] && task.count >= task.maxReps) {
           gameState.perks[task.perk] = true;
@@ -3560,6 +3810,9 @@ CURRENT_GAME_VERSION = "v0.2";
           if (task.name === "Embrace Stillness") {
             gameState.secondSectionUnlocked = true;
             showMessage("Second prestige section unlocked!");
+          } else if (task.name === "Transcend Chaos") {
+            gameState.thirdSectionUnlocked = true;
+            showMessage("Third prestige section unlocked!");
           }
           if(!gameState.prestigeAvailable){
             showSerenityUnlockedModal();
@@ -3691,11 +3944,32 @@ CURRENT_GAME_VERSION = "v0.2";
     gameState.numCosmicShards = gameState.numCosmicShards || 0;
     gameState.cosmicShardTaskRunning = gameState.cosmicShardTaskRunning || false;
     gameState.secondSectionUnlocked = gameState.secondSectionUnlocked || false;
+    gameState.thirdSectionUnlocked = gameState.thirdSectionUnlocked || false;
     gameState.elixirEnergy = gameState.elixirEnergy || 3;
     gameState.startingLevel = gameState.startingLevel || 1;
     gameState.serenityGainZoneExponent = gameState.serenityGainZoneExponent || 3;
     gameState.numAtomicParticles = gameState.numAtomicParticles || 0;
     gameState.energyCoreMultiplier = gameState.energyCoreMultiplier || 1;
+    gameState.skills.totality = gameState.skills.totality || { level: 1, xp: 0, visible: false, energyDrain: 1000,  progressBoost: 1, drainBoost: 1, xpGainFactor: 1e-10 };
+    gameState.numPrestiges = gameState.numPrestiges || 0;
+    gameState.autoConsumeEnabled = gameState.autoConsumeEnabled || false;
+    gameState.consumeMinusOneEnabled = gameState.consumeMinusOneEnabled || false;
+    gameState.perksUnlocked = gameState.perksUnlocked || 0;
+    gameState.satoshiSerenity = gameState.satoshiSerenity || 0;
+    gameState.maxDelusion = gameState.maxDelusion || 9000;
+    gameState.copiumReactorEnergy = gameState.copiumReactorEnergy || 6;
+    gameState.randomCrystalLevels = gameState.randomCrystalLevels || 1;
+    gameState.fortunesFavorValue = gameState.fortunesFavorValue || 7;
+    gameState.unlockedAchievements = gameState.unlockedAchievements || {};
+    gameState.achievementsMultiplier = gameState.achievementsMultiplier || 1;
+
+    // Cleanup old values:
+    if ("luck_of_the_irish" in gameState.perks) {
+      delete gameState.perks["luck_of_the_irish"];
+    }
+    if ("Always a Workaholic" in gameState.serenityUnlockables) {
+      delete gameState.serenityUnlockables["Always a Workaholic"];
+    }
 
     applySerenityUpgrades();
     gatherAllPerks();
@@ -3716,16 +3990,6 @@ CURRENT_GAME_VERSION = "v0.2";
     updatePerksCount();
     displayZone();
     initializeSerenityUpgrades();
-
-    // Version check
-    if (gameState.gameVersion !== CURRENT_GAME_VERSION) {
-      const banner = document.getElementById("versionBanner");
-      if (banner) {
-        banner.style.display = "block";
-        banner.innerHTML =
-          "New major update was released and your save is out of date. This may cause issues. Full Restart through settings is advised.";
-      }
-    }
   });
 
   // Expose functions for perks_and_resources.js
@@ -3741,6 +4005,7 @@ CURRENT_GAME_VERSION = "v0.2";
   window.saveGameProgress = saveGameProgress;
   window.addXP = (skillName, rawXP, prePendMessage, suppressMessage, overwriteXP) => addXP(skillName, rawXP, prePendMessage, suppressMessage, overwriteXP);
   window.getSkillXpScaling = () => skillXpScaling;
+  window.showKnowledgeIfUnlocked = () => showKnowledgeIfUnlocked();
 
   // Expose some functions for debugging
   window.getGameState = () => gameState;

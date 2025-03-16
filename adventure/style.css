@@ -873,7 +873,7 @@ footer {
 /* ---------------------- */
 .custom-tooltip {
   position: absolute;
-  background: #000000c8;
+  background: #000000ab;
   color: #fff;
   padding: 4px 8px;
   border-radius: 3px;
@@ -881,7 +881,7 @@ footer {
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.1s;
-  z-index: 1200;
+  z-index: 10000;
 }
 
 #versionBanner {
@@ -1139,7 +1139,90 @@ footer {
   text-align: center;
 }
 
+/* Custom Checkbox Styles for "Leave 1" */
+input[type="checkbox"].custom-checkbox {
+  transform: scale(1.5);
+  width: 12px;
+  height: 12px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  background-color: gray;
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+  cursor: pointer;
+  position: relative;
+}
 
+input[type="checkbox"].custom-checkbox:checked {
+  background-color: green;
+}
+
+input[type="checkbox"].custom-checkbox:checked::after {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 0px;
+  width: 3px;
+  height: 6px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+
+/* Achievements Modal */
+#achievementsModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1200;
+}
+
+#achievementsModal .modal-content {
+  background-color: #fff;
+  padding: 20px;
+  max-height: 80vh;
+  overflow-y: auto;
+  width: 80%;
+  max-width: 800px;
+  border-radius: 8px;
+}
+
+/* Achievements Grid */
+#achievementsGrid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 10px;
+  margin-top: 15px;
+}
+
+/* Each achievement cell */
+.achievement-cell {
+  width: 100%;
+  padding-top: 100%; /* for square aspect ratio */
+  position: relative;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  overflow: hidden;
+  background-color: #f9f9f9;
+}
+
+.achievement-cell img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
 
 
 /* Media Queries for Mobile Devices */
@@ -1233,8 +1316,12 @@ footer {
     min-height: 3.9em; /* reserves space for three lines */
   }
 
-.modal-content button {
-  height: 40px;
-  margin: 3px;
-}
+  .modal-content button {
+    height: 40px;
+    margin: 3px;
+  }
+
+  #achievementsGrid {
+    grid-template-columns: repeat(5, 1fr);
+  }
 }
