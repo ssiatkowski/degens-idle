@@ -111,12 +111,15 @@ body {
 /* Specific fill colors for each type of bar */
 #energyBarFill {
   background: #e74c3c;
+  pointer-events: none;
 }
 #copiumBarFill {
   background: #dbd834;
+  pointer-events: none;
 }
 #delusionBarFill {
   background: #9b59b6;
+  pointer-events: none;
 }
 
 #energyBarFill.glowing {

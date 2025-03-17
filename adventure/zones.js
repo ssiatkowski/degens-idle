@@ -116,7 +116,7 @@ var zones = [
       { id: 84, name: "Cybernetic Armor", type: "Training", maxReps: 1, count: 0, baseTime: 1e12, drainMult: 1.5, description: "Carefully craft a cybernetic armor.", skills: ["tinkering", "cybernetics"], resources: ["cybernetic_armor"] },
       { id: 85, name: "High-Rise Debate Persuade the Crowd", type: "Training", maxReps: 10, count: 0, baseTime: 9e9, description: "Use your wit to sway opinions.", skills: ["negotiation", "charisma"] },
       { id: 86, name: "Rex: Adopt a Dog", type: "Training", maxReps: 1, count: 0, baseTime: 3e12, description: "Adopt a loyal dog.", skills: ["perception", "charisma"], perk: "rex" },
-      { id: 87, name: "Four Leaf Clover: Find the Clover", type: "Training", maxReps: 1, count: 0, baseTime: 3.9e10, drainMult: 2, description: "Locate a lucky clover.", skills: ["perception"], perk: "four_leaf_clover" }
+      { id: 87, name: "Four Leaf Clover: Find the Clover", type: "Training", maxReps: 1, count: 0, baseTime: 3.9e10, drainMult: 2, xpMult: 2, description: "Locate a lucky clover.", skills: ["perception"], perk: "four_leaf_clover" }
     ]
   },
   {
@@ -289,7 +289,7 @@ var zones = [
       { id: 203, name: "Heat the Stellar Crucible", type: "Training", maxReps: 20, count: 0, baseTime: 1e17, drainMult: 6, xpMult: 1000, description: "Ignite the furnace of creation to mold the universe.", skills: ["alchemy"], mandatory: true },
       { id: 204, name: "Embrace Stillness", type: "Prestige", maxReps: 1, count: 0, baseTime: 8e6, speedMult: 0.4, xpMult: 1.2, description: "Comprehend the stillness of the cosmos.", skills: ["omniscience"], mandatory: true },
       { id: 205, name: "Extract Celestial Ore", type: "Training", maxReps: 1, count: 0, baseTime: 1e27, drainMult: 5, speedMult: 1e-3, description: "Mine rare metals from the heart of a star.", skills: ["mechanics", "alchemy"], resources: ["celestial_ore"] },
-      { id: 206, name: "Universal Alloy: Mold Strength", type: "Training", maxReps: 7, count: 0, baseTime: 5e19, drainMult: 5, xpMult: 1000, description: "Combine elements to form structures of eternal strength.", skills: ["tinkering"], perk: "universal_alloy" },
+      { id: 206, name: "Universal Alloy: Mold Strength", type: "Training", maxReps: 7, count: 0, baseTime: 1e19, drainMult: 25, xpMult: 1000, description: "Combine elements to form structures of eternal strength.", skills: ["tinkering"], perk: "universal_alloy" },
       { id: 207, name: "Forge Fervor: Resonate with Flames", type: "Training", maxReps: 7, count: 0, baseTime: 1e17, drainMult: 100, description: "Let the heat of creation empower your spirit.", skills: ["endurance"], perk: "forge_fervor" },
       { id: 208, name: "Sparring with Dwarf King", type: "Training", maxReps: 12, count: 0, baseTime: 5e18, drainMult: 8, speedMult: 5e-8, description: "Test your strength against the might of the dwarf king.", skills: ["combat", "endurance"] },
       { id: 209, name: "Battle Doctor Manhattan", type: "Training", maxReps: 1, count: 0, baseTime: 1e19, speedMult: 0.5, description: "Contend with the enigmatic force of atomic power.", skills: ["combat"], boss_image: "images/bosses/doctor_manhattan.jpg", drainMult: 90, resources: ["atomic_particle"], sound: doctorManhattanSound },
@@ -316,10 +316,10 @@ var zones = [
     tasks: [
       { id: 221, name: "Travel: Shift to Omega Expanse", type: "Travel", maxReps: 1, count: 0, baseTime: 4e16, drainMult: 32, description: "Escape the dazzling glow and step into the ultimate frontier.", skills: ["travel"] },
       { id: 222, name: "Sync with Digital Frequencies", type: "Training", maxReps: 2, count: 0, baseTime: 1e25, speedMult: 4e-6, drainMult: 500, description: "Tune into the electric pulse of the grid.", skills: ["intellect", "hacking"], mandatory: true },
-      { id: 223, name: "Illuminate Virtual Vistas", type: "Training", maxReps: 20, count: 0, baseTime: 5e16, xpMult: 5e8, drainMult: 10, description: "Unleash radiant creativity through digital artistry.", skills: ["cybernetics"], mandatory: true },
+      { id: 223, name: "Illuminate Virtual Vistas", type: "Training", maxReps: 20, count: 0, baseTime: 3e16, xpMult: 5e8, drainMult: 10, description: "Unleash radiant creativity through digital artistry.", skills: ["cybernetics"], mandatory: true },
       { id: 224, name: "Extract Pixel Data", type: "Training", maxReps: 2, count: 0, baseTime: 1.5e23, speedMult: 3e-6,drainMult: 8192, description: "Gather fragmented bits of digital information.", skills: ["hacking", "perception"], resources: ["data_bit"] },
       { id: 225, name: "Overclock Digital Circuits", type: "Training", maxReps: 5, count: 0, baseTime: 1e22, speedMult: 1e-10, drainMult: 1000, xpMult: 0.01, description: "Boost the power of virtual infrastructures.", skills: ["mechanics", "endurance"] },
-      { id: 226, name: "Neon Energy: Electric Vigor", type: "Training", maxReps: 4, count: 0, baseTime: 1e22, drainMult: 100, description: "Channel the raw force of electric vibrance.", skills: ["tinkering"], perk: "neon_energy" },
+      { id: 226, name: "Neon Energy: Electric Vigor", type: "Training", maxReps: 4, count: 0, baseTime: 1e22, drainMult: 75, description: "Channel the raw force of electric vibrance.", skills: ["tinkering"], perk: "neon_energy" },
       { id: 227, name: "Battle Doomsday", type: "Training", maxReps: 1, count: 0, baseTime: 3e20, speedMult: 0.4, drainMult: 400, description: "Face the unstoppable force of destruction.", skills: ["combat"], boss_image: "images/bosses/doomsday.jpg", resources: ["energy_core"], sound: doomsdaySound }
     ]
   },
@@ -357,7 +357,7 @@ var zones = [
     img: "images/zones/zone25.jpg",
     tasks: [
       { id: 251, name: "Travel: Breakthrough to Ethereal Matrix", type: "Travel", maxReps: 1, count: 0, baseTime: 1e18, speedMult: 0.25, drainMult: 256, description: "Shatter your limits and cross into the unknown.", skills: ["travel"] },
-      { id: 252, name: "Break Finite Limits", type: "Training", maxReps: 14, count: 0, baseTime: 1e25, speedMult: 1e-5, drainMult: 100, xpMult: 1e-3, description: "Push beyond the boundaries of the known universe.", skills: ["aiMastery", "endurance"], mandatory: true },
+      { id: 252, name: "Break Finite Limits", type: "Training", maxReps: 14, count: 0, baseTime: 1e25, speedMult: 5e-6, drainMult: 500, xpMult: 1e-3, description: "Push beyond the boundaries of the known universe.", skills: ["aiMastery", "endurance"], mandatory: true },
       { id: 253, name: "Embody Cosmic Potential", type: "Training", maxReps: 1, count: 0, baseTime: 1e28, speedMult: 1e-7, drainMult: 150, description: "Channel the energy of infinity into your being.", skills: ["alchemy", "charisma"], mandatory: true },
       { id: 254, name: "Transcend Chaos", type: "Prestige", maxReps: 1, count: 0, baseTime: 1e9, speedMult: 0.3, xpMult: 2, description: "Embark on the ultimate rebirth by transcending chaos - a ritual that reshapes your destiny.", skills: ["omniscience"], mandatory: true },
       { id: 255, name: "Harvest Cosmic Scrolls", type: "Training", maxReps: 2, count: 0, baseTime: 1e28, speedMult: 1e-7, drainMult: 7500, description: "Collect ancient insights from the cosmos.", skills: ["intellect", "perception"], resources: ["cosmic_scroll"] },

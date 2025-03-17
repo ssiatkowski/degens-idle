@@ -36,7 +36,7 @@ let perkDescriptions = {
     quantum_teleportation:  "Travel is now affected by Power.",
     quantum_harmony:        "Whenever another skill gains xp, Quantum gains 1% of that xp.",
     cyber_boost:            "Each time Cybernetics levels up,<br>another random skill also levels up.",
-    universal_alloy:        "Multiply Combat speed by square root of unspent Serenity.",
+    universal_alloy:        "Multiply Combat speed by cube root of unspent Serenity.",
     forge_fervor:           "Reduce Combat energy drain by 3x.",
     celestial_light:        "All XP gains increased by 2x.",
     neon_energy:            "Next time you prestige, start with +300 energy (first run only).",
@@ -382,7 +382,7 @@ let resourceActions = {
   "infinity_gauntlet": {
     onConsume: (gameState, amt) => {
       Object.keys(gameState.resources).forEach(resource => {
-        if (gameState.resources[resource] > 0 && resource !== "infinity_gauntlet") {
+        if (gameState.resources[resource] > 0 && resource !== "infinity_gauntlet" && resource !== "googol") {
           addResource(resource, amt);
         }
       });
@@ -767,9 +767,60 @@ let resourceActions = {
     },
     tooltip: "Reduces Totality energy drain by 15%."
   },
+  "system_core": {
+    onConsume: (gameState, amt) => {
+      gameState.skills["aiMastery"].drainBoost += 0.5 * amt;
+      updateSkillMultipliers();
+      updateSkillDisplay();
+      updateTasksHoverInfo();
+      showMessage(`Used ${amt} System Core${amt > 1 ? "s" : ""}.<br>Reduced AI Mastery energy drain by ${50 * amt}%.`);
+    },
+  },
+  "googol": {
+    onConsume: (gameState, amt) => {
+      // Object to record how much was added per resource.
+      let addedTotals = {};
+      
+      // For each googol unit consumed...
+      for (let i = 0; i < amt; i++) {
+        // Get a list of other resources that the player currently holds (>0), excluding "googol"
+        const otherResources = Object.keys(gameState.resources)
+          .filter(r => r !== "googol" && gameState.resources[r] > 0);
+        
+        // If no other resource is found, skip this iteration.
+        if (otherResources.length === 0) continue;
+        
+        // Randomly select one of the available resources.
+        const randomResource = otherResources[Math.floor(Math.random() * otherResources.length)];
+        
+        // Add 10 to the chosen resource.
+        addResource(randomResource, 10);
+        
+        // Record how much was added.
+        addedTotals[randomResource] = (addedTotals[randomResource] || 0) + 10;
+      }
+      
+      // If nothing was added, notify the player.
+      if (Object.keys(addedTotals).length === 0) {
+        showMessage("No other resources available to boost with Googol.");
+        return;
+      }
+      
+      // Build a summary message.
+      let summary = [];
+      for (const resource in addedTotals) {
+        summary.push(`${formatStringForDisplay(resource)} +${addedTotals[resource]}`);
+      }
+      
+      showMessage(`Used ${amt} Googol${amt > 1 ? "s" : ""}.<br>Added:<br>${summary.join("<br>")}`);
+    },
+    tooltip: "When consumed, for each Googol adds +10 to a random other resource you have.<br>Googol cannot be created by Infinity Gauntlet."
+  }
+
+
 };
 
-const EXCLUDED_AUTO_RESOURCES = new Set(["cybernetic_armor", "infinity_gauntlet", "stardust", "cosmic_shard","atomic_particle","energy_core"]);
+const EXCLUDED_AUTO_RESOURCES = new Set(["cybernetic_armor", "infinity_gauntlet", "stardust", "cosmic_shard","atomic_particle","energy_core","googol"]);
 
 const achievements = [
   { name: "That Was Easy", description: "Advance to Zone 2.", img: "images/achievements/that_was_easy.jpg" },
@@ -788,7 +839,7 @@ const achievements = [
   { name: "Take down the Doctor", description: "Defeat Doctor Manhattan while holding atomic particle (unused).", img: "images/achievements/take_down_the_doctor.jpg" },
   { name: "Amnesia", description: "Lose over 10K knowledge in a single copium reset.", img: "images/achievements/amnesia.jpg" },
   { name: "Delusional", description: "Delusion reset at over 50K delusion.", img: "images/achievements/delusional.jpg" },
-  { name: "Cybernetic Overload", description: "Gain over 40 starting energy from cybernetic implant in one run.", img: "images/achievements/cybernetic_overload.jpg" },
+  { name: "Cybernetic Overload", description: "Gain over 40 starting energy from cybernetic implants in one run.", img: "images/achievements/cybernetic_overload.jpg" },
   { name: "Slay the Beast", description: "Defeat Godzilla after having used an energy core.", img: "images/achievements/slay_the_beast.jpg" },
 ];
 

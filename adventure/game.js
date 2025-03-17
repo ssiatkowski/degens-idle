@@ -849,7 +849,7 @@
       let baseMult = Math.pow(1.01, sData.level - 1);
       if (sName === "alchemy" && gameState.perks.brewmaster) baseMult *= 1.25;
       if (sName === "travel" && gameState.perks.hoverboard) baseMult *= 4;
-      if (sName === "combat" && gameState.perks.universal_alloy) baseMult *= Math.max(1, gameState.serenity ** (1/2));
+      if (sName === "combat" && gameState.perks.universal_alloy) baseMult *= Math.max(1, gameState.serenity ** (1/3));
       if (sName === "omniscience" && gameState.perks.omega_stability) baseMult *= 1.5;
       baseMult *= (sData.progressBoost);
       let baseDrain = sData.energyDrain / (sData.drainBoost || 1);
@@ -993,7 +993,7 @@
         baseMult *= (1 + (gameState.perks.urban_warfare ? 0.03 : 0.01) * gameState.power);
       }
       
-      if (sName === "combat" && gameState.perks.universal_alloy) baseMult *= Math.max(1, gameState.serenity ** (1/2));
+      if (sName === "combat" && gameState.perks.universal_alloy) baseMult *= Math.max(1, gameState.serenity ** (1/3));
 
       if (sName === "omniscience" && gameState.perks.omega_stability) baseMult *= 1.5;
       
@@ -2574,7 +2574,7 @@
     // Calculate total resets from energy, copium, and delusion resets.
     const totalResets = gameState.numEnergyResets + gameState.numCopiumResets + gameState.numDelusionResets;
     // Calculate next zone potential using (highestCompletedZone + 1) divided by total resets.
-    const nextZonePotential = (((gameState.highestCompletedZone + 1) ** gameState.serenityGainZoneExponent) / totalResets) *
+    const nextZonePotential = (((gameState.highestCompletedZone + 1) ** gameState.serenityGainZoneExponent) / Math.max(totalResets, 1)) *
       (gameState.perks.inspired_glow ? 1.25 : 1) + gameState.satoshiSerenity;
   
     // Check if the modal already exists.
@@ -3583,6 +3583,9 @@
       if (tData.progress >= tData.totalDuration) {
         const task = zone.tasks[tData.taskIndex];
         if (task.count < task.maxReps) task.count++;
+        if (task.name === "Battle Doctor Manhattan" && gameState.resources["atomic_particle"] && gameState.resources["atomic_particle"] > 0) {
+          unlockAchievement("Take down the Doctor");
+        }
         if (task.resources && Array.isArray(task.resources)) {
           if (gameState.perks["four_leaf_clover"] && Math.random() < gameState.fortunesFavorValue / 100) {
             if(gameState.numAtomicParticles > 0) {
@@ -3811,9 +3814,6 @@
           }
           if (task.name === "Battle Vegeta" && gameState.copium == 0) {
             unlockAchievement("Mondo Cool");
-          }
-          if (task.name === "Battle Doctor Manhattan" && gameState.resources["atomic_particle"] && gameState.resources["atomic_particle"] > 0) {
-            unlockAchievement("Take down the Doctor");
           }
         }
         if (task.perk && !gameState.perks[task.perk] && task.count >= task.maxReps) {
