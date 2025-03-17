@@ -153,6 +153,9 @@
       }
     }
     gameState.resources[name] += amt;
+    if (name == "Energy Elixir" && gameState.resources[name] >= 200) {
+      unlockAchievement("Apothecary");
+    }
     // Instead of full re-render, update only this resource.
     updateResourceDisplay(name);
   }
@@ -1054,7 +1057,19 @@
   /****************************************
    * RESTART & GAME OVER FUNCTIONS
    ****************************************/
+  function debounce(func, wait) {
+    let timeout;
+    return function(...args) {
+      if (timeout) return;
+      timeout = setTimeout(() => {
+        timeout = null;
+      }, wait);
+      func.apply(this, args);
+    };
+  }
+
   function resetGame(reason) {
+    let neon_energy = false;
     if (reason === "energyLoss") {
       // lose half resources
       Object.keys(gameState.resources).forEach(rName => {
@@ -1117,6 +1132,9 @@
       });
       growthMiracleApplied = false;
       gameState.resources = {};
+      if (gameState.perks["neon_energy"]) {
+        neon_energy = true;
+      }
       gameState.perks = {};
       gatherAllPerks();
       applyPerks();
@@ -1158,8 +1176,13 @@
     });
     gameState.resourcesUsed = {};
     gameState.energy = gameState.startingEnergy;
-    if (reason == "prestige" && gameState.perks["neon_energy"]) {
-      gameState.energy += 300;
+    if (neon_energy) {
+      gameState.energy += 500;
+      if (Math.random() < 0.5) {
+        gameState.perks["neon_energy"] = true;
+        showMessage("Neon Energy preserved!");
+        renderPerks();
+      }
     }
     currentZoneIndex = 0;
     currentTasks = [];
@@ -1204,10 +1227,10 @@
       </div>
     `;
     // Attach the restart button listener
-    energyScreen.querySelector("#restartButtonEnergy").addEventListener("click", () => {
+    energyScreen.querySelector("#restartButtonEnergy").addEventListener("click", debounce(() => {
       energyScreen.style.display = "none";
       resetGame("energyLoss");
-    });
+    }, 2000));
     // Now update the reset message.
     const energyContent = energyScreen.querySelector("#gameOverContentEnergy");
     let resetMsg = energyContent.querySelector("#energyResetMsg");
@@ -1242,10 +1265,10 @@
         <button id="restartButtonCopium">Restart</button>
       </div>
     `;
-    copiumScreen.querySelector("#restartButtonCopium").addEventListener("click", () => {
+    copiumScreen.querySelector("#restartButtonCopium").addEventListener("click", debounce(() => {
       copiumScreen.style.display = "none";
       resetGame("copiumOverflow");
-    });
+    }, 2000));
     const copiumContent = copiumScreen.querySelector("#gameOverContentCopium");
     let resetMsg = copiumContent.querySelector("#copiumResetMsg");
     if (!resetMsg) {
@@ -1278,10 +1301,10 @@
         <button id="restartButtonDelusion">Restart</button>
       </div>
     `;
-    delusionScreen.querySelector("#restartButtonDelusion").addEventListener("click", () => {
+    delusionScreen.querySelector("#restartButtonDelusion").addEventListener("click", debounce(() => {
       delusionScreen.style.display = "none";
       resetGame("delusionOverflow");
-    });
+    }, 2000));
     const delusionContent = delusionScreen.querySelector("#gameOverContentDelusion");
     let resetMsg = delusionContent.querySelector("#delusionResetMsg");
     if (!resetMsg) {
@@ -2689,7 +2712,7 @@
         } else {
           if (sectionLocked) {
             slot.classList.add("upgrade-slot-locked");
-            costDiv.textContent = `Cost: ${details.cost}`;
+            costDiv.textContent = `Cost: ${formatNumber(details.cost)}`;
             slot.setAttribute("data-tooltip", (details.description || "") + "<br><br>This section is locked.");
           } else {
             if (gameState.serenity >= details.cost) {
@@ -2697,7 +2720,7 @@
             } else {
               slot.classList.add("upgrade-slot-locked");
             }
-            costDiv.textContent = `Cost: ${details.cost}`;
+            costDiv.textContent = `Cost: ${formatNumber(details.cost)}`;
             slot.addEventListener("click", () => {
               if (gameState.serenity >= details.cost) {
                 const prevScroll = content.scrollTop;
@@ -2826,7 +2849,7 @@
     confirmBtn.textContent = "Confirm";
     confirmBtn.className = "prestige-task-button";
     confirmBtn.style.fontWeight = "bold";
-    confirmBtn.addEventListener("click", () => {
+    confirmBtn.addEventListener("click", debounce(() => {
       // Add serenity, reset, close modal
       gameState.serenity += serenityGain;
       gameState.prestigeAvailable = false;
@@ -2835,7 +2858,7 @@
       // Also close the main serenity modal if it's still open
       const mainModal = document.getElementById("serenityModal");
       if (mainModal) mainModal.remove();
-    });
+    }, 2000));
 
     const cancelBtn = document.createElement("button");
     cancelBtn.textContent = "Cancel";
@@ -3310,7 +3333,7 @@
       
       <h3>Skills:</h3>
       <p>
-        Each skill controls two key factors: speed (how fast tasks progress) and energy drain (how much energy a task uses). Skill speed improves with level (XP requirements scale exponentially at about 1% per level), and various resources, perks, and upgrades can further affect speed, energy drain, or XP scaling.
+        Each skill controls two key factors: speed (how fast tasks progress) and energy drain (how much energy a task uses). Skill speed improves with level (at start, speed scales 1% per level while XP required scales 2% per level), and various resources, perks, and upgrades can further affect speed, energy drain, or XP scaling.
       </p>
       
       <h3>Tasks:</h3>
@@ -3329,6 +3352,11 @@
       <h3>Perks:</h3>
       <p>
         Some tasks grant perks that persist through resets until you prestige. Tasks with perks that have not been unlocked yet are marked with a star. Some perks also have effects that you can toggle on or off.
+      </p>
+
+      <h3>Achievements:</h3>
+      <p>
+        Achievements are a one-and-done type of deal - once unlocked you have them forever. They provide a small speed boost to all skills (additive 1% per achievement).
       </p>
 
       <h3>Automation:</h3>
@@ -3590,6 +3618,7 @@
           if (gameState.perks["four_leaf_clover"] && Math.random() < gameState.fortunesFavorValue / 100) {
             if(gameState.numAtomicParticles > 0) {
               task.resources.forEach(r => addResource(r, gameState.fortunesFavorValue * 2));
+              unlockAchievement("Lucky");
               gameState.numAtomicParticles--;
             } else {
               task.resources.forEach(r => addResource(r, gameState.fortunesFavorValue));

@@ -216,7 +216,7 @@ var zones = [
       { id: 153, name: "Cyber Siege Digital Onslaught", type: "Training", maxReps: 10, count: 0, baseTime: 2e18, description: "Launch a final digital assault on enemy systems.", skills: ["hacking", "cybernetics"], mandatory: true },
       { id: 154, name: "Discover Serenity", type: "Prestige", maxReps: 1, count: 0, baseTime: 3.3e5, xpMult: 0.9, description: "Find inner peace and serenity.", skills: ["omniscience"], mandatory: true },
       { id: 155, name: "Master of AI: Ultimate Challenge", type: "Training", maxReps: 5, count: 0, baseTime: 1e19, xpMult: 0.5, description: "Solve a complex algorithm that tests your intellect.", skills: ["aiMastery", "intellect"], perk: "master_of_ai" },
-      { id: 156, name: "Last Stand: Test of Endurance", type: "Training", maxReps: 4, count: 0, baseTime: 2e14, drainMult: 3, xpMult: 10, description: "Withstand an endless onslaught of foes.", skills: ["endurance"], perk: "last_stand" },
+      { id: 156, name: "Last Stand: Test of Endurance", type: "Training", maxReps: 4, count: 0, baseTime: 2e14, drainMult: 3, xpMult: 20, description: "Withstand an endless onslaught of foes.", skills: ["endurance"], perk: "last_stand" },
       { id: 157, name: "Puzzle Piece: Destiny", type: "Training", maxReps: 10, count: 0, baseTime: 1e17, description: "Find a piece of the ultimate puzzle to shape your destiny.", skills: ["aiMastery", "perception"], resources: ["puzzle_piece"] }
     ]
   },

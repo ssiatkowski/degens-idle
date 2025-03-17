@@ -39,7 +39,7 @@ let perkDescriptions = {
     universal_alloy:        "Multiply Combat speed by cube root of unspent Serenity.",
     forge_fervor:           "Reduce Combat energy drain by 3x.",
     celestial_light:        "All XP gains increased by 2x.",
-    neon_energy:            "Next time you prestige, start with +300 energy (first run only).",
+    neon_energy:            "Next time you prestige, start with +500 energy (first run only).",
     omega_stability:        "Omniscience is 50% faster.",
     expanse_echo:           "Make every game tick count as 10% more.",
     digital_dreams:         "When hacking levels up, 10% chance for tinkering to also level up.<br>When tinkering levels up, 10% chance for hacking to also level up.<br>(in theory can propagate infinitely)",
@@ -836,10 +836,12 @@ const achievements = [
   { name: "Empty Pockets", description: "Reach Zone 15 without any resources (used or held).", img: "images/achievements/empty_pockets.jpg" },
   { name: "Mega Push", description: "Copium reset with exactly 10 inifinity gauntlets and nothing else.", img: "images/achievements/mega_push.jpg" },
   { name: "Mondo Cool", description: "Defeat Vegeta with 0 copium.", img: "images/achievements/mondo_cool.jpg" },
+  { name: "Lucky", description: "Produce at least 14 resources at once.", img: "images/achievements/lucky.jpg" },
   { name: "Take down the Doctor", description: "Defeat Doctor Manhattan while holding atomic particle (unused).", img: "images/achievements/take_down_the_doctor.jpg" },
   { name: "Amnesia", description: "Lose over 10K knowledge in a single copium reset.", img: "images/achievements/amnesia.jpg" },
   { name: "Delusional", description: "Delusion reset at over 50K delusion.", img: "images/achievements/delusional.jpg" },
   { name: "Cybernetic Overload", description: "Gain over 40 starting energy from cybernetic implants in one run.", img: "images/achievements/cybernetic_overload.jpg" },
+  { name: "Apothecary", description: "Hold over 200 Energy Elixirs in your inventory at once.", img: "images/achievements/apothecary.jpg" },
   { name: "Slay the Beast", description: "Defeat Godzilla after having used an energy core.", img: "images/achievements/slay_the_beast.jpg" },
 ];
 
@@ -950,7 +952,7 @@ const SERENITY_UPGRADES = {
       },
       "Better Elixirs": {
         initialCost: 2,
-        scaling: 3,
+        scaling: 3.1,
         description: "Increase effect of Energy Elixir by +1."
       },
       "Game Speed": {
