@@ -153,7 +153,7 @@
       }
     }
     gameState.resources[name] += amt;
-    if (name == "Energy Elixir" && gameState.resources[name] >= 200) {
+    if (name == "energy_elixir" && gameState.resources[name] >= 200) {
       unlockAchievement("Apothecary");
     }
     // Instead of full re-render, update only this resource.
