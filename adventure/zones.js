@@ -362,7 +362,7 @@ var zones = [
       { id: 254, name: "Transcend Chaos", type: "Prestige", maxReps: 1, count: 0, baseTime: 1e9, speedMult: 0.3, xpMult: 2, description: "Embark on the ultimate rebirth by transcending chaos - a ritual that reshapes your destiny.", skills: ["omniscience"], mandatory: true },
       { id: 255, name: "Harvest Cosmic Scrolls", type: "Training", maxReps: 2, count: 0, baseTime: 1e28, speedMult: 1e-7, drainMult: 7500, description: "Collect ancient insights from the cosmos.", skills: ["intellect", "perception"], resources: ["cosmic_scroll"] },
       { id: 256, name: "Stellar Dreams: Drift Through", type: "Training", maxReps: 7, count: 0, baseTime: 1e27, speedMult: 3e-8, drainMult: 2000, description: "Float among the endless expanse of space.", skills: ["tinkering", "charisma"], perk: "stellar_dreams" },
-      { id: 257, name: "Spark of Infinity: Cyber Enhancement", type: "Training", maxReps: 1, count: 0, baseTime: 5e5, xpMult: 1e7, description: "Let the boundless energy of the universe fuel your knowledge of cybernetics.", skills: ["totality"], perk: "spark_of_infinity" },
+      { id: 257, name: "Spark of Infinity: Cyber Enhancement", type: "Training", maxReps: 1, count: 0, baseTime: 5e5, xpMult: 2e6, description: "Let the boundless energy of the universe fuel your knowledge of cybernetics.", skills: ["totality"], perk: "spark_of_infinity" },
       { id: 258, name: "Battle Godzilla", type: "Training", maxReps: 1, count: 0, baseTime: 1e21, speedMult: 0.2, drainMult: 2500, description: "Engage the king of monsters in a titanic struggle.", skills: ["combat"], boss_image: "images/bosses/godzilla.jpg", sound: godzillaSound, resources: ["kaiju_scale"] }
     ]
   },

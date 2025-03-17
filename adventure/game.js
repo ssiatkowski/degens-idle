@@ -96,6 +96,9 @@
       copiumReactorEnergy: 6,
       randomCrystalLevels: 1,
       fortunesFavorValue: 7,
+
+      //achievement related
+      totalCyberneticImplantEnergy: 0,
     };
   }
 
@@ -1061,17 +1064,35 @@
         gameState.startingEnergy += (currentZoneIndex+1)/10;
       }
       gameState.numEnergyResets++;
+      if (gameState.copium >= 8990) {
+        unlockAchievement("Postpone Inevitable");
+      }
+      if (gameState.resources["cybernetic_armor"] && gameState.resources["cybernetic_armor"] >= 4) {
+        unlockAchievement("Certified Turtle");
+      }
     } else if (reason === "copiumOverflow") {
       applyResourceSaver();
       if (gameState.perks["knowledge_preserver"]) {
+        if (gameState.knowledge >= 100000) {
+          unlockAchievement("Amnesia");
+        }
         gameState.knowledge = Math.floor(gameState.knowledge * 0.9);
       } else {
+        if (gameState.knowledge >= 20000) {
+          unlockAchievement("Amnesia");
+        }
         gameState.knowledge = Math.floor(gameState.knowledge / 2);
       }
       gameState.copium = 0;
       gameState.startingEnergy += gameState.perks["copium_reactor"] ? gameState.copiumReactorEnergy : 2;
       gameState.numCopiumResets++;
+      if (gameState.resources["infinity_gauntlet"] === 10 && Object.keys(gameState.resources).length === 1) {
+        unlockAchievement("Mega Push");
+      }
     } else if (reason === "delusionOverflow") {
+      if (gameState.delusion >= 50000) {
+        unlockAchievement("Delusional");
+      }
       gameState.power = Math.floor(gameState.power * 0.8);
       gameState.delusion = 0;
       gameState.numDelusionResets++;
@@ -1150,6 +1171,7 @@
     gameState.numCelestialBlossoms = 0;
     gameState.numAtomicParticles = 0;
     gameState.energyCoreMultiplier = 1;
+    gameState.totalCyberneticImplantEnergy = 0;
     if (gameState.serenityUnlockables["Delusion Enjoyer"]) {
       gameState.delusionEnjoyerMultiplier = Math.max(1, gameState.delusion / 100);
     }
@@ -1347,6 +1369,9 @@
     };
     button.classList.add("active");
     currentTasks.push(data);
+    if (task.name === "Brew a Simple Potion" && gameState.numCyberneticArmors > 0) {
+      unlockAchievement("Wasted Armor");
+    };
   }
   
 
@@ -1845,6 +1870,9 @@
     else {
       showEndOfContentModal();
       currentZoneIndex = 1;
+    }
+    if (currentZoneIndex == 1) {
+      unlockAchievement("That Was Easy");
     }
     if (currentZoneIndex == 14 && Object.keys(gameState.resourcesUsed).length == 0 
         && Object.values(gameState.resources).reduce((sum, value) => sum + value, 0) == 0) {
@@ -3274,8 +3302,7 @@
     content.innerHTML = `
       <h2>Tutorial & Tips</h2>
       <p>
-        This game does not require a tutorial, but here it is if you need extra guidance. Warning: this guide contains spoilers.
-        As you progress, you'll discover that different stages of the game demand different strategies—what works in the early zones might not be as effective later on.
+        This game throws many mechanics at you - feel free to experiment by yourself, but this tutorial will walk you through the basics. As you progress, you'll discover that different stages of the game demand different strategies—what works in the early zones might not be as effective later on.
         The complexity of resources and their interactions with skills, tasks, and resets scale up very quickly, so if you're looking for a chill, passive idle experience, this may not be the game for you.
         Instead, be prepared to constantly adapt your strategy to optimize your resource management and efficiency.
         And hey, if you manage to solve all the strategic puzzles and beat zone 33 with ease, send me your resume!
@@ -3475,29 +3502,29 @@
    * MAIN GAME LOOP
    ****************************************/
   function gameLoop() {
-  // Auto-Use resources if enabled:
-  if (gameState.autoConsumeEnabled) {
-    // Loop over resources and pick the first usable one.
-    for (const resName in gameState.resources) {
-      let available = gameState.resources[resName];
-      if (available > 0 && !EXCLUDED_AUTO_RESOURCES.has(resName)) {
-        let amt;
-        if (gameState.consumeMinusOneEnabled) {
-          // Only consume if more than 1 exists, leaving 1 behind.
-          if (available > 1) {
-            amt = available - 1;
+    // Auto-Use resources if enabled:
+    if (gameState.autoConsumeEnabled) {
+      // Loop over resources and pick the first usable one.
+      for (const resName in gameState.resources) {
+        let available = gameState.resources[resName];
+        if (available > 0 && !EXCLUDED_AUTO_RESOURCES.has(resName)) {
+          let amt;
+          if (gameState.consumeMinusOneEnabled) {
+            // Only consume if more than 1 exists, leaving 1 behind.
+            if (available > 1) {
+              amt = available - 1;
+            } else {
+              continue; // Skip this resource if only 1 is available.
+            }
           } else {
-            continue; // Skip this resource if only 1 is available.
+            amt = available;
           }
-        } else {
-          amt = available;
+          consumeResource(resName, amt);
+          // Only process one resource per tick.
+          break;
         }
-        consumeResource(resName, amt);
-        // Only process one resource per tick.
-        break;
       }
     }
-  }
 
     if (currentTasks.length === 0 && !gameState.autoRun) return;
     currentTasks.forEach((tData) => {
@@ -3765,7 +3792,12 @@
           if (!gameState.powerUnlocked) {
             gameState.powerUnlocked = true;
             showPowerModal();
+          
           }
+          if (task.name === "Battle Godzilla" && gameState.energyCoreMultiplier > 1) {
+            unlockAchievement("Slay the Beast");
+          }
+
           gameState.energyCoreMultiplier = 1;
           gameState.power += (zone.id - 3) * gameState.powerGainMultiplier;
           showMessage(`<span style="color: rgb(222, 34, 191);">${task.name.replace(/^[^ ]+ /, "")} defeated! +${formatNumber((zone.id - 3) * gameState.powerGainMultiplier)} Power</span>`);
@@ -3773,6 +3805,15 @@
 
           if (task.name === "Battle Agent Smith" && Object.keys(gameState.resourcesUsed).length == 0) {
             unlockAchievement("Mano a Mano");
+          }
+          if (task.name === "Challenge Big Brother" && Object.keys(gameState.resourcesUsed).length == 1 && gameState.resourcesUsed["cool_sunglasses"]) {
+            unlockAchievement("Cool Little Brother");
+          }
+          if (task.name === "Battle Vegeta" && gameState.copium == 0) {
+            unlockAchievement("Mondo Cool");
+          }
+          if (task.name === "Battle Doctor Manhattan" && gameState.resources["atomic_particle"] && gameState.resources["atomic_particle"] > 0) {
+            unlockAchievement("Take down the Doctor");
           }
         }
         if (task.perk && !gameState.perks[task.perk] && task.count >= task.maxReps) {
@@ -3975,6 +4016,7 @@
     gameState.fortunesFavorValue = gameState.fortunesFavorValue || 7;
     gameState.unlockedAchievements = gameState.unlockedAchievements || {};
     gameState.achievementsMultiplier = gameState.achievementsMultiplier || 1;
+    gameState.totalCyberneticImplantEnergy = gameState.totalCyberneticImplantEnergy || 0;
 
     // Cleanup old values:
     if ("luck_of_the_irish" in gameState.perks) {
@@ -4019,6 +4061,7 @@
   window.addXP = (skillName, rawXP, prePendMessage, suppressMessage, overwriteXP) => addXP(skillName, rawXP, prePendMessage, suppressMessage, overwriteXP);
   window.getSkillXpScaling = () => skillXpScaling;
   window.showKnowledgeIfUnlocked = () => showKnowledgeIfUnlocked();
+  window.unlockAchievement = (name) => unlockAchievement(name);
 
   // Expose some functions for debugging
   window.getGameState = () => gameState;

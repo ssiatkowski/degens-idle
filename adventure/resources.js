@@ -730,15 +730,18 @@ let resourceActions = {
   },
   "cybernetic_implant": {
     onConsume: (gameState, amt) => {
-      // Increase starting energy by (current Cybernetics level / 8192) per implant.
-      const energyIncrease = (gameState.skills["cybernetics"].level / 8192) * amt;
+      const energyIncrease = (gameState.skills["cybernetics"].level / 4096) * amt;
       gameState.startingEnergy += energyIncrease;
+      gameState.totalCyberneticImplantEnergy += energyIncrease;
+      if (gameState.totalCyberneticImplantEnergy > 40) {
+        unlockAchievement("Cybernetic Overload");
+      }
       
       updateEnergyDisplay();
       
       showMessage(`Used ${amt} Cybernetic Implant${amt > 1 ? "s" : ""}.<br>Increased Starting Energy by ${formatNumber(energyIncrease)}.`);
     },
-    tooltip: "Increases Starting Energy by (Cybernetics level / 8192) per implant."
+    tooltip: "Increases Starting Energy by (Cybernetics level / 4096) per implant."
   },
   "cosmic_scroll": {
     onConsume: (gameState, amt) => {
@@ -769,12 +772,24 @@ let resourceActions = {
 const EXCLUDED_AUTO_RESOURCES = new Set(["cybernetic_armor", "infinity_gauntlet", "stardust", "cosmic_shard","atomic_particle","energy_core"]);
 
 const achievements = [
-  { name: "Baby Steps", description: "Full clear Zone 3.", img: "images/achievements/baby_steps.jpg" },
+  { name: "That Was Easy", description: "Advance to Zone 2.", img: "images/achievements/that_was_easy.jpg" },
   { name: "Toggler", description: "Toggle a perk to disable it.", img: "images/achievements/toggler.jpg" },
+  { name: "Baby Steps", description: "Full clear Zone 3.", img: "images/achievements/baby_steps.jpg" },
   { name: "Take a Breather", description: "Pause a boss fight.", img: "images/achievements/take_a_breather.jpg" },
   { name: "Mano a Mano", description: "Defeat Agent Smith without using any resources.", img: "images/achievements/mano_a_mano.jpg" },
+  { name: "Wasted Armor", description: "Use cybernetic armor to make an energy elixir.", img: "images/achievements/wasted_armor.jpg" },
+  { name: "Certified Turtle", description: "Have at least 4 cybernetic armors left after energy reset.", img: "images/achievements/certified_turtle.jpg" },
+  { name: "Postpone Inevitable", description: "Energy reset with over 8990 copium.", img: "images/achievements/postpone_inevitable.jpg" },
   { name: "First Prestige", description: "Complete your first Prestige.", img: "images/achievements/first_prestige.jpg" },
+  { name: "Cool Little Brother", description: "Defeat Big Brother after having only used sunglasses.", img: "images/achievements/cool_little_brother.jpg" },
   { name: "Empty Pockets", description: "Reach Zone 15 without any resources (used or held).", img: "images/achievements/empty_pockets.jpg" },
+  { name: "Mega Push", description: "Copium reset with exactly 10 inifinity gauntlets and nothing else.", img: "images/achievements/mega_push.jpg" },
+  { name: "Mondo Cool", description: "Defeat Vegeta with 0 copium.", img: "images/achievements/mondo_cool.jpg" },
+  { name: "Take down the Doctor", description: "Defeat Doctor Manhattan while holding atomic particle (unused).", img: "images/achievements/take_down_the_doctor.jpg" },
+  { name: "Amnesia", description: "Lose over 10K knowledge in a single copium reset.", img: "images/achievements/amnesia.jpg" },
+  { name: "Delusional", description: "Delusion reset at over 50K delusion.", img: "images/achievements/delusional.jpg" },
+  { name: "Cybernetic Overload", description: "Gain over 40 starting energy from cybernetic implant in one run.", img: "images/achievements/cybernetic_overload.jpg" },
+  { name: "Slay the Beast", description: "Defeat Godzilla after having used an energy core.", img: "images/achievements/slay_the_beast.jpg" },
 ];
 
 const achievementsMap = new Map();
@@ -871,7 +886,7 @@ const SERENITY_UPGRADES = {
       },
       "Power Doubler": {
         initialCost: 2,
-        scaling: 3,
+        scaling: 3.5,
         description: "Multiply power gained from defeating bosses by 2x (multiplicatively)."
       }
     },
