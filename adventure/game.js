@@ -1692,6 +1692,7 @@
         }
       });
     }
+    mult *= gameState.achievementsMultiplier;
     if (task.speedMult !== undefined) {
       mult *= task.speedMult;
     }
