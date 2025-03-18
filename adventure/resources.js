@@ -45,6 +45,7 @@ let perkDescriptions = {
     digital_dreams:         "When hacking levels up, 10% chance for tinkering to also level up.<br>When tinkering levels up, 10% chance for hacking to also level up.<br>(in theory can propagate infinitely)",
     stellar_dreams:         "Changes lambda parameter for delusion gain from 0.5 to 0.3.<br>This increases delusion gain.",
     spark_of_infinity:      "Knowledge also levels with and boosts Cybernetics.",
+    spectral_glow:          "Each time you advance a zone,<br>25% chance to spawn a random resource used in this run.",
 
   };
 
@@ -382,7 +383,7 @@ let resourceActions = {
   "infinity_gauntlet": {
     onConsume: (gameState, amt) => {
       Object.keys(gameState.resources).forEach(resource => {
-        if (gameState.resources[resource] > 0 && resource !== "infinity_gauntlet" && resource !== "googol") {
+        if (gameState.resources[resource] > 0 && resource !== "infinity_gauntlet" && resource !== "googol" && resource !== "radiance") {
           addResource(resource, amt);
         }
       });
@@ -394,7 +395,7 @@ let resourceActions = {
   "stardust": {
     onConsume: (gameState, amt) => {
       // Get an array of resource names, excluding "infinity_gauntlet" and "stardust"
-      const usedResources = Object.keys(gameState.resourcesUsed).filter(r => r !== "infinity_gauntlet" && r !== "stardust");
+      const usedResources = Object.keys(gameState.resourcesUsed).filter(r => r !== "infinity_gauntlet" && r !== "stardust" && r !== "radiance" && r !== "googol");
       let resourceCounts = {};
 
       // For each Stardust unit consumed...
@@ -775,6 +776,7 @@ let resourceActions = {
       updateTasksHoverInfo();
       showMessage(`Used ${amt} System Core${amt > 1 ? "s" : ""}.<br>Reduced AI Mastery energy drain by ${50 * amt}%.`);
     },
+    tooltip: "Reduces AI Mastery energy drain by 50%."
   },
   "googol": {
     onConsume: (gameState, amt) => {
@@ -814,13 +816,83 @@ let resourceActions = {
       
       showMessage(`Used ${amt} Googol${amt > 1 ? "s" : ""}.<br>Added:<br>${summary.join("<br>")}`);
     },
-    tooltip: "When consumed, for each Googol adds +10 to a random other resource you have.<br>Googol cannot be created by Infinity Gauntlet."
-  }
+    tooltip: "When consumed, for each Googol adds +10 to a random other resource you have.<br>Googol cannot be created by Infinity Gauntlet or Stardust."
+  },
+  "dream_fragment": {
+    onConsume: (gameState, amt) => {
+      // Calculate 0.1% of maxDelusion
+      const delusionIncrement = 0.001 * gameState.maxDelusion;
+
+      // Move delusion towards 90% of maxDelusion, either increasing or decreasing
+      const targetDelusion = 0.9 * gameState.maxDelusion;
+      
+      if (gameState.delusion < targetDelusion) {
+        gameState.delusion = Math.min(gameState.delusion + delusionIncrement, targetDelusion);
+      } else {
+        gameState.delusion = Math.max(gameState.delusion - delusionIncrement, targetDelusion);
+      }
+
+      updateDelusionDisplay();
+      showMessage(`Used ${amt} Dream Fragment${amt > 1 ? "s" : ""}.<br>Adjusted delusion towards 90% by ${delusionIncrement}.`);
+    },
+    tooltip: "Moves delusion 0.1% of max delusion closer to 90%."
+  },
+"radiance": {
+  onConsume: (gameState, amt, currentTasks) => {
+    const currentZoneIndex = getCurrentZoneIndex(); // Get the current zone index
+    const zone = zones[currentZoneIndex]; // Get the current zone using the index
+
+    zone.tasks.forEach((task, taskIndex) => {
+      // Only progress tasks that are not finished and are visible
+      if (task.count < task.maxReps) {
+        // Check if the task is already in currentTasks; if not, add it
+        const existingTaskData = currentTasks.find(t => t.zoneIndex === currentZoneIndex && t.taskIndex === taskIndex);
+
+        if (!existingTaskData) {
+          const taskDiv = document.querySelector(`.task[data-zone-index="${currentZoneIndex}"][data-task-index="${taskIndex}"]`);
+          const button = taskDiv.querySelector("button");
+          const progressFill = taskDiv.querySelector(".current-progress-fill");
+          const repContainer = taskDiv.querySelector(".rep-container");
+
+          // Add the task to currentTasks with initial progress set to 0
+          startTask(currentZoneIndex, taskIndex, button, progressFill, repContainer);
+        }
+
+        // Now find the task data in currentTasks (it should be there now)
+        const tData = currentTasks.find(t => t.zoneIndex === currentZoneIndex && t.taskIndex === taskIndex);
+
+        if (tData) {
+          const remainingProgress = task.baseTime - tData.progress; // Remaining progress to complete the task
+          console.log(tData.progress, task.baseTime , remainingProgress);
+          const progressIncrease = remainingProgress * 0.1; // 10% of the remaining progress
+          tData.progress = Math.min(tData.progress + progressIncrease, task.baseTime); // Ensure progress doesn't exceed totalDuration
+          console.log(tData.progress);
+
+          // Update the visual progress fill
+          const pct = (tData.progress / task.baseTime) * 100;
+          console.log(pct);
+          tData.progressFill.style.width = Math.min(pct, 100) + "%";
+
+          // Pause the task before updating progress
+          tData.paused = true;
+          console.log(tData.paused);
+        }
+      }
+    });
+
+    updateTasksHoverInfo(); // Update any necessary task hover info
+    showMessage(`Used ${amt} Radiance${amt > 1 ? "s" : ""}.<br>Progressed all tasks by 10% of their remaining progress.`);
+
+  },
+  tooltip: "Progresses all tasks in the current zone by 10% of their remaining progress.<br>Radiance cannot be created by Infinity Gauntlet or Stardust."
+}
+
+
 
 
 };
 
-const EXCLUDED_AUTO_RESOURCES = new Set(["cybernetic_armor", "infinity_gauntlet", "stardust", "cosmic_shard","atomic_particle","energy_core","googol"]);
+const EXCLUDED_AUTO_RESOURCES = new Set(["cybernetic_armor", "infinity_gauntlet", "stardust", "cosmic_shard","atomic_particle","energy_core","googol","radiance"]);
 
 const achievements = [
   { name: "That Was Easy", description: "Advance to Zone 2.", img: "images/achievements/that_was_easy.jpg" },
@@ -947,12 +1019,12 @@ const SERENITY_UPGRADES = {
     "Embrace Stillness": {
       "Starting Level": {
         initialCost: 1.5,
-        scaling: 1.5,
-        description: "Increase starting level of all skills after Prestige by +1."
+        scaling: 2,
+        description: "Increase starting level of ALL skills after Prestige by +1."
       },
       "Better Elixirs": {
         initialCost: 2,
-        scaling: 3.1,
+        scaling: 3.25,
         description: "Increase effect of Energy Elixir by +1."
       },
       "Game Speed": {
@@ -980,7 +1052,7 @@ const SERENITY_UPGRADES = {
       },
       "Crystal Collector": {
         initialCost: 300,
-        scaling: 3,
+        scaling: 3.25,
         description: "Random Crystal gives +1 more level."
       },
       "Fortune's Favor": {

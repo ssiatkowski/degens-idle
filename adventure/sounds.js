@@ -42,7 +42,7 @@ const soundManager = {
   // Register your sounds
   const bgMusic = soundManager.register("background", "sounds/background_music.ogg", { loop: true, type: 'music' });
   const levelUpSound = soundManager.register("levelUp", "sounds/level_up.wav", { type: 'sfx' });
-  const copiumGameOverSound = soundManager.register("copiumGameOver", "sounds/copium_game_over.wav", { type: 'sfx' });
+  const copiumGameOverSound = soundManager.register("copiumGameOver", "sounds/copium_game_over.mp3", { type: 'sfx' });
   const delusionGameOverSound = soundManager.register("delusionGameOver", "sounds/delusion_game_over.wav", { type: 'sfx' });
   const energyGameOverSound = soundManager.register("energyGameOver", "sounds/energy_game_over.wav", { type: 'sfx' });
   const gulpSound = soundManager.register("gulp", "sounds/gulp.wav", { type: 'sfx' });
@@ -53,6 +53,7 @@ const soundManager = {
   const atomicParticleSound = soundManager.register("atomicParticle", "sounds/atomic_particle.wav", { type: 'sfx' });
   const energyCoreSound = soundManager.register("energyCore", "sounds/energy_core.mp3", { type: 'sfx' });
   const achievementSound = soundManager.register("achievement", "sounds/achievement.mp3", { type: 'sfx' });
+  const prestigeSound = soundManager.register("prestige", "sounds/prestige.mp3", { type: 'sfx' });
 
   const agentSmithSound = soundManager.register("agentSmith", "sounds/agent_smith.mp3", { type: 'sfx' });
   const shaoKahnSound = soundManager.register("shaoKahn", "sounds/shao_kahn.mp3", { type: 'sfx' });
@@ -79,6 +80,23 @@ const soundManager = {
   const kaguyaSound = soundManager.register("kaguya", "sounds/kaguya.wav", { type: 'sfx' });
   const oneAboveAllSound = soundManager.register("oneAboveAll", "sounds/one_above_all.wav", { type: 'sfx' });
   const saitamaSound = soundManager.register("saitama", "sounds/saitama.wav", { type: 'sfx' });
+  const minotaurSound = soundManager.register("minotaur", "sounds/minotaur.wav", { type: 'sfx' });
+  const hermesSound = soundManager.register("hermes", "sounds/hermes.wav", { type: 'sfx' });
+  const apolloSound = soundManager.register("apollo", "sounds/apollo.wav", { type: 'sfx' });
+  const athenaSound = soundManager.register("athena", "sounds/athena.wav", { type: 'sfx' });
+  const medusaSound = soundManager.register("medusa", "sounds/medusa.wav", { type: 'sfx' });
+  const heraSound = soundManager.register("hera", "sounds/hera.wav", { type: 'sfx' });
+  const cerberusSound = soundManager.register("cerberus", "sounds/cerberus.wav", { type: 'sfx' });
+  const herculesSound = soundManager.register("hercules", "sounds/hercules.wav", { type: 'sfx' });
+  const poseidonSound = soundManager.register("poseidon", "sounds/poseidon.wav", { type: 'sfx' });
+  const hydraSound = soundManager.register("hydra", "sounds/hydra.wav", { type: 'sfx' });
+  const hadesSound = soundManager.register("hades", "sounds/hades.wav", { type: 'sfx' });
+  const uranusSound = soundManager.register("uranus", "sounds/uranus.wav", { type: 'sfx' });
+  const gaiaSound = soundManager.register("gaia", "sounds/gaia.wav", { type: 'sfx' });
+  const cronusSound = soundManager.register("cronus", "sounds/cronus.wav", { type: 'sfx' });
+  const typhonSound = soundManager.register("typhon", "sounds/typhon.wav", { type: 'sfx' });
+  const zeusSound = soundManager.register("zeus", "sounds/zeus.wav", { type: 'sfx' });
+
 
   // Register additional sounds as needed:
   // const someOtherSound = soundManager.register("other", "sounds/other_sound.wav", { type: 'sfx' });

@@ -134,7 +134,11 @@
       gameState.resourcesUsed[name] = true;
     }
     if (resourceActions[name]?.onConsume) {
-      resourceActions[name].onConsume(gameState, amt);
+      if (name == "radiance") {
+        resourceActions[name].onConsume(gameState, amt, currentTasks);
+      } else {
+        resourceActions[name].onConsume(gameState, amt);
+      }
     }
     // Instead of re-rendering everything, update only this resource.
     updateResourceDisplay(name);
@@ -731,8 +735,8 @@
     const delusionBarFill = document.getElementById("delusionBarFill");
     if (delusionBarFill) {
       delusionBarFill.style.width = (val / (gameState.maxDelusion/100)) + "%";
-      // Add high-delusion glow if delusion is above 8000
-      if (gameState.delusion > 8000) {
+      // Add high-delusion glow if delusion is above gameState.maxDelusion * 0.9
+      if (gameState.delusion > gameState.maxDelusion * 0.9) {
         delusionBarFill.classList.add("delusion-high");
         delusionBar.setAttribute("data-tooltip",
           "Delusion builds up from tasks with<br>" + delusionSkills.join(", ") +
@@ -1112,6 +1116,9 @@
       gameState.delusion = 0;
       gameState.numDelusionResets++;
     } else if (reason === "prestige") {
+      if (gameState.soundEnabled){
+        prestigeSound.play();
+      }
       gameState.startingEnergy = 100;
       gameState.copium = 0;
       gameState.delusion = 0;
@@ -1137,7 +1144,6 @@
       }
       gameState.perks = {};
       gatherAllPerks();
-      applyPerks();
       gameState.numEnergyResets = 0;
       gameState.numCopiumResets = 0;
       gameState.numDelusionResets = 0;
@@ -1152,6 +1158,9 @@
         });
       }
       applySerenityUpgrades();
+      updatePerksCount();
+      applyPerks();
+      renderPerks();
       if(!gameState.serenityUnlockables["Instant Simulation"]) {
         gameState.zoneFullCompletes = {};
       }
@@ -1181,6 +1190,7 @@
       if (Math.random() < 0.5) {
         gameState.perks["neon_energy"] = true;
         showMessage("Neon Energy preserved!");
+        updatePerksCount();
         renderPerks();
       }
     }
@@ -3309,7 +3319,6 @@
     const sUpg = document.getElementById("serenityUpgDiv");
     if (sUpg) sUpg.style.display = "none";
     displayZone();
-    document.getElementById("versionBanner").style.display = "none";
   }
 
   function showTutorialModal() {
@@ -3794,6 +3803,15 @@
               }
             }
           }
+          if (gameState.perks.spectral_glow && Math.random() < 0.25) {
+            const usedResources = Object.keys(gameState.resourcesUsed);
+            if (usedResources.length > 0) {
+              const randomIndex = Math.floor(Math.random() * usedResources.length);
+              const randomResource = usedResources[randomIndex];
+              addResource(randomResource, 1);
+              showMessage(`Spectral Glow: Spawned ${formatStringForDisplay(randomResource)}`);
+            }
+          }
           
           currentTasks = [];
           nextZone();
@@ -4091,6 +4109,9 @@
   window.getSkillXpScaling = () => skillXpScaling;
   window.showKnowledgeIfUnlocked = () => showKnowledgeIfUnlocked();
   window.unlockAchievement = (name) => unlockAchievement(name);
+  window.getCurrentZoneIndex = () => currentZoneIndex;
+  window.startTask = (zoneIndex, taskIndex, button, progressFill, repContainer) => startTask(zoneIndex, taskIndex, button, progressFill, repContainer);
+  window.removeTaskFromCurrent = (taskData) => removeTaskFromCurrent(taskData);
 
   // Expose some functions for debugging
   window.getGameState = () => gameState;
@@ -4101,4 +4122,5 @@
   window.getRunTickDuration = () => runTickDuration;
   window.displayZone = () => displayZone();
   window.resetGame = (reason) => resetGame("energy");
+  window.getCurrentTasks = () => currentTasks;
 })();

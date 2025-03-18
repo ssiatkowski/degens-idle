@@ -12,8 +12,8 @@ var zones = [
       { id: 13, name: "Small Talk Practice", type: "Training", maxReps: 4, count: 0, baseTime: 3e3, description: "Polish your social skills with casual chat.<br><br>The orange button indicates that this task is<br>mandatory to progress to next zone.", skills: ["charisma"], mandatory: true },
       { id: 14, name: "Warm-Up Jog in Place", type: "Training", maxReps: 7, count: 0, baseTime: 6e3, xpMult: 2, description: "Boost your stamina with a simple jog.", skills: ["endurance"] },
       { id: 15, name: "Assemble a Clockwork Toy", type: "Training", maxReps: 5, count: 0, baseTime: 6e3, xpMult: 2, description: "Practice assembling basic mechanisms.", skills: ["tinkering"] },
-      { id: 16, name: "Mirror Mojo", type: "Training", maxReps: 2, count: 0, baseTime: 1.5e4, xpMult: 1.2, description: "Tinker with your mirror while engaging in charismatic banter.", skills: ["tinkering", "charisma"] },
-      { id: 17, name: "Brewmaster: Read an Alchemy Book", type: "Training", maxReps: 1, count: 0, baseTime: 5e4, xpMult: 1.5, description: "Study the ancient art of alchemy.<br><br>The ★ indicates that completing this task<br>for the first time will grant a perk.", skills: ["alchemy"], perk: "brewmaster" },
+      { id: 16, name: "Mirror Mojo", type: "Training", maxReps: 2, count: 0, baseTime: 1.5e4, xpMult: 1.5, description: "Tinker with your mirror while engaging in charismatic banter.", skills: ["tinkering", "charisma"] },
+      { id: 17, name: "Brewmaster: Read an Alchemy Book", type: "Training", maxReps: 1, count: 0, baseTime: 5e4, xpMult: 2, description: "Study the ancient art of alchemy.<br><br>The ★ indicates that completing this task<br>for the first time will grant a perk.", skills: ["alchemy"], perk: "brewmaster" },
       { id: 18, name: "Brew a Simple Potion", type: "Training", maxReps: 18, count: 0, baseTime: 8e3, description: "Experiment with ingredients to create a potion.<br><br>The resource icon indicates that each completion<br>of this task will produce a resource.", skills: ["alchemy"], resources: ["energy_elixir"] }
     ]
   },
@@ -24,11 +24,11 @@ var zones = [
     tasks: [
       { id: 21, name: "Travel: Head to the City Core", type: "Travel", maxReps: 1, count: 0, baseTime: 2e4, description: "Venture into the bustling heart of the city.", skills: ["travel"] },
       { id: 22, name: "Map the City", type: "Training", maxReps: 4, count: 0, baseTime: 3e3, description: "Study the city’s layout to boost your intellect.", skills: ["intellect"], mandatory: true },
-      { id: 23, name: "Spot the Details", type: "Training", maxReps: 6, count: 0, baseTime: 5e3, description: "Sharpen your senses by noticing urban subtleties.", skills: ["perception"], mandatory: true },
-      { id: 24, name: "Combined Recall Drill", type: "Training", maxReps: 8, count: 0, baseTime: 3e4, xpMult: 1.2, description: "Run while recalling facts about your surroundings.", skills: ["endurance", "intellect"] },
+      { id: 23, name: "Spot the Details", type: "Training", maxReps: 6, count: 0, baseTime: 5e3, xpMult: 1.2, description: "Sharpen your senses by noticing urban subtleties.", skills: ["perception"], mandatory: true },
+      { id: 24, name: "Combined Recall Drill", type: "Training", maxReps: 8, count: 0, baseTime: 3e4, xpMult: 1.5, description: "Run while recalling facts about your surroundings.", skills: ["endurance", "intellect"] },
       { id: 25, name: "Assemble a Magnifying Glass", type: "Training", maxReps: 14, count: 0, baseTime: 5e3, description: "Assemble a simple magnifying glass.", skills: ["tinkering"], resources: ["magnifying_glass"] },
-      { id: 26, name: "Strike up a Quick Chat", type: "Training", maxReps: 2, count: 0, baseTime: 9e3, description: "Engage strangers in conversation.", skills: ["charisma"] },
-      { id: 27, name: "Healthy Living: Explore Dietary Options", type: "Training", xpMult: 1.1, maxReps: 3, count: 0, baseTime: 6e5, description: "Learn about healthy eating habits.", skills: ["endurance", "intellect", "alchemy"], perk: "healthy_living" }
+      { id: 26, name: "Strike up a Quick Chat", type: "Training", maxReps: 2, count: 0, baseTime: 9e3, xpMult: 2, description: "Engage strangers in conversation.", skills: ["charisma"] },
+      { id: 27, name: "Healthy Living: Explore Dietary Options", type: "Training", xpMult: 1.2, maxReps: 3, count: 0, baseTime: 6e5, description: "Learn about healthy eating habits.", skills: ["endurance", "intellect", "alchemy"], perk: "healthy_living" }
     ]
   },
   {
@@ -41,7 +41,7 @@ var zones = [
       { id: 33, name: "Workshop Fix a Broken Engine", type: "Training", maxReps: 5, count: 0, baseTime: 3e5, xpMult: 2, description: "Learn the basics of machinery repair.", skills: ["mechanics"] },
       { id: 34, name: "Basic Mech: Rudimentary Upgrade", type: "Training", maxReps: 1, count: 0, baseTime: 4e5, description: "Construct a basic biomechanical upgrade.", skills: ["mechanics", "intellect"], perk: "basic_mech" },
       { id: 35, name: "Study Urban Traffic Flow", type: "Training", maxReps: 10, count: 0, baseTime: 8e4, xpMult: 1.2,description: "Analyze traffic patterns using perception and intellect.", skills: ["perception", "intellect"] },
-      { id: 36, name: "Assemble Goggles", type: "Training", maxReps: 12, count: 0, baseTime: 1.2e5, description: "Build yourself some eye protection.", skills: ["tinkering"], resources: ["goggles"] },
+      { id: 36, name: "Assemble Goggles", type: "Training", maxReps: 12, count: 0, baseTime: 1.2e5, xpMult: 1.1, description: "Build yourself some eye protection.", skills: ["tinkering"], resources: ["goggles"] },
       { id: 37, name: "Self-Operating Gadget: Simple Automation", type: "Training", maxReps: 2, count: 0, baseTime: 1e7, speedMult: 1.5, description: "Utilize your mechanical expertise and tinkering skills to build a basic automated system that streamlines routine tasks.", skills: ["mechanics", "tinkering"], perk: "self_operating_gadget" }
     ]
   },
@@ -53,8 +53,8 @@ var zones = [
       { id: 41, name: "Travel: Proceed to Cyber Lab", type: "Travel", maxReps: 1, count: 0, baseTime: 4e4, description: "Advance to a high-tech cyber environment.", skills: ["travel"] },
       { id: 42, name: "Business Card Exchange", type: "Training", maxReps: 5, count: 0, baseTime: 2e4, description: "Practice your charisma in a corporate setting.", skills: ["charisma"], mandatory: true },
       { id: 43, name: "Tactical Office Skirmish Simulation", type: "Training", maxReps: 5, count: 0, baseTime: 3e5, description: "Engage in simulated corporate conflicts.", skills: ["endurance", "tinkering"], mandatory: true },
-      { id: 44, name: "Workaholic: Finance Bro Advice", type: "Training", maxReps: 1, count: 0, baseTime: 3e7, xpMult: 0.8, description: "Learn how workaholics function.", skills: ["endurance", "charisma", "perception"], perk: "workaholic" },
-      { id: 45, name: "Crunch Financial Numbers", type: "Training", maxReps: 10, count: 0, baseTime: 8e4, xpMult: 1.1, description: "Analyze corporate data with intellect and mechanics.", skills: ["intellect", "mechanics"] },
+      { id: 44, name: "Workaholic: Finance Bro Advice", type: "Training", maxReps: 1, count: 0, baseTime: 3e7, xpMult: 0.7, description: "Learn how workaholics function.", skills: ["endurance", "charisma", "perception"], perk: "workaholic" },
+      { id: 45, name: "Crunch Financial Numbers", type: "Training", maxReps: 10, count: 0, baseTime: 8e4, xpMult: 1.3, description: "Analyze corporate data with intellect and mechanics.", skills: ["intellect", "mechanics"] },
       { id: 46, name: "Gacha Machine: Mechanics of Luck", type: "Training", maxReps: 1, count: 0, baseTime: 2e5, description: "Build a simple gacha machine.", skills: ["mechanics"], perk: "gacha_machine" },
       { id: 47, name: "Battle Agent Smith", type: "Training", maxReps: 1, count: 0, baseTime: 2e7, description: "Take on this Matrix propagator. Might as well practice Combat.<br><br>This button is red - it's a boss fight.<br>Don't worry, you can move to next zone without it.", skills: ["combat"], boss_image: "images/bosses/agent_smith.jpg", resources: ["cool_sunglasses"], drainMult: 1.5, sound: agentSmithSound }
     ]
@@ -68,9 +68,9 @@ var zones = [
       { id: 52, name: "Cyber Infiltration Breach the Firewall", type: "Training", maxReps: 4, count: 0, baseTime: 4e4, description: "Learn basic system penetration.", skills: ["hacking"], mandatory: true },
       { id: 53, name: "Chemical Simulation", type: "Training", maxReps: 3, count: 0, baseTime: 6e6, description: "Simulate a chemical reaction.", skills: ["alchemy", "tinkering"], mandatory: true },
       { id: 54, name: "Create an Amphetamine Pill", type: "Training", maxReps: 6, count: 0, baseTime: 5e5, description: "Create a simple amphetamine pill.", skills: ["alchemy", "mechanics"], resources: ["amphetamine_pill"] },
-      { id: 55, name: "Crack the Cipher", type: "Training", maxReps: 10, count: 0, baseTime: 5e5, xpMult: 1.2, description: "Decrypt secret codes.", skills: ["hacking", "endurance"] },
-      { id: 56, name: "Debug Digital Puzzle", type: "Training", maxReps: 2, count: 0, baseTime: 4e6, xpMult: 1.2, description: "Solve a digital puzzle using coding skills.", skills: ["hacking", "mechanics"] },
-      { id: 57, name: "Double Timer: System Revamp", type: "Training", maxReps: 2, count: 0, baseTime: 5e8, description: "Revamp a digital system to double its efficiency.", skills: ["hacking", "tinkering", "intellect"], perk: "double_timer" },
+      { id: 55, name: "Crack the Cipher", type: "Training", maxReps: 10, count: 0, baseTime: 5e5, xpMult: 1.5, description: "Decrypt secret codes.", skills: ["hacking", "endurance"] },
+      { id: 56, name: "Debug Digital Puzzle", type: "Training", maxReps: 2, count: 0, baseTime: 4e6, xpMult: 1.5, description: "Solve a digital puzzle using coding skills.", skills: ["hacking", "mechanics"] },
+      { id: 57, name: "Double Timer: System Revamp", type: "Training", maxReps: 2, count: 0, baseTime: 5e8, xpMult: 0.8, description: "Revamp a digital system to double its efficiency.", skills: ["hacking", "tinkering", "intellect"], perk: "double_timer" },
       { id: 58, name: "Noob Haxor: Study the Basics", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "Study the basics of hacking.", skills: ["hacking", "perception"], perk: "noob_haxor" },
       { id: 59, name: "Battle Shao Kahn", type: "Training", maxReps: 1, count: 0, baseTime: 1.2e8, description: "Some clown challenges you to mortal combat.", skills: ["combat"], boss_image: "images/bosses/shao_kahn.jpg", drainMult: 4, resources: ["shiny_helmet"], sound: shaoKahnSound }
     ]
@@ -82,11 +82,11 @@ var zones = [
     tasks: [
       { id: 61, name: "Travel: Navigate to Abandoned Factory", type: "Travel", maxReps: 1, count: 0, baseTime: 1e5, description: "Descend deeper into the digital realm.", skills: ["travel"] },
       { id: 62, name: "Training Sparring Session", type: "Training", maxReps: 10, count: 0, baseTime: 1e5, speedMult: 0.8, description: "Learn the fundamentals of combat.", skills: ["combat"], mandatory: true },
-      { id: 63, name: "Weapon Drills Simulated Battle", type: "Training", maxReps: 5, count: 0, baseTime: 8e6, description: "Practice with simulated weapons.", skills: ["combat", "hacking"] },
+      { id: 63, name: "Weapon Drills Simulated Battle", type: "Training", maxReps: 5, count: 0, baseTime: 8e6, xpMult: 2, description: "Practice with simulated weapons.", skills: ["combat", "hacking"] },
       { id: 64, name: "Tactical Coordination Group Skirmish", type: "Training", maxReps: 7, count: 0, baseTime: 4e8, description: "Develop team-based combat strategies.", skills: ["combat", "charisma"] },
-      { id: 65, name: "Energetic Bliss: Painstaking Training", type: "Training", maxReps: 1, count: 0, baseTime: 4e12, xpMult: 0.8, description: "Engage in a grueling training session.", skills: ["combat", "endurance", "perception"], perk: "energetic_bliss" },
-      { id: 66, name: "Concoct Some Steroids", type: "Training", maxReps: 4, count: 0, baseTime: 9e9, speedMult: 0.5, description: "Create a performance-enhancing steroid.", skills: ["alchemy", "tinkering", "intellect"], resources: ["steroids"] },
-      { id: 67, name: "Kung Fu Zen: Talk Your Way", type: "Training", maxReps: 3, count: 0, baseTime: 1e10, drainMult: 3, xpMult: 10, description: "Convince the masters to help you improve your learning.", skills: ["charisma"], perk: "kung_fu_zen" },
+      { id: 65, name: "Energetic Bliss: Painstaking Training", type: "Training", maxReps: 1, count: 0, baseTime: 4e12, xpMult: 0.6, description: "Engage in a grueling training session.", skills: ["combat", "endurance", "perception"], perk: "energetic_bliss" },
+      { id: 66, name: "Concoct Some Steroids", type: "Training", maxReps: 4, count: 0, baseTime: 9e9, speedMult: 0.3, description: "Create a performance-enhancing steroid.", skills: ["alchemy", "tinkering", "intellect"], resources: ["steroids"] },
+      { id: 67, name: "Kung Fu Zen: Talk Your Way", type: "Training", maxReps: 3, count: 0, baseTime: 1e10, drainMult: 3, xpMult: 12, description: "Convince the masters to help you improve your learning.", skills: ["charisma"], perk: "kung_fu_zen" },
       { id: 68, name: "Challenge Dojo Master Chuck Norris", type: "Training", maxReps: 1, count: 0, baseTime: 1e9, description: "Challenge the legendary martial artist.", skills: ["combat"], boss_image: "images/bosses/chuck_norris.jpg", drainMult: 8, resources: ["karate_belt"], sound: chuckNorrisSound },
     ]
   },
@@ -98,10 +98,10 @@ var zones = [
       { id: 71, name: "Travel: Proceed to Rooftop Rendezvous", type: "Travel", maxReps: 1, count: 0, baseTime: 3e5, description: "Climb to the city rooftop.", skills: ["travel"] },
       { id: 72, name: "Neural Implant Test", type: "Training", maxReps: 7, count: 0, baseTime: 1e5, description: "Test cutting-edge neural implants.", skills: ["cybernetics"], mandatory: true },
       { id: 73, name: "Exosuit Upgrade Overhaul", type: "Training", maxReps: 5, count: 0, baseTime: 1e7, description: "Upgrade your cybernetic exosuit.", skills: ["cybernetics", "mechanics"], mandatory: true },
-      { id: 74, name: "Copium Reactor: Synthesize a Contraption", type: "Training", maxReps: 1, count: 0, baseTime: 1e13, xpMult: 0.7, description: "Create a contraption using advanced techniques.", skills: ["endurance", "alchemy", "mechanics"], perk: "copium_reactor" },
+      { id: 74, name: "Copium Reactor: Synthesize a Contraption", type: "Training", maxReps: 1, count: 0, baseTime: 1e13, xpMult: 0.5, description: "Create a contraption using advanced techniques.", skills: ["endurance", "alchemy", "mechanics"], perk: "copium_reactor" },
       { id: 75, name: "Save Some Touchable Grass", type: "Training", maxReps: 4, count: 0, baseTime: 5e8, description: "Spot touchable grass and pick some for later.", skills: ["intellect", "charisma"], resources: ["touchable_grass"] },
-      { id: 76, name: "System Calibration Diagnostic Run", type: "Training", maxReps: 16, count: 0, baseTime: 5e7, xpMult: 1.2, description: "Calibrate cybernetic systems.", skills: ["cybernetics", "tinkering"] },
-      { id: 77, name: "Futuristic Wrench: Find a Tool", type: "Training", maxReps: 1, count: 0, baseTime: 4e9, drainMult: 1.5, description: "Locate a futuristic wrench.", skills: ["perception"], perk: "futuristic_wrench" },
+      { id: 76, name: "System Calibration Diagnostic Run", type: "Training", maxReps: 16, count: 0, baseTime: 5e7, xpMult: 2, description: "Calibrate cybernetic systems.", skills: ["cybernetics", "tinkering"] },
+      { id: 77, name: "Futuristic Wrench: Find a Tool", type: "Training", maxReps: 1, count: 0, baseTime: 3e9, drainMult: 2, description: "Locate a futuristic wrench.", skills: ["perception"], perk: "futuristic_wrench" },
       { id: 78, name: "Battle Sauron", type: "Training", maxReps: 1, count: 0, baseTime: 4e9, description: "Take on the creator of just one ring.", skills: ["combat"], boss_image: "images/bosses/sauron.jpg", drainMult: 12, resources: ["one_ring"], sound: sauronSound }
     ]
   },
@@ -113,10 +113,10 @@ var zones = [
       { id: 81, name: "Travel: Descend to Digital Underground", type: "Travel", maxReps: 1, count: 0, baseTime: 9e5, description: "Head back into the digital depths.", skills: ["travel"] },
       { id: 82, name: "Tactics Broker a Deal", type: "Training", maxReps: 3, count: 0, baseTime: 5e5, description: "Hone your negotiation skills in high places.", skills: ["negotiation"], mandatory: true },
       { id: 83, name: "Cybernetic Potion", type: "Training", maxReps: 10, count: 0, baseTime: 1e8, description: "Create a cybernetic potion.", skills: ["alchemy", "cybernetics"], resources: ["cybernetic_potion"] },
-      { id: 84, name: "Cybernetic Armor", type: "Training", maxReps: 1, count: 0, baseTime: 1e12, drainMult: 1.5, description: "Carefully craft a cybernetic armor.", skills: ["tinkering", "cybernetics"], resources: ["cybernetic_armor"] },
-      { id: 85, name: "High-Rise Debate Persuade the Crowd", type: "Training", maxReps: 10, count: 0, baseTime: 9e9, description: "Use your wit to sway opinions.", skills: ["negotiation", "charisma"] },
-      { id: 86, name: "Rex: Adopt a Dog", type: "Training", maxReps: 1, count: 0, baseTime: 3e12, description: "Adopt a loyal dog.", skills: ["perception", "charisma"], perk: "rex" },
-      { id: 87, name: "Four Leaf Clover: Find the Clover", type: "Training", maxReps: 1, count: 0, baseTime: 3.9e10, drainMult: 2, xpMult: 2, description: "Locate a lucky clover.", skills: ["perception"], perk: "four_leaf_clover" }
+      { id: 84, name: "Cybernetic Armor", type: "Training", maxReps: 1, count: 0, baseTime: 1e12, drainMult: 2.5, description: "Carefully craft a cybernetic armor.", skills: ["tinkering", "cybernetics"], resources: ["cybernetic_armor"] },
+      { id: 85, name: "High-Rise Debate Persuade the Crowd", type: "Training", maxReps: 10, count: 0, baseTime: 9e9, xpMult: 1.6, description: "Use your wit to sway opinions.", skills: ["negotiation", "charisma"] },
+      { id: 86, name: "Rex: Adopt a Dog", type: "Training", maxReps: 1, count: 0, baseTime: 3e12, speedMult: 0.9, description: "Adopt a loyal dog.", skills: ["perception", "charisma"], perk: "rex" },
+      { id: 87, name: "Four Leaf Clover: Find the Clover", type: "Training", maxReps: 1, count: 0, baseTime: 2.6e10, drainMult: 3, xpMult: 2, description: "Locate a lucky clover.", skills: ["perception"], perk: "four_leaf_clover" }
     ]
   },
   {
@@ -126,10 +126,10 @@ var zones = [
     tasks: [
       { id: 91, name: "Travel: Emerge into Techno District", type: "Travel", maxReps: 1, count: 0, baseTime: 4e6, description: "Climb out to the bustling Techno District.", skills: ["travel"] },
       { id: 92, name: "Extract Encrypted Secrets", type: "Training", maxReps: 5, count: 0, baseTime: 1e9, description: "Extract and decode hidden data.", skills: ["aiMastery", "hacking"], mandatory: true },
-      { id: 93, name: "Copius Alchemist: Advanced Manual", type: "Training", maxReps: 1, count: 0, baseTime: 1e14, description: "Study advanced alchemical techniques.", skills: ["alchemy", "perception"], perk: "copious_alchemist", mandatory: true },
+      { id: 93, name: "Copius Alchemist: Advanced Manual", type: "Training", maxReps: 1, count: 0, baseTime: 1e14, xpMult: 0.8, description: "Study advanced alchemical techniques.", skills: ["alchemy", "perception"], perk: "copious_alchemist", mandatory: true },
       { id: 94, name: "Neural Net Optimize the System", type: "Training", maxReps: 10, count: 0, baseTime: 1e8, xpMult: 1.2, description: "Enhance and optimize neural networks.", skills: ["aiMastery", "intellect"] },
       { id: 95, name: "Virtual Simulated Skirmish", type: "Training", maxReps: 2, count: 0, baseTime: 3e8, xpMult: 1.5, description: "Engage in simulated digital battles.", skills: ["aiMastery", "combat"] },
-      { id: 96, name: "Simulation Engine: Ultimate Feat of Engineering", type: "Training", maxReps: 1, count: 0, baseTime: 4e14, description: "Create the ultimate feat of engineering.", skills: ["tinkering", "cybernetics", "hacking"], perk: "simulation_engine" },
+      { id: 96, name: "Simulation Engine: Ultimate Feat of Engineering", type: "Training", maxReps: 1, count: 0, baseTime: 4e14, xpMult: 0.75, description: "Create the ultimate feat of engineering.", skills: ["tinkering", "cybernetics", "hacking"], perk: "simulation_engine" },
       { id: 97, name: "Battle Isshin", type: "Training", maxReps: 1, count: 0, baseTime: 1e10, description: "Challenge the master of the blade.", skills: ["combat"], boss_image: "images/bosses/isshin.jpg", drainMult: 20, resources: ["katana"], sound: isshinSound }
     ]
   },
@@ -141,9 +141,9 @@ var zones = [
       { id: 101, name: "Travel: Venture to Research Facility", type: "Travel", maxReps: 1, count: 0, baseTime: 1e7, description: "Head to the hub of advanced AI research.", skills: ["travel"] },
       { id: 102, name: "Digital Frenzy Data Stream Challenge", type: "Training", maxReps: 10, count: 0, baseTime: 5e8, description: "Process rapid streams of digital data.", skills: ["intellect", "aiMastery"], mandatory: true },
       { id: 103, name: "Omega Resonator: Cybernetic Enhancement", type: "Training", maxReps: 10, count: 0, baseTime: 1e11, description: "Leverage AI to create a cybernetic combat enhancement.", skills: ["aiMastery", "cybernetics"], resources: ["omega_resonator"] },
-      { id: 104, name: "System Override the Grid", type: "Training", maxReps: 5, count: 0, baseTime: 2e11, description: "Take control of the city's digital infrastructure.", skills: ["hacking", "intellect"] },
+      { id: 104, name: "System Override the Grid", type: "Training", maxReps: 5, count: 0, baseTime: 2e11, xpMult: 1.2, description: "Take control of the city's digital infrastructure.", skills: ["hacking", "intellect"] },
       { id: 105, name: "Hoverboard: Steal One", type: "Training", maxReps: 1, count: 0, baseTime: 1e13, description: "Steal a hoverboard for high-speed travel.", skills: ["combat", "hacking"], perk: "hoverboard" },
-      { id: 106, name: "Reinforcement Learning: Decent Algorithm", type: "Training", maxReps: 2, count: 0, baseTime: 2.5e6, xpMult: 1.3, description: "Train a reinforcement learning algorithm.", skills: ["aiMastery"], perk: "reinforcement_learning" },
+      { id: 106, name: "Reinforcement Learning: Decent Algorithm", type: "Training", maxReps: 2, count: 0, baseTime: 2.5e6, xpMult: 2.5, description: "Train a reinforcement learning algorithm.", skills: ["aiMastery"], perk: "reinforcement_learning" },
       { id: 107, name: "Battle Kratos", type: "Training", maxReps: 1, count: 0, baseTime: 5e10, description: "Challenge the demi-god.", skills: ["combat"], boss_image: "images/bosses/kratos.jpg", drainMult: 30, resources: ["blades_of_chaos"], sound: kratosSound }
     ]
   },
@@ -158,7 +158,7 @@ var zones = [
       { id: 114, name: "Subatomic Experiment", type: "Training", maxReps: 10, count: 0, baseTime: 1e10, xpMult: 1.2, description: "Experiment with quantum particles.", skills: ["quantum", "intellect"] },
       { id: 115, name: "Algorithm Optimization Code Refinement", type: "Training", maxReps: 5, count: 0, baseTime: 1e11, description: "Refine and optimize complex algorithms.", skills: ["aiMastery", "intellect"] },
       { id: 116, name: "Immunity Device: Haggle for it", type: "Training", maxReps: 2, count: 0, baseTime: 1.6e7, description: "Haggle with a science nerd.", skills: ["negotiation"], perk: "immunity_device" },
-      { id: 117, name: "Random Crystal: Sentience Attempt", type: "Training", maxReps: 2, count: 0, baseTime: 7e7, description: "Attempt to create a sentient crystal.", skills: ["aiMastery", "quantum"], resources: ["random_crystal"] },
+      { id: 117, name: "Random Crystal: Sentience Attempt", type: "Training", maxReps: 2, count: 0, baseTime: 7e7, speedMult: 0.5, drainMult: 2, description: "Attempt to create a sentient crystal.", skills: ["aiMastery", "quantum"], resources: ["random_crystal"] },
       { id: 118, name: "Quantum Vitalizer: Energy Galore", type: "Training", maxReps: 1, count: 0, baseTime: 1e6, description: "Create a quantum vitalizer for health benefits.", skills: ["quantum"], perk: "quantum_vitalizer" },
       { id: 119, name: "Hyperlink Manipulation", type: "Training", maxReps: 7, count: 0, baseTime: 1e14, description: "A high-tech take on social engineering.", skills: ["cybernetics","charisma"] }
     ]
@@ -168,7 +168,7 @@ var zones = [
     name: "Forsaken Bastion",
     img: "images/zones/zone12.jpg",
     tasks: [
-      { id: 121, name: "Travel: Exit to Shattered Expanse", type: "Travel", maxReps: 1, count: 0, baseTime: 1e8, description: "Journey back to the shattered expanse.", skills: ["travel"] },
+      { id: 121, name: "Travel: Exit to Shattered Expanse", type: "Travel", maxReps: 1, count: 0, baseTime: 1.2e8, description: "Journey back to the shattered expanse.", skills: ["travel"] },
       { id: 122, name: "Travel Training", type: "Training", maxReps: 16, count: 0, baseTime: 1.3e8, description: "Train for long-distance travel.", skills: ["travel", "endurance"], mandatory: true },
       { id: 123, name: "Secure Vault Access Code Breaker", type: "Training", maxReps: 2, count: 0, baseTime: 1e15, xpMult: 0.9, description: "Breach a secure digital vault.", skills: ["hacking", "intellect"], mandatory: true },
       { id: 124, name: "Bunker Blitz High-Intensity Drill", type: "Training", maxReps: 7, count: 0, baseTime: 2e14, description: "Push your endurance to the limit in a confined space.", skills: ["endurance", "combat"] },
@@ -184,11 +184,11 @@ var zones = [
     img: "images/zones/zone13.jpg",
     tasks: [
       { id: 131, name: "Travel: Journey to Exalting Metropolis", type: "Travel", maxReps: 1, count: 0, baseTime: 4e8, description: "Approach a dazzling metropolis of the future.", skills: ["travel"] },
-      { id: 132, name: "Beg for Ascension", type: "Training", maxReps: 3, count: 0, baseTime: 1e19, description: "Convince ascended beings to let you access their metropolis.", skills: ["intellect", "negotiation"], mandatory: true },
-      { id: 133, name: "Sandstorm: Guerrilla Warfare Sprint", type: "Training", maxReps: 4, count: 0, baseTime: 2.2e16, description: "Sprint through a raging sandstorm.", skills: ["endurance", "combat"], perk: "sandstorm" },
+      { id: 132, name: "Beg for Ascension", type: "Training", maxReps: 3, count: 0, baseTime: 1e19, xpMult: 0.7, description: "Convince ascended beings to let you access their metropolis.", skills: ["intellect", "negotiation"], mandatory: true },
+      { id: 133, name: "Sandstorm: Guerrilla Warfare Sprint", type: "Training", maxReps: 4, count: 0, baseTime: 2.2e16, drainMult: 3, description: "Sprint through a raging sandstorm.", skills: ["endurance", "combat"], perk: "sandstorm" },
       { id: 134, name: "Outpost Infiltration Silent Breach", type: "Training", maxReps: 5, count: 0, baseTime: 1e16, description: "Breach an enemy outpost undetected.", skills: ["hacking", "endurance"] },
-      { id: 135, name: "Produce Augment Fuel", type: "Training", maxReps: 4, count: 0, baseTime: 1e18, description: "Synethesize some augment fuel.", skills: ["cybernetics", "mechanics"], resources: ["augment_fuel"] },
-      { id: 136, name: "Wise Mechanic: Knowledge Expansion", type: "Training", maxReps: 1, count: 0, baseTime: 1e22, speedMult: 0.1, xpMult: 0.02, description: "Expand your knowledge of mechanics.", skills: ["tinkering", "intellect", "mechanics"], perk: "wise_mechanic" },
+      { id: 135, name: "Produce Augment Fuel", type: "Training", maxReps: 4, count: 0, baseTime: 1e18, xpMult: 0.5,description: "Synethesize some augment fuel.", skills: ["cybernetics", "mechanics"], resources: ["augment_fuel"] },
+      { id: 136, name: "Wise Mechanic: Knowledge Expansion", type: "Training", maxReps: 1, count: 0, baseTime: 1e22, speedMult: 0.1, xpMult: 0.005, description: "Expand your knowledge of mechanics.", skills: ["tinkering", "intellect", "mechanics"], perk: "wise_mechanic" },
       { id: 137, name: "Battle Vegeta", type: "Training", maxReps: 1, count: 0, baseTime: 1e12, description: "Challenge the prince of all Saiyans.", skills: ["combat"], boss_image: "images/bosses/vegeta.jpg", drainMult: 50, resources: ["saiyan_armor"], sound: vegetaSound }
     ]
   },
@@ -202,7 +202,7 @@ var zones = [
       { id: 143, name: "Corporate Espionage Information Heist", type: "Training", maxReps: 2, count: 0, baseTime: 3e17, description: "Steal confidential data using your omniscient insight.", skills: ["negotiation", "hacking"], mandatory: true },
       { id: 144, name: "Urban Warfare: Digital Onslaught", type: "Training", maxReps: 10, count: 0, baseTime: 1e16, description: "Engage in a fast-paced digital battle.", skills: ["combat", "aiMastery"], perk: "urban_warfare" },
       { id: 145, name: "Prepare Hoverboard Fuel", type: "Training", maxReps: 16, count: 0, baseTime: 1e20, xpMult: 0.5, description: "Synthesize some fuel for your hoverboard.", skills: ["tinkering", "alchemy"], resources: ["hoverboard_fuel"] },
-      { id: 146, name: "Crypto Wallet: Find on Street", type: "Training", maxReps: 1, count: 0, baseTime: 2.5e11, drainMult: 4, xpMult: 2, description: "Find a lost crypto wallet.", skills: ["perception"], perk: "crypto_wallet" },
+      { id: 146, name: "Crypto Wallet: Find on Street", type: "Training", maxReps: 1, count: 0, baseTime: 2e11, drainMult: 5, xpMult: 2, description: "Find a lost crypto wallet.", skills: ["perception"], perk: "crypto_wallet" },
       { id: 147, name: "Challenge Big Brother", type: "Training", maxReps: 1, count: 0, baseTime: 1e13, description: "Challenge Big Brother.", skills: ["combat"], boss_image: "images/bosses/big_brother.jpg", drainMult: 55, resources: ["surveillance_core"], sound: bigBrotherSound }
     ]
   },
@@ -284,7 +284,7 @@ var zones = [
     name: "Cosmic Forge",
     img: "images/zones/zone20.jpg",
     tasks: [
-      { id: 201, name: "Travel: Emerge into Celestial Dominion", type: "Travel", maxReps: 1, count: 0, baseTime: 1e16, drainMult: 8, description: "Exit the blazing forge and ascend toward divine realms.", skills: ["travel"] },
+      { id: 201, name: "Travel: Emerge into Celestial Dominion", type: "Travel", maxReps: 1, count: 0, baseTime: 1e16, speedMult: 0.5, drainMult: 4, description: "Exit the blazing forge and ascend toward divine realms.", skills: ["travel"] },
       { id: 202, name: "Hammer the Celestial Anvil", type: "Training", maxReps: 4, count: 0, baseTime: 1e18, drainMult: 100, speedMult: 1e-10, description: "Shape raw cosmic materials with divine precision.", skills: ["tinkering", "endurance"], mandatory: true },
       { id: 203, name: "Heat the Stellar Crucible", type: "Training", maxReps: 20, count: 0, baseTime: 1e17, drainMult: 6, xpMult: 1000, description: "Ignite the furnace of creation to mold the universe.", skills: ["alchemy"], mandatory: true },
       { id: 204, name: "Embrace Stillness", type: "Prestige", maxReps: 1, count: 0, baseTime: 8e6, speedMult: 0.4, xpMult: 1.2, description: "Comprehend the stillness of the cosmos.", skills: ["omniscience"], mandatory: true },
@@ -300,7 +300,7 @@ var zones = [
     name: "Celestial Dominion",
     img: "images/zones/zone21.jpg",
     tasks: [
-      { id: 211, name: "Travel: Exit to Neon Hypergrid", type: "Travel", maxReps: 1, count: 0, baseTime: 3e16, drainMult: 16, description: "Leave divine order behind and step into radiant energy.", skills: ["travel"] },
+      { id: 211, name: "Travel: Exit to Neon Hypergrid", type: "Travel", maxReps: 1, count: 0, baseTime: 3e16, speedMult: 0.5, drainMult: 8, description: "Leave divine order behind and step into radiant energy.", skills: ["travel"] },
       { id: 212, name: "Proclaim Divine Edicts", type: "Training", maxReps: 7, count: 0, baseTime: 5e18, drainMult: 15, xpMult: 1e5, description: "Establish your authority over celestial forces.", skills: ["charisma"], mandatory: true },
       { id: 213, name: "Unify Stellar Legions", type: "Training", maxReps: 10, count: 0, baseTime: 1e24, speedMult: 9e-4, xpMult: 0.01, description: "Rally celestial forces into one harmonious chorus.", skills: ["charisma", "negotiation"], mandatory: true },
       { id: 214, name: "Advanced Potion Making", type: "Training", maxReps: 10, count: 0, baseTime: 1e25, speedMult: 1e-19, drainMult: 100, xpMult: 2, description: "Create potions to enhance your combat prowess.", skills: ["alchemy", "tinkering", "intellect"], resources: ["energy_elixir","steroids","augment_fuel"]},
@@ -314,7 +314,7 @@ var zones = [
     name: "Neon Hypergrid",
     img: "images/zones/zone22.jpg",
     tasks: [
-      { id: 221, name: "Travel: Shift to Omega Expanse", type: "Travel", maxReps: 1, count: 0, baseTime: 4e16, drainMult: 32, description: "Escape the dazzling glow and step into the ultimate frontier.", skills: ["travel"] },
+      { id: 221, name: "Travel: Shift to Omega Expanse", type: "Travel", maxReps: 1, count: 0, baseTime: 4e16, speedMult: 0.5, drainMult: 16, description: "Escape the dazzling glow and step into the ultimate frontier.", skills: ["travel"] },
       { id: 222, name: "Sync with Digital Frequencies", type: "Training", maxReps: 2, count: 0, baseTime: 1e25, speedMult: 4e-6, drainMult: 500, description: "Tune into the electric pulse of the grid.", skills: ["intellect", "hacking"], mandatory: true },
       { id: 223, name: "Illuminate Virtual Vistas", type: "Training", maxReps: 20, count: 0, baseTime: 3e16, xpMult: 5e8, drainMult: 10, description: "Unleash radiant creativity through digital artistry.", skills: ["cybernetics"], mandatory: true },
       { id: 224, name: "Extract Pixel Data", type: "Training", maxReps: 2, count: 0, baseTime: 1.5e23, speedMult: 3e-6,drainMult: 8192, description: "Gather fragmented bits of digital information.", skills: ["hacking", "perception"], resources: ["data_bit"] },
@@ -328,7 +328,7 @@ var zones = [
     name: "Omega Expanse",
     img: "images/zones/zone23.jpg",
     tasks: [
-      { id: 231, name: "Travel: Venture to Digital Nebula", type: "Travel", maxReps: 1, count: 0, baseTime: 1e17, drainMult: 64, description: "Step from the vast expanse into an enigmatic digital cloud.", skills: ["travel"] },
+      { id: 231, name: "Travel: Venture to Digital Nebula", type: "Travel", maxReps: 1, count: 0, baseTime: 1e17, speedMult: 0.5, drainMult: 32, description: "Step from the vast expanse into an enigmatic digital cloud.", skills: ["travel"] },
       { id: 232, name: "Decode Alien Frequencies", type: "Training", maxReps: 7, count: 0, baseTime: 2.5e18, xpMult: 1e9, drainMult: 1000, description: "Interpret mysterious signals from beyond.", skills: ["intellect"], mandatory: true },
       { id: 233, name: "Harness Expanse Energy", type: "Training", maxReps: 1, count: 0, baseTime: 2e25, speedMult: 3e-9, drainMult: 16000, xpMult: 1e-5, description: "Channel raw cosmic power into your arsenal.", skills: ["endurance", "intellect"], mandatory: true },
       { id: 234, name: "Scavenge Cyber Relics", type: "Training", maxReps: 5, count: 0, baseTime: 1e23, speedMult: 2e-8, drainMult: 75, description: "Recover valuable remnants from forgotten networks.", skills: ["mechanics", "hacking"], resources: ["cyber_relic"] },
@@ -342,7 +342,7 @@ var zones = [
     name: "Digital Nebula",
     img: "images/zones/zone24.jpg",
     tasks: [
-      { id: 241, name: "Travel: Depart to Infinite Horizon", type: "Travel", maxReps: 1, count: 0, baseTime: 4e17, speedMult: 0.5, drainMult: 128, description: "Exit the digital cloud and step toward endless possibility.", skills: ["travel"] },
+      { id: 241, name: "Travel: Depart to Infinite Horizon", type: "Travel", maxReps: 1, count: 0, baseTime: 4e17, speedMult: 0.25, drainMult: 64, description: "Exit the digital cloud and step toward endless possibility.", skills: ["travel"] },
       { id: 242, name: "Decrypt Virtual Codes", type: "Training", maxReps: 8, count: 0, baseTime: 1e17, xpMult: 2e9, drainMult: 512, description: "Unlock hidden messages in streams of data.", skills: ["hacking"], mandatory: true },
       { id: 243, name: "Sync with Pixel Patterns", type: "Training", maxReps: 3, count: 0, baseTime: 1e18, xpMult: 5e8, drainMult: 1024,description: "Merge your vision with digital artistry.", skills: ["perception"], mandatory: true },
       { id: 244, name: "Compile Data Clusters", type: "Training", maxReps: 7, count: 0, baseTime: 1e25, speedMult: 1e-7, drainMult: 256, description: "Gather and organize fragmented digital info.", skills: ["tinkering", "hacking"], resources: ["data_cluster"] },
@@ -356,7 +356,7 @@ var zones = [
     name: "Infinite Horizon",
     img: "images/zones/zone25.jpg",
     tasks: [
-      { id: 251, name: "Travel: Breakthrough to Ethereal Matrix", type: "Travel", maxReps: 1, count: 0, baseTime: 1e18, speedMult: 0.25, drainMult: 256, description: "Shatter your limits and cross into the unknown.", skills: ["travel"] },
+      { id: 251, name: "Travel: Breakthrough to Ethereal Matrix", type: "Travel", maxReps: 1, count: 0, baseTime: 1e18, speedMult: 0.1, drainMult: 128, description: "Shatter your limits and cross into the unknown.", skills: ["travel"] },
       { id: 252, name: "Break Finite Limits", type: "Training", maxReps: 14, count: 0, baseTime: 1e25, speedMult: 5e-6, drainMult: 500, xpMult: 1e-3, description: "Push beyond the boundaries of the known universe.", skills: ["aiMastery", "endurance"], mandatory: true },
       { id: 253, name: "Embody Cosmic Potential", type: "Training", maxReps: 1, count: 0, baseTime: 1e28, speedMult: 1e-7, drainMult: 150, description: "Channel the energy of infinity into your being.", skills: ["alchemy", "charisma"], mandatory: true },
       { id: 254, name: "Transcend Chaos", type: "Prestige", maxReps: 1, count: 0, baseTime: 1e9, speedMult: 0.3, xpMult: 2, description: "Embark on the ultimate rebirth by transcending chaos - a ritual that reshapes your destiny.", skills: ["omniscience"], mandatory: true },
@@ -371,29 +371,29 @@ var zones = [
     name: "Ethereal Matrix",
     img: "images/zones/zone26.jpg",
     tasks: [
-      { id: 261, name: "Travel: Leap to Temporal Paradox", type: "Travel", maxReps: 1, count: 0, baseTime: 5e18, speedMult: 0.1, drainMult: 512, description: "Exit the digital realm and jump into time’s mysterious currents.", skills: ["travel"] },
-      // { id: 262, name: "Merge with the Digital Spirit", type: "Training", maxReps: 10, count: 0, baseTime: 1.1e30, description: "Harmonize with the underlying code of existence.", skills: ["hacking", "intellect"], mandatory: true },
-      // { id: 263, name: "Decode Ethereal Enigmas", type: "Training", maxReps: 10, count: 0, baseTime: 1.2e30, description: "Solve the riddles of a shifting digital realm.", skills: ["intellect", "perception"], mandatory: true },
-      // { id: 264, name: "Extract Dream Fragments", type: "Training", maxReps: 7, count: 0, baseTime: 1.3e30, description: "Gather rare remnants of lucid dreams.", skills: ["alchemy", "intellect"], resources: ["dream_fragment"] },
-      // { id: 265, name: "Synthesize Virtual Realities", type: "Training", maxReps: 7, count: 0, baseTime: 1.4e30, description: "Blend imagination with binary data.", skills: ["hacking"] },
-      // { id: 266, name: "Invoke Matrix Miracles", type: "Training", maxReps: 7, count: 0, baseTime: 1.5e30, description: "Manifest unexpected wonders from the code.", skills: ["charisma", "intellect"], perk: "spectral_glow" },
-      { id: 267, name: "Battle Googol Smith", type: "Training", maxReps: 1, count: 0, baseTime: 1e23, speedMult: 0.2, drainMult: 5000, description: "Confront the ancient horror from beyond reality.", skills: ["combat"], boss_image: "images/bosses/googol_smith.jpg", sound: googolSmithSound, resources: ["googol"] }
+      { id: 261, name: "Travel: Leap to Temporal Paradox", type: "Travel", maxReps: 1, count: 0, baseTime: 5e18, speedMult: 0.05, drainMult: 256, description: "Exit the digital realm and jump into time’s mysterious currents.", skills: ["travel"] },
+      { id: 262, name: "Merge with the Digital Spirit", type: "Training", maxReps: 5, count: 0, baseTime: 1e27, speedMult: 1e-8, drainMult: 2500, description: "Harmonize with the underlying code of existence.", skills: ["hacking", "intellect"], mandatory: true },
+      { id: 263, name: "Decode Ethereal Enigmas", type: "Training", maxReps: 3, count: 0, baseTime: 5e25, speedMult: 4e-6, drainMult: 500, xpMult: 0.01, description: "Solve the riddles of a shifting digital realm.", skills: ["intellect", "aiMastery"], mandatory: true },
+      { id: 265, name: "Synthesize Virtual Realities", type: "Training", maxReps: 2, count: 0, baseTime: 1e28, speedMult: 1e-8, drainMult: 2500, description: "Blend imagination with binary data.", skills: ["hacking", "tinkering"], mandatory: true },
+      { id: 264, name: "Extract Dream Fragments", type: "Training", maxReps: 2, count: 0, baseTime: 1e25, speedMult: 4e-6, drainMult: 500, xpMult: 0.002, description: "Gather rare remnants of lucid dreams.", skills: ["alchemy", "aiMastery"], resources: ["dream_fragment"] },
+      { id: 266, name: "Spectral Glow: Matrix Miracles", type: "Training", maxReps: 4, count: 0, baseTime: 1e28, speedMult: 9e-10, drainMult: 10000, description: "Manifest unexpected wonders from the code.", skills: ["charisma", "intellect"], perk: "spectral_glow" },
+      { id: 267, name: "Battle Googol Smith", type: "Training", maxReps: 1, count: 0, baseTime: 1e23, speedMult: 0.2, drainMult: 5000, description: "A relentless swarm of Agent Smiths — endless, inescapable, inevitable.", skills: ["combat"], boss_image: "images/bosses/googol_smith.jpg", sound: googolSmithSound, resources: ["googol"] }
     ]
   },
-  // {
-  //   id: 27,
-  //   name: "Temporal Paradox",
-  //   img: "images/zones/zone27.jpg",
-  //   tasks: [
-  //     { id: 271, name: "Travel: Navigate to Ultra Dimension", type: "Travel", maxReps: 1, count: 0, baseTime: 1.0e31, description: "Step from warped time into a realm of infinite possibilities.", skills: ["travel"] },
-  //     { id: 272, name: "Measure Shifting Chronologies", type: "Training", maxReps: 10, count: 0, baseTime: 1.1e31, description: "Analyze the distortions in time’s fabric.", skills: ["intellect", "perception"], mandatory: true },
-  //     { id: 273, name: "Synchronize Lost Moments", type: "Training", maxReps: 10, count: 0, baseTime: 1.2e31, description: "Align fragmented memories across eras.", skills: ["tinkering", "intellect"], mandatory: true },
-  //     { id: 274, name: "Capture Temporal Residue", type: "Training", maxReps: 7, count: 0, baseTime: 1.3e31, description: "Secure remnants of fleeting time.", skills: ["alchemy", "perception"], resources: ["time_fragment"] },
-  //     { id: 275, name: "Rewind Digital Echoes", type: "Training", maxReps: 7, count: 0, baseTime: 1.4e31, description: "Manipulate echoes of the past.", skills: ["hacking", "intellect"] },
-  //     { id: 276, name: "Amplify Chrono Clarity", type: "Training", maxReps: 7, count: 0, baseTime: 1.5e31, description: "Focus your mind to see through time.", skills: ["intellect"], perk: "time_glimpse" },
-  //     { id: 277, name: "Battle Pudge", type: "Training", maxReps: 1, count: 0, baseTime: 1.6e31, description: "Face the master of misfortune in a clash of wills.", skills: ["combat"], boss_image: "images/bosses/pudge.jpg", sound: pudgeSound, resources: ["doom_relic"] }
-  //   ]
-  // },
+  {
+    id: 27,
+    name: "Temporal Paradox",
+    img: "images/zones/zone27.jpg",
+    tasks: [
+      { id: 271, name: "Travel: Navigate to Ultra Dimension", type: "Travel", maxReps: 1, count: 0, baseTime: 1e19, speedMult: 0.01, drainMult: 512, description: "Step from warped time into a realm of infinite possibilities.", skills: ["travel"] },
+      { id: 272, name: "Measure Shifting Chronologies", type: "Training", maxReps: 10, count: 0, baseTime: 1e28, speedMult: 1e-11, drainMult: 12500, description: "Analyze the distortions in time’s fabric.", skills: ["intellect", "perception"], mandatory: true },
+      // { id: 273, name: "Synchronize Lost Moments", type: "Training", maxReps: 10, count: 0, baseTime: 1.2e31, description: "Align fragmented memories across eras.", skills: ["tinkering", "intellect"], mandatory: true },
+      // { id: 274, name: "Capture Temporal Residue", type: "Training", maxReps: 7, count: 0, baseTime: 1.3e31, description: "Secure remnants of fleeting time.", skills: ["alchemy", "perception"], resources: ["time_fragment"] },
+      // { id: 275, name: "Rewind Digital Echoes", type: "Training", maxReps: 7, count: 0, baseTime: 1.4e31, description: "Manipulate echoes of the past.", skills: ["hacking", "intellect"] },
+      // { id: 276, name: "Amplify Chrono Clarity", type: "Training", maxReps: 7, count: 0, baseTime: 1.5e31, description: "Focus your mind to see through time.", skills: ["intellect"], perk: "time_glimpse" },
+      { id: 277, name: "Battle Pudge", type: "Training", maxReps: 1, count: 0, baseTime: 2e23, speedMult: 0.2, drainMult: 10000, description: "Hooks fly from the shadows — sudden, brutal, and impossible to dodge.", skills: ["combat"], boss_image: "images/bosses/pudge.jpg", sound: pudgeSound, resources: ["radiance"] }
+    ]
+  },
   // {
   //   id: 28,
   //   name: "Ultra Dimension",
@@ -442,16 +442,22 @@ var zones = [
   //   name: "Mount Olympus",
   //   img: "images/zones/zone31.jpg",
   //   tasks: [
-  //     { id: 311, name: "Battle Apollo", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "God of the sun, music, and prophecy.", skills: ["combat", "charisma"], boss_image: "images/bosses/apollo.jpg", drainMult: 10, sound: apolloSound },
-  //     { id: 312, name: "Battle Athena", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "Goddess of wisdom, war, and strategy.", skills: ["combat", "tinering"], boss_image: "images/bosses/athena.jpg", drainMult: 12, sound: athenaSound },
-  //     { id: 313, name: "Battle Hera", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "Queen of the gods and goddess of marriage and family.", skills: ["combat", "negotiation"], boss_image: "images/bosses/hera.jpg", drainMult: 14, sound: heraSound },
-  //     { id: 314, name: "Battle Poseidon", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "God of the sea, earthquakes, and horses.", skills: ["combat", "endurance"], boss_image: "images/bosses/poseidon.jpg", drainMult: 16, sound: poseidonSound },
-  //     { id: 315, name: "Battle Hades", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "God of the underworld and the dead.", skills: ["combat", "perception"], boss_image: "images/bosses/hades.jpg", drainMult: 18, sound: hadesSound },
-  //     { id: 316, name: "Battle Uranus", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "Primordial god of the sky, and father of the Titans.", skills: ["combat", "cybernetics"], boss_image: "images/bosses/uranus.jpg", drainMult: 20, sound: uranusSound },
-  //     { id: 317, name: "Battle Gaia", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "Primordial goddess of the earth and mother of many gods and Titans.", skills: ["combat", "quantum"], boss_image: "images/bosses/gaia.jpg", drainMult: 22, sound: gaiaSound },
-  //     { id: 318, name: "Battle Cronus", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "The leader of the Titans and father of Zeus, Poseidon, and Hades.", skills: ["combat", "omniscience"], boss_image: "images/bosses/cronus.jpg", drainMult: 24, sound: cronusSound },
-  //     { id: 319, name: "Battle Typhon", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "The deadliest monster, often considered a major threat to the Olympian gods.", skills: ["combat", "totality"], boss_image: "images/bosses/typhon.jpg", drainMult: 26, sound: typhonSound },
-  //     { id: 320, name: "Battle Zeus", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "King of the gods, ruler of the sky and thunder.", skills: ["combat", "nihility"], boss_image: "images/bosses/zeus.jpg", drainMult: 28, sound: zeusSound }
+  //     { id: 3101, name: "Battle Minotaur", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "The fearsome beast dwelling in the labyrinth.", skills: ["combat", "alchemy"], boss_image: "images/bosses/minotaur.jpg", sound: minotaurSound },
+  //     { id: 3102, name: "Battle Hermes", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "The messenger of the gods and guide to the underworld.", skills: ["combat", "travel"], boss_image: "images/bosses/hermes.jpg", sound: hermesSound },
+  //     { id: 3103, name: "Battle Apollo", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "God of the sun, music, and prophecy.", skills: ["combat", "charisma"], boss_image: "images/bosses/apollo.jpg", sound: apolloSound },
+  //     { id: 3104, name: "Battle Athena", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "Goddess of wisdom, war, and strategy.", skills: ["combat", "tinkering"], boss_image: "images/bosses/athena.jpg", sound: athenaSound },
+  //     { id: 3105, name: "Battle Medusa", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "The monstrous Gorgon with snakes for hair.", skills: ["combat", "hacking"], boss_image: "images/bosses/medusa.jpg", sound: medusaSound },
+  //     { id: 3106, name: "Battle Hera", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "Queen of the gods and goddess of marriage and family.", skills: ["combat", "negotiation"], boss_image: "images/bosses/hera.jpg", sound: heraSound },
+  //     { id: 3107, name: "Battle Cerberus", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "The three‐headed guardian of the underworld.", skills: ["combat", "mechanics"], boss_image: "images/bosses/cerberus.jpg", sound: cerberusSound },
+  //     { id: 3108, name: "Battle Hercules", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "The demigod renowned for his strength.", skills: ["combat", "endurance"], boss_image: "images/bosses/hercules.jpg", sound: herculesSound },
+  //     { id: 3109, name: "Battle Poseidon", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "God of the sea, earthquakes, and horses.", skills: ["combat", "intellect"], boss_image: "images/bosses/poseidon.jpg", sound: poseidonSound },
+  //     { id: 3110, name: "Battle Hydra", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "The multi‐headed serpent that regrows its heads.", skills: ["combat", "cybernetics"], boss_image: "images/bosses/hydra.jpg", sound: hydraSound },
+  //     { id: 3111, name: "Battle Hades", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "God of the underworld and the dead.", skills: ["combat", "perception"], boss_image: "images/bosses/hades.jpg", sound: hadesSound },
+  //     { id: 3112, name: "Battle Uranus", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "Primordial god of the sky, and father of the Titans.", skills: ["combat", "aiMastery"], boss_image: "images/bosses/uranus.jpg", sound: uranusSound },
+  //     { id: 3113, name: "Battle Gaia", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "Primordial goddess of the earth and mother of many gods and Titans.", skills: ["combat", "quantum"], boss_image: "images/bosses/gaia.jpg", sound: gaiaSound },
+  //     { id: 3114, name: "Battle Cronus", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "The leader of the Titans and father of Zeus, Poseidon, and Hades.", skills: ["combat", "omniscience"], boss_image: "images/bosses/cronus.jpg", sound: cronusSound },
+  //     { id: 3115, name: "Battle Typhon", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "The deadliest monster, a major threat to the Olympian gods.", skills: ["combat", "totality"], boss_image: "images/bosses/typhon.jpg", sound: typhonSound },
+  //     { id: 3116, name: "Battle Zeus", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "King of the gods, ruler of the sky and thunder.", skills: ["combat", "nihility"], boss_image: "images/bosses/zeus.jpg", sound: zeusSound }
   //   ]
   // },
   // {
