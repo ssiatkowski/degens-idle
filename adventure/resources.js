@@ -848,6 +848,8 @@ let resourceActions = {
         // Check if the task is already in currentTasks; if not, add it
         const existingTaskData = currentTasks.find(t => t.zoneIndex === currentZoneIndex && t.taskIndex === taskIndex);
 
+        const taskRunningAlready = existingTaskData && !existingTaskData.paused;
+
         if (!existingTaskData) {
           const taskDiv = document.querySelector(`.task[data-zone-index="${currentZoneIndex}"][data-task-index="${taskIndex}"]`);
           const button = taskDiv.querySelector("button");
@@ -863,19 +865,20 @@ let resourceActions = {
 
         if (tData) {
           const remainingProgress = task.baseTime - tData.progress; // Remaining progress to complete the task
-          console.log(tData.progress, task.baseTime , remainingProgress);
           const progressIncrease = remainingProgress * 0.1; // 10% of the remaining progress
           tData.progress = Math.min(tData.progress + progressIncrease, task.baseTime); // Ensure progress doesn't exceed totalDuration
-          console.log(tData.progress);
 
           // Update the visual progress fill
           const pct = (tData.progress / task.baseTime) * 100;
-          console.log(pct);
           tData.progressFill.style.width = Math.min(pct, 100) + "%";
 
-          // Pause the task before updating progress
-          tData.paused = true;
-          console.log(tData.paused);
+          if (!taskRunningAlready) {
+            // Pause the task before updating progress
+            tData.paused = true;
+            const taskDiv = document.querySelector(`.task[data-zone-index="${currentZoneIndex}"][data-task-index="${taskIndex}"]`);
+            const button = taskDiv.querySelector("button");
+            button.classList.remove("active");
+          }
         }
       }
     });

@@ -3749,6 +3749,7 @@
               tData.progress = 0;
               tData.progressFill.style.width = "0%";
             } else {
+              tData.button.classList.remove("active");
               removeTaskFromCurrent(tData);
             }
             gameState.cyberneticArmorTaskRunning = false;
