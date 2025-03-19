@@ -69,7 +69,7 @@ var zones = [
       { id: 53, name: "Chemical Simulation", type: "Training", maxReps: 3, count: 0, baseTime: 6e6, description: "Simulate a chemical reaction.", skills: ["alchemy", "tinkering"], mandatory: true },
       { id: 54, name: "Create an Amphetamine Pill", type: "Training", maxReps: 6, count: 0, baseTime: 5e5, description: "Create a simple amphetamine pill.", skills: ["alchemy", "mechanics"], resources: ["amphetamine_pill"] },
       { id: 55, name: "Crack the Cipher", type: "Training", maxReps: 10, count: 0, baseTime: 5e5, xpMult: 1.5, description: "Decrypt secret codes.", skills: ["hacking", "endurance"] },
-      { id: 56, name: "Debug Digital Puzzle", type: "Training", maxReps: 2, count: 0, baseTime: 4e6, xpMult: 1.5, description: "Solve a digital puzzle using coding skills.", skills: ["hacking", "mechanics"] },
+      { id: 56, name: "Debug Digital Puzzle", type: "Training", maxReps: 2, count: 0, baseTime: 4e6, xpMult: 2, description: "Solve a digital puzzle using coding skills.", skills: ["hacking", "mechanics"] },
       { id: 57, name: "Double Timer: System Revamp", type: "Training", maxReps: 2, count: 0, baseTime: 5e8, xpMult: 0.8, description: "Revamp a digital system to double its efficiency.", skills: ["hacking", "tinkering", "intellect"], perk: "double_timer" },
       { id: 58, name: "Noob Haxor: Study the Basics", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "Study the basics of hacking.", skills: ["hacking", "perception"], perk: "noob_haxor" },
       { id: 59, name: "Battle Shao Kahn", type: "Training", maxReps: 1, count: 0, baseTime: 1.2e8, description: "Some clown challenges you to mortal combat.", skills: ["combat"], boss_image: "images/bosses/shao_kahn.jpg", drainMult: 4, resources: ["shiny_helmet"], sound: shaoKahnSound }
@@ -202,7 +202,7 @@ var zones = [
       { id: 143, name: "Corporate Espionage Information Heist", type: "Training", maxReps: 2, count: 0, baseTime: 3e17, xpMult: 0.8, description: "Steal confidential data using your omniscient insight.", skills: ["negotiation", "hacking"], mandatory: true },
       { id: 144, name: "Urban Warfare: Digital Onslaught", type: "Training", maxReps: 10, count: 0, baseTime: 1e16, description: "Engage in a fast-paced digital battle.", skills: ["combat", "aiMastery"], perk: "urban_warfare" },
       { id: 145, name: "Prepare Hoverboard Fuel", type: "Training", maxReps: 16, count: 0, baseTime: 1e20, xpMult: 0.5, description: "Synthesize some fuel for your hoverboard.", skills: ["tinkering", "alchemy"], resources: ["hoverboard_fuel"] },
-      { id: 146, name: "Crypto Wallet: Find on Street", type: "Training", maxReps: 1, count: 0, baseTime: 2e11, drainMult: 5, xpMult: 2, description: "Find a lost crypto wallet.", skills: ["perception"], perk: "crypto_wallet" },
+      { id: 146, name: "Crypto Wallet: Find on Street", type: "Training", maxReps: 1, count: 0, baseTime: 2e11, drainMult: 5, xpMult: 10, description: "Find a lost crypto wallet.", skills: ["perception"], perk: "crypto_wallet" },
       { id: 147, name: "Challenge Big Brother", type: "Training", maxReps: 1, count: 0, baseTime: 1e13, description: "Challenge Big Brother.", skills: ["combat"], boss_image: "images/bosses/big_brother.jpg", drainMult: 55, resources: ["surveillance_core"], sound: bigBrotherSound }
     ]
   },
@@ -319,7 +319,7 @@ var zones = [
       { id: 223, name: "Illuminate Virtual Vistas", type: "Training", maxReps: 20, count: 0, baseTime: 3e16, xpMult: 5e8, drainMult: 10, description: "Unleash radiant creativity through digital artistry.", skills: ["cybernetics"], mandatory: true },
       { id: 224, name: "Extract Pixel Data", type: "Training", maxReps: 2, count: 0, baseTime: 1.5e23, speedMult: 3e-6,drainMult: 8192, description: "Gather fragmented bits of digital information.", skills: ["hacking", "perception"], resources: ["data_bit"] },
       { id: 225, name: "Overclock Digital Circuits", type: "Training", maxReps: 5, count: 0, baseTime: 1e22, speedMult: 1e-10, drainMult: 1000, xpMult: 0.01, description: "Boost the power of virtual infrastructures.", skills: ["mechanics", "endurance"] },
-      { id: 226, name: "Neon Energy: Electric Vigor", type: "Training", maxReps: 4, count: 0, baseTime: 1e22, drainMult: 75, description: "Channel the raw force of electric vibrance.", skills: ["tinkering"], perk: "neon_energy" },
+      { id: 226, name: "Neon Energy: Electric Vigor", type: "Training", maxReps: 4, count: 0, baseTime: 7e21, drainMult: 60, description: "Channel the raw force of electric vibrance.", skills: ["tinkering"], perk: "neon_energy" },
       { id: 227, name: "Battle Doomsday", type: "Training", maxReps: 1, count: 0, baseTime: 3e20, speedMult: 0.4, drainMult: 400, description: "Face the unstoppable force of destruction.", skills: ["combat"], boss_image: "images/bosses/doomsday.jpg", resources: ["energy_core"], sound: doomsdaySound }
     ]
   },

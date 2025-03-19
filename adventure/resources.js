@@ -61,7 +61,7 @@ let resourceActions = {
       updateEnergyDisplay();
       updateTasksHoverInfo();
       //if(gameState.soundEnabled && amt >= 25) gulpSound.play(); 
-      showMessage(`Used ${amt} Energy Elixir${amt > 1 ? "s" : ""}.<br>Gained ${gameState.elixirEnergy * amt} Energy.`);
+      showMessage(`Used ${amt} Energy Elixir${amt > 1 ? "s" : ""}.<br>Gained ${gameState.elixirEnergy * amt} Energy.`, backgroundColors["resource"]);
     },
     tooltip: "Click to gain +3 Energy.<br>" + (("ontouchstart" in window || navigator.maxTouchPoints > 0) ? "Use above switch to consume all." : "Right-click to consume all.")
   },
@@ -71,7 +71,7 @@ let resourceActions = {
       updateSkillMultipliers(); 
       updateSkillDisplay(); 
       updateTasksHoverInfo(); 
-      showMessage(`Used ${amt} Magnifying Glass${amt > 1 ? "es" : ""}.<br>Boosted Perception by ${5 * amt}%.`);
+      showMessage(`Used ${amt} Magnifying Glass${amt > 1 ? "es" : ""}.<br>Boosted Perception by ${5 * amt}%.`, backgroundColors["resource"]);
     },
     tooltip: "Boosts Perception speed by 5%.<br>All resources only take effect after they are consumed<br>and last for all zones until a reset!"
   },
@@ -81,7 +81,7 @@ let resourceActions = {
       updateSkillMultipliers(); 
       updateSkillDisplay(); 
       updateTasksHoverInfo();
-      showMessage(`Used ${amt} Goggles.<br>Reduced Alchemy energy drain by ${7 * amt}%.`);
+      showMessage(`Used ${amt} Goggles.<br>Reduced Alchemy energy drain by ${7 * amt}%.`, backgroundColors["resource"]);
     },
     tooltip: "Reduces Alchemy energy drain by 7%"
   },
@@ -91,7 +91,7 @@ let resourceActions = {
       updateSkillMultipliers(); 
       updateSkillDisplay(); 
       updateTasksHoverInfo(); 
-      showMessage(`Used ${amt} Cybernetic Potion${amt > 1 ? "s" : ""}.<br>Reduced Cybernetics energy drain by ${20 * amt}%.`);
+      showMessage(`Used ${amt} Cybernetic Potion${amt > 1 ? "s" : ""}.<br>Reduced Cybernetics energy drain by ${20 * amt}%.`, backgroundColors["resource"]);
     },
     tooltip: "Reduces Cybernetics energy drain by 20%."
   },
@@ -100,7 +100,7 @@ let resourceActions = {
       gameState.numCyberneticArmors += amt; 
       updateTasksHoverInfo();
       if(gameState.soundEnabled) reinforcementSound.play();
-      showMessage(`Used ${amt} Cybernetic Armor${amt > 1 ? "s" : ""}.<br>Reduced energy drain by 75% for next ${amt > 1 ? amt + " tasks" : "task"}`);
+      showMessage(`Used ${amt} Cybernetic Armor${amt > 1 ? "s" : ""}.<br>Reduced energy drain by 75% for next ${amt > 1 ? amt + " tasks" : "task"}`, backgroundColors["resource"]);
     },
     tooltip: "Reduces energy drain by 75% for next task (one square).<br>Any task ending or pausing task will remove the armor.<br>Multiple uses stack with # of tasks, not with drain."
   },
@@ -111,7 +111,7 @@ let resourceActions = {
       updateSkillMultipliers();
       updateSkillDisplay();
       updateTasksHoverInfo();
-      showMessage(`Used ${amt} Amphetamine Pill${amt > 1 ? "s" : ""}.<br>Reduced Tinkering and Hacking energy drain by ${5 * amt}%.`);
+      showMessage(`Used ${amt} Amphetamine Pill${amt > 1 ? "s" : ""}.<br>Reduced Tinkering and Hacking energy drain by ${5 * amt}%.`, backgroundColors["resource"]);
     },
     tooltip: "Reduces Tinkering and Hacking energy drain by 5%."
   },
@@ -122,7 +122,7 @@ let resourceActions = {
       updateSkillMultipliers();
       updateSkillDisplay();
       updateTasksHoverInfo();
-      showMessage(`Used ${amt} Steroids${amt > 1 ? "s" : ""}.<br>Reduced Endurance and Combat energy drain by ${10 * amt}%.`);
+      showMessage(`Used ${amt} Steroids${amt > 1 ? "s" : ""}.<br>Reduced Endurance and Combat energy drain by ${10 * amt}%.`, backgroundColors["resource"]);
     },
     tooltip: "Reduces Endurance and Combat energy drain by 10%."
   },
@@ -130,7 +130,7 @@ let resourceActions = {
     onConsume: (gameState, amt) => {
       gameState.copium = Math.max(gameState.copium - 100 * amt, 0);
       updateCopiumDisplay();
-      showMessage(`Used ${amt} Touchable Grass${amt > 1 ? "es" : ""}.<br>Reduced Copium by ${100 * amt}.`);
+      showMessage(`Used ${amt} Touchable Grass${amt > 1 ? "es" : ""}.<br>Reduced Copium by ${100 * amt}.`, backgroundColors["resource"]);
     },
     tooltip: "Reduces Copium by 100."
   },
@@ -140,7 +140,7 @@ let resourceActions = {
       updateSkillMultipliers();
       updateSkillDisplay();
       updateTasksHoverInfo();
-      showMessage(`Used ${amt} Cool Sunglasses.<br>Reduced Hacking energy drain by ${100 * amt}%.`);
+      showMessage(`Used ${amt} Cool Sunglasses.<br>Reduced Hacking energy drain by ${100 * amt}%.`, backgroundColors["resource"]);
     },
     tooltip: "Reduces Hacking energy drain by 100%.<br>And Makes you look cool."
   },
@@ -150,7 +150,7 @@ let resourceActions = {
       updateSkillMultipliers();
       updateSkillDisplay();
       updateTasksHoverInfo();
-      showMessage(`Used ${amt} Omega Resonator${amt > 1 ? "s" : ""}.<br>Boosted Combat speed by ${20 * amt}%.`);
+      showMessage(`Used ${amt} Omega Resonator${amt > 1 ? "s" : ""}.<br>Boosted Combat speed by ${20 * amt}%.`, backgroundColors["resource"]);
     },
     tooltip: "Boosts Combat speed by 20%."
   },
@@ -160,7 +160,7 @@ let resourceActions = {
       updateSkillMultipliers();
       updateSkillDisplay();
       updateTasksHoverInfo();
-      showMessage(`Used ${amt} Shiny Helmet${amt > 1 ? "s" : ""}.<br>Reduced Combat energy drain by ${100 * amt}%.`);
+      showMessage(`Used ${amt} Shiny Helmet${amt > 1 ? "s" : ""}.<br>Reduced Combat energy drain by ${100 * amt}%.`, backgroundColors["resource"]);
     },
     tooltip: "Reduces Combat energy drain by 100%.<br>And makes you look more shiny."
   },
@@ -171,7 +171,7 @@ let resourceActions = {
       updateSkillMultipliers();
       updateSkillDisplay();
       updateTasksHoverInfo();
-      showMessage(`Used ${amt} Karate Belt${amt > 1 ? "s" : ""}.<br>Boosted Charisma speed by ${25 * amt}%. Reduced Negotiation energy drain by ${100 * amt}%.`);
+      showMessage(`Used ${amt} Karate Belt${amt > 1 ? "s" : ""}.<br>Boosted Charisma speed by ${25 * amt}%. Reduced Negotiation energy drain by ${100 * amt}%.`, backgroundColors["resource"]);
     },
     tooltip: "Boosts Charisma speed by 25%.<br>And reduces Negotiation energy drain by 100%.<br>By letting them know you are a ninja."
   },
@@ -214,7 +214,7 @@ let resourceActions = {
         messages.push(`${formatStringForDisplay(skillName)} +${totalIncrease} (Lvl ${skill.level})`);
       }
 
-      showMessage(`Used ${amt} Random Crystal${amt > 1 ? "s" : ""}. Leveled up:<br>${messages.join("<br>")}.`);
+      showMessage(`Used ${amt} Random Crystal${amt > 1 ? "s" : ""}. Leveled up:<br>${messages.join("<br>")}.`, backgroundColors["resource"]);
     },
     tooltip: "Levels up a random skill to next level."
   },
@@ -224,7 +224,7 @@ let resourceActions = {
       updateSkillMultipliers();
       updateSkillDisplay();
       updateTasksHoverInfo();
-      showMessage(`Used ${amt} One Ring${amt > 1 ? "s" : ""}.<br>Boosted Quantum speed by ${500 * amt}%.`);
+      showMessage(`Used ${amt} One Ring${amt > 1 ? "s" : ""}.<br>Boosted Quantum speed by ${500 * amt}%.`, backgroundColors["resource"]);
     },
     tooltip: "Boosts Quantum speed by 500%.<br>And wards off potential mates."
   },
@@ -235,7 +235,7 @@ let resourceActions = {
       updateSkillMultipliers();
       updateSkillDisplay();
       updateTasksHoverInfo();
-      showMessage(`Used ${amt} Katana${amt > 1 ? "s" : ""}.<br>Boosted Combat speed by ${10 * amt}%. Reduced Perception energy drain by ${300 * amt}%.`);
+      showMessage(`Used ${amt} Katana${amt > 1 ? "s" : ""}.<br>Boosted Combat speed by ${10 * amt}%. Reduced Perception energy drain by ${300 * amt}%.`, backgroundColors["resource"]);
     },
     tooltip: "Oddly enough, only boosts Combat speed by 10%.<br>But also reduces energy drain of Perception by 300%."
   },
@@ -246,7 +246,7 @@ let resourceActions = {
       updateSkillMultipliers();
       updateSkillDisplay();
       updateTasksHoverInfo();
-      showMessage(`Used ${amt} Blades of Chaos.<br>Reduced Combat and Quantum energy drain by ${25 * amt}%.`);
+      showMessage(`Used ${amt} Blades of Chaos.<br>Reduced Combat and Quantum energy drain by ${25 * amt}%.`, backgroundColors["resource"]);
     },
     tooltip: "Reduces Combat and Quantum energy drain by 25%.<br>While looking like a badass."
   },
@@ -260,7 +260,7 @@ let resourceActions = {
         gameState.delusion = Math.max(gameState.delusion - reduction, 0);
       }
       updateDelusionDisplay();
-      showMessage(`Used ${amt} Sanity Cleanser${amt > 1 ? "s" : ""}.<br>Reduced Delusion by ${totalReduced}.`);
+      showMessage(`Used ${amt} Sanity Cleanser${amt > 1 ? "s" : ""}.<br>Reduced Delusion by ${totalReduced}.`, backgroundColors["resource"]);
     },
     tooltip: "Reduces Delusion by a random number between 1 and 200."
   },
@@ -283,7 +283,7 @@ let resourceActions = {
       
       updateCopiumDisplay();
       updateDelusionDisplay();
-      showMessage(`Used ${amt} Augment Fuel${amt > 1 ? "s" : ""}.<br>Reduced Copium by ${totalCopiumReduced} and Delusion by ${totalDelusionReduced}.`);
+      showMessage(`Used ${amt} Augment Fuel${amt > 1 ? "s" : ""}.<br>Reduced Copium by ${totalCopiumReduced} and Delusion by ${totalDelusionReduced}.`, backgroundColors["resource"]);
     },
     tooltip: "At random, reduce Copium or Delusion by 75."
   },
@@ -335,7 +335,7 @@ let resourceActions = {
       updateSkillMultipliers();
       updateSkillDisplay();
       updateTasksHoverInfo();
-      showMessage(`Used ${amt} Saiyan Armor${amt > 1 ? "s" : ""}.<br>Boosted Combat speed and reduced energy drain by ${75 * amt}%.`);
+      showMessage(`Used ${amt} Saiyan Armor${amt > 1 ? "s" : ""}.<br>Boosted Combat speed and reduced energy drain by ${75 * amt}%.`, backgroundColors["resource"]);
     },
     tooltip: "Reduces Combat energy drain and boosts Combat speed by 75%.<br>"
   },
@@ -345,7 +345,7 @@ let resourceActions = {
       updateSkillMultipliers();
       updateSkillDisplay();
       updateTasksHoverInfo();
-      showMessage(`Used ${amt} Hoverboard Fuel${amt > 1 ? "s" : ""}.<br>Boosted Travel speed by ${10 * amt}%.`);
+      showMessage(`Used ${amt} Hoverboard Fuel${amt > 1 ? "s" : ""}.<br>Boosted Travel speed by ${10 * amt}%.`, backgroundColors["resource"]);
     },
     tooltip: "Boosts Travel speed by 10%."
   },
@@ -358,7 +358,7 @@ let resourceActions = {
       updateSkillMultipliers();
       updateSkillDisplay();
       updateTasksHoverInfo();
-      showMessage(`Used ${amt} Surveillance Core${amt > 1 ? "s" : ""}.<br>Reduced energy drain by ${50 * amt}% for Perception, Intellect, Hacking, and Cybernetics.`);
+      showMessage(`Used ${amt} Surveillance Core${amt > 1 ? "s" : ""}.<br>Reduced energy drain by ${50 * amt}% for Perception, Intellect, Hacking, and Cybernetics.`, backgroundColors["resource"]);
     },
     tooltip: "Reduces energy drain by 50%<br>for Perception, Intellect, Hacking, and Cybernetics.<br>And brings about a surveillance state."
   },
@@ -368,7 +368,7 @@ let resourceActions = {
           updateSkillMultipliers();
           updateSkillDisplay();
           updateTasksHoverInfo();
-          showMessage(`Used ${amt} Puzzle Piece${amt > 1 ? "s" : ""}.<br>Boosted Omniscience speed by ${2 * amt}%.`);
+          showMessage(`Used ${amt} Puzzle Piece${amt > 1 ? "s" : ""}.<br>Boosted Omniscience speed by ${2 * amt}%.`, backgroundColors["resource"]);
         },
         tooltip: "Boosts Omniscience speed by 2%."
   },
@@ -376,7 +376,7 @@ let resourceActions = {
     onConsume: (gameState, amt) => {
       gameState.numCelestialBlossoms += amt;
       updateTasksHoverInfo();
-      showMessage(`Used ${amt} Celestial Blossom${amt > 1 ? "s" : ""}.<br>Reduced Copium gain by ${amt}.`);
+      showMessage(`Used ${amt} Celestial Blossom${amt > 1 ? "s" : ""}.<br>Reduced Copium gain by ${amt}.`, backgroundColors["resource"]);
     },
     tooltip: "Reduces Copium gain by 1."
   },
@@ -388,7 +388,7 @@ let resourceActions = {
         }
       });
       updateTasksHoverInfo();
-      showMessage(`Used ${amt} Infinity Gauntlet${amt > 1 ? "s" : ""}.<br>Gained +1 of every held resource.`);
+      showMessage(`Used ${amt} Infinity Gauntlet${amt > 1 ? "s" : ""}.<br>Gained +1 of every held resource.`, backgroundColors["resource"]);
     },
     tooltip: "Gain +1 of every resource you currently have."
   },
@@ -421,7 +421,7 @@ let resourceActions = {
         messageLines.push(createdResources.join("<br>"));
       }
       
-      showMessage(messageLines.join("<br>"));
+      showMessage(messageLines.join("<br>"), backgroundColors["resource"]);
     },
     tooltip: "Create 1 of a random resource that you used this run.<br>Cannot create Infinity Gauntlet."
   },
@@ -446,7 +446,7 @@ let resourceActions = {
       if (extraSpawned > 0) {
         msg += `<br>${extraSpawned} extra lightsaber${extraSpawned !== 1 ? "s" : ""} spawned!`;
       }
-      showMessage(msg);
+      showMessage(msg, backgroundColors["resource"]);
     },
     tooltip: "Boosts speed for all skills by 3% per use.<br>50% chance to spawn an extra Lightsaber."
   },
@@ -513,7 +513,7 @@ let resourceActions = {
         messageLines.push(`${formatStringForDisplay(skillName)} ${effectDescription} changed by ${coloredEffect}.`);
       }
       
-      showMessage(messageLines.join("<br>"));
+      showMessage(messageLines.join("<br>"), backgroundColors["resource"]);
     },
     tooltip: "Unexpectedly affect speed or energy drain of<br>a random skill by anywhere from -10% to +50%.<br>(cannot affect Omniscience)"
   },
@@ -540,7 +540,7 @@ let resourceActions = {
     updateSkillDisplay();
     updateTasksHoverInfo();
     
-    showMessage(`Used ${amt} Adamantium${amt > 1 ? "s" : ""}.<br>Boosted Tinkering progress by ${totalProgressBoostPercent}%<br>and reduced energy drain by ${totalDrainBoostPercent}%.`);
+    showMessage(`Used ${amt} Adamantium${amt > 1 ? "s" : ""}.<br>Boosted Tinkering progress by ${totalProgressBoostPercent}%<br>and reduced energy drain by ${totalDrainBoostPercent}%.`, backgroundColors["resource"]);
   },
   tooltip: "Boosts Tinkering progress and reduces its energy drain<br>by a random percentage (1%-50%) per use."
 },
@@ -551,7 +551,7 @@ let resourceActions = {
       updateSkillMultipliers();
       updateSkillDisplay();
       updateTasksHoverInfo();
-      showMessage(`Used ${amt} Nano Component${amt > 1 ? "s" : ""}.<br>Boosted speed by ${15 * amt}% for Charisma and Tinkering.`);
+      showMessage(`Used ${amt} Nano Component${amt > 1 ? "s" : ""}.<br>Boosted speed by ${15 * amt}% for Charisma and Tinkering.`, backgroundColors["resource"]);
     },
     tooltip: "Boosts speed by 15% for Charisma and Tinkering."
   },
@@ -560,7 +560,7 @@ let resourceActions = {
       gameState.numCosmicShards += amt; 
       updateTasksHoverInfo();
       if(gameState.soundEnabled) experienceSound.play();
-      showMessage(`Used ${amt} Cosmic Shard${amt > 1 ? "s" : ""}.<br>5x experience gain next ${amt > 1 ? amt + " tasks" : "task"}`);
+      showMessage(`Used ${amt} Cosmic Shard${amt > 1 ? "s" : ""}.<br>5x experience gain next ${amt > 1 ? amt + " tasks" : "task"}`, backgroundColors["resource"]);
     },
     tooltip: "Increases experience gain by 5x for next task (one square).<br>Any task ending or pausing task will remove the shard.<br>Multiple uses stack with # of tasks, not with xp gain."
   },
@@ -570,7 +570,7 @@ let resourceActions = {
       updateSkillMultipliers();
       updateSkillDisplay();
       updateTasksHoverInfo();
-      showMessage(`Used ${amt} Celestial Ore${amt > 1 ? "s" : ""}.<br>Reduced Endurance energy drain by ${1000 * amt}%.`);
+      showMessage(`Used ${amt} Celestial Ore${amt > 1 ? "s" : ""}.<br>Reduced Endurance energy drain by ${1000 * amt}%.`, backgroundColors["resource"]);
     },
     tooltip: "Reduces energy drain by 1000% for Endurance."
   },
@@ -579,7 +579,7 @@ let resourceActions = {
       gameState.numAtomicParticles += amt;
       updateTasksHoverInfo();
       if(gameState.soundEnabled) atomicParticleSound.play();
-      showMessage(`Used ${amt} Atomic Particle${amt > 1 ? "s" : ""}.<br>Double resource production next ${amt > 1 ? amt + " tasks" : "task"}`);
+      showMessage(`Used ${amt} Atomic Particle${amt > 1 ? "s" : ""}.<br>Double resource production next ${amt > 1 ? amt + " tasks" : "task"}`, backgroundColors["resource"]);
     },
     tooltip: "Doubles resource production next time a resource is produced.<br>Stacks with other multipliers.<br>Multiple uses stack with # of tasks, not with production."
   },
@@ -589,7 +589,7 @@ let resourceActions = {
       updateSkillMultipliers();
       updateSkillDisplay();
       updateTasksHoverInfo();
-      showMessage(`Used ${amt} Star Fragment${amt > 1 ? "s" : ""}.<br>Reduced Charisma energy drain by ${25 * amt}%.`);
+      showMessage(`Used ${amt} Star Fragment${amt > 1 ? "s" : ""}.<br>Reduced Charisma energy drain by ${25 * amt}%.`, backgroundColors["resource"]);
     },
     tooltip: "Reduces energy drain by 25% for Charisma."
   },
@@ -598,7 +598,7 @@ let resourceActions = {
       gameState.energy += 300 * amt;
       updateEnergyDisplay();
       updateTasksHoverInfo();
-      showMessage(`Used ${amt} Hunger Shard${amt > 1 ? "s" : ""}.<br>Gained ${300 * amt} Energy.`);
+      showMessage(`Used ${amt} Hunger Shard${amt > 1 ? "s" : ""}.<br>Gained ${300 * amt} Energy.`, backgroundColors["resource"]);
     },
     tooltip: "Consume a nearby world and gain +300 Energy.<br>"
   },
@@ -618,7 +618,7 @@ let resourceActions = {
       updateSkillMultipliers();
       updateSkillDisplay();
       updateTasksHoverInfo();
-      showMessage(`Used ${amt} Data Bit${amt > 1 ? "s" : ""}.<br>Lowered Cybernetics by ${lowered} level${lowered === 1 ? "" : "s"}.`);
+      showMessage(`Used ${amt} Data Bit${amt > 1 ? "s" : ""}.<br>Lowered Cybernetics by ${lowered} level${lowered === 1 ? "" : "s"}.`, backgroundColors["resource"]);
     },
     tooltip: "Lowers Cybernetics level by 1 per Data Bit used."
   },
@@ -632,7 +632,7 @@ let resourceActions = {
       }
       
       showMessage(`Used ${amt} Energy Core${amt > 1 ? "s" : ""}.<br>
-        Next battle XP gain multiplier is now ${formatNumber(gameState.energyCoreMultiplier)}x.`);
+        Next battle XP gain multiplier is now ${formatNumber(gameState.energyCoreMultiplier)}x.`, backgroundColors["resource"]);
     },
     tooltip: "Increases next battle XP gain additively<br>by (current energy / 5000)x per Energy Core used."
   },
@@ -649,7 +649,7 @@ let resourceActions = {
       updateSkillDisplay();
       updateTasksHoverInfo();
       
-      showMessage(`Used ${amt} Cyber Relic${amt > 1 ? "s" : ""}.<br>Boosted Intellect and Cybernetics speed by ${10 * amt}% each.`);
+      showMessage(`Used ${amt} Cyber Relic${amt > 1 ? "s" : ""}.<br>Boosted Intellect and Cybernetics speed by ${10 * amt}% each.`, backgroundColors["resource"]);
     },
     tooltip: "Boosts speed by 10% for Intellect and Cybernetics."
   },
@@ -725,7 +725,7 @@ let resourceActions = {
       if (messages.length > 0) {
         message += `<br>Effects:<br>${messages.join("<br>")}`;
       }
-      showMessage(message);
+      showMessage(message, backgroundColors["resource"]);
     },
     tooltip: "Randomly either increases the level of Hacking, Perception, or Tinkering by 1,<br>or reduces the energy drain of Hacking, Perception, or Tinkering by 15% per use."
   },
@@ -740,7 +740,7 @@ let resourceActions = {
       
       updateEnergyDisplay();
       
-      showMessage(`Used ${amt} Cybernetic Implant${amt > 1 ? "s" : ""}.<br>Increased Starting Energy by ${formatNumber(energyIncrease)}.`);
+      showMessage(`Used ${amt} Cybernetic Implant${amt > 1 ? "s" : ""}.<br>Increased Starting Energy by ${formatNumber(energyIncrease)}.`, backgroundColors["resource"]);
     },
     tooltip: "Increases Starting Energy by (Cybernetics level / 4096) per implant."
   },
@@ -750,7 +750,7 @@ let resourceActions = {
       gameState.knowledge += knowledgeIncrease;
       updateTasksHoverInfo();
       showKnowledgeIfUnlocked();
-      showMessage(`Used ${amt} Cosmic Scroll${amt > 1 ? "s" : ""}.<br>Increased Knowledge by ${knowledgeIncrease}.`);
+      showMessage(`Used ${amt} Cosmic Scroll${amt > 1 ? "s" : ""}.<br>Increased Knowledge by ${knowledgeIncrease}.`, backgroundColors["resource"]);
     },
     tooltip: "Increases Knowledge by (Highest Fully Completed Zone ^ 2) per Cosmic Scroll used."
   },
@@ -761,7 +761,7 @@ let resourceActions = {
         updateSkillMultipliers();
         updateSkillDisplay();
         updateTasksHoverInfo();
-        showMessage(`Used ${amt} Kaiju Scale${amt > 1 ? "s" : ""}.<br>Reduced Totality energy drain by ${15 * amt}%.`);
+        showMessage(`Used ${amt} Kaiju Scale${amt > 1 ? "s" : ""}.<br>Reduced Totality energy drain by ${15 * amt}%.`, backgroundColors["resource"]);
       } else {
         showMessage("Totality skill not unlocked.");
       }
@@ -774,7 +774,7 @@ let resourceActions = {
       updateSkillMultipliers();
       updateSkillDisplay();
       updateTasksHoverInfo();
-      showMessage(`Used ${amt} System Core${amt > 1 ? "s" : ""}.<br>Reduced AI Mastery energy drain by ${50 * amt}%.`);
+      showMessage(`Used ${amt} System Core${amt > 1 ? "s" : ""}.<br>Reduced AI Mastery energy drain by ${50 * amt}%.`, backgroundColors["resource"]);
     },
     tooltip: "Reduces AI Mastery energy drain by 50%."
   },
@@ -814,7 +814,7 @@ let resourceActions = {
         summary.push(`${formatStringForDisplay(resource)} +${addedTotals[resource]}`);
       }
       
-      showMessage(`Used ${amt} Googol${amt > 1 ? "s" : ""}.<br>Added:<br>${summary.join("<br>")}`);
+      showMessage(`Used ${amt} Googol${amt > 1 ? "s" : ""}.<br>Added:<br>${summary.join("<br>")}`, backgroundColors["resource"]);
     },
     tooltip: "When consumed, for each Googol adds +10 to a random other resource you have.<br>Googol cannot be created by Infinity Gauntlet or Stardust."
   },
@@ -833,7 +833,7 @@ let resourceActions = {
       }
 
       updateDelusionDisplay();
-      showMessage(`Used ${amt} Dream Fragment${amt > 1 ? "s" : ""}.<br>Adjusted delusion towards 90% by ${delusionIncrement}.`);
+      showMessage(`Used ${amt} Dream Fragment${amt > 1 ? "s" : ""}.<br>Adjusted delusion towards 90% by ${delusionIncrement}.`, backgroundColors["resource"]);
     },
     tooltip: "Moves delusion 0.1% of max delusion closer to 90%."
   },
@@ -881,7 +881,7 @@ let resourceActions = {
     });
 
     updateTasksHoverInfo(); // Update any necessary task hover info
-    showMessage(`Used ${amt} Radiance${amt > 1 ? "s" : ""}.<br>Progressed all tasks by 10% of their remaining progress.`);
+    showMessage(`Used ${amt} Radiance${amt > 1 ? "s" : ""}.<br>Progressed all tasks by 10% of their remaining progress.`, backgroundColors["resource"]);
 
   },
   tooltip: "Progresses all tasks in the current zone by 10% of their remaining progress.<br>Radiance cannot be created by Infinity Gauntlet or Stardust."
@@ -904,10 +904,10 @@ const achievements = [
   { name: "Certified Turtle", description: "Have at least 4 cybernetic armors left after energy reset.", img: "images/achievements/certified_turtle.jpg" },
   { name: "Postpone Inevitable", description: "Energy reset with over 8990 copium.", img: "images/achievements/postpone_inevitable.jpg" },
   { name: "First Prestige", description: "Complete your first Prestige.", img: "images/achievements/first_prestige.jpg" },
-  { name: "Cool Little Brother", description: "Defeat Big Brother after having only used sunglasses.", img: "images/achievements/cool_little_brother.jpg" },
   { name: "Empty Pockets", description: "Reach Zone 15 without any resources (used or held).", img: "images/achievements/empty_pockets.jpg" },
-  { name: "Mega Push", description: "Copium reset with exactly 10 inifinity gauntlets and nothing else.", img: "images/achievements/mega_push.jpg" },
   { name: "Mondo Cool", description: "Defeat Vegeta with 0 copium.", img: "images/achievements/mondo_cool.jpg" },
+  { name: "Mega Push", description: "Copium reset with exactly 10 inifinity gauntlets and nothing else.", img: "images/achievements/mega_push.jpg" },
+  { name: "Cool Little Brother", description: "Defeat Big Brother after having only used sunglasses.", img: "images/achievements/cool_little_brother.jpg" },
   { name: "Lucky", description: "Produce at least 14 resources at once.", img: "images/achievements/lucky.jpg" },
   { name: "Take down the Doctor", description: "Defeat Doctor Manhattan while holding atomic particle (unused).", img: "images/achievements/take_down_the_doctor.jpg" },
   { name: "Amnesia", description: "Lose over 10K knowledge in a single copium reset.", img: "images/achievements/amnesia.jpg" },
