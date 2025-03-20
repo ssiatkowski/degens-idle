@@ -1563,6 +1563,13 @@
         if (gameState.musicEnabled && bgMusic.paused) {
           bgMusic.play().catch(() => {});
         }
+        
+        // If music is disabled, only play mutedSound
+        if (mutedSound.paused) {
+          mutedSound.play().catch(() => {});
+          mutedSound.volume = 0.1
+        }
+      
         toggleTask(currentZoneIndex, idx, btn, progressFill, repContainer);
       });
 
@@ -1620,6 +1627,10 @@
 
         // Attach listeners:
         zoneBtn.addEventListener("click", () => {
+          // If music is disabled, only play mutedSound
+          if (mutedSound.paused) {
+            mutedSound.play().catch(() => {});
+          }
           if (gameState.autoRun) {
             gameState.autoRun = false;
             showMessage("Automation disabled.");
@@ -1631,6 +1642,10 @@
           updateAutomationButtonStyles(zoneBtn, allBtn);
         });
         allBtn.addEventListener("click", () => {
+          // If music is disabled, only play mutedSound
+          if (mutedSound.paused) {
+            mutedSound.play().catch(() => {});
+          }
           if (gameState.autoRun) {
             gameState.autoRun = false;
             showMessage("Automation disabled");
@@ -2877,6 +2892,9 @@
       // Add serenity, reset, close modal
       gameState.serenity += serenityGain;
       gameState.prestigeAvailable = false;
+      if (gameState.bestCompletedZone === 7){
+        unlockAchievement("Seven");
+      }
       resetGame("prestige");
       confirmModal.remove();
       // Also close the main serenity modal if it's still open
@@ -2995,6 +3013,31 @@
   /****************************************
    * SETTINGS & FULL RESTART
    ****************************************/
+  // Global object to track button clicks on the settings screen
+  const bookwormSettingsClicks = {
+    copy: false,
+    paste: false,
+    save: false,
+    load: false,
+    version: false,
+    tutorial: false,
+    achievements: false,
+    fullRestart: false,
+    discord: false,
+    buyMeACoffee: false,
+    degensIdle: false,
+    back: false
+  };
+
+  function updateBookwormAchievement(key) {
+    if (!bookwormSettingsClicks[key]) {
+      bookwormSettingsClicks[key] = true;
+      if (Object.values(bookwormSettingsClicks).every(clicked => clicked)){
+        unlockAchievement("Bookworm");
+      }
+    }
+  }
+
   function createSettingsButton() {
     const sImg = document.getElementById("settingsImage");
     if (!sImg) return;
@@ -3048,7 +3091,6 @@
         // When toggled on, unmute and (optionally) restart bgMusic.
         const enabled = this.checked;
         gameState.musicEnabled = enabled;
-        soundManager.setMute(!enabled);
         if (enabled && bgMusic.paused) {
           bgMusic.play().catch(() => {});
         } else {
@@ -3079,7 +3121,10 @@
       copySaveBtn.classList.add("btn-copy");
       copySaveBtn.innerHTML = `<img src="images/buttons/copy.png" alt="Copy"><span> Copy</span>`;
       copySaveBtn.setAttribute("data-tooltip", "Save your game progress to the clipboard.");
-      copySaveBtn.addEventListener("click", copySave);
+      copySaveBtn.addEventListener("click", () => {
+        copySave();
+        updateBookwormAchievement("copy");
+      });
       saveButtonsContainer.appendChild(copySaveBtn);
 
       // Create the Paste Save button
@@ -3087,7 +3132,10 @@
       pasteSaveBtn.classList.add("btn-paste");
       pasteSaveBtn.innerHTML = `<img src="images/buttons/paste.png" alt="Paste"><span> Paste</span>`;
       pasteSaveBtn.setAttribute("data-tooltip", "Paste a save string from your clipboard to load progress.<br>This will overwrite your current progress.");
-      pasteSaveBtn.addEventListener("click", pasteSave);
+      pasteSaveBtn.addEventListener("click", () => {
+        pasteSave();
+        updateBookwormAchievement("paste");
+      });
       saveButtonsContainer.appendChild(pasteSaveBtn);
 
       // Create the Save to File button.
@@ -3096,6 +3144,7 @@
       saveFileBtn.innerHTML = `<img src="images/buttons/upload.png" alt="Save"><span> Save</span>`;
       saveFileBtn.setAttribute("data-tooltip", "Save your game progress to a file.");
       saveFileBtn.addEventListener("click", () => {
+        updateBookwormAchievement("save");
         // Ensure progress is saved.
         saveGameProgress();
         const saveData = localStorage.getItem("degensAdventureProgress");
@@ -3133,6 +3182,7 @@
       loadFileBtn.setAttribute("data-tooltip", "Load game progress from a file.");
       loadFileBtn.addEventListener("click", () => {
         // Create a hidden file input.
+        updateBookwormAchievement("load");
         const input = document.createElement("input");
         input.type = "file";
         input.accept = "application/json";
@@ -3183,6 +3233,7 @@
       
       versionButton.addEventListener("click", () => {
         showChangelogModal();  // Function to show the changelog modal
+        updateBookwormAchievement("version");
       });
       
       content.appendChild(versionButton);
@@ -3195,6 +3246,7 @@
       tutorialBtn.setAttribute("data-tooltip", "Learn the basics of gameplay, scaling, and tips to improve your efficiency.");
       tutorialBtn.addEventListener("click", () => {
         showTutorialModal();
+        updateBookwormAchievement("tutorial");
       });
       content.appendChild(tutorialBtn);
 
@@ -3205,6 +3257,7 @@
       achievementsBtn.setAttribute("data-tooltip", "View your achievements.");
       achievementsBtn.addEventListener("click", () => {
         showAchievementsModal();
+        updateBookwormAchievement("achievements");
       });
       content.appendChild(achievementsBtn);
 
@@ -3219,6 +3272,7 @@
         "all your progress will be lost."
       );
       restartAll.addEventListener("click", () => {
+        updateBookwormAchievement("fullRestart");
         showRestartConfirmationModal(() => {
           localStorage.removeItem("degensAdventureProgress");
           fullRestart();
@@ -3244,6 +3298,7 @@
       );
       discordBtn.addEventListener("click", () => {
         window.open("https://discord.gg/kBc4hjQBRg", "_blank");
+        updateBookwormAchievement("discord");
       });
       content.appendChild(discordBtn);
 
@@ -3259,6 +3314,7 @@
       );
       coffeeBtn.addEventListener("click", () => {
         window.open("https://buymeacoffee.com/ssiatkowski", "_blank");
+        updateBookwormAchievement("buyMeACoffee");
       });
       content.appendChild(coffeeBtn);
   
@@ -3281,6 +3337,7 @@
       );
       degensIdleBtn.addEventListener("click", () => {
         window.open("https://www.degensidle.com/", "_blank");
+        updateBookwormAchievement("degensIdle");
       });
       content.appendChild(degensIdleBtn);
   
@@ -3290,6 +3347,7 @@
       backBtn.textContent = "Back";
       backBtn.addEventListener("click", () => {
         modal.remove();
+        updateBookwormAchievement("back");
       });
       content.appendChild(backBtn);
   
@@ -3345,6 +3403,16 @@
     if (pUpg) pUpg.style.display = "none";
     const sUpg = document.getElementById("serenityUpgDiv");
     if (sUpg) sUpg.style.display = "none";
+    resourceActions.energy_elixir.tooltip = "Click to gain +3 Energy.<br>" + (("ontouchstart" in window || navigator.maxTouchPoints > 0) ? "Use above switch to consume all." : "Right-click to consume all.");
+    resourceActions.random_crystal.tooltip = "Levels up a random skill to next level.";
+    perkDescriptions.basic_mech = "Increases starting Energy by 25.";
+    perkDescriptions.copious_alchemist = "Reduce Copium gain by 60%.";
+    perkDescriptions.gacha_machine = "25% chance to produce double resources.";
+    perkDescriptions.workaholic = "All XP gains increased by 50%.";
+    perkDescriptions.celestial_light = "All XP gains increased by 2x.";
+    perkDescriptions.crypto_wallet = "Each time you travel:<br>5% chance to gain 25 Energy<br>5% chance to lose 25 Copium<br>5% chance to lose 25 Delusion<br>2.5% chance to gain 25 Knowledge<br>0.5% chance to gain 25 Power";
+    perkDescriptions.cyber_boost = "Each time Cybernetics levels up,<br>another random skill also levels up.";
+    perkDescriptions.four_leaf_clover = "7% chance to produce 7x resources.";
     displayZone();
   }
   
@@ -3546,6 +3614,16 @@
           unlockAchievement("Take down the Doctor");
         }
         if (task.resources && Array.isArray(task.resources)) {
+          
+          if (task.name === "Advanced Potion Making" && 
+            (!gameState.resources["energy_elixir"] || gameState.resources["energy_elixir"] === 0) &&
+            (!gameState.resourcesUsed["energy_elixir"] || gameState.resourcesUsed["energy_elixir"] === false) &&
+            (!gameState.resources["steroids"] || gameState.resources["steroids"] === 0) &&
+            (!gameState.resourcesUsed["steroids"] || gameState.resourcesUsed["steroids"] === false) &&
+            (!gameState.resources["augment_fuel"] || gameState.resources["augment_fuel"] === 0) &&
+            (!gameState.resourcesUsed["augment_fuel"] || gameState.resourcesUsed["augment_fuel"] === false)) {
+              unlockAchievement("Instant Expert");
+          }
           if (gameState.perks["four_leaf_clover"] && Math.random() < gameState.fortunesFavorValue / 100) {
             if(gameState.numAtomicParticles > 0) {
               task.resources.forEach(r => addResource(r, gameState.fortunesFavorValue * 2));
@@ -4017,6 +4095,14 @@
     updatePerksCount();
     displayZone();
     initializeSerenityUpgrades();
+
+    if (gameState.musicEnabled && bgMusic.paused) {
+      bgMusic.play().catch(() => {});
+    }
+    if (mutedSound.paused) {
+      mutedSound.play().catch(() => {});
+      mutedSound.volume = 0.1
+    }
   });
 
   // Expose functions for perks_and_resources.js

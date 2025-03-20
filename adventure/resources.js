@@ -898,6 +898,7 @@ let resourceActions = {
 const EXCLUDED_AUTO_RESOURCES = new Set(["cybernetic_armor", "infinity_gauntlet", "stardust", "cosmic_shard","atomic_particle","energy_core","googol","radiance"]);
 
 const achievements = [
+  { name: "Bookworm", description: "Click all the buttons on main settings page.", img: "images/achievements/bookworm.jpg" },
   { name: "That Was Easy", description: "Advance to Zone 2.", img: "images/achievements/that_was_easy.jpg" },
   { name: "Toggler", description: "Toggle a perk to disable it.", img: "images/achievements/toggler.jpg" },
   { name: "Baby Steps", description: "Full clear Zone 3.", img: "images/achievements/baby_steps.jpg" },
@@ -910,10 +911,12 @@ const achievements = [
   { name: "Empty Pockets", description: "Reach Zone 15 without any resources (used or held).", img: "images/achievements/empty_pockets.jpg" },
   { name: "Mondo Cool", description: "Defeat Vegeta with 0 copium.", img: "images/achievements/mondo_cool.jpg" },
   { name: "Mega Push", description: "Copium reset with exactly 10 inifinity gauntlets and nothing else.", img: "images/achievements/mega_push.jpg" },
+  { name: "Seven", description: "Prestige with zone 7 being your best zone.", img: "images/achievements/seven.jpg" },
   { name: "Cool Little Brother", description: "Defeat Big Brother after having only used sunglasses.", img: "images/achievements/cool_little_brother.jpg" },
   { name: "Lucky", description: "Produce at least 14 resources at once.", img: "images/achievements/lucky.jpg" },
   { name: "Take down the Doctor", description: "Defeat Doctor Manhattan while holding atomic particle (unused).", img: "images/achievements/take_down_the_doctor.jpg" },
   { name: "Amnesia", description: "Lose over 10K knowledge in a single copium reset.", img: "images/achievements/amnesia.jpg" },
+  { name: "Instant Expert", description: "Advanced Potion Making without having seen any of those potions.", img: "images/achievements/instant_expert.jpg" },
   { name: "Delusional", description: "Delusion reset at over 50K delusion.", img: "images/achievements/delusional.jpg" },
   { name: "Cybernetic Overload", description: "Gain over 40 starting energy from cybernetic implants in one run.", img: "images/achievements/cybernetic_overload.jpg" },
   { name: "Apothecary", description: "Hold over 200 Energy Elixirs in your inventory at once.", img: "images/achievements/apothecary.jpg" },

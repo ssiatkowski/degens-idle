@@ -3,7 +3,6 @@
 // Updated Sound Manager
 const soundManager = {
     volume: 0.5,
-    mute: false,
     sounds: {},
     
     // Register a sound by name with an optional type ("music" or "sfx")
@@ -24,7 +23,7 @@ const soundManager = {
       for (const key in this.sounds) {
         if (this.sounds[key]._type === 'music') {
           this.sounds[key].volume = vol * 0.25;  // music always at 1/4
-        } else {
+        } else if (key != "muted"){
           this.sounds[key].volume = vol;
         }
       }
@@ -32,8 +31,10 @@ const soundManager = {
     
     // Mute or unmute all sounds
     setMute: function(mute) {
-      this.mute = mute;
       for (const key in this.sounds) {
+        if (key === 'muted') {
+          continue;
+        }
         this.sounds[key].muted = mute;
       }
     }
@@ -41,6 +42,7 @@ const soundManager = {
   
   // Register your sounds
   const bgMusic = soundManager.register("background", "sounds/background_music.ogg", { loop: true, type: 'music' });
+  const mutedSound = soundManager.register("muted", "sounds/muted.mp3", { loop: true, type: 'music'})
   const levelUpSound = soundManager.register("levelUp", "sounds/level_up.wav", { type: 'sfx' });
   const copiumGameOverSound = soundManager.register("copiumGameOver", "sounds/copium_game_over.mp3", { type: 'sfx' });
   const delusionGameOverSound = soundManager.register("delusionGameOver", "sounds/delusion_game_over.wav", { type: 'sfx' });
