@@ -458,7 +458,7 @@ let resourceActions = {
 
       for (let i = 0; i < amt; i++) {
         // Get all visible skills.
-        const visibleSkills = Object.keys(gameState.skills).filter(s => gameState.skills[s].visible && s !== "omniscience");
+        const visibleSkills = Object.keys(gameState.skills).filter(s => gameState.skills[s].visible && s !== "omniscience" && s !== "totality" && s !== "nihility");
         if (visibleSkills.length === 0) continue;
         
         // Choose a random skill.
@@ -515,7 +515,7 @@ let resourceActions = {
       
       showMessage(messageLines.join("<br>"), backgroundColors["resource"]);
     },
-    tooltip: "Unexpectedly affect speed or energy drain of<br>a random skill by anywhere from -10% to +50%.<br>(cannot affect Omniscience)"
+    tooltip: "Unexpectedly affect speed or energy drain of<br>a random skill by anywhere from -10% to +50%.<br>(cannot affect Omniscience, Totality, or Nihility)"
   },
 "adamantium": {
   onConsume: (gameState, amt) => {
@@ -906,6 +906,7 @@ const achievements = [
   { name: "Mano a Mano", description: "Defeat Agent Smith without using any resources.", img: "images/achievements/mano_a_mano.jpg" },
   { name: "Wasted Armor", description: "Use cybernetic armor to make an energy elixir.", img: "images/achievements/wasted_armor.jpg" },
   { name: "Certified Turtle", description: "Have at least 4 cybernetic armors left after energy reset.", img: "images/achievements/certified_turtle.jpg" },
+  { name: "Stockpile", description: "Reach zone 10 without using any resources and holding over 100 resources.", img: "images/achievements/stockpile.jpg" },
   { name: "Postpone Inevitable", description: "Energy reset with over 8990 copium.", img: "images/achievements/postpone_inevitable.jpg" },
   { name: "First Prestige", description: "Complete your first Prestige.", img: "images/achievements/first_prestige.jpg" },
   { name: "Empty Pockets", description: "Reach Zone 15 without any resources (used or held).", img: "images/achievements/empty_pockets.jpg" },

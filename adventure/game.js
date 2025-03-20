@@ -810,7 +810,6 @@
       skill.level++;
   
       if (gameState.perks.cyber_boost && skillName === "cybernetics") {
-        // Filter visible skills to exclude "cybernetics", "totality", and "nihility"
         if (filteredVisibleSkills.length > 0) {
           const randomSkillName = filteredVisibleSkills[Math.floor(Math.random() * filteredVisibleSkills.length)];
           const randomSkill = gameState.skills[randomSkillName];
@@ -1565,7 +1564,7 @@
         }
         
         // If music is disabled, only play mutedSound
-        if (mutedSound.paused) {
+        if (mutedSound.paused && !isMobile) {
           mutedSound.play().catch(() => {});
           mutedSound.volume = 0.1
         }
@@ -1628,7 +1627,7 @@
         // Attach listeners:
         zoneBtn.addEventListener("click", () => {
           // If music is disabled, only play mutedSound
-          if (mutedSound.paused) {
+          if (mutedSound.paused && !isMobile) {
             mutedSound.play().catch(() => {});
           }
           if (gameState.autoRun) {
@@ -1643,7 +1642,7 @@
         });
         allBtn.addEventListener("click", () => {
           // If music is disabled, only play mutedSound
-          if (mutedSound.paused) {
+          if (mutedSound.paused && !isMobile) {
             mutedSound.play().catch(() => {});
           }
           if (gameState.autoRun) {
@@ -1938,6 +1937,10 @@
     if (currentZoneIndex == 14 && Object.keys(gameState.resourcesUsed).length == 0 
         && Object.values(gameState.resources).reduce((sum, value) => sum + value, 0) == 0) {
           unlockAchievement("Empty Pockets");
+    }
+    if (currentZoneIndex == 9 && Object.keys(gameState.resourcesUsed).length == 0 
+        && Object.values(gameState.resources).reduce((sum, value) => sum + value, 0) >= 100) {
+      unlockAchievement("Stockpile");
     }
     saveGameProgress();
   }
@@ -4099,7 +4102,7 @@
     if (gameState.musicEnabled && bgMusic.paused) {
       bgMusic.play().catch(() => {});
     }
-    if (mutedSound.paused) {
+    if (mutedSound.paused && !isMobile) {
       mutedSound.play().catch(() => {});
       mutedSound.volume = 0.1
     }

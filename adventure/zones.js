@@ -286,7 +286,7 @@ var zones = [
     tasks: [
       { id: 201, name: "Travel: Emerge into Celestial Dominion", type: "Travel", maxReps: 1, count: 0, baseTime: 1e16, speedMult: 0.5, drainMult: 4, description: "Exit the blazing forge and ascend toward divine realms.", skills: ["travel"] },
       { id: 202, name: "Hammer the Celestial Anvil", type: "Training", maxReps: 4, count: 0, baseTime: 1e18, drainMult: 100, speedMult: 1e-10, description: "Shape raw cosmic materials with divine precision.", skills: ["tinkering", "endurance"], mandatory: true },
-      { id: 203, name: "Heat the Stellar Crucible", type: "Training", maxReps: 20, count: 0, baseTime: 1e17, drainMult: 6, xpMult: 1000, description: "Ignite the furnace of creation to mold the universe.", skills: ["alchemy"], mandatory: true },
+      { id: 203, name: "Heat the Stellar Crucible", type: "Training", maxReps: 20, count: 0, baseTime: 1e17, drainMult: 6, xpMult: 1e5, description: "Ignite the furnace of creation to mold the universe.", skills: ["alchemy"], mandatory: true },
       { id: 204, name: "Embrace Stillness", type: "Prestige", maxReps: 1, count: 0, baseTime: 8e6, speedMult: 0.4, xpMult: 1.2, description: "Comprehend the stillness of the cosmos.", skills: ["omniscience"], mandatory: true },
       { id: 205, name: "Extract Celestial Ore", type: "Training", maxReps: 1, count: 0, baseTime: 1e27, drainMult: 5, speedMult: 1e-3, description: "Mine rare metals from the heart of a star.", skills: ["mechanics", "alchemy"], resources: ["celestial_ore"] },
       { id: 206, name: "Universal Alloy: Mold Strength", type: "Training", maxReps: 7, count: 0, baseTime: 1e19, drainMult: 25, xpMult: 1000, description: "Combine elements to form structures of eternal strength.", skills: ["tinkering"], perk: "universal_alloy" },
@@ -329,11 +329,11 @@ var zones = [
     img: "images/zones/zone23.jpg",
     tasks: [
       { id: 231, name: "Travel: Venture to Digital Nebula", type: "Travel", maxReps: 1, count: 0, baseTime: 1e17, speedMult: 0.5, drainMult: 32, description: "Step from the vast expanse into an enigmatic digital cloud.", skills: ["travel"] },
-      { id: 232, name: "Decode Alien Frequencies", type: "Training", maxReps: 7, count: 0, baseTime: 2.5e18, xpMult: 1e9, drainMult: 1000, description: "Interpret mysterious signals from beyond.", skills: ["intellect"], mandatory: true },
-      { id: 233, name: "Harness Expanse Energy", type: "Training", maxReps: 1, count: 0, baseTime: 2e25, speedMult: 3e-9, drainMult: 16000, xpMult: 1e-5, description: "Channel raw cosmic power into your arsenal.", skills: ["endurance", "intellect"], mandatory: true },
-      { id: 234, name: "Scavenge Cyber Relics", type: "Training", maxReps: 5, count: 0, baseTime: 1e23, speedMult: 2e-8, drainMult: 75, description: "Recover valuable remnants from forgotten networks.", skills: ["mechanics", "hacking"], resources: ["cyber_relic"] },
+      { id: 232, name: "Decode Alien Frequencies", type: "Training", maxReps: 7, count: 0, baseTime: 2.5e18, xpMult: 3e9, drainMult: 1000, description: "Interpret mysterious signals from beyond.", skills: ["intellect"], mandatory: true },
+      { id: 233, name: "Harness Expanse Energy", type: "Training", maxReps: 1, count: 0, baseTime: 2e25, speedMult: 3e-9, drainMult: 16000, xpMult: 2.5e-4, description: "Channel raw cosmic power into your arsenal.", skills: ["endurance", "intellect"], mandatory: true },
+      { id: 234, name: "Scavenge Cyber Relics", type: "Training", maxReps: 5, count: 0, baseTime: 1e23, speedMult: 2e-8, drainMult: 75, xpMult: 10, description: "Recover valuable remnants from forgotten networks.", skills: ["mechanics", "hacking"], resources: ["cyber_relic"] },
       { id: 235, name: "Omega Stability: Harmonize Chaos", type: "Training", maxReps: 6, count: 0, baseTime: 1.6e27, speedMult: 2e-6, drainMult: 1500, description: "Ensure harmony amid chaotic energies.", skills: ["tinkering", "quantum"], perk: "omega_stability" },
-      { id: 236, name: "Expanse Echo: Resonate with Cosmos", type: "Training", maxReps: 16, count: 0, baseTime: 3e17, xpMult: 1.5e8, drainMult: 1500, description: "Feel the heartbeat of the universe.", skills: ["perception"], perk: "expanse_echo" },
+      { id: 236, name: "Expanse Echo: Resonate with Cosmos", type: "Training", maxReps: 16, count: 0, baseTime: 3e17, xpMult: 7.5e8, drainMult: 1500, description: "Feel the heartbeat of the universe.", skills: ["perception"], perk: "expanse_echo" },
       { id: 237, name: "Battle T-800", type: "Training", maxReps: 1, count: 0, baseTime: 5e20, speedMult: 0.3, drainMult: 600, description: "Engage the relentless cyborg in a test of survival.", skills: ["combat"], boss_image: "images/bosses/t800.jpg", sound: t800Sound, resources: ["cybernetic_implant"] }
     ]
   },
