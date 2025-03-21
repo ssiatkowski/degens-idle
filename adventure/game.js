@@ -105,6 +105,8 @@
 
       //achievement related
       totalCyberneticImplantEnergy: 0,
+      criticallyLowEnergyHit: false,
+      defeatedBoss: false,
     };
   }
 
@@ -698,6 +700,7 @@
         energyBar.setAttribute("data-tooltip",
           `Energy: ${formatNumber(gameState.energy)}/${formatNumber(gameState.startingEnergy)}<br>Energy drains based on each skill used.<br>Stacks multiplicatively.<br><br>Energy is critically low!`
         );
+        gameState.criticallyLowEnergyHit = true;
       } else {
         energyBarFill.classList.remove("glowing");
         energyBarFill.classList.remove("energy-low");
@@ -825,10 +828,10 @@
 
       if (gameState.perks.digital_dreams){
         //10% chance
-        if (skillName === "hacking" && Math.random() < 0.1){
+        if (skillName === "hacking" && Math.random() < 0.13){
           addXP("tinkering", 0, "Digital Dreams: ", false, Math.pow(skillXpScaling, gameState.skills["tinkering"].level - 1) - gameState.skills["tinkering"].xp);
         }
-        if (skillName === "tinkering" && Math.random() < 0.1){
+        if (skillName === "tinkering" && Math.random() < 0.13){
           addXP("hacking", 0, "Digital Dreams: ", false, Math.pow(skillXpScaling, gameState.skills["hacking"].level - 1) - gameState.skills["hacking"].xp);
         }
       }
@@ -1200,7 +1203,7 @@
       gameState.energy += 500;
       if (Math.random() < 0.5) {
         gameState.perks["neon_energy"] = true;
-        showMessage("Neon Energy preserved!");
+        showMessage("Neon Energy preserved!", color = backgroundColors["perk"]);
         updatePerksCount();
         renderPerks();
       }
@@ -1216,6 +1219,8 @@
     gameState.numAtomicParticles = 0;
     gameState.energyCoreMultiplier = 1;
     gameState.totalCyberneticImplantEnergy = 0;
+    gameState.criticallyLowEnergyHit = false;
+    gameState.defeatedBoss = false;
     if (gameState.serenityUnlockables["Delusion Enjoyer"]) {
       gameState.delusionEnjoyerMultiplier = Math.max(1, gameState.delusion / 100);
     }
@@ -1942,6 +1947,9 @@
         && Object.values(gameState.resources).reduce((sum, value) => sum + value, 0) >= 100) {
       unlockAchievement("Stockpile");
     }
+    if (currentZoneIndex == 10 && gameState.numEnergyResets == 0) {
+      unlockAchievement("I'm Flying");
+    }
     saveGameProgress();
   }
 
@@ -2069,7 +2077,7 @@
       growthMiracleApplied = true;
     }    
     if (gameState.perks.expanse_echo) {
-      effTickDuration = 110;
+      effTickDuration = 120;
     } else {
       effTickDuration = 100;
     }
@@ -3700,6 +3708,9 @@
             gameState.delusionEnjoyerMultiplier = Math.max(1, gameState.delusion / 100);
           }
           
+          if (gameState.delusion == gameState.maxDelusion) {
+            unlockAchievement("Not Delusional");
+          }
           if (gameState.delusion > gameState.maxDelusion) {
             currentTasks = [];
             gameState.autoRun = false;
@@ -3806,7 +3817,7 @@
               }
             }
           }
-          if (gameState.perks.spectral_glow && Math.random() < 0.25) {
+          if (gameState.perks.spectral_glow && gameState.perks.spectral_glow !== "disabled" && Math.random() < 0.25) {
             const usedResources = Object.keys(gameState.resourcesUsed);
             if (usedResources.length > 0) {
               const randomIndex = Math.floor(Math.random() * usedResources.length);
@@ -3848,9 +3859,13 @@
             showPowerModal();
           
           }
-          if (task.name === "Battle Godzilla" && gameState.energyCoreMultiplier > 1) {
-            unlockAchievement("Slay the Beast");
+          if (task.name === "Challenge Dojo Master Chuck Norris" && gameState.energyCoreMultiplier > 1) {
+            unlockAchievement("What XP?");
           }
+          if (task.name === "Battle Godzilla" && !gameState.defeatedBoss) {
+            unlockAchievement("Big Game Hunter");
+          }
+          gameState.defeatedBoss = true;
 
           gameState.energyCoreMultiplier = 1;
           gameState.power += (zone.id - 3) * gameState.powerGainMultiplier;

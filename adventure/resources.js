@@ -41,23 +41,30 @@ let perkDescriptions = {
     celestial_light:        "All XP gains increased by 2x.",
     neon_energy:            "Next time you prestige, start with +500 energy (first run only).",
     omega_stability:        "Omniscience is 50% faster.",
-    expanse_echo:           "Make every game tick count as 10% more.",
-    digital_dreams:         "When hacking levels up, 10% chance for tinkering to also level up.<br>When tinkering levels up, 10% chance for hacking to also level up.<br>(in theory can propagate infinitely)",
+    expanse_echo:           "Make every game tick count as 20% more.",
+    digital_dreams:         "When hacking levels up, 13% chance for tinkering to also level up.<br>When tinkering levels up, 13% chance for hacking to also level up.<br>(in theory can propagate infinitely)",
     stellar_dreams:         "Changes lambda parameter for delusion gain from 0.5 to 0.3.<br>This increases delusion gain.",
     spark_of_infinity:      "Knowledge also levels with and boosts Cybernetics.",
     spectral_glow:          "Each time you advance a zone,<br>25% chance to spawn a random resource used in this run.",
 
   };
 
-const toggleablePerks = ["completionist", "copious_alchemist", "master_of_ai", "crypto_wallet", "mechanical_genius", "stellar_dreams"];
+const toggleablePerks = ["completionist", "copious_alchemist", "master_of_ai", "crypto_wallet", "mechanical_genius", "stellar_dreams", "spectral_glow"];
 
 /****************************************
  * RESOURCE ACTIONS & RENDERING
  ****************************************/
+
+let lightsaberReturns = 0;
+
 let resourceActions = {
   "energy_elixir": {
     onConsume: (gameState, amt) => { 
       gameState.energy += gameState.elixirEnergy * amt;
+      if (gameState.criticallyLowEnergyHit && gameState.energy >= gameState.startingEnergy) {
+        unlockAchievement("Second Wind");
+        gameState.criticallyLowEnergyHit = false;
+      }
       updateEnergyDisplay();
       updateTasksHoverInfo();
       //if(gameState.soundEnabled && amt >= 25) gulpSound.play(); 
@@ -308,6 +315,11 @@ let resourceActions = {
           totalEnergyGained += 100;
         }
       }
+
+      if (gameState.criticallyLowEnergyHit && gameState.energy >= gameState.startingEnergy) {
+        unlockAchievement("Second Wind");
+        gameState.criticallyLowEnergyHit = false;
+      }
       
       updateCopiumDisplay();
       updateDelusionDisplay();
@@ -438,6 +450,14 @@ let resourceActions = {
           addResource("lightsaber", 1);
           extraSpawned++;
         }
+      }
+      if (amt == 1 && extraSpawned == 1) {
+        lightsaberReturns++;    
+        if (lightsaberReturns >= 5) {
+          unlockAchievement("Jedi Master")
+        }    
+      } else {
+        lightsaberReturns = 0;
       }
       updateSkillMultipliers();
       updateSkillDisplay();
@@ -596,6 +616,10 @@ let resourceActions = {
   "hunger_shard": {
     onConsume: (gameState, amt) => { 
       gameState.energy += 300 * amt;
+      if (gameState.criticallyLowEnergyHit && gameState.energy >= gameState.startingEnergy) {
+        unlockAchievement("Second Wind");
+        gameState.criticallyLowEnergyHit = false;
+      }
       updateEnergyDisplay();
       updateTasksHoverInfo();
       showMessage(`Used ${amt} Hunger Shard${amt > 1 ? "s" : ""}.<br>Gained ${300 * amt} Energy.`, backgroundColors["resource"]);
@@ -842,6 +866,8 @@ let resourceActions = {
     const currentZoneIndex = getCurrentZoneIndex(); // Get the current zone index
     const zone = zones[currentZoneIndex]; // Get the current zone using the index
 
+    let asymptoteTasks = false;
+
     zone.tasks.forEach((task, taskIndex) => {
       // Only progress tasks that are not finished and are visible
       if (task.count < task.maxReps) {
@@ -862,6 +888,13 @@ let resourceActions = {
 
         // Now find the task data in currentTasks (it should be there now)
         const tData = currentTasks.find(t => t.zoneIndex === currentZoneIndex && t.taskIndex === taskIndex);
+
+        if (tData && (tData.progress / task.baseTime) > 0.9) {
+          asymptoteTasks++;
+          if (asymptoteTasks >= 2) {
+            unlockAchievement("Asymptote");
+          }
+        }
 
         if (tData) {
           const remainingProgress = task.baseTime - tData.progress; // Remaining progress to complete the task
@@ -908,20 +941,26 @@ const achievements = [
   { name: "Certified Turtle", description: "Have at least 4 cybernetic armors left after energy reset.", img: "images/achievements/certified_turtle.jpg" },
   { name: "Stockpile", description: "Reach zone 10 without using any resources and holding over 100 resources.", img: "images/achievements/stockpile.jpg" },
   { name: "Postpone Inevitable", description: "Energy reset with over 8990 copium.", img: "images/achievements/postpone_inevitable.jpg" },
+  { name: "Not Delusional", description: "Reach your max delusion value exactly.", img: "images/achievements/not_delusional.jpg" },
+  { name: "Second Wind", description: "After hitting critically low energy, get back up above starting energy.", img: "images/achievements/second_wind.jpg" },
   { name: "First Prestige", description: "Complete your first Prestige.", img: "images/achievements/first_prestige.jpg" },
   { name: "Empty Pockets", description: "Reach Zone 15 without any resources (used or held).", img: "images/achievements/empty_pockets.jpg" },
   { name: "Mondo Cool", description: "Defeat Vegeta with 0 copium.", img: "images/achievements/mondo_cool.jpg" },
   { name: "Mega Push", description: "Copium reset with exactly 10 inifinity gauntlets and nothing else.", img: "images/achievements/mega_push.jpg" },
   { name: "Seven", description: "Prestige with zone 7 being your best zone.", img: "images/achievements/seven.jpg" },
   { name: "Cool Little Brother", description: "Defeat Big Brother after having only used sunglasses.", img: "images/achievements/cool_little_brother.jpg" },
+  { name: "Jedi Master", description: "Using 1 lightsaber at a time, have it return 5 times in a row.", img: "images/achievements/jedi_master.jpg" },
   { name: "Lucky", description: "Produce at least 14 resources at once.", img: "images/achievements/lucky.jpg" },
   { name: "Take down the Doctor", description: "Defeat Doctor Manhattan while holding atomic particle (unused).", img: "images/achievements/take_down_the_doctor.jpg" },
   { name: "Amnesia", description: "Lose over 10K knowledge in a single copium reset.", img: "images/achievements/amnesia.jpg" },
+  { name: "What XP?", description: "Defeat Chuck Norris after having used an energy core.", img: "images/achievements/what_xp.jpg" },
   { name: "Instant Expert", description: "Advanced Potion Making without having seen any of those potions.", img: "images/achievements/instant_expert.jpg" },
   { name: "Delusional", description: "Delusion reset at over 50K delusion.", img: "images/achievements/delusional.jpg" },
   { name: "Cybernetic Overload", description: "Gain over 40 starting energy from cybernetic implants in one run.", img: "images/achievements/cybernetic_overload.jpg" },
   { name: "Apothecary", description: "Hold over 200 Energy Elixirs in your inventory at once.", img: "images/achievements/apothecary.jpg" },
-  { name: "Slay the Beast", description: "Defeat Godzilla after having used an energy core.", img: "images/achievements/slay_the_beast.jpg" },
+  { name: "Big Game Hunter", description: "Slay Godzilla without battling any previous bosses.", img: "images/achievements/big_game_hunter.jpg" },
+  { name: "I'm Flying", description: "Reach zone 11 with zero energy resets.", img: "images/achievements/im_flying.jpg" },
+  { name: "Asymptote", description: "Use radiance when 2 unfinished tasks are above 90% complete.", img: "images/achievements/asymptote.jpg" },
 ];
 
 const achievementsMap = new Map();
@@ -1003,7 +1042,7 @@ const SERENITY_UPGRADES = {
     "Discover Serenity": {
       "Wisdom Seeker": { 
         initialCost: 2, 
-        scaling: 1.25,
+        scaling: 1.24,
         description: "Increase all XP gains by 50% (additively)."
       },
       "Entropy Shield": { 
@@ -1049,7 +1088,7 @@ const SERENITY_UPGRADES = {
     "Transcend Chaos": {
       "Delusion Immune": {
         initialCost: 50,
-        scaling: 1.15,
+        scaling: 1.17,
         description: "Increase max Delusion by 1000."
       },
       "Greater Reactor": {
