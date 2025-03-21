@@ -1012,7 +1012,7 @@ const SERENITY_UPGRADES = {
       },
       "Kung Fu Master": {
         cost: 5000,
-        description: "On Prestige, start with kung fu master perk unlocked."
+        description: "On Prestige, start with kung fu zen perk unlocked."
       },
       "Repurpose Perks": {
         cost: 25000,
