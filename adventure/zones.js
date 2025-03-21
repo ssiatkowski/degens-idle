@@ -342,7 +342,7 @@ var zones = [
     name: "Digital Nebula",
     img: "images/zones/zone24.jpg",
     tasks: [
-      { id: 241, name: "Travel: Depart to Infinite Horizon", type: "Travel", maxReps: 1, count: 0, baseTime: 4e17, speedMult: 0.25, drainMult: 64, description: "Exit the digital cloud and step toward endless possibility.", skills: ["travel"] },
+      { id: 241, name: "Travel: Depart to Infinite Horizon", type: "Travel", maxReps: 1, count: 0, baseTime: 4e17, speedMult: 0.25, drainMult: 64, xpMult: 0.5, description: "Exit the digital cloud and step toward endless possibility.", skills: ["travel"] },
       { id: 242, name: "Decrypt Virtual Codes", type: "Training", maxReps: 8, count: 0, baseTime: 1e17, xpMult: 2e9, drainMult: 512, description: "Unlock hidden messages in streams of data.", skills: ["hacking"], mandatory: true },
       { id: 243, name: "Sync with Pixel Patterns", type: "Training", maxReps: 3, count: 0, baseTime: 1e18, xpMult: 5e8, drainMult: 1024,description: "Merge your vision with digital artistry.", skills: ["perception"], mandatory: true },
       { id: 244, name: "Compile Data Clusters", type: "Training", maxReps: 7, count: 0, baseTime: 1e25, speedMult: 1e-7, drainMult: 256, description: "Gather and organize fragmented digital info.", skills: ["tinkering", "hacking"], resources: ["data_cluster"] },
@@ -356,7 +356,7 @@ var zones = [
     name: "Infinite Horizon",
     img: "images/zones/zone25.jpg",
     tasks: [
-      { id: 251, name: "Travel: Breakthrough to Ethereal Matrix", type: "Travel", maxReps: 1, count: 0, baseTime: 1e18, speedMult: 0.1, drainMult: 128, description: "Shatter your limits and cross into the unknown.", skills: ["travel"] },
+      { id: 251, name: "Travel: Breakthrough to Ethereal Matrix", type: "Travel", maxReps: 1, count: 0, baseTime: 1e18, speedMult: 0.1, drainMult: 128, xpMult: 0.4, description: "Shatter your limits and cross into the unknown.", skills: ["travel"] },
       { id: 252, name: "Break Finite Limits", type: "Training", maxReps: 14, count: 0, baseTime: 1e25, speedMult: 5e-6, drainMult: 500, xpMult: 1e-3, description: "Push beyond the boundaries of the known universe.", skills: ["aiMastery", "endurance"], mandatory: true },
       { id: 253, name: "Embody Cosmic Potential", type: "Training", maxReps: 1, count: 0, baseTime: 1e28, speedMult: 1e-7, drainMult: 150, description: "Channel the energy of infinity into your being.", skills: ["alchemy", "charisma"], mandatory: true },
       { id: 254, name: "Transcend Chaos", type: "Prestige", maxReps: 1, count: 0, baseTime: 1e9, speedMult: 0.3, xpMult: 2, description: "Embark on the ultimate rebirth by transcending chaos - a ritual that reshapes your destiny.", skills: ["omniscience"], mandatory: true },
@@ -371,7 +371,7 @@ var zones = [
     name: "Ethereal Matrix",
     img: "images/zones/zone26.jpg",
     tasks: [
-      { id: 261, name: "Travel: Leap to Temporal Paradox", type: "Travel", maxReps: 1, count: 0, baseTime: 5e18, speedMult: 0.05, drainMult: 256, description: "Exit the digital realm and jump into time’s mysterious currents.", skills: ["travel"] },
+      { id: 261, name: "Travel: Leap to Temporal Paradox", type: "Travel", maxReps: 1, count: 0, baseTime: 5e18, speedMult: 0.05, drainMult: 256, xpMult: 0.3, description: "Exit the digital realm and jump into time’s mysterious currents.", skills: ["travel"] },
       { id: 262, name: "Merge with the Digital Spirit", type: "Training", maxReps: 5, count: 0, baseTime: 1e27, speedMult: 1e-8, drainMult: 2500, description: "Harmonize with the underlying code of existence.", skills: ["hacking", "intellect"], mandatory: true },
       { id: 263, name: "Decode Ethereal Enigmas", type: "Training", maxReps: 3, count: 0, baseTime: 5e25, speedMult: 4e-6, drainMult: 500, xpMult: 0.01, description: "Solve the riddles of a shifting digital realm.", skills: ["intellect", "aiMastery"], mandatory: true },
       { id: 265, name: "Synthesize Virtual Realities", type: "Training", maxReps: 2, count: 0, baseTime: 1e28, speedMult: 1e-8, drainMult: 2500, description: "Blend imagination with binary data.", skills: ["hacking", "tinkering"], mandatory: true },
@@ -385,7 +385,7 @@ var zones = [
     name: "Temporal Paradox",
     img: "images/zones/zone27.jpg",
     tasks: [
-      { id: 271, name: "Travel: Navigate to Ultra Dimension", type: "Travel", maxReps: 1, count: 0, baseTime: 1e19, speedMult: 0.01, drainMult: 512, description: "Step from warped time into a realm of infinite possibilities.", skills: ["travel"] },
+      { id: 271, name: "Travel: Navigate to Ultra Dimension", type: "Travel", maxReps: 1, count: 0, baseTime: 1e19, speedMult: 0.01, drainMult: 512, xpMult: 0.2, description: "Step from warped time into a realm of infinite possibilities.", skills: ["travel"] },
       { id: 272, name: "Measure Shifting Chronologies", type: "Training", maxReps: 10, count: 0, baseTime: 1e28, speedMult: 1e-11, drainMult: 12500, description: "Analyze the distortions in time’s fabric.", skills: ["intellect", "perception"], mandatory: true },
       // { id: 273, name: "Synchronize Lost Moments", type: "Training", maxReps: 10, count: 0, baseTime: 1.2e31, description: "Align fragmented memories across eras.", skills: ["tinkering", "intellect"], mandatory: true },
       // { id: 274, name: "Capture Temporal Residue", type: "Training", maxReps: 7, count: 0, baseTime: 1.3e31, description: "Secure remnants of fleeting time.", skills: ["alchemy", "perception"], resources: ["time_fragment"] },

@@ -43,7 +43,7 @@ let perkDescriptions = {
     omega_stability:        "Omniscience is 50% faster.",
     expanse_echo:           "Make every game tick count as 20% more.",
     digital_dreams:         "When hacking levels up, 13% chance for tinkering to also level up.<br>When tinkering levels up, 13% chance for hacking to also level up.<br>(in theory can propagate infinitely)",
-    stellar_dreams:         "Changes lambda parameter for delusion gain from 0.5 to 0.3.<br>This increases delusion gain.",
+    stellar_dreams:         "Changes lambda parameter for delusion gain from 0.5 to 0.25.<br>This increases delusion gain.",
     spark_of_infinity:      "Knowledge also levels with and boosts Cybernetics.",
     spectral_glow:          "Each time you advance a zone,<br>25% chance to spawn a random resource used in this run.",
 
@@ -1011,6 +1011,10 @@ const SERENITY_UPGRADES = {
         cost: 1000,
         description: "Add auto consume option that leaves 1 of every resource<br>and on Prestige, start with growth miracle perk unlocked."
       },
+      "Kung Fu Master": {
+        cost: 5000,
+        description: "On Prestige, start with kung fu master perk unlocked."
+      },
       "Repurpose Perks": {
         cost: 25000,
         description: "Divide all energy drain by (# perks unlocked / 10)."
@@ -1105,6 +1109,11 @@ const SERENITY_UPGRADES = {
         initialCost: 777,
         scaling: 7,
         description: "Improve four leaf clover perk by +1% chance and +1 resource."
+      },
+      "Serenity Infusion": {
+        initialCost: 1000,
+        scaling: 10,
+        description: "Multiplies serenity gain by +1% * (highest fully completed zone)."
       }
 
     },

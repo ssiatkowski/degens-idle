@@ -102,6 +102,7 @@
       copiumReactorEnergy: 6,
       randomCrystalLevels: 1,
       fortunesFavorValue: 7,
+      serenityInfusionValue: 0,
 
       //achievement related
       totalCyberneticImplantEnergy: 0,
@@ -2332,6 +2333,12 @@
         }
         showAutoConsumeButton();
         break;
+      case "Kung Fu Master":
+        if (!gameState.perks["kung_fu_zen"]) {
+          gameState.perks["kung_fu_zen"] = true;
+          renderPerks();
+        }
+        break;
       case "Repurpose Perks":
         // Effect is applied elsewhere.
         updateTasksHoverInfo();
@@ -2402,6 +2409,9 @@
       case "Fortune's Favor":
         gameState.fortunesFavorValue = 7 + level;
         perkDescriptions.four_leaf_clover = `${gameState.fortunesFavorValue}% chance to produce ${gameState.fortunesFavorValue}x resources.`; 
+        break;
+      case "Serenity Infusion":
+        gameState.serenityInfusionValue = level;
         break;
       default:
         console.log(`No effect defined for infinite upgrade: ${upgName}`);
@@ -2591,7 +2601,7 @@
     if (gameState.serenityUnlocked) {
       serenityUpg.style.display = "inline-block";
       // Calculate potential serenity gain on prestige:
-      const serenityGainPotential = ((gameState.bestCompletedZone ** gameState.serenityGainZoneExponent) / gameState.resetsForBestZone) * (gameState.perks.inspired_glow ? 1.25 : 1) + gameState.satoshiSerenity;
+      const serenityGainPotential = ((gameState.bestCompletedZone ** gameState.serenityGainZoneExponent) / gameState.resetsForBestZone) * (gameState.perks.inspired_glow ? 1.25 : 1)  * (1 + (0.01 * gameState.serenityInfusionValue * gameState.highestCompletedZone)) + gameState.satoshiSerenity;
       // Set the inner HTML: first line shows current Serenity, second line (in gray) shows potential gain.
       serenityUpg.innerHTML = `Serenity: ${formatNumber(gameState.serenity)}`
       serenityUpg.innerHTML += `<br><span style="color:rgb(200, 200, 200); font-size: 0.9em;">+(${formatNumber(serenityGainPotential)})</span>`;
@@ -2632,6 +2642,8 @@
         return `Current Effect: ${formatNumber(gameState.randomCrystalLevels)}`;
       case "Fortune's Favor":
         return `Current Effect: ${formatNumber(gameState.fortunesFavorValue)}`;
+      case "Serenity Infusion":
+        return `Current Effect: ${formatNumber(gameState.serenityInfusionValue)}`;
       default:
         return "Current Effect: (to be calculated)";
     }
@@ -2641,13 +2653,15 @@
     hideTooltip();
   
     const serenityGainPotential = ((gameState.bestCompletedZone ** gameState.serenityGainZoneExponent) / gameState.resetsForBestZone) *
-      (gameState.perks.inspired_glow ? 1.25 : 1) + gameState.satoshiSerenity;;
+      (gameState.perks.inspired_glow ? 1.25 : 1) * (1 + (0.01 *gameState.serenityInfusionValue * gameState.highestCompletedZone))
+       + gameState.satoshiSerenity;
   
     // Calculate total resets from energy, copium, and delusion resets.
     const totalResets = gameState.numEnergyResets + gameState.numCopiumResets + gameState.numDelusionResets;
     // Calculate next zone potential using (highestCompletedZone + 1) divided by total resets.
     const nextZonePotential = (((gameState.highestCompletedZone + 1) ** gameState.serenityGainZoneExponent) / Math.max(totalResets, 1)) *
-      (gameState.perks.inspired_glow ? 1.25 : 1) + gameState.satoshiSerenity;
+      (gameState.perks.inspired_glow ? 1.25 : 1)  * (1 + (0.01 * gameState.serenityInfusionValue * gameState.highestCompletedZone))
+       + gameState.satoshiSerenity;
   
     // Check if the modal already exists.
     let modal = document.getElementById("serenityModal");
@@ -2686,7 +2700,7 @@
           <span style="color: gray; font-size: 0.9em;">(+${formatNumber(serenityGainPotential)})</span>
         </p>
         <p style="color: gray; margin-top: -10px;">
-          Serenity Gain = (<strong>Best Full Zone</strong> ^ ${gameState.serenityGainZoneExponent} / <strong>Total Resets</strong>)${gameState.perks.inspired_glow ? " * 1.25" : ""}${gameState.serenityUnlockables["Satoshi's Wallet"] ? " + Wallet(" + formatNumber(gameState.satoshiSerenity) + ")" : ""}
+          Serenity Gain = (<strong>Best Full Zone</strong> ^ ${gameState.serenityGainZoneExponent} / <strong>Total Resets</strong>)${gameState.perks.inspired_glow ? " * 1.25" : ""}${gameState.serenityInfusionValue > 0 ? " * Infusion(" + gameState.serenityInfusionValue + "% * Highest Zone)" : ""}${gameState.serenityUnlockables["Satoshi's Wallet"] ? " + Wallet(" + formatNumber(gameState.satoshiSerenity) + ")" : ""}
         </p>
       </div>
       <p style="font-size: 0.9em; margin-top: 5px;">
@@ -3689,7 +3703,7 @@
           let lambda = 0.5; // Experiment with this value to get your desired shape
           
           if (gameState.perks.stellar_dreams && gameState.perks.stellar_dreams !== "disabled") {
-            lambda = 0.3;
+            lambda = 0.25;
           }
           
           // Generate an exponential random value.
@@ -4082,6 +4096,7 @@
     gameState.copiumReactorEnergy = gameState.copiumReactorEnergy || 6;
     gameState.randomCrystalLevels = gameState.randomCrystalLevels || 1;
     gameState.fortunesFavorValue = gameState.fortunesFavorValue || 7;
+    gameState.serenityInfusionValue = gameState.serenityInfusionValue || 0;
     gameState.unlockedAchievements = gameState.unlockedAchievements || {};
     gameState.achievementsMultiplier = gameState.achievementsMultiplier || 1;
     gameState.totalCyberneticImplantEnergy = gameState.totalCyberneticImplantEnergy || 0;
