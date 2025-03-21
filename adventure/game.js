@@ -2017,10 +2017,10 @@
   function applyPerks() {
     baseEnergyDrain = 0.05;
     if (gameState.perks.healthy_living) {
-      baseEnergyDrain *= 0.75; // 25% reduction
+      baseEnergyDrain *= 0.75;
     }
     if (gameState.perks.last_stand) {
-      baseEnergyDrain *= 0.8;  // 20% reduction
+      baseEnergyDrain *= 0.8;
     }
     if(gameState.perks.sandstorm) {
       skillXpScaling = 1.019;

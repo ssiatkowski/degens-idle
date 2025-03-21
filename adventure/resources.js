@@ -67,7 +67,6 @@ let resourceActions = {
       }
       updateEnergyDisplay();
       updateTasksHoverInfo();
-      //if(gameState.soundEnabled && amt >= 25) gulpSound.play(); 
       showMessage(`Used ${amt} Energy Elixir${amt > 1 ? "s" : ""}.<br>Gained ${gameState.elixirEnergy * amt} Energy.`, backgroundColors["resource"]);
     },
     tooltip: "Click to gain +3 Energy.<br>" + (("ontouchstart" in window || navigator.maxTouchPoints > 0) ? "Use above switch to consume all." : "Right-click to consume all.")
