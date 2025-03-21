@@ -107,6 +107,7 @@ let resourceActions = {
       updateTasksHoverInfo();
       if(gameState.soundEnabled) reinforcementSound.play();
       showMessage(`Used ${amt} Cybernetic Armor${amt > 1 ? "s" : ""}.<br>Reduced energy drain by 75% for next ${amt > 1 ? amt + " tasks" : "task"}`, backgroundColors["resource"]);
+      updateActiveResourcesOverlay();
     },
     tooltip: "Reduces energy drain by 75% for next task (one square).<br>Any task ending or pausing task will remove the armor.<br>Multiple uses stack with # of tasks, not with drain."
   },
@@ -580,6 +581,7 @@ let resourceActions = {
       updateTasksHoverInfo();
       if(gameState.soundEnabled) experienceSound.play();
       showMessage(`Used ${amt} Cosmic Shard${amt > 1 ? "s" : ""}.<br>5x experience gain next ${amt > 1 ? amt + " tasks" : "task"}`, backgroundColors["resource"]);
+      updateActiveResourcesOverlay();
     },
     tooltip: "Increases experience gain by 5x for next task (one square).<br>Any task ending or pausing task will remove the shard.<br>Multiple uses stack with # of tasks, not with xp gain."
   },
@@ -599,6 +601,7 @@ let resourceActions = {
       updateTasksHoverInfo();
       if(gameState.soundEnabled) atomicParticleSound.play();
       showMessage(`Used ${amt} Atomic Particle${amt > 1 ? "s" : ""}.<br>Double resource production next ${amt > 1 ? amt + " tasks" : "task"}`, backgroundColors["resource"]);
+      updateActiveResourcesOverlay();
     },
     tooltip: "Doubles resource production next time a resource is produced.<br>Stacks with other multipliers.<br>Multiple uses stack with # of tasks, not with production."
   },
@@ -656,6 +659,7 @@ let resourceActions = {
       
       showMessage(`Used ${amt} Energy Core${amt > 1 ? "s" : ""}.<br>
         Next battle XP gain multiplier is now ${formatNumber(gameState.energyCoreMultiplier)}x.`, backgroundColors["resource"]);
+      updateActiveResourcesOverlay();
     },
     tooltip: "Increases next battle XP gain additively<br>by (current energy / 5000)x per Energy Core used."
   },

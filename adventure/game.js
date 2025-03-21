@@ -172,6 +172,158 @@
     // Instead of full re-render, update only this resource.
     updateResourceDisplay(name);
   }
+
+  function updateActiveResourcesOverlay() {
+    // Determine which resource icons should be active
+    const activeResources = [
+      { name: "cybernetic_armor", active: gameState.numCyberneticArmors > 0 || gameState.cyberneticArmorTaskRunning },
+      { name: "cosmic_shard",      active: gameState.numCosmicShards > 0 || gameState.cosmicShardTaskRunning },
+      { name: "atomic_particle",   active: gameState.numAtomicParticles > 0 },
+      { name: "energy_core",       active: gameState.energyCoreMultiplier !== 1 }
+    ];
+  
+    // Early check: if no zone image, do nothing
+    const zoneImage = document.getElementById("zoneImage");
+    if (!zoneImage) return;
+    const parent = zoneImage.parentElement;
+    if (!parent) return;
+  
+    // Ensure the parent is relatively positioned
+    if (!parent.style.position || parent.style.position === "static") {
+      parent.style.position = "relative";
+    }
+  
+    // Calculate the zone image's bounding rectangle relative to the parent
+    const imageRect = zoneImage.getBoundingClientRect();
+    const parentRect = parent.getBoundingClientRect();
+    const offsetLeft = imageRect.left - parentRect.left;
+    // The zone image's bottom relative to the parent's top:
+    const imageBottom = imageRect.bottom - parentRect.top;
+  
+    // The width of the zone image (used for margins + sizing)
+    const zoneWidth = imageRect.width;
+  
+    // Use a margin value (here 1/100th of the zone width)
+    const margin = zoneWidth / 100;
+    // The overlay's width is the zone's width minus left/right margins
+    const overlayWidth = zoneWidth - 2 * margin;
+  
+    // Decide grid settings based on device
+    const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+    const columns = isMobile ? 4 : 5;
+    const gap = isMobile ? 2 : 5;
+    const padding = 5; // overlay padding
+  
+    // Determine how many active icons there are
+    const activeCount = activeResources.filter(r => r.active).length;
+    if (activeCount === 0) {
+      // Hide the overlay if nothing is active
+      const existingOverlay = document.getElementById("activeResourcesOverlay");
+      if (existingOverlay) {
+        existingOverlay.innerHTML = "";
+        existingOverlay.style.display = "none";
+      }
+      return;
+    }
+  
+    // Each resource image is sized relative to zoneWidth.
+    // For desktop, resourceSize = zoneWidth / 5.7; for mobile, zoneWidth / 4.7.
+    const resourceSize = isMobile ? zoneWidth / 4.7 : zoneWidth / 5.7;
+  
+    // Compute number of rows needed:
+    const rows = Math.ceil(activeCount / columns);
+    // Calculate overlay height: rows * resourceSize, plus gaps between rows and padding.
+    const overlayHeight = rows * resourceSize + (rows - 1) * gap + 2 * padding;
+  
+    // Position the overlay so its bottom aligns with the zone image bottom (minus margin)
+    // Since we are pinning via "top" (and parent's top is fixed), compute:
+    const topPos = imageBottom - overlayHeight - margin;
+  
+    // Try to find the overlay container; if not, create it.
+    let overlay = document.getElementById("activeResourcesOverlay");
+    if (!overlay) {
+      overlay = document.createElement("div");
+      overlay.id = "activeResourcesOverlay";
+      parent.appendChild(overlay);
+    }
+  
+    // Clear any existing icons and ensure it's displayed
+    overlay.innerHTML = "";
+    overlay.style.display = "grid";
+  
+    // Set positioning and styling for the overlay container
+    overlay.style.position = "absolute";
+    overlay.style.zIndex = "1000";
+    overlay.style.left = (offsetLeft + margin) + "px";
+    overlay.style.top = topPos + "px";
+    overlay.style.width = overlayWidth + "px";
+  
+    // Draw a subtle bounding box behind the icons
+    overlay.style.background = "rgba(0, 0, 0, 0.3)";
+    overlay.style.borderRadius = "8px";
+    overlay.style.padding = padding + "px";
+  
+    // Set up the grid layout: number of columns and gap between icons
+    overlay.style.gridTemplateColumns = `repeat(${columns}, max-content)`;
+    overlay.style.gridAutoFlow = "row";
+    overlay.style.gap = gap + "px";
+  
+    // Add an icon (with a count overlay) for each active resource
+    activeResources.forEach(res => {
+      if (res.active) {
+        // Create a container for each icon
+        const container = document.createElement("div");
+        container.style.position = "relative";
+        container.style.width = resourceSize + "px";
+        container.style.height = resourceSize + "px";
+  
+        // Create the resource image
+        const img = document.createElement("img");
+        img.src = "images/resources/" + res.name + ".jpg";
+        img.alt = res.name;
+        img.style.width = "100%";
+        img.style.height = "100%";
+        img.style.objectFit = "cover";
+        img.style.pointerEvents = "none";
+        container.appendChild(img);
+  
+        // Determine the number to display
+        let displayValue;
+        switch (res.name) {
+          case "cybernetic_armor":
+            displayValue = gameState.numCyberneticArmors;
+            break;
+          case "cosmic_shard":
+            displayValue = gameState.numCosmicShards;
+            break;
+          case "atomic_particle":
+            displayValue = gameState.numAtomicParticles;
+            break;
+          case "energy_core":
+            displayValue = formatNumber(gameState.energyCoreMultiplier);
+            break;
+        }
+  
+        // Create a count overlay in the bottom-right corner
+        const countOverlay = document.createElement("div");
+        countOverlay.textContent = displayValue;
+        countOverlay.style.position = "absolute";
+        countOverlay.style.bottom = "0";
+        countOverlay.style.right = "0";
+        countOverlay.style.fontSize = isMobile ? "0.5em" : "0.8em";
+        countOverlay.style.color = "#fff";
+        countOverlay.style.background = "rgba(0,0,0,0.6)";
+        countOverlay.style.padding = isMobile ? "1px 2px" : "2px 4px";
+        countOverlay.style.borderRadius = isMobile ? "2px 0 0 0" : "4px 0 0 0";
+        container.appendChild(countOverlay);
+  
+        overlay.appendChild(container);
+      }
+    });
+  }
+  
+  
+  
   
 
   function updateResourceDisplay(name) {
@@ -1232,6 +1384,7 @@
     updateDelusionDisplay();
     renderSkills();
     updateSkillDisplay();
+    updateActiveResourcesOverlay();
     renderResources();
     displayZone();
   }
@@ -1377,10 +1530,12 @@
         gameState.cosmicShardTaskRunning = false;
         if (existing.task.boss_image) {
           unlockAchievement("Take a Breather");
+          gameState.energyCoreMultiplier = 1;
         }
         if (!currentTasks.some(t => !t.paused && t.task.boss_image)) {
           document.getElementById("zoneImage").src = zones[zoneIndex].img;
         }
+        updateActiveResourcesOverlay();
       }
     } else {
       // Start new task
@@ -2140,6 +2295,7 @@
           // On click, toggle it
           div.addEventListener("click", () => {
             gameState.perks[pKey] = (gameState.perks[pKey] === "disabled") ? true : "disabled";
+            showMessage(gameState.perks[pKey] === "disabled" ? `Disabled ${pStr}.` : `Enabled ${pStr}.`);
             unlockAchievement("Toggler");
             applyPerks();
             renderPerks();
@@ -3594,10 +3750,12 @@
       if (!gameState.cyberneticArmorTaskRunning && gameState.numCyberneticArmors > 0) {
         gameState.cyberneticArmorTaskRunning = true;
         gameState.numCyberneticArmors--;
+        updateActiveResourcesOverlay();
       }
       if (!gameState.cosmicShardTaskRunning && gameState.numCosmicShards > 0) {
         gameState.cosmicShardTaskRunning = true;
         gameState.numCosmicShards--;
+        updateActiveResourcesOverlay();
       }
       if (gameState.cyberneticArmorTaskRunning) {
         drain *= 0.25;
@@ -3623,7 +3781,7 @@
       if (gameState.perks["kung_fu_zen"]) xpEach *= 1.28;
       if (gameState.perks["celestial_light"]) xpEach *= gameState.serenityUnlockables["Experience Junkie"] ? 6 : 2;
       if (gameState.cosmicShardTaskRunning) xpEach *= 5;
-      if (tData.boss_image) xpEach *= gameState.energyCoreMultiplier;
+      if (tData.task.boss_image) xpEach *= gameState.energyCoreMultiplier;
       if (tData.task.xpMult !== undefined) {
         xpEach *= tData.task.xpMult;
       }
@@ -3654,6 +3812,7 @@
               task.resources.forEach(r => addResource(r, gameState.fortunesFavorValue * 2));
               unlockAchievement("Lucky");
               gameState.numAtomicParticles--;
+              updateActiveResourcesOverlay();
             } else {
               task.resources.forEach(r => addResource(r, gameState.fortunesFavorValue));
             } 
@@ -3662,6 +3821,7 @@
               if (gameState.numAtomicParticles > 0) {
                 task.resources.forEach(r => addResource(r, 6));
                 gameState.numAtomicParticles--;
+                updateActiveResourcesOverlay();
               } else {
                 task.resources.forEach(r => addResource(r, 3));
               }
@@ -3669,6 +3829,7 @@
               if (gameState.numAtomicParticles > 0) {
                 task.resources.forEach(r => addResource(r, 4));
                 gameState.numAtomicParticles--;
+                updateActiveResourcesOverlay();
               } else {
                 task.resources.forEach(r => addResource(r, 2));
               }
@@ -3677,6 +3838,7 @@
             if (gameState.numAtomicParticles > 0) {
               task.resources.forEach(r => addResource(r, 2));
               gameState.numAtomicParticles--;
+              updateActiveResourcesOverlay();
             } else {
               task.resources.forEach(r => addResource(r, 1));
             }
@@ -3840,6 +4002,10 @@
               showMessage(`Spectral Glow: Spawned ${formatStringForDisplay(randomResource)}`);
             }
           }
+
+          gameState.cyberneticArmorTaskRunning = false;
+          gameState.cosmicShardTaskRunning = false;
+          updateActiveResourcesOverlay();
           
           currentTasks = [];
           nextZone();
@@ -3858,9 +4024,10 @@
               tData.button.classList.remove("active");
               removeTaskFromCurrent(tData);
             }
-            gameState.cyberneticArmorTaskRunning = false;
-            gameState.cosmicShardTaskRunning = false;
           }
+          gameState.cyberneticArmorTaskRunning = false;
+          gameState.cosmicShardTaskRunning = false;
+          updateActiveResourcesOverlay();
           if (!gameState.autoRun) saveGameProgress();
         }
         if (task.count >= task.maxReps && gameState.knowledgeUnlocked && usedSkills.some(s => knowledgeSkills.includes(s))) {
@@ -3882,6 +4049,7 @@
           gameState.defeatedBoss = true;
 
           gameState.energyCoreMultiplier = 1;
+          updateActiveResourcesOverlay();
           gameState.power += (zone.id - 3) * gameState.powerGainMultiplier;
           showMessage(`<span style="color: rgb(222, 34, 191);">${task.name.replace(/^[^ ]+ /, "")} defeated! +${formatNumber((zone.id - 3) * gameState.powerGainMultiplier)} Power</span>`);
           showPowerIfUnlocked();
@@ -4128,6 +4296,9 @@
     updatePerksCount();
     displayZone();
     initializeSerenityUpgrades();
+    setTimeout(() => {
+      updateActiveResourcesOverlay();
+    }, 100);
 
     if (gameState.musicEnabled && bgMusic.paused) {
       bgMusic.play().catch(() => {});
@@ -4157,6 +4328,7 @@
   window.startTask = (zoneIndex, taskIndex, button, progressFill, repContainer) => startTask(zoneIndex, taskIndex, button, progressFill, repContainer);
   window.removeTaskFromCurrent = (taskData) => removeTaskFromCurrent(taskData);
   window.backgroundColors = backgroundColors;
+  window.updateActiveResourcesOverlay = () => updateActiveResourcesOverlay();
 
   // Expose some functions for debugging
   window.getGameState = () => gameState;
