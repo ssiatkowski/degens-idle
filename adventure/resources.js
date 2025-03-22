@@ -1095,12 +1095,12 @@ const SERENITY_UPGRADES = {
     "Transcend Chaos": {
       "Delusion Immune": {
         initialCost: 50,
-        scaling: 1.17,
+        scaling: 1.18,
         description: "Increase max Delusion by 1000."
       },
       "Greater Reactor": {
         initialCost: 200,
-        scaling: 1.8,
+        scaling: 1.82,
         description: "Increase copium reactor starting energy gain by +1."
       },
       "Crystal Collector": {
