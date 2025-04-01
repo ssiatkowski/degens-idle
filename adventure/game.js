@@ -3695,6 +3695,11 @@
     if (pUpg) pUpg.style.display = "none";
     const sUpg = document.getElementById("serenityUpgDiv");
     if (sUpg) sUpg.style.display = "none";
+    const leaveOneCheckbox = document.getElementById("consumeMinusOneCheckbox");
+    if (leaveOneCheckbox && leaveOneCheckbox.parentElement) {
+      // Hide the container element that holds the checkbox and label
+      leaveOneCheckbox.parentElement.style.display = "none";
+    }
     resourceActions.energy_elixir.tooltip = "Click to gain +3 Energy.<br>" + (("ontouchstart" in window || navigator.maxTouchPoints > 0) ? "Use above switch to consume all." : "Right-click to consume all.");
     resourceActions.random_crystal.tooltip = "Levels up a random skill to next level.";
     perkDescriptions.basic_mech = "Increases starting Energy by 25.";
