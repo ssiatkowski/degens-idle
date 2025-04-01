@@ -94,7 +94,7 @@ let state = {
   
   // Generate AI Slop every tick (production is boosted by prestige currencies).
   function generateSlop() {
-    let goreMultiplier = 1 + state.gorePoints * 0.15;
+    let goreMultiplier = 1 + state.gorePoints * 0.13;
     let climateMultiplier = 1 + state.climatePoints * 0.5;
     state.aiSlop += state.slopPerClick * goreMultiplier * climateMultiplier;
     state.gorePoints += state.rebirthPoints;
