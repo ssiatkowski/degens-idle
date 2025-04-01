@@ -21,7 +21,7 @@ let perkDescriptions = {
     hoverboard:             "Increase travel speed by 4x.",
     reinforcement_learning: "5x increased AI Mastery XP gain.",
     immunity_device:        "Reduce minimum energy drain by 75%.<br>This affects tasks that are completed in one tick.",
-    quantum_vitalizer:      "Get Zone / 10 starting Energy for each Energy reset.<br>Ex: energy reset on zone 8 gives +0.8 starting energy.",
+    quantum_vitalizer:      "Gain Zone / 10 starting Energy for each Energy reset.<br>Ex: energy reset on zone 8 gives +0.8 starting energy.",
     knowledge_preserver:    "Reduce Knowledge loss on copium reset by 80%.",
     neural_matrix:          "Reduce Quantum energy drain by 40%.",
     sandstorm:              "Reduce all skill XP scaling from 2% to 1.9%.",
@@ -1014,6 +1014,10 @@ const SERENITY_UPGRADES = {
         cost: 1000,
         description: "Add auto consume option that leaves 1 of every resource<br>and on Prestige, start with growth miracle perk unlocked."
       },
+      "Cognitive Cache": {
+        cost: 2500,
+        description: "Unlock 4 automation profile slots.<br>Click to Load, Right Click to Save (Hold on Mobile)"
+      },
       "Kung Fu Master": {
         cost: 5000,
         description: "On Prestige, start with kung fu zen perk unlocked."
@@ -1032,7 +1036,7 @@ const SERENITY_UPGRADES = {
                     "• Energy: 10% chance to gain 50 Energy (<del>was 5% chance to gain 25 Energy</del>)<br>" +
                     "• Knowledge: 5% chance to gain 50 Knowledge (<del>was 2.5% chance to gain 25 Knowledge</del>)<br>" +
                     "• Power: 5% chance to gain 50 Power (<del>was 0.5% chance to gain 25 Power</del>)<br>" +
-                    "• Serenity: 1% chance to stash 1% of base potential Serenity<br>" +
+                    "• Serenity: 1% chance to stash 2.5% of base potential Serenity<br>" +
                     "• Data Bit: 1% chance to find 1 Data Bit"
       }
 
@@ -1055,7 +1059,7 @@ const SERENITY_UPGRADES = {
       "Entropy Shield": { 
         initialCost: 1, 
         scaling: 1.7,
-        description: "Reduce minimum energy drain by 2% (multiplicatively).<br>This affects tasks that are completed instantly."
+        description: "Reduce minimum energy drain by 2% (asymptotically).<br>This affects tasks that are completed instantly."
       },
       "Resource Saver": { 
         initialCost: 0.1,
@@ -1083,7 +1087,7 @@ const SERENITY_UPGRADES = {
       "Game Speed": {
         initialCost: 5,
         scaling: 1.3,
-        description: "Reduce game tick duration by 1% (multiplicatively)."
+        description: "Reduce game tick duration by 1% (asymptotically)."
       },
       "Zone Pusher": {
         initialCost: 4,
@@ -1098,6 +1102,11 @@ const SERENITY_UPGRADES = {
         scaling: 1.18,
         description: "Increase max Delusion by 1000."
       },
+      "1337 H4X0R": {
+        initialCost: 133.7,
+        scaling: 1.337,
+        description: "Improve Noob Haxor energy drain reduction by 1% (asymptotically)."
+      },
       "Greater Reactor": {
         initialCost: 200,
         scaling: 1.82,
@@ -1105,7 +1114,7 @@ const SERENITY_UPGRADES = {
       },
       "Crystal Collector": {
         initialCost: 300,
-        scaling: 3.25,
+        scaling: 5,
         description: "Random Crystal gives +1 more level."
       },
       "Fortune's Favor": {

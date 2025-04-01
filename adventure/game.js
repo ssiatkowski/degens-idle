@@ -69,6 +69,7 @@
       musicEnabled: true,
       soundVolume: 0.5,
       automationOverrides : {},
+      cognitiveCache: {},
 
       serenityUnlockables: {},
       serenityInfinite: {},
@@ -103,6 +104,7 @@
       randomCrystalLevels: 1,
       fortunesFavorValue: 7,
       serenityInfusionValue: 0,
+      haxorEnergyDrainReduction: 0.9,
 
       //achievement related
       totalCyberneticImplantEnergy: 0,
@@ -1027,7 +1029,7 @@
       if (sName === "omniscience" && gameState.perks.omega_stability) baseMult *= 1.5;
       baseMult *= (sData.progressBoost);
       let baseDrain = sData.energyDrain / (sData.drainBoost || 1);
-      if (sName === "hacking" && gameState.perks.noob_haxor) baseDrain *= 0.9;
+      if (sName === "hacking" && gameState.perks.noob_haxor) baseDrain *= gameState.haxorEnergyDrainReduction;
       if (sName === "mechanics" && gameState.perks.futuristic_wrench) baseDrain /= 3;
       if (sName === "charisma" && gameState.perks.kung_fu_zen) baseDrain *= 0.72;
       if (sName === "quantum" && gameState.perks.neural_matrix) baseDrain *= 0.6;
@@ -1179,7 +1181,7 @@
       if (sName === "mechanics" && gameState.perks.futuristic_wrench) drainFactor /= 3;
       if (sName === "charisma" && gameState.perks.kung_fu_zen) drainFactor *= 0.72;
       if (sName === "quantum" && gameState.perks.neural_matrix) drainFactor *= 0.6;
-      if (sName === "hacking" && gameState.perks.noob_haxor) drainFactor *= 0.9;
+      if (sName === "hacking" && gameState.perks.noob_haxor) drainFactor *= gameState.haxorEnergyDrainReduction;
       if (sName === "combat" && gameState.perks.forge_fervor) drainFactor *= 1/3;
       sk.precomputedDrainFactor = drainFactor;
     });
@@ -1822,6 +1824,10 @@
         
         // Set their initial appearance based on gameState.
         updateAutomationButtonStyles(zoneBtn, allBtn);
+
+        if (gameState.serenityUnlockables["Cognitive Cache"]) {
+          renderCognitiveCacheButtons();
+        }
       } else {
         zoneAutomationEl.innerHTML =
           "Full Completes:<br>" + gameState.zoneFullCompletes[currentZoneIndex] + " / 10";
@@ -1863,6 +1869,90 @@
     } else {
       // If automation is disabled, add the big gray X overlay
       btn.classList.add('big-x');
+    }
+  }
+
+  function updateAllTaskAutomationUI() {
+    const zone = zones[currentZoneIndex];
+    zone.tasks.forEach((task, idx) => {
+      const key = `${currentZoneIndex}-${idx}`;
+      // Find the task’s automation button in the DOM.
+      const btn = document.querySelector(`.task[data-zone-index="${currentZoneIndex}"][data-task-index="${idx}"] button`);
+      if (btn) {
+        updateTaskAutomationUI(btn, key);
+      }
+    });
+  }
+  
+  function renderCognitiveCacheButtons() {
+    // Locate the automation container (assumed to exist)
+    const zoneAutomationEl = document.getElementById("zoneAutomation");
+    if (!zoneAutomationEl) return;
+    
+    // Create (or update) a container for Cognitive Cache buttons.
+    let cacheContainer = document.getElementById("cognitiveCacheContainer");
+    if (!cacheContainer) {
+      cacheContainer = document.createElement("div");
+      cacheContainer.id = "cognitiveCacheContainer";
+      cacheContainer.style.marginTop = "10px";
+      cacheContainer.style.display = "flex";
+      cacheContainer.style.gap = isMobile ? "3px" : "5px";
+      zoneAutomationEl.appendChild(cacheContainer);
+    }
+    // Clear any previous buttons.
+    cacheContainer.innerHTML = "";
+    
+    // Create four profile buttons.
+    for (let i = 1; i <= 4; i++) {
+      const btn = document.createElement("button");
+      btn.textContent = i;
+      btn.dataset.cacheProfile = i;
+      
+      // Visual cue: add a CSS class if a profile is saved.
+      if (gameState.cognitiveCache && gameState.cognitiveCache[i]) {
+        btn.classList.add("profile-set");
+      } else {
+        btn.classList.add("profile-empty");
+      }
+      
+      // Left-click: load the saved profile into automationOverrides.
+      btn.addEventListener("click", () => {
+        if (gameState.cognitiveCache && gameState.cognitiveCache[i]) {
+          // Deep copy the stored overrides into gameState.automationOverrides.
+          gameState.automationOverrides = JSON.parse(JSON.stringify(gameState.cognitiveCache[i]));
+          updateAllTaskAutomationUI(); // Update the task buttons in the current zone.
+          showMessage(`Loaded Cognitive Cache profile ${i}.`);
+        } else if (gameState.cognitiveCache && gameState.cognitiveCache[i] === undefined) {
+          showMessage(`Cognitive Cache profile ${i} is empty.`);
+        }
+      });
+      
+      // Right-click: save the current automationOverrides into the profile.
+      btn.addEventListener("contextmenu", (e) => {
+        e.preventDefault();
+        if (!gameState.cognitiveCache) gameState.cognitiveCache = {};
+        gameState.cognitiveCache[i] = JSON.parse(JSON.stringify(gameState.automationOverrides));
+        btn.classList.remove("profile-empty");
+        btn.classList.add("profile-set");
+        showMessage(`Saved Cognitive Cache profile ${i}.`);
+      });
+      
+      // Mobile support: use a long press (1 second) to save.
+      let touchTimer;
+      btn.addEventListener("touchstart", () => {
+        touchTimer = setTimeout(() => {
+          if (!gameState.cognitiveCache) gameState.cognitiveCache = {};
+          gameState.cognitiveCache[i] = JSON.parse(JSON.stringify(gameState.automationOverrides));
+          btn.classList.remove("profile-empty");
+          btn.classList.add("profile-set");
+          showMessage(`Saved Cognitive Cache profile ${i}.`);
+        }, 1000);
+      });
+      btn.addEventListener("touchend", () => {
+        if (touchTimer) clearTimeout(touchTimer);
+      });
+      
+      cacheContainer.appendChild(btn);
     }
   }
   
@@ -2489,6 +2579,9 @@
         }
         showAutoConsumeButton();
         break;
+      case "Cognitive Cache":
+        // No immediate effect; the Cognitive Cache UI will now show.
+        break;
       case "Kung Fu Master":
         if (!gameState.perks["kung_fu_zen"]) {
           gameState.perks["kung_fu_zen"] = true;
@@ -2505,7 +2598,7 @@
         renderPerks();
         break;
       case "Satoshi's Wallet":
-        perkDescriptions.crypto_wallet = "Each time you travel:<br>10% chance to gain 50 Energy<br>5% chance to lose 25 Copium<br>5% chance to lose 25 Delusion<br>5% chance to gain 50 Knowledge<br>5% chance to gain 50 Power<br>1% chance to stash 1% of base potential Serenity<br>1% chance to find 1 Data Bit";
+        perkDescriptions.crypto_wallet = "Each time you travel:<br>10% chance to gain 50 Energy<br>5% chance to lose 25 Copium<br>5% chance to lose 25 Delusion<br>5% chance to gain 50 Knowledge<br>5% chance to gain 50 Power<br>1% chance to stash 2.5% of base potential Serenity<br>1% chance to find 1 Data Bit";
         break;
       default:
         console.log(`No effect defined for unlockable: ${upgName}`);
@@ -2551,8 +2644,13 @@
         gameState.maxDelusion = 9000 + level * 1000;
         showDelusionBar();
         break;
+      case "1337 H4X0R":
+        gameState.haxorEnergyDrainReduction = 0.9 * Math.pow(0.99, level);
+        perkDescriptions.noob_haxor = `Reduces Hacking energy drain by ${formatNumber((1 - gameState.haxorEnergyDrainReduction) * 100)}%.`;
+        break;
       case "Greater Reactor":
         gameState.copiumReactorEnergy = 6 + level;
+        perkDescriptions.copium_reactor = `Increase starting Energy gained for each Copium reset to +${gameState.copiumReactorEnergy}.`;
         break;
       case "Crystal Collector":
         gameState.randomCrystalLevels = 1 + level;
@@ -2792,6 +2890,8 @@
         return `Current Effect: ^${formatNumber(gameState.serenityGainZoneExponent)}`;
       case "Delusion Immune":
         return `Current Effect: ${formatNumber(gameState.maxDelusion)}`;
+      case "1337 H4X0R":
+        return `Current Effect: ${formatNumber((1 - gameState.haxorEnergyDrainReduction) * 100)}%`;
       case "Greater Reactor":
         return `Current Effect: ${formatNumber(gameState.copiumReactorEnergy)}`;
       case "Crystal Collector":
@@ -2809,15 +2909,21 @@
     hideTooltip();
   
     const serenityGainPotential = ((gameState.bestCompletedZone ** gameState.serenityGainZoneExponent) / gameState.resetsForBestZone) *
-      (gameState.perks.inspired_glow ? 1.25 : 1) * (1 + (0.01 *gameState.serenityInfusionValue * gameState.highestCompletedZone))
+      (gameState.perks.inspired_glow ? 1.25 : 1) * (1 + (0.01 * gameState.serenityInfusionValue * gameState.highestCompletedZone))
        + gameState.satoshiSerenity;
   
     // Calculate total resets from energy, copium, and delusion resets.
     const totalResets = gameState.numEnergyResets + gameState.numCopiumResets + gameState.numDelusionResets;
     // Calculate next zone potential using (highestCompletedZone + 1) divided by total resets.
-    const nextZonePotential = (((gameState.highestCompletedZone + 1) ** gameState.serenityGainZoneExponent) / Math.max(totalResets, 1)) *
-      (gameState.perks.inspired_glow ? 1.25 : 1)  * (1 + (0.01 * gameState.serenityInfusionValue * gameState.highestCompletedZone))
+    let nextZonePotential = (((gameState.highestCompletedZone + 1) ** gameState.serenityGainZoneExponent) / Math.max(totalResets, 1)) *
+      (gameState.perks.inspired_glow ? 1.25 : 1)  * (1 + (0.01 * gameState.serenityInfusionValue * (gameState.highestCompletedZone + 1)))
        + gameState.satoshiSerenity;
+
+    if (serenityGainPotential > nextZonePotential && gameState.serenityInfusionValue > 0) {
+      nextZonePotential = ((gameState.bestCompletedZone ** gameState.serenityGainZoneExponent) / gameState.resetsForBestZone) *
+      (gameState.perks.inspired_glow ? 1.25 : 1) * (1 + (0.01 * gameState.serenityInfusionValue * (gameState.highestCompletedZone + 1)))
+       + gameState.satoshiSerenity;
+    }
   
     // Check if the modal already exists.
     let modal = document.getElementById("serenityModal");
@@ -2863,7 +2969,7 @@
         Best Zone Completed: ${gameState.bestCompletedZone} | 
         Resets on Completion: ${gameState.resetsForBestZone == 1e100 ? "N/A" : gameState.resetsForBestZone}<br>
         <span style="color: gray;">
-          Highest Zone Completed: ${gameState.highestCompletedZone} | Next Zone Potential Serenity: 
+          Highest Zone Completed: ${gameState.highestCompletedZone} | Zone ${gameState.highestCompletedZone + 1} Potential Serenity: 
           <span style="color: ${nextZonePotential > serenityGainPotential ? "green" : "gray"};">${formatNumber(nextZonePotential)}</span>
         </span><br><br>
         Current Resets: ${totalResets}<br>
@@ -3594,6 +3700,8 @@
     perkDescriptions.crypto_wallet = "Each time you travel:<br>5% chance to gain 25 Energy<br>5% chance to lose 25 Copium<br>5% chance to lose 25 Delusion<br>2.5% chance to gain 25 Knowledge<br>0.5% chance to gain 25 Power";
     perkDescriptions.cyber_boost = "Each time Cybernetics levels up,<br>another random skill also levels up.";
     perkDescriptions.four_leaf_clover = "7% chance to produce 7x resources.";
+    perkDescriptions.copium_reactor = "Increase starting Energy gained for each Copium reset to +6.";
+    perkDescriptions.noob_haxor = "Reduce Hacking energy drain by 10%.";
     displayZone();
   }
   
@@ -3954,8 +4062,8 @@
               }
               if (Math.random() < 0.01) {
                 const serenityGainPotential = ((gameState.bestCompletedZone ** gameState.serenityGainZoneExponent) / gameState.resetsForBestZone)
-                gameState.satoshiSerenity += serenityGainPotential * 0.01;
-                showMessage(`Satoshi's Wallet: +${formatNumber(serenityGainPotential * 0.01)} Wallet Serenity`);
+                gameState.satoshiSerenity += serenityGainPotential * 0.025;
+                showMessage(`Satoshi's Wallet: +${formatNumber(serenityGainPotential * 0.025)} Wallet Serenity`);
               }
               if (Math.random() < 0.01) {
                 addResource("data_bit", 1);
@@ -4268,6 +4376,8 @@
     gameState.unlockedAchievements = gameState.unlockedAchievements || {};
     gameState.achievementsMultiplier = gameState.achievementsMultiplier || 1;
     gameState.totalCyberneticImplantEnergy = gameState.totalCyberneticImplantEnergy || 0;
+    gameState.haxorEnergyDrainReduction = gameState.haxorEnergyDrainReduction || 0.9;
+    gameState.cognitiveCache = gameState.cognitiveCache || {};
 
     // Cleanup old values:
     if ("luck_of_the_irish" in gameState.perks) {
