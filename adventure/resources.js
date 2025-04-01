@@ -843,7 +843,7 @@ let resourceActions = {
       
       showMessage(`Used ${amt} Googol${amt > 1 ? "s" : ""}.<br>Added:<br>${summary.join("<br>")}`, backgroundColors["resource"]);
     },
-    tooltip: "When consumed, for each Googol adds +10 to a random other resource you have.<br>Googol cannot be created by Infinity Gauntlet or Stardust."
+    tooltip: "When consumed, for each Googol adds +10 to a random other resource you have.<br>Googol cannot be created by Infinity Gauntlet or Stardust.<br>Cannot have more than 1 digit of Googols."
   },
   "dream_fragment": {
     onConsume: (gameState, amt) => {
@@ -963,6 +963,7 @@ const achievements = [
   { name: "Apothecary", description: "Hold over 200 Energy Elixirs in your inventory at once.", img: "images/achievements/apothecary.jpg" },
   { name: "Big Game Hunter", description: "Slay Godzilla without battling any previous bosses.", img: "images/achievements/big_game_hunter.jpg" },
   { name: "I'm Flying", description: "Reach zone 11 with zero energy resets.", img: "images/achievements/im_flying.jpg" },
+  { name: "Googolplex", description: "Try to hold over 9 Googols in your inventory at once.", img: "images/achievements/googolplex.jpg" },
   { name: "Asymptote", description: "Use radiance when 2 unfinished tasks are above 90% complete.", img: "images/achievements/asymptote.jpg" },
 ];
 

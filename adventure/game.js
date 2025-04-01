@@ -171,6 +171,11 @@
     if (name == "energy_elixir" && gameState.resources[name] >= 200) {
       unlockAchievement("Apothecary");
     }
+    if (name == "googol" && gameState.resources[name] > 9) {
+      gameState.resources[name] = 9;
+      unlockAchievement("Googolplex");
+      showMessage("This universe cannot handle more than 9 Googols.");
+    }
     // Instead of full re-render, update only this resource.
     updateResourceDisplay(name);
   }
@@ -4042,7 +4047,7 @@
           }
           tData.button.classList.remove("active");
           removeTaskFromCurrent(tData);
-          if (gameState.perks.crypto_wallet) {
+          if (gameState.perks.crypto_wallet && gameState.perks.crypto_wallet !== "disabled") {
             if (gameState.serenityUnlockables && gameState.serenityUnlockables["Satoshi's Wallet"]) {
               // Upgraded Satoshi's Wallet behavior:
               if (Math.random() < 0.10) {
