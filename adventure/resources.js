@@ -965,6 +965,7 @@ const achievements = [
   { name: "I'm Flying", description: "Reach zone 11 with zero energy resets.", img: "images/achievements/im_flying.jpg" },
   { name: "Googolplex", description: "Try to hold over 9 Googols in your inventory at once.", img: "images/achievements/googolplex.jpg" },
   { name: "Asymptote", description: "Use radiance when 2 unfinished tasks are above 90% complete.", img: "images/achievements/asymptote.jpg" },
+  { name: "420", description: "Prestige 420 times.", img: "images/achievements/420.jpg" },
 ];
 
 const achievementsMap = new Map();
@@ -998,7 +999,7 @@ const SERENITY_UPGRADES = {
       },
       "Smarter Automation": {
         cost: 100,
-        description: "Automation performs resource producing tasks first."
+        description: "Automation order can now be fine tuned for each zone.<br>Enable automation for tasks in order you want them to run."
       },
       "Copiouser Alchemist": {
         cost: 200,

@@ -260,7 +260,7 @@
   
     // Set positioning and styling for the overlay container
     overlay.style.position = "absolute";
-    overlay.style.zIndex = "1000";
+    overlay.style.zIndex = "900";
     overlay.style.left = (offsetLeft + margin) + "px";
     overlay.style.top = topPos + "px";
     overlay.style.width = overlayWidth + "px";
@@ -1322,6 +1322,9 @@
       gameState.numCopiumResets = 0;
       gameState.numDelusionResets = 0;
       gameState.numPrestiges++;
+      if (gameState.numPrestiges >= 420) {
+        unlockAchievement("420");
+      }
       gameState.highestCompletedZone = 0;
       gameState.bestCompletedZone = 0;
       gameState.resetsForBestZone = 1e100;
@@ -1772,11 +1775,16 @@
       }
       if (gameState.zoneFullCompletes[currentZoneIndex] >= 10) {
         zoneAutomationEl.innerHTML = "";
-        const label = document.createElement("span");
-        label.textContent = "Automate: ";
-        zoneAutomationEl.appendChild(label);
-
-        // Create both buttons first:
+        
+        // Label container on its own line.
+        const labelContainer = document.createElement("div");
+        labelContainer.textContent = "Automate:";
+        zoneAutomationEl.appendChild(labelContainer);
+        
+        // Button container on its own line.
+        const buttonContainer = document.createElement("div");
+        buttonContainer.style.marginTop = "5px"; // optional spacing
+        
         const zoneBtn = document.createElement("button");
         zoneBtn.textContent = "Zone";
         zoneBtn.setAttribute("data-automation", "zone");
@@ -1786,15 +1794,14 @@
         allBtn.textContent = "All";
         allBtn.setAttribute("data-automation", "all");
         allBtn.setAttribute("data-tooltip", "Run all tasks in automated zones.");
-
+        
         if (gameState.perks.simulation_engine) {
           zoneBtn.setAttribute("data-tooltip", `Run selected tasks in current zone.<br>${isMobile ? "Long press a task to toggle automation." : "Right click a task to toggle automation."}`);
           allBtn.setAttribute("data-tooltip", `Run selected tasks in automated zones.<br>${isMobile ? "Long press a task to toggle automation." : "Right click a task to toggle automation."}`);
         }
-
+        
         // Attach listeners:
         zoneBtn.addEventListener("click", () => {
-          // If music is disabled, only play mutedSound
           if (mutedSound.paused && !isMobile) {
             mutedSound.play().catch(() => {});
           }
@@ -1809,7 +1816,6 @@
           updateAutomationButtonStyles(zoneBtn, allBtn);
         });
         allBtn.addEventListener("click", () => {
-          // If music is disabled, only play mutedSound
           if (mutedSound.paused && !isMobile) {
             mutedSound.play().catch(() => {});
           }
@@ -1823,23 +1829,22 @@
           }
           updateAutomationButtonStyles(zoneBtn, allBtn);
         });
-
-        zoneAutomationEl.appendChild(zoneBtn);
-        zoneAutomationEl.appendChild(allBtn);
         
-        // Set their initial appearance based on gameState.
+        buttonContainer.appendChild(zoneBtn);
+        buttonContainer.appendChild(allBtn);
+        zoneAutomationEl.appendChild(buttonContainer);
+        
         updateAutomationButtonStyles(zoneBtn, allBtn);
-
+        
         if (gameState.serenityUnlockables["Cognitive Cache"]) {
           renderCognitiveCacheButtons();
         }
       } else {
-        zoneAutomationEl.innerHTML =
-          "Full Completes:<br>" + gameState.zoneFullCompletes[currentZoneIndex] + " / 10";
+        zoneAutomationEl.innerHTML = "Full Completes:<br>" + gameState.zoneFullCompletes[currentZoneIndex] + " / 10";
       }
     } else {
       zoneAutomationEl.innerHTML = "";
-    }
+    }    
   }
 
   function updateAutomationButtonStyles() {
@@ -1859,23 +1864,87 @@
       allBtn.classList.remove("active");
     }
   }
+
   function toggleTaskAutomation(key, btn, task) {
-    // Toggle the stored value:
-    gameState.automationOverrides[key] = !gameState.automationOverrides[key];
+    if (gameState.serenityUnlockables["Smarter Automation"]) {
+      if (gameState.automationOverrides[key] === false || gameState.automationOverrides[key] === true) {
+        // Assign the next available order number.
+        const zoneKeys = Object.keys(gameState.automationOverrides)
+          .filter(k => k.startsWith(`${currentZoneIndex}-`));
+        const orders = zoneKeys
+          .map(k => gameState.automationOverrides[k])
+          .filter(v => typeof v === 'number');
+        const nextOrder = orders.length ? Math.max(...orders) + 1 : 1;
+        gameState.automationOverrides[key] = nextOrder;
+      } else {
+        // If already numeric, disable it and renumber remaining tasks.
+        gameState.automationOverrides[key] = false;
+        renumberAutomationOrders(currentZoneIndex);
+      }
+    } else {
+      gameState.automationOverrides[key] = !gameState.automationOverrides[key];
+    }
     updateTaskAutomationUI(btn, key);
     showMessage(`Automation ${gameState.automationOverrides[key] ? "enabled" : "disabled"} for ${task.name}`);
   }
   
 
+  function renumberAutomationOrders(zoneIndex) {
+    // Gather keys in the current zone with a numeric override.
+    const zoneKeys = Object.keys(gameState.automationOverrides)
+      .filter(k => k.startsWith(`${zoneIndex}-`));
+    let ordered = [];
+    zoneKeys.forEach(key => {
+      const val = gameState.automationOverrides[key];
+      if (typeof val === 'number') {
+        ordered.push({ key, value: val });
+      }
+    });
+    // Sort in ascending order.
+    ordered.sort((a, b) => a.value - b.value);
+    // Reassign numbers consecutively starting at 1.
+    for (let i = 0; i < ordered.length; i++) {
+      gameState.automationOverrides[ordered[i].key] = i + 1;
+      // Update UI for each task.
+      const parts = ordered[i].key.split('-'); // key format: zoneIndex-taskIndex
+      const btn = document.querySelector(`.task[data-zone-index="${zoneIndex}"][data-task-index="${parts[1]}"] button`);
+      if (btn) {
+        updateTaskAutomationUI(btn, ordered[i].key);
+      }
+    }
+  }  
+  
+
   function updateTaskAutomationUI(btn, key) {
-    if (gameState.automationOverrides[key]) {
-      // If automation is enabled, remove the big gray X overlay
+    const override = gameState.automationOverrides[key];
+    // Ensure a label exists to show the order number.
+    let label = btn.querySelector(".automation-order-label");
+    if (!label) {
+      label = document.createElement("span");
+      label.className = "automation-order-label";
+      label.style.position = "absolute";
+      label.style.top = "2px";
+      label.style.left = "2px";
+      label.style.fontSize = "0.8em";
+      label.style.color = "#ff0";
+      btn.style.position = "relative"; // ensure relative positioning for the button
+      btn.appendChild(label);
+    }
+    // If the override is a number, show it; otherwise, clear the label.
+    if (typeof override === 'number') {
+      label.textContent = override;
+    } else {
+      label.textContent = "";
+    }
+    
+    // If override is enabled (either a number or true), remove the "big-x" class; otherwise, add it.
+    if (override) {
       btn.classList.remove('big-x');
     } else {
-      // If automation is disabled, add the big gray X overlay
       btn.classList.add('big-x');
     }
   }
+
 
   function updateAllTaskAutomationUI() {
     const zone = zones[currentZoneIndex];
@@ -4237,7 +4306,9 @@
             showMessage("Third prestige section unlocked!", backgroundColors["prestige"]);
           }
           if(!gameState.prestigeAvailable){
-            showSerenityUnlockedModal();
+            if(gameState.serenity < 1000) {
+              showSerenityUnlockedModal();
+            }
             gameState.prestigeAvailable = true;
           }
         }
@@ -4287,7 +4358,16 @@
         if (candidateTasks.length > 0) {
           // If Smarter Automation is unlocked, sort candidates so that tasks with resources come first.
           if (gameState.serenityUnlockables["Smarter Automation"]) {
-            candidateTasks.sort((a, b) => b.resourcePriority - a.resourcePriority);
+            candidateTasks.sort((a, b) => {
+              const keyA = `${currentZoneIndex}-${a.idx}`;
+              const keyB = `${currentZoneIndex}-${b.idx}`;
+              const valA = gameState.automationOverrides[keyA];
+              const valB = gameState.automationOverrides[keyB];
+              // If numeric, use that; if True, treat as a high order; if false, skip (should not be in candidate list).
+              const orderA = (typeof valA === 'number') ? valA : (valA === true ? 9999 : 99999);
+              const orderB = (typeof valB === 'number') ? valB : (valB === true ? 9999 : 99999);
+              return orderA - orderB;
+            });
           }
           const chosenIdx = candidateTasks[0].idx;
           const taskDiv = document.querySelector(`.task[data-zone-index="${currentZoneIndex}"][data-task-index="${chosenIdx}"]`);
@@ -4454,7 +4534,6 @@
   window.getGameState = () => gameState;
   window.getXpScale = () => xpScale;
   window.setXpScale = (newScale) => xpScale = newScale;
-  window.showSerenityUnlockedModal = () => showSerenityUnlockedModal();
   window.setRunTickDuration = (newTickDuration) => setRunTickDuration(newTickDuration);
   window.getRunTickDuration = () => runTickDuration;
   window.displayZone = () => displayZone();

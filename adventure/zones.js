@@ -13,7 +13,7 @@ var zones = [
       { id: 14, name: "Warm-Up Jog in Place", type: "Training", maxReps: 7, count: 0, baseTime: 6e3, xpMult: 2, description: "Boost your stamina with a simple jog.", skills: ["endurance"] },
       { id: 15, name: "Assemble a Clockwork Toy", type: "Training", maxReps: 5, count: 0, baseTime: 6e3, xpMult: 2, description: "Practice assembling basic mechanisms.", skills: ["tinkering"] },
       { id: 16, name: "Mirror Mojo", type: "Training", maxReps: 2, count: 0, baseTime: 1.5e4, xpMult: 1.5, description: "Tinker with your mirror while engaging in charismatic banter.", skills: ["tinkering", "charisma"] },
-      { id: 17, name: "Brewmaster: Read an Alchemy Book", type: "Training", maxReps: 1, count: 0, baseTime: 5e4, xpMult: 2, description: "Study the ancient art of alchemy.<br><br>The ★ indicates that completing this task<br>for the first time will grant a perk.", skills: ["alchemy"], perk: "brewmaster" },
+      { id: 17, name: "Brewmaster: Read an Alchemy Book", type: "Training", maxReps: 1, count: 0, baseTime: 5e4, xpMult: 2.5, description: "Study the ancient art of alchemy.<br><br>The ★ indicates that completing this task<br>for the first time will grant a perk.", skills: ["alchemy"], perk: "brewmaster" },
       { id: 18, name: "Brew a Simple Potion", type: "Training", maxReps: 18, count: 0, baseTime: 8e3, description: "Experiment with ingredients to create a potion.<br><br>The resource icon indicates that each completion<br>of this task will produce a resource.", skills: ["alchemy"], resources: ["energy_elixir"] }
     ]
   },
@@ -216,7 +216,7 @@ var zones = [
       { id: 153, name: "Cyber Siege Digital Onslaught", type: "Training", maxReps: 10, count: 0, baseTime: 2e18, description: "Launch a final digital assault on enemy systems.", skills: ["hacking", "cybernetics"], mandatory: true },
       { id: 154, name: "Discover Serenity", type: "Prestige", maxReps: 1, count: 0, baseTime: 3e5, xpMult: 0.9, description: "Find inner peace and serenity.", skills: ["omniscience"], mandatory: true },
       { id: 155, name: "Master of AI: Ultimate Challenge", type: "Training", maxReps: 5, count: 0, baseTime: 1e19, xpMult: 0.5, description: "Solve a complex algorithm that tests your intellect.", skills: ["aiMastery", "intellect"], perk: "master_of_ai" },
-      { id: 156, name: "Last Stand: Test of Endurance", type: "Training", maxReps: 4, count: 0, baseTime: 2e14, drainMult: 3, xpMult: 20, description: "Withstand an endless onslaught of foes.", skills: ["endurance"], perk: "last_stand" },
+      { id: 156, name: "Last Stand: Test of Endurance", type: "Training", maxReps: 4, count: 0, baseTime: 2e14, drainMult: 3, xpMult: 25, description: "Withstand an endless onslaught of foes.", skills: ["endurance"], perk: "last_stand" },
       { id: 157, name: "Puzzle Piece: Destiny", type: "Training", maxReps: 10, count: 0, baseTime: 1e17, description: "Find a piece of the ultimate puzzle to shape your destiny.", skills: ["aiMastery", "perception"], resources: ["puzzle_piece"] }
     ]
   },
@@ -386,7 +386,7 @@ var zones = [
     img: "images/zones/zone27.jpg",
     tasks: [
       { id: 271, name: "Travel: Navigate to Ultra Dimension", type: "Travel", maxReps: 1, count: 0, baseTime: 1e19, speedMult: 0.01, drainMult: 512, xpMult: 0.2, description: "Step from warped time into a realm of infinite possibilities.", skills: ["travel"] },
-      { id: 272, name: "Measure Shifting Chronologies", type: "Training", maxReps: 10, count: 0, baseTime: 1e28, speedMult: 1e-11, drainMult: 12500, description: "Analyze the distortions in time’s fabric.", skills: ["intellect", "perception"], mandatory: true },
+      { id: 272, name: "Measure Shifting Chronologies", type: "Training", maxReps: 10, count: 0, baseTime: 1e28, speedMult: 1e-10, drainMult: 125000, description: "Analyze the distortions in time’s fabric.", skills: ["intellect", "perception"], mandatory: true },
       // { id: 273, name: "Synchronize Lost Moments", type: "Training", maxReps: 10, count: 0, baseTime: 1.2e31, description: "Align fragmented memories across eras.", skills: ["tinkering", "intellect"], mandatory: true },
       // { id: 274, name: "Capture Temporal Residue", type: "Training", maxReps: 7, count: 0, baseTime: 1.3e31, description: "Secure remnants of fleeting time.", skills: ["alchemy", "perception"], resources: ["time_fragment"] },
       // { id: 275, name: "Rewind Digital Echoes", type: "Training", maxReps: 7, count: 0, baseTime: 1.4e31, description: "Manipulate echoes of the past.", skills: ["hacking", "intellect"] },
