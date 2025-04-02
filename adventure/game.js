@@ -87,6 +87,7 @@
       cosmicShardTaskRunning: false,
       numCelestialBlossoms: 0,
       numAtomicParticles: 0,
+      numTimeFraments: 0,
       energyCoreMultiplier: 1,
 
       //serenity upgrades related
@@ -186,7 +187,8 @@
       { name: "cybernetic_armor", active: gameState.numCyberneticArmors > 0 || gameState.cyberneticArmorTaskRunning },
       { name: "cosmic_shard",      active: gameState.numCosmicShards > 0 || gameState.cosmicShardTaskRunning },
       { name: "atomic_particle",   active: gameState.numAtomicParticles > 0 },
-      { name: "energy_core",       active: gameState.energyCoreMultiplier !== 1 }
+      { name: "energy_core",       active: gameState.energyCoreMultiplier !== 1 },
+      { name: "time_fragment",     active: gameState.numTimeFraments > 0 },
     ];
   
     // Early check: if no zone image, do nothing
@@ -308,6 +310,9 @@
             break;
           case "energy_core":
             displayValue = formatNumber(gameState.energyCoreMultiplier);
+            break;
+          case "time_fragment":
+            displayValue = gameState.numTimeFraments;
             break;
         }
   
@@ -972,6 +977,21 @@
       skill.xp -= required;
       skill.level++;
   
+        
+      var message = formatStringForDisplay(skillName) + " leveled up to " + skill.level;
+  
+      if (skill.level % 100 === 0 && false) { // TODO: Only show color after upgrade unlocked.
+        if (gameState.soundEnabled) {
+          levelUpSound.play();
+        }
+        showMessage(prePendMessage + '<span style="color: rgb(63, 202, 212);">' + message + '</span>');
+      } else {
+        if (!suppressMessage) {
+          showMessage(prePendMessage + message, backgroundColors["levelUp"]);
+        }
+      }
+      required = Math.pow(skillXpScaling, skill.level - 1);
+
       if (gameState.perks.cyber_boost && skillName === "cybernetics") {
         if (filteredVisibleSkills.length > 0) {
           const randomSkillName = filteredVisibleSkills[Math.floor(Math.random() * filteredVisibleSkills.length)];
@@ -995,21 +1015,14 @@
           addXP("hacking", 0, "Digital Dreams: ", false, Math.pow(skillXpScaling, gameState.skills["hacking"].level - 1) - gameState.skills["hacking"].xp);
         }
       }
-      updateSkillMultipliers();
-  
-      var message = formatStringForDisplay(skillName) + " leveled up to " + skill.level;
-  
-      if (skill.level % 100 === 0 && false) { // TODO: Only show color after upgrade unlocked.
-        if (gameState.soundEnabled) {
-          levelUpSound.play();
-        }
-        showMessage(prePendMessage + '<span style="color: rgb(63, 202, 212);">' + message + '</span>');
-      } else {
-        if (!suppressMessage) {
-          showMessage(prePendMessage + message, backgroundColors["levelUp"]);
-        }
+
+      if (gameState.numTimeFraments > 0 && prePendMessage !== "Time Fragment: "){
+        gameState.numTimeFraments--;
+        updateActiveResourcesOverlay();
+        addXP(skillName, 0, "Time Fragment: ", false, Math.pow(skillXpScaling, skill.level - 1) - skill.xp);
       }
-      required = Math.pow(skillXpScaling, skill.level - 1);
+
+      updateSkillMultipliers();
     }
     updateSkillDisplay();
   }
@@ -1380,6 +1393,7 @@
     gameState.numCosmicShards = 0;
     gameState.numCelestialBlossoms = 0;
     gameState.numAtomicParticles = 0;
+    gameState.numTimeFraments = 0;
     gameState.energyCoreMultiplier = 1;
     gameState.totalCyberneticImplantEnergy = 0;
     gameState.criticallyLowEnergyHit = false;
@@ -1516,7 +1530,7 @@
    * TASK TOGGLING FUNCTIONS
    ****************************************/
   function toggleTask(zoneIndex, taskIndex, button, progressFill, repContainer) {
-    const maxSlots = gameState.perks["double_timer"] ? 2 : 1;
+    const maxSlots = (gameState.perks["double_timer"] && gameState.perks["double_timer"] !== "disabled") ? 2 : 1;
     const existing = currentTasks.find(t => t.zoneIndex === zoneIndex && t.taskIndex === taskIndex);
 
     if (existing) {
@@ -2008,7 +2022,7 @@
         gameState.cognitiveCache[i] = JSON.parse(JSON.stringify(gameState.automationOverrides));
         btn.classList.remove("profile-empty");
         btn.classList.add("profile-set");
-        showMessage(`Saved Cognitive Cache profile ${i}.`);
+        showMessage(`Saved Cognitive Cache profile ${i}. (all zones)`);
       });
       
       // Mobile support: use a long press (1 second) to save.
@@ -2019,7 +2033,7 @@
           gameState.cognitiveCache[i] = JSON.parse(JSON.stringify(gameState.automationOverrides));
           btn.classList.remove("profile-empty");
           btn.classList.add("profile-set");
-          showMessage(`Saved Cognitive Cache profile ${i}.`);
+          showMessage(`Saved Cognitive Cache profile ${i}. (all zones)`);
         }, 1000);
       });
       btn.addEventListener("touchend", () => {
@@ -4330,7 +4344,7 @@
     }
 
     if (gameState.autoRun) {
-      const maxSlots = gameState.perks["double_timer"] ? 2 : 1;
+      const maxSlots = (gameState.perks["double_timer"] && gameState.perks["double_timer"] !== "disabled") ? 2 : 1;
       if (currentTasks.filter(t => !t.paused).length < maxSlots) {
         let taskStarted = false;
         const zone = zones[currentZoneIndex];
@@ -4451,6 +4465,7 @@
     gameState.startingLevel = gameState.startingLevel || 1;
     gameState.serenityGainZoneExponent = gameState.serenityGainZoneExponent || 3;
     gameState.numAtomicParticles = gameState.numAtomicParticles || 0;
+    gameState.numTimeFraments = gameState.numTimeFraments || 0;
     gameState.energyCoreMultiplier = gameState.energyCoreMultiplier || 1;
     gameState.skills.totality = gameState.skills.totality || { level: 1, xp: 0, visible: false, energyDrain: 1000,  progressBoost: 1, drainBoost: 1, xpGainFactor: 1e-10 };
     gameState.numPrestiges = gameState.numPrestiges || 0;

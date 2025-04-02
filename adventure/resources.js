@@ -49,7 +49,7 @@ let perkDescriptions = {
 
   };
 
-const toggleablePerks = ["completionist", "copious_alchemist", "master_of_ai", "crypto_wallet", "mechanical_genius", "stellar_dreams", "spectral_glow"];
+const toggleablePerks = ["completionist", "double_timer", "copious_alchemist", "master_of_ai", "crypto_wallet", "mechanical_genius", "stellar_dreams", "spectral_glow"];
 
 /****************************************
  * RESOURCE ACTIONS & RENDERING
@@ -523,9 +523,9 @@ let resourceActions = {
         // For energy drain: a negative display (i.e. reduced drain) is good → green; a positive display (increased drain) is bad → red.
         let color;
         if (effectType === "drain") {
-          color = displayEffectPercent < 0 ? "green" : "red";
+          color = displayEffectPercent < 0 ? "#E0FFD0" : "#FFBFBF";
         } else {
-          color = displayEffectPercent >= 0 ? "green" : "red";
+          color = displayEffectPercent >= 0 ? "#E0FFD0" : "#FFBFBF";
         }
         
         let coloredEffect = `<span style="color: ${color};">${sign}${displayEffectPercent}%</span>`;
@@ -864,74 +864,83 @@ let resourceActions = {
     },
     tooltip: "Moves delusion 0.1% of max delusion closer to 90%."
   },
-"radiance": {
-  onConsume: (gameState, amt, currentTasks) => {
-    const currentZoneIndex = getCurrentZoneIndex(); // Get the current zone index
-    const zone = zones[currentZoneIndex]; // Get the current zone using the index
+  "radiance": {
+    onConsume: (gameState, amt, currentTasks) => {
+      const currentZoneIndex = getCurrentZoneIndex(); // Get the current zone index
+      const zone = zones[currentZoneIndex]; // Get the current zone using the index
 
-    let asymptoteTasks = false;
+      let asymptoteTasks = false;
 
-    zone.tasks.forEach((task, taskIndex) => {
-      // Only progress tasks that are not finished and are visible
-      if (task.count < task.maxReps) {
-        // Check if the task is already in currentTasks; if not, add it
-        const existingTaskData = currentTasks.find(t => t.zoneIndex === currentZoneIndex && t.taskIndex === taskIndex);
+      zone.tasks.forEach((task, taskIndex) => {
+        // Only progress tasks that are not finished and are visible
+        if (task.count < task.maxReps) {
+          // Check if the task is already in currentTasks; if not, add it
+          const existingTaskData = currentTasks.find(t => t.zoneIndex === currentZoneIndex && t.taskIndex === taskIndex);
 
-        const taskRunningAlready = existingTaskData && !existingTaskData.paused;
+          const taskRunningAlready = existingTaskData && !existingTaskData.paused;
 
-        if (!existingTaskData) {
-          const taskDiv = document.querySelector(`.task[data-zone-index="${currentZoneIndex}"][data-task-index="${taskIndex}"]`);
-          const button = taskDiv.querySelector("button");
-          const progressFill = taskDiv.querySelector(".current-progress-fill");
-          const repContainer = taskDiv.querySelector(".rep-container");
-
-          // Add the task to currentTasks with initial progress set to 0
-          startTask(currentZoneIndex, taskIndex, button, progressFill, repContainer);
-        }
-
-        // Now find the task data in currentTasks (it should be there now)
-        const tData = currentTasks.find(t => t.zoneIndex === currentZoneIndex && t.taskIndex === taskIndex);
-
-        if (tData && (tData.progress / task.baseTime) > 0.9) {
-          asymptoteTasks++;
-          if (asymptoteTasks >= 2) {
-            unlockAchievement("Asymptote");
-          }
-        }
-
-        if (tData) {
-          const remainingProgress = task.baseTime - tData.progress; // Remaining progress to complete the task
-          const progressIncrease = remainingProgress * 0.1; // 10% of the remaining progress
-          tData.progress = Math.min(tData.progress + progressIncrease, task.baseTime); // Ensure progress doesn't exceed totalDuration
-
-          // Update the visual progress fill
-          const pct = (tData.progress / task.baseTime) * 100;
-          tData.progressFill.style.width = Math.min(pct, 100) + "%";
-
-          if (!taskRunningAlready) {
-            // Pause the task before updating progress
-            tData.paused = true;
+          if (!existingTaskData) {
             const taskDiv = document.querySelector(`.task[data-zone-index="${currentZoneIndex}"][data-task-index="${taskIndex}"]`);
             const button = taskDiv.querySelector("button");
-            button.classList.remove("active");
+            const progressFill = taskDiv.querySelector(".current-progress-fill");
+            const repContainer = taskDiv.querySelector(".rep-container");
+
+            // Add the task to currentTasks with initial progress set to 0
+            startTask(currentZoneIndex, taskIndex, button, progressFill, repContainer);
+          }
+
+          // Now find the task data in currentTasks (it should be there now)
+          const tData = currentTasks.find(t => t.zoneIndex === currentZoneIndex && t.taskIndex === taskIndex);
+
+          if (tData && (tData.progress / task.baseTime) > 0.9) {
+            asymptoteTasks++;
+            if (asymptoteTasks >= 2) {
+              unlockAchievement("Asymptote");
+            }
+          }
+
+          if (tData) {
+            const remainingProgress = task.baseTime - tData.progress; // Remaining progress to complete the task
+            const progressIncrease = remainingProgress * 0.1; // 10% of the remaining progress
+            tData.progress = Math.min(tData.progress + progressIncrease, task.baseTime); // Ensure progress doesn't exceed totalDuration
+
+            // Update the visual progress fill
+            const pct = (tData.progress / task.baseTime) * 100;
+            tData.progressFill.style.width = Math.min(pct, 100) + "%";
+
+            if (!taskRunningAlready) {
+              // Pause the task before updating progress
+              tData.paused = true;
+              const taskDiv = document.querySelector(`.task[data-zone-index="${currentZoneIndex}"][data-task-index="${taskIndex}"]`);
+              const button = taskDiv.querySelector("button");
+              button.classList.remove("active");
+            }
           }
         }
-      }
-    });
+      });
 
-    updateTasksHoverInfo(); // Update any necessary task hover info
-    showMessage(`Used ${amt} Radiance${amt > 1 ? "s" : ""}.<br>Progressed all tasks by 10% of their remaining progress.`, backgroundColors["resource"]);
+      updateTasksHoverInfo(); // Update any necessary task hover info
+      showMessage(`Used ${amt} Radiance${amt > 1 ? "s" : ""}.<br>Progressed all tasks by 10% of their remaining progress.`, backgroundColors["resource"]);
 
+    },
+    tooltip: "Progresses all tasks in the current zone by 10% of their remaining progress.<br>Radiance cannot be created by Infinity Gauntlet or Stardust."
   },
-  tooltip: "Progresses all tasks in the current zone by 10% of their remaining progress.<br>Radiance cannot be created by Infinity Gauntlet or Stardust."
-}
+  "time_fragment": {
+    onConsume: (gameState, amt) => {
+      gameState.numTimeFraments += amt;
+      if(gameState.soundEnabled) timeFragmentSound.play();
+      showMessage(`Used ${amt} Time Fragment${amt > 1 ? "s" : ""}.<br>Double level gains on next ${amt > 1 ? amt + " level ups" : "level up"}`, backgroundColors["resource"]);
+      updateActiveResourcesOverlay();
+    },
+    tooltip: "Doubles level gain on next level up.<br>Multiple uses stack with # of level ups, not with level gain."
+  },
 
 
 
 
 };
 
-const EXCLUDED_AUTO_RESOURCES = new Set(["cybernetic_armor", "infinity_gauntlet", "stardust", "cosmic_shard","atomic_particle","energy_core","googol","radiance"]);
+const EXCLUDED_AUTO_RESOURCES = new Set(["cybernetic_armor", "infinity_gauntlet", "stardust", "cosmic_shard","atomic_particle","energy_core","googol","radiance", "time_fragment"]);
 
 const achievements = [
   { name: "Bookworm", description: "Click all the buttons on main settings page.", img: "images/achievements/bookworm.jpg" },

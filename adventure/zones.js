@@ -362,7 +362,7 @@ var zones = [
       { id: 254, name: "Transcend Chaos", type: "Prestige", maxReps: 1, count: 0, baseTime: 1e9, speedMult: 0.3, xpMult: 2, description: "Embark on the ultimate rebirth by transcending chaos - a ritual that reshapes your destiny.", skills: ["omniscience"], mandatory: true },
       { id: 255, name: "Harvest Cosmic Scrolls", type: "Training", maxReps: 2, count: 0, baseTime: 1e28, speedMult: 1e-7, drainMult: 7500, description: "Collect ancient insights from the cosmos.", skills: ["intellect", "perception"], resources: ["cosmic_scroll"] },
       { id: 256, name: "Stellar Dreams: Drift Through", type: "Training", maxReps: 7, count: 0, baseTime: 1e27, speedMult: 3e-8, drainMult: 2000, description: "Float among the endless expanse of space.", skills: ["tinkering", "charisma"], perk: "stellar_dreams" },
-      { id: 257, name: "Spark of Infinity: Cyber Enhancement", type: "Training", maxReps: 1, count: 0, baseTime: 5e5, xpMult: 2e6, description: "Let the boundless energy of the universe fuel your knowledge of cybernetics.", skills: ["totality"], perk: "spark_of_infinity" },
+      { id: 257, name: "Spark of Infinity: Cyber Enhancement", type: "Training", maxReps: 1, count: 0, baseTime: 8e5, xpMult: 1e6, description: "Let the boundless energy of the universe fuel your knowledge of cybernetics.", skills: ["totality"], perk: "spark_of_infinity" },
       { id: 258, name: "Battle Godzilla", type: "Training", maxReps: 1, count: 0, baseTime: 1e21, speedMult: 0.2, drainMult: 2500, description: "Engage the king of monsters in a titanic struggle.", skills: ["combat"], boss_image: "images/bosses/godzilla.jpg", sound: godzillaSound, resources: ["kaiju_scale"] }
     ]
   },
@@ -386,9 +386,9 @@ var zones = [
     img: "images/zones/zone27.jpg",
     tasks: [
       { id: 271, name: "Travel: Navigate to Ultra Dimension", type: "Travel", maxReps: 1, count: 0, baseTime: 1e19, speedMult: 0.01, drainMult: 512, xpMult: 0.2, description: "Step from warped time into a realm of infinite possibilities.", skills: ["travel"] },
-      { id: 272, name: "Measure Shifting Chronologies", type: "Training", maxReps: 10, count: 0, baseTime: 1e28, speedMult: 1e-10, drainMult: 125000, description: "Analyze the distortions in time’s fabric.", skills: ["intellect", "perception"], mandatory: true },
-      // { id: 273, name: "Synchronize Lost Moments", type: "Training", maxReps: 10, count: 0, baseTime: 1.2e31, description: "Align fragmented memories across eras.", skills: ["tinkering", "intellect"], mandatory: true },
-      // { id: 274, name: "Capture Temporal Residue", type: "Training", maxReps: 7, count: 0, baseTime: 1.3e31, description: "Secure remnants of fleeting time.", skills: ["alchemy", "perception"], resources: ["time_fragment"] },
+      { id: 272, name: "Measure Shifting Chronologies", type: "Training", maxReps: 8, count: 0, baseTime: 1e28, speedMult: 5e-9, drainMult: 125000, description: "Analyze the distortions in time’s fabric.", skills: ["intellect", "perception"], mandatory: true },
+      { id: 273, name: "Synchronize Lost Moments", type: "Training", maxReps: 4, count: 0, baseTime: 1e29, speedMult: 1e-10, drainMult: 25000, description: "Align fragmented memories across eras.", skills: ["tinkering", "intellect"], mandatory: true },
+      { id: 274, name: "Capture Time Fragments", type: "Training", maxReps: 3, count: 0, baseTime: 2e27, speedMult: 1e-8, drainMult: 1e4, description: "Secure remnants of fleeting time.", skills: ["alchemy", "perception"], resources: ["time_fragment"] },
       // { id: 275, name: "Rewind Digital Echoes", type: "Training", maxReps: 7, count: 0, baseTime: 1.4e31, description: "Manipulate echoes of the past.", skills: ["hacking", "intellect"] },
       // { id: 276, name: "Amplify Chrono Clarity", type: "Training", maxReps: 7, count: 0, baseTime: 1.5e31, description: "Focus your mind to see through time.", skills: ["intellect"], perk: "time_glimpse" },
       { id: 277, name: "Battle Pudge", type: "Training", maxReps: 1, count: 0, baseTime: 2e23, speedMult: 0.2, drainMult: 10000, description: "Hooks fly from the shadows — sudden, brutal, and impossible to dodge.", skills: ["combat"], boss_image: "images/bosses/pudge.jpg", sound: pudgeSound, resources: ["radiance"] }
