@@ -56,7 +56,7 @@ var zones = [
       { id: 44, name: "Workaholic: Finance Bro Advice", type: "Training", maxReps: 1, count: 0, baseTime: 3e7, xpMult: 0.7, description: "Learn how workaholics function.", skills: ["endurance", "charisma", "perception"], perk: "workaholic" },
       { id: 45, name: "Crunch Financial Numbers", type: "Training", maxReps: 10, count: 0, baseTime: 8e4, xpMult: 1.5, description: "Analyze corporate data with intellect and mechanics.", skills: ["intellect", "mechanics"] },
       { id: 46, name: "Gacha Machine: Mechanics of Luck", type: "Training", maxReps: 1, count: 0, baseTime: 2e5, description: "Build a simple gacha machine.", skills: ["mechanics"], perk: "gacha_machine" },
-      { id: 47, name: "Battle Agent Smith", type: "Training", maxReps: 1, count: 0, baseTime: 2e7, description: "Take on this Matrix propagator. Might as well practice Combat.<br><br>This button is red - it's a boss fight.<br>Don't worry, you can move to next zone without it.", skills: ["combat"], boss_image: "images/bosses/agent_smith.jpg", resources: ["cool_sunglasses"], drainMult: 1.5, sound: agentSmithSound }
+      { id: 47, name: "Battle Agent Smith", type: "Training", maxReps: 1, count: 0, baseTime: 2e7, description: "Take on this Matrix propagator. Might as well practice Combat.<br><br>This button is red - it's a boss fight.<br>Don't worry, you can move to next zone without it.", skills: ["combat"], boss_image: "images/bosses/agent_smith.jpg", resources: ["cool_sunglasses"], drainMult: 1.5, sound: agentSmithSound, attunement: "endurance" }
     ]
   },
   {
@@ -72,7 +72,7 @@ var zones = [
       { id: 56, name: "Debug Digital Puzzle", type: "Training", maxReps: 2, count: 0, baseTime: 4e6, xpMult: 2, description: "Solve a digital puzzle using coding skills.", skills: ["hacking", "mechanics"] },
       { id: 57, name: "Double Timer: System Revamp", type: "Training", maxReps: 2, count: 0, baseTime: 5e8, xpMult: 0.8, description: "Revamp a digital system to double its efficiency.", skills: ["hacking", "tinkering", "intellect"], perk: "double_timer" },
       { id: 58, name: "Noob Haxor: Study the Basics", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "Study the basics of hacking.", skills: ["hacking", "perception"], perk: "noob_haxor" },
-      { id: 59, name: "Battle Shao Kahn", type: "Training", maxReps: 1, count: 0, baseTime: 1.2e8, description: "Some clown challenges you to mortal combat.", skills: ["combat"], boss_image: "images/bosses/shao_kahn.jpg", drainMult: 4, resources: ["shiny_helmet"], sound: shaoKahnSound }
+      { id: 59, name: "Battle Shao Kahn", type: "Training", maxReps: 1, count: 0, baseTime: 1.2e8, description: "Some clown challenges you to mortal combat.", skills: ["combat"], boss_image: "images/bosses/shao_kahn.jpg", drainMult: 4, resources: ["shiny_helmet"], sound: shaoKahnSound, attunement: "tinkering" },
     ]
   },
   {
@@ -87,7 +87,7 @@ var zones = [
       { id: 65, name: "Energetic Bliss: Painstaking Training", type: "Training", maxReps: 1, count: 0, baseTime: 4e12, xpMult: 0.6, description: "Engage in a grueling training session.", skills: ["combat", "endurance", "perception"], perk: "energetic_bliss" },
       { id: 66, name: "Concoct Some Steroids", type: "Training", maxReps: 4, count: 0, baseTime: 9e9, speedMult: 0.3, description: "Create a performance-enhancing steroid.", skills: ["alchemy", "tinkering", "intellect"], resources: ["steroids"] },
       { id: 67, name: "Kung Fu Zen: Talk Your Way", type: "Training", maxReps: 3, count: 0, baseTime: 1e10, drainMult: 3, xpMult: 13, description: "Convince the masters to help you improve your learning.", skills: ["charisma"], perk: "kung_fu_zen" },
-      { id: 68, name: "Challenge Dojo Master Chuck Norris", type: "Training", maxReps: 1, count: 0, baseTime: 1e9, description: "Challenge the legendary martial artist.", skills: ["combat"], boss_image: "images/bosses/chuck_norris.jpg", drainMult: 8, resources: ["karate_belt"], sound: chuckNorrisSound },
+      { id: 68, name: "Challenge Dojo Master Chuck Norris", type: "Training", maxReps: 1, count: 0, baseTime: 1e9, description: "Challenge the legendary martial artist.", skills: ["combat"], boss_image: "images/bosses/chuck_norris.jpg", drainMult: 8, resources: ["karate_belt"], sound: chuckNorrisSound, attunement: "charisma" },
     ]
   },
   {
@@ -102,7 +102,7 @@ var zones = [
       { id: 75, name: "Save Some Touchable Grass", type: "Training", maxReps: 4, count: 0, baseTime: 5e8, description: "Spot touchable grass and pick some for later.", skills: ["intellect", "charisma"], resources: ["touchable_grass"] },
       { id: 76, name: "System Calibration Diagnostic Run", type: "Training", maxReps: 16, count: 0, baseTime: 5e7, xpMult: 2, description: "Calibrate cybernetic systems.", skills: ["cybernetics", "tinkering"] },
       { id: 77, name: "Futuristic Wrench: Find a Tool", type: "Training", maxReps: 1, count: 0, baseTime: 3e9, drainMult: 2, xpMult: 5, description: "Locate a futuristic wrench.", skills: ["perception"], perk: "futuristic_wrench" },
-      { id: 78, name: "Battle Sauron", type: "Training", maxReps: 1, count: 0, baseTime: 4e9, description: "Take on the creator of just one ring.", skills: ["combat"], boss_image: "images/bosses/sauron.jpg", drainMult: 12, resources: ["one_ring"], sound: sauronSound }
+      { id: 78, name: "Battle Sauron", type: "Training", maxReps: 1, count: 0, baseTime: 4e9, description: "Take on the creator of just one ring.", skills: ["combat"], boss_image: "images/bosses/sauron.jpg", drainMult: 12, resources: ["one_ring"], sound: sauronSound, attunement: "alchemy" }
     ]
   },
   {
@@ -130,7 +130,7 @@ var zones = [
       { id: 94, name: "Neural Net Optimize the System", type: "Training", maxReps: 10, count: 0, baseTime: 1e8, xpMult: 1.2, description: "Enhance and optimize neural networks.", skills: ["aiMastery", "intellect"] },
       { id: 95, name: "Virtual Simulated Skirmish", type: "Training", maxReps: 2, count: 0, baseTime: 3e8, xpMult: 1.5, description: "Engage in simulated digital battles.", skills: ["aiMastery", "combat"] },
       { id: 96, name: "Simulation Engine: Ultimate Feat of Engineering", type: "Training", maxReps: 1, count: 0, baseTime: 4e14, xpMult: 0.75, description: "Create the ultimate feat of engineering.", skills: ["tinkering", "cybernetics", "hacking"], perk: "simulation_engine" },
-      { id: 97, name: "Battle Isshin", type: "Training", maxReps: 1, count: 0, baseTime: 1e10, description: "Challenge the master of the blade.", skills: ["combat"], boss_image: "images/bosses/isshin.jpg", drainMult: 20, resources: ["katana"], sound: isshinSound }
+      { id: 97, name: "Battle Isshin", type: "Training", maxReps: 1, count: 0, baseTime: 1e10, description: "Challenge the master of the blade.", skills: ["combat"], boss_image: "images/bosses/isshin.jpg", drainMult: 20, resources: ["katana"], sound: isshinSound, attunement: "travel"}
     ]
   },
   {
@@ -144,7 +144,7 @@ var zones = [
       { id: 104, name: "System Override the Grid", type: "Training", maxReps: 5, count: 0, baseTime: 2e11, xpMult: 1.2, description: "Take control of the city's digital infrastructure.", skills: ["hacking", "intellect"] },
       { id: 105, name: "Hoverboard: Steal One", type: "Training", maxReps: 1, count: 0, baseTime: 1e13, description: "Steal a hoverboard for high-speed travel.", skills: ["combat", "hacking"], perk: "hoverboard" },
       { id: 106, name: "Reinforcement Learning: Decent Algorithm", type: "Training", maxReps: 2, count: 0, baseTime: 2.5e6, xpMult: 2.5, description: "Train a reinforcement learning algorithm.", skills: ["aiMastery"], perk: "reinforcement_learning" },
-      { id: 107, name: "Battle Kratos", type: "Training", maxReps: 1, count: 0, baseTime: 5e10, description: "Challenge the demi-god.", skills: ["combat"], boss_image: "images/bosses/kratos.jpg", drainMult: 30, resources: ["blades_of_chaos"], sound: kratosSound }
+      { id: 107, name: "Battle Kratos", type: "Training", maxReps: 1, count: 0, baseTime: 5e10, description: "Challenge the demi-god.", skills: ["combat"], boss_image: "images/bosses/kratos.jpg", drainMult: 30, resources: ["blades_of_chaos"], sound: kratosSound, attunement: "combat" }
     ]
   },
   {
@@ -175,7 +175,7 @@ var zones = [
       { id: 125, name: "Neural Matrix: System Repair", type: "Training", maxReps: 5, count: 0, baseTime: 1e13, description: "Repair and optimize atomic systems.", skills: ["aiMastery", "hacking"], perk: "neural_matrix" },
       { id: 126, name: "Infuse a Sanity Cleanser", type: "Training", maxReps: 4, count: 0, baseTime: 1e11, description: "Create a potion that cleanses the mind.", skills: ["alchemy", "quantum"], resources: ["sanity_cleanser"] },
       { id: 127, name: "Knowledge Preserver: New Invention", type: "Training", maxReps: 3, count: 0, baseTime: 4e16, xpMult: 0.7, description: "Create a machine that preserves knowledge.", skills: ["tinkering", "intellect"], perk: "knowledge_preserver" },
-      { id: 128, name: "Battle Deadpool", type: "Training", maxReps: 1, count: 0, baseTime: 2e11, description: "Challenge the merc with a mouth.", skills: ["combat"], boss_image: "images/bosses/deadpool.jpg", drainMult: 40, resources: ["beating_heart"], sound: deadpoolSound }
+      { id: 128, name: "Battle Deadpool", type: "Training", maxReps: 1, count: 0, baseTime: 2e11, description: "Challenge the merc with a mouth.", skills: ["combat"], boss_image: "images/bosses/deadpool.jpg", drainMult: 40, resources: ["beating_heart"], sound: deadpoolSound, attunement: "perception" }
     ]
   },
   {
@@ -189,7 +189,7 @@ var zones = [
       { id: 134, name: "Outpost Infiltration Silent Breach", type: "Training", maxReps: 5, count: 0, baseTime: 1e16, description: "Breach an enemy outpost undetected.", skills: ["hacking", "endurance"] },
       { id: 135, name: "Produce Augment Fuel", type: "Training", maxReps: 4, count: 0, baseTime: 1e18, xpMult: 0.5,description: "Synethesize some augment fuel.", skills: ["cybernetics", "mechanics"], resources: ["augment_fuel"] },
       { id: 136, name: "Wise Mechanic: Knowledge Expansion", type: "Training", maxReps: 1, count: 0, baseTime: 1e22, speedMult: 0.1, xpMult: 0.005, description: "Expand your knowledge of mechanics.", skills: ["tinkering", "intellect", "mechanics"], perk: "wise_mechanic" },
-      { id: 137, name: "Battle Vegeta", type: "Training", maxReps: 1, count: 0, baseTime: 1e12, description: "Challenge the prince of all Saiyans.", skills: ["combat"], boss_image: "images/bosses/vegeta.jpg", drainMult: 50, resources: ["saiyan_armor"], sound: vegetaSound }
+      { id: 137, name: "Battle Vegeta", type: "Training", maxReps: 1, count: 0, baseTime: 1e12, description: "Challenge the prince of all Saiyans.", skills: ["combat"], boss_image: "images/bosses/vegeta.jpg", drainMult: 50, resources: ["saiyan_armor"], sound: vegetaSound, attunement: "negotiation" }
     ]
   },
   {
@@ -203,7 +203,7 @@ var zones = [
       { id: 144, name: "Urban Warfare: Digital Onslaught", type: "Training", maxReps: 10, count: 0, baseTime: 1e16, description: "Engage in a fast-paced digital battle.", skills: ["combat", "aiMastery"], perk: "urban_warfare" },
       { id: 145, name: "Prepare Hoverboard Fuel", type: "Training", maxReps: 16, count: 0, baseTime: 1e20, xpMult: 0.5, description: "Synthesize some fuel for your hoverboard.", skills: ["tinkering", "alchemy"], resources: ["hoverboard_fuel"] },
       { id: 146, name: "Crypto Wallet: Find on Street", type: "Training", maxReps: 1, count: 0, baseTime: 2e11, drainMult: 5, xpMult: 10, description: "Find a lost crypto wallet.", skills: ["perception"], perk: "crypto_wallet" },
-      { id: 147, name: "Challenge Big Brother", type: "Training", maxReps: 1, count: 0, baseTime: 1e13, description: "Challenge Big Brother.", skills: ["combat"], boss_image: "images/bosses/big_brother.jpg", drainMult: 55, resources: ["surveillance_core"], sound: bigBrotherSound }
+      { id: 147, name: "Challenge Big Brother", type: "Training", maxReps: 1, count: 0, baseTime: 1e13, description: "Challenge Big Brother.", skills: ["combat"], boss_image: "images/bosses/big_brother.jpg", drainMult: 55, resources: ["surveillance_core"], sound: bigBrotherSound, attunement: "cybernetics" },
     ]
   },
   {
@@ -232,7 +232,7 @@ var zones = [
       { id: 165, name: "Prune the Stellar Vines", type: "Training", maxReps: 7, count: 0, baseTime: 1e23, description: "Trim and shape the living tendrils of cosmic life.", skills: ["tinkering", "perception"] },
       { id: 166, name: "Harvest the Celestial Blossoms", type: "Training", maxReps: 7, count: 0, baseTime: 1.4e22, description: "Gather rare blossoms that glow with otherworldly light.", skills: ["alchemy", "charisma"], resources: ["celestial_blossom"] },
       { id: 167, name: "Growth Miracle: Nebula Soil", type: "Training", maxReps: 3, count: 0, baseTime: 4e16, drainMult: 2.5, description: "Study the soil here to learn how to accelerate growth.", skills: ["alchemy"], perk: "growth_miracle" },
-      { id: 168, name: "Battle Thanos (with hair)", type: "Training", maxReps: 1, count: 0, baseTime: 1e15, description: "Engage the Mad Titan in a clash of cosmic might. Maybe even take his glove.", skills: ["combat"], boss_image: "images/bosses/thanos.jpg", drainMult: 65, resources: ["infinity_gauntlet"], sound: thanosSound },
+      { id: 168, name: "Battle Thanos (with hair)", type: "Training", maxReps: 1, count: 0, baseTime: 1e15, description: "Engage the Mad Titan in a clash of cosmic might. Maybe even take his glove.", skills: ["combat"], boss_image: "images/bosses/thanos.jpg", drainMult: 65, resources: ["infinity_gauntlet"], sound: thanosSound, attunement: "mechanics" },
     ]
   },
   {
@@ -248,7 +248,7 @@ var zones = [
       { id: 176, name: "Inspired Glow: Nebular Inspiration", type: "Training", maxReps: 3, count: 0, baseTime: 2e18, drainMult: 5, description: "Let the glow of the cosmos spark creative genius.", skills: ["charisma"], perk: "inspired_glow" },
       { id: 177, name: "Intergallactic Farming", type: "Training", maxReps: 8, count: 0, baseTime: 2e24, description: "Learn to grow crops that thrive in the vast expanse of the nebula.", skills: ["mechanics", "alchemy"] },
       { id: 178, name: "Quantum Teleportation: Early Research", type: "Training", maxReps: 1, count: 0, baseTime: 2e19, speedMult: 0.9, xpMult: 0.75, description: "Navigate the nebula with the power of quantum teleportation.", skills: ["aiMastery", "quantum"], perk: "quantum_teleportation" },
-      { id: 179, name: "Battle Darth Vader", type: "Training", maxReps: 1, count: 0, baseTime: 5e15, speedMult: 0.8, description: "Engage the dark enforcer in an intergalactic duel.", skills: ["combat"], boss_image: "images/bosses/darth_vader.jpg", drainMult: 70, resources: ["lightsaber"], sound: darthVaderSound },
+      { id: 179, name: "Battle Darth Vader", type: "Training", maxReps: 1, count: 0, baseTime: 5e15, speedMult: 0.8, description: "Engage the dark enforcer in an intergalactic duel.", skills: ["combat"], boss_image: "images/bosses/darth_vader.jpg", drainMult: 70, resources: ["lightsaber"], sound: darthVaderSound, attunement: "combat" },
     ]
   },
   {
@@ -262,7 +262,7 @@ var zones = [
       { id: 184, name: "Collect Quantum Residue", type: "Training", maxReps: 3, count: 0, baseTime: 2.5e22, description: "Retrieve fleeting particles left in the void.", skills: ["alchemy", "quantum"], resources: ["quantum_residue"] },
       { id: 185, name: "Calibrate Waveform Oscillations", type: "Training", maxReps: 9, count: 0, baseTime: 2e25, description: "Adjust the frequencies of unseen oscillations.", skills: ["intellect", "mechanics"] },
       { id: 186, name: "Quantum Harmony: Uncertainty Principle", type: "Training", maxReps: 1, count: 0, baseTime: 5e18, drainMult: 20, description: "Blend chaos and order into perfect symmetry.", skills: ["intellect"], perk: "quantum_harmony" },
-      { id: 187, name: "Battle Ultron", type: "Training", maxReps: 1, count: 0, baseTime: 2e16, speedMult: 0.7, description: "Confront the synthetic menace in a clash of logic.", skills: ["combat"], boss_image: "images/bosses/ultron.jpg", drainMult: 75, resources: ["adamantium"], sound: ultronSound },
+      { id: 187, name: "Battle Ultron", type: "Training", maxReps: 1, count: 0, baseTime: 2e16, speedMult: 0.7, description: "Confront the synthetic menace in a clash of logic.", skills: ["combat"], boss_image: "images/bosses/ultron.jpg", drainMult: 75, resources: ["adamantium"], sound: ultronSound, attunement: "aiMastery" },
     ]
   },
   {
@@ -276,7 +276,7 @@ var zones = [
       { id: 194, name: "Extract Nano Components", type: "Training", maxReps: 4, count: 0, baseTime: 1e22, description: "Scavenge vital microchips from abandoned systems.", skills: ["mechanics", "hacking"], resources: ["nano_component"] },
       { id: 195, name: "Charm the Data Streams", type: "Training", maxReps: 7, count: 0, baseTime: 5e24, description: "Use your intellect and charisma to infuse digital data with a harmonious energy.", skills: ["intellect", "charisma"] },
       { id: 196, name: "Cyber Boost: Digital Resonance", type: "Training", maxReps: 5, count: 0, baseTime: 7e14, drainMult: 2, description: "Amplify the power of cybernetic energy.", skills: ["cybernetics"], perk: "cyber_boost" },
-      { id: 198, name: "Battle Unicron", type: "Training", maxReps: 1, count: 0, baseTime: 2e17, speedMult: 0.6, description: "Confront the colossal force of cosmic destruction.", skills: ["combat"], boss_image: "images/bosses/unicron.jpg", drainMult: 80, resources: ["cosmic_shard"], sound: unicronSound },
+      { id: 198, name: "Battle Unicron", type: "Training", maxReps: 1, count: 0, baseTime: 2e17, speedMult: 0.6, description: "Confront the colossal force of cosmic destruction.", skills: ["combat"], boss_image: "images/bosses/unicron.jpg", drainMult: 80, resources: ["cosmic_shard"], sound: unicronSound, attunement: "hacking" },
     ]
   },
   {
@@ -292,7 +292,7 @@ var zones = [
       { id: 206, name: "Universal Alloy: Mold Strength", type: "Training", maxReps: 7, count: 0, baseTime: 1e19, drainMult: 25, xpMult: 1000, description: "Combine elements to form structures of eternal strength.", skills: ["tinkering"], perk: "universal_alloy" },
       { id: 207, name: "Forge Fervor: Resonate with Flames", type: "Training", maxReps: 7, count: 0, baseTime: 1e17, drainMult: 100, description: "Let the heat of creation empower your spirit.", skills: ["endurance"], perk: "forge_fervor" },
       { id: 208, name: "Sparring with Dwarf King", type: "Training", maxReps: 12, count: 0, baseTime: 5e18, drainMult: 8, speedMult: 5e-8, description: "Test your strength against the might of the dwarf king.", skills: ["combat", "endurance"] },
-      { id: 209, name: "Battle Doctor Manhattan", type: "Training", maxReps: 1, count: 0, baseTime: 1e19, speedMult: 0.5, description: "Contend with the enigmatic force of atomic power.", skills: ["combat"], boss_image: "images/bosses/doctor_manhattan.jpg", drainMult: 90, resources: ["atomic_particle"], sound: doctorManhattanSound },
+      { id: 209, name: "Battle Doctor Manhattan", type: "Training", maxReps: 1, count: 0, baseTime: 1e19, speedMult: 0.5, description: "Contend with the enigmatic force of atomic power.", skills: ["combat"], boss_image: "images/bosses/doctor_manhattan.jpg", drainMult: 90, resources: ["atomic_particle"], sound: doctorManhattanSound, attunement: "intellect" },
     ]
   },
   {
@@ -306,7 +306,7 @@ var zones = [
       { id: 214, name: "Advanced Potion Making", type: "Training", maxReps: 10, count: 0, baseTime: 1e25, speedMult: 1e-19, drainMult: 100, xpMult: 2, description: "Create potions to enhance your combat prowess.", skills: ["alchemy", "tinkering", "intellect"], resources: ["energy_elixir","steroids","augment_fuel"]},
       { id: 215, name: "Barter for Star Fragments", type: "Training", maxReps: 6, count: 0, baseTime: 1e13, drainMult: 10, xpMult: 1e9, description: "Gather shimmering remnants of ancient stars.", skills: ["negotiation"], resources: ["star_fragment"] },
       { id: 216, name: "Celestial Light: Invoke Glory", type: "Training", maxReps: 3, count: 0, baseTime: 5e26, speedMult: 1e-6, drainMult: 100, description: "Channel celestial light to inspire greatness.", skills: ["charisma", "intellect"], perk: "celestial_light" },
-      { id: 217, name: "Battle Galactus", type: "Training", maxReps: 1, count: 0, baseTime: 5e19, speedMult: 0.4, drainMult: 250, description: "Engage the devourer of worlds in an epic showdown.", skills: ["combat"], boss_image: "images/bosses/galactus.jpg", resources: ["hunger_shard"], sound: galactusSound }
+      { id: 217, name: "Battle Galactus", type: "Training", maxReps: 1, count: 0, baseTime: 5e19, speedMult: 0.4, drainMult: 250, description: "Engage the devourer of worlds in an epic showdown.", skills: ["combat"], boss_image: "images/bosses/galactus.jpg", resources: ["hunger_shard"], sound: galactusSound, attunement: "alchemy" },
     ]
   },
   {
@@ -320,7 +320,7 @@ var zones = [
       { id: 224, name: "Extract Pixel Data", type: "Training", maxReps: 2, count: 0, baseTime: 1.5e23, speedMult: 3e-6,drainMult: 8192, description: "Gather fragmented bits of digital information.", skills: ["hacking", "perception"], resources: ["data_bit"] },
       { id: 225, name: "Overclock Digital Circuits", type: "Training", maxReps: 5, count: 0, baseTime: 1e22, speedMult: 1e-10, drainMult: 1000, xpMult: 0.01, description: "Boost the power of virtual infrastructures.", skills: ["mechanics", "endurance"] },
       { id: 226, name: "Neon Energy: Electric Vigor", type: "Training", maxReps: 4, count: 0, baseTime: 7e21, drainMult: 60, description: "Channel the raw force of electric vibrance.", skills: ["tinkering"], perk: "neon_energy" },
-      { id: 227, name: "Battle Doomsday", type: "Training", maxReps: 1, count: 0, baseTime: 3e20, speedMult: 0.4, drainMult: 400, description: "Face the unstoppable force of destruction.", skills: ["combat"], boss_image: "images/bosses/doomsday.jpg", resources: ["energy_core"], sound: doomsdaySound }
+      { id: 227, name: "Battle Doomsday", type: "Training", maxReps: 1, count: 0, baseTime: 3e20, speedMult: 0.4, drainMult: 400, description: "Face the unstoppable force of destruction.", skills: ["combat"], boss_image: "images/bosses/doomsday.jpg", resources: ["energy_core"], sound: doomsdaySound, attunement: "endurance" },
     ]
   },
   {
@@ -334,7 +334,7 @@ var zones = [
       { id: 234, name: "Scavenge Cyber Relics", type: "Training", maxReps: 5, count: 0, baseTime: 1e23, speedMult: 2e-8, drainMult: 75, xpMult: 10, description: "Recover valuable remnants from forgotten networks.", skills: ["mechanics", "hacking"], resources: ["cyber_relic"] },
       { id: 235, name: "Omega Stability: Harmonize Chaos", type: "Training", maxReps: 6, count: 0, baseTime: 1.6e27, speedMult: 2e-6, drainMult: 1500, description: "Ensure harmony amid chaotic energies.", skills: ["tinkering", "quantum"], perk: "omega_stability" },
       { id: 236, name: "Expanse Echo: Resonate with Cosmos", type: "Training", maxReps: 16, count: 0, baseTime: 3e17, xpMult: 7.5e8, drainMult: 1500, description: "Feel the heartbeat of the universe.", skills: ["perception"], perk: "expanse_echo" },
-      { id: 237, name: "Battle T-800", type: "Training", maxReps: 1, count: 0, baseTime: 5e20, speedMult: 0.3, drainMult: 600, description: "Engage the relentless cyborg in a test of survival.", skills: ["combat"], boss_image: "images/bosses/t800.jpg", sound: t800Sound, resources: ["cybernetic_implant"] }
+      { id: 237, name: "Battle T-800", type: "Training", maxReps: 1, count: 0, baseTime: 5e20, speedMult: 0.3, drainMult: 600, description: "Engage the relentless cyborg in a test of survival.", skills: ["combat"], boss_image: "images/bosses/t800.jpg", sound: t800Sound, resources: ["cybernetic_implant"], attunement: "cybernetics" }
     ]
   },
   {
@@ -348,7 +348,7 @@ var zones = [
       { id: 244, name: "Compile Data Clusters", type: "Training", maxReps: 7, count: 0, baseTime: 1e25, speedMult: 1e-7, drainMult: 256, description: "Gather and organize fragmented digital info.", skills: ["tinkering", "hacking"], resources: ["data_cluster"] },
       { id: 245, name: "Streamline Virtual Networks", type: "Training", maxReps: 4, count: 0, baseTime: 2e26, speedMult: 2e-7, drainMult: 32, description: "Enhance connectivity within the digital realm.", skills: ["cybernetics", "intellect"] },
       { id: 246, name: "Digital Dreams: Evoke Inspiration", type: "Training", maxReps: 1, count: 0, baseTime: 2e19, xpMult: 1e8, drainMult: 2500, description: "Let visions of code inspire new realities.", skills: ["charisma"], perk: "digital_dreams" },
-      { id: 247, name: "Battle HAL 9000", type: "Training", maxReps: 1, count: 0, baseTime: 7e20, speedMult: 0.3, drainMult: 1500, description: "Challenge the legendary AI in a clash of wits.", skills: ["combat"], boss_image: "images/bosses/hal9000.jpg", sound: hal9000Sound, resources: ["system_core"] }
+      { id: 247, name: "Battle HAL 9000", type: "Training", maxReps: 1, count: 0, baseTime: 7e20, speedMult: 0.3, drainMult: 1500, description: "Challenge the legendary AI in a clash of wits.", skills: ["combat"], boss_image: "images/bosses/hal9000.jpg", sound: hal9000Sound, resources: ["system_core"], attunement: "aiMastery" },
     ]
   },
   {
@@ -363,7 +363,7 @@ var zones = [
       { id: 255, name: "Harvest Cosmic Scrolls", type: "Training", maxReps: 2, count: 0, baseTime: 1e28, speedMult: 1e-7, drainMult: 7500, description: "Collect ancient insights from the cosmos.", skills: ["intellect", "perception"], resources: ["cosmic_scroll"] },
       { id: 256, name: "Stellar Dreams: Drift Through", type: "Training", maxReps: 7, count: 0, baseTime: 1e27, speedMult: 3e-8, drainMult: 2000, description: "Float among the endless expanse of space.", skills: ["tinkering", "charisma"], perk: "stellar_dreams" },
       { id: 257, name: "Spark of Infinity: Cyber Enhancement", type: "Training", maxReps: 1, count: 0, baseTime: 8e5, xpMult: 1e6, description: "Let the boundless energy of the universe fuel your knowledge of cybernetics.", skills: ["totality"], perk: "spark_of_infinity" },
-      { id: 258, name: "Battle Godzilla", type: "Training", maxReps: 1, count: 0, baseTime: 1e21, speedMult: 0.2, drainMult: 2500, description: "Engage the king of monsters in a titanic struggle.", skills: ["combat"], boss_image: "images/bosses/godzilla.jpg", sound: godzillaSound, resources: ["kaiju_scale"] }
+      { id: 258, name: "Battle Godzilla", type: "Training", maxReps: 1, count: 0, baseTime: 1e21, speedMult: 0.2, drainMult: 2500, description: "Engage the king of monsters in a titanic struggle.", skills: ["combat"], boss_image: "images/bosses/godzilla.jpg", sound: godzillaSound, resources: ["kaiju_scale"], attunement: "totality" },
     ]
   },
   {
@@ -377,7 +377,7 @@ var zones = [
       { id: 265, name: "Synthesize Virtual Realities", type: "Training", maxReps: 2, count: 0, baseTime: 1e28, speedMult: 1e-8, drainMult: 2500, description: "Blend imagination with binary data.", skills: ["hacking", "tinkering"], mandatory: true },
       { id: 264, name: "Extract Dream Fragments", type: "Training", maxReps: 2, count: 0, baseTime: 1e25, speedMult: 4e-6, drainMult: 500, xpMult: 0.002, description: "Gather rare remnants of lucid dreams.", skills: ["alchemy", "aiMastery"], resources: ["dream_fragment"] },
       { id: 266, name: "Spectral Glow: Matrix Miracles", type: "Training", maxReps: 4, count: 0, baseTime: 1e28, speedMult: 9e-10, drainMult: 10000, description: "Manifest unexpected wonders from the code.", skills: ["charisma", "intellect"], perk: "spectral_glow" },
-      { id: 267, name: "Battle Googol Smith", type: "Training", maxReps: 1, count: 0, baseTime: 1e23, speedMult: 0.2, drainMult: 5000, description: "A relentless swarm of Agent Smiths — endless, inescapable, inevitable.", skills: ["combat"], boss_image: "images/bosses/googol_smith.jpg", sound: googolSmithSound, resources: ["googol"] }
+      { id: 267, name: "Battle Googol Smith", type: "Training", maxReps: 1, count: 0, baseTime: 1e23, speedMult: 0.2, drainMult: 5000, description: "A relentless swarm of Agent Smiths — endless, inescapable, inevitable.", skills: ["combat"], boss_image: "images/bosses/googol_smith.jpg", sound: googolSmithSound, resources: ["googol"], attunement: "omniscience" }
     ]
   },
   {
@@ -385,29 +385,29 @@ var zones = [
     name: "Temporal Paradox",
     img: "images/zones/zone27.jpg",
     tasks: [
-      { id: 271, name: "Travel: Navigate to Ultra Dimension", type: "Travel", maxReps: 1, count: 0, baseTime: 1e19, speedMult: 0.01, drainMult: 512, xpMult: 0.2, description: "Step from warped time into a realm of infinite possibilities.", skills: ["travel"] },
+      { id: 271, name: "Travel: Navigate to Ultra Dimension", type: "Travel", maxReps: 1, count: 0, baseTime: 1e19, speedMult: 0.03, drainMult: 512, xpMult: 0.2, description: "Step from warped time into a realm of infinite possibilities.", skills: ["travel"] },
       { id: 272, name: "Measure Shifting Chronologies", type: "Training", maxReps: 8, count: 0, baseTime: 1e28, speedMult: 5e-9, drainMult: 125000, description: "Analyze the distortions in time’s fabric.", skills: ["intellect", "perception"], mandatory: true },
       { id: 273, name: "Synchronize Lost Moments", type: "Training", maxReps: 4, count: 0, baseTime: 1e29, speedMult: 1e-10, drainMult: 25000, description: "Align fragmented memories across eras.", skills: ["tinkering", "intellect"], mandatory: true },
       { id: 274, name: "Capture Time Fragments", type: "Training", maxReps: 3, count: 0, baseTime: 2e27, speedMult: 1e-8, drainMult: 1e4, description: "Secure remnants of fleeting time.", skills: ["alchemy", "perception"], resources: ["time_fragment"] },
-      // { id: 275, name: "Rewind Digital Echoes", type: "Training", maxReps: 7, count: 0, baseTime: 1.4e31, description: "Manipulate echoes of the past.", skills: ["hacking", "intellect"] },
-      // { id: 276, name: "Amplify Chrono Clarity", type: "Training", maxReps: 7, count: 0, baseTime: 1.5e31, description: "Focus your mind to see through time.", skills: ["intellect"], perk: "time_glimpse" },
-      { id: 277, name: "Battle Pudge", type: "Training", maxReps: 1, count: 0, baseTime: 2e23, speedMult: 0.2, drainMult: 10000, description: "Hooks fly from the shadows — sudden, brutal, and impossible to dodge.", skills: ["combat"], boss_image: "images/bosses/pudge.jpg", sound: pudgeSound, resources: ["radiance"] }
+      { id: 275, name: "Rewind Digital Echoes", type: "Training", maxReps: 20, count: 0, baseTime: 2e30, speedMult: 1e-8, drainMult: 1e3, description: "Manipulate echoes of the past.", skills: ["hacking", "intellect"] },
+      { id: 276, name: "Time Glimpse: Chrono Clarity", type: "Training", maxReps: 5, count: 0, baseTime: 1e23, drainMult: 25000, xpMult: 1e7, description: "Focus your mind to see through time.", skills: ["intellect"], perk: "time_glimpse" },
+      { id: 277, name: "Battle Pudge", type: "Training", maxReps: 1, count: 0, baseTime: 2e23, speedMult: 0.2, drainMult: 10000, description: "Hooks fly from the shadows — sudden, brutal, and impossible to dodge.", skills: ["combat"], boss_image: "images/bosses/pudge.jpg", sound: pudgeSound, resources: ["radiance"], attunement: "mechanics" }
     ]
   },
-  // {
-  //   id: 28,
-  //   name: "Ultra Dimension",
-  //   img: "images/zones/zone28.jpg",
-  //   tasks: [
-  //     { id: 281, name: "Travel: Traverse to Transcendent Void", type: "Travel", maxReps: 1, count: 0, baseTime: 1.0e32, description: "Cross into a realm beyond conventional space and time.", skills: ["travel"] },
-  //     { id: 282, name: "Align Multiversal Realms", type: "Training", maxReps: 10, count: 0, baseTime: 1.1e32, description: "Bridge the gaps between infinite dimensions.", skills: ["intellect", "quantum"], mandatory: true },
-  //     { id: 283, name: "Decode Dimensional Signatures", type: "Training", maxReps: 10, count: 0, baseTime: 1.2e32, description: "Interpret the signals of alternate realities.", skills: ["perception", "intellect"], mandatory: true },
-  //     { id: 284, name: "Collect Interdimensional Ore", type: "Training", maxReps: 7, count: 0, baseTime: 1.3e32, description: "Mine rare materials from shifting planes.", skills: ["mechanics", "alchemy"], resources: ["dimensional_ore"] },
-  //     { id: 285, name: "Synthesize Reality Fragments", type: "Training", maxReps: 7, count: 0, baseTime: 1.4e32, description: "Merge elements from multiple realms into a new whole.", skills: ["tinkering", "intellect"] },
-  //     { id: 286, name: "Harmonize the Multiverse", type: "Training", maxReps: 7, count: 0, baseTime: 1.5e32, description: "Attune yourself to the symphony of infinite realities.", skills: ["intellect", "nihility"], perk: "dimension_mastery" },
-  //     { id: 287, name: "Battle Arceus", type: "Training", maxReps: 1, count: 0, baseTime: 1.6e32, description: "Challenge the tyrant of apocalyptic power.", skills: ["combat"], boss_image: "images/bosses/arceus.jpg", sound: arceusSound, resources: ["omega_force"] }
-  //   ]
-  // },
+  {
+    id: 28,
+    name: "Ultra Dimension",
+    img: "images/zones/zone28.jpg",
+    tasks: [
+      { id: 281, name: "Travel: Traverse to Transcendent Void", type: "Travel", maxReps: 1, count: 0, baseTime: 2e19, speedMult: 0.02, drainMult: 600, description: "Cross into a realm beyond conventional space and time.", skills: ["travel"] },
+      { id: 282, name: "Align Multiversal Realms", type: "Training", maxReps: 15, count: 0, baseTime: 1e29, speedMult: 1e-9, drainMult: 1e3, description: "Bridge the gaps between infinite dimensions.", skills: ["intellect", "quantum"], mandatory: true },
+      { id: 283, name: "Decode Dimensional Signatures", type: "Training", maxReps: 5, count: 0, baseTime: 1e30, speedMult: 1e-8, drainMult: 1e5, description: "Interpret the signals of alternate realities.", skills: ["perception", "intellect"], mandatory: true },
+      { id: 284, name: "Collect Interdimensional Ore", type: "Training", maxReps: 4, count: 0, baseTime: 1e28, speedMult: 2e-8, drainMult: 2e3, description: "Mine rare materials from shifting planes.", skills: ["mechanics", "alchemy"], resources: ["interdimensional_ore"] },
+      { id: 285, name: "Synthesize Reality Fragments", type: "Training", maxReps: 6, count: 0, baseTime: 1e30, speedMult: 3e-10, drainMult: 1e4, description: "Merge elements from multiple realms into a new whole.", skills: ["tinkering", "intellect"], resources: ["reality_fragment"] },
+      { id: 286, name: "Dimesion Mastery: Grasp Multiverse", type: "Training", maxReps: 3, count: 0, baseTime: 1e15, speedMult: 1e-8, drainMult: 1e3, xpMult: 1e-3, description: "Attune yourself to the symphony of infinite realities.", skills: ["intellect", "totality"], perk: "dimension_mastery" },
+      { id: 287, name: "Battle Arceus", type: "Training", maxReps: 1, count: 0, baseTime: 3e23, speedMult: 0.2, drainMult: 20000, description: "Challenge the tyrant of apocalyptic power and creator of Pokemon.", skills: ["combat"], boss_image: "images/bosses/arceus.jpg", sound: arceusSound, resources: ["master_ball"], attunement: "quantum" },
+    ]
+  },
   // {
   //   id: 29,
   //   name: "Transcendent Void",
@@ -416,11 +416,12 @@ var zones = [
   //     { id: 291, name: "Travel: Soar to Eternal Apex", type: "Travel", maxReps: 1, count: 0, baseTime: 1.0e33, description: "Leave the emptiness behind and ascend toward ultimate revelation.", skills: ["travel"] },
   //     { id: 292, name: "Embrace the Void's Wisdom", type: "Training", maxReps: 10, count: 0, baseTime: 1.1e33, description: "Absorb the profound silence and insights of nothingness.", skills: ["intellect", "meditation"], mandatory: true },
   //     { id: 293, name: "Distill Absurdity", type: "Training", maxReps: 10, count: 0, baseTime: 1.2e33, description: "Extract meaning from the chaos of the void.", skills: ["intellect"], mandatory: true },
+  //     one more task that only takes Endurance and 30 reps called Copium Check
   //     { id: 294, name: "Harvest Void Residue", type: "Training", maxReps: 7, count: 0, baseTime: 1.3e33, description: "Collect remnants left behind in the emptiness.", skills: ["alchemy", "perception"], resources: ["void_residue"] },
   //     { id: 295, name: "Practice Kamui with Kakashi", type: "Training", maxReps: 6, count: 0, baseTime: 1e15, description: "", skills: ["travel", "combat", "intellect"] },
   //     { id: 296, name: "Resonate with Nihilistic Beats", type: "Training", maxReps: 7, count: 0, baseTime: 1.4e33, description: "Vibrate with the rhythm of utter nothingness.", skills: ["tinkering", "intellect"] },
   //     { id: 297, name: "Invoke the Echo of Nothing", type: "Training", maxReps: 7, count: 0, baseTime: 1.5e33, description: "Channel the void’s mysterious reverberations.", skills: ["intellect", "meditation"], perk: "void_echo" },
-  //     { id: 298, name: "Battle Kaguya", type: "Training", maxReps: 1, count: 0, baseTime: 1.6e33, description: "Engage in an epic confrontation with Kaguya.", skills: ["combat"], boss_image: "images/bosses/kaguya.jpg", sound: kaguyaSound }
+  //     { id: 298, name: "Battle Kaguya", type: "Training", maxReps: 1, count: 0, baseTime: 1.6e33, description: "Engage in an epic confrontation with Kaguya.", skills: ["combat"], boss_image: "images/bosses/kaguya.jpg", sound: kaguyaSound, attunement: "negotiation" }
   //   ]
   // },
   // {
@@ -434,7 +435,7 @@ var zones = [
   //     { id: 304, name: "Collect Divine Radiance", type: "Training", maxReps: 7, count: 0, baseTime: 1.3e34, description: "Harvest luminous energy from the cosmos.", skills: ["charisma", "alchemy"], resources: ["divine_fragment"] },
   //     { id: 305, name: "Synthesize Universal Harmony", type: "Training", maxReps: 7, count: 0, baseTime: 1.4e34, description: "Craft a masterpiece of cosmic balance.", skills: ["tinkering"] },
   //     { id: 306, name: "Ignite the Spark of Revelation", type: "Training", maxReps: 7, count: 0, baseTime: 1.5e34, description: "Unleash the inner light of infinite wisdom.", skills: ["intellect"], perk: "cosmic_oneness" },
-  //     { id: 307, name: "Battle One Above All", type: "Training", maxReps: 1, count: 0, baseTime: 1.6e34, description: "Confront the supreme force that transcends all realities.", skills: ["combat"], boss_image: "images/bosses/one_above_all.jpg", sound: oneAboveAllSound, resources: ["divine_core"] }
+  //     { id: 307, name: "Battle One Above All", type: "Training", maxReps: 1, count: 0, baseTime: 1.6e34, description: "Confront the supreme force that transcends all realities.", skills: ["combat"], boss_image: "images/bosses/one_above_all.jpg", sound: oneAboveAllSound, resources: ["divine_core"], attunement: "omniscience" }
   //   ]
   // },
   // {
@@ -442,22 +443,22 @@ var zones = [
   //   name: "Mount Olympus",
   //   img: "images/zones/zone31.jpg",
   //   tasks: [
-  //     { id: 3101, name: "Battle Minotaur", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "The fearsome beast dwelling in the labyrinth.", skills: ["combat", "alchemy"], boss_image: "images/bosses/minotaur.jpg", sound: minotaurSound },
-  //     { id: 3102, name: "Battle Hermes", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "The messenger of the gods and guide to the underworld.", skills: ["combat", "travel"], boss_image: "images/bosses/hermes.jpg", sound: hermesSound },
-  //     { id: 3103, name: "Battle Apollo", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "God of the sun, music, and prophecy.", skills: ["combat", "charisma"], boss_image: "images/bosses/apollo.jpg", sound: apolloSound },
-  //     { id: 3104, name: "Battle Athena", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "Goddess of wisdom, war, and strategy.", skills: ["combat", "tinkering"], boss_image: "images/bosses/athena.jpg", sound: athenaSound },
-  //     { id: 3105, name: "Battle Medusa", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "The monstrous Gorgon with snakes for hair.", skills: ["combat", "hacking"], boss_image: "images/bosses/medusa.jpg", sound: medusaSound },
-  //     { id: 3106, name: "Battle Hera", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "Queen of the gods and goddess of marriage and family.", skills: ["combat", "negotiation"], boss_image: "images/bosses/hera.jpg", sound: heraSound },
-  //     { id: 3107, name: "Battle Cerberus", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "The three‐headed guardian of the underworld.", skills: ["combat", "mechanics"], boss_image: "images/bosses/cerberus.jpg", sound: cerberusSound },
-  //     { id: 3108, name: "Battle Hercules", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "The demigod renowned for his strength.", skills: ["combat", "endurance"], boss_image: "images/bosses/hercules.jpg", sound: herculesSound },
-  //     { id: 3109, name: "Battle Poseidon", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "God of the sea, earthquakes, and horses.", skills: ["combat", "intellect"], boss_image: "images/bosses/poseidon.jpg", sound: poseidonSound },
-  //     { id: 3110, name: "Battle Hydra", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "The multi‐headed serpent that regrows its heads.", skills: ["combat", "cybernetics"], boss_image: "images/bosses/hydra.jpg", sound: hydraSound },
-  //     { id: 3111, name: "Battle Hades", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "God of the underworld and the dead.", skills: ["combat", "perception"], boss_image: "images/bosses/hades.jpg", sound: hadesSound },
-  //     { id: 3112, name: "Battle Uranus", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "Primordial god of the sky, and father of the Titans.", skills: ["combat", "aiMastery"], boss_image: "images/bosses/uranus.jpg", sound: uranusSound },
-  //     { id: 3113, name: "Battle Gaia", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "Primordial goddess of the earth and mother of many gods and Titans.", skills: ["combat", "quantum"], boss_image: "images/bosses/gaia.jpg", sound: gaiaSound },
-  //     { id: 3114, name: "Battle Cronus", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "The leader of the Titans and father of Zeus, Poseidon, and Hades.", skills: ["combat", "omniscience"], boss_image: "images/bosses/cronus.jpg", sound: cronusSound },
-  //     { id: 3115, name: "Battle Typhon", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "The deadliest monster, a major threat to the Olympian gods.", skills: ["combat", "totality"], boss_image: "images/bosses/typhon.jpg", sound: typhonSound },
-  //     { id: 3116, name: "Battle Zeus", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "King of the gods, ruler of the sky and thunder.", skills: ["combat", "nihility"], boss_image: "images/bosses/zeus.jpg", sound: zeusSound }
+  //     { id: 3101, name: "Battle Minotaur", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "The fearsome beast dwelling in the labyrinth.", skills: ["combat", "alchemy"], boss_image: "images/bosses/minotaur.jpg", sound: minotaurSound, attunement: "alchemy" },
+  //     { id: 3102, name: "Battle Hermes", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "The messenger of the gods and guide to the underworld.", skills: ["combat", "travel"], boss_image: "images/bosses/hermes.jpg", sound: hermesSound, attunement: "travel" },
+  //     { id: 3103, name: "Battle Apollo", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "God of the sun, music, and prophecy.", skills: ["combat", "charisma"], boss_image: "images/bosses/apollo.jpg", sound: apolloSound, attunement: "charisma" },
+  //     { id: 3104, name: "Battle Athena", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "Goddess of wisdom, war, and strategy.", skills: ["combat", "tinkering"], boss_image: "images/bosses/athena.jpg", sound: athenaSound, attunement: "tinkering" },
+  //     { id: 3105, name: "Battle Medusa", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "The monstrous Gorgon with snakes for hair.", skills: ["combat", "hacking"], boss_image: "images/bosses/medusa.jpg", sound: medusaSound, attunement: "hacking" },
+  //     { id: 3106, name: "Battle Hera", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "Queen of the gods and goddess of marriage and family.", skills: ["combat", "negotiation"], boss_image: "images/bosses/hera.jpg", sound: heraSound, attunement: "negotiation" },
+  //     { id: 3107, name: "Battle Cerberus", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "The three‐headed guardian of the underworld.", skills: ["combat", "mechanics"], boss_image: "images/bosses/cerberus.jpg", sound: cerberusSound, attunement: "mechanics" },
+  //     { id: 3108, name: "Battle Hercules", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "The demigod renowned for his strength.", skills: ["combat", "endurance"], boss_image: "images/bosses/hercules.jpg", sound: herculesSound, attunement: "endurance" },
+  //     { id: 3109, name: "Battle Poseidon", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "God of the sea, earthquakes, and horses.", skills: ["combat", "intellect"], boss_image: "images/bosses/poseidon.jpg", sound: poseidonSound, attunement: "intellect" },
+  //     { id: 3110, name: "Battle Hydra", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "The multi‐headed serpent that regrows its heads.", skills: ["combat", "cybernetics"], boss_image: "images/bosses/hydra.jpg", sound: hydraSound, attunement: "cybernetics" },
+  //     { id: 3111, name: "Battle Hades", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "God of the underworld and the dead.", skills: ["combat", "perception"], boss_image: "images/bosses/hades.jpg", sound: hadesSound, attunement: "perception" },
+  //     { id: 3112, name: "Battle Uranus", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "Primordial god of the sky, and father of the Titans.", skills: ["combat", "aiMastery"], boss_image: "images/bosses/uranus.jpg", sound: uranusSound, attunement: "aiMastery" },
+  //     { id: 3113, name: "Battle Gaia", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "Primordial goddess of the earth and mother of many gods and Titans.", skills: ["combat", "quantum"], boss_image: "images/bosses/gaia.jpg", sound: gaiaSound, attunement: "quantum" },
+  //     { id: 3114, name: "Battle Cronus", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "The leader of the Titans and father of Zeus, Poseidon, and Hades.", skills: ["combat", "omniscience"], boss_image: "images/bosses/cronus.jpg", sound: cronusSound, attunement: "omniscience" },
+  //     { id: 3115, name: "Battle Typhon", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "The deadliest monster, a major threat to the Olympian gods.", skills: ["combat", "totality"], boss_image: "images/bosses/typhon.jpg", sound: typhonSound, attunement: "totality" },
+  //     { id: 3116, name: "Battle Zeus", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "King of the gods, ruler of the sky and thunder.", skills: ["combat", "nihility"], boss_image: "images/bosses/zeus.jpg", sound: zeusSound, attunement: "nihility" },
   //   ]
   // },
   // {
@@ -465,7 +466,7 @@ var zones = [
   //   name: "Final Convergence",
   //   img: "images/zones/zone32.jpg",
   //   tasks: [
-  //     { id: 330, name: "Battle Saitama", type: "Training", maxReps: 1, count: 0, baseTime: 1e9, description: "Engage in a final showdown with Saitama.", skills: ["combat"], boss_image: "images/bosses/saitama.jpg", drainMult: 50, sound: saitamaSound }
+  //     { id: 330, name: "Battle Saitama", type: "Training", maxReps: 1, count: 0, baseTime: 1e9, description: "Engage in a final showdown with Saitama.", skills: ["combat"], boss_image: "images/bosses/saitama.jpg", drainMult: 50, sound: saitamaSound, attunement: "nihility" }
   //   ]
   // },
   // {
@@ -473,7 +474,7 @@ var zones = [
   //   name: "The Origin Core",
   //   img: "images/zones/zone33.jpg",
   //   tasks: [
-  //     { id: 340, name: "Battle Future You", type: "Training", maxReps: 1, count: 0, baseTime: 1e9, description: "Face your future self in a climactic battle.", skills: ["combat"], boss_image: "images/bosses/future_you.jpg", drainMult: 60, sound: futureYouSound }
+  //     { id: 340, name: "Battle Future You", type: "Training", maxReps: 1, count: 0, baseTime: 1e9, description: "Face your future self in a climactic battle.", skills: ["combat"], boss_image: "images/bosses/future_you.jpg", drainMult: 60, sound: futureYouSound, attunement: "charisma" },
   //   ]
   // }
 ];

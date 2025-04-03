@@ -12,7 +12,12 @@ const soundManager = {
       // Save a custom type property (default to "sfx")
       sound._type = options.type || 'sfx';
       // Set initial volume based on type:
-      sound.volume = (sound._type === 'music') ? this.volume * 0.5 : this.volume;
+      if (sound._type === 'music') {
+        sound.volume = this.volume * 0.5;
+      } else {
+        // Make t800 louder by increasing its volume multiplier (e.g., 1.5 instead of 1)
+        sound.volume = (name === "t800") ? Math.min(1,this.volume * 2) : this.volume;
+      }
       this.sounds[name] = sound;
       return sound;
     },
@@ -24,7 +29,7 @@ const soundManager = {
         if (this.sounds[key]._type === 'music') {
           this.sounds[key].volume = vol * 0.25;  // music always at 1/4
         } else if (key != "muted"){
-          this.sounds[key].volume = vol;
+          this.sounds[key].volume = (key === "t800") ? Math.min(1,vol * 2) : vol;
         }
       }
     },
@@ -55,6 +60,7 @@ const soundManager = {
   const atomicParticleSound = soundManager.register("atomicParticle", "sounds/atomic_particle.wav", { type: 'sfx' });
   const energyCoreSound = soundManager.register("energyCore", "sounds/energy_core.mp3", { type: 'sfx' });
   const timeFragmentSound = soundManager.register("timeFragment", "sounds/time_fragment.mp3", { type: 'sfx' });
+  const masterBallSound = soundManager.register("masterBall", "sounds/master_ball.wav", { type: 'sfx' });
   const achievementSound = soundManager.register("achievement", "sounds/achievement.mp3", { type: 'sfx' });
   const prestigeSound = soundManager.register("prestige", "sounds/prestige.mp3", { type: 'sfx' });
 

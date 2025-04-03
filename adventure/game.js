@@ -11,7 +11,8 @@
                             "resource": "rgb(32, 21, 0, 0.25)",
                             "achievement": "rgb(0, 60, 0, 0.25)",
                             "perk": "rgb(35, 35, 0, 0.25)",
-                            "prestige": "rgb(23, 23, 170, 0.5)"};
+                            "prestige": "rgb(23, 23, 170, 0.5)",
+                            "attunement": "rgb(0, 100, 100, 0.2)",};
 
   /****************************************
    * INITIAL STATE
@@ -34,6 +35,8 @@
       prestigeAvailable: false,
       secondSectionUnlocked: false,
       thirdSectionUnlocked: false,
+
+      attunementUnlocked: false,
       
       unlockedAchievements: {},
       achievementsMultiplier: 1,
@@ -54,7 +57,7 @@
         quantum:     { level: 1, xp: 0, visible: false, energyDrain: 25,  progressBoost: 1, drainBoost: 1, xpGainFactor: 0.0001 },
         omniscience: { level: 1, xp: 0, visible: false, energyDrain: 100, progressBoost: 1, drainBoost: 1, xpGainFactor: 1 },
         totality:    { level: 1, xp: 0, visible: false, energyDrain: 1000,  progressBoost: 1, drainBoost: 1, xpGainFactor: 1e-10 },
-        //nihility:    { level: 1, xp: 0, visible: false, energyDrain: 1e10,  progressBoost: 1, drainBoost: 1, xpGainFactor: 1e-25 },
+        nihility:    { level: 1, xp: 0, visible: false, energyDrain: 1e6,  progressBoost: 1, drainBoost: 1, xpGainFactor: 1e-25 },
       },
       perks: {},
       perksUnlocked: 0,
@@ -89,6 +92,7 @@
       numAtomicParticles: 0,
       numTimeFraments: 0,
       energyCoreMultiplier: 1,
+      numMasterBalls: 0,
 
       //serenity upgrades related
       delusionEnjoyerMultiplier: 1,
@@ -189,6 +193,7 @@
       { name: "atomic_particle",   active: gameState.numAtomicParticles > 0 },
       { name: "energy_core",       active: gameState.energyCoreMultiplier !== 1 },
       { name: "time_fragment",     active: gameState.numTimeFraments > 0 },
+      { name: "master_ball",       active: gameState.numMasterBalls > 0 },
     ];
   
     // Early check: if no zone image, do nothing
@@ -313,6 +318,9 @@
             break;
           case "time_fragment":
             displayValue = gameState.numTimeFraments;
+            break;
+          case "master_ball":
+            displayValue = gameState.numMasterBalls;
             break;
         }
   
@@ -1018,8 +1026,11 @@
 
       if (gameState.numTimeFraments > 0 && prePendMessage !== "Time Fragment: "){
         gameState.numTimeFraments--;
-        updateActiveResourcesOverlay();
         addXP(skillName, 0, "Time Fragment: ", false, Math.pow(skillXpScaling, skill.level - 1) - skill.xp);
+        if (gameState.perks.time_glimpse){
+          addXP(skillName, 0, "Time Fragment: ", false, Math.pow(skillXpScaling, skill.level - 1) - skill.xp);
+        }
+        updateActiveResourcesOverlay();
       }
 
       updateSkillMultipliers();
@@ -1394,6 +1405,7 @@
     gameState.numCelestialBlossoms = 0;
     gameState.numAtomicParticles = 0;
     gameState.numTimeFraments = 0;
+    gameState.numMasterBalls = 0;
     gameState.energyCoreMultiplier = 1;
     gameState.totalCyberneticImplantEnergy = 0;
     gameState.criticallyLowEnergyHit = false;
@@ -2189,6 +2201,9 @@
       }
       if (gameState.copiumUnlocked && usedSkills.some(s => copiumSkills.includes(s))) {
         let copiumGain = 10 * zone.id;
+        if (zone.id >= 26) {
+          copiumGain *= 3;
+        }
         if (gameState.perks["copious_alchemist"] && gameState.perks["copious_alchemist"] !== "disabled") {
           copiumGain *= (gameState.serenityUnlockables["Copiouser Alchemist"] ? 0.2 : 0.4);
         }
@@ -2200,6 +2215,9 @@
       }
       if (gameState.delusionUnlocked && usedSkills.some(s => delusionSkills.includes(s))) {
         extraInfo += `<br><br><span style="color:#9b59b6">Delusion Gain for next Task: 0 - ${formatNumber(zone.id * 100)} (random, skewed to low)</span>`;
+      }
+      if (gameState.attunementUnlocked && task.attunement) {
+        extraInfo += `<br><br><span style="color:rgb(0, 255, 255)">Attunement: ${formatStringForDisplay(task.attunement)}</span>`;
       }
       // --- New: Drain Multiplier Info ---
       if (task.drainMult !== undefined || task.speedMult !== undefined || task.xpMult !== undefined) {
@@ -2414,6 +2432,11 @@
       effTickDuration = 120;
     } else {
       effTickDuration = 100;
+    }
+    if (gameState.perks.time_glimpse) {
+      resourceActions["time_fragment"].tooltip = "Triples level gain on next level up.<br>Multiple uses stack with # of level ups, not with level gain.";
+    } else {
+      resourceActions["time_fragment"].tooltip = "Doubles level gain on next level up.<br>Multiple uses stack with # of level ups, not with level gain.";
     }
   }
   
@@ -2686,7 +2709,7 @@
         renderPerks();
         break;
       case "Satoshi's Wallet":
-        perkDescriptions.crypto_wallet = "Each time you travel:<br>10% chance to gain 50 Energy<br>5% chance to lose 25 Copium<br>5% chance to lose 25 Delusion<br>5% chance to gain 50 Knowledge<br>5% chance to gain 50 Power<br>1% chance to stash 2.5% of base potential Serenity<br>1% chance to find 1 Data Bit";
+        perkDescriptions.crypto_wallet = "Each time you travel:<br>25% chance to gain 50 Energy<br>5% chance to lose 25 Copium<br>5% chance to lose 25 Delusion<br>10% chance to gain 50 Knowledge<br>5% chance to gain 50 Power<br>2.5% chance to stash 2.5% of base potential Serenity<br>1% chance to find 1 Data Bit";
         break;
       default:
         console.log(`No effect defined for unlockable: ${upgName}`);
@@ -4050,7 +4073,11 @@
             (gameState.perks["copious_alchemist"] && gameState.perks["copious_alchemist"] !== "disabled")
               ? (gameState.serenityUnlockables["Copiouser Alchemist"] ? 0.2 : 0.4)
               : 1;
-          gameState.copium += Math.max((10 * zone.id) * copiousAlchemistMultiplier - gameState.numCelestialBlossoms, 0);
+          if (zone.id < 26) {
+            gameState.copium += Math.max((10 * zone.id) * copiousAlchemistMultiplier - gameState.numCelestialBlossoms, 0);
+          } else {
+            gameState.copium += Math.max((30 * zone.id) * copiousAlchemistMultiplier - gameState.numCelestialBlossoms, 0);
+          }
 
           if (gameState.copium > 9000) {
             currentTasks = [];
@@ -4138,12 +4165,12 @@
           if (gameState.perks.crypto_wallet && gameState.perks.crypto_wallet !== "disabled") {
             if (gameState.serenityUnlockables && gameState.serenityUnlockables["Satoshi's Wallet"]) {
               // Upgraded Satoshi's Wallet behavior:
-              if (Math.random() < 0.10) {
+              if (Math.random() < 0.25) {
                 gameState.energy += 50;
                 showMessage("Satoshi's Wallet: +50 Energy");
                 updateEnergyDisplay();
               }
-              if (Math.random() < 0.05) {
+              if (Math.random() < 0.1) {
                 gameState.knowledge += 50;
                 showMessage("Satoshi's Wallet: +50 Knowledge");
                 showKnowledgeIfUnlocked();
@@ -4153,10 +4180,11 @@
                 showMessage("Satoshi's Wallet: +50 Power");
                 showPowerIfUnlocked();
               }
-              if (Math.random() < 0.01) {
+              if (Math.random() < 0.025) {
                 const serenityGainPotential = ((gameState.bestCompletedZone ** gameState.serenityGainZoneExponent) / gameState.resetsForBestZone)
                 gameState.satoshiSerenity += serenityGainPotential * 0.025;
                 showMessage(`Satoshi's Wallet: +${formatNumber(serenityGainPotential * 0.025)} Wallet Serenity`);
+                showSerenityIfUnlocked();
               }
               if (Math.random() < 0.01) {
                 addResource("data_bit", 1);
@@ -4255,6 +4283,28 @@
           showMessage(`<span style="color: rgb(222, 34, 191);">${task.name.replace(/^[^ ]+ /, "")} defeated! +${formatNumber((zone.id - 3) * gameState.powerGainMultiplier)} Power</span>`);
           showPowerIfUnlocked();
 
+          if (gameState.numMasterBalls > 0) {
+            gameState.numMasterBalls--;
+
+            const skill = gameState.skills[task.attunement];
+            
+            let levelsToAdd = Math.floor(Math.random() * 10) + 1; // Randomly choose between 1 and 10 levels.
+            
+            // For each level, force the level-up by adding enough XP.
+            for (let j = 0; j < levelsToAdd; j++) {
+              addXP(task.attunement, 0, "", true, Math.pow(skillXpScaling, skill.level - 1) - skill.xp);
+            }
+
+            skill.progressBoost += 1;
+            
+            updateSkillMultipliers();
+            updateSkillDisplay();
+            updateTasksHoverInfo();
+      
+            showMessage(`Attuned to ${formatStringForDisplay(task.attunement)}.<br>Gained ${levelsToAdd} levels.<br>Boosted speed by 100%.`, backgroundColors["attunement"]);
+
+          }
+
           if (task.name === "Battle Agent Smith" && Object.keys(gameState.resourcesUsed).length == 0) {
             unlockAchievement("Mano a Mano");
           }
@@ -4263,6 +4313,10 @@
           }
           if (task.name === "Battle Vegeta" && gameState.copium == 0) {
             unlockAchievement("Mondo Cool");
+          }
+          if (task.name === "Battle Arceus" && !gameState.attunementUnlocked) {
+            unlockAchievement("Attunement");
+            gameState.attunementUnlocked = true;
           }
         }
         if (task.perk && !gameState.perks[task.perk] && task.count >= task.maxReps) {
@@ -4281,6 +4335,13 @@
                 });
               });
             }
+          }
+          if (task.perk === "time_glimpse") {
+            resourceActions["time_fragment"].tooltip = "Triples level gain on next level up.<br>Multiple uses stack with # of level ups, not with level gain.";
+          }
+          if (task.perk === "dimension_mastery") {
+            gameState.startingEnergy += 12345;
+            updateEnergyDisplay();
           }
           const perkKey = task.perk;
           const perkName = formatStringForDisplay(perkKey);
@@ -4461,13 +4522,16 @@
     gameState.cosmicShardTaskRunning = gameState.cosmicShardTaskRunning || false;
     gameState.secondSectionUnlocked = gameState.secondSectionUnlocked || false;
     gameState.thirdSectionUnlocked = gameState.thirdSectionUnlocked || false;
+    gameState.attunementUnlocked = gameState.attunementUnlocked || false;
     gameState.elixirEnergy = gameState.elixirEnergy || 3;
     gameState.startingLevel = gameState.startingLevel || 1;
     gameState.serenityGainZoneExponent = gameState.serenityGainZoneExponent || 3;
     gameState.numAtomicParticles = gameState.numAtomicParticles || 0;
     gameState.numTimeFraments = gameState.numTimeFraments || 0;
+    gameState.numMasterBalls = gameState.numMasterBalls || 0;
     gameState.energyCoreMultiplier = gameState.energyCoreMultiplier || 1;
     gameState.skills.totality = gameState.skills.totality || { level: 1, xp: 0, visible: false, energyDrain: 1000,  progressBoost: 1, drainBoost: 1, xpGainFactor: 1e-10 };
+    gameState.skills.nihility = gameState.skills.nihility || { level: 1, xp: 0, visible: false, energyDrain: 1e6,  progressBoost: 1, drainBoost: 1, xpGainFactor: 1e-25 };
     gameState.numPrestiges = gameState.numPrestiges || 0;
     gameState.autoConsumeEnabled = gameState.autoConsumeEnabled || false;
     gameState.consumeMinusOneEnabled = gameState.consumeMinusOneEnabled || false;
@@ -4544,6 +4608,7 @@
   window.removeTaskFromCurrent = (taskData) => removeTaskFromCurrent(taskData);
   window.backgroundColors = backgroundColors;
   window.updateActiveResourcesOverlay = () => updateActiveResourcesOverlay();
+  window.showSerenityIfUnlocked = () => showSerenityIfUnlocked();
 
   // Expose some functions for debugging
   window.getGameState = () => gameState;

@@ -46,7 +46,8 @@ let perkDescriptions = {
     stellar_dreams:         "Changes lambda parameter for delusion gain from 0.5 to 0.25.<br>This increases delusion gain.",
     spark_of_infinity:      "Knowledge also levels with and boosts Cybernetics.",
     spectral_glow:          "Each time you advance a zone,<br>25% chance to spawn a random resource used in this run.",
-
+    time_glimpse:           "Time Fragment level up is improved from double to triple.",
+    dimension_mastery:      "Increase starting Energy by 12345.",
   };
 
 const toggleablePerks = ["completionist", "double_timer", "copious_alchemist", "master_of_ai", "crypto_wallet", "mechanical_genius", "stellar_dreams", "spectral_glow"];
@@ -395,7 +396,7 @@ let resourceActions = {
   "infinity_gauntlet": {
     onConsume: (gameState, amt) => {
       Object.keys(gameState.resources).forEach(resource => {
-        if (gameState.resources[resource] > 0 && resource !== "infinity_gauntlet" && resource !== "googol" && resource !== "radiance") {
+        if (gameState.resources[resource] > 0 && resource !== "infinity_gauntlet" && resource !== "googol" && resource !== "radiance" && resource !== "master_ball") {
           addResource(resource, amt);
         }
       });
@@ -407,7 +408,7 @@ let resourceActions = {
   "stardust": {
     onConsume: (gameState, amt) => {
       // Get an array of resource names, excluding "infinity_gauntlet" and "stardust"
-      const usedResources = Object.keys(gameState.resourcesUsed).filter(r => r !== "infinity_gauntlet" && r !== "stardust" && r !== "radiance" && r !== "googol");
+      const usedResources = Object.keys(gameState.resourcesUsed).filter(r => r !== "infinity_gauntlet" && r !== "stardust" && r !== "radiance" && r !== "googol" && r !== "master_ball");
       let resourceCounts = {};
 
       // For each Stardust unit consumed...
@@ -847,22 +848,27 @@ let resourceActions = {
   },
   "dream_fragment": {
     onConsume: (gameState, amt) => {
-      // Calculate 0.1% of maxDelusion
-      const delusionIncrement = 0.001 * gameState.maxDelusion;
-
-      // Move delusion towards 90% of maxDelusion, either increasing or decreasing
+      // Calculate 0.2% of maxDelusion
+      const delusionIncrement = 0.002 * gameState.maxDelusion;
+      // The target delusion is 90% of maxDelusion.
       const targetDelusion = 0.9 * gameState.maxDelusion;
       
-      if (gameState.delusion < targetDelusion) {
-        gameState.delusion = Math.min(gameState.delusion + delusionIncrement, targetDelusion);
-      } else {
-        gameState.delusion = Math.max(gameState.delusion - delusionIncrement, targetDelusion);
-      }
+      const delusionBefore = gameState.delusion;
 
+      // Loop through amt times:
+      for (let i = 0; i < amt; i++) {
+        if (gameState.delusion < targetDelusion) {
+          gameState.delusion = Math.min(gameState.delusion + delusionIncrement, targetDelusion);
+        } else {
+          gameState.delusion = Math.max(gameState.delusion - delusionIncrement, targetDelusion);
+        }
+      }
+      const totalAdjusted = Math.abs(gameState.delusion - delusionBefore);
+      
       updateDelusionDisplay();
-      showMessage(`Used ${amt} Dream Fragment${amt > 1 ? "s" : ""}.<br>Adjusted delusion towards 90% by ${delusionIncrement}.`, backgroundColors["resource"]);
+      showMessage(`Used ${amt} Dream Fragment${amt > 1 ? "s" : ""}.<br>Adjusted delusion towards 90% by ${formatNumber(totalAdjusted)}.`, backgroundColors["resource"]);
     },
-    tooltip: "Moves delusion 0.1% of max delusion closer to 90%."
+    tooltip: "Moves delusion 0.2% of max delusion closer to 90% per fragment."
   },
   "radiance": {
     onConsume: (gameState, amt, currentTasks) => {
@@ -934,13 +940,39 @@ let resourceActions = {
     },
     tooltip: "Doubles level gain on next level up.<br>Multiple uses stack with # of level ups, not with level gain."
   },
-
-
+  "reality_fragment": {
+    onConsume: (gameState, amt) => {
+      gameState.skills["intellect"].drainBoost += 2 * amt;
+      updateSkillMultipliers();
+      updateSkillDisplay();
+      updateTasksHoverInfo();
+      showMessage(`Used ${amt} Reality Fragment${amt > 1 ? "s" : ""}.<br>Increased Intellect energy drain by ${200 * amt}%.`, backgroundColors["resource"]);
+    },
+    tooltip: "Reduces Intellect energy drain by 200%."
+  },
+  "interdimensional_ore": {
+    onConsume: (gameState, amt) => {
+      const serenityGainPotential = ((gameState.bestCompletedZone ** gameState.serenityGainZoneExponent) / gameState.resetsForBestZone)
+      gameState.serenity += serenityGainPotential * 0.01 * amt;
+      showMessage(`Used ${amt} Dimensional Ore${amt > 1 ? "s" : ""}.<br>Gained ${formatNumber(serenityGainPotential * 0.01 * amt)} Serenity.`, backgroundColors["resource"]);
+      showSerenityIfUnlocked();
+    },
+    tooltip: "Instantly gain 1% of base potential Serenity.<br>Does not include any multipliers."
+  },
+  "master_ball": {
+    onConsume: (gameState, amt) => {
+      gameState.numMasterBalls += amt;
+      if(gameState.soundEnabled) masterBallSound.play();
+      showMessage(`Used ${amt} Master Ball${amt > 1 ? "s" : ""}.<br>Will capture the next ${amt > 1 ? amt + " bosses" : "boss"} attunement${amt > 1 ? "s" : ""}.`, backgroundColors["resource"]);
+      updateActiveResourcesOverlay();
+    },
+    tooltip: "Use to capture the attunement of the next boss you defeat.<br>Each boss is attuned to a different skill - attunements are now shown on hover info.<br>Capturing attunement will do the following:<br>1. Increase the skill's level by 1-10 (random).<br>2. Increase the skill's speed by 100%.<br><br>Cannot be created by Infinity Gauntlet or Stardust."
+  },
 
 
 };
 
-const EXCLUDED_AUTO_RESOURCES = new Set(["cybernetic_armor", "infinity_gauntlet", "stardust", "cosmic_shard","atomic_particle","energy_core","googol","radiance", "time_fragment"]);
+const EXCLUDED_AUTO_RESOURCES = new Set(["cybernetic_armor", "infinity_gauntlet", "stardust", "cosmic_shard","atomic_particle","energy_core","googol","radiance", "time_fragment", "master_ball"]);
 
 const achievements = [
   { name: "Bookworm", description: "Click all the buttons on main settings page.", img: "images/achievements/bookworm.jpg" },
@@ -974,6 +1006,7 @@ const achievements = [
   { name: "I'm Flying", description: "Reach zone 11 with zero energy resets.", img: "images/achievements/im_flying.jpg" },
   { name: "Googolplex", description: "Try to hold over 9 Googols in your inventory at once.", img: "images/achievements/googolplex.jpg" },
   { name: "Asymptote", description: "Use radiance when 2 unfinished tasks are above 90% complete.", img: "images/achievements/asymptote.jpg" },
+  { name: "Attunement", description: "Unlock the Master Ball.", img: "images/achievements/attunement.jpg" },
   { name: "420", description: "Prestige 420 times.", img: "images/achievements/420.jpg" },
 ];
 
@@ -1044,10 +1077,10 @@ const SERENITY_UPGRADES = {
       "Satoshi's Wallet": {
         cost: 250000,
         description: "Improves Crypto Wallet:<br>" +
-                    "• Energy: 10% chance to gain 50 Energy (<del>was 5% chance to gain 25 Energy</del>)<br>" +
-                    "• Knowledge: 5% chance to gain 50 Knowledge (<del>was 2.5% chance to gain 25 Knowledge</del>)<br>" +
+                    "• Energy: 25% chance to gain 50 Energy (<del>was 5% chance to gain 25 Energy</del>)<br>" +
+                    "• Knowledge: 10% chance to gain 50 Knowledge (<del>was 2.5% chance to gain 25 Knowledge</del>)<br>" +
                     "• Power: 5% chance to gain 50 Power (<del>was 0.5% chance to gain 25 Power</del>)<br>" +
-                    "• Serenity: 1% chance to stash 2.5% of base potential Serenity<br>" +
+                    "• Serenity: 2.5% chance to stash 2.5% of base potential Serenity<br>" +
                     "• Data Bit: 1% chance to find 1 Data Bit"
       }
 
