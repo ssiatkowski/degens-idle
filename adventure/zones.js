@@ -42,7 +42,7 @@ var zones = [
       { id: 34, name: "Basic Mech: Rudimentary Upgrade", type: "Training", maxReps: 1, count: 0, baseTime: 4e5, xpMult: 1.2, description: "Construct a basic biomechanical upgrade.", skills: ["mechanics", "intellect"], perk: "basic_mech" },
       { id: 35, name: "Study Urban Traffic Flow", type: "Training", maxReps: 10, count: 0, baseTime: 8e4, xpMult: 1.8,description: "Analyze traffic patterns using perception and intellect.", skills: ["perception", "intellect"] },
       { id: 36, name: "Assemble Goggles", type: "Training", maxReps: 12, count: 0, baseTime: 1.2e5, xpMult: 1.1, description: "Build yourself some eye protection.", skills: ["tinkering"], resources: ["goggles"] },
-      { id: 37, name: "Self-Operating Gadget: Simple Automation", type: "Training", maxReps: 2, count: 0, baseTime: 1e7, speedMult: 1.6, description: "Utilize your mechanical expertise and tinkering skills to build a basic automated system that streamlines routine tasks.", skills: ["mechanics", "tinkering"], perk: "self_operating_gadget" }
+      { id: 37, name: "Self-Operating Gadget: Simple Automation", type: "Training", maxReps: 2, count: 0, baseTime: 1e7, speedMult: 1.75, description: "Utilize your mechanical expertise and tinkering skills to build a basic automated system that streamlines routine tasks.", skills: ["mechanics", "tinkering"], perk: "self_operating_gadget" }
     ]
   },
   {
@@ -55,7 +55,7 @@ var zones = [
       { id: 43, name: "Tactical Office Skirmish Simulation", type: "Training", maxReps: 5, count: 0, baseTime: 3e5, description: "Engage in simulated corporate conflicts.", skills: ["endurance", "tinkering"], mandatory: true },
       { id: 44, name: "Workaholic: Finance Bro Advice", type: "Training", maxReps: 1, count: 0, baseTime: 3e7, xpMult: 0.7, description: "Learn how workaholics function.", skills: ["endurance", "charisma", "perception"], perk: "workaholic" },
       { id: 45, name: "Crunch Financial Numbers", type: "Training", maxReps: 10, count: 0, baseTime: 8e4, xpMult: 2, description: "Analyze corporate data with intellect and mechanics.", skills: ["intellect", "mechanics"] },
-      { id: 46, name: "Gacha Machine: Mechanics of Luck", type: "Training", maxReps: 1, count: 0, baseTime: 2e5, description: "Build a simple gacha machine.", skills: ["mechanics"], perk: "gacha_machine" },
+      { id: 46, name: "Gacha Machine: Mechanics of Luck", type: "Training", maxReps: 1, count: 0, baseTime: 2e5, xpMult: 5, description: "Build a simple gacha machine.", skills: ["mechanics"], perk: "gacha_machine" },
       { id: 47, name: "Battle Agent Smith", type: "Training", maxReps: 1, count: 0, baseTime: 2e7, description: "Take on this Matrix propagator. Might as well practice Combat.<br><br>This button is red - it's a boss fight.<br>Don't worry, you can move to next zone without it.", skills: ["combat"], boss_image: "images/bosses/agent_smith.jpg", resources: ["cool_sunglasses"], drainMult: 1.5, sound: agentSmithSound, attunement: "endurance" }
     ]
   },
