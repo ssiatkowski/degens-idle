@@ -1,5 +1,5 @@
 
-const CURRENT_GAME_VERSION = 0.6;
+const CURRENT_GAME_VERSION = 0.601;
 
 
 function showTutorialModal() {
