@@ -28,7 +28,7 @@ var zones = [
       { id: 24, name: "Combined Recall Drill", type: "Training", maxReps: 8, count: 0, baseTime: 3e4, xpMult: 1.6, description: "Run while recalling facts about your surroundings.", skills: ["endurance", "intellect"] },
       { id: 25, name: "Assemble a Magnifying Glass", type: "Training", maxReps: 14, count: 0, baseTime: 5e3, description: "Assemble a simple magnifying glass.", skills: ["tinkering"], resources: ["magnifying_glass"] },
       { id: 26, name: "Strike up a Quick Chat", type: "Training", maxReps: 2, count: 0, baseTime: 9e3, xpMult: 2, description: "Engage strangers in conversation.", skills: ["charisma"] },
-      { id: 27, name: "Healthy Living: Explore Dietary Options", type: "Training", xpMult: 1.2, maxReps: 3, count: 0, baseTime: 6e5, description: "Learn about healthy eating habits.", skills: ["endurance", "intellect", "alchemy"], perk: "healthy_living" }
+      { id: 27, name: "Healthy Living: Explore Dietary Options", type: "Training", xpMult: 1.3, maxReps: 3, count: 0, baseTime: 6e5, description: "Learn about healthy eating habits.", skills: ["endurance", "intellect", "alchemy"], perk: "healthy_living" }
     ]
   },
   {
@@ -42,7 +42,7 @@ var zones = [
       { id: 34, name: "Basic Mech: Rudimentary Upgrade", type: "Training", maxReps: 1, count: 0, baseTime: 4e5, description: "Construct a basic biomechanical upgrade.", skills: ["mechanics", "intellect"], perk: "basic_mech" },
       { id: 35, name: "Study Urban Traffic Flow", type: "Training", maxReps: 10, count: 0, baseTime: 8e4, xpMult: 1.8,description: "Analyze traffic patterns using perception and intellect.", skills: ["perception", "intellect"] },
       { id: 36, name: "Assemble Goggles", type: "Training", maxReps: 12, count: 0, baseTime: 1.2e5, xpMult: 1.1, description: "Build yourself some eye protection.", skills: ["tinkering"], resources: ["goggles"] },
-      { id: 37, name: "Self-Operating Gadget: Simple Automation", type: "Training", maxReps: 2, count: 0, baseTime: 1e7, speedMult: 1.5, description: "Utilize your mechanical expertise and tinkering skills to build a basic automated system that streamlines routine tasks.", skills: ["mechanics", "tinkering"], perk: "self_operating_gadget" }
+      { id: 37, name: "Self-Operating Gadget: Simple Automation", type: "Training", maxReps: 2, count: 0, baseTime: 1e7, speedMult: 1.6, description: "Utilize your mechanical expertise and tinkering skills to build a basic automated system that streamlines routine tasks.", skills: ["mechanics", "tinkering"], perk: "self_operating_gadget" }
     ]
   },
   {
