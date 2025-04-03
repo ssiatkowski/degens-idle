@@ -1156,20 +1156,20 @@ const SERENITY_UPGRADES = {
         scaling: 1.82,
         description: "Increase copium reactor starting energy gain by +1."
       },
-      "Crystal Collector": {
-        initialCost: 300,
-        scaling: 5,
-        description: "Random Crystal gives +1 more level."
+      "Serenity Infusion": {
+        initialCost: 1000,
+        scaling: 4,
+        description: "Multiplies serenity gain by +1% * (highest fully completed zone)."
       },
       "Fortune's Favor": {
         initialCost: 777,
         scaling: 7,
         description: "Improve four leaf clover perk by +1% chance and +1 resource."
       },
-      "Serenity Infusion": {
-        initialCost: 1000,
+      "Crystal Collector": {
+        initialCost: 300,
         scaling: 10,
-        description: "Multiplies serenity gain by +1% * (highest fully completed zone)."
+        description: "Random Crystal gives +1 more level."
       }
 
     },

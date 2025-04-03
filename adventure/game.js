@@ -2763,6 +2763,13 @@
         gameState.copiumReactorEnergy = 6 + level;
         perkDescriptions.copium_reactor = `Increase starting Energy gained for each Copium reset to +${gameState.copiumReactorEnergy}.`;
         break;
+      case "Serenity Infusion":
+        gameState.serenityInfusionValue = level;
+        break;
+      case "Fortune's Favor":
+        gameState.fortunesFavorValue = 7 + level;
+        perkDescriptions.four_leaf_clover = `${gameState.fortunesFavorValue}% chance to produce ${gameState.fortunesFavorValue}x resources.`; 
+        break;
       case "Crystal Collector":
         gameState.randomCrystalLevels = 1 + level;
         //if "totality is in visible skills"
@@ -2770,13 +2777,6 @@
         if (gameState.skills["totality"].visible){
           resourceActions["random_crystal"].tooltip += "<br>(does not affect Totality)";
         }
-        break;
-      case "Fortune's Favor":
-        gameState.fortunesFavorValue = 7 + level;
-        perkDescriptions.four_leaf_clover = `${gameState.fortunesFavorValue}% chance to produce ${gameState.fortunesFavorValue}x resources.`; 
-        break;
-      case "Serenity Infusion":
-        gameState.serenityInfusionValue = level;
         break;
       default:
         console.log(`No effect defined for infinite upgrade: ${upgName}`);
@@ -3005,12 +3005,12 @@
         return `Current Effect: ${formatNumber((1 - gameState.haxorEnergyDrainReduction) * 100)}%`;
       case "Greater Reactor":
         return `Current Effect: ${formatNumber(gameState.copiumReactorEnergy)}`;
-      case "Crystal Collector":
-        return `Current Effect: ${formatNumber(gameState.randomCrystalLevels)}`;
-      case "Fortune's Favor":
-        return `Current Effect: ${formatNumber(gameState.fortunesFavorValue)}`;
       case "Serenity Infusion":
         return `Current Effect: ${formatNumber(gameState.serenityInfusionValue)}`;
+      case "Fortune's Favor":
+        return `Current Effect: ${formatNumber(gameState.fortunesFavorValue)}`;
+      case "Crystal Collector":
+        return `Current Effect: ${formatNumber(gameState.randomCrystalLevels)}`;
       default:
         return "Current Effect: (to be calculated)";
     }
