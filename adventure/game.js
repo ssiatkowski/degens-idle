@@ -2733,6 +2733,9 @@
       case "Power Doubler":
         gameState.powerGainMultiplier = Math.pow(2, level);
         break;
+      case "Game Speed":
+        setRunTickDuration(100 * Math.pow(0.99, level));
+        break;
       case "Better Elixirs":
         gameState.elixirEnergy = 3 + level;
         resourceActions["energy_elixir"].tooltip = "Click to gain +" + gameState.elixirEnergy + " Energy.<br>" + (("ontouchstart" in window || navigator.maxTouchPoints > 0) ? "Use above switch to consume all." : "Right-click to consume all.");
@@ -2744,9 +2747,6 @@
         });
         updateSkillDisplay();
         updateTasksHoverInfo();
-        break;
-      case "Game Speed":
-        setRunTickDuration(100 * Math.pow(0.99, level));
         break;
       case "Zone Pusher":
         gameState.serenityGainZoneExponent = 3 + (level * 0.1);
@@ -2991,12 +2991,12 @@
       case "Power Doubler":
         // For example, you might calculate the effective boss power multiplier.
         return `Current Effect: ${formatNumber(gameState.powerGainMultiplier)}x`;
+      case "Game Speed":
+        return `Current Effect: Tick speed: ${formatNumber(runTickDuration)}ms`;
       case "Better Elixirs":
         return `Current Effect: +${formatNumber(gameState.elixirEnergy)}`;
       case "Starting Level":
         return `Current Effect: ${formatNumber(gameState.startingLevel)}`;
-      case "Game Speed":
-        return `Current Effect: Tick speed: ${formatNumber(runTickDuration)}ms`;
       case "Zone Pusher":
         return `Current Effect: ^${formatNumber(gameState.serenityGainZoneExponent)}`;
       case "Delusion Immune":

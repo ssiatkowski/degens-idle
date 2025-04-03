@@ -396,12 +396,12 @@ let resourceActions = {
   "infinity_gauntlet": {
     onConsume: (gameState, amt) => {
       Object.keys(gameState.resources).forEach(resource => {
-        if (gameState.resources[resource] > 0 && resource !== "infinity_gauntlet" && resource !== "googol" && resource !== "radiance" && resource !== "master_ball") {
+        if (gameState.resources[resource] > 0 && resource !== "infinity_gauntlet" && resource !== "random_crystal" && resource !== "googol" && resource !== "radiance" && resource !== "master_ball") {
           addResource(resource, amt);
         }
       });
       updateTasksHoverInfo();
-      showMessage(`Used ${amt} Infinity Gauntlet${amt > 1 ? "s" : ""}.<br>Gained +1 of every held resource.`, backgroundColors["resource"]);
+      showMessage(`Used ${amt} Infinity Gauntlet${amt > 1 ? "s" : ""}.<br>Gained +1 of every held resource.<br>Very few resources cannot be created by Infinity Gauntlet.`, backgroundColors["resource"]);
     },
     tooltip: "Gain +1 of every resource you currently have."
   },
@@ -953,11 +953,11 @@ let resourceActions = {
   "interdimensional_ore": {
     onConsume: (gameState, amt) => {
       const serenityGainPotential = ((gameState.bestCompletedZone ** gameState.serenityGainZoneExponent) / gameState.resetsForBestZone)
-      gameState.serenity += serenityGainPotential * 0.01 * amt;
-      showMessage(`Used ${amt} Dimensional Ore${amt > 1 ? "s" : ""}.<br>Gained ${formatNumber(serenityGainPotential * 0.01 * amt)} Serenity.`, backgroundColors["resource"]);
+      gameState.serenity += serenityGainPotential * 0.015 * amt;
+      showMessage(`Used ${amt} Dimensional Ore${amt > 1 ? "s" : ""}.<br>Gained ${formatNumber(serenityGainPotential * 0.015 * amt)} Serenity.`, backgroundColors["resource"]);
       showSerenityIfUnlocked();
     },
-    tooltip: "Instantly gain 1% of base potential Serenity.<br>Does not include any multipliers."
+    tooltip: "Instantly gain 1.5% of base potential Serenity.<br>Does not include any multipliers."
   },
   "master_ball": {
     onConsume: (gameState, amt) => {
@@ -1107,7 +1107,7 @@ const SERENITY_UPGRADES = {
       },
       "Resource Saver": { 
         initialCost: 0.1,
-        scaling: 1.4,
+        scaling: 1.42,
         description: "On Copium reset, keep one random random resource per level."
       },
       "Power Doubler": {
@@ -1118,6 +1118,11 @@ const SERENITY_UPGRADES = {
     },
 
     "Embrace Stillness": {
+      "Game Speed": {
+        initialCost: 5,
+        scaling: 1.3,
+        description: "Reduce game tick duration by 1% (asymptotically)."
+      },
       "Starting Level": {
         initialCost: 1.5,
         scaling: 2,
@@ -1128,14 +1133,9 @@ const SERENITY_UPGRADES = {
         scaling: 3.25,
         description: "Increase effect of Energy Elixir by +1."
       },
-      "Game Speed": {
-        initialCost: 5,
-        scaling: 1.3,
-        description: "Reduce game tick duration by 1% (asymptotically)."
-      },
       "Zone Pusher": {
         initialCost: 4,
-        scaling: 4,
+        scaling: 3.8,
         description: "Increase exponent of zone in serenity gain function by +0.1."
       }
     },
@@ -1153,12 +1153,12 @@ const SERENITY_UPGRADES = {
       },
       "Greater Reactor": {
         initialCost: 200,
-        scaling: 1.82,
+        scaling: 1.85,
         description: "Increase copium reactor starting energy gain by +1."
       },
       "Serenity Infusion": {
         initialCost: 500,
-        scaling: 4,
+        scaling: 3,
         description: "Multiplies serenity gain by +1% * (highest fully completed zone)."
       },
       "Fortune's Favor": {
