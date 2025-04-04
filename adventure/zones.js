@@ -8,11 +8,11 @@ var zones = [
     img: "images/zones/zone1.jpg",
     tasks: [
       { id: 11, name: "Travel: Exit Bootcamp", type: "Travel", maxReps: 1, count: 0, baseTime: 1e4, description: "Leave bootcamp and begin your journey.<br><br>The dark green button indicates travel to the next zone.", skills: ["travel"] },
-      { id: 12, name: "Combined Assembly Drill", type: "Training", maxReps: 1, count: 0, baseTime: 3e4, description: "A challenging drill combining physical<br>stamina and careful assembly.<br><br>The orange button indicates that this task is<br>mandatory to progress to next zone.", skills: ["endurance", "tinkering"], mandatory: true },
+      { id: 12, name: "Combined Assembly Drill", type: "Training", maxReps: 1, count: 0, baseTime: 3e4, xpMult: 1.2, description: "A challenging drill combining physical<br>stamina and careful assembly.<br><br>The orange button indicates that this task is<br>mandatory to progress to next zone.", skills: ["endurance", "tinkering"], mandatory: true },
       { id: 13, name: "Small Talk Practice", type: "Training", maxReps: 4, count: 0, baseTime: 3e3, description: "Polish your social skills with casual chat.<br><br>The orange button indicates that this task is<br>mandatory to progress to next zone.", skills: ["charisma"], mandatory: true },
       { id: 14, name: "Warm-Up Jog in Place", type: "Training", maxReps: 7, count: 0, baseTime: 6e3, xpMult: 2, description: "Boost your stamina with a simple jog.", skills: ["endurance"] },
       { id: 15, name: "Assemble a Clockwork Toy", type: "Training", maxReps: 5, count: 0, baseTime: 6e3, xpMult: 2, description: "Practice assembling basic mechanisms.", skills: ["tinkering"] },
-      { id: 16, name: "Mirror Mojo", type: "Training", maxReps: 2, count: 0, baseTime: 1.5e4, xpMult: 1.8, description: "Tinker with your mirror while engaging in charismatic banter.", skills: ["tinkering", "charisma"] },
+      { id: 16, name: "Mirror Mojo", type: "Training", maxReps: 2, count: 0, baseTime: 1.5e4, xpMult: 2.5, description: "Tinker with your mirror while engaging in charismatic banter.", skills: ["tinkering", "charisma"] },
       { id: 17, name: "Brewmaster: Read an Alchemy Book", type: "Training", maxReps: 1, count: 0, baseTime: 5e4, xpMult: 3, description: "Study the ancient art of alchemy.<br><br>The ★ indicates that completing this task<br>for the first time will grant a perk.", skills: ["alchemy"], perk: "brewmaster" },
       { id: 18, name: "Brew a Simple Potion", type: "Training", maxReps: 18, count: 0, baseTime: 8e3, description: "Experiment with ingredients to create a potion.<br><br>The resource icon indicates that each completion<br>of this task will produce a resource.", skills: ["alchemy"], resources: ["energy_elixir"] }
     ]
@@ -39,9 +39,9 @@ var zones = [
       { id: 31, name: "Travel: Enter Corporate District", type: "Travel", maxReps: 1, count: 0, baseTime: 3e4, description: "Step into the orderly world of corporate business.", skills: ["travel"] },
       { id: 32, name: "Completionist: Run City Marathon", type: "Training", maxReps: 1, count: 0, baseTime: 2e5, xpMult: 2, description: "Test your stamina on a long city run.", skills: ["endurance"], mandatory: true, perk: "completionist" },
       { id: 33, name: "Workshop Fix a Broken Engine", type: "Training", maxReps: 5, count: 0, baseTime: 3e5, xpMult: 2.5, description: "Learn the basics of machinery repair.", skills: ["mechanics"] },
-      { id: 34, name: "Basic Mech: Rudimentary Upgrade", type: "Training", maxReps: 1, count: 0, baseTime: 4e5, xpMult: 1.2, description: "Construct a basic biomechanical upgrade.", skills: ["mechanics", "intellect"], perk: "basic_mech" },
+      { id: 34, name: "Basic Mech: Rudimentary Upgrade", type: "Training", maxReps: 1, count: 0, baseTime: 4e5, xpMult: 1.3, description: "Construct a basic biomechanical upgrade.", skills: ["mechanics", "intellect"], perk: "basic_mech" },
       { id: 35, name: "Study Urban Traffic Flow", type: "Training", maxReps: 10, count: 0, baseTime: 8e4, xpMult: 1.8,description: "Analyze traffic patterns using perception and intellect.", skills: ["perception", "intellect"] },
-      { id: 36, name: "Assemble Goggles", type: "Training", maxReps: 12, count: 0, baseTime: 1.2e5, xpMult: 1.1, description: "Build yourself some eye protection.", skills: ["tinkering"], resources: ["goggles"] },
+      { id: 36, name: "Assemble Goggles", type: "Training", maxReps: 12, count: 0, baseTime: 1e5, xpMult: 3, description: "Build yourself some eye protection.", skills: ["tinkering"], resources: ["goggles"] },
       { id: 37, name: "Self-Operating Gadget: Simple Automation", type: "Training", maxReps: 2, count: 0, baseTime: 1e7, speedMult: 1.75, description: "Utilize your mechanical expertise and tinkering skills to build a basic automated system that streamlines routine tasks.", skills: ["mechanics", "tinkering"], perk: "self_operating_gadget" }
     ]
   },
@@ -53,7 +53,7 @@ var zones = [
       { id: 41, name: "Travel: Proceed to Cyber Lab", type: "Travel", maxReps: 1, count: 0, baseTime: 4e4, description: "Advance to a high-tech cyber environment.", skills: ["travel"] },
       { id: 42, name: "Business Card Exchange", type: "Training", maxReps: 5, count: 0, baseTime: 2e4, description: "Practice your charisma in a corporate setting.", skills: ["charisma"], mandatory: true },
       { id: 43, name: "Tactical Office Skirmish Simulation", type: "Training", maxReps: 5, count: 0, baseTime: 3e5, description: "Engage in simulated corporate conflicts.", skills: ["endurance", "tinkering"], mandatory: true },
-      { id: 44, name: "Workaholic: Finance Bro Advice", type: "Training", maxReps: 1, count: 0, baseTime: 3e7, xpMult: 0.7, description: "Learn how workaholics function.", skills: ["endurance", "charisma", "perception"], perk: "workaholic" },
+      { id: 44, name: "Workaholic: Finance Bro Advice", type: "Training", maxReps: 1, count: 0, baseTime: 3e7, xpMult: 0.75, description: "Learn how workaholics function.", skills: ["endurance", "charisma", "perception"], perk: "workaholic" },
       { id: 45, name: "Crunch Financial Numbers", type: "Training", maxReps: 10, count: 0, baseTime: 8e4, xpMult: 2, description: "Analyze corporate data with intellect and mechanics.", skills: ["intellect", "mechanics"] },
       { id: 46, name: "Gacha Machine: Mechanics of Luck", type: "Training", maxReps: 1, count: 0, baseTime: 2e5, xpMult: 5, description: "Build a simple gacha machine.", skills: ["mechanics"], perk: "gacha_machine" },
       { id: 47, name: "Battle Agent Smith", type: "Training", maxReps: 1, count: 0, baseTime: 2e7, description: "Take on this Matrix propagator. Might as well practice Combat.<br><br>This button is red - it's a boss fight.<br>Don't worry, you can move to next zone without it.", skills: ["combat"], boss_image: "images/bosses/agent_smith.jpg", resources: ["cool_sunglasses"], drainMult: 1.5, sound: agentSmithSound, attunement: "endurance" }
@@ -66,9 +66,9 @@ var zones = [
     tasks: [
       { id: 51, name: "Travel: Proceed to Combat Arena", type: "Travel", maxReps: 1, count: 0, baseTime: 5e4, description: "Step into the arena of combat.", skills: ["travel"] },
       { id: 52, name: "Cyber Infiltration Breach the Firewall", type: "Training", maxReps: 4, count: 0, baseTime: 4e4, description: "Learn basic system penetration.", skills: ["hacking"], mandatory: true },
-      { id: 53, name: "Chemical Simulation", type: "Training", maxReps: 3, count: 0, baseTime: 6e6, description: "Simulate a chemical reaction.", skills: ["alchemy", "tinkering"], mandatory: true },
+      { id: 53, name: "Chemical Simulation", type: "Training", maxReps: 3, count: 0, baseTime: 6e6, xpMult: 2, description: "Simulate a chemical reaction.", skills: ["alchemy", "tinkering"], mandatory: true },
       { id: 54, name: "Create an Amphetamine Pill", type: "Training", maxReps: 6, count: 0, baseTime: 5e5, description: "Create a simple amphetamine pill.", skills: ["alchemy", "mechanics"], resources: ["amphetamine_pill"] },
-      { id: 55, name: "Crack the Cipher", type: "Training", maxReps: 10, count: 0, baseTime: 5e5, xpMult: 1.5, description: "Decrypt secret codes.", skills: ["hacking", "endurance"] },
+      { id: 55, name: "Crack the Cipher", type: "Training", maxReps: 10, count: 0, baseTime: 5e5, xpMult: 1.8, description: "Decrypt secret codes.", skills: ["hacking", "endurance"] },
       { id: 56, name: "Debug Digital Puzzle", type: "Training", maxReps: 2, count: 0, baseTime: 4e6, xpMult: 3, description: "Solve a digital puzzle using coding skills.", skills: ["hacking", "mechanics"] },
       { id: 57, name: "Double Timer: System Revamp", type: "Training", maxReps: 2, count: 0, baseTime: 5e8, xpMult: 0.8, description: "Revamp a digital system to double its efficiency.", skills: ["hacking", "tinkering", "intellect"], perk: "double_timer" },
       { id: 58, name: "Noob Haxor: Study the Basics", type: "Training", maxReps: 1, count: 0, baseTime: 1e8, description: "Study the basics of hacking.", skills: ["hacking", "perception"], perk: "noob_haxor" },
@@ -82,8 +82,8 @@ var zones = [
     tasks: [
       { id: 61, name: "Travel: Navigate to Abandoned Factory", type: "Travel", maxReps: 1, count: 0, baseTime: 1e5, description: "Descend deeper into the digital realm.", skills: ["travel"] },
       { id: 62, name: "Training Sparring Session", type: "Training", maxReps: 10, count: 0, baseTime: 1e5, speedMult: 0.8, xpMult: 10, description: "Learn the fundamentals of combat.", skills: ["combat"], mandatory: true },
-      { id: 63, name: "Weapon Drills Simulated Battle", type: "Training", maxReps: 5, count: 0, baseTime: 8e6, xpMult: 2, description: "Practice with simulated weapons.", skills: ["combat", "hacking"] },
-      { id: 64, name: "Tactical Coordination Group Skirmish", type: "Training", maxReps: 7, count: 0, baseTime: 4e8, xpMult: 2.5, description: "Develop team-based combat strategies.", skills: ["combat", "charisma"] },
+      { id: 63, name: "Weapon Drills Simulated Battle", type: "Training", maxReps: 5, count: 0, baseTime: 8e6, xpMult: 5, description: "Practice with simulated weapons.", skills: ["combat", "hacking"] },
+      { id: 64, name: "Tactical Coordination Group Skirmish", type: "Training", maxReps: 7, count: 0, baseTime: 4e8, xpMult: 10, description: "Develop team-based combat strategies.", skills: ["combat", "charisma"] },
       { id: 65, name: "Energetic Bliss: Painstaking Training", type: "Training", maxReps: 1, count: 0, baseTime: 4e12, xpMult: 0.6, description: "Engage in a grueling training session.", skills: ["combat", "endurance", "perception"], perk: "energetic_bliss" },
       { id: 66, name: "Concoct Some Steroids", type: "Training", maxReps: 4, count: 0, baseTime: 9e9, speedMult: 0.3, description: "Create a performance-enhancing steroid.", skills: ["alchemy", "tinkering", "intellect"], resources: ["steroids"] },
       { id: 67, name: "Kung Fu Zen: Talk Your Way", type: "Training", maxReps: 3, count: 0, baseTime: 1e10, drainMult: 3, xpMult: 13, description: "Convince the masters to help you improve your learning.", skills: ["charisma"], perk: "kung_fu_zen" },
@@ -126,7 +126,7 @@ var zones = [
     tasks: [
       { id: 91, name: "Travel: Emerge into Techno District", type: "Travel", maxReps: 1, count: 0, baseTime: 4e6, description: "Climb out to the bustling Techno District.", skills: ["travel"] },
       { id: 92, name: "Extract Encrypted Secrets", type: "Training", maxReps: 5, count: 0, baseTime: 1e9, description: "Extract and decode hidden data.", skills: ["aiMastery", "hacking"], mandatory: true },
-      { id: 93, name: "Copius Alchemist: Advanced Manual", type: "Training", maxReps: 1, count: 0, baseTime: 1e14, xpMult: 0.8, description: "Study advanced alchemical techniques.", skills: ["alchemy", "perception"], perk: "copious_alchemist", mandatory: true },
+      { id: 93, name: "Copius Alchemist: Advanced Manual", type: "Training", maxReps: 1, count: 0, baseTime: 1e14, xpMult: 0.9, description: "Study advanced alchemical techniques.", skills: ["alchemy", "perception"], perk: "copious_alchemist", mandatory: true },
       { id: 94, name: "Neural Net Optimize the System", type: "Training", maxReps: 10, count: 0, baseTime: 1e8, xpMult: 1.8, description: "Enhance and optimize neural networks.", skills: ["aiMastery", "intellect"] },
       { id: 95, name: "Virtual Simulated Skirmish", type: "Training", maxReps: 2, count: 0, baseTime: 3e8, xpMult: 1.5, description: "Engage in simulated digital battles.", skills: ["aiMastery", "combat"] },
       { id: 96, name: "Simulation Engine: Ultimate Feat of Engineering", type: "Training", maxReps: 1, count: 0, baseTime: 4e14, xpMult: 0.75, description: "Create the ultimate feat of engineering.", skills: ["tinkering", "cybernetics", "hacking"], perk: "simulation_engine" },

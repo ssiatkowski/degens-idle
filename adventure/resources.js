@@ -32,7 +32,7 @@ let perkDescriptions = {
     last_stand:             "Reduce all energy drain by 20%.",
     mechanical_genius:      "Remove Copium gain related to Mechanics.",
     growth_miracle:         "Increase # of resource generating tasks by 50%.",
-    inspired_glow:          "Serenity Gain on Prestige increased by 25%.",
+    inspired_glow:          "Serenity Gain on Prestige increased by 50%.",
     quantum_teleportation:  "Travel is now affected by Power.",
     quantum_harmony:        "Whenever another skill gains xp, Quantum gains 1% of that xp.",
     cyber_boost:            "Each time Cybernetics levels up,<br>another random skill also levels up.",

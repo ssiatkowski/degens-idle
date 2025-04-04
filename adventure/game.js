@@ -2375,6 +2375,8 @@
     }
     if(gameState.perks.sandstorm) {
       skillXpScaling = 1.019;
+    } else {
+      skillXpScaling = 1.02;
     }
     if (gameState.perks.wise_mechanic) {
       knowledgeSkills = ["tinkering", "intellect", "hacking", "mechanics"];
@@ -2966,7 +2968,7 @@
     if (gameState.serenityUnlocked) {
       serenityUpg.style.display = "inline-block";
       // Calculate potential serenity gain on prestige:
-      const serenityGainPotential = ((gameState.bestCompletedZone ** gameState.serenityGainZoneExponent) / gameState.resetsForBestZone) * (gameState.perks.inspired_glow ? 1.25 : 1)  * (1 + (0.01 * gameState.serenityInfusionValue * gameState.highestCompletedZone)) + gameState.satoshiSerenity;
+      const serenityGainPotential = ((gameState.bestCompletedZone ** gameState.serenityGainZoneExponent) / gameState.resetsForBestZone) * (gameState.perks.inspired_glow ? 1.5 : 1)  * (1 + (0.01 * gameState.serenityInfusionValue * gameState.highestCompletedZone)) + gameState.satoshiSerenity;
       // Set the inner HTML: first line shows current Serenity, second line (in gray) shows potential gain.
       serenityUpg.innerHTML = `Serenity: ${formatNumber(gameState.serenity)}`
       serenityUpg.innerHTML += `<br><span style="color:rgb(200, 200, 200); font-size: 0.9em;">+(${formatNumber(serenityGainPotential)})</span>`;
@@ -3020,19 +3022,19 @@
     hideTooltip();
   
     const serenityGainPotential = ((gameState.bestCompletedZone ** gameState.serenityGainZoneExponent) / gameState.resetsForBestZone) *
-      (gameState.perks.inspired_glow ? 1.25 : 1) * (1 + (0.01 * gameState.serenityInfusionValue * gameState.highestCompletedZone))
+      (gameState.perks.inspired_glow ? 1.5 : 1) * (1 + (0.01 * gameState.serenityInfusionValue * gameState.highestCompletedZone))
        + gameState.satoshiSerenity;
   
     // Calculate total resets from energy, copium, and delusion resets.
     const totalResets = gameState.numEnergyResets + gameState.numCopiumResets + gameState.numDelusionResets;
     // Calculate next zone potential using (highestCompletedZone + 1) divided by total resets.
     let nextZonePotential = (((gameState.highestCompletedZone + 1) ** gameState.serenityGainZoneExponent) / Math.max(totalResets, 1)) *
-      (gameState.perks.inspired_glow ? 1.25 : 1)  * (1 + (0.01 * gameState.serenityInfusionValue * (gameState.highestCompletedZone + 1)))
+      (gameState.perks.inspired_glow ? 1.5 : 1)  * (1 + (0.01 * gameState.serenityInfusionValue * (gameState.highestCompletedZone + 1)))
        + gameState.satoshiSerenity;
 
     if (serenityGainPotential > nextZonePotential && gameState.serenityInfusionValue > 0) {
       nextZonePotential = ((gameState.bestCompletedZone ** gameState.serenityGainZoneExponent) / gameState.resetsForBestZone) *
-      (gameState.perks.inspired_glow ? 1.25 : 1) * (1 + (0.01 * gameState.serenityInfusionValue * (gameState.highestCompletedZone + 1)))
+      (gameState.perks.inspired_glow ? 1.5 : 1) * (1 + (0.01 * gameState.serenityInfusionValue * (gameState.highestCompletedZone + 1)))
        + gameState.satoshiSerenity;
     }
   
@@ -3073,7 +3075,7 @@
           <span style="color: gray; font-size: 0.9em;">(+${formatNumber(serenityGainPotential)})</span>
         </p>
         <p style="color: gray; margin-top: -10px;">
-          Serenity Gain = (<strong>Best Full Zone</strong> ^ ${gameState.serenityGainZoneExponent} / <strong>Total Resets</strong>)${gameState.perks.inspired_glow ? " * 1.25" : ""}${gameState.serenityInfusionValue > 0 ? " * Infusion(" + gameState.serenityInfusionValue + "% * Highest Zone)" : ""}${gameState.serenityUnlockables["Satoshi's Wallet"] ? " + Wallet(" + formatNumber(gameState.satoshiSerenity) + ")" : ""}
+          Serenity Gain = (<strong>Best Full Zone</strong> ^ ${gameState.serenityGainZoneExponent} / <strong>Total Resets</strong>)${gameState.perks.inspired_glow ? " * 1.5" : ""}${gameState.serenityInfusionValue > 0 ? " * Infusion(" + gameState.serenityInfusionValue + "% * Highest Zone)" : ""}${gameState.serenityUnlockables["Satoshi's Wallet"] ? " + Wallet(" + formatNumber(gameState.satoshiSerenity) + ")" : ""}
         </p>
       </div>
       <p style="font-size: 0.9em; margin-top: 5px;">
@@ -4619,4 +4621,7 @@
   window.displayZone = () => displayZone();
   window.resetGame = (reason) => resetGame("energy");
   window.getCurrentTasks = () => currentTasks;
+  window.getEffTickDuration = () => effTickDuration;
+  window.getBaseEnergyDrain = () => baseEnergyDrain;
+  window.getSkillXpScaling = () => skillXpScaling;
 })();
