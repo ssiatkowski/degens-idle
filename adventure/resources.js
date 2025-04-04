@@ -48,6 +48,7 @@ let perkDescriptions = {
     spectral_glow:          "Each time you advance a zone,<br>25% chance to spawn a random resource used in this run.",
     time_glimpse:           "Time Fragment level up is improved from double to triple.",
     dimension_mastery:      "Increase starting Energy by 12345.",
+    echo_of_nothing:        "Multiply Serenity gain by # unlocked perks.",
   };
 
 const toggleablePerks = ["completionist", "double_timer", "copious_alchemist", "master_of_ai", "crypto_wallet", "mechanical_genius", "stellar_dreams", "spectral_glow"];
@@ -759,10 +760,10 @@ let resourceActions = {
   },
   "cybernetic_implant": {
     onConsume: (gameState, amt) => {
-      const energyIncrease = (gameState.skills["cybernetics"].level / 4096) * amt;
+      const energyIncrease = (gameState.skills["cybernetics"].level / 1024) * amt;
       gameState.startingEnergy += energyIncrease;
       gameState.totalCyberneticImplantEnergy += energyIncrease;
-      if (gameState.totalCyberneticImplantEnergy > 40) {
+      if (gameState.totalCyberneticImplantEnergy > 100) {
         unlockAchievement("Cybernetic Overload");
       }
       
@@ -770,7 +771,7 @@ let resourceActions = {
       
       showMessage(`Used ${amt} Cybernetic Implant${amt > 1 ? "s" : ""}.<br>Increased Starting Energy by ${formatNumber(energyIncrease)}.`, backgroundColors["resource"]);
     },
-    tooltip: "Increases Starting Energy by (Cybernetics level / 4096) per implant."
+    tooltip: "Increases Starting Energy by (Cybernetics level / 1024) per implant."
   },
   "cosmic_scroll": {
     onConsume: (gameState, amt) => {
@@ -953,11 +954,11 @@ let resourceActions = {
   "interdimensional_ore": {
     onConsume: (gameState, amt) => {
       const serenityGainPotential = ((gameState.bestCompletedZone ** gameState.serenityGainZoneExponent) / gameState.resetsForBestZone)
-      gameState.serenity += serenityGainPotential * 0.015 * amt;
-      showMessage(`Used ${amt} Dimensional Ore${amt > 1 ? "s" : ""}.<br>Gained ${formatNumber(serenityGainPotential * 0.015 * amt)} Serenity.`, backgroundColors["resource"]);
+      gameState.serenity += serenityGainPotential * 0.025 * amt;
+      showMessage(`Used ${amt} Dimensional Ore${amt > 1 ? "s" : ""}.<br>Gained ${formatNumber(serenityGainPotential * 0.025 * amt)} Serenity.`, backgroundColors["resource"]);
       showSerenityIfUnlocked();
     },
-    tooltip: "Instantly gain 1.5% of base potential Serenity.<br>Does not include any multipliers."
+    tooltip: "Instantly gain 2.5% of base potential Serenity.<br>Does not include any multipliers."
   },
   "master_ball": {
     onConsume: (gameState, amt) => {
@@ -1000,10 +1001,11 @@ const achievements = [
   { name: "What XP?", description: "Defeat Chuck Norris after having used an energy core.", img: "images/achievements/what_xp.jpg" },
   { name: "Instant Expert", description: "Advanced Potion Making without having seen any of those potions.", img: "images/achievements/instant_expert.jpg" },
   { name: "Delusional", description: "Delusion reset at over 50K delusion.", img: "images/achievements/delusional.jpg" },
-  { name: "Cybernetic Overload", description: "Gain over 40 starting energy from cybernetic implants in one run.", img: "images/achievements/cybernetic_overload.jpg" },
+  { name: "Cybernetic Overload", description: "Gain over 100 starting energy from cybernetic implants in one run.", img: "images/achievements/cybernetic_overload.jpg" },
   { name: "Apothecary", description: "Hold over 200 Energy Elixirs in your inventory at once.", img: "images/achievements/apothecary.jpg" },
   { name: "Big Game Hunter", description: "Slay Godzilla without battling any previous bosses.", img: "images/achievements/big_game_hunter.jpg" },
   { name: "I'm Flying", description: "Reach zone 11 with zero energy resets.", img: "images/achievements/im_flying.jpg" },
+  { name: "69 K?", description: "Gain at least 69k serenity in one prestige.", img: "images/achievements/69.jpg" },
   { name: "Googolplex", description: "Try to hold over 9 Googols in your inventory at once.", img: "images/achievements/googolplex.jpg" },
   { name: "Asymptote", description: "Use radiance when 2 unfinished tasks are above 90% complete.", img: "images/achievements/asymptote.jpg" },
   { name: "Attunement", description: "Unlock the Master Ball.", img: "images/achievements/attunement.jpg" },
@@ -1081,7 +1083,7 @@ const SERENITY_UPGRADES = {
                     "• Knowledge: 10% chance to gain 50 Knowledge (<del>was 2.5% chance to gain 25 Knowledge</del>)<br>" +
                     "• Power: 5% chance to gain 50 Power (<del>was 0.5% chance to gain 25 Power</del>)<br>" +
                     "• Serenity: 2.5% chance to stash 2.5% of base potential Serenity<br>" +
-                    "• Data Bit: 1% chance to find 1 Data Bit"
+                    "• Data Bit: 1% chance to find 1-10 (random) Data Bits"
       }
 
     },
@@ -1135,7 +1137,7 @@ const SERENITY_UPGRADES = {
       },
       "Zone Pusher": {
         initialCost: 4,
-        scaling: 3.8,
+        scaling: 3.5,
         description: "Increase exponent of zone in serenity gain function by +0.1."
       }
     },
@@ -1153,12 +1155,12 @@ const SERENITY_UPGRADES = {
       },
       "Greater Reactor": {
         initialCost: 200,
-        scaling: 1.85,
+        scaling: 1.84,
         description: "Increase copium reactor starting energy gain by +1."
       },
       "Serenity Infusion": {
         initialCost: 500,
-        scaling: 3,
+        scaling: 2.5,
         description: "Multiplies serenity gain by +1% * (highest fully completed zone)."
       },
       "Fortune's Favor": {

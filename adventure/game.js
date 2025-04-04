@@ -145,10 +145,7 @@
   function consumeResource(name, amt) {
     if (!gameState.resources[name] || gameState.resources[name] < amt) return;
     gameState.resources[name] -= amt;
-    // Record resource usage (if not "infinity_gauntlet")
-    if (name !== "infinity_gauntlet") {
-      gameState.resourcesUsed[name] = true;
-    }
+    gameState.resourcesUsed[name] = true;
     if (resourceActions[name]?.onConsume) {
       if (name == "radiance") {
         resourceActions[name].onConsume(gameState, amt, currentTasks);
@@ -2448,7 +2445,10 @@
     if (!grid) return;
     grid.innerHTML = "";
   
-    if (gameState.skills["totality"].visible){
+    if (gameState.skills["nihility"].visible) {
+      perkDescriptions["cyber_boost"] = "Each time Cybernetics levels up,<br>another random skill also levels up.<br>(does not affect Totality or Nihility)";
+    }
+    else if (gameState.skills["totality"].visible){
       perkDescriptions["cyber_boost"] = "Each time Cybernetics levels up,<br>another random skill also levels up.<br>(does not affect Totality)";
     }
 
@@ -2711,7 +2711,7 @@
         renderPerks();
         break;
       case "Satoshi's Wallet":
-        perkDescriptions.crypto_wallet = "Each time you travel:<br>25% chance to gain 50 Energy<br>5% chance to lose 25 Copium<br>5% chance to lose 25 Delusion<br>10% chance to gain 50 Knowledge<br>5% chance to gain 50 Power<br>2.5% chance to stash 2.5% of base potential Serenity<br>1% chance to find 1 Data Bit";
+        perkDescriptions.crypto_wallet = "Each time you travel:<br>25% chance to gain 50 Energy<br>5% chance to lose 25 Copium<br>5% chance to lose 25 Delusion<br>10% chance to gain 50 Knowledge<br>5% chance to gain 50 Power<br>2.5% chance to stash 2.5% of base potential Serenity<br>1% chance to find 1-10 (random) Data Bits";
         break;
       default:
         console.log(`No effect defined for unlockable: ${upgName}`);
@@ -2774,9 +2774,10 @@
         break;
       case "Crystal Collector":
         gameState.randomCrystalLevels = 1 + level;
-        //if "totality is in visible skills"
         resourceActions["random_crystal"].tooltip = `Levels up a random skill by ${gameState.randomCrystalLevels} levels.`;
-        if (gameState.skills["totality"].visible){
+        if (gameState.skills["nihility"].visible) {
+          resourceActions["random_crystal"].tooltip += "<br>(does not affect Totality or Nihility)";
+        } else if (gameState.skills["totality"].visible){
           resourceActions["random_crystal"].tooltip += "<br>(does not affect Totality)";
         }
         break;
@@ -2968,7 +2969,7 @@
     if (gameState.serenityUnlocked) {
       serenityUpg.style.display = "inline-block";
       // Calculate potential serenity gain on prestige:
-      const serenityGainPotential = ((gameState.bestCompletedZone ** gameState.serenityGainZoneExponent) / gameState.resetsForBestZone) * (gameState.perks.inspired_glow ? 1.5 : 1)  * (1 + (0.01 * gameState.serenityInfusionValue * gameState.highestCompletedZone)) + gameState.satoshiSerenity;
+      const serenityGainPotential = ((gameState.bestCompletedZone ** gameState.serenityGainZoneExponent) / gameState.resetsForBestZone) * (gameState.perks.inspired_glow ? 1.5 : 1)  * (1 + (0.01 * gameState.serenityInfusionValue * gameState.highestCompletedZone)) * (gameState.perks.echo_of_nothing ? gameState.perksUnlocked : 1) + gameState.satoshiSerenity;
       // Set the inner HTML: first line shows current Serenity, second line (in gray) shows potential gain.
       serenityUpg.innerHTML = `Serenity: ${formatNumber(gameState.serenity)}`
       serenityUpg.innerHTML += `<br><span style="color:rgb(200, 200, 200); font-size: 0.9em;">+(${formatNumber(serenityGainPotential)})</span>`;
@@ -3022,19 +3023,19 @@
     hideTooltip();
   
     const serenityGainPotential = ((gameState.bestCompletedZone ** gameState.serenityGainZoneExponent) / gameState.resetsForBestZone) *
-      (gameState.perks.inspired_glow ? 1.5 : 1) * (1 + (0.01 * gameState.serenityInfusionValue * gameState.highestCompletedZone))
+      (gameState.perks.inspired_glow ? 1.5 : 1) * (1 + (0.01 * gameState.serenityInfusionValue * gameState.highestCompletedZone)) * (gameState.perks.echo_of_nothing ? gameState.perksUnlocked : 1)
        + gameState.satoshiSerenity;
   
     // Calculate total resets from energy, copium, and delusion resets.
     const totalResets = gameState.numEnergyResets + gameState.numCopiumResets + gameState.numDelusionResets;
     // Calculate next zone potential using (highestCompletedZone + 1) divided by total resets.
     let nextZonePotential = (((gameState.highestCompletedZone + 1) ** gameState.serenityGainZoneExponent) / Math.max(totalResets, 1)) *
-      (gameState.perks.inspired_glow ? 1.5 : 1)  * (1 + (0.01 * gameState.serenityInfusionValue * (gameState.highestCompletedZone + 1)))
+      (gameState.perks.inspired_glow ? 1.5 : 1)  * (1 + (0.01 * gameState.serenityInfusionValue * (gameState.highestCompletedZone + 1))) * (gameState.perks.echo_of_nothing ? gameState.perksUnlocked : 1)
        + gameState.satoshiSerenity;
 
     if (serenityGainPotential > nextZonePotential && gameState.serenityInfusionValue > 0) {
       nextZonePotential = ((gameState.bestCompletedZone ** gameState.serenityGainZoneExponent) / gameState.resetsForBestZone) *
-      (gameState.perks.inspired_glow ? 1.5 : 1) * (1 + (0.01 * gameState.serenityInfusionValue * (gameState.highestCompletedZone + 1)))
+      (gameState.perks.inspired_glow ? 1.5 : 1) * (1 + (0.01 * gameState.serenityInfusionValue * (gameState.highestCompletedZone + 1))) * (gameState.perks.echo_of_nothing ? gameState.perksUnlocked : 1)
        + gameState.satoshiSerenity;
     }
   
@@ -3075,7 +3076,7 @@
           <span style="color: gray; font-size: 0.9em;">(+${formatNumber(serenityGainPotential)})</span>
         </p>
         <p style="color: gray; margin-top: -10px;">
-          Serenity Gain = (<strong>Best Full Zone</strong> ^ ${gameState.serenityGainZoneExponent} / <strong>Total Resets</strong>)${gameState.perks.inspired_glow ? " * 1.5" : ""}${gameState.serenityInfusionValue > 0 ? " * Infusion(" + gameState.serenityInfusionValue + "% * Highest Zone)" : ""}${gameState.serenityUnlockables["Satoshi's Wallet"] ? " + Wallet(" + formatNumber(gameState.satoshiSerenity) + ")" : ""}
+          Serenity Gain = (<strong>Best Full Zone</strong> ^ ${gameState.serenityGainZoneExponent} / <strong>Total Resets</strong>)${gameState.perks.inspired_glow ? " * 1.5" : ""}${gameState.serenityInfusionValue > 0 ? " * Infusion(" + gameState.serenityInfusionValue + "% * Highest Zone)" : ""}${gameState.perks.echo_of_nothing ? " * (# perks)" : ""}${gameState.serenityUnlockables["Satoshi's Wallet"] ? " + Wallet(" + formatNumber(gameState.satoshiSerenity) + ")" : ""}
         </p>
       </div>
       <p style="font-size: 0.9em; margin-top: 5px;">
@@ -3294,6 +3295,9 @@
       gameState.prestigeAvailable = false;
       if (gameState.bestCompletedZone === 7){
         unlockAchievement("Seven");
+      }
+      if (serenityGain >= 69000) {
+        unlockAchievement("69 K?");
       }
       resetGame("prestige");
       confirmModal.remove();
@@ -4189,8 +4193,9 @@
                 showSerenityIfUnlocked();
               }
               if (Math.random() < 0.01) {
-                addResource("data_bit", 1);
-                showMessage("Satoshi's Wallet: Found 1 Data Bit");
+                const numDataBits = Math.floor(Math.random() * 10) + 1; // Randomly choose between 1 and 10 Data Bits.
+                addResource("data_bit", numDataBits);
+                showMessage(`Satoshi's Wallet: Found ${numDataBits} Data Bit${numDataBits > 1 ? "s" : ""}`);
               }
             } else {
               // Default crypto_wallet behavior:
@@ -4361,7 +4366,7 @@
           if (task.perk === "urban_warfare") {
             showPowerIfUnlocked();
           }
-          if (task.perk === "inspired_glow") {
+          if (task.perk === "inspired_glow" || task.perk === "echo_of_nothing") {
             showSerenityIfUnlocked();
           }
           applyPerks();
@@ -4383,7 +4388,7 @@
             showMessage("Third prestige section unlocked!", backgroundColors["prestige"]);
           }
           if(!gameState.prestigeAvailable){
-            if(gameState.serenity < 1000) {
+            if(gameState.serenity < 100) {
               showSerenityUnlockedModal();
             }
             gameState.prestigeAvailable = true;
