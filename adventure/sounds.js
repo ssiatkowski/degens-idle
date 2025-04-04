@@ -61,6 +61,7 @@ const soundManager = {
   const energyCoreSound = soundManager.register("energyCore", "sounds/energy_core.mp3", { type: 'sfx' });
   const timeFragmentSound = soundManager.register("timeFragment", "sounds/time_fragment.mp3", { type: 'sfx' });
   const masterBallSound = soundManager.register("masterBall", "sounds/master_ball.wav", { type: 'sfx' });
+  const rinneganSound = soundManager.register("rinnegan", "sounds/rinnegan.wav", { type: 'sfx' });
   const achievementSound = soundManager.register("achievement", "sounds/achievement.mp3", { type: 'sfx' });
   const prestigeSound = soundManager.register("prestige", "sounds/prestige.mp3", { type: 'sfx' });
 

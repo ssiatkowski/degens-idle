@@ -49,6 +49,7 @@ let perkDescriptions = {
     time_glimpse:           "Time Fragment level up is improved from double to triple.",
     dimension_mastery:      "Increase starting Energy by 12345.",
     echo_of_nothing:        "Multiply Serenity gain by # unlocked perks.",
+    nihilistic_beats:       "All XP gains increased by 4x.",
   };
 
 const toggleablePerks = ["completionist", "double_timer", "copious_alchemist", "master_of_ai", "crypto_wallet", "mechanical_genius", "stellar_dreams", "spectral_glow"];
@@ -397,19 +398,19 @@ let resourceActions = {
   "infinity_gauntlet": {
     onConsume: (gameState, amt) => {
       Object.keys(gameState.resources).forEach(resource => {
-        if (gameState.resources[resource] > 0 && resource !== "infinity_gauntlet" && resource !== "random_crystal" && resource !== "googol" && resource !== "radiance" && resource !== "master_ball") {
+        if (gameState.resources[resource] > 0 && resource !== "infinity_gauntlet" && resource !== "random_crystal" && resource !== "googol" && resource !== "radiance" && resource !== "master_ball" && resource !== "rinnegan") {
           addResource(resource, amt);
         }
       });
       updateTasksHoverInfo();
-      showMessage(`Used ${amt} Infinity Gauntlet${amt > 1 ? "s" : ""}.<br>Gained +1 of every held resource.<br>Very few resources cannot be created by Infinity Gauntlet.`, backgroundColors["resource"]);
+      showMessage(`Used ${amt} Infinity Gauntlet${amt > 1 ? "s" : ""}.<br>Gained +1 of held resources.`, backgroundColors["resource"]);
     },
-    tooltip: "Gain +1 of every resource you currently have."
+    tooltip: "Gain +1 of every resource you currently have.<br>Very few resources cannot be created by Infinity Gauntlet."
   },
   "stardust": {
     onConsume: (gameState, amt) => {
       // Get an array of resource names, excluding "infinity_gauntlet" and "stardust"
-      const usedResources = Object.keys(gameState.resourcesUsed).filter(r => r !== "infinity_gauntlet" && r !== "stardust" && r !== "radiance" && r !== "googol" && r !== "master_ball");
+      const usedResources = Object.keys(gameState.resourcesUsed).filter(r => r !== "infinity_gauntlet" && r !== "stardust" && r !== "radiance" && r !== "googol" && r !== "master_ball" && r !== "rinnegan");
       let resourceCounts = {};
 
       // For each Stardust unit consumed...
@@ -812,11 +813,10 @@ let resourceActions = {
       // Object to record how much was added per resource.
       let addedTotals = {};
       
-      // For each googol unit consumed...
       for (let i = 0; i < amt; i++) {
         // Get a list of other resources that the player currently holds (>0), excluding "googol"
         const otherResources = Object.keys(gameState.resources)
-          .filter(r => r !== "googol" && gameState.resources[r] > 0);
+          .filter(r => r !== "googol" && gameState.resources[r] > 0 && r !== "rinnegan");
         
         // If no other resource is found, skip this iteration.
         if (otherResources.length === 0) continue;
@@ -969,11 +969,39 @@ let resourceActions = {
     },
     tooltip: "Use to capture the attunement of the next boss you defeat.<br>Each boss is attuned to a different skill - attunements are now shown on hover info.<br>Capturing attunement will do the following:<br>1. Increase the skill's level by 1-10 (random).<br>2. Increase the skill's speed by 100%.<br><br>Cannot be created by Infinity Gauntlet or Stardust."
   },
+  "rinnegan": {
+    onConsume: (gameState, amt) => {
+      // Play the rinnegan sound.
+      if (gameState.soundEnabled) rinneganSound.play();
+      // Save the original sound setting and then disable sound.
+      const originalSoundSetting = gameState.soundEnabled;
+      gameState.soundEnabled = false;
+
+      // Loop over each held resource except rinnegan
+      for (const resName in gameState.resources) {
+        if (resName === "rinnegan") continue;
+        const heldAmt = gameState.resources[resName];
+        if (heldAmt > 0 && resourceActions[resName] && typeof resourceActions[resName].onConsume === "function") {
+          resourceActions[resName].onConsume(gameState, 1);
+        }
+      }
+
+      // Restore sound setting so future sounds will play normally.
+      gameState.soundEnabled = originalSoundSetting;
+
+      showMessage(`Used ${amt} Rinnegan${amt > 1 ? "s" : ""}.<br>Applied effects of every held resource.`, backgroundColors["resource"]);
+
+      unlockAchievement("Rinnegan");
+
+    },
+    tooltip: "Use to apply the effects of 1 of every held resource.<br>Does not consume those resources."
+  }
+
 
 
 };
 
-const EXCLUDED_AUTO_RESOURCES = new Set(["cybernetic_armor", "infinity_gauntlet", "stardust", "cosmic_shard","atomic_particle","energy_core","googol","radiance", "time_fragment", "master_ball"]);
+const EXCLUDED_AUTO_RESOURCES = new Set(["cybernetic_armor", "infinity_gauntlet", "stardust", "cosmic_shard","atomic_particle","energy_core","googol","radiance", "time_fragment", "master_ball", "rinnegan"]);
 
 const achievements = [
   { name: "Bookworm", description: "Click all the buttons on main settings page.", img: "images/achievements/bookworm.jpg" },
@@ -1009,6 +1037,7 @@ const achievements = [
   { name: "Googolplex", description: "Try to hold over 9 Googols in your inventory at once.", img: "images/achievements/googolplex.jpg" },
   { name: "Asymptote", description: "Use radiance when 2 unfinished tasks are above 90% complete.", img: "images/achievements/asymptote.jpg" },
   { name: "Attunement", description: "Unlock the Master Ball.", img: "images/achievements/attunement.jpg" },
+  { name: "Rinnegan", description: "Use the power of Rinnegan.", img: "images/achievements/rinnegan.jpg" },
   { name: "420", description: "Prestige 420 times.", img: "images/achievements/420.jpg" },
 ];
 

@@ -178,6 +178,10 @@
       unlockAchievement("Googolplex");
       showMessage("This universe cannot handle more than 9 Googols.");
     }
+    if (name == "rinnegan" && gameState.resources[name] > 2) {
+      gameState.resources[name] = 2;
+      showMessage("You can only have 2 eyes.");
+    }
     // Instead of full re-render, update only this resource.
     updateResourceDisplay(name);
   }
@@ -2132,6 +2136,7 @@
       if (gameState.perks["workaholic"]) baseXP *= gameState.serenityUnlockables["Experience Junkie"] ? 2.5 : 1.5;
       if (gameState.perks["kung_fu_zen"]) baseXP *= 1.28;
       if (gameState.perks["celestial_light"]) baseXP *= gameState.serenityUnlockables["Experience Junkie"] ? 6 : 2;
+      if (gameState.perks["nihilistic_beats"]) baseXP *= 4;
       let levelText = "";
       usedSkills.forEach(sName => {
         let gainedXP = baseXP;
@@ -4010,6 +4015,7 @@
       if (gameState.perks["workaholic"]) xpEach *= gameState.serenityUnlockables["Experience Junkie"] ? 2.5 : 1.5;
       if (gameState.perks["kung_fu_zen"]) xpEach *= 1.28;
       if (gameState.perks["celestial_light"]) xpEach *= gameState.serenityUnlockables["Experience Junkie"] ? 6 : 2;
+      if (gameState.perks["nihilistic_beats"]) xpEach *= 4;
       if (gameState.cosmicShardTaskRunning) xpEach *= 5;
       if (tData.task.boss_image) xpEach *= gameState.energyCoreMultiplier;
       if (tData.task.xpMult !== undefined) {

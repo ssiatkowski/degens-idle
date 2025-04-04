@@ -12,7 +12,7 @@ var zones = [
       { id: 13, name: "Small Talk Practice", type: "Training", maxReps: 4, count: 0, baseTime: 3e3, xpMult: 2, description: "Polish your social skills with casual chat.<br><br>The orange button indicates that this task is<br>mandatory to progress to next zone.", skills: ["charisma"], mandatory: true },
       { id: 14, name: "Warm-Up Jog in Place", type: "Training", maxReps: 7, count: 0, baseTime: 6e3, xpMult: 4, description: "Boost your stamina with a simple jog.", skills: ["endurance"] },
       { id: 15, name: "Assemble a Clockwork Toy", type: "Training", maxReps: 5, count: 0, baseTime: 6e3, xpMult: 3, description: "Practice assembling basic mechanisms.", skills: ["tinkering"] },
-      { id: 16, name: "Mirror Mojo", type: "Training", maxReps: 2, count: 0, baseTime: 1.5e4, xpMult: 5, description: "Tinker with your mirror while engaging in charismatic banter.", skills: ["tinkering", "charisma"] },
+      { id: 16, name: "Mirror Mojo", type: "Training", maxReps: 2, count: 0, baseTime: 1.8e4, xpMult: 5, description: "Tinker with your mirror while engaging in charismatic banter.", skills: ["tinkering", "charisma"] },
       { id: 17, name: "Brewmaster: Read an Alchemy Book", type: "Training", maxReps: 1, count: 0, baseTime: 5e4, xpMult: 3, description: "Study the ancient art of alchemy.<br><br>The ★ indicates that completing this task<br>for the first time will grant a perk.", skills: ["alchemy"], perk: "brewmaster" },
       { id: 18, name: "Brew a Simple Potion", type: "Training", maxReps: 18, count: 0, baseTime: 8e3, description: "Experiment with ingredients to create a potion.<br><br>The resource icon indicates that each completion<br>of this task will produce a resource.", skills: ["alchemy"], resources: ["energy_elixir"] }
     ]
@@ -414,15 +414,13 @@ var zones = [
     img: "images/zones/zone29.jpg",
     tasks: [
       { id: 291, name: "Travel: Soar to Eternal Apex", type: "Travel", maxReps: 1, count: 0, baseTime: 3e19, speedMult: 0.015, drainMult: 700, description: "Leave the emptiness behind and ascend toward ultimate revelation.", skills: ["travel"] },
-      // { id: 292, name: "Embrace the Void's Wisdom", type: "Training", maxReps: 10, count: 0, baseTime: 1.1e33, description: "Absorb the profound silence and insights of nothingness.", skills: ["intellect", "meditation"], mandatory: true },
+      { id: 292, name: "Embrace the Void's Wisdom", type: "Training", maxReps: 5, count: 0, baseTime: 1000, speedMult: 3e-22, xpMult: 2e23, drainMult: 0.001, description: "Absorb the profound silence and insights of nothingness.", skills: ["intellect", "nihility"], mandatory: true },
       { id: 293, name: "Distill Absurdity", type: "Training", maxReps: 20, count: 0, baseTime: 1e20, speedMult: 6e-3, drainMult: 1e4, xpMult: 1e10, description: "Extract meaning from the chaos of the void.", skills: ["intellect"], mandatory: true },
-      // one more task that only takes Endurance and 30 reps called Copium Check
-      // { id: 294, name: "Harvest Void Residue", type: "Training", maxReps: 7, count: 0, baseTime: 1.3e33, description: "Collect remnants left behind in the emptiness.", skills: ["alchemy", "perception"], resources: ["void_residue"] },
-      // { id: 295, name: "Practice Kamui with Kakashi", type: "Training", maxReps: 6, count: 0, baseTime: 1e15, description: "What a guy.", skills: ["travel", "combat", "intellect"] },
-      // { id: 296, name: "Resonate with Nihilistic Beats", type: "Training", maxReps: 7, count: 0, baseTime: 1.4e33, description: "Vibrate with the rhythm of utter nothingness.", skills: ["tinkering", "intellect"] },
-      // one perk should do 10x serenity gain
+      { id: 294, name: "Copium Check", type: "Training", maxReps: 50, count: 0, baseTime: 1e18, speedMult: 3e-3, drainMult: 1e4, xpMult: 5e3, description: "One must transcend above Copium to exit the void.", skills: ["endurance"], mandatory: true },
+      { id: 295, name: "Practice Kamui with Kakashi", type: "Training", maxReps: 3, count: 0, baseTime: 3e33, speedMult: 1e-24, drainMult: 3e5, xpMult: 3e-14, description: "What a guy.", skills: ["travel", "combat", "intellect"] },
+      { id: 296, name: "Nihilistic Beats: Resonate", type: "Training", maxReps: 4, count: 0, baseTime: 1e31, speedMult: 1e-12, drainMult: 5e4, description: "Vibrate with the rhythm of utter nothingness.", skills: ["tinkering", "intellect"], perk: "nihilistic_beats" },
       { id: 297, name: "Echo of Nothing: Invoke the Void", type: "Training", maxReps: 1, count: 0, baseTime: 300, speedMult: 5e-4, xpMult: 1e24, drainMult: 1e-4, description: "Channel the void’s mysterious reverberations.", skills: ["nihility"], perk: "echo_of_nothing" },
-      // { id: 298, name: "Battle Kaguya", type: "Training", maxReps: 1, count: 0, baseTime: 1.6e33, description: "Engage in an epic confrontation with Kaguya.", skills: ["combat"], boss_image: "images/bosses/kaguya.jpg", sound: kaguyaSound, resources: ["rinnegan"], attunement: "negotiation" }
+      { id: 298, name: "Battle Kaguya", type: "Training", maxReps: 1, count: 0, baseTime: 3e23, speedMult: 0.13, drainMult: 30000, description: "Engage in an epic confrontation with Kaguya.<br>Slay the bitch and take her eye.", skills: ["combat"], boss_image: "images/bosses/kaguya.jpg", sound: kaguyaSound, resources: ["rinnegan"], attunement: "negotiation" }
     ]
   },
   // {
