@@ -1054,8 +1054,8 @@ function attackEnemy(resolve) {
 
             if (!purchasedUpgradesSet.has("Mosquito")) {
                 unlockAchievement('Dirty Trick');
-                enemyStunCount += 250;
-                logFight("<span style='color: green; font-size: 1.3em';>Just as Saitama got serious, you pointed at a piñata and he couldn't resist. But when he punched it, a swarm of mosquitos burst out, fueling his mosquito hate. He spends 250 turns squashing them, leaving himself wide open to your attacks.</span>");
+                enemyStunCount += 200;
+                logFight("<span style='color: green; font-size: 1.3em';>Just as Saitama got serious, you pointed at a piñata and he couldn't resist. But when he punched it, a swarm of mosquitos burst out, fueling his mosquito hate. He spends 200 turns squashing them, leaving himself wide open to your attacks.</span>");
                 if (numBattleGimmicks.size >= 9) {
                     unlockAchievement('Bells and Whistles');
                 }
