@@ -1935,7 +1935,7 @@ function updateDisplay() {
 
 function updateMultipliersDisplay() {
 
-    earlyAccelerantMult = earlyAccelerantSkill ? 1 + (13 * Math.pow(0.976, purchasedUpgrades.length)) : 1;
+    earlyAccelerantMult = earlyAccelerantSkill ? 1 + (9 * Math.pow(0.98, purchasedUpgrades.length)) : 1;
 
     totalMultiplier = epsMultiplier * godModeMultiplier * puGodMultiplier * bigCrunchMultiplier * achievementMultiplier * devMultiplier * stellarHarvestMult * stellarMeditationMult * cosmicGamekeeperMultiplier * earlyAccelerantMult
 
@@ -3187,7 +3187,7 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true, ski
         // Increase the per second earnings for each resource, apply God Mode multiplier if applicable
         const multiplier = (upgrade.isGodMode && upgrade.isPUGodMode) ? 100 :
             (upgrade.isGodMode || upgrade.isPUGodMode) ? 10 : 1;
-        const battleMultiplier = ((upgrade.isFight && rewardingVictoriesSkill) || (upgrade.isMeditation && rewardingMeditationsSkill)) ? 1.4 : 1;
+        const battleMultiplier = ((upgrade.isFight && rewardingVictoriesSkill) || (upgrade.isMeditation && rewardingMeditationsSkill)) ? 1.5 : 1;
 
         knowledgePerSecond += (earnings.knowledgePerSecond || 0) * multiplier * battleMultiplier;
         serenityPerSecond += (earnings.serenityPerSecond || 0) * multiplier * battleMultiplier;
@@ -3554,7 +3554,7 @@ function formatEarnings(earnings, isGodMode = false, isPUGodMode = false, isFigh
 
             // Apply additional multipliers for Fight and Meditation skills
             if ((rewardingVictoriesSkill && isFight) || (rewardingMeditationsSkill && isMeditation)) {
-                adjustedValue *= 1.4;
+                adjustedValue *= 1.5;
             }
 
             result += `<p style="font-size: 14px;">${displayName}: ${formatNumber(adjustedValue)}</p>`;
@@ -3963,68 +3963,76 @@ function isResourceAffordable(resource, cost) {
     }
 }
 
-// Function to update the appearance of upgrade buttons based on affordability
 function updateUpgradeButtons() {
     let foundAffordableUpgrade = false;
-    let topUpgrades = availableUpgrades.slice(0, 8);
-
-    topUpgrades.forEach(upgrade => {
-        const encodedName = encodeName(upgrade.name);
-        const button = document.querySelector(`button[data-upgrade-name="${encodedName}"]`);
-        if (button) {
-            // Check if the upgrade is affordable based on current resources
-            if (isAffordable(upgrade.cost)) {
-                foundAffordableUpgrade = true;
-                // Manage classes based on God Mode and PU God Mode status
-                button.classList.toggle('affordable-double-godmode', upgrade.isPUGodMode && upgrade.isGodMode);
-                button.classList.toggle('affordable-pu-godmode', upgrade.isPUGodMode && !upgrade.isGodMode);
-                button.classList.toggle('affordable-godmode', upgrade.isGodMode && !upgrade.isPUGodMode);
-                button.classList.toggle('affordable', !upgrade.isGodMode && !upgrade.isPUGodMode);
-            } else {
-                button.classList.remove('affordable', 'affordable-godmode', 'affordable-pu-godmode', 'affordable-double-godmode');
-            }
-
-            // Update the cost text for the upgrade
-            const costElement = button.nextElementSibling;
-            if (costElement) {
-                costElement.innerHTML = formatCost(upgrade.cost);
-            }
-
-            // Add icons if they are not already present
-            if ((upgrade.isFight || upgrade.name === 'The Rock') && !button.querySelector('.sword-icon')) {
-                const swordIcon = document.createElement('img');
-                swordIcon.src = './imgs/textures/sword_icon.png';
-                swordIcon.classList.add('sword-icon');
-                swordIcon.style.width = '16px';
-                swordIcon.style.marginRight = '5px';
-                button.prepend(swordIcon);
-                button.style.paddingLeft = '10px';
-            }
-
-            if (upgrade.isMeditation && !button.querySelector('.meditation-icon')) {
-                const meditationIcon = document.createElement('img');
-                meditationIcon.src = './imgs/textures/meditation_icon.png';
-                meditationIcon.classList.add('meditation-icon');
-                meditationIcon.style.width = '16px';
-                meditationIcon.style.marginRight = '5px';
-                button.prepend(meditationIcon);
-                button.style.paddingLeft = '10px';
-            }
-
-            // Attach event listeners for tooltips if not already attached
-            if (!button.hasTooltipListener) {
-                attachTooltipEvents(button, upgrade);
-                button.hasTooltipListener = true; // Custom property to track listener attachment
-            }
-        }
-    });
-
-    // Update buy buttons based on the presence of affordable upgrades
+    const topUpgrades = availableUpgrades.slice(0, 8);
     const buySeenButton = document.getElementById('buySeenButton');
     const buyMaxButton = document.getElementById('buyMaxButton');
+
+    for (const upgrade of topUpgrades) {
+        const encodedName = encodeName(upgrade.name);
+        const button = document.querySelector(`button[data-upgrade-name="${encodedName}"]`);
+        if (!button) continue;
+
+        const affordable = isAffordable(upgrade.cost);
+        if (affordable) {
+            foundAffordableUpgrade = true;
+
+            // Reset all possible classes first
+            button.classList.remove('affordable', 'affordable-godmode', 'affordable-pu-godmode', 'affordable-double-godmode');
+
+            // Determine and add correct class
+            let classToAdd = 'affordable';
+            if (upgrade.isGodMode && upgrade.isPUGodMode) {
+                classToAdd = 'affordable-double-godmode';
+            } else if (upgrade.isPUGodMode) {
+                classToAdd = 'affordable-pu-godmode';
+            } else if (upgrade.isGodMode) {
+                classToAdd = 'affordable-godmode';
+            }
+            button.classList.add(classToAdd);
+        } else {
+            button.classList.remove('affordable', 'affordable-godmode', 'affordable-pu-godmode', 'affordable-double-godmode');
+        }
+
+        // Update the cost display
+        const costElement = button.nextElementSibling;
+        if (costElement) {
+            costElement.innerHTML = formatCost(upgrade.cost);
+        }
+
+        // Add icons if missing
+        if ((upgrade.isFight || upgrade.name === 'The Rock') && !button.querySelector('.sword-icon')) {
+            addIconToButton(button, 'sword-icon', './imgs/textures/sword_icon.png');
+        }
+
+        if (upgrade.isMeditation && !button.querySelector('.meditation-icon')) {
+            addIconToButton(button, 'meditation-icon', './imgs/textures/meditation_icon.png');
+        }
+
+        // Add tooltip listener once
+        if (!button.hasTooltipListener) {
+            attachTooltipEvents(button, upgrade);
+            button.hasTooltipListener = true;
+        }
+    }
+
+    // Toggle buy button appearance once
     buySeenButton.classList.toggle('affordable', foundAffordableUpgrade);
     buyMaxButton.classList.toggle('affordable', foundAffordableUpgrade);
 }
+
+// Utility function to add an icon
+function addIconToButton(button, className, src) {
+    const icon = document.createElement('img');
+    icon.src = src;
+    icon.classList.add(className);
+    icon.style.width = '16px';
+    icon.style.marginRight = '5px';
+    button.prepend(icon);
+    button.style.paddingLeft = '10px'; // Only once per icon addition
+}
+
 
 
 

@@ -4,12 +4,12 @@ const loveHallSkills = [
   {
     name: "Delusion Surge",
     cost: 0.3,
-    description: "36x Delusion gain.",
+    description: "39x Delusion gain.",
     unlocked: false,
     level: "Quantum Harmony (2.8x)",
     pair: 1,
     onUnlock: (duringLoad) => {
-      delusionSurgeMultiplier = 36;
+      delusionSurgeMultiplier = 39;
       if (!duringLoad) {
         updateEffectiveMultipliers();
       }
@@ -24,12 +24,12 @@ const loveHallSkills = [
   {
     name: "Copium Surge",
     cost: 0.3,
-    description: "36x Copium gain.",
+    description: "39x Copium gain.",
     unlocked: false,
     level: "Quantum Harmony (2.8x)",
     pair: 1,
     onUnlock: (duringLoad) => {
-      copiumSurgeMultiplier = 36;
+      copiumSurgeMultiplier = 39;
       if (!duringLoad) {
         updateEffectiveMultipliers();
       }
@@ -105,12 +105,12 @@ const loveHallSkills = [
   {
     name: "Cosmic Embrace",
     cost: 1.9,
-    description: "Gain +1 Love Point every embrace.",
+    description: "Gain +2 Love Point every embrace.",
     unlocked: false,
     level: "Quantum Harmony (2.8x)",
     pair: 3,
     onUnlock: () => {
-      embraceExtraLovePoints += 1;
+      embraceExtraLovePoints += 2;
     },
     onRespec: () => {
       embraceExtraLovePoints = 0;
@@ -222,7 +222,7 @@ const loveHallSkills = [
 
   {
     name: "Illusion of Power",
-    cost: 14,
+    cost: 10,
     description:
       "Lower auto-fight power threshold by 10x each for ascended / transcended upgrades.",
     unlocked: false,
@@ -238,9 +238,9 @@ const loveHallSkills = [
   },
   {
     name: "Early Accelerant",
-    cost: 14,
+    cost: 10,
     description:
-      "14x multiplier to first 6 resources, degrades by 2.4% with each purchased upgrade.",
+      "10x multiplier to first 6 resources, degrades by 2% with each purchased upgrade.",
     unlocked: false,
     level: "Quantum Harmony (2.8x)",
     pair: 7,
@@ -254,7 +254,7 @@ const loveHallSkills = [
 
   {
     name: "Power Infusion",
-    cost: 40,
+    cost: 30,
     description: "4x Power gain.",
     unlocked: false,
     level: "Quantum Harmony (2.8x)",
@@ -274,14 +274,14 @@ const loveHallSkills = [
   },
   {
     name: "Soulbound Embrace",
-    cost: 40,
-    description: "Gain +6 Love Points every embrace.",
+    cost: 30,
+    description: "Gain +8 Love Points every embrace.",
     unlocked: false,
     level: "Quantum Harmony (2.8x)",
     pair: 8,
     requirement: "Cosmic Embrace",
     onUnlock: () => {
-      embraceExtraLovePoints += 6;
+      embraceExtraLovePoints += 8;
     },
     onRespec: () => {
       embraceExtraLovePoints = 0;
@@ -507,12 +507,12 @@ const loveHallSkills = [
   {
     name: "Yacht Money Surge",
     cost: 0.06,
-    description: "24x Yacht Money gain.",
+    description: "26x Yacht Money gain.",
     unlocked: false,
     level: "Dimensional Shift (27x)",
     pair: 21,
     onUnlock: (duringLoad) => {
-      yachtMoneySurgeMultiplier = 24;
+      yachtMoneySurgeMultiplier = 26;
       if (!duringLoad) {
         updateEffectiveMultipliers();
       }
@@ -527,12 +527,12 @@ const loveHallSkills = [
   {
     name: "Troll Points Surge",
     cost: 0.06,
-    description: "24x Troll Points gain.",
+    description: "26x Troll Points gain.",
     unlocked: false,
     level: "Dimensional Shift (27x)",
     pair: 21,
     onUnlock: (duringLoad) => {
-      trollPointsSurgeMultiplier = 24;
+      trollPointsSurgeMultiplier = 26;
       if (!duringLoad) {
         updateEffectiveMultipliers();
       }
@@ -583,12 +583,12 @@ const loveHallSkills = [
   {
     name: "Knowledge Infusion",
     cost: 0.4,
-    description: "8x Knowledge gain.",
+    description: "9x Knowledge gain.",
     unlocked: false,
     level: "Dimensional Shift (27x)",
     pair: 23,
     onUnlock: (duringLoad) => {
-      knowledgeInfusionMultiplier = 8;
+      knowledgeInfusionMultiplier = 9;
       if (!duringLoad) {
         updateEffectiveMultipliers();
       }
@@ -623,7 +623,7 @@ const loveHallSkills = [
 
   {
     name: "Hall of Knowledge Auto-Buy",
-    cost: 1.8,
+    cost: 1.5,
     description: "Automatically buy upgrades from the Hall of Knowledge.",
     unlocked: false,
     level: "Dimensional Shift (27x)",
@@ -637,7 +637,7 @@ const loveHallSkills = [
   },
   {
     name: "Hall of Power Auto-Buy",
-    cost: 1.8,
+    cost: 1.5,
     description: "Automatically buy upgrades from the Hall of Power.",
     unlocked: false,
     level: "Dimensional Shift (27x)",
@@ -1020,12 +1020,12 @@ const loveHallSkills = [
   {
     name: "Study Accelerator",
     cost: 0.04,
-    description: "Meditation duration decreased by 0.2 seconds.",
+    description: "Meditation duration decreased by 0.5 seconds.",
     unlocked: false,
     level: "Cosmic Truth (42x)",
     pair: 41,
     onUnlock: () => {
-      studyAcceleratorReduction = 0.2;
+      studyAcceleratorReduction = 0.5;
     },
     onRespec: () => {
       studyAcceleratorReduction = 0;
@@ -1049,7 +1049,7 @@ const loveHallSkills = [
   {
     name: "Rewarding Victories",
     cost: 0.12,
-    description: "Battle upgrades give +40% rewards.",
+    description: "Battle upgrades give +50% rewards.",
     unlocked: false,
     level: "Cosmic Truth (42x)",
     pair: 42,
@@ -1100,7 +1100,7 @@ const loveHallSkills = [
 
   {
     name: "Crunch Knowledge",
-    cost: 0.35,
+    cost: 0.3,
     description:
       "Big Crunch extra knowledge mult is now ^(2/3) instead of ^(1/2).",
     unlocked: false,
@@ -1121,7 +1121,7 @@ const loveHallSkills = [
   },
   {
     name: "Stellar Meditation",
-    cost: 0.35,
+    cost: 0.3,
     description:
       "Multiplicative x1.1 to first 7 resources after each successful meditation.",
     unlocked: false,
@@ -1137,7 +1137,7 @@ const loveHallSkills = [
 
   {
     name: "Oversurged Power",
-    cost: 0.66,
+    cost: 0.6,
     description: "Power Surge Skill is 2x as powerful.",
     unlocked: false,
     level: "Cosmic Truth (42x)",
@@ -1151,7 +1151,7 @@ const loveHallSkills = [
   },
   {
     name: "Overcompressed Power",
-    cost: 0.66,
+    cost: 0.6,
     description: "Compressed / Condensed Power Skills are 3x as powerful.",
     unlocked: false,
     level: "Cosmic Truth (42x)",
@@ -1181,7 +1181,7 @@ const loveHallSkills = [
   {
     name: "Rewarding Meditations",
     cost: 1.2,
-    description: "Meditations give +40% rewards",
+    description: "Meditations give +50% rewards",
     unlocked: false,
     level: "Cosmic Truth (42x)",
     pair: 46,
@@ -1397,7 +1397,7 @@ const loveHallSkills = [
 
   {
     name: "Intrinsic Meditation",
-    cost: 125,
+    cost: 35,
     description:
       "Auto complete meditations that are ascended & transcended after meeting Serenity threshold.",
     unlocked: false,
@@ -1413,7 +1413,7 @@ const loveHallSkills = [
   },
   {
     name: "The Ultimate Fix",
-    cost: 125,
+    cost: 35,
     description: "Fix the 3 remaining basic resources.",
     unlocked: false,
     level: "Cosmic Truth (42x)",
