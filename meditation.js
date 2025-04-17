@@ -260,11 +260,13 @@ function startMeditationGame(challengeName, backgroundImage, stageNumber = 1, pr
         let fontSize = '20px';
 
         isSkepticismUnwinnable = false;
-        if (currentChallengeName === 'Skepticism' && stageVelocityIncrease > 3 && stageArenaSizeChange < 0.67 && stageExtraLivesPerBall > 2) {
-            unlockAchievement('Unwinnable');
-            isSkepticismUnwinnable = true;
-        } else if (currentChallengeName === 'Skepticism' && stageVelocityIncrease < 1.25 && stageArenaSizeChange > 0.7 && stageExtraLivesPerBall < 0.25) {
-            unlockAchievement('Too Easy');
+        if (currentChallengeName === 'Skepticism' && stageNumber > 1) {
+            if (stageVelocityIncrease > 3 && stageArenaSizeChange < 0.67 && stageExtraLivesPerBall > 2) {
+                unlockAchievement('Unwinnable');
+                isSkepticismUnwinnable = true;
+            } else if (stageVelocityIncrease < 1.25 && stageArenaSizeChange > 0.7 && stageExtraLivesPerBall < 0.25) {
+                unlockAchievement('Too Easy');
+            }
         }
 
         if (currentChallengeName === 'Dualism' && ballCount == 1) {
