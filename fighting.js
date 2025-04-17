@@ -52,7 +52,7 @@ const enemyStats = {
         absorb: 0.3
     },
     "Isshin": {
-        health: 5500,
+        health: 6000,
         minDamage: 5,
         maxDamage: 12,
         attackSpeed: 45,
@@ -868,7 +868,7 @@ function attackEnemy(resolve) {
 
         } else {
             // After 69 revives, calculate the revival chance
-            const revivalChance = 0.99 * Math.pow(0.99, deadpoolRevives - 69);
+            const revivalChance = 0.9931 * Math.pow(0.9931, deadpoolRevives - 69);
             if (Math.random() < revivalChance) {
                 unlockAchievement('WHY IS HE ALIVE?');
                 enemyHealth = enemyMaxHealth;
@@ -877,7 +877,8 @@ function attackEnemy(resolve) {
                     unlockAchievement('Rasta Deadpool');
                 }
                 logFight(`<span style='color: #AAFF00;'>${currEnemyName} dies and regenerates back to full health! 
-                    (<span style='font-weight: bold; font-size: 1.4em;'>${deadpoolRevives}</span> revives - you feel like he's killable now!)</span>`);
+                    <span style='font-weight: bold; font-size: 1.4em;'>${deadpoolRevives}</span> revives - you feel like he's killable now! (Revival Chance: ${formatNumber(revivalChance * 100)}%)</span>`);
+
 
                 // Call updateHealthBars to ensure the health bar reflects the new health
                 updateHealthBars();

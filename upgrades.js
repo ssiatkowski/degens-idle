@@ -1378,7 +1378,7 @@ const upgrades = [
         autoMeditateThreshold: 100,
         achievement: 'Focus Your Mind',
         isKey: true,
-        message: `Congratulations on your first successful meditation! Through this meditation, you have gained a deeper understanding of Yin and Yang, the dual forces that create balance and harmony in the universe. You have learned that <strong>opposites are interconnected</strong>, and each one gives rise to the other. There is no light without darkness, no strength without softness, and no action without stillness. By embracing both sides, you now understand that balance is the key to living in harmony with yourself and the world around you. Continue to seek balance in all things, and you will find peace.`,
+        message: `Congratulations on your first successful meditation! Through this meditation, you have gained a deeper understanding of Yin and Yang, the dual forces that create balance and harmony in the universe. You have learned that <strong>opposites are interconnected</strong>, and each one gives rise to the other. There is no light without darkness, no strength without softness, and no action without stillness. By embracing both sides, you now understand that balance is the key to living in harmony with yourself and the world around you. Continue to seek balance in all things, and you will find peace.<br><br>Note: For breakdown of how resources affect meditations, click the Meditation upgrade.`,
     },
     {         
         name: `Ignoring Stereotypes`,
@@ -1679,13 +1679,13 @@ const upgrades = [
     },
     {
         name: `We're All Gamers`,
-        cost: { copium: 3e143, delusion: 3e143, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 7.5e19 },
+        cost: { copium: 3e143, delusion: 3e143, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 2.5e19 },
         earnings: { copiumPerSecond: 1e59, delusionPerSecond: 1e59, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 3e9 },
         img: `imgs/we_are_all_gamers.jpg`,
     },
     {
         name: `Actual Life Advice`,
-        cost: { copium: 1.6e146, delusion: 0, yachtMoney: 0, trollPoints: 1.6e146, hopium: 0, knowledge: 1e118, power: 0, serenity: 8e21 },
+        cost: { copium: 1.6e146, delusion: 0, yachtMoney: 0, trollPoints: 1.6e146, hopium: 0, knowledge: 1e118, power: 0, serenity: 8e20 },
         earnings: { copiumPerSecond: 0, delusionPerSecond: 3e59, yachtMoneyPerSecond: 0, trollPointsPerSecond: 2e59, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 6e9 },
         img: `imgs/actual_life_advice.jpg`,
         hoverOverwrite: `don't take advice from a guy who made a game called "Degens Idle"`,

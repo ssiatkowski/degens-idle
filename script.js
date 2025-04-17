@@ -208,6 +208,7 @@ let quantumBastionSkill = false;
 let enemiesFoughtManually = new Set();
 let numBattleGimmicks = new Set();
 
+let cookieClicks = 0;
 let numTotalTrades = 0;
 let numFightLogScrolls = 0;
 
@@ -391,8 +392,6 @@ function updateEffectiveMultipliers() {
     }
 }
 
-let cookieClicks = 0;
-
 // Function to handle cookie click
 function cookieCollectAllResources(isManualClick=true) {
     if (cookieBoost){
@@ -414,8 +413,10 @@ function cookieCollectAllResources(isManualClick=true) {
         trollPoints += cookieClickMultiplier * totalMultiplier;
     }
     cookieClicks++;
-    if(cookieClicks >= 500 && cookieClicks <= 505){
+    if(cookieClicks >= 500 && cookieClicks <= 550){
         unlockAchievement('Fatigued Finger');
+    } else if (cookieClicks >= 10000000 && cookieClicks <= 10001000){
+        unlockAchievement('Child Labor');
     }
     if (!achievementsMap.get('Warped Cookie').isUnlocked && isManualClick){
         warpedCookieSequence += 'C';
@@ -579,6 +580,7 @@ function loadGameState() {
     numConsecutiveMathFailures = parseFloat(localStorage.getItem('numConsecutiveMathFailures')) || 0;
     numMiniGameSkips = parseFloat(localStorage.getItem('numMiniGameSkips')) || 0;
 
+    cookieClicks = parseFloat(localStorage.getItem('cookieClicks')) || 0;
     numTotalTrades = parseFloat(localStorage.getItem('numTotalTrades')) || 0;
     numFightLogScrolls = parseFloat(localStorage.getItem('numFightLogScrolls')) || 0;
 
@@ -865,6 +867,8 @@ function saveGameState() {
     localStorage.setItem('cookieButtonVisible', document.getElementById('cookieButton').style.display === 'block');
     localStorage.setItem('timeWarpButtonVisible', warpButton.style.display === 'block');
     localStorage.setItem('cookieClickMultiplier', cookieClickMultiplier);
+
+    localStorage.setItem('cookieClicks', cookieClicks);
 
     localStorage.setItem('transcendenceUnlocked', transcendenceUnlocked);
 
@@ -1345,6 +1349,7 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
                 numMathWins = 0;
                 numConsecutiveMathFailures = 0;
                 numMiniGameSkips = 0;
+                cookieClicks = 0;
                 numTotalTrades = 0;
                 numFightLogScrolls = 0;
 
@@ -2381,6 +2386,9 @@ async function bigCrunch(skipConfirms = false) {
 
         if (confirmed && canBigCrunch()) {
 
+            // Save game state to prevent data loss on rare mobile crashes        
+            saveGameState();
+
             if(isAutoSaveEnabled && loveHallSkills.filter(skill => skill.unlocked).length == 0){
                 exportSave();
             }
@@ -2572,6 +2580,9 @@ async function infiniteEmbrace(skipConfirms = false, lovePointsOverwrite = false
         }
 
         if (confirmed) {
+
+            // Save game state to prevent data loss on rare mobile crashes        
+            saveGameState();
 
             if(isAutoSaveEnabled && Array.from(balanceHallSkills.values()).filter(skill => skill.unlocked).length < 8){
                 exportSave();
@@ -2821,7 +2832,7 @@ function updateBigCrunchButton() {
 
             // Check if auto-crunch should be triggered
             if (autoBigCrunchThreshold !== null && autoBigCrunchThreshold >= 1 && (newMultiplier / bigCrunchMultiplier) > autoBigCrunchThreshold && !isEventInProgress()) {
-                showPopupTooltip(`Auto-Crunched for x${formatNumber(newMultiplier / bigCrunchMultiplier)}`, color='#FF4433');
+                showPopupTooltip(`Auto-Crunched for x${formatNumber(newMultiplier / bigCrunchMultiplier)}`, color='#FF4433', durationSeconds=3);
                 bigCrunch(true); // Trigger auto-crunch
             }
         }

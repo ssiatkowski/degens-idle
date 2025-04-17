@@ -364,6 +364,13 @@ const achievements = [
         type: 'puzzle',
     },
     {
+        name: 'Child Labor',
+        isUnlocked: false,
+        hoverText: '10 million clicks on cookie',
+        img: 'imgs/achievements/child_labor.jpg',
+        type: 'puzzle',
+    },
+    {
         name: 'Tongue Twister',
         isUnlocked: false,
         hoverText: 'TT AT TA AA',
@@ -653,7 +660,7 @@ const achievements = [
     {
         name: 'That is some Bad Luck',
         isUnlocked: false,
-        hoverText: 'keep playing Luck Game until it happens',
+        hoverText: 'lose 55% in luck game',
         img: 'imgs/achievements/very_unlucky.jpg',
         type: 'skill',
     },
@@ -1080,6 +1087,13 @@ const achievements = [
         isUnlocked: false,
         hoverText: 'get unlucky Skepticism rolls',
         img: 'imgs/achievements/unwinnable.jpg',
+        type: 'puzzle',
+    },
+    {
+        name: 'Too Easy',
+        isUnlocked: false,
+        hoverText: 'get super lucky Skepticism rolls',
+        img: 'imgs/achievements/too_easy.jpg',
         type: 'puzzle',
     },
     {

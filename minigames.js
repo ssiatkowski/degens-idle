@@ -1154,7 +1154,7 @@ function playMiniGame(gameType) {
                         if(boxValue >= 123){
                             unlockAchievement('Pure Luck');
                         }
-                        if(sebosLuck && boxValue <= -44.9){
+                        if(boxValue <= -54.9){
                             unlockAchievement('That is some Bad Luck');
                         }
 

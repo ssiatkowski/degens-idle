@@ -96,7 +96,7 @@ const meditationChallenges = {
         arenaSize: 520,
         ballSize: 110,
         ballSizeDelta: 30,
-        velocity: 9,
+        velocity: 8.8,
         wind: 5,
         respawnFactor: 1,
         livesPerBall: 1,
@@ -114,7 +114,7 @@ const meditationChallenges = {
         livesPerBall: 1.2,
     },
     "Shinto": {
-        duration: 21,
+        duration: 21.5,
         focus: 1,
         ballCount: 1,
         arenaSize: 275,
@@ -132,7 +132,7 @@ const meditationChallenges = {
         arenaSize: 700,
         ballSize: 150,
         ballSizeDelta: 20,
-        velocity: 4.8,
+        velocity: 4.9,
         wind: 2,
         respawnFactor: 1,
         livesPerBall: 5,
@@ -263,8 +263,9 @@ function startMeditationGame(challengeName, backgroundImage, stageNumber = 1, pr
         if (stageVelocityIncrease > 3 && stageArenaSizeChange < 0.67 && stageExtraLivesPerBall > 2) {
             unlockAchievement('Unwinnable');
             isSkepticismUnwinnable = true;
+        } else if (stageVelocityIncrease < 1.25 && stageArenaSizeChange > 0.7 && stageExtraLivesPerBall < 0.25) {
+            unlockAchievement('Too Easy');
         }
-
 
         if (currentChallengeName === 'Dualism' && ballCount == 1) {
             ballCount = 2;

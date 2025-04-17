@@ -105,7 +105,7 @@ const loveHallSkills = [
   {
     name: "Cosmic Embrace",
     cost: 1.9,
-    description: "Gain +2 Love Point every embrace.",
+    description: "Gain +2 Love Points every embrace.",
     unlocked: false,
     level: "Quantum Harmony (2.8x)",
     pair: 3,
@@ -395,7 +395,7 @@ const loveHallSkills = [
     name: "Achievement Hypercharge",
     cost: 308,
     description:
-      "Achievement multiplier becomes multiplicative instead of additive.",
+      "Achievement multiplier becomes multiplicative instead of additive (Best Skill)",
     unlocked: false,
     level: "Quantum Harmony (2.8x)",
     pair: 12,
@@ -506,7 +506,7 @@ const loveHallSkills = [
   // 27x Level - dimensions in string theory
   {
     name: "Yacht Money Surge",
-    cost: 0.06,
+    cost: 0.05,
     description: "26x Yacht Money gain.",
     unlocked: false,
     level: "Dimensional Shift (27x)",
@@ -526,7 +526,7 @@ const loveHallSkills = [
   },
   {
     name: "Troll Points Surge",
-    cost: 0.06,
+    cost: 0.05,
     description: "26x Troll Points gain.",
     unlocked: false,
     level: "Dimensional Shift (27x)",
@@ -690,7 +690,7 @@ const loveHallSkills = [
 
   {
     name: "Overwhelming Mercy",
-    cost: 3,
+    cost: 2.7,
     description:
       "Spare opponents who are far weaker than you. (Automate Battles)",
     unlocked: false,
@@ -706,7 +706,7 @@ const loveHallSkills = [
   },
   {
     name: "Hopium Fix",
-    cost: 3,
+    cost: 2.7,
     description: "Fix Hopium in the same way Delusion is cured.",
     unlocked: false,
     level: "Dimensional Shift (27x)",
@@ -1166,7 +1166,7 @@ const loveHallSkills = [
 
   {
     name: "Raise That Soft Cap",
-    cost: 1.2,
+    cost: 1.1,
     description: "Increase mini games soft cap to 24 hours",
     unlocked: false,
     level: "Cosmic Truth (42x)",
@@ -1180,7 +1180,7 @@ const loveHallSkills = [
   },
   {
     name: "Rewarding Meditations",
-    cost: 1.2,
+    cost: 1.1,
     description: "Meditations give +50% rewards",
     unlocked: false,
     level: "Cosmic Truth (42x)",
@@ -1266,7 +1266,7 @@ const loveHallSkills = [
 
   {
     name: "Perpetual Collapse",
-    cost: 10,
+    cost: 7,
     description: "Auto Big Crunch (default 25x)",
     unlocked: false,
     level: "Cosmic Truth (42x)",
@@ -1283,7 +1283,7 @@ const loveHallSkills = [
   },
   {
     name: "Beacon of Seven Suns",
-    cost: 10,
+    cost: 7,
     description:
       "Multiplicative 7% bonus to Copium and Hopium for every Hall of Love skill.",
     unlocked: false,
