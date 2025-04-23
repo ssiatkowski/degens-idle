@@ -366,7 +366,7 @@ const achievements = [
     {
         name: 'Child Labor',
         isUnlocked: false,
-        hoverText: '10 million clicks on cookie',
+        hoverText: '1 million clicks on cookie',
         img: 'imgs/achievements/child_labor.jpg',
         type: 'puzzle',
     },
@@ -941,7 +941,7 @@ const achievements = [
     {
         name: 'More than Sauron',
         isUnlocked: false,
-        hoverText: '???',
+        hoverText: 'this can be achieved in Saitama fight',
         img: 'imgs/achievements/damage_absorption.jpg',
         type: 'puzzle',
     },
@@ -1165,6 +1165,13 @@ const achievements = [
         isUnlocked: false,
         hoverText: 'T before A without BC (cannot have infinite collapse)',
         img: 'imgs/achievements/absolute_leap.jpg',
+        type: 'puzzle',
+    },
+    {
+        name: `Ain't Nobody Got Time for That`,
+        isUnlocked: false,
+        hoverText: 'attempt Epicureanism at max duration',
+        img: 'imgs/achievements/aint_nobody_got_time_for_that.jpg',
         type: 'puzzle',
     },
     {

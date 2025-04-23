@@ -198,13 +198,13 @@ const meditationChallenges = {
         livesPerBall: 1,
     },
     "Agnosticism": {
-        duration: 1800,
+        duration: 1700,
         focus: 1,
         ballCount: 1,
         arenaSize: 382,
         ballSize: 800,
         ballSizeDelta: 0,
-        velocity: 88,
+        velocity: 86,
         wind: 0,
         respawnFactor: 1,
         livesPerBall: 101,
@@ -256,13 +256,16 @@ function startMeditationGame(challengeName, backgroundImage, stageNumber = 1, pr
         livesPerBall = Math.max(challenge.livesPerBall - (steadyFocusSkill ? 1 : 0) , 1) + stageExtraLivesPerBall;
 
         let arenaMessage = '';
-        let fontColor = 'green';
+        let fontColor = '#5CE65C';
         let fontSize = '20px';
 
         isSkepticismUnwinnable = false;
         if (currentChallengeName === 'Skepticism' && stageNumber > 1) {
             if (stageVelocityIncrease > 3 && stageArenaSizeChange < 0.67 && stageExtraLivesPerBall > 2) {
                 unlockAchievement('Unwinnable');
+                arenaMessage = 'Unwinnable';
+                fontColor = 'red'
+                fontSize = '30px';
                 isSkepticismUnwinnable = true;
             } else if (stageVelocityIncrease < 1.25 && stageArenaSizeChange > 0.7 && stageExtraLivesPerBall < 0.25) {
                 unlockAchievement('Too Easy');
@@ -276,17 +279,17 @@ function startMeditationGame(challengeName, backgroundImage, stageNumber = 1, pr
             unlockAchievement('Buddhist Bunny');
             respawnTime += 500;
             livesPerBall = Math.max(livesPerBall - 1, 1);
-            arenaMessage = 'The Bunny helps you by making balls respawn 0.5s faster and reduces focus loss by 1 per ball.';
+            arenaMessage = 'The Bunny makes balls respawn 0.5s slower and reduces focus loss by 1';
             noGimmicksUsed = false;
-            fontColor = '#C04000';
-            fontSize = '26px';
+            fontColor = '#FFBF00';
+            fontSize = '40px';
         } else if (currentChallengeName === 'Christianity' && !purchasedUpgradesSet.has("Christian Logic")) {
             unlockAchievement('Theological Reasoning');
             livesPerBall = Math.max(livesPerBall - 1, 1);
             baseVelocity *= 0.9;
-            arenaMessage = 'Through applying logic, you lose 1 less life per ball and reduce ball velocity by 10%.';
+            arenaMessage = 'Through applying logic, you reduce focus loss by 1 and ball velocity by 10%';
             noGimmicksUsed = false;
-            fontSize = '22px';
+            fontSize = '28px';
         } else if (currentChallengeName === 'Epicureanism') {
             if (!purchasedUpgradesSet.has("First Pizza Meme") && !purchasedUpgradesSet.has("Second Pizza Meme")){
                 unlockAchievement('Slice of Euphoria');
@@ -294,19 +297,25 @@ function startMeditationGame(challengeName, backgroundImage, stageNumber = 1, pr
                 respawnFactor += 1;
                 respawnTime = 100;
                 respawnTime = calculateRespawnTime();
-                arenaMessage = 'Pizzas remove 2 balls and increase the respawn time by 1 second';
+                arenaMessage = 'Pizzas remove 2 balls and increase ball respawn time by 1 second';
                 noGimmicksUsed = false;
-                fontColor = 'purple';
-                fontSize = '24px';
+                fontColor = '#B163FF';
+                fontSize = '32px';
             }
             if (respawnTime / 1000 > meditationTimer) {
                 unlockAchievement('Where did everybody go?');
                 console.log(`Respawn Time: ${respawnTime / 1000}, Meditation Timer: ${meditationTimer}`);
             }
+            if (meditationTimer > 1000) {
+                unlockAchievement(`Ain't Nobody Got Time for That`);
+            }
         } else if (currentChallengeName === 'Skepticism' && purchasedUpgradesSet.has("Religious Books") && stageNumber === 2) {
             unlockAchievement('Cured Skepticism');
             skepticismRandomnessFactor = 2.5;
-            arenaMessage = 'Religious books help you find order in chaos, reducing randomness.';
+            if (!isSkepticismUnwinnable) {
+                arenaMessage = 'Religious books help reduce randomness by 15%';
+                fontSize = '24px'
+            }
             noGimmicksUsed = false;
         } else if (currentChallengeName === 'Agnosticism') {
             const isWisdomPattern = ['W', 'I', 'S', 'D', 'O', 'M'].every((letter, index) =>
@@ -317,9 +326,9 @@ function startMeditationGame(challengeName, backgroundImage, stageNumber = 1, pr
             if (isWisdomPattern) {
                 unlockAchievement('Apply Wisdom');
                 turnRadius *= 1.3;
-                arenaMessage = 'WISDOM improves your turn radius by 30%.';
+                arenaMessage = 'WISDOM improves your turn radius by 30%';
                 noGimmicksUsed = false;
-                fontSize = '26px';
+                fontSize = '30px';
             }
 
             const isInsightPattern = ['I', 'N', 'S', 'I', 'G', 'H', 'T'].every((letter, index) =>
@@ -922,7 +931,7 @@ function showArenaMessage(messageContent, fontColor = 'red', fontSize = '32px') 
         message.innerText = messageContent;
         message.style.color = fontColor;
         message.style.fontSize = fontSize;
-        message.style.backgroundColor = 'rgba(0, 0, 0, 0.3)'; // Transparent dark gray background
+        message.style.backgroundColor = 'rgba(0, 0, 0, 0.7)'; // Transparent dark gray background
         message.style.padding = '10px'; // Add some padding for better appearance
         message.style.borderRadius = '5px'; // Optional: rounded corners
 
@@ -931,6 +940,6 @@ function showArenaMessage(messageContent, fontColor = 'red', fontSize = '32px') 
         setTimeout(() => {
             message.remove();
             resolve();
-        }, 2000); // Display message for 1 second
+        }, 3000); // Display message for 3 seconds
     });
 }

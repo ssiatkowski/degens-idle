@@ -659,9 +659,11 @@ const loveHallSkills = [
     pair: 26,
     onUnlock: () => {
       gamingAddictSkill = true;
+      unlockMiniGames();
     },
     onRespec: () => {
       gamingAddictSkill = false;
+      unlockMiniGames();
     },
   },
   {

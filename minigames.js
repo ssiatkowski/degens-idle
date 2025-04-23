@@ -15,8 +15,10 @@ const miniGameTimeouts = {
     luck:   4 * 60 * 1000,   // 4 minutes
 };
 
-// Object to store interval references for each mini-game
-const miniGameIntervals = {};
+// holds the interval IDs
+let miniGameIntervalIds = {};
+// holds the timeout IDs
+let miniGameTimeoutIds  = {};
 
 let numMathPortals = 0;
 let numSpeedTaps = 0;
@@ -164,11 +166,13 @@ function playMiniGame(gameType) {
     
                     if (effectiveClicksPerSecond >= targetClickSpeed) {
                         reward = Math.max(Math.floor(Math.abs(copium) * (effectiveClicksPerSecond * 0.15)), 25);
-                        if (speedGameSkill) { reward *= 3; }
+                        let percent_earned = effectiveClicksPerSecond * 15;
+                        if (speedGameSkill) { reward *= 3; percent_earned *= 3; }
                         if (reward > softCaps.speed) {
                             reward = softCaps.speed;
                             softCapReached = true;
                         }
+                        percent_earned = Math.floor(percent_earned);
     
                         // If fewer than 2 starting dots were clicked, unlock the achievement
                         if (startingDotsClicked == 1) {
@@ -185,7 +189,7 @@ function playMiniGame(gameType) {
     
                         const speedTapsDelta = Math.max(0, points - misclicks);
     
-                        resultMessage = `You tapped ${points} dots with ${misclicks} misclicks in ${duration} seconds (${effectiveClicksPerSecond.toFixed(2)} points per second). Your reward is <span style="color: green;">${formatNumber(reward)}</span> copium!<br><br>You added ${speedTapsDelta} taps to for a total of ${formatNumber(numSpeedTaps)} taps in winning games.`;
+                        resultMessage = `You tapped ${points} dots with ${misclicks} misclicks in ${duration} seconds (${effectiveClicksPerSecond.toFixed(2)} points per second). Your reward is ${percent_earned}% (<span style="color: green;">${formatNumber(reward)}</span>) copium!<br><br>You added ${speedTapsDelta} taps to for a total of ${formatNumber(numSpeedTaps)} taps in winning games.`;
                         
                         if(cosmicGamekeeperSkill){
                             resultMessage += `<br><br>Cosmic Gamekeeper mult has permanently increased by <span style="color: #90EE90;">+${formatNumber(applyProgressiveScaling(numSpeedTaps + speedTapsDelta, 0.0001) - applyProgressiveScaling(numSpeedTaps, 0.0001))}</span>!`;
@@ -209,7 +213,7 @@ function playMiniGame(gameType) {
                             numSpeedFailures--;
                         }
                         reward = -Math.max(Math.floor(Math.abs(copium) * 0.25), 25);
-                        resultMessage = `You were too slow, managing only ${points} taps on dots with ${misclicks} misclicks in ${duration} seconds (${effectiveClicksPerSecond.toFixed(2)} points per second). You lose <span style="color: red;">${formatNumber(reward)}</span> copium. Try again later!`;
+                        resultMessage = `You were too slow, managing only ${points} taps on dots with ${misclicks} misclicks in ${duration} seconds (${effectiveClicksPerSecond.toFixed(2)} points per second). You lose 25% (<span style="color: red;">${formatNumber(reward)}</span>) copium. Try again later!`;
                         numSpeedFailures++;
                         localStorage.setItem('numSpeedFailures', numSpeedFailures);
                         numConsecutiveSpeedFailures++;
@@ -234,19 +238,22 @@ function playMiniGame(gameType) {
             } else if (action === 'skip') {
 
                 reward = Math.max(Math.floor(Math.abs(copium) * 1.5 * (0.15)), 25);
-                if (speedGameSkill) { reward *= 3; }
+                let percent_earned = 1.5 * 15;
+                if (speedGameSkill) { reward *= 3; percent_earned *= 3; }
                 if (reward > softCaps.speed) {
                     reward = softCaps.speed;
                     softCapReached = true;
                 }
 
                 reward *= (sereneExtortionSkill ? 0.2 : 0.1);
+                percent_earned *= (sereneExtortionSkill ? 0.2 : 0.1);
+                percent_earned = Math.floor(percent_earned);
 
                 copium += reward;
 
                 speedTapsDelta = duration * 1.5 * (sereneExtortionSkill ? 0.2 : 0.1)
 
-                let resultMessage = `You got rewards equivalent to (${(1.5 * (sereneExtortionSkill ? 0.2 : 0.1)).toFixed(2)} points per second). Your reward is <span style="color: green;">${formatNumber(reward)}</span> copium! <br><br>You added ${formatNumber(speedTapsDelta)} taps to for a total of ${formatNumber(numSpeedTaps)} taps in winning games.`;
+                let resultMessage = `You got rewards equivalent to ${(1.5 * (sereneExtortionSkill ? 0.2 : 0.1)).toFixed(2)} clicks per second. Your reward is ${percent_earned}% (<span style="color: green;">${formatNumber(reward)}</span>) copium! <br><br>You added ${formatNumber(speedTapsDelta)} taps to for a total of ${formatNumber(numSpeedTaps)} taps in winning games.`;
 
                 if(cosmicGamekeeperSkill){
                     resultMessage += `<br><br>Cosmic Gamekeeper mult has permanently increased by <span style="color: #90EE90;">+${formatNumber(applyProgressiveScaling(numSpeedTaps + speedTapsDelta, 0.0001) - applyProgressiveScaling(numSpeedTaps, 0.0001))}</span>!`;
@@ -430,7 +437,7 @@ function playMiniGame(gameType) {
                     }
     
                     let reward = correct ? Math.max(Math.floor(Math.abs(delusion) * 0.3), 30) : -Math.max(Math.floor(Math.random() * Math.abs(delusion) * 0.2), 20);
-                    if (memoryGameSkill) reward *= 3; // Triple the reward if memoryGameSkill is true
+                    if (memoryGameSkill && correct) reward *= 3; // Triple the reward if memoryGameSkill is true
     
                     // Apply the soft cap
                     if (reward > softCaps.memory) {
@@ -450,8 +457,8 @@ function playMiniGame(gameType) {
                     delusion += reward;
 
                     let resultMessage = correct
-                        ? `You successfully matched the pattern and earned <span style="color: green;">${formatNumber(reward)}</span> delusion!<br><br>You memorized ${formatNumber(sequenceLength)} new dots for a total of ${formatNumber(numMemorizedDots)} dots in winning games!`
-                        : `You failed to match the pattern and lost <span style="color: red;">${formatNumber(Math.abs(reward))}</span> delusion!`;
+                        ? `You successfully matched the pattern and earned ${memoryGameSkill ? '90%' : '30%'} (<span style="color: green;">${formatNumber(reward)}</span>) delusion!<br><br>You memorized ${formatNumber(sequenceLength)} new dots for a total of ${formatNumber(numMemorizedDots)} dots in winning games!`
+                        : `You failed to match the pattern and lost 20% (<span style="color: red;">${formatNumber(Math.abs(reward))}</span>) delusion!`;
     
                     if (cosmicGamekeeperSkill && correct) {
                         resultMessage += `<br><br>Cosmic Gamekeeper mult has permanently increased by <span style="color: #90EE90;">+${formatNumber(applyProgressiveScaling(numMemorizedDots + sequenceLength, 0.0003) - applyProgressiveScaling(numMemorizedDots, 0.0003))}</span>!`;
@@ -500,7 +507,11 @@ function playMiniGame(gameType) {
                 playSequence(); // Play the sequence for the player to remember
             } else if (action === 'skip') {
                 let reward = Math.max(Math.floor(Math.abs(delusion) * 0.3), 30);
-                if (memoryGameSkill) reward *= 3; // Triple the reward if memoryGameSkill is true
+                let percent_earned = 30;
+                if (memoryGameSkill) {
+                    reward *= 3; // Triple the reward if memoryGameSkill is true
+                    percent_earned = 90;
+                }
 
                 // Apply the soft cap
                 if (reward > softCaps.memory) {
@@ -508,10 +519,12 @@ function playMiniGame(gameType) {
                     softCapReached = true;
                 }
                 reward *= (sereneExtortionSkill ? 0.2 : 0.1);
+                percent_earned *= (sereneExtortionSkill ? 0.2 : 0.1);
+                percent_earned = Math.floor(percent_earned);
 
                 delusion += reward;
 
-                let resultMessage = `You got rewards equivalent to ${(sequenceLength * (sereneExtortionSkill ? 0.2 : 0.1)).toFixed(2)} sequence length. Your reward is <span style="color: green;">${formatNumber(reward)}</span> delusion! You have now memorized ${formatNumber(numMemorizedDots)} dots in winning games.`;
+                let resultMessage = `You got rewards equivalent to ${(sequenceLength * (sereneExtortionSkill ? 0.2 : 0.1)).toFixed(2)} sequence length. Your reward is ${percent_earned}% (<span style="color: green;">${formatNumber(reward)}</span>) delusion! You have now memorized ${formatNumber(numMemorizedDots)} dots in winning games.`;
 
                 if (cosmicGamekeeperSkill) {
                     resultMessage += `<br><br>Cosmic Gamekeeper mult has permanently increased by <span style="color: #90EE90;">+${formatNumber(applyProgressiveScaling(numMemorizedDots + (sequenceLength * (sereneExtortionSkill ? 0.2 : 0.1)), 0.0003) - applyProgressiveScaling(numMemorizedDots, 0.0003))}</span>!`;
@@ -857,7 +870,7 @@ function playMiniGame(gameType) {
                             unlockAchievement('Mathematical Overshot');
                         }
 
-                        resultMessage = `You found the correct sum and earned <span style="color: green;">${formatNumber(reward)}</span> Yacht Money! You selected ${selectedPortals.length} portals for a total of ${formatNumber(numMathPortals)} correct math portals.`;
+                        resultMessage = `You found the correct sum and earned ${mathGameSkill ? '90%' : '45%'} (<span style="color: green;">${formatNumber(reward)}</span>) Yacht Money! You selected ${selectedPortals.length} portals for a total of ${formatNumber(numMathPortals)} correct math portals.`;
 
                         if (cosmicGamekeeperSkill) {
                             resultMessage += `<br><br>Cosmic Gamekeeper mult has permanently increased by <span style="color: #90EE90;">+${formatNumber(applyProgressiveScaling(numMathPortals + selectedPortals.length, 0.0005) - applyProgressiveScaling(numMathPortals, 0.0005))}</span>!`;
@@ -879,7 +892,7 @@ function playMiniGame(gameType) {
                         numConsecutiveMathFailures++;
                         localStorage.setItem('numConsecutiveMathFailures', numConsecutiveMathFailures);
                         reward = -Math.max(Math.floor(Math.abs(yachtMoney) * 0.2), 20);
-                        resultMessage = `You didn't find the correct sum. You lost <span style="color: red;">${formatNumber(Math.abs(reward))}</span> Yacht Money.`;
+                        resultMessage = `You didn't find the correct sum. You lost 20% (<span style="color: red;">${formatNumber(Math.abs(reward))}</span>) Yacht Money.`;
                     }
 
                     yachtMoney += reward;
@@ -903,8 +916,10 @@ function playMiniGame(gameType) {
                 }
             } else if (action === 'skip') {
                 let reward = Math.max(Math.floor(Math.abs(yachtMoney) * 0.45), 50);
+                let percent_earned = 45;
                 if (mathGameSkill) {
                     reward *= 2; // Double the reward if mathGameSkill is active
+                    percent_earned = 90;
                 }
                 // Apply the soft cap
                 if (reward > softCaps.math) {
@@ -912,10 +927,12 @@ function playMiniGame(gameType) {
                     softCapReached = true;
                 }
                 reward *= (sereneExtortionSkill ? 0.2 : 0.1);
+                percent_earned *= (sereneExtortionSkill ? 0.2 : 0.1);
+                percent_earned = Math.floor(percent_earned);
 
                 yachtMoney += reward;
 
-                let resultMessage = `You got rewards equivalent to ${(2.5 * (sereneExtortionSkill ? 0.2 : 0.1)).toFixed(3)} math portals. Your reward is <span style="color: green;">${formatNumber(reward)}</span> yacht money! You have now selected ${formatNumber(numMathPortals)} correct math portals.`;
+                let resultMessage = `You got rewards equivalent to ${(2.5 * (sereneExtortionSkill ? 0.2 : 0.1)).toFixed(3)} math portals. Your reward is ${percent_earned}% (<span style="color: green;">${formatNumber(reward)}</span>) yacht money! You have now selected ${formatNumber(numMathPortals)} correct math portals.`;
 
                 if (cosmicGamekeeperSkill) {
                     resultMessage += `<br><br>Cosmic Gamekeeper mult has permanently increased by <span style="color: #90EE90;">+${formatNumber(applyProgressiveScaling(numMathPortals + (2.5 * (sereneExtortionSkill ? 0.2 : 0.1)), 0.0005) - applyProgressiveScaling(numMathPortals, 0.0005))}</span>!`;
@@ -1129,8 +1146,8 @@ function playMiniGame(gameType) {
                         }
 
                         resultMessage = boxValue >= 0 ?
-                            `You chose a lucky box and gained <span style="color: green;">${formatNumber(reward)}</span> troll points! That was your ${numLuckyBoxes}${getOrdinalSuffix(numLuckyBoxes)} lucky box.` :
-                            `You chose an unlucky box and lost <span style="color: red;">${formatNumber(Math.abs(reward))}</span> troll points. That was your ${numUnluckyBoxes}${getOrdinalSuffix(numUnluckyBoxes)} unlucky box.`;
+                            `You chose a lucky box and gained ${boxValue}% (<span style="color: green;">${formatNumber(reward)}</span>) troll points! That was your ${numLuckyBoxes}${getOrdinalSuffix(numLuckyBoxes)} lucky box.` :
+                            `You chose an unlucky box and lost ${boxValue}% (<span style="color: red;">${formatNumber(Math.abs(reward))}</span>) troll points. That was your ${numUnluckyBoxes}${getOrdinalSuffix(numUnluckyBoxes)} unlucky box.`;
 
                         if (cosmicGamekeeperSkill && boxValue > 0) {
                             resultMessage += `<br><br>Cosmic Gamekeeper mult has permanently increased by <span style="color: #90EE90;">+${formatNumber(applyProgressiveScaling(numLuckyBoxes, 0.0007) - applyProgressiveScaling(numLuckyBoxes-1, 0.0007))}</span>!`;
@@ -1292,58 +1309,111 @@ function showMiniGameStartModal(title, message, showSkipButton = false) {
     });
 }
 
-
-
-
-function startCooldown(gameType) {
-    const button = document.getElementById(`${gameType}Game`);
-    const startTime = Date.now();
-    const cooldownMultiplier = miniGamerSkill ? (gamingAddictSkill ? 0.25 : 0.5) : 1;
-    const cooldownDuration = (miniGameTimeouts[gameType] * cooldownMultiplier);
-
-    localStorage.setItem(`${gameType}CooldownStart`, startTime);
-
-    cooldowns[gameType] = true;
-    if (button) {
-        button.classList.remove('affordable');
-        button.classList.add('disabled');
-        button.disabled = true;
-
-        let progressBar = button.querySelector('.progress');
-        if (!progressBar) {
-            progressBar = document.createElement('div');
-            progressBar.className = 'progress';
-            button.appendChild(progressBar);
-        }
-        progressBar.style.width = '0%';
-
-        const interval = setInterval(() => {
-            const elapsedTime = Date.now() - startTime;
-            const progressPercent = (elapsedTime / cooldownDuration) * 100;
-            progressBar.style.width = `${progressPercent}%`;
-
-            if (elapsedTime >= cooldownDuration) {
-                clearInterval(interval);
-                cooldowns[gameType] = false;
-                button.disabled = false;
-                button.classList.remove('disabled');
-                button.classList.add('affordable');
-                progressBar.style.width = '100%';
-            }
-        }, 200);
-
-        // Set timeout to reset button state after cooldown ends
-        setTimeout(() => {
-            cooldowns[gameType] = false;
-            if (button) {
-                button.disabled = false;
-                button.classList.remove('disabled');
-                button.classList.add('affordable');
-            }
-        }, cooldownDuration);
+function startCooldown(gameType, overrideStart = null) {
+    // 1) clear any in‑flight timers
+    clearInterval(miniGameIntervalIds[gameType]);
+    clearTimeout(miniGameTimeoutIds[gameType]);
+  
+    // 2) compute duration
+    const mult    = miniGamerSkill ? (gamingAddictSkill ? 0.25 : 0.5) : 1;
+    const fullDur = miniGameTimeouts[gameType] * mult;
+    const now     = Date.now();
+    const startTs = overrideStart != null ? overrideStart : now;
+  
+    // 3) persist only on a brand‑new cooldown
+    if (overrideStart == null) {
+      localStorage.setItem(`${gameType}CooldownStart`, String(startTs));
     }
+  
+    // 4) figure out time left
+    const elapsed = now - startTs;
+    const left    = Math.max(fullDur - elapsed, 0);
+  
+    // 5) flip your JS flag
+    cooldowns[gameType] = true;
+  
+    // 6) flip the UI into “cooling down”
+    const btn = document.getElementById(`${gameType}Game`);
+    btn.disabled = true;
+    btn.classList.remove('affordable', 'disabled');
+    btn.classList.add('disabled');
+  
+    // 7) rebuild the progress bar
+    let bar = btn.querySelector('.progress');
+    if (bar) bar.remove();
+    bar = document.createElement('div');
+    bar.className = 'progress';
+    btn.appendChild(bar);
+    bar.style.width = `${Math.min(100, (elapsed / fullDur) * 100)}%`;
+  
+    // 8) keep ticking
+    const tick0 = now;
+    miniGameIntervalIds[gameType] = setInterval(() => {
+      const e2 = elapsed + (Date.now() - tick0);
+      bar.style.width = `${Math.min(100, (e2 / fullDur) * 100)}%`;
+    }, 200);
+  
+    // 9) schedule the unlock
+    miniGameTimeoutIds[gameType] = setTimeout(() => {
+      clearInterval(miniGameIntervalIds[gameType]);
+      cooldowns[gameType] = false;            // <— unset the flag
+      btn.disabled        = false;
+      btn.classList.remove('affordable', 'disabled');
+      btn.classList.add('affordable');
+      bar.remove();
+      localStorage.removeItem(`${gameType}CooldownStart`);
+    }, left);
 }
 
+
+function unlockMiniGames() {
+    const now = Date.now();
+  
+    Object.keys(miniGameTimeouts).forEach(gameType => {
+      const key   = `${gameType}CooldownStart`;
+      const raw   = localStorage.getItem(key);
+      const btn   = document.getElementById(`${gameType}Game`);
+      const mult  = miniGamerSkill ? (gamingAddictSkill ? 0.25 : 0.5) : 1;
+      const full  = miniGameTimeouts[gameType] * mult;
+  
+      // always show the button
+      btn.style.display = 'block';
+  
+      // no saved start → fully reset
+      if (!raw) {
+        cooldowns[gameType] = false;
+        btn.disabled        = false;
+        btn.classList.remove('affordable', 'disabled');
+        btn.classList.add('affordable');
+        // remove any leftover bar
+        const oldBar = btn.querySelector('.progress');
+        if (oldBar) oldBar.remove();
+        return;
+      }
+  
+      const startTs = parseInt(raw, 10);
+      const elapsed = now - startTs;
+  
+      if (elapsed >= full) {
+        // cooldown has expired
+        cooldowns[gameType] = false;
+        btn.disabled        = false;
+        btn.classList.remove('affordable', 'disabled');
+        btn.classList.add('affordable');
+        const oldBar = btn.querySelector('.progress');
+        if (oldBar) oldBar.remove();
+        localStorage.removeItem(key);
+      }
+      else {
+        // still cooling
+        cooldowns[gameType] = true;
+        // rebuild the cooldown exactly as if it just started
+        startCooldown(gameType, startTs);
+      }
+    });
+}
+  
+  
 
 function applyProgressiveScaling(effectValue, baseIncrease) {
     let scaledEffect = 0;
@@ -1419,67 +1489,6 @@ function calculateMiniGamesMultiplier() {
     }
 }
 
-
-
-
-function unlockMiniGames() {
-    const now = Date.now();
-
-    Object.keys(miniGameTimeouts).forEach(gameType => {
-        const startTime = localStorage.getItem(`${gameType}CooldownStart`);
-        const button = document.getElementById(`${gameType}Game`);
-        const progressBar = button.querySelector('.progress');
-
-        button.style.display = 'block';
-
-        if (startTime) {
-            const elapsed = now - parseInt(startTime, 10);
-            const cooldownMultiplier = miniGamerSkill ? (gamingAddictSkill ? 0.25 : 0.5) : 1;
-            const cooldownDuration = (miniGameTimeouts[gameType] * cooldownMultiplier);
-
-            if (elapsed >= cooldownDuration) {
-                cooldowns[gameType] = false;
-                button.disabled = false;
-                button.classList.remove('disabled');
-                button.classList.add('affordable');
-                if (progressBar) {
-                    progressBar.style.width = '100%';
-                }
-            } else {
-                const remainingCooldown = cooldownDuration - elapsed;
-                const progressPercent = (elapsed / cooldownDuration) * 100;
-
-                button.disabled = true;
-                button.classList.add('disabled');
-                button.classList.remove('affordable');
-                if (progressBar) {
-                    progressBar.style.width = `${progressPercent}%`;
-                }
-
-                const interval = setInterval(() => {
-                    const newElapsed = Date.now() - parseInt(startTime, 10);
-                    const newProgressPercent = (newElapsed / cooldownDuration) * 100;
-
-                    if (newElapsed >= cooldownDuration) {
-                        clearInterval(interval);
-                        button.disabled = false;
-                        button.classList.remove('disabled');
-                        button.classList.add('affordable');
-                        if (progressBar) {
-                            progressBar.style.width = '100%';
-                        }
-                    } else {
-                        if (progressBar) {
-                            progressBar.style.width = `${newProgressPercent}%`;
-                        }
-                    }
-                }, 100);
-            }
-        } else {
-            startCooldown(gameType);
-        }
-    });
-}
 
 function setupMiniGameTooltips() {
     const miniGameButtons = [

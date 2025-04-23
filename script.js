@@ -415,7 +415,7 @@ function cookieCollectAllResources(isManualClick=true) {
     cookieClicks++;
     if(cookieClicks >= 500 && cookieClicks <= 550){
         unlockAchievement('Fatigued Finger');
-    } else if (cookieClicks >= 10000000 && cookieClicks <= 10001000){
+    } else if (cookieClicks >= 1000000 && cookieClicks <= 1001000){
         unlockAchievement('Child Labor');
     }
     if (!achievementsMap.get('Warped Cookie').isUnlocked && isManualClick){
@@ -560,6 +560,9 @@ function loadGameState() {
     deadpoolRevives = parseFloat(localStorage.getItem('deadpoolRevives')) || 0;
 
     forgetfulnessCounter = parseFloat(localStorage.getItem('forgetfulnessCounter')) || 0;
+
+    //load cooldowns, miniGameIntervalIds, and miniGameTimeoutIds
+    // cooldowns = JSON.parse(localStorage.getItem('cooldowns')) || { speed: false, memory: false, math: false, luck: false };
 
     numMathPortals = parseFloat(localStorage.getItem('numMathPortals')) || 0;
     numSpeedTaps = parseFloat(localStorage.getItem('numSpeedTaps')) || 0;
@@ -898,8 +901,10 @@ function saveGameState() {
     localStorage.setItem('warpTimeRemaining', warpTimeRemaining); // Save remaining warp time
 
     localStorage.setItem('messageShownUpgrades', JSON.stringify(Array.from(messageShownUpgrades)));
- 
 
+    //save cooldowns, miniGameIntervalIds, and miniGameTimeoutIds
+    // localStorage.setItem('cooldowns', JSON.stringify(cooldowns));
+ 
     // Save unlocked library skills
     if (Array.isArray(librarySkills)) {
         const unlockedLibrarySkills = librarySkills.filter(skill => skill.unlocked);
@@ -1111,9 +1116,9 @@ function resetButtonAndProgress(gameType) {
 
 // Helper function to clear all intervals
 function clearAllIntervals() {
-    Object.keys(miniGameIntervals).forEach(gameType => {
-        clearInterval(miniGameIntervals[gameType]);
-        delete miniGameIntervals[gameType];
+    Object.keys(miniGameIntervalIds).forEach(gameType => {
+        clearInterval(miniGameIntervalIds[gameType]);
+        delete miniGameIntervalIds[gameType];
     });
 }
 
@@ -1175,6 +1180,7 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
         // Reset ascends and multipliers if it's a full restart or Infinite Embrace
         if (!isPrestige || isInfiniteEmbrace) {
 
+            // Full Restart
             if (!isInfiniteEmbrace) {
 
                 lovePoints = 0;
@@ -1527,7 +1533,7 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
         updateMultipliersDisplay();
 
         // Start unlock timeouts for mini-games
-        unlockMiniGames();
+        //unlockMiniGames();
 
         // Save game state
         saveGameState();

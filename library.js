@@ -130,6 +130,7 @@ function unlockLibrarySkill(skill, duringLoad = false, infoOnly = false) {
 
             case "Mini Gamer":
                 miniGamerSkill = true;
+                unlockMiniGames();
                 break;
 
             case 'Prestige Base':
