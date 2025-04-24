@@ -413,14 +413,14 @@ document.getElementById('automationButton').addEventListener('click', function()
         const enableQuickModeAscendSwitch = document.getElementById('enableQuickModeAscend');
         enableQuickModeAscendSwitch.checked = enableQuickModeAscend;
         const quickModeAscendContainer = document.getElementById('quickModeAscendContainer');
-        if (upgrades.some(upgrade => upgrade.isGodMode)) {
+        if (upgrades.some(upgrade => upgrade.isGodMode) || bigCrunchMultiplier > 1) {
             quickModeAscendContainer.style.display = 'block';
         }
 
         const enableQuickModeTranscendSwitch = document.getElementById('enableQuickModeTranscend');
         enableQuickModeTranscendSwitch.checked = enableQuickModeTranscend;
         const quickModeTranscendContainer = document.getElementById('quickModeTranscendContainer');
-        if (upgrades.some(upgrade => upgrade.isPUGodMode)) {
+        if (upgrades.some(upgrade => upgrade.isPUGodMode) || bigCrunchMultiplier > 1) {
             quickModeTranscendContainer.style.display = 'block';
         }
 

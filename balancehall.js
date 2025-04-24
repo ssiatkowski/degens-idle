@@ -13,9 +13,9 @@ const balanceHallContainer = document.getElementById('balanceHallSkills');
 const basicResources = ['Copium', 'Delusion', 'Yacht Money', 'Troll Points'];
 
 let balanceHallSkills = new Map([
-    ["Greater Balance", { description: "Increase max balance values x100", cost: { Copium: 2.5e205 }, available: false, unlocked: false }],
+    ["Greater Balance", { description: "Increase max balance values x100", cost: { Copium: 2e205 }, available: false, unlocked: false }],
     ["Love Matters", { description: "Multiply all resources by (Love Points / 1000)", cost: { Delusion: 1e210 }, available: false, unlocked: false }],
-    ["Balance Check", { description: "Multiplier to last 4 resources based on balance of first 4 resources (checked every 30 seconds)", cost: { 'Yacht Money': 5e217 }, available: false, unlocked: false }],
+    ["Balance Check", { description: "Multiplier to last 4 resources (max 999x) based on how close together the amounts of first 4 resources are (checked every 30 seconds)", cost: { 'Yacht Money': 5e217 }, available: false, unlocked: false }],
     ["Everlasting Love", { description: "Passively generate Love Points based on largest embrace each hour (online & offline) -- can go beyond the Infinite Embrace 1M limit", cost: { 'Troll Points': 1e225 }, available: false, unlocked: false }],
     ["Quality of Life", { description: "Resource balancing first 4 resources no longer resets game AND Ascend/Transcend up to 100 upgrades at once AND Cookie Clicker Clicker is permanent AND unlock toggle for suppressing Hall of Balance skills", cost: { Hopium: 1e230 }, available: false, unlocked: false }],
     ["Balance is Power", { description: "Multiplicative 5x to Power for each Balance Skill unlocked", cost: { Knowledge: 1e202 }, available: false, unlocked: false }],
@@ -541,24 +541,23 @@ function balanceCheck() {
     
     // Scaling function for balanceCheckMultiplier based on diffRatio
 
-    if(suppressBalanceSkills) {
+    if (suppressBalanceSkills) {
         balanceCheckMultiplier = 1;
-    } else if (diffRatio < 2) {
-        balanceCheckMultiplier = 1000;
-    } else if (diffRatio < 5) {
-        // Interpolate between 1000 (2x) and 500 (5x)
-        balanceCheckMultiplier = 1000 - ((diffRatio - 2) / (5 - 2)) * (1000 - 500);
+    } else if (diffRatio < 2.5) {
+        balanceCheckMultiplier = 999;
     } else if (diffRatio < 10) {
-        // Interpolate between 500 (5x) and 100 (10x)
-        balanceCheckMultiplier = 500 - ((diffRatio - 5) / (10 - 5)) * (500 - 100);
+        // Interpolate between 999 (2.5x) and 500 (10x)
+        balanceCheckMultiplier = 999 - ((diffRatio - 2.5) / (10 - 2.5)) * (999 - 500);
     } else if (diffRatio < 100) {
-        // Interpolate between 100 (10x) and 10 (100x)
-        balanceCheckMultiplier = 100 - ((diffRatio - 10) / (100 - 10)) * (100 - 10);
+        // Interpolate between 500 (10x) and 100 (100x)
+        balanceCheckMultiplier = 500 - ((diffRatio - 10) / (100 - 10)) * (500 - 100);
     } else if (diffRatio < 1000) {
-        // Interpolate between 10 (100x) and 1 (1000x)
-        balanceCheckMultiplier = 10 - ((diffRatio - 100) / (1000 - 100)) * (10 - 1);
+        // Interpolate between 100 (100x) and 10 (1000x)
+        balanceCheckMultiplier = 100 - ((diffRatio - 100) / (1000 - 100)) * (100 - 10);
+    } else if (diffRatio < 10000) {
+        // Interpolate between 10 (1000x) and 1 (10000x)
+        balanceCheckMultiplier = 10 - ((diffRatio - 1000) / (10000 - 1000)) * (10 - 1);
     } else {
-        // If diffRatio is >= 1000, set balanceCheckMultiplier to 1
         balanceCheckMultiplier = 1;
     }
 

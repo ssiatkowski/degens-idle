@@ -1324,6 +1324,13 @@ const achievements = [
         type: 'puzzle',
     },
     {
+        name: 'Gotthard Base Tunnel',
+        isUnlocked: false,
+        hoverText: `TT.AA km`,
+        img: 'imgs/achievements/gotthard_base_tunnel.jpg',
+        type: 'puzzle',
+    },
+    {
         name: 'Do as dev #3 says',
         isUnlocked: false,
         hoverText: `???`,

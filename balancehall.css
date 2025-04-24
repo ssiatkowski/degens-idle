@@ -262,7 +262,8 @@
 
     .balance-button {
         text-align: center;
-        margin-bottom: 25px;
+        margin-top: -5px;
+        margin-bottom: 35px;
     }
 
     .balance-skill-grid {

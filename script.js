@@ -1077,6 +1077,7 @@ function generateResources() {
     if (accumulatedWarpTime < warpTimeMax) accumulatedWarpTime += (balanceHallSkills.get("Temporal Dominion").unlocked ? 2.5 : 0.5);
 
     updateDisplay();
+    updateWarpTime();
 }
 
 async function restartPrestige(){
@@ -1941,7 +1942,6 @@ function updateDisplay() {
     updateBigCrunchButton();
     updateInfiniteEmbraceButton();
     updateUpgradeButtons();
-    updateWarpTime();
 }
 
 function updateMultipliersDisplay() {
@@ -2334,6 +2334,10 @@ async function transcend(skipConfirms = false) {
                 const gmLevelsGained = upgrades.filter(upgrade => upgrade.isGodMode).length - godModeLevel;
                 if (gmLevelsGained == 5 && selectedUpgrades.length == 24){
                     unlockAchievement('Laerdal Tunnel');
+                    suppressAscendPopup = true;
+                }
+                if ((gmLevelsGained == 9 || gmLevelsGained == 10) && selectedUpgrades.length == 57){
+                    unlockAchievement('Gotthard Base Tunnel');
                     suppressAscendPopup = true;
                 }
                 godModeLevel = upgrades.filter(upgrade => upgrade.isGodMode).length;

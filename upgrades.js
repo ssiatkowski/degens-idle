@@ -104,6 +104,7 @@ const upgrades = [
         cost: { copium: 2400, delusion: 1600, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 18.5, delusionPerSecond: 14, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/swing_and_a_miss.jpg`,
+        message: `<b>Just a heads-up (a.k.a. The Disclaimer):</b><br><br>This game contains humor. I hope you find it funny. But even if you don’t, I <i>especially</i> hope it doesn’t offend you.<br><br>There are jokes that poke at politics, religion, countries, economies—you know, the topics you strategically avoid at family gatherings. If you're easily offended, this might not be the game for you—and that’s okay. No harm was ever intended.<br><br>Some of the most polarizing content seems to be memes related to American politics. Just to be clear: I’ve done my best to poke equal fun at all sides. None of the jokes reflect my personal political views.<br><br>This is just a game. One that tries to blend progression with lighthearted absurdity. Not every joke will land—but they’re never meant to hurt.`,
     },
     {
         name: `The Savior`,
@@ -179,6 +180,7 @@ const upgrades = [
         cost: { copium: 5000, delusion: 5000, yachtMoney: 5000, trollPoints: 5000, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: -15, delusionPerSecond: 32, yachtMoneyPerSecond: 18, trollPointsPerSecond: 30, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/standard.jpg`,
+        message: `You don’t get this game? <i>Could’ve fooled me.</i> Looks like you’ve already got the hang of it. Keep buying upgrades and progressing like you’ve been doing—don’t overthink it. Things are about to get a lot more fun.<br><br><details><summary><b>Spoiler:</b></summary>There will be multiple prestige layers. There will be iconic boss battles. There will be introspective meditations powered by a custom physics engine. There will be fine-tuned resource balancing. And yeah, there might even be tears.</details><br>But before we get there, a couple quick tips:<br><br><b>Mini-games</b> (like Speed Game and Luck Game) are designed for a more active playstyle. While you can technically beat the whole game without them, they offer huge rewards and will cut down your playtime by many months. These scale exponentially based on your current amount of the related resource—perfect for pushing past time walls.<br><br>Also (mild spoiler): your mini-game wins are already being tracked. Eventually, you’ll unlock a multiplier to all resources based on your victory count. So yeah, it pays to start early.<br><br>As for those individual <i>“Collect”</i> buttons? Honestly, they’re just early-game flair. The next upgrade will add something far better. But hey, they might still earn you an achievement or two if you’re the curious type.`,
     },
     {
         name: `Cookie Clicker`,
@@ -203,6 +205,7 @@ const upgrades = [
         cost: { copium: 0, delusion: 25000, yachtMoney: 0, trollPoints: 80000, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 89, delusionPerSecond: 96, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/use_useless.jpg`,
+        message: `<b>Note:</b> this game doesn’t play nice when you tab out.<br><br>If you’re running it in a background tab or on mobile and then come back later, it <i>might</i> look like nothing happened. But don’t panic—just <u>refresh the page</u> before doing anything else, and your offline gains will be calculated correctly.<br><br>However… if you click something that saves the game (like buying an upgrade or opening Settings) <b>before</b> refreshing, you’re basically telling the game, “Hey, this is the new reality.” And just like that, all those offline gains? <b>Gone forever.</b> RIP.<br><br><b>Best practice:</b> keep the game in its own window. But if you can't do that, then always refresh before you touch anything after coming back.<br><br><i>Technical note:</i> The game tracks time using <code>Date.now()</code> and calculates offline gains on load. But if you take any action that saves before that calculation runs, your “last active” time gets overwritten and the gains are lost. That’s just how it be.`,
     },
     {
         name: `Job Application`,
@@ -731,6 +734,7 @@ const upgrades = [
         cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 5e31, knowledge: 2.5e25, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 1.3e13, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 4.5e7, knowledgePerSecond: 240, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/how_i_sleep_knowing.jpg`,
+        message: `Worried you were nearing the end of the game? <i>Relax.</i> You’ve barely scratched the surface.<br><br>Even if you play optimally, there’s still <b>months</b> of content ahead. And no, it’s not just the usual loop of prestige → ascend → crunch.<br><br>There are entirely new mechanics ahead—things you haven’t seen in any other idle game. So settle in, keep experimenting, and don’t be afraid to push boundaries. The real ride hasn’t even started.`,
     },
     {
         name: `Silence is Golden`,
@@ -777,6 +781,14 @@ const upgrades = [
         achievement: 'Begin Training',
         hoverOverwrite: 'Beware 3 power will be consumed. Remaining power will be converted to Damage.',
         autoBattlePower: 10000,
+    },
+    {
+        name: `Gimmicks`,
+        cost: { copium: 1.5e41, delusion: 0, yachtMoney: 4e41, trollPoints: 0, hopium: 3e32, knowledge: 1e29, power: 0, serenity: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 2e14, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 2e7, knowledgePerSecond: 100, powerPerSecond: 0, serenityPerSecond: 0 },
+        img: `imgs/gimmicks.jpg`,
+        message: `You’ve now entered the Battle Saga. Some enemies have hidden mechanics known as <b>gimmicks</b>. These are optional quirks that can shift the tide of battle in your favor, especially when you're fighting enemies near your power limit.<br><br>To activate a gimmick, leave specific upgrades unpurchased. For example, leaving “VR Life” untouched will help with Agent Smith. Each gimmick is tied to a puzzle achievement so you can check those for hints, and the Battle Log will show the effects when triggered.<br><br>They’re subtle. They’re clever. And if used right, they’re the edge you need. Welcome to the mind games.`,
+        hoverOverwrite: `Battle Cheat Codes?`,
     },
     {
         name: `Agent Smith`,
@@ -1360,10 +1372,10 @@ const upgrades = [
                     <li><strong>Delusion</strong> - Affects <strong>Turn Speed</strong>. A greater delusion allows the balls to adjust their direction quicker, pulling them back toward the center faster.</li>
                     <li><strong>Yacht Money</strong> - <strong>Reduces Meditation Duration</strong>. Accumulating more shortens the time required to complete the meditation challenge.</li>
                     <li><strong>Troll Points</strong> - Increases <strong>Respawn Delay</strong>. Higher Troll Points give you more time before a ball that leaves the bounds reappears, offering brief respite.</li>
-                    <li><strong>Hopium</strong> - <strong>Reduces the Number of Balls</strong>. With more Hopium, fewer balls must be managed during meditation.</li>
+                    <li><strong>Hopium</strong> - <strong>Reduces the Number of Balls</strong>. With more Hopium, fewer balls must be managed during meditation. (-1 ball per 10 OoM)</li>
                     <li><strong>Knowledge</strong> - Affects <strong>Velocity</strong>. Greater Knowledge slows down the balls, making it easier to keep them in the meditative space.</li>
                     <li><strong>Power</strong> - Affects <strong>Gravity</strong>. A stronger gravitational pull towards the center keeps the balls from straying too far from the boundary.</li>
-                    <li><strong>Serenity</strong> - Enhances <strong>Focus</strong>. More Serenity allows more balls to exit the boundary before you lose focus and fail the meditation.</li>
+                    <li><strong>Serenity</strong> - Enhances <strong>Focus</strong>. More Serenity allows more balls to exit the boundary before you lose focus and fail the meditation. (+1 focus per OoM)</li>
                 </ul>
                 <p>As you master each meditation, you’ll unlock upgrades tied to diverse belief systems, philosophies, and worldviews. Use your resources strategically to navigate these metaphysical challenges and achieve deeper understanding and metaphysical mastery.</p>`,
         isKey: true,
