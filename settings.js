@@ -326,7 +326,7 @@ document.getElementById('pasteSaveButton').addEventListener('click', function() 
 document.getElementById('howToPlayButton').addEventListener('click', function() {
     closeSettings();
     unlockAchievement('How to Play');
-    showMessageModal('How to Play', '', false, false, 'imgs/modal_imgs/howtoplay.png');
+    showMessageModal('How to Play', '', false, false, 'imgs/modal_imgs/howtoplay.jpg');
 });
 
 document.getElementById('wikiButton').addEventListener('click', function() {
