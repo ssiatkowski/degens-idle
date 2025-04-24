@@ -189,7 +189,7 @@ function playMiniGame(gameType) {
     
                         const speedTapsDelta = Math.max(0, points - misclicks);
     
-                        resultMessage = `You tapped ${points} dots with ${misclicks} misclicks in ${duration} seconds (${effectiveClicksPerSecond.toFixed(2)} points per second). Your reward is ${percent_earned}% (<span style="color: green;">${formatNumber(reward)}</span>) copium!<br><br>You added ${speedTapsDelta} taps to for a total of ${formatNumber(numSpeedTaps)} taps in winning games.`;
+                        resultMessage = `You tapped ${points} dots with ${misclicks} misclicks in ${duration} seconds (${effectiveClicksPerSecond.toFixed(2)} points per second). Your reward is ${percent_earned}% (<span style="color: green;">${formatNumber(reward)}</span>) copium!<br><br>You added ${speedTapsDelta} taps for a total of ${formatNumber(numSpeedTaps)} taps in winning games.`;
                         
                         if(cosmicGamekeeperSkill){
                             resultMessage += `<br><br>Cosmic Gamekeeper mult has permanently increased by <span style="color: #90EE90;">+${formatNumber(applyProgressiveScaling(numSpeedTaps + speedTapsDelta, 0.0001) - applyProgressiveScaling(numSpeedTaps, 0.0001))}</span>!`;
@@ -253,7 +253,7 @@ function playMiniGame(gameType) {
 
                 speedTapsDelta = duration * 1.5 * (sereneExtortionSkill ? 0.2 : 0.1)
 
-                let resultMessage = `You got rewards equivalent to ${(1.5 * (sereneExtortionSkill ? 0.2 : 0.1)).toFixed(2)} clicks per second. Your reward is ${percent_earned}% (<span style="color: green;">${formatNumber(reward)}</span>) copium! <br><br>You added ${formatNumber(speedTapsDelta)} taps to for a total of ${formatNumber(numSpeedTaps)} taps in winning games.`;
+                let resultMessage = `You got rewards equivalent to ${(1.5 * (sereneExtortionSkill ? 0.2 : 0.1)).toFixed(2)} clicks per second. Your reward is ${percent_earned}% (<span style="color: green;">${formatNumber(reward)}</span>) copium! <br><br>You added ${formatNumber(speedTapsDelta)} taps for a total of ${formatNumber(numSpeedTaps)} taps in winning games.`;
 
                 if(cosmicGamekeeperSkill){
                     resultMessage += `<br><br>Cosmic Gamekeeper mult has permanently increased by <span style="color: #90EE90;">+${formatNumber(applyProgressiveScaling(numSpeedTaps + speedTapsDelta, 0.0001) - applyProgressiveScaling(numSpeedTaps, 0.0001))}</span>!`;

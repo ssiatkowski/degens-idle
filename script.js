@@ -233,7 +233,7 @@ let defaultBuyMarkerState = false;
 let crunchTimer = 9999;
 let embraceTimer = 9999;
 
-let numLoveHallFreeRespecs; // Global variable for free respecs
+let numLoveHallFreeRespecs = 1; // Global variable for free respecs
 
 const warpButton = document.getElementById('warpTimeButton');
 let accumulatedWarpTime = 0;
@@ -587,7 +587,7 @@ function loadGameState() {
     numTotalTrades = parseFloat(localStorage.getItem('numTotalTrades')) || 0;
     numFightLogScrolls = parseFloat(localStorage.getItem('numFightLogScrolls')) || 0;
 
-    numLoveHallFreeRespecs = localStorage.getItem('numLoveHallFreeRespecs') !== null ? parseFloat(localStorage.getItem('numLoveHallFreeRespecs')) : 1;
+    numLoveHallFreeRespecs = (s => Number.isNaN(s = s !== null ? parseFloat(s) : NaN) ? 1 : s)(localStorage.getItem('numLoveHallFreeRespecs'));
 
     consecutiveClicks = parseInt(localStorage.getItem('consecutiveClicks')) || 0;
     lastClickedBoxIndex = parseInt(localStorage.getItem('lastClickedBoxIndex')) || 0;

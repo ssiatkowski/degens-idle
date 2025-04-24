@@ -896,7 +896,7 @@ function attackEnemy(resolve) {
                 }, 150); // Slightly longer delay to ensure the flash is visible
             } else {
                 logFight(`<span style='color: #39FF14;'>${currEnemyName} finally stays dead after 
-                    <span style='font-weight: bold; font-size: 1.4em;'>${deadpoolRevives}</span> revives!</span>`);
+                    <span style='font-weight: bold; font-size: 1.4em;'>${deadpoolRevives}</span> revives! (Revival Chance: ${formatNumber(revivalChance * 100)}%)</span>`);
             }
         }
     }

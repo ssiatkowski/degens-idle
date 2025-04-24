@@ -342,6 +342,8 @@ function startMeditationGame(challengeName, backgroundImage, stageNumber = 1, pr
         } else if (currentChallengeName === "Dimensional Weaving") {
             gravityStrength /= 10;
             turnRadius /= 10;
+        } else {
+            skepticismRandomnessFactor = 3;
         }
 
         // Show the meditation overlay
