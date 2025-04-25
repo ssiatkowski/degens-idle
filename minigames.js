@@ -456,14 +456,6 @@ function playMiniGame(gameType) {
     
                     delusion += reward;
 
-                    let resultMessage = correct
-                        ? `You successfully matched the pattern and earned ${memoryGameSkill ? '90%' : '30%'} (<span style="color: green;">${formatNumber(reward)}</span>) delusion!<br><br>You memorized ${formatNumber(sequenceLength)} new dots for a total of ${formatNumber(numMemorizedDots)} dots in winning games!`
-                        : `You failed to match the pattern and lost 20% (<span style="color: red;">${formatNumber(Math.abs(reward))}</span>) delusion!`;
-    
-                    if (cosmicGamekeeperSkill && correct) {
-                        resultMessage += `<br><br>Cosmic Gamekeeper mult has permanently increased by <span style="color: #90EE90;">+${formatNumber(applyProgressiveScaling(numMemorizedDots + sequenceLength, 0.0003) - applyProgressiveScaling(numMemorizedDots, 0.0003))}</span>!`;
-                    }
-
                     if (correct) {
                         numMemorizedDots += sequenceLength;
                         localStorage.setItem('numMemorizedDots', numMemorizedDots);
@@ -481,7 +473,15 @@ function playMiniGame(gameType) {
                         numConsecutiveMemoryFailures++;
                         localStorage.setItem('numConsecutiveMemoryFailures', numConsecutiveMemoryFailures);
                     }
-        
+
+                    let resultMessage = correct
+                        ? `You successfully matched the pattern and earned ${memoryGameSkill ? '90%' : '30%'} (<span style="color: green;">${formatNumber(reward)}</span>) delusion!<br><br>You memorized ${formatNumber(sequenceLength)} new dots for a total of ${formatNumber(numMemorizedDots)} dots in winning games!`
+                        : `You failed to match the pattern and lost 20% (<span style="color: red;">${formatNumber(Math.abs(reward))}</span>) delusion!`;
+
+                    if (cosmicGamekeeperSkill && correct) {
+                        resultMessage += `<br><br>Cosmic Gamekeeper mult has permanently increased by <span style="color: #90EE90;">+${formatNumber(applyProgressiveScaling(numMemorizedDots + sequenceLength, 0.0003) - applyProgressiveScaling(numMemorizedDots, 0.0003))}</span>!`;
+                    }
+            
 
                     if (softCapReached) {
                         numSoftCaps++;
@@ -870,17 +870,18 @@ function playMiniGame(gameType) {
                             unlockAchievement('Mathematical Overshot');
                         }
 
+                        numMathWins++;
+                        numMathPortals += selectedPortals.length;
+                        
                         resultMessage = `You found the correct sum and earned ${mathGameSkill ? '90%' : '45%'} (<span style="color: green;">${formatNumber(reward)}</span>) Yacht Money! You selected ${selectedPortals.length} portals for a total of ${formatNumber(numMathPortals)} correct math portals.`;
 
                         if (cosmicGamekeeperSkill) {
                             resultMessage += `<br><br>Cosmic Gamekeeper mult has permanently increased by <span style="color: #90EE90;">+${formatNumber(applyProgressiveScaling(numMathPortals + selectedPortals.length, 0.0005) - applyProgressiveScaling(numMathPortals, 0.0005))}</span>!`;
                         }
 
-                        numMathWins++;
                         localStorage.setItem('numMathWins', numMathWins);
                         numConsecutiveMathFailures = 0;
                         localStorage.setItem('numConsecutiveMathFailures', numConsecutiveMathFailures);
-                        numMathPortals += selectedPortals.length;
                         localStorage.setItem('numMathPortals', numMathPortals);
                         if (numMathPortals > 314) {
                             unlockAchievement('Pie Guy');

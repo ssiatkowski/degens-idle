@@ -196,7 +196,7 @@ const upgrades = [
         cost: { copium: 28000, delusion: 28000, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: 850, delusionPerSecond: 850, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/cosmetic_surgery.jpg`,
-        message: `Congratulations on your bold transformation! It's natural to feel a little weaker—about 10% on a prestige multiplier scale—after undergoing significant cosmetic surgery. Just like recovering from any major procedure, your strength and confidence will gradually return.<br><br>This temporary adjustment is a gentle reminder that even extraordinary changes come with phases of recovery. Embrace this period of healing as a testament to your resilience. With time and patience, your full strength and beauty will shine through, stronger than ever.`,
+        message: `Congratulations on your bold transformation! It's natural to feel a little weaker—about 10% on a prestige multiplier scale—after undergoing significant cosmetic surgery. <br><br>This temporary adjustment is a gentle reminder that even extraordinary changes come with phases of recovery. Embrace this period of healing as a testament to your resilience. With time and patience, your full strength and beauty will shine through, stronger than ever.`,
         miniPrestigeMultiplier: 0.9,
         hoverOverwrite: `This one has a big tradeoff`,
     },
@@ -228,7 +228,7 @@ const upgrades = [
     },
     {
         name: `I'm gonna come`,
-        cost: { copium: 75000, delusion: 75000, yachtMoney: 0, trollPoints: 50000, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
+        cost: { copium: 75000, delusion: 75000, yachtMoney: 0, trollPoints: 20000, hopium: 0, knowledge: 0, power: 0, serenity: 0 },
         earnings: { copiumPerSecond: -40, delusionPerSecond: 0, yachtMoneyPerSecond: -160, trollPointsPerSecond: 600, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/do_not_come.jpg`,
     },
@@ -1960,7 +1960,6 @@ const upgrades = [
         cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 2e88, serenity: 0 },
         earnings: { copiumPerSecond: 1e90, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/volume_controls.jpg`,
-        hoverOverwrite: 'Knowledge is Power',
     },
     {
         name: `Your Ego`,

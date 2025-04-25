@@ -18,7 +18,7 @@ let balanceHallSkills = new Map([
     ["Balance Check", { description: "Multiplier to last 4 resources (max 999x) based on how close together the amounts of first 4 resources are (checked every 30 seconds)", cost: { 'Yacht Money': 5e217 }, available: false, unlocked: false }],
     ["Everlasting Love", { description: "Passively generate Love Points based on largest embrace each hour (online & offline) -- can go beyond the Infinite Embrace 1M limit", cost: { 'Troll Points': 1e225 }, available: false, unlocked: false }],
     ["Quality of Life", { description: "Resource balancing first 4 resources no longer resets game AND Ascend/Transcend up to 100 upgrades at once AND Cookie Clicker Clicker is permanent AND unlock toggle for suppressing Hall of Balance skills", cost: { Hopium: 1e230 }, available: false, unlocked: false }],
-    ["Balance is Power", { description: "Multiplicative 5x to Power for each Balance Skill unlocked", cost: { Knowledge: 1e202 }, available: false, unlocked: false }],
+    ["Balance is Power", { description: "Multiplicative 5x to Power for each Balance Skill unlocked", cost: { Knowledge: 2e202 }, available: false, unlocked: false }],
     ["Temporal Dominion", { description: "Time Warp charges 5x faster AND max time increases to 24 minutes", cost: { Power: 1e90 }, available: false, unlocked: false }],
     ["Serene Future", { description: "Multiplicative 3% to Serenity for each upgrade purchased", cost: { Serenity: 1e47 }, available: false, unlocked: false }],
     ["Greatest Balance", { description: "Max balance values are squared", cost: { Copium: 1e242, Delusion: 1e242, 'Yacht Money': 1e242, 'Troll Points': 1e242, Hopium: 1e242, Knowledge: 1e213, Power: 1e96, Serenity: 1e52 }, available: false, unlocked: false }],

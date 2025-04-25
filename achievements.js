@@ -371,13 +371,6 @@ const achievements = [
         type: 'puzzle',
     },
     {
-        name: 'Child Labor',
-        isUnlocked: false,
-        hoverText: '1 million clicks on cookie',
-        img: 'imgs/achievements/child_labor.jpg',
-        type: 'puzzle',
-    },
-    {
         name: 'Tongue Twister',
         isUnlocked: false,
         hoverText: 'TT AT TA AA',
@@ -487,6 +480,13 @@ const achievements = [
         isUnlocked: false,
         hoverText: 'a strong leader will help you defeat Sauron',
         img: 'imgs/achievements/morale_boost.jpg',
+        type: 'puzzle',
+    },
+    {
+        name: 'Child Labor',
+        isUnlocked: false,
+        hoverText: '1 million clicks on cookie',
+        img: 'imgs/achievements/child_labor.jpg',
         type: 'puzzle',
     },
     {
