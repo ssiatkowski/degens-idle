@@ -1401,6 +1401,13 @@ const achievements = [
         type: 'progression',
     },
     {
+        name: 'Spell It Out',
+        isUnlocked: false,
+        hoverText: `in available upgrades`,
+        img: 'imgs/achievements/ace.jpg',
+        type: 'puzzle',
+    },
+    {
         name: 'F',
         isUnlocked: false,
         hoverText: `fetch the fiery letter F`,

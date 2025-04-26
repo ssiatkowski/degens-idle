@@ -129,10 +129,17 @@
     margin-bottom: 5px;
 }
 
+/* base cost styling (blocks, yellow by default) */
 .balance-skill-button .skill-cost {
-    color: #ffc107; /* Yellow color for cost */
+    display: block;            /* each cost on its own line */
+    color: #ffc107;            /* yellow */
     font-size: 0.9em;
     margin-bottom: 5px;
+}
+
+/* override when you can’t afford */
+.balance-skill-button .skill-cost.insufficient {
+    color: #FF6F91;            /* reddish-pink */
 }
 
 .balance-skill-button .skill-description {

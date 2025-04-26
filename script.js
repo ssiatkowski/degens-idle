@@ -3408,15 +3408,44 @@ async function buyUpgrade(encodedUpgradeName, callUpdatesAfterBuying = true, ski
             ) {
                 unlockAchievement('Number One');
             }
+        } else if (
+            name.length === 1 &&
+            !achievementsMap.get('Spell It Out').isUnlocked &&
+            // scan every possible 3-letter window in availableUpgrades
+            Array.from({ length: availableUpgrades.length - 2 }, (_, i) => i)
+                 .some(startIndex =>
+                     ['A', 'C', 'E'].every((letter, idx) =>
+                         availableUpgrades[startIndex + idx] &&
+                         availableUpgrades[startIndex + idx].name === letter
+                     )
+                 )
+            ) {
+            unlockAchievement('Spell It Out');
         } else if (name.length == 1 && !achievementsMap.get('Honor').isUnlocked && [0, 1, 2, 3].some(startIndex =>
             ['G', 'L', 'O', 'R', 'Y'].every((letter, index) =>
                 availableUpgrades[startIndex + index] && availableUpgrades[startIndex + index].name == letter))) {
                 unlockAchievement('Honor');
-        } else if (name == 'S' && !achievementsMap.get('STARBOUND').isUnlocked &&
-            ['D', 'N', 'U', 'O', 'B', 'R', 'A', 'T', 'S'].every((letter, index) =>
-                purchasedUpgrades[purchasedUpgrades.length - 9 + index] &&
-                purchasedUpgrades[purchasedUpgrades.length - 9 + index].name == letter)) {
-            unlockAchievement('STARBOUND');
+        } else if (
+            // only fire on purchasing S or D
+            (name === 'S' || name === 'D') &&
+            !achievementsMap.get('STARBOUND').isUnlocked
+          ) {
+            // grab the last 9 upgrade names
+            const lastNine = purchasedUpgrades
+              .slice(-9)
+              .map(u => u.name);
+          
+            // define forward and backward spells
+            const forward  = ['S','T','A','R','B','O','U','N','D'];
+            const backward = [...forward].reverse();
+          
+            // helper to test a pattern
+            const matches = pattern =>
+              pattern.every((ch, i) => lastNine[i] === ch);
+          
+            if (matches(forward) || matches(backward)) {
+              unlockAchievement('STARBOUND');
+            }
         }
         
 
@@ -3707,7 +3736,7 @@ function addPurchasedUpgrade(img, name, earnings, isGodMode = false, isPUGodMode
                 if (name == `What is DEGENS?`) {
                     let admireTimeoutId = setTimeout(() => {
                         unlockAchievement('Admire The Acronym');
-                    }, 15000);
+                    }, 10000);
 
                     // Delay the event listener for a moment to avoid canceling the timeout by the same initial click
                     setTimeout(() => {

@@ -20,8 +20,8 @@ let balanceHallSkills = new Map([
     ["Quality of Life", { description: "Resource balancing first 4 resources no longer resets game AND Ascend/Transcend up to 100 upgrades at once AND Cookie Clicker Clicker is permanent AND unlock toggle for suppressing Hall of Balance skills", cost: { Hopium: 1e230 }, available: false, unlocked: false }],
     ["Balance is Power", { description: "Multiplicative 5x to Power for each Balance Skill unlocked", cost: { Knowledge: 2e202 }, available: false, unlocked: false }],
     ["Temporal Dominion", { description: "Time Warp charges 5x faster AND max time increases to 24 minutes", cost: { Power: 1e90 }, available: false, unlocked: false }],
-    ["Serene Future", { description: "Multiplicative 3% to Serenity for each upgrade purchased", cost: { Serenity: 1e47 }, available: false, unlocked: false }],
-    ["Greatest Balance", { description: "Max balance values are squared", cost: { Copium: 1e242, Delusion: 1e242, 'Yacht Money': 1e242, 'Troll Points': 1e242, Hopium: 1e242, Knowledge: 1e213, Power: 1e96, Serenity: 1e52 }, available: false, unlocked: false }],
+    ["Serene Future", { description: "Multiplicative 3% to Serenity for each upgrade purchased", cost: { Serenity: 7e47 }, available: false, unlocked: false }],
+    ["Greatest Balance", { description: "Max balance values are squared", cost: { Copium: 1e244, Delusion: 1e244, 'Yacht Money': 1e244, 'Troll Points': 1e244, Hopium: 1e243, Knowledge: 1e214, Power: 1e96, Serenity: 1e52 }, available: false, unlocked: false }],
     ["Surrounded by Love", { description: "Passive Love Point Generation is 500x faster", cost: { Copium: 1e258, Delusion: 1e258, 'Yacht Money': 1e258, 'Troll Points': 1e258, Hopium: 1e257, Knowledge: 1e230, Power: 1e107, Serenity: 1.6e56 }, available: false, unlocked: false }],
     ["Singularity Wielder", { description: "In battles, set Stun and Dodge chances to log10(serenity) AND vastly increase HP scaling with Copium", cost: { Copium: 1e268, Delusion: 1e268, 'Yacht Money': 1e268, 'Troll Points': 1e268, Hopium: 2e266, Knowledge: 3e242, Power: 6e114, Serenity: 1.6e59 }, available: false, unlocked: false }],
     ["Guardian Training", { description: "Vastly Improve Meditation resource calculations (not implemented yet)", cost: { Copium: 1e300, Delusion: 1e300, 'Yacht Money': 1e300, 'Troll Points': 1e300, Hopium: 1e300, Knowledge: 1e300, Power: 1e300, Serenity: 1e300 }, available: false, unlocked: false }]
@@ -302,56 +302,54 @@ function updateSliders() {
 function updateBalanceSkillDisplay(skill, skillName) {
     const skillButton = document.querySelector(`.balance-skill-button[data-name="${skillName}"]`);
     if (!skillButton) return;
-
-    skillButton.innerHTML = ''; // Clear existing content
-
-    // Bold skill name
-    const skillNameElement = document.createElement('strong');
-    skillNameElement.textContent = skillName;
-    skillButton.appendChild(skillNameElement);
-
-    // Disable skills until they are available
-    skillButton.disabled = !skill.available;
-    skillButton.classList.toggle('disabled-skill', !skill.available); // Apply disabled style when not available
-
-    // Show cost and description only when skill is available and not unlocked
+  
+    skillButton.innerHTML = '';              // clear existing
+    skillButton.disabled = !skill.available; // toggle disabled look
+    skillButton.classList.toggle('disabled-skill', !skill.available);
+  
+    // Skill title
+    const title = document.createElement('strong');
+    title.textContent = skillName;
+    skillButton.appendChild(title);
+  
+    // Cost (only if available & not yet unlocked)
     if (skill.available && !skill.unlocked) {
-        const costContainer = document.createElement('div');
-        costContainer.classList.add('skill-cost-container');
-
-        if (Array.from(balanceHallSkills.keys()).indexOf(skillName) < 8) {
-            Object.entries(skill.cost).forEach(([resource, amount]) => {
-                const costText = document.createElement('span');
-                costText.textContent = `${formatNumber(amount)} ${resource}`;
-                costText.classList.add('skill-cost');
-                costContainer.appendChild(costText);
-            });
-        } else {
-            Object.entries(skill.cost).forEach(([resource, amount]) => {
-                const costText = document.createElement('div');
-                costText.textContent = `${formatNumber(amount)} ${resource}`;
-                costText.classList.add('skill-cost');
-                costContainer.appendChild(costText);
-            });
+      const costContainer = document.createElement('div');
+      costContainer.classList.add('skill-cost-container');
+  
+      Object.entries(skill.cost).forEach(([resName, amount]) => {
+        const costText = document.createElement('span');
+        costText.textContent = `${formatNumber(amount)} ${resName}`;
+        costText.classList.add('skill-cost');
+  
+        // mark insufficient ones
+        const playerAmt = balanceHallMultipliers.get(resName)?.resource ?? 0;
+        if (playerAmt < amount) {
+          costText.classList.add('insufficient');
         }
-        skillButton.appendChild(costContainer);
+  
+        costContainer.appendChild(costText);
+      });
+  
+      skillButton.appendChild(costContainer);
     }
-
-    // Show description only if the skill is available
+  
+    // Description (if available)
     if (skill.available) {
-        const skillDescription = document.createElement('div');
-        skillDescription.classList.add('skill-description');
-        skillDescription.textContent = skill.description;
-        skillButton.appendChild(skillDescription);
+      const desc = document.createElement('div');
+      desc.classList.add('skill-description');
+      desc.textContent = skill.description;
+      skillButton.appendChild(desc);
     }
-
-    // Style for purchased skills
+  
+    // Purchased state
     if (skill.unlocked) {
-        skillButton.classList.add('purchased-skill');
-        skillButton.style.backgroundColor = '#4CAF50';
-        skillButton.innerHTML = `<strong>${skillName}</strong><div>${skill.description}</div>`;
+      skillButton.classList.add('purchased-skill');
+      skillButton.style.backgroundColor = '#4CAF50';
+      skillButton.innerHTML = `<strong>${skillName}</strong><div>${skill.description}</div>`;
     }
 }
+  
 
 
 function anySkillPurchased() {

@@ -454,7 +454,7 @@ const upgrades = [
     {
         name: `The Finale`,
         cost: { copium: 1e15, delusion: 1e15, yachtMoney: 1e15, trollPoints: 1e15, hopium: 1e8, knowledge: 10000, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 6.9e5, trollPointsPerSecond: 6.9e6, hopiumPerSecond: 0, knowledgePerSecond: 0.000026, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 6.9e5, trollPointsPerSecond: 6.9e6, hopiumPerSecond: 0, knowledgePerSecond: 0.000028, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/rick_roll.jpg`,
         hoverOverwrite: `Thank you for playing...`,
         achievement: 'Get Rick Rolled',
@@ -463,7 +463,7 @@ const upgrades = [
     {
         name: `Plot Twist?`,
         cost: { copium: 1e15, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 1e8, knowledge: 8000, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 5.9e6, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 6.5, knowledgePerSecond: 0.000013, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 5.9e6, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 7.5, knowledgePerSecond: 0.000013, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/wait_theres_more.jpg`,
         message: `<p>You're less than 1% into this epic journey—what lies ahead will truly challenge you!</p>
                 <p>Beyond this point, new prestige layers, intricate skill trees, powerful automations, and strategic puzzles await your brilliance. But that's not all—epic boss fights will test your strength, and you’ll uncover that this entire game is, at its core, a story of love.</p>
@@ -478,7 +478,7 @@ const upgrades = [
     {
         name: `Free Trial`,
         cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 2e11, knowledge: 25000, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 9.7e6, delusionPerSecond: 0, yachtMoneyPerSecond: 1.77e6, trollPointsPerSecond: 0, hopiumPerSecond: 2.5, knowledgePerSecond: 0.000017, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 9.7e6, delusionPerSecond: 0, yachtMoneyPerSecond: 1.77e6, trollPointsPerSecond: 0, hopiumPerSecond: 3.5, knowledgePerSecond: 0.000017, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/free_trial.jpg`,
     },
     {
@@ -505,7 +505,7 @@ const upgrades = [
     {
         name: `Build a Base`,
         cost: { copium: 8e17, delusion: 4e17, yachtMoney: 4e17, trollPoints: 8e17, hopium: 1e12, knowledge: 1, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: -2.5e7, delusionPerSecond: 0, yachtMoneyPerSecond: -1.3e7, trollPointsPerSecond: -4e7, hopiumPerSecond: -75, knowledgePerSecond: 0.0026, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: -2.5e7, delusionPerSecond: 0, yachtMoneyPerSecond: -1.3e7, trollPointsPerSecond: -4e7, hopiumPerSecond: -75, knowledgePerSecond: 0.0027, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/all_your_base.jpg`,
         hoverOverwrite: `Xy'løth Q'värk, F'näürg zxÿl-gørh'tha! Z'qúol b'zhåk vi'krêth, nx'tuöl j'dä!`,
         achievement: 'Build a Base',
@@ -513,14 +513,14 @@ const upgrades = [
     {
         name: `NGU Idle`,
         cost: { copium: 8e17, delusion: 3.5e17, yachtMoney: 3.5e17, trollPoints: 8e17, hopium: 1e12, knowledge: 6e7, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 9.9e7, delusionPerSecond: 7.2e7, yachtMoneyPerSecond: 9.3e7, trollPointsPerSecond: 1.9e8, hopiumPerSecond: 840, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 9.9e7, delusionPerSecond: 9.9e7, yachtMoneyPerSecond: 9.9e7, trollPointsPerSecond: 2.2e8, hopiumPerSecond: 840, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/ngu_idle.jpg`,
         message: `Congratulations on unlocking the "NGU Idle" upgrade! This upgrade is a tribute to one of the greatest idle games ever. NGU Idle, known for its deep mechanics and quirky humor, has set a high standard in the idle game genre.<br><br>Here's to celebrating a game that has set a high bar for idle games everywhere. Enjoy the nostalgia and the boost it brings to your Degens Idle journey -- you may now watch all your Numbers Go Up!`,
     },
     {
         name: `Unlimited Power`,
         cost: { copium: 0, delusion: 0, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 0, power: 3.3e-9, serenity: 0 },
-        earnings: { copiumPerSecond: 2.5e6, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1.55e7, hopiumPerSecond: 2.9, knowledgePerSecond: 0.000029, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 2.5e6, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 1.6e7, hopiumPerSecond: 2.9, knowledgePerSecond: 0.000029, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/unlimited_power.jpg`,
         message: `<p>As the gears of progress click into place, you feel a surge of energy coursing through your veins. The very essence of the universe seems to hum in harmony with your newfound abilities. "All you know for now is that power is unlocked," echoes a distant voice in your mind, as if whispered by the ancients who have tread this path before you.</p>
                 <p>Gaining power feels good—no, it feels exhilarating. You sense the weight of the world lifting, replaced by a tantalizing promise of untapped potential. This isn't just strength; it's an awakening, a key to doors that were previously hidden in the shadows of your ignorance.</p>
@@ -533,7 +533,7 @@ const upgrades = [
     {
         name: `Honest Work`,
         cost: { copium: 0, delusion: 0, yachtMoney: 1.6e18, trollPoints: 0, hopium: 4.2e13, knowledge: 2.25e8, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 6.1e6, delusionPerSecond: 1.9e7, yachtMoneyPerSecond: 9.3e6, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0.00048, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 6.4e6, delusionPerSecond: 1.9e7, yachtMoneyPerSecond: 9.6e6, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0.00088, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/honest_work.jpg`,
     },
     {
@@ -545,31 +545,31 @@ const upgrades = [
     {
         name: `McDonalds Diet`,
         cost: { copium: 9e18, delusion: 9e18, yachtMoney: 3e18, trollPoints: 0, hopium: 3e13, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 6.8e7, delusionPerSecond: 4.5e7, yachtMoneyPerSecond: 0, trollPointsPerSecond: 8.5e7, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 6.8e7, delusionPerSecond: 4.6e7, yachtMoneyPerSecond: 0, trollPointsPerSecond: 8.5e7, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/mcdonalds.jpg`,
     },
     {
         name: `Careful Planning Time`,
         cost: { copium: 3e19, delusion: 1.4e19, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 3.1e8, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: -1e7, trollPointsPerSecond: 3.6e8, hopiumPerSecond: 2500, knowledgePerSecond: 0.00095, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: -1e7, trollPointsPerSecond: 3.7e8, hopiumPerSecond: 2500, knowledgePerSecond: 0.00099, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/leeroy_jenkins.jpg`,
     },
     {
         name: `First Pizza Meme`,
         cost: { copium: 2.5e19, delusion: 0, yachtMoney: 2.5e19, trollPoints: 5e19, hopium: 2e14, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 8.5e7, delusionPerSecond: 0, yachtMoneyPerSecond: -1e7, trollPointsPerSecond: 9.5e7, hopiumPerSecond: 0, knowledgePerSecond: 0.0025, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 8.5e7, delusionPerSecond: 0, yachtMoneyPerSecond: -1e7, trollPointsPerSecond: 9.5e7, hopiumPerSecond: 0, knowledgePerSecond: 0.0026, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/first_pizza_meme.jpg`,
     },
     {
         name: `Still very stupid`,
         cost: { copium: 0, delusion: 1.8e19, yachtMoney: 0, trollPoints: 0, hopium: 1.8e15, knowledge: 1.8e9, power: 1.8e-7, serenity: 0 },
-        earnings: { copiumPerSecond: 5.9e7, delusionPerSecond: 5.9e7, yachtMoneyPerSecond: 7.9e7, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0.0031, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 7.9e7, delusionPerSecond: 7.9e7, yachtMoneyPerSecond: 7.9e7, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0.0031, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/young_stupid.jpg`,
     },
     {
         name: `Change My Mind`,
         cost: { copium: 0, delusion: 2e19, yachtMoney: 1e19, trollPoints: 7e19, hopium: 0, knowledge: 3e8, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 18000, knowledgePerSecond: 0.0025, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 0, delusionPerSecond: 0, yachtMoneyPerSecond: 0, trollPointsPerSecond: 0, hopiumPerSecond: 18800, knowledgePerSecond: 0.0026, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/change_my_mind.jpg`,
     },
     {
