@@ -587,7 +587,7 @@ function updateDisplay() {
     `Resets Level → Gain Revolutions<br>` +
     `(x${formatNum(
       new Decimal(1).plus(
-        state.revolutionPoints.times(grBase.plus(extraPerAwak))
+        state.revolutionPoints.times(0.05)
       )
     )} Slop production)<br>` +
     `(+${formatNum(totalBoostPct)}% flat to each Climate Change’s Slop boost)`;
