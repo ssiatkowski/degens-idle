@@ -329,6 +329,14 @@ document.getElementById('howToPlayButton').addEventListener('click', function() 
     showMessageModal('How to Play', '', false, false, 'imgs/modal_imgs/howtoplay.jpg');
 });
 
+
+// Add event listener for Import Save button
+document.getElementById('trailerButton').addEventListener('click', function() {
+    closeSettings();
+    unlockAchievement('Watch Trailer');
+    window.open('https://www.youtube.com/watch?v=g8tVXoYSIy4', '_blank');
+});
+
 document.getElementById('wikiButton').addEventListener('click', function() {
     unlockAchievement('Visit Wiki');
     window.open('https://degens-idle.fandom.com/wiki/Degens_Idle_Wiki', '_blank');

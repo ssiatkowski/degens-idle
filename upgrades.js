@@ -401,7 +401,7 @@ const upgrades = [
     {
         name: `Melvor Idle`,
         cost: { copium: 1e14, delusion: 3e13, yachtMoney: 0, trollPoints: 0, hopium: 0, knowledge: 50, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 1010000, delusionPerSecond: 0, yachtMoneyPerSecond: 500000, trollPointsPerSecond: 1040000, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 1050000, delusionPerSecond: 0, yachtMoneyPerSecond: 500000, trollPointsPerSecond: 1050000, hopiumPerSecond: 0, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/melvor.jpg`,
         hoverOverwrite: `I don't know. Never played it. Take some Copium.`,
     }, 
@@ -505,7 +505,7 @@ const upgrades = [
     {
         name: `Build a Base`,
         cost: { copium: 8e17, delusion: 4e17, yachtMoney: 4e17, trollPoints: 8e17, hopium: 1e12, knowledge: 1, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: -2.5e7, delusionPerSecond: 0, yachtMoneyPerSecond: -1.3e7, trollPointsPerSecond: -4e7, hopiumPerSecond: -75, knowledgePerSecond: 0.0027, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: -2.5e7, delusionPerSecond: 0, yachtMoneyPerSecond: -1.3e7, trollPointsPerSecond: -4e7, hopiumPerSecond: -75, knowledgePerSecond: 0.0028, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/all_your_base.jpg`,
         hoverOverwrite: `Xy'løth Q'värk, F'näürg zxÿl-gørh'tha! Z'qúol b'zhåk vi'krêth, nx'tuöl j'dä!`,
         achievement: 'Build a Base',
@@ -513,7 +513,7 @@ const upgrades = [
     {
         name: `NGU Idle`,
         cost: { copium: 8e17, delusion: 3.5e17, yachtMoney: 3.5e17, trollPoints: 8e17, hopium: 1e12, knowledge: 6e7, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 9.9e7, delusionPerSecond: 9.9e7, yachtMoneyPerSecond: 9.9e7, trollPointsPerSecond: 2.2e8, hopiumPerSecond: 840, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 2.2e8, delusionPerSecond: 9.9e7, yachtMoneyPerSecond: 9.9e7, trollPointsPerSecond: 2.2e8, hopiumPerSecond: 880, knowledgePerSecond: 0, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/ngu_idle.jpg`,
         message: `Congratulations on unlocking the "NGU Idle" upgrade! This upgrade is a tribute to one of the greatest idle games ever. NGU Idle, known for its deep mechanics and quirky humor, has set a high standard in the idle game genre.<br><br>Here's to celebrating a game that has set a high bar for idle games everywhere. Enjoy the nostalgia and the boost it brings to your Degens Idle journey -- you may now watch all your Numbers Go Up!`,
     },
@@ -533,7 +533,7 @@ const upgrades = [
     {
         name: `Honest Work`,
         cost: { copium: 0, delusion: 0, yachtMoney: 1.6e18, trollPoints: 0, hopium: 4.2e13, knowledge: 2.25e8, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 6.4e6, delusionPerSecond: 1.9e7, yachtMoneyPerSecond: 9.6e6, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0.00088, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 6.4e6, delusionPerSecond: 2.3e7, yachtMoneyPerSecond: 9.6e6, trollPointsPerSecond: 0, hopiumPerSecond: 0, knowledgePerSecond: 0.0009, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/honest_work.jpg`,
     },
     {
@@ -557,7 +557,7 @@ const upgrades = [
     {
         name: `First Pizza Meme`,
         cost: { copium: 2.5e19, delusion: 0, yachtMoney: 2.5e19, trollPoints: 5e19, hopium: 2e14, knowledge: 0, power: 0, serenity: 0 },
-        earnings: { copiumPerSecond: 8.5e7, delusionPerSecond: 0, yachtMoneyPerSecond: -1e7, trollPointsPerSecond: 9.5e7, hopiumPerSecond: 0, knowledgePerSecond: 0.0026, powerPerSecond: 0, serenityPerSecond: 0 },
+        earnings: { copiumPerSecond: 8.5e7, delusionPerSecond: 0, yachtMoneyPerSecond: -1e7, trollPointsPerSecond: 9.7e7, hopiumPerSecond: 0, knowledgePerSecond: 0.0026, powerPerSecond: 0, serenityPerSecond: 0 },
         img: `imgs/first_pizza_meme.jpg`,
     },
     {

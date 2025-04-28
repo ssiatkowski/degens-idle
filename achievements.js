@@ -28,6 +28,13 @@ const achievements = [
         type: 'freebie',
     },
     {
+        name: 'Watch Trailer',
+        isUnlocked: false,
+        hoverText: 'watch the game trailer',
+        img: 'imgs/achievements/watch_trailer.jpg',
+        type: 'freebie',
+    },
+    {
         name: 'Grasshopper',
         isUnlocked: false,
         hoverText: 'buy some upgrades',

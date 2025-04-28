@@ -1,129 +1,76 @@
+/* style.css */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #111;
-    color: #eee;
-    margin: 0;
-    padding: 0;
-  }
-  
-  header, footer {
-    background-color: #222;
-    padding: 10px;
-    text-align: center;
-  }
-  
-  header h1 {
-    margin: 0;
-    font-size: 2.5em;
-  }
-  
-  main {
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-  }
-  
-  #game {
-    background-color: #333;
-    padding: 20px;
-    border-radius: 8px;
-    width: 400px;
-    text-align: center;
-  }
-  
-  #stats p,
-  #actions p {
-    margin: 10px 0;
-  }
-  
-  button {
-    background-color: #444;
-    color: #eee;
-    border: none;
-    padding: 10px 20px;
-    margin: 5px;
-    border-radius: 4px;
-    font-size: 1em;
-    cursor: pointer;
-    transition: background-color 0.2s;
-  }
-  
-  button:hover {
-    background-color: #555;
-  }
-  
-  button:active {
-    background-color: #666;
-  }
-  
-  /* Prestige buttons: ensure each is on its own line */
-  #prestige > div {
-    margin-bottom: 8px;
-  }
-  
-  /* Style for the upgrade button when affordable */
-  .affordable {
-    border: 2px solid #0f0;
-  }
-  
-  /* Custom tooltip for messages at the bottom */
-  #customTooltip {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #222;
-    padding: 10px 20px;
-    border-radius: 5px;
-    opacity: 0;
-    transition: opacity 0.5s;
-    color: #fff;
-    z-index: 1000;
-  }
-  
-  /* Modal styles for final enlightenment */
-  .modal {
-    display: none; /* Hidden by default */
-    position: fixed;
-    z-index: 2000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.7);
-  }
-  
-  .modal-content {
-    background-color: #333;
-    margin: 15% auto;
-    padding: 20px;
-    border-radius: 8px;
-    width: 80%;
-    max-width: 600px;
-    color: #eee;
-  }
-  
-  .modal-content h2 {
-    margin-top: 0;
-  }
-  
-  .modal-content a {
-    color: #4ca3dd;
-    text-decoration: none;
-  }
-  
-  .modal-content a:hover {
-    text-decoration: underline;
-  }
-  
-  .modal-content button {
-    background-color: #800;
-    margin-top: 20px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    color: #fff;
-    cursor: pointer;
-  }
-  
+  font-family: Arial, sans-serif;
+  background-color: #111;
+  color: #eee;
+  margin: 0; padding: 0;
+}
+header, footer {
+  background-color: #222; padding: 10px; text-align: center;
+}
+main {
+  padding: 20px; display: flex; justify-content: center;
+}
+#game {
+  background-color: #333; padding: 20px;
+  border-radius: 8px; width: 600px; text-align: center;
+}
+#stats p, #actions p { margin: 6px 0; }
+button {
+  background-color: #444; color: #eee; border: none;
+  padding: 10px 16px; margin: 4px; border-radius: 4px;
+  font-size: 1em; cursor: pointer; transition: background-color 0.2s;
+}
+button:hover { background-color: #555; }
+button:active { background-color: #666; }
+.affordable { border: 2px solid #0f0; }
+.prestige-row {
+  display: flex; align-items: center; margin-bottom: 8px;
+}
+.prestige-row button { flex-shrink: 0; }
+.prestigeDesc {
+  margin-left: 12px; font-size: 0.85em; color: #ccc; text-align: left;
+}
+#customTooltip {
+  position: fixed; bottom: 20px; left: 50%;
+  transform: translateX(-50%);
+  background-color: #222; padding: 10px 20px;
+  border-radius: 5px; opacity: 0; transition: opacity 0.5s;
+  color: #fff; z-index: 1000;
+}
+.modal {
+  display: none; position: fixed; z-index: 2000;
+  left: 0; top: 0; width: 100%; height: 100%;
+  background-color: rgba(0,0,0,0.7); overflow: auto;
+}
+.modal-content {
+  background-color: #333; margin: 15% auto;
+  padding: 20px; border-radius: 8px; width: 80%;
+  max-width: 600px; color: #eee;
+}
+.modal-content h2 { margin-top: 0; }
+.modal-content a {
+  color: #4ca3dd; text-decoration: none;
+}
+.modal-content a:hover { text-decoration: underline; }
+.modal-content button {
+  background-color: #800; margin-top: 20px;
+  padding: 10px 20px; border: none; border-radius: 4px;
+  color: #fff; cursor: pointer;
+}
+
+/* make Restart red and full-width under auto-buy */
+.restart-container {
+  margin-top: 8px;
+}
+#restartButton {
+  background-color: #b00;
+}
+#restartButton:hover {
+  background-color: #d00;
+}
+
+/* reuse .modal/.modal-content but tweak confirmation buttons */
+#confirmRestartModal .modal-content button {
+  margin: 0 8px;
+}
