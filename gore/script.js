@@ -240,8 +240,8 @@ function updateDisplay() {
   } else {
     autoBtn.style.display = '';
     if (!state.autoBuyUnlocked) {
-      autoBtn.disabled    = !state.rebirthPoints.gte(5);
-      autoBtn.textContent = 'Unlock Auto-Buy (5 Rebirths)';
+      autoBtn.disabled    = !state.revolutionPoints.gte(10);
+      autoBtn.textContent = 'Unlock Auto-Buy (10 Green Revolutions)';
     } else {
       autoBtn.disabled    = false;
       autoBtn.textContent = state.autoBuyEnabled
