@@ -74,3 +74,74 @@ button:active { background-color: #666; }
 #confirmRestartModal .modal-content button {
   margin: 0 8px;
 }
+
+button.unaffordable {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+  /* Goofy, colorful modal styling */
+  #finalModal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    backdrop-filter: blur(8px);
+    animation: fadeIn 0.5s ease-out;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+  }
+  #finalModal .modal-content {
+    position: relative;
+    background: linear-gradient(135deg, #ff00ff, #00ffff);
+    border: 8px dashed #fff;
+    border-radius: 20px;
+    width: 80%;
+    max-width: 800px;
+    margin: 5% auto;
+    padding: 30px;
+    color: #222;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(0,0,0,0.5);
+    animation: popIn 0.4s ease-out;
+  }
+  #finalModal h2 {
+    font-size: 3rem;
+    margin-bottom: 0.2em;
+    text-shadow: 2px 2px #000;
+  }
+  #finalModal p {
+    font-size: 1.1rem;
+    line-height: 1.4;
+    margin: 0.8em 0;
+  }
+  #finalModal .slop-display {
+    font-size: 2rem;
+    margin: 1em 0;
+    color: #0f0;
+    text-shadow: 1px 1px #000;
+  }
+  #finalModal a {
+    color: #ff0;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  #finalModal button {
+    margin-top: 1.5em;
+    padding: 0.8em 1.5em;
+    font-size: 1.2rem;
+    background: #424347;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    animation: wobble 1s infinite alternate;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0 } to { opacity: 1 }
+  }
+  @keyframes popIn {
+    from { transform: scale(0.8) } to { transform: scale(1) }
+  }
+  @keyframes wobble {
+    from { transform: rotate(-2deg) } to { transform: rotate(2deg) }
+  }
