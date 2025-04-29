@@ -261,7 +261,7 @@ function getClimateBulk() {
   return calcBulkLinear(
     state.gorePoints,
     costOneClimate(),
-    new Decimal(1)
+    new Decimal(0.25)
   );
 }
 
@@ -279,7 +279,11 @@ function getRebirthBulk() {
   return calcBulkLinear(
     state.climatePoints,
     costOneRebirth(),
-    new Decimal(1)
+    state.rebirthScaling2Unlocked
+    ? new Decimal(0.2)
+    : state.rebirthScalingUnlocked
+      ? new Decimal(1)
+      : new Decimal(5)
   );
 }
 
