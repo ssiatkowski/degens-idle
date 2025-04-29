@@ -594,7 +594,7 @@ function updateDisplay() {
         state.revolutionPoints.times(0.05)
       )
     )} Slop production)<br>` +
-    `(+${formatNum(totalBoostPct)}% flat to each Climate Change’s Slop boost)`;
+    `(+${formatNum(totalBoostPct)}% to each Climate Change’s Slop boost)`;
 
   // 4) Cosmic Rebirth: Gore/sec = rebirthPoints (cubed if Cosmic Gore unlocked)
   const goreRate = state.cosmicGoreUnlocked
@@ -605,7 +605,7 @@ function updateDisplay() {
     `(x${formatNum(
       state.rebirthPoints.times(0.3).plus(1)
     )} Slop production)<br>` +
-    `(+${formatNum(state.rebirthPoints)}% flat to each Al Gore’s Slop boost)<br>` +
+    `(+${formatNum(state.rebirthPoints)}% to each Al Gore’s Slop boost)<br>` +
     `(+${formatNum(goreRate)} Al Gores / second)`;
 
   // 5) Temporal Awakening: +5% slop & shows capped % boost per Revolution
