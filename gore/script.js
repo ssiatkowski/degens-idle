@@ -863,7 +863,7 @@ function restartGame() {
     }
     if (state.transcendentAwakeningUnlocked) {
       state.awakeningPoints = state.awakeningPoints.plus(
-        state.aiSlop.pow(1/3)
+        state.aiSlop.pow(1/4)
       );
     }
   }, 1000);
