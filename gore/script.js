@@ -74,6 +74,10 @@ function initializeState() {
     greenCheapUnlocked: false,
     transcendentAwakeningUnlocked: false,
     cosmicGoreUnlocked: false,
+    finalActionUnlocked: false,
+    finalAction2Unlocked: false,
+    finalAction3Unlocked: false,
+    finalAction4Unlocked: false,
   };
 }
 
@@ -103,7 +107,11 @@ function saveState() {
     alGoreCheapUnlocked: state.alGoreCheapUnlocked,
     greenCheapUnlocked: state.greenCheapUnlocked,
     transcendentAwakeningUnlocked: state.transcendentAwakeningUnlocked,
-    cosmicGoreUnlocked: state.cosmicGoreUnlocked
+    cosmicGoreUnlocked: state.cosmicGoreUnlocked,
+    finalActionUnlocked: state.finalActionUnlocked,
+    finalAction2Unlocked: state.finalAction2Unlocked,
+    finalAction3Unlocked: state.finalAction3Unlocked,
+    finalAction4Unlocked: state.finalAction4Unlocked,
   }));
 }
 
@@ -136,6 +144,10 @@ function loadState() {
     state.greenCheapUnlocked = o.greenCheapUnlocked;
     state.transcendentAwakeningUnlocked = o.transcendentAwakeningUnlocked;
     state.cosmicGoreUnlocked = o.cosmicGoreUnlocked;
+    state.finalActionUnlocked = o.finalActionUnlocked;
+    state.finalAction2Unlocked = o.finalAction2Unlocked;
+    state.finalAction3Unlocked = o.finalAction3Unlocked;
+    state.finalAction4Unlocked = o.finalAction4Unlocked;
   } catch {
     console.error("Failed to load state, starting fresh.");
   }
@@ -155,15 +167,50 @@ function resetProgress(full = false) {
 
 // 7) Bulk-buy helpers
 function calcBulkGeometric(resource, base, factor, currentLevel) {
-  let n = 0, total = new Decimal(0);
-  while (true) {
-    const cost = base.times(Decimal.pow(factor, currentLevel + n)).floor();
-    if (!resource.gte(total.plus(cost))) break;
-    total = total.plus(cost);
-    n++;
+  const one = new Decimal(1);
+  const f    = new Decimal(factor);
+  const fcL  = f.pow(currentLevel);
+  const inv  = f.minus(one);
+
+  // total cost for buying n items starting at level currentLevel:
+  //    S(n) = base·f^currentLevel · (f^n − 1)/(f − 1)
+  function totalCost(n) {
+    return base
+      .times(fcL)
+      .times(f.pow(n).minus(one))
+      .div(inv)
+      .floor();
   }
-  return { count: n, cost: total };
+
+  // if you can’t even afford the first one:
+  const firstCost = base.times(fcL).floor();
+  if (!resource.gte(firstCost)) {
+    return { count: 0, cost: new Decimal(0) };
+  }
+
+  // find an upper bound for n by doubling
+  let low  = new Decimal(0);
+  let high = new Decimal(1);
+  while (totalCost(high).lte(resource)) {
+    high = high.times(2);
+  }
+
+  // binary search between [low, high) for the max n
+  while (high.minus(low).gt(one)) {
+    const mid     = low.plus(high).div(2).floor();
+    const costMid = totalCost(mid);
+    if (costMid.lte(resource)) {
+      low = mid;
+    } else {
+      high = mid;
+    }
+  }
+
+  const n    = low.toNumber();
+  const cost = totalCost(low);
+  return { count: n, cost };
 }
+
 
 // new, constant-time linear bulk calculator
 function calcBulkLinear(resource, firstCost, increment) {
@@ -210,10 +257,15 @@ function costOneGore() {
 }
 
 function costOneClimate() {
+  // finalAction2Unlocked removes all scaling
+  if (state.finalAction2Unlocked) {
+    return BASE_CLIMATE_COST;
+  }
   return BASE_CLIMATE_COST.plus(
     state.climatePoints.div(4).floor()
   );
 }
+
 
 function costOneRevolution() {
   if (state.greenCheapUnlocked) return BASE_REVOLUTION_COST;
@@ -224,7 +276,10 @@ function costOneRevolution() {
 
 
 function costOneRebirth() {
-  // default ÷5, after first unlock ÷1, after second unlock ÷0.2
+  // finalAction2Unlocked removes all scaling
+  if (state.finalAction2Unlocked) {
+    return BASE_REBIRTH_COST;
+  }
   const factor = state.rebirthScaling2Unlocked
     ? new Decimal(0.2)
     : state.rebirthScalingUnlocked
@@ -234,6 +289,7 @@ function costOneRebirth() {
     state.rebirthPoints.times(factor)
   );
 }
+
 
 function costOneAwakening() {
   if (state.sloppyAwakeningUnlocked) {
@@ -471,12 +527,62 @@ function updateDisplay() {
     cgCont.style.display = '';
     cgBtn.disabled = false;
     cgBtn.classList.toggle('unaffordable',
-      state.revolutionPoints.lt(new Decimal('5e210'))
+      state.revolutionPoints.lt(new Decimal('5.55e55'))
     );
   } else {
     cgCont.style.display = 'none';
   }
+
+  // show the final thank-you button only after Cosmic Gore is unlocked
+  const faCont = document.getElementById('finalActionContainer');
+  if (state.cosmicGoreUnlocked && !state.finalActionUnlocked) {
+    const faBtn = document.getElementById('finalActionButton');
+    faCont.style.display = '';
+    faBtn.disabled = false;
+    faBtn.classList.toggle('unaffordable',
+      state.aiSlop.lt(new Decimal('3.33e333'))
+    );
+  } else {
+    faCont.style.display = 'none';
+  }
+
+  const fa2Cont = document.getElementById('finalAction2Container');
+  if (state.finalActionUnlocked && !state.finalAction2Unlocked) {
+    const fa2Btn = document.getElementById('finalAction2Button');
+    fa2Cont.style.display = '';
+    fa2Btn.disabled = false;
+    fa2Btn.classList.toggle('unaffordable',
+      state.awakeningPoints.lt(new Decimal('1.11e111'))
+    );
+  } else {
+    fa2Cont.style.display = 'none';
+  }
   
+  const fa3Cont = document.getElementById('finalAction3Container');
+  if (state.finalAction2Unlocked && !state.finalAction3Unlocked) {
+    const fa3Btn = document.getElementById('finalAction3Button');
+    fa3Cont.style.display = '';
+    fa3Btn.disabled = false;
+    fa3Btn.classList.toggle('unaffordable',
+      state.gorePoints.lt(new Decimal('1e50'))
+    );
+  } else {
+    fa3Cont.style.display = 'none';
+  }
+
+  // Final Action 4: square GR/sec
+  const fa4Cont = document.getElementById('finalAction4Container');
+  if (state.finalAction3Unlocked && !state.finalAction4Unlocked) {
+    const fa4Btn = document.getElementById('finalAction4Button');
+    fa4Cont.style.display = '';
+    fa4Btn.disabled = false;
+    fa4Btn.classList.toggle('unaffordable',
+      state.rebirthPoints.lt(new Decimal('666e21'))
+    );  
+  } else {
+    fa4Cont.style.display = 'none';
+  }
+
 
 
   // Al Gore
@@ -537,7 +643,7 @@ function updateDisplay() {
   // Enlightenment
   {
     const btn = document.getElementById("prestigeEnlightenmentButton");
-    const ec  = Decimal.pow(69, 420);
+    const ec  = Decimal.pow(10, 420).times(6.9);
     if (state.awakeningPoints.gte(ec)) {
       btn.innerHTML = "Enlightenment<br>(Ready!)";
       btn.style.backgroundColor = "#00aaff";
@@ -545,7 +651,7 @@ function updateDisplay() {
     } else {
       btn.innerHTML =
         `Enlightenment<br>` +
-        `(Need ${formatNum(ec)} Awakenings; You have ${formatNum(state.awakeningPoints)})`;
+        `Need 6.9e420 Temporal Awakenings`;
       btn.style.backgroundColor = "#555";
       btn.style.boxShadow       = "none";
     }
@@ -566,7 +672,10 @@ function updateDisplay() {
   // 2) Climate Reset: base 25% + (1% + cappedAwaks*1%) per Revolution
   const baseClimateRate = new Decimal(0.25);
   const grBase          = new Decimal(0.01);
-  const cappedAwaks     = Decimal.min(state.awakeningPoints, new Decimal(1e6));
+  const awakenCap = state.finalActionUnlocked
+  ? new Decimal('3e30')
+  : new Decimal(1e6);
+  const cappedAwaks = Decimal.min(state.awakeningPoints, awakenCap);
   const extraPerAwak    = state.awakeningBoostUnlocked
     ? cappedAwaks.times(grBase)
     : new Decimal(0);
@@ -610,20 +719,20 @@ function updateDisplay() {
 
   // 5) Temporal Awakening: +5% slop & shows capped % boost per Revolution
   const baseMultiplier = state.awakeningPoints.plus(1);
-  const grPerSec       = state.awakeningPoints;
+  const grPerSec = state.awakeningPoints;
   let html =
     `Resets Level → Temporal Awakening<br>` +
     `(x${formatNum(baseMultiplier)} Slop production)<br>` +
     `(+${formatNum(grPerSec)} Green Revolutions / second)`;
   if (state.awakeningBoostUnlocked) {
-    const capNoteTA = state.awakeningPoints.gt(1e6) ? " (capped)" : "";
+    const capNoteTA = state.awakeningPoints.gt(state.finalActionUnlocked ? new Decimal('3e30') : new Decimal(1e6)) ? " (capped)" : "";
     html += `<br>(+${formatNum(cappedAwaks)}% to each Climate Change per Revolution${capNoteTA})`;
   }
   document.getElementById("descAwakening").innerHTML = html;
 
   // 6) Enlightenment remains static
   document.getElementById("descEnlightenment").innerHTML =
-    `Become Enlightened<br>(cost: 69^420 Awakenings)`;
+    `Become Enlightened<br>(or something like that)`;
 
 
   saveState();
@@ -641,7 +750,11 @@ function calculateSlopRate() {
   // Climate
   const baseClimateRate = new Decimal(0.25);
   const grBase          = new Decimal(0.01);
-  const cappedAwaks     = Decimal.min(state.awakeningPoints, new Decimal(1e6));
+  // allow huge cap if finalActionUnlocked
+  const awakenCap = state.finalActionUnlocked
+    ? new Decimal('3e30')
+    : new Decimal(1e6);
+  const cappedAwaks = Decimal.min(state.awakeningPoints, awakenCap);
   const extraPerAwak    = state.awakeningBoostUnlocked
     ? cappedAwaks.times(grBase)
     : new Decimal(0);
@@ -694,7 +807,11 @@ function generateSlop() {
   const baseClimateRate = new Decimal(0.25);
   const grBase          = new Decimal(0.01);
   // cap awakenings at 1e6
-  const cappedAwaks     = Decimal.min(state.awakeningPoints, new Decimal(1e6));
+  // allow huge cap if finalActionUnlocked
+  const awakenCap = state.finalActionUnlocked
+    ? new Decimal('3e30')
+    : new Decimal(1e6);
+  const cappedAwaks = Decimal.min(state.awakeningPoints, awakenCap);
   const extraPerAwak    = state.awakeningBoostUnlocked
     ? cappedAwaks.times(grBase)
     : new Decimal(0);
@@ -748,6 +865,18 @@ function generateSlop() {
     }
   }
 
+  if (state.finalAction3Unlocked) {
+    // simulate clicks on all bulk-buy buttons
+    [
+      'upgradeButton',
+      'prestigeGoreButton',
+      'prestigeClimateButton',
+      'prestigeRevolutionButton',
+      'prestigeRebirthButton',
+      'prestigeAwakeningButton'
+    ].forEach(id => document.getElementById(id).click());
+  }
+
   updateDisplay();
 }
 
@@ -782,7 +911,9 @@ function prestigeAlGore() {
     state.aiSlop = state.aiSlop.minus(cost);
     resetProgress();
   }
-  showCustomTooltip(`+${count} Al Gores`);
+  if (!state.finalAction3Unlocked) {
+    showCustomTooltip(`+${formatNum(new Decimal(count))} Al Gores`);
+  }
 }
 
 function prestigeClimate() {
@@ -793,7 +924,9 @@ function prestigeClimate() {
     state.gorePoints    = state.gorePoints.minus(cost);
     resetProgress();
   }
-  showCustomTooltip(`+${count} Climate Changes`);
+  if (!state.finalAction3Unlocked) {
+    showCustomTooltip(`+${formatNum(new Decimal(count))} Climate Changes`);
+  }
 }
 
 function prestigeRevolution() {
@@ -804,7 +937,9 @@ function prestigeRevolution() {
     state.climatePoints = state.climatePoints.minus(cost);
     resetProgress();
   }
-  showCustomTooltip(`+${count} Green Revolutions`);
+  if (!state.finalAction3Unlocked) {
+    showCustomTooltip(`+${formatNum(new Decimal(count))} Green Revolutions`);
+  }
 }
 
 function prestigeCosmicRebirth() {
@@ -815,20 +950,26 @@ function prestigeCosmicRebirth() {
     state.climatePoints  = state.climatePoints.minus(cost);
     resetProgress(true);
   }
-  showCustomTooltip(`+${count} Cosmic Rebirths`);
+  if (!state.finalAction3Unlocked) {
+    showCustomTooltip(`+${formatNum(new Decimal(count))} Cosmic Rebirths`);
+  }
 }
 
 function prestigeAwakening() {
   const { count, cost } = getAwakeningBulk();
   if (count === 0) return showCustomTooltip("Not enough Rebirths!");
   state.awakeningPoints = state.awakeningPoints.plus(count);
-  state.rebirthPoints   = state.rebirthPoints.minus(cost);
-  resetProgress();
-  showCustomTooltip(`+${count} Temporal Awakenings`);
+  if (!state.transcendentAwakeningUnlocked) {
+    state.rebirthPoints   = state.rebirthPoints.minus(cost);
+    resetProgress();
+  }
+  if (!state.finalAction3Unlocked) {
+    showCustomTooltip(`+${formatNum(new Decimal(count))} Temporal Awakenings`);
+  }
 }
 
 function prestigeEnlightenment() {
-  const ec = Decimal.pow(69,420);
+  const ec = Decimal.pow(10,420).times(6.9);
   if (!state.awakeningPoints.gte(ec)) {
     return showCustomTooltip("Not enough Awakenings!");
   }
@@ -859,12 +1000,20 @@ function restartGame() {
       state.gorePoints = state.gorePoints.plus(payoff);
     }
     if (state.awakeningPoints.gt(0)) {
-      state.revolutionPoints = state.revolutionPoints.plus(state.awakeningPoints);
+      // old: state.revolutionPoints = state.revolutionPoints.plus(state.awakeningPoints);
+      const gain = state.awakeningPoints;
+      state.revolutionPoints = state.revolutionPoints.plus(gain);
     }
     if (state.transcendentAwakeningUnlocked) {
-      state.awakeningPoints = state.awakeningPoints.plus(
-        state.aiSlop.pow(1/4)
-      );
+      if (state.finalAction4Unlocked) {
+        state.awakeningPoints = state.awakeningPoints.plus(
+          state.aiSlop.pow(1/4).times(5e55)
+        );
+      } else {
+        state.awakeningPoints = state.awakeningPoints.plus(
+          state.aiSlop.pow(1/4)
+        );
+      }
     }
   }, 1000);
 
@@ -989,19 +1138,57 @@ function restartGame() {
     updateDisplay();
   });
   document.getElementById('cosmicGoreButton').addEventListener('click', () => {
-    const cost = new Decimal('5e210');
+    const cost = new Decimal('5.55e55');
     if (state.revolutionPoints.lt(cost)) {
-      return showCustomTooltip('Need 5e210 Green Revolutions!');
+      return showCustomTooltip('Need 5.55e55 Green Revolutions!');
     }
     state.revolutionPoints   = state.revolutionPoints.minus(cost);
     state.cosmicGoreUnlocked = true;
     showCustomTooltip('Cosmic Gore unlocked!');
     updateDisplay();
   });
+  document.getElementById('finalActionButton').addEventListener('click', () => {
+    const cost = new Decimal('3.33e333');
+    if (state.aiSlop.lt(cost)) {
+      return showCustomTooltip('Need 3.33e333 AI Slop!');
+    }
+    state.finalActionUnlocked = true;
+    showCustomTooltip('Thank you! Temporal Awakening cap is now 3e30.');
+    updateDisplay();
+  });
+  document.getElementById('finalAction2Button').addEventListener('click', () => {
+    const cost = new Decimal('1.11e111');
+    if (state.awakeningPoints.lt(cost)) {
+      return showCustomTooltip('Need 1.11e111 Temporal Awakenings!');
+    }
+    state.awakeningPoints        = state.awakeningPoints.minus(cost);
+    state.finalAction2Unlocked   = true;
+    showCustomTooltip('All Climate & Rebirth scaling removed! Enjoy infinite simplicity.');
+    updateDisplay();
+  });
+  document.getElementById('finalAction3Button').addEventListener('click', () => {
+    const cost = new Decimal('1e50');
+    if (state.gorePoints.lt(cost)) {
+      return showCustomTooltip('Need 1e50 Al Gores!');
+    }
+    state.gorePoints        = state.gorePoints.minus(cost);
+    state.finalAction3Unlocked = true;
+    showCustomTooltip('Purchase-All unlocked! Sit back and watch it go.');
+    updateDisplay();
+  });
+  document.getElementById('finalAction4Button').addEventListener('click', () => {
+    // 666Sx = 666 × 10^21
+    const cost = new Decimal('666e21');
+    if (state.rebirthPoints.lt(cost)) {
+      return showCustomTooltip('Need 666Sx Cosmic Rebirths!');
+    }
+    state.rebirthPoints        = state.rebirthPoints.minus(cost);
+    state.finalAction4Unlocked = true;
+    showCustomTooltip('x5e55 Temporal Awakenings / second! Watch those numbers explode!');
+    updateDisplay();
+  });
 
-  
 
-  
   
   
 
