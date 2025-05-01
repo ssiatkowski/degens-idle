@@ -118,14 +118,40 @@ const suffixes = ["","K","M","B","T","Qa","Qi","Sx","Sp","Oc","No","Dc"];
 function formatNumber(d) {
     const n = new Decimal(d);
     if (n.isZero()) return "0";
-    const [mant,exp] = n.toExponential(2).split("e");
-    const idx = Math.floor(parseInt(exp, 10) / 3);
-    if (idx < suffixes.length) {
-        const scaled = n.dividedBy(new Decimal(10).pow(idx*3));
-        return scaled.toFixed(2).replace(/\.?0+$/, "") + suffixes[idx];
+  
+    const sign = n.isNegative() ? "-" : "";
+    const abs  = n.abs();
+  
+    // — SMALL NUMBERS: dynamically choose decimals so you see at least
+    //   the first significant digit.
+    if (abs.lessThan(1)) {
+      // get exponent from scientific form, e.g. "1.00e-3" → exp = -3
+      const [, expStr] = abs.toExponential().split("e");
+      const exp = parseInt(expStr, 10);
+      // at least 2 places, or enough to show the first sig digit: (−exp + 1)
+      const places = Math.max(2, -exp + 1);
+      return sign + abs.toFixed(places).replace(/\.?0+$/, "");
     }
-    return n.toExponential(2);
-};
+  
+    // — BIGGER NUMBERS: use suffixes as before
+    const [mant, expStr] = abs.toExponential(2).split("e");
+    const exp = parseInt(expStr, 10);
+    const idx = Math.floor(exp / 3);
+  
+    if (idx > 0 && idx < suffixes.length) {
+      const scaled = abs.dividedBy(new Decimal(10).pow(idx * 3));
+      return sign + scaled.toFixed(2).replace(/\.?0+$/, "") + suffixes[idx];
+    }
+  
+    if (idx <= 0) {
+      return sign + abs.toFixed(2).replace(/\.?0+$/, "");
+    }
+  
+    // fallback for enormous values
+    return sign + abs.toExponential(2);
+}
+  
+  
 
 function formatPct(value) {
     // value is already in percent form (e.g. 0.005 for 0.005%)

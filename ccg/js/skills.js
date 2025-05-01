@@ -11,7 +11,7 @@ window.skills = [
     purchased: false
   },
   {
-    id: 1001,
+    id: 1002,
     name: "Unlock Bugdom Realm",
     description: "Black Hole pokes can now give cards from Bugdom realm.",
     cost: { realmId: 2, currencyId: "coral", amount: 1e5 },
@@ -179,17 +179,18 @@ function buySkill(id) {
   const s    = skillMap[id];
   const cur  = state.currencies[s.cost.currencyId];
   const cost = new Decimal(s.cost.amount);
+  console.log("buySkill", s, formatNumber(cur), formatNumber(cost));
   if (cur.lessThan(cost)) return;
   state.currencies[s.cost.currencyId] = cur.minus(cost);
 
   s.purchased = true;
   s.unlocked  = true;
   if (s.name === "Unlock Sea World Realm"){
-    realmMap[2].unlocked = true;
+    realms[1].unlocked = true;
     initCardsFilters();
   }
   if (s.name === "Unlock Bugdom Realm"){
-    realmMap[3].unlocked = true;
+    realms[2].unlocked = true;
     initCardsFilters();
   }
   if (s.name === "More Cards"){
