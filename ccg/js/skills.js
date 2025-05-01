@@ -1,0 +1,205 @@
+// js/skills.js
+
+// --- SKILLS DATA ---
+window.skills = [
+  {
+    id: 1001,
+    name: "Unlock Sea World Realm",
+    description: "Black Hole pokes can now give cards from Sea World realm.",
+    cost: { realmId: 1, currencyId: "stone", amount: 100000 },
+    unlocked: false,
+    purchased: false
+  },
+  {
+    id: 1001,
+    name: "Unlock Bugdom Realm",
+    description: "Black Hole pokes can now give cards from Bugdom realm.",
+    cost: { realmId: 2, currencyId: "coral", amount: 1e5 },
+    unlocked: false,
+    purchased: false
+  },
+  {
+    id: 2001,
+    name: "More Cards",
+    description: "+1 to max cards per poke.",
+    cost: { realmId: 1, currencyId: "stone", amount: 1e6 },
+    unlocked: false,
+    purchased: false
+  },
+  {
+    id: 2002,
+    name: "More Cards 2",
+    description: "+1 to max cards per poke.",
+    cost: { realmId: 2, currencyId: "coral", amount: 1e6 },
+    unlocked: false,
+    purchased: false
+  },
+  {
+    id: 3001,
+    name: "Faster Poke",
+    description: "Decrease base cooldown for Rocks by 0.5s.",
+    cost: { realmId: 1, currencyId: "stone", amount: 10000 },
+    unlocked: false,
+    purchased: false
+  },
+  {
+    id: 3002,
+    name: "Faster Poke 2",
+    description: "Decrease base cooldown for Sea World by 2s.",
+    cost: { realmId: 2, currencyId: "coral", amount: 10000 },
+    unlocked: false,
+    purchased: false
+  },
+];
+
+// --- FILTER STATE ---
+const skillFilterState = {
+  purchased:     'all',  // 'all' | 'purchased' | 'unpurchased'
+  affordability: 'all',  // 'all' | 'affordable' | 'unaffordable'
+  lock:          'all'   // 'all' | 'locked' | 'unlocked'
+};
+
+// --- RENDER FILTER CONTROLS ---
+function initSkillsFilters() {
+  const container = document.getElementById('skills-list');
+  container.querySelectorAll('.skills-filters').forEach(el => el.remove());
+
+  const filters = document.createElement('div');
+  filters.className = 'skills-filters';
+
+  const purchasedOpts = ['unpurchased','all','purchased'];
+  const affordOpts    = ['all','affordable','unaffordable'];
+  const lockOpts      = ['unlocked','all','locked'];
+
+  const makeToggle = (labelMap, opts, key) => {
+    const btn = document.createElement('button');
+    btn.className = 'filter-btn';
+    btn.dataset.filterKey = key;
+    btn.dataset.idx = opts.indexOf(skillFilterState[key]);
+    btn.textContent = labelMap[ skillFilterState[key] ];
+    btn.onclick = () => {
+      let idx = (parseInt(btn.dataset.idx) + 1) % opts.length;
+      btn.dataset.idx = idx;
+      skillFilterState[key] = opts[idx];
+      btn.textContent = labelMap[ opts[idx] ];
+      renderSkillsTab();
+    };
+    return btn;
+  };
+
+  const purchasedLabels = {
+    all: 'All',
+    purchased: 'Purchased',
+    unpurchased: 'Unpurchased'
+  };
+  const affordLabels = {
+    all: 'All',
+    affordable: 'Affordable',
+    unaffordable: 'Unaffordable'
+  };
+  const lockLabels = {
+    all: 'All',
+    locked: 'Locked',
+    unlocked: 'Unlocked'
+  };
+
+  skillFilterState.purchased     = 'unpurchased';
+  skillFilterState.affordability = 'all';
+  skillFilterState.lock          = 'unlocked';
+
+  filters.append(
+    makeToggle(purchasedLabels, purchasedOpts, 'purchased'),
+    makeToggle(affordLabels,    affordOpts,    'affordability'),
+    makeToggle(lockLabels,      lockOpts,      'lock')
+  );
+  container.prepend(filters);
+}
+
+// --- RENDER SKILLS GRID ---
+function renderSkillsTab() {
+  const list = document.getElementById('skills-list');
+  // clear old tiles and grid (keep filters)
+  list.querySelectorAll('.skill-tile, .skills-grid').forEach(el => el.remove());
+
+  const grid = document.createElement('div');
+  grid.className = 'skills-grid';
+
+  skills.forEach(s => {
+    const realmUnlocked = realmMap[s.cost.realmId].unlocked;
+    const owned         = s.purchased;
+    const curAmt        = state.currencies[s.cost.currencyId] || new Decimal(0);
+    const affordable    = curAmt.greaterThanOrEqualTo(s.cost.amount);
+    const locked        = !realmUnlocked;
+
+    // filters
+    if (skillFilterState.purchased==='purchased'   && !owned)      return;
+    if (skillFilterState.purchased==='unpurchased' &&  owned)      return;
+    if (skillFilterState.lock==='locked'     && !locked)           return;
+    if (skillFilterState.lock==='unlocked'   &&  locked)           return;
+    if (skillFilterState.affordability==='affordable'   && !affordable)   return;
+    if (skillFilterState.affordability==='unaffordable' &&  affordable)   return;
+
+    const tile = document.createElement('button');
+    tile.className = 'skill-tile';
+    tile.style.borderColor = realmColors[s.cost.realmId];
+
+    if (locked)           tile.classList.add('locked');
+    else if (owned)       tile.classList.add('purchased');
+    else if (!affordable) tile.classList.add('unaffordable');
+    else                  tile.classList.add('affordable');
+
+    // build content
+    const iconName = s.cost.currencyId + '.png';
+    tile.innerHTML = `
+      <h4>${s.name}</h4>
+      <p class="skill-desc">${locked ? '' : s.description}</p>
+      ${locked ? '' : `
+      <div class="skill-cost">
+        ${formatNumber(s.cost.amount)}
+        <img src="assets/images/currencies/${iconName}" class="icon"/>
+      </div>`}
+    `;
+
+    if (!locked && !owned && affordable) {
+      tile.onclick = () => {
+        buySkill(s.id);
+        s.purchased = true;
+        renderSkillsTab();
+      };
+    }
+
+    grid.appendChild(tile);
+  });
+
+  list.appendChild(grid);
+}
+
+// --- PURCHASE LOGIC ---
+function buySkill(id) {
+  const s    = skillMap[id];
+  const cur  = state.currencies[s.cost.currencyId];
+  const cost = new Decimal(s.cost.amount);
+  if (cur.lessThan(cost)) return;
+  state.currencies[s.cost.currencyId] = cur.minus(cost);
+
+  s.purchased = true;
+  s.unlocked  = true;
+  if (s.name === "Unlock Sea World Realm"){
+    realmMap[2].unlocked = true;
+    initCardsFilters();
+  }
+  if (s.name === "Unlock Bugdom Realm"){
+    realmMap[3].unlocked = true;
+    initCardsFilters();
+  }
+  if (s.name === "More Cards"){
+    state.effects.maxCardsPerPoke += 1;
+  }
+  if (s.name === "Faster Poke"){
+    realms[0].cooldown -= 0.5;
+    updatePokeFilterStats();
+  }
+
+  renderSkillsTab();
+  updateCurrencyBar();
+}

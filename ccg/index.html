@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Incremental Card Game</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <!-- Currency Bar -->
+  <div id="currency-bar"></div>
+  <!-- Cooldown bar pinned under the currency bar -->
+  <div id="global-cooldown-bar">
+    <div id="global-cooldown-fill"></div>
+  </div>
+
+  <!-- Navigation Tabs -->
+  <nav id="tabs">
+    <button id="tab-btn-hole"    class="tab-btn active">Hole</button>
+    <button id="tab-btn-cards"   class="tab-btn">Cards</button>
+    <button id="tab-btn-skills"  class="tab-btn">Skills</button>
+    <button id="tab-btn-merchant"class="tab-btn">Merchant</button>
+    <button id="tab-btn-stats"   class="tab-btn">Stats</button>
+  </nav>
+
+  <!-- HOLE TAB -->
+  <div id="tab-content-hole" class="tab-content">
+    <div id="poke-grid">
+      <div class="poke-hole-wrapper">
+        <div id="hole-button" class="hole-button">
+          <span id="cooldown-counter"></span>
+        </div>
+      </div>
+    
+      <div class="poke-controls">
+        <div id="poke-filters" class="poke-filters-container"></div>
+        <div id="poke-filter-stats" class="poke-filter-stats">
+          <table>
+            <tr>
+              <td><strong>Poke Cooldown</strong></td>
+              <td id="cooldown-val"></td>
+            </tr>
+            <tr>
+              <td><strong>Undiscovered Cards</strong></td>
+              <td id="undiscovered-val"></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div id="draw-area" class="draw-area"></div>
+    </div>
+  </div>
+  
+  
+
+  <div id="tab-content-cards" class="tab-content" style="display:none;">
+    <h2>Cards Collection</h2>
+    <div id="cards-filters">
+    </div>
+    <div id="cards-list"></div>
+  </div>
+
+  <div id="tab-content-skills" class="tab-content" style="display:none;">
+    <h2>Skills</h2>
+    <ul id="skills-list"></ul>
+  </div>
+
+  <div id="tab-content-merchant" class="tab-content" style="display:none;">
+    <h2>Traveling Merchant</h2>
+    <p>Refresh in <span id="merchant-timer-value">30</span>s</p>
+    <div id="merchant-offers"></div>
+  </div>
+
+  <div id="tab-content-stats" class="tab-content" style="display:none;">
+  </div>
+
+  <!-- Libs -->
+  <script src="https://cdn.jsdelivr.net/npm/decimal.js@10.3.1/decimal.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+
+  <!-- Core Data -->
+  <script src="js/cards.js"></script>
+  <script src="js/skills.js"></script>
+
+  <!-- Split-out Logic -->
+  <script src="js/resources.js"></script>
+  <script src="js/effects.js"></script>
+  <script src="js/statistics.js"></script>
+  <script src="js/merchant.js"></script>
+
+  <!-- Main Behavior -->
+  <script src="js/main.js"></script>
+</body>
+</html>
