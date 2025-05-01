@@ -212,8 +212,9 @@ function performPoke() {
 
   // build realm weight map
   const realmWeights = {};
-  realms.forEach(r => {
-    if (r.unlocked) realmWeights[r.id] = r.pokeWeight;
+  state.selectedRealms.forEach(rid => {
+    const r = realmMap[rid];
+    if (r.unlocked) realmWeights[rid] = r.pokeWeight;
   });
 
   // pick actual cards
@@ -509,6 +510,7 @@ function openModal(cardId) {
   if (canAfford) {
     btn.onclick = e => {
       e.stopPropagation();
+      state.currencies[costCurrency] = state.currencies[costCurrency].minus(cost);
       levelUp(cardId);
       updateCurrencyBar();
       openModal(cardId); // re-open to refresh numbers

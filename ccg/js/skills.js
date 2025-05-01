@@ -188,10 +188,12 @@ function buySkill(id) {
   if (s.name === "Unlock Sea World Realm"){
     realms[1].unlocked = true;
     initCardsFilters();
+    renderRealmFilters();
   }
   if (s.name === "Unlock Bugdom Realm"){
     realms[2].unlocked = true;
     initCardsFilters();
+    renderRealmFilters();
   }
   if (s.name === "More Cards"){
     state.effects.maxCardsPerPoke += 1;
