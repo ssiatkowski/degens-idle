@@ -6,7 +6,7 @@ window.skills = [
     id: 1001,
     name: "Unlock Sea World Realm",
     description: "Black Hole pokes can now give cards from Sea World realm.",
-    cost: { realmId: 1, currencyId: "stone", amount: 100000 },
+    cost: { realmId: 1, currencyId: "stone", amount: 5e4 },
     unlocked: false,
     purchased: false
   },
@@ -22,15 +22,15 @@ window.skills = [
     id: 2001,
     name: "More Cards",
     description: "+1 to max cards per poke.",
-    cost: { realmId: 1, currencyId: "stone", amount: 1e6 },
+    cost: { realmId: 1, currencyId: "stone", amount: 1e5 },
     unlocked: false,
     purchased: false
   },
   {
     id: 2002,
     name: "More Cards 2",
-    description: "+1 to max cards per poke.",
-    cost: { realmId: 2, currencyId: "coral", amount: 1e6 },
+    description: "+2 to max cards per poke.",
+    cost: { realmId: 2, currencyId: "coral", amount: 2e5 },
     unlocked: false,
     purchased: false
   },
@@ -38,7 +38,7 @@ window.skills = [
     id: 3001,
     name: "Faster Poke",
     description: "Decrease base cooldown for Rocks by 0.5s.",
-    cost: { realmId: 1, currencyId: "stone", amount: 10000 },
+    cost: { realmId: 1, currencyId: "stone", amount: 5000 },
     unlocked: false,
     purchased: false
   },
@@ -47,6 +47,22 @@ window.skills = [
     name: "Faster Poke 2",
     description: "Decrease base cooldown for Sea World by 2s.",
     cost: { realmId: 2, currencyId: "coral", amount: 10000 },
+    unlocked: false,
+    purchased: false
+  },
+  {
+    id: 4001,
+    name: "Not Less Cards",
+    description: "+1 to min cards per poke.",
+    cost: { realmId: 1, currencyId: "stone", amount: 1e7 },
+    unlocked: false,
+    purchased: false
+  },
+  {
+    id: 4002,
+    name: "Not Less Cards 2",
+    description: "+2 to min cards per poke.",
+    cost: { realmId: 2, currencyId: "coral", amount: 2e7 },
     unlocked: false,
     purchased: false
   },
@@ -175,34 +191,62 @@ function renderSkillsTab() {
 }
 
 // --- PURCHASE LOGIC ---
-function buySkill(id) {
-  const s    = skillMap[id];
-  const cur  = state.currencies[s.cost.currencyId];
-  const cost = new Decimal(s.cost.amount);
-  console.log("buySkill", s, formatNumber(cur), formatNumber(cost));
-  if (cur.lessThan(cost)) return;
-  state.currencies[s.cost.currencyId] = cur.minus(cost);
+function applySkill(id, skipCost = false) {
+  console.log("applySkill", id, skipCost);
+  const s = skillMap[id];
+  if (!s || s.purchased) return;
 
+  // 1) optionally pay
+  if (!skipCost) {
+    const cur    = state.currencies[s.cost.currencyId];
+    const amount = new Decimal(s.cost.amount);
+    if (cur.lessThan(amount)) return;
+    state.currencies[s.cost.currencyId] = cur.minus(amount);
+  }
+
+  // 2) mark purchased & unlocked
   s.purchased = true;
   s.unlocked  = true;
-  if (s.name === "Unlock Sea World Realm"){
-    realms[1].unlocked = true;
-    initCardsFilters();
-    renderRealmFilters();
-  }
-  if (s.name === "Unlock Bugdom Realm"){
-    realms[2].unlocked = true;
-    initCardsFilters();
-    renderRealmFilters();
-  }
-  if (s.name === "More Cards"){
-    state.effects.maxCardsPerPoke += 1;
-  }
-  if (s.name === "Faster Poke"){
-    realms[0].cooldown -= 0.5;
-    updatePokeFilterStats();
+
+  // 3) apply its effect
+  switch (s.id) {
+    case 1001: // Unlock Sea World Realm
+      realms[1].unlocked = true;
+      initCardsFilters(); renderRealmFilters();
+      break;
+    case 1002: // Unlock Bugdom Realm
+      realms[2].unlocked = true;
+      initCardsFilters(); renderRealmFilters();
+      break;
+    case 2001: // More Cards
+      state.effects.maxCardsPerPoke += 1;
+      break;
+    case 2002:
+      state.effects.maxCardsPerPoke += 2;
+      break;
+    case 3001: // Faster Poke
+      realms[s.cost.realmId - 1].cooldown -= 0.5;
+      updatePokeFilterStats();
+      break;
+    case 3002:
+      realms[s.cost.realmId - 1].cooldown -= 2;
+      updatePokeFilterStats();
+      break;
+    case 2001: // Not Less Cards
+      state.effects.minCardsPerPoke += 1;
+      break;
+    case 2002:
+      state.effects.minCardsPerPoke += 2;
+      break;
+    // add more cases as-needed…
   }
 
+  // 4) refresh UI
   renderSkillsTab();
   updateCurrencyBar();
+}
+
+// replace your old buySkill:
+function buySkill(id) {
+  applySkill(id, /*skipCost=*/false);
 }

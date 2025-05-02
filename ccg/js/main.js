@@ -49,7 +49,12 @@ function loadState() {
   try {
     const obj = JSON.parse(raw);
     obj.unlockedRealms.forEach(rid  => realmMap[rid].unlocked = true);
-    obj.purchasedSkills.forEach(sid => skillMap[sid].unlocked = true);
+    obj.unlockedSkills.forEach(sid => skillMap[sid].unlocked = true);
+    if (Array.isArray(obj.purchasedSkills)) {
+      obj.purchasedSkills.forEach(sid => {
+        applySkill(Number(sid), /*skipCost=*/true);
+      });
+    }
     Object.entries(obj.currencies).forEach(([cid,val])=>{
       state.currencies[cid] = new Decimal(val);
     });
@@ -71,7 +76,8 @@ function loadState() {
 function saveState() {
   const obj = {
     unlockedRealms:  realms.filter(r=>r.unlocked).map(r=>r.id),
-    purchasedSkills: skills.filter(s=>s.unlocked).map(s=>s.id),
+    unlockedSkills: skills.filter(s=>s.unlocked).map(s=>s.id),
+    purchasedSkills: skills.filter(s=>s.purchased).map(s=>s.id),
     currencies:      {},
     unlockedCurrencies: state.unlockedCurrencies,
     ownedCards:      {},
@@ -91,7 +97,6 @@ function saveState() {
   localStorage.setItem(SAVE_KEY, JSON.stringify(obj));
 }
 setInterval(saveState, 10000);
-loadState();
 
 // js/main.js (excerpt)
 
@@ -137,15 +142,6 @@ cards.forEach(c => {
     realmRarityCardMap[c.realm][c.rarity] = [];
   }
   realmRarityCardMap[c.realm][c.rarity].push(c.id);
-});
-
-cards.forEach(c => {
-  c.lastAppliedEffects = {};
-  if (c.quantity > 0) {
-    const cur = computeCardEffects(c);
-    applyEffectsDelta(cur, +1);
-    c.lastAppliedEffects = cur;
-  }
 });
 
 
@@ -200,95 +196,119 @@ function showTab(tab) {
 // --- POKE & REVEAL ---
 
 function performPoke() {
-  
+  // reset UI & state
   drawArea.innerHTML = '';
   revealedCount = 0;
   state.flipsDone = false;
 
+  // how many cards to draw this poke
   const e     = state.effects;
   const draws = Math.floor(
     Math.random() * (e.maxCardsPerPoke - e.minCardsPerPoke + 1)
   ) + e.minCardsPerPoke;
 
-  // build realm weight map
+  // build realm → weight map
   const realmWeights = {};
   state.selectedRealms.forEach(rid => {
     const r = realmMap[rid];
     if (r.unlocked) realmWeights[rid] = r.pokeWeight;
   });
 
-  // pick actual cards
-  const picks = [];
-  for (let i = 0; i < draws; i++) {
-    const realmId = +weightedPick(realmWeights);
-    const rr      = realmMap[realmId];
-    const rarity  = weightedPick(rr.rarityWeights);
-    const pool    = realmRarityCardMap[realmId][rarity];
-    picks.push(pool[Math.floor(Math.random() * pool.length)]);
-  }
+  // ————— BULK SAMPLING —————
+  // 1) sample how many draws per realm
+  const realmIds       = Object.keys(realmWeights).map(Number);
+  const realmWeightArr = realmIds.map(id => realmWeights[id]);
+  const realmDrawCounts = multinomialSample(draws, realmWeightArr);
 
-  // group duplicates
-  const counts = {};
-  picks.forEach(id => counts[id] = (counts[id]||0) + 1);
-  currentPackCount = Object.keys(counts).length;
+  // 2) for each realm, sample rarity counts, then individual card counts
+  const picksCounts = {};
+  realmIds.forEach((realmId, idx) => {
+    const nRealm = realmDrawCounts[idx];
+    if (!nRealm) return;
 
-  // now award each unique card
-  Object.entries(counts).forEach(([cid, count]) => {
-    const c  = cardMap[cid];
+    const rr = realmMap[realmId];
+    const rarities = Object.keys(rr.rarityWeights);
+    const rarityWeightArr = rarities.map(r => rr.rarityWeights[r]);
+    const rarityDrawCounts = multinomialSample(nRealm, rarityWeightArr);
+
+    rarities.forEach((rarity, rIdx) => {
+      const nRare = rarityDrawCounts[rIdx];
+      if (!nRare) return;
+
+      const pool = realmRarityCardMap[realmId][rarity];
+      // uniform weights across that pool
+      const poolCounts = multinomialSample(nRare, Array(pool.length).fill(1));
+
+      pool.forEach((cid, cIdx) => {
+        const cCount = poolCounts[cIdx];
+        if (cCount) picksCounts[cid] = (picksCounts[cid] || 0) + cCount;
+      });
+    });
+  });
+
+  // how many unique cards to reveal
+  currentPackCount = Object.keys(picksCounts).length;
+
+  // ————— AWARD & RENDER each unique card —————
+  Object.entries(picksCounts).forEach(([cid, count]) => {
+    const c       = cardMap[cid];
     const wasNew  = c.quantity === 0;
     const oldTier = c.tier;
 
     // 1) increment total pokes
     state.stats.totalPokes++;
 
-    // 2) award *only* the global per-poke rates
+    // 2) global per-poke currencies
     Object.entries(state.effects.currencyPerPoke).forEach(([curId, rate]) => {
       if (!rate || state.currencies[curId] == null) return;
       state.currencies[curId] =
         state.currencies[curId].plus(new Decimal(rate).times(count));
     });
 
-    // 3) actually give the card(s) to the player (maintains quantity, tier, level,
-    //    and triggers any tier‐or‐level effects exactly when those milestones cross)
+    // 3) give the cards (handles quantity, tier/level effects)
     giveCard(cid, count);
     const newTier = c.tier;
 
-    // 4) render tile
+    // 4) build & append the DOM tile
     const rr    = realmMap[c.realm];
     const outer = document.createElement('div');
     outer.className = 'card-outer';
+
     const inner = document.createElement('div');
     inner.className = 'card-inner';
     inner.dataset.id = cid;
 
+    // back
     const back = document.createElement('img');
     back.className = 'card-face back';
     back.src = `assets/images/card_backs/${rr.name.toLowerCase().replace(/ /g,'_')}_card_back.jpg`;
 
+    // front
     const front = document.createElement('div');
     front.className = 'card-face front';
     front.style.borderColor = realmColors[rr.id];
-    const frameImg = document.createElement('img');
+
+    const frameImg   = document.createElement('img');
     frameImg.className = 'card-frame';
     frameImg.src = `assets/images/frames/${c.rarity}_frame.jpg`;
+
     const contentImg = document.createElement('img');
     contentImg.className = 'card-image';
     contentImg.src = `assets/images/cards/${slugify(c.name)}.jpg`;
 
     front.append(frameImg, contentImg);
 
-    //  - TIER ICON -
-    if(c.tier > 0) {
+    if (c.tier > 0) {
       const tierIcon = document.createElement('img');
       tierIcon.className = 'tier-icon';
       tierIcon.src = `assets/images/tiers/tier_${c.tier}.png`;
       tierIcon.alt = `Tier ${c.tier}`;
-      front.appendChild(tierIcon);
 
       const lvlLabel = document.createElement('div');
       lvlLabel.className   = 'level-label';
       lvlLabel.textContent = `Lvl: ${formatNumber(c.level)}`;
-      front.appendChild(lvlLabel);
+
+      front.append(tierIcon, lvlLabel);
     }
 
     if (count > 1) {
@@ -298,15 +318,13 @@ function performPoke() {
       front.append(badge);
     }
 
-    // overlay badges
     if (wasNew || c.isNew) {
       c.isNew = true;
       const badge = document.createElement('div');
       badge.className = 'reveal-badge new-badge';
       badge.textContent = 'NEW';
       front.append(badge);
-    }
-    else if (newTier > oldTier) {
+    } else if (newTier > oldTier) {
       const badge = document.createElement('div');
       badge.className = 'reveal-badge tierup-badge';
       badge.textContent = 'TIER UP';
@@ -317,14 +335,12 @@ function performPoke() {
     outer.append(inner);
     drawArea.append(outer);
 
-    // 1) hover to reveal
+    // hover to flip
     outer.addEventListener('mouseenter', () => {
       if (!inner.classList.contains('revealed')) {
-        // flip it
         inner.classList.add('revealed');
         revealedCount++;
-    
-        // once flip (transform) finishes, do spin or shake
+
         const onFlipEnd = e => {
           if (e.propertyName === 'transform') {
             if (wasNew) {
@@ -337,9 +353,8 @@ function performPoke() {
           }
           inner.removeEventListener('transitionend', onFlipEnd);
         };
-    
         inner.addEventListener('transitionend', onFlipEnd);
-    
+
         if (revealedCount === currentPackCount) {
           state.flipsDone = true;
           tryEnableHole();
@@ -347,19 +362,17 @@ function performPoke() {
       }
     });
 
-    // 2) click to open modal once revealed
+    // click to open modal
     outer.addEventListener('click', () => {
-      if (inner.classList.contains('revealed')) {
-        openModal(cid);
-      }
+      if (inner.classList.contains('revealed')) openModal(cid);
     });
   });
 
   startCooldown();
-  // disable hole until all revealed
   holeBtn.disabled = true;
   holeBtn.classList.add('disabled');
 }
+
 
 function tryEnableHole() {
   if (state.cooldownDone && state.flipsDone) {
@@ -500,8 +513,8 @@ function openModal(cardId) {
   const ico = curEntry.icon || 'question.png';
 
   const btn = document.createElement('button');
-  btn.innerHTML = `Level Up (${costTxt}
-    <img class="icon" src="assets/images/currencies/${ico}"/>)`;
+  btn.innerHTML = `Level Up: ${costTxt}
+    <img class="icon" src="assets/images/currencies/${ico}"/>`;
 
   // can afford?
   const canAfford = state.currencies[costCurrency].greaterThanOrEqualTo(cost);
@@ -519,6 +532,13 @@ function openModal(cardId) {
   }
   right.append(btn);
 
+  // --- REALM DISPLAY ---
+  const realmLine = document.createElement('p');
+  realmLine.className = 'modal-rarity';
+  realmLine.innerHTML =
+    `Realm: <span style="color:${color}">${rr.name}</span>`;
+  right.appendChild(realmLine);
+
   // --- RARITY DISPLAY ---
   const rarityLine = document.createElement('p');
   rarityLine.className = 'modal-rarity';
@@ -532,10 +552,16 @@ function openModal(cardId) {
   rarityLine.appendChild(span);
   right.appendChild(rarityLine);
 
-// --- EFFECT LINES ---
-const effectsList = Array.isArray(c.baseEffects)
-  ? c.baseEffects
-  : [ c.baseEffect ].filter(e => e && e.type);
+  // --- EFFECTS HEADER ---
+  const effHeader = document.createElement('p');
+  effHeader.className = 'modal-effects-header';
+  effHeader.textContent = 'Effects';
+  right.appendChild(effHeader);
+
+  // --- EFFECT LINES ---
+  const effectsList = Array.isArray(c.baseEffects)
+    ? c.baseEffects
+    : [ c.baseEffect ].filter(e => e && e.type);
 
   if (effectsList.length) {
     const effContainer = document.createElement('div');
@@ -875,23 +901,69 @@ function calculateCooldown() {
 
 
 function updatePokeFilterStats() {
-  // 1) Estimate cooldown time
-  let cooldownSum = calculateCooldown();
-  document.getElementById('cooldown-val').textContent = formatDuration(cooldownSum);
+  const container = document.getElementById('poke-filter-stats');
+  container.innerHTML = '';  // clear old
 
-  // 2) Count total undiscovered cards in selected realms
+  // 1) Poke cooldown
+  const cooldownSum = calculateCooldown();
+  const cooldownTxt = formatDuration(cooldownSum);
+
+  // 2) Undiscovered cards
   let undiscovered = 0;
   state.selectedRealms.forEach(rid => {
     cards.forEach(c => {
       if (c.realm === rid && c.quantity === 0) undiscovered++;
     });
   });
-  document.getElementById('undiscovered-val').textContent = undiscovered;
+
+  // 3) Realm odds
+  // build weight map & total
+  const weights = state.selectedRealms
+    .filter(rid => realmMap[rid].unlocked)
+    .map(rid => realmMap[rid].pokeWeight);
+  const totalWeight = weights.reduce((a,b)=>a+b, 0);
+
+  // 4) assemble table HTML
+  let html = `<table class="poke-stats-table">
+    <tr><th>Poke Cooldown</th><td>${cooldownTxt}</td></tr>
+    <tr><th>Undiscovered Cards</th><td>${undiscovered}</td></tr>
+    <tr><th colspan="2">Realm Odds</th></tr>`;
+
+  state.selectedRealms.forEach(rid => {
+    const realm = realmMap[rid];
+    if (!realm.unlocked) return;
+    const w = realm.pokeWeight;
+    const pct = totalWeight > 0
+      ? (w/totalWeight*100).toFixed(2)
+      : '0.00';
+    html += `
+      <tr>
+        <td>${realm.name}</td>
+        <td>${pct}%</td>
+      </tr>`;
+  });
+
+  html += `</table>`;
+  container.innerHTML = html;
 }
+
 
 
 // --- INIT AFTER DOM READY ---
 document.addEventListener('DOMContentLoaded', ()=>{
+
+  loadState();
+
+  cards.forEach(c => {
+    c.lastAppliedEffects = {};
+    if (c.quantity > 0) {
+      const cur = computeCardEffects(c);
+      applyEffectsDelta(cur, +1);
+      c.lastAppliedEffects = cur;
+    }
+  });
+
+
   ['hole','cards','skills','merchant','stats'].forEach(t=>{
     document.getElementById(`tab-btn-${t}`).onclick = ()=> showTab(t);
   });

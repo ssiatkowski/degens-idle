@@ -6,42 +6,53 @@ window.EFFECT_NAMES = {
     currencyPerPoke:    "Currency / Poke",
     currencyPerSec:     "Currency / Sec",
     rarityWeightBonus:  "Rarity Weight Bonus",
-    rarityWeightMultiplier: "Rarity Weight Multiplier",
     cooldownDivider:    "Cooldown Divider",
 };
 
+// js/effects.js
+
 function computeCardEffects(c) {
-    // returns a map: { effectKey: totalValue }
     const effs = {};
     if (!c.baseEffects || c.tier === 0) return effs;
   
-    // Per‐effect in baseEffects[]
     c.baseEffects.forEach(def => {
-      let raw = def.value * c.level * Math.pow(2, c.tier - 1);
+      // pick the right per-tier multiplier
+      const scale = def.type === "cooldownDivider" ? 1.5 : 2;
+      const multiplier = Math.pow(scale, c.tier - 1);
+      const total = def.value * c.level * multiplier;
   
       switch (def.type) {
         case "minCardsPerPoke":
         case "maxCardsPerPoke":
+          // simple keys
+          effs[def.type] = (effs[def.type] || 0) + total;
+          break;
+  
         case "currencyPerPoke":
         case "currencyPerSec":
-        case "cooldownDivider":
-          const key = `${def.type}.${def.currency}`;
-          effs[key] = (effs[key] || 0) + def.value * c.level * Math.pow(2, c.tier - 1);
+          // currency effects still key by currency
+          const curKey = `${def.type}.${def.currency}`;
+          effs[curKey] = (effs[curKey] || 0) + total;
           break;
   
         case "rarityWeightBonus":
-          // keyed by realm & rarity
+          // still 2^ scaling here
           const rwKey = `rarityWeightBonus.${def.realm}.${def.rarity}`;
-          effs[rwKey] = (effs[rwKey] || 0) + def.value * c.level * Math.pow(2, c.tier - 1);
+          effs[rwKey] = (effs[rwKey] || 0) + total;
           break;
-
+  
+        case "cooldownDivider":
+          // now using 1.5^ scaling
+          effs.cooldownDivider = (effs.cooldownDivider || 0) + total;
+          break;
   
         default:
           console.warn("Unknown effect type:", def.type);
       }
     });
+  
     return effs;
-  }
+}
   
   // Apply (or remove) a delta of effects into the global state
   function applyEffectsDelta(deltaMap, sign = +1) {
@@ -52,20 +63,22 @@ function computeCardEffects(c) {
         case "minCardsPerPoke":
         case "maxCardsPerPoke":
         case "cooldownDivider":
-          E[parts[0]] = (E[parts[0]] || 0) + sign * v;
-          break;
+            E[parts[0]] = (E[parts[0]] || 0) + sign * v;
+            break;
   
         case "currencyPerPoke":
         case "currencyPerSec":
-          const cur = parts[1];
-          E[parts[0]][cur] = (E[parts[0]][cur] || 0) + sign * v;
-          break;
+            const cur = parts[1];
+            E[parts[0]][cur] = (E[parts[0]][cur] || 0) + sign * v;
+            break;
   
         case "rarityWeightBonus":
-          const realmId = parts[1], rarity = parts[2];
-          realmMap[realmId].rarityWeights[rarity] =
-            (realmMap[realmId].rarityWeights[rarity] || 0) + sign * v;
-          break;
+            const realmId = parts[1], rarity = parts[2];
+            const prev = realmMap[realmId].rarityWeights[rarity] || 0;
+            const updated = prev + sign * v;
+            realmMap[realmId].rarityWeights[rarity] = Math.max(1, updated);
+            break;
+            
       }
     });
   }

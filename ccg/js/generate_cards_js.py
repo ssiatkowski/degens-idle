@@ -31,7 +31,7 @@ def load_cards(csv_path):
             # Prepare effect dict
             effect = {"type": etype}
             # depending on type, assign args
-            if etype in ("minCardsPerPoke", "maxCardsPerPoke", "extraPoke", "bonusChance","rarityBoost"):
+            if etype in ("minCardsPerPoke", "maxCardsPerPoke", "cooldownDivider"):
                 # single value
                 val = row.get(f"effect{i}_arg1", "")
                 effect["value"] = float(val) if val else 0
@@ -62,7 +62,7 @@ def generate_js(cards, out_path):
 if __name__ == "__main__":
     # Update paths as needed
     csv_file = "cards.csv"
-    js_file = "cards_test.js"
+    js_file = "cards.js"
     cards = load_cards(csv_file)
     generate_js(cards, js_file)
     print(f"Generated {js_file} with {len(cards)} cards.")

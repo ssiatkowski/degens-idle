@@ -1,16 +1,16 @@
 
 // Define all available rarities in order of increasing quality
 window.rarities = [
-    "junk",
-    "basic",
-    "decent",
-    "fine",
-    "rare",
-    "epic",
-    "legendary",
-    "mythic",
-    "exotic",
-    "divine"
+    "junk",     // ~1 effect
+    "basic",    // ~1 effect
+    "decent",   // ~1 effect
+    "fine",     // ~2 effects
+    "rare",     // ~2 effects
+    "epic",     // ~2 effects
+    "legendary",// ~3 effects
+    "mythic",   // ~3 effects
+    "exotic",   // ~4 effects
+    "divine"    // ~5 effects
 ];
 
 window.realms = [
@@ -20,7 +20,7 @@ window.realms = [
         unlocked:   true,
         cooldown:  3,
         deselectMultiplier: 10,
-        pokeWeight: 1e10,
+        pokeWeight: 1e11,
         rarityWeights: {
         junk:      1e9,
         basic:     1e7,
@@ -47,7 +47,7 @@ window.realms = [
         decent:    1e11,
         fine:      1e9,
         rare:      1e7,
-        epic:      0,
+        epic:      1e5,
         legendary: 1,
         mythic:    0,
         exotic:    0,
@@ -58,7 +58,7 @@ window.realms = [
         id: 3,
         name:       "Bugdom",
         unlocked:   false,
-        cooldown:  100,
+        cooldown:  20,
         deselectMultiplier: 10,
         pokeWeight: 1e10,
         rarityWeights: {
@@ -94,22 +94,18 @@ window.realmColors = {
 };
     
 // Generate tier thresholds (powers of base)
-function genThresholds(base, count = 20) {
-    return Array.from({ length: count }, (_, i) => Math.pow(base, i));
-  }
-  
-// Expose tier thresholds for every rarity
 window.tierThresholds = {
-    junk:      genThresholds(4),
-    basic:     genThresholds(5),
-    decent:    genThresholds(8),
-    fine:      genThresholds(10),
-    rare:      genThresholds(15),
-    epic:      genThresholds(16),
-    legendary: genThresholds(20),
-    mythic:    genThresholds(25),
-    exotic:    genThresholds(50),
-    divine:    genThresholds(100)
+    //          1    2      3      4      5      6      7       8       9       10      11     12     13      14     15     16     17     18     19    20
+    junk:      [1,   10,  100,    250,   1000,  5000,  20000,  80000,  2.5e5,    6e5,     1e6,   2e6,  3e6,    4e6,    5e6,   6e6,   7e6,  8e6,    9e6,  1e7 ],
+    basic:     [1,   10,   69,    200,   690,   3000,  15000,  69000,   2e5,    6.9e5,    1e6,   2e6,  3e6,    4e6,    5e6,   6e6,  6.9e6, 8e6,    9e6,  1e7 ],
+    decent:    [1,   10,   42,    150,   420,   2000,  10000,  40000,    2e5,    4.2e5,   6e5,   8e5,  1e6,  2e6,    3e6,  4.2e6,  6e6,  8e6,    9e6,  1e7 ],
+    fine:      [1,   10,   25,     50,   100,    500,   5000,  20000,    1e5,     2e5,   5e5,   1e6,    5e6,  1e7,    2e7,    3e7,  4e7,  6e7,    8e7,  1e8 ],
+    rare:      [1,   5,    10,     25,    50,    100,   1000,   5000,    3e4,     1e5,   5e5,   1e6,    5e6,  1e7,    2e7,    3e7,  4e7,  6e7,    8e7,  1e8 ],
+    epic:      [1,   5,    10,     25,    50,    100,   1000,   5000,    3e4,     1e5,   5e5,   1e6,    2e6,  3e6,    5e6,    1e7,  3e7,  5e7,    7e7,  1e8 ],
+    legendary: [1,   5,    10,     20,    35,     80,    150,    300,    1e3,     1e4,   2e4,   1e5,    2e5,  1e6,    2e6,    1e7,  2e7,  1e8,    2e8,  1e9 ],
+    mythic:    [1,   4,     8,     16,    32,     64,    128,    256,    512,    1024,  2056,  4096,   8192, 16384,  32768,    1e5,  1e6,  1e7,   1e8,  1e9 ],
+    exotic:    [1,   3,     7,     15,    30,     60,    100,    200,    500,    1000,  2000,  4000,   8000, 16000,  32000,    1e5,  1e6,  1e7,   1e8,  1e9 ],
+    divine:    [1,   2,     3,     4,      5,     10,     20,    30,      40,     50,   100,   500,    1000,  5000,   1e4,     1e5,  1e6,  1e7,   1e8,  1e9 ],
   };
 
 // — Number formatting for currencies and costs —
@@ -190,3 +186,18 @@ const g = (num >> 8)  & 255;
 const b = num & 255;
 return `rgba(${r},${g},${b},${alpha})`;
 };
+
+function multinomialSample(N, weights) {
+    const total = weights.reduce((a,b) => a + b, 0);
+    const probs = weights.map(w => w/total);
+    const counts = Array(weights.length).fill(0);
+  
+    for (let i = 0; i < N; i++) {
+      let r = Math.random(), cum = 0;
+      for (let j = 0; j < probs.length; j++) {
+        cum += probs[j];
+        if (r < cum) { counts[j]++; break; }
+      }
+    }
+    return counts;
+}
