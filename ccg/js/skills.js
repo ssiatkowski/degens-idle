@@ -22,7 +22,7 @@ window.skills = [
     id: 2001,
     name: "More Cards",
     description: "+1 to max cards per poke.",
-    cost: { realmId: 1, currencyId: "stone", amount: 1e5 },
+    cost: { realmId: 1, currencyId: "stone", amount: 2e4 },
     unlocked: false,
     purchased: false
   },
@@ -30,7 +30,15 @@ window.skills = [
     id: 2002,
     name: "More Cards 2",
     description: "+2 to max cards per poke.",
-    cost: { realmId: 2, currencyId: "coral", amount: 2e5 },
+    cost: { realmId: 2, currencyId: "coral", amount: 2e4 },
+    unlocked: false,
+    purchased: false
+  },
+  {
+    id: 2003,
+    name: "More Cards 3",
+    description: "+3 to max cards per poke.",
+    cost: { realmId: 3, currencyId: "pollen", amount: 2e4 },
     unlocked: false,
     purchased: false
   },
@@ -46,7 +54,15 @@ window.skills = [
     id: 3002,
     name: "Faster Poke 2",
     description: "Decrease base cooldown for Sea World by 2s.",
-    cost: { realmId: 2, currencyId: "coral", amount: 10000 },
+    cost: { realmId: 2, currencyId: "coral", amount: 5000 },
+    unlocked: false,
+    purchased: false
+  },
+  {
+    id: 3003,
+    name: "Faster Poke 3",
+    description: "Decrease base cooldown for Sea World by 5s.",
+    cost: { realmId: 3, currencyId: "pollen", amount: 5000 },
     unlocked: false,
     purchased: false
   },
@@ -62,10 +78,34 @@ window.skills = [
     id: 4002,
     name: "Not Less Cards 2",
     description: "+2 to min cards per poke.",
-    cost: { realmId: 2, currencyId: "coral", amount: 2e7 },
+    cost: { realmId: 2, currencyId: "coral", amount: 1e7 },
     unlocked: false,
     purchased: false
   },
+  {
+    id: 4003,
+    name: "Not Less Cards 3",
+    description: "+2 to min cards per poke.",
+    cost: { realmId: 3, currencyId: "pollen", amount: 1e7 },
+    unlocked: false,
+    purchased: false
+  },
+  {
+    id: 5001,
+    name: "Nobody Likes Rocks",
+    description: "Rocks realm weight reduced by 5e10.",
+    cost: { realmId: 2, currencyId: "stone", amount: 1e8 },
+    unlocked: false,
+    purchased: false
+  },
+  {
+    id: 5002,
+    name: "The Sea Scares Me",
+    description: "Sea World realm weight reduced by 1e10.",
+    cost: { realmId: 3, currencyId: "coral", amount: 1e9 },
+    unlocked: false,
+    purchased: false
+  }
 ];
 
 // --- FILTER STATE ---
@@ -224,6 +264,9 @@ function applySkill(id, skipCost = false) {
     case 2002:
       state.effects.maxCardsPerPoke += 2;
       break;
+    case 2003:
+      state.effects.maxCardsPerPoke += 3;
+      break;
     case 3001: // Faster Poke
       realms[s.cost.realmId - 1].cooldown -= 0.5;
       updatePokeFilterStats();
@@ -232,11 +275,24 @@ function applySkill(id, skipCost = false) {
       realms[s.cost.realmId - 1].cooldown -= 2;
       updatePokeFilterStats();
       break;
-    case 2001: // Not Less Cards
+    case 3003:
+      realms[s.cost.realmId - 1].cooldown -= 5;
+      updatePokeFilterStats();
+      break;
+    case 4001: // Not Less Cards
       state.effects.minCardsPerPoke += 1;
       break;
-    case 2002:
+    case 4002:
       state.effects.minCardsPerPoke += 2;
+      break;
+    case 4003:
+      state.effects.minCardsPerPoke += 2;
+      break;
+    case 5001: // Nobody Likes Rocks
+      realms[0].pokeWeight -= 5e10;
+      break;
+    case 5002: // The Sea Scares Me
+      realms[1].pokeWeight -= 1e10;
       break;
     // add more cases as-needed…
   }

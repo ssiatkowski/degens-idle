@@ -38,7 +38,7 @@ window.realms = [
         id: 2,
         name:       "Sea World",
         unlocked:   false,
-        cooldown:  10,
+        cooldown:  7,
         deselectMultiplier: 10,
         pokeWeight: 3e10,
         rarityWeights: {

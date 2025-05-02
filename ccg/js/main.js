@@ -319,6 +319,7 @@ function performPoke() {
     }
 
     if (wasNew || c.isNew) {
+      initCardsFilters();
       c.isNew = true;
       const badge = document.createElement('div');
       badge.className = 'reveal-badge new-badge';
