@@ -13,77 +13,82 @@ window.rarities = [
     "divine"    // ~5 effects
 ];
 
+// 1) define your “master” rarity-weights
+const defaultRarityWeights = {
+  junk:      1e20,
+  basic:     1e18,
+  decent:    1e16,
+  fine:      1e14,
+  rare:      1e12,
+  epic:      1e10,
+  legendary: 1e8,
+  mythic:    1e6,
+  exotic:    1e3,
+  divine:    1,
+};
+
+// 1) base odds reduction for each rarity
+const RARITY_ODDS_BASE = {
+  junk:      1e14,
+  basic:     1e12,
+  decent:    1e10,
+  fine:      1e8,
+  rare:      1e6,
+  epic:      1e4,
+  legendary: 1e2,
+  mythic:    0.1,
+};
+
+// 2) minimum odds for each rarity
+const RARITY_ODDS_MIN = {
+  junk:      8e6,
+  basic:     4e6,
+  decent:    2e6,
+  fine:      1e6,
+  rare:      8e5,
+  epic:      4e5,
+  legendary: 2e5,
+  mythic:    1e5,
+};
+
+// 2) create your realms without individual rarityWeights
 window.realms = [
-    {
-        id: 1,
-        name:       "Rocks",
-        unlocked:   true,
-        cooldown:  3,
-        deselectMultiplier: 10,
-        pokeWeight: 1e11,
-        rarityWeights: {
-        junk:      1e9,
-        basic:     1e7,
-        decent:    1e5,
-        fine:      1e3,
-        rare:      1,
-        epic:      0,
-        legendary: 0,
-        mythic:    0,
-        exotic:    0,
-        divine:    0
-        }
-    },
-    {
-        id: 2,
-        name:       "Sea World",
-        unlocked:   false,
-        cooldown:  7,
-        deselectMultiplier: 10,
-        pokeWeight: 3e10,
-        rarityWeights: {
-        junk:      1e15,
-        basic:     1e13,
-        decent:    1e11,
-        fine:      1e9,
-        rare:      1e7,
-        epic:      1e5,
-        legendary: 1,
-        mythic:    0,
-        exotic:    0,
-        divine:    0
-        }
-    },
-    {
-        id: 3,
-        name:       "Bugdom",
-        unlocked:   false,
-        cooldown:  20,
-        deselectMultiplier: 10,
-        pokeWeight: 1e10,
-        rarityWeights: {
-        junk:      1e13,
-        basic:     1e11,
-        decent:    1e9,
-        fine:      1e7,
-        rare:      1e5,
-        epic:      1e3,
-        legendary: 1,
-        mythic:    0,
-        exotic:    0,
-        divine:    0
-        }
-    }
+  { id: 1, name: "Rocks",      unlocked: true,  cooldown: 3,  deselectMultiplier: 10, pokeWeight: 1e11 },
+  { id: 2, name: "Sea World",  unlocked: false, cooldown: 7,  deselectMultiplier: 10, pokeWeight: 3e10 },
+  { id: 3, name: "Bugdom",     unlocked: false, cooldown: 20, deselectMultiplier: 10, pokeWeight: 1e10 },
 ];
+
+// 3) give every realm its own copy of the default weights
+window.realms.forEach(r => {
+  r.rarityWeights = { ...defaultRarityWeights };
+});
+
+// 4) build a lookup of which rarities actually exist per realm
+const cardsByRealm = window.cards.reduce((acc, card) => {
+  acc[card.realm] = acc[card.realm] || new Set();
+  acc[card.realm].add(card.rarity);
+  return acc;
+}, {});
+
+// 5) zero out weights for any rarity not present in that realm’s cards
+window.realms.forEach(r => {
+  const present = cardsByRealm[r.id] || new Set();
+  for (const rarity in r.rarityWeights) {
+    if (!present.has(rarity)) {
+      r.rarityWeights[rarity] = 0;
+    }
+  }
+});
+
   
 
 window.currencies = [
-{ id: 'stone',       name: 'Stone',       icon: 'stone.png'       },
-{ id: 'rune',        name: 'Rune',        icon: 'rune.png'        },
-{ id: 'coral',       name: 'Coral',       icon: 'coral.png'       },
-{ id: 'pearl',       name: 'Pearl',       icon: 'pearl.png'       },
-{ id: 'pollen',      name: 'Pollen',      icon: 'pollen.png'      },
-{ id: 'royal_jelly', name: 'Royal Jelly', icon: 'royal_jelly.png' }
+{ id: 'stone',       name: 'Stone',       realm: 1, scarcity: 1,   icon: 'stone.png'       },
+{ id: 'rune',        name: 'Rune',        realm: 1, scarcity: 100, icon: 'rune.png'        },
+{ id: 'coral',       name: 'Coral',       realm: 2, scarcity: 1,   icon: 'coral.png'       },
+{ id: 'pearl',       name: 'Pearl',       realm: 2, scarcity: 100, icon: 'pearl.png'       },
+{ id: 'pollen',      name: 'Pollen',      realm: 3, scarcity: 1,   icon: 'pollen.png'      },
+{ id: 'royal_jelly', name: 'Royal Jelly', realm: 3, scarcity: 100, icon: 'royal_jelly.png' }
 ];
 
 
@@ -95,17 +100,17 @@ window.realmColors = {
     
 // Generate tier thresholds (powers of base)
 window.tierThresholds = {
-    //          1    2      3      4      5      6      7       8       9       10      11     12     13      14     15     16     17     18     19    20
-    junk:      [1,   10,  100,    250,   1000,  5000,  20000,  80000,  2.5e5,    6e5,     1e6,   2e6,  3e6,    4e6,    5e6,   6e6,   7e6,  8e6,    9e6,  1e7 ],
-    basic:     [1,   10,   69,    200,   690,   3000,  15000,  69000,   2e5,    6.9e5,    1e6,   2e6,  3e6,    4e6,    5e6,   6e6,  6.9e6, 8e6,    9e6,  1e7 ],
-    decent:    [1,   10,   42,    150,   420,   2000,  10000,  40000,    2e5,    4.2e5,   6e5,   8e5,  1e6,  2e6,    3e6,  4.2e6,  6e6,  8e6,    9e6,  1e7 ],
-    fine:      [1,   10,   25,     50,   100,    500,   5000,  20000,    1e5,     2e5,   5e5,   1e6,    5e6,  1e7,    2e7,    3e7,  4e7,  6e7,    8e7,  1e8 ],
-    rare:      [1,   5,    10,     25,    50,    100,   1000,   5000,    3e4,     1e5,   5e5,   1e6,    5e6,  1e7,    2e7,    3e7,  4e7,  6e7,    8e7,  1e8 ],
-    epic:      [1,   5,    10,     25,    50,    100,   1000,   5000,    3e4,     1e5,   5e5,   1e6,    2e6,  3e6,    5e6,    1e7,  3e7,  5e7,    7e7,  1e8 ],
-    legendary: [1,   5,    10,     20,    35,     80,    150,    300,    1e3,     1e4,   2e4,   1e5,    2e5,  1e6,    2e6,    1e7,  2e7,  1e8,    2e8,  1e9 ],
-    mythic:    [1,   4,     8,     16,    32,     64,    128,    256,    512,    1024,  2056,  4096,   8192, 16384,  32768,    1e5,  1e6,  1e7,   1e8,  1e9 ],
-    exotic:    [1,   3,     7,     15,    30,     60,    100,    200,    500,    1000,  2000,  4000,   8000, 16000,  32000,    1e5,  1e6,  1e7,   1e8,  1e9 ],
-    divine:    [1,   2,     3,     4,      5,     10,     20,    30,      40,     50,   100,   500,    1000,  5000,   1e4,     1e5,  1e6,  1e7,   1e8,  1e9 ],
+    //          1    2      3      4      5      6      7       8       9        10       11     12     13      14     15      16     17     18     19    20
+    junk:      [1,   10,  100,    250,   1000,  5000,  20000,  80000,  2.5e5,    6e5,     1e6,  8e6,    2e7,   5e7,    1e8,     3e8,  6e8,   8e8,    9e8,  1e9 ],
+    basic:     [1,   10,   69,    200,   690,   3000,  15000,  69000,   2e5,    6.9e5,    1e6,  5e6,    1e7,   4e7,   6.9e7,    2e8,  5e8,  6.9e8,   8e8,  1e9 ],
+    decent:    [1,   10,   42,    150,   420,   2000,  10000,  40000,    2e5,    4.2e5,   6e5,  3e6,    7e6,   2e7,    3e7,   4.2e7,  1e8,  4.2e8,  7.5e8, 1e9 ],
+    fine:      [1,   10,   25,     50,   100,    500,   5000,  20000,    1e5,     2e5,   5e5,   3e6,    5e6,  1e7,    2e7,     3e7,  8e7,   4e8,    5e8,  1e9 ],
+    rare:      [1,   5,    10,     25,    50,    100,   1000,   5000,    3e4,     1e5,   5e5,   2e6,    5e6,  1e7,    2e7,     3e7,  4e7,   3e8,    4e8,  1e9 ],
+    epic:      [1,   5,    10,     25,    50,    100,   1000,   5000,    3e4,     1e5,   5e5,   1e6,    2e6,  3e6,    5e6,     1e7,  3e7,   2e8,    3e8,  1e9 ],
+    legendary: [1,   5,    10,     20,    35,     80,    150,    300,    1e3,     1e4,   2e4,   1e5,    2e5,  1e6,    2e6,     1e7,  1e7,   1e8,    2e8,  1e9 ],
+    mythic:    [1,   4,     8,     16,    32,     64,    128,    256,    512,    1024,  2056,  4096,   8192, 16384,  32768,    1e5,  1e6,   1e7,    1e8,  1e9 ],
+    exotic:    [1,   3,     7,     15,    30,     60,    100,    200,    500,    1000,  2000,  4000,   8000, 16000,  32000,    1e5,  1e6,   1e7,    1e8,  1e9 ],
+    divine:    [1,   2,     3,     4,      5,     10,     20,    30,      40,     50,   100,    500,   1000,  5000,   1e4,     1e5,  1e6,   1e7,    1e8,  1e9 ],
   };
 
 // — Number formatting for currencies and costs —
@@ -147,6 +152,40 @@ function formatNumber(d) {
     return sign + abs.toExponential(2);
 }
   
+function formatQuantity(d) {
+  const n = new Decimal(d);
+  if (n.isZero()) return "0";
+
+  const abs = n.abs();
+  // get exponent from scientific form with 2 sig-figs
+  const [, expStr] = abs.toExponential(2).split("e");
+  const exp = parseInt(expStr, 10);
+  const idx = Math.floor(exp / 3);
+
+  // if we have a valid suffix
+  if (idx > 0 && idx < suffixes.length) {
+    // scale down
+    const scaled = abs.dividedBy(new Decimal(10).pow(idx * 3));
+    // choose decimals: <10→2, <100→1, else→0
+    let decimals;
+    if (scaled.lt(10))        decimals = 2;
+    else if (scaled.lt(100))  decimals = 1;
+    else                       decimals = 0;
+
+    let str = scaled
+      .toFixed(decimals)
+      .replace(/\.?0+$/, "");  // drop trailing zeros/decimal
+    return str + suffixes[idx];
+  }
+
+  // no suffix (small numbers)
+  if (idx <= 0) {
+    return abs.toFixed(0);
+  }
+
+  // fallback for enormous values
+  return abs.toExponential(2);
+}
   
 
 function formatPct(value) {

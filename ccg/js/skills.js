@@ -22,7 +22,7 @@ window.skills = [
     id: 2001,
     name: "More Cards",
     description: "+1 to max cards per poke.",
-    cost: { realmId: 1, currencyId: "stone", amount: 2e4 },
+    cost: { realmId: 1, currencyId: "stone", amount: 5e3 },
     unlocked: false,
     purchased: false
   },
@@ -46,7 +46,7 @@ window.skills = [
     id: 3001,
     name: "Faster Poke",
     description: "Decrease base cooldown for Rocks by 0.5s.",
-    cost: { realmId: 1, currencyId: "stone", amount: 5000 },
+    cost: { realmId: 1, currencyId: "stone", amount: 1000 },
     unlocked: false,
     purchased: false
   },
@@ -70,7 +70,7 @@ window.skills = [
     id: 4001,
     name: "Not Less Cards",
     description: "+1 to min cards per poke.",
-    cost: { realmId: 1, currencyId: "stone", amount: 1e7 },
+    cost: { realmId: 1, currencyId: "stone", amount: 1e6 },
     unlocked: false,
     purchased: false
   },
@@ -78,7 +78,7 @@ window.skills = [
     id: 4002,
     name: "Not Less Cards 2",
     description: "+2 to min cards per poke.",
-    cost: { realmId: 2, currencyId: "coral", amount: 1e7 },
+    cost: { realmId: 2, currencyId: "coral", amount: 1e6 },
     unlocked: false,
     purchased: false
   },
@@ -86,14 +86,14 @@ window.skills = [
     id: 4003,
     name: "Not Less Cards 3",
     description: "+2 to min cards per poke.",
-    cost: { realmId: 3, currencyId: "pollen", amount: 1e7 },
+    cost: { realmId: 3, currencyId: "pollen", amount: 1e6 },
     unlocked: false,
     purchased: false
   },
   {
     id: 5001,
     name: "Nobody Likes Rocks",
-    description: "Rocks realm weight reduced by 5e10.",
+    description: "Rocks realm deselect multiplier reduced by 50%.",
     cost: { realmId: 2, currencyId: "stone", amount: 1e8 },
     unlocked: false,
     purchased: false
@@ -101,7 +101,7 @@ window.skills = [
   {
     id: 5002,
     name: "The Sea Scares Me",
-    description: "Sea World realm weight reduced by 1e10.",
+    description: "Sea World realm deselect multiplier reduced by 50%.",
     cost: { realmId: 3, currencyId: "coral", amount: 1e9 },
     unlocked: false,
     purchased: false
@@ -289,10 +289,12 @@ function applySkill(id, skipCost = false) {
       state.effects.minCardsPerPoke += 2;
       break;
     case 5001: // Nobody Likes Rocks
-      realms[0].pokeWeight -= 5e10;
+      realms[0].deselectMultiplier -= 5;
+      updatePokeFilterStats();
       break;
     case 5002: // The Sea Scares Me
-      realms[1].pokeWeight -= 1e10;
+      realms[1].deselectMultiplier -= 5;
+      updatePokeFilterStats();
       break;
     // add more cases as-needed…
   }
