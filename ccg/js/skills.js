@@ -123,6 +123,22 @@ window.skills = [
     purchased: false
   },
   {
+    id: 3101,
+    name: "Even Faster Poke",
+    description: "Decrease base cooldown for Rocks by 0.5s.",
+    cost: { realmId: 3, currencyId: "pollen", amount: 1e5},
+    unlocked: false,
+    purchased: false
+  },
+  {
+    id: 3102,
+    name: "Even Faster Poke 2",
+    description: "Decrease base cooldown for Sea World by 2s.",
+    cost: { realmId: 4, currencyId: "egg", amount: 2e5},
+    unlocked: false,
+    purchased: false
+  },
+  {
     id: 4001,
     name: "Not Less Cards",
     description: "+1 to min cards per poke.",
@@ -496,6 +512,16 @@ function applySkill(id, skipCost = false) {
       break;
     case 3004:
       realms[s.cost.realmId - 1].cooldown -= 10;
+      updatePokeFilterStats();
+      renderRealmFilters();
+      break;
+    case 3101: // Even Faster Poke
+      realms[s.cost.realmId - 3].cooldown -= 0.5;
+      updatePokeFilterStats();
+      renderRealmFilters();
+      break;
+    case 3102:
+      realms[s.cost.realmId - 3].cooldown -= 2;
       updatePokeFilterStats();
       renderRealmFilters();
       break;
