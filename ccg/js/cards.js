@@ -196,6 +196,11 @@ window.cards = [
     "description": "Granite makes up most of Earth’s continental crust and can be over a billion years old.",
     "baseEffects": [
       {
+        "type": "currencyPerPoke",
+        "currency": "stone",
+        "value": 1.0
+      },
+      {
         "type": "rarityOddsReduction",
         "realm": 1,
         "rarity": "junk"
@@ -245,13 +250,13 @@ window.cards = [
     "description": "Marble is metamorphosed limestone and was used by Michelangelo to carve David.",
     "baseEffects": [
       {
-        "type": "maxCardsPerPoke",
-        "value": 0.001
-      },
-      {
         "type": "currencyPerSec",
         "currency": "stone",
         "value": 10.0
+      },
+      {
+        "type": "maxCardsPerPoke",
+        "value": 0.001
       }
     ]
   },
@@ -270,6 +275,11 @@ window.cards = [
     },
     "description": "Quartz powers timepieces—its vibrations keep watches ticking!",
     "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "stone",
+        "value": 1.0
+      },
       {
         "type": "rarityOddsReduction",
         "realm": 1,
@@ -303,10 +313,6 @@ window.cards = [
     "description": "Basalt forms the vast ocean floors and the Giant’s Causeway in Ireland.",
     "baseEffects": [
       {
-        "type": "cooldownDivider",
-        "value": 0.001
-      },
-      {
         "type": "currencyPerPoke",
         "currency": "stone",
         "value": 10.0
@@ -315,6 +321,10 @@ window.cards = [
         "type": "rarityOddsReduction",
         "realm": 1,
         "rarity": "junk"
+      },
+      {
+        "type": "cooldownDivider",
+        "value": 0.001
       }
     ]
   },
@@ -334,13 +344,13 @@ window.cards = [
     "description": "Obsidian was prized by ancient cultures for making razor-sharp blades.",
     "baseEffects": [
       {
-        "type": "cooldownDivider",
-        "value": 0.002
-      },
-      {
         "type": "currencyPerPoke",
         "currency": "stone",
         "value": 100.0
+      },
+      {
+        "type": "cooldownDivider",
+        "value": 0.002
       }
     ]
   },
@@ -360,14 +370,14 @@ window.cards = [
     "description": "Fossils can reveal creatures that roamed Earth over 65 million years ago.",
     "baseEffects": [
       {
-        "type": "currencyPerSec",
-        "currency": "stone",
-        "value": 5.0
-      },
-      {
         "type": "currencyPerPoke",
         "currency": "stone",
         "value": 100.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "stone",
+        "value": 5.0
       }
     ]
   },
@@ -386,6 +396,11 @@ window.cards = [
     },
     "description": "Geodes form when minerals deposit inside gas bubbles in rocks over eons.",
     "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "stone",
+        "value": 25.0
+      },
       {
         "type": "rarityOddsReduction",
         "realm": 1,
@@ -424,13 +439,13 @@ window.cards = [
     "description": "Emeralds get their green from trace chromium and vanadium.",
     "baseEffects": [
       {
-        "type": "cooldownDivider",
-        "value": 0.002
-      },
-      {
         "type": "currencyPerPoke",
         "currency": "stone",
         "value": 50.0
+      },
+      {
+        "type": "cooldownDivider",
+        "value": 0.002
       }
     ]
   },
@@ -452,7 +467,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "rune",
-        "value": 10.0
+        "value": 5.0
       }
     ]
   },
@@ -511,7 +526,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "rune",
-        "value": 1.0
+        "value": 5.0
       },
       {
         "type": "rarityOddsReduction",
@@ -634,6 +649,11 @@ window.cards = [
     "description": "Ancient footwear found in rivers helps archaeologists date human settlements.",
     "baseEffects": [
       {
+        "type": "currencyPerPoke",
+        "currency": "coral",
+        "value": 1.0
+      },
+      {
         "type": "rarityOddsReduction",
         "realm": 1,
         "rarity": "junk"
@@ -693,13 +713,13 @@ window.cards = [
     "description": "Some jellyfish species are biologically immortal, reverting to juvenile form to avoid death.",
     "baseEffects": [
       {
-        "type": "cooldownDivider",
-        "value": 0.001
-      },
-      {
         "type": "currencyPerPoke",
         "currency": "coral",
         "value": 2.0
+      },
+      {
+        "type": "cooldownDivider",
+        "value": 0.001
       }
     ]
   },
@@ -718,6 +738,11 @@ window.cards = [
     },
     "description": "Over 3 million shipwrecks lie on the ocean floor, preserving maritime history.",
     "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "coral",
+        "value": 1.0
+      },
       {
         "type": "rarityOddsReduction",
         "realm": 2,
@@ -745,6 +770,11 @@ window.cards = [
     },
     "description": "Lobsters taste with their legs and chew with their stomachs!",
     "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "coral",
+        "value": 1.0
+      },
       {
         "type": "rarityOddsReduction",
         "realm": 2,
@@ -778,14 +808,14 @@ window.cards = [
     "description": "Male seahorses carry and give birth to their young.",
     "baseEffects": [
       {
-        "type": "currencyPerSec",
-        "currency": "coral",
-        "value": 5.0
-      },
-      {
         "type": "currencyPerPoke",
         "currency": "coral",
         "value": 10.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "coral",
+        "value": 5.0
       }
     ]
   },
@@ -804,6 +834,11 @@ window.cards = [
     },
     "description": "Clownfish live among anemones and are immune to their stinging cells.",
     "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "coral",
+        "value": 1.0
+      },
       {
         "type": "minCardsPerPoke",
         "value": 0.0005
@@ -830,13 +865,13 @@ window.cards = [
     "description": "Swordfish can swim up to 60 mph—one of the ocean’s fastest predators.",
     "baseEffects": [
       {
-        "type": "cooldownDivider",
-        "value": 0.002
-      },
-      {
         "type": "currencyPerPoke",
         "currency": "coral",
         "value": 20.0
+      },
+      {
+        "type": "cooldownDivider",
+        "value": 0.002
       }
     ]
   },
@@ -855,6 +890,11 @@ window.cards = [
     },
     "description": "Deep-sea anglerfish use a bioluminescent lure to attract prey in darkness.",
     "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "coral",
+        "value": 25.0
+      },
       {
         "type": "rarityOddsReduction",
         "realm": 2,
@@ -882,6 +922,11 @@ window.cards = [
     },
     "description": "Electric eels can generate over 600 volts of electricity to stun prey.",
     "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "coral",
+        "value": 25.0
+      },
       {
         "type": "rarityOddsReduction",
         "realm": 1,
@@ -968,6 +1013,11 @@ window.cards = [
     "description": "Legends of the kraken may have originated from giant squid sightings.",
     "baseEffects": [
       {
+        "type": "currencyPerPoke",
+        "currency": "coral",
+        "value": 50.0
+      },
+      {
         "type": "minCardsPerPoke",
         "value": 0.001
       },
@@ -992,6 +1042,11 @@ window.cards = [
     },
     "description": "Sunken idols often stay pristine underwater for centuries.",
     "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "coral",
+        "value": 50.0
+      },
       {
         "type": "rarityOddsReduction",
         "realm": 1,
@@ -1029,6 +1084,11 @@ window.cards = [
     },
     "description": "The name ‘leviathan’ appears in ancient texts describing sea monsters.",
     "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "coral",
+        "value": 500.0
+      },
       {
         "type": "rarityOddsReduction",
         "realm": 2,
@@ -1070,6 +1130,11 @@ window.cards = [
         "type": "currencyPerPoke",
         "currency": "pearl",
         "value": 2.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "coral",
+        "value": 5.0
       },
       {
         "type": "rarityOddsReduction",
@@ -1212,13 +1277,13 @@ window.cards = [
     "description": "Spider silk is stronger than steel of the same thickness.",
     "baseEffects": [
       {
-        "type": "cooldownDivider",
-        "value": 0.001
-      },
-      {
         "type": "currencyPerPoke",
         "currency": "pollen",
-        "value": 1.0
+        "value": 2.0
+      },
+      {
+        "type": "cooldownDivider",
+        "value": 0.001
       }
     ]
   },
@@ -1260,6 +1325,11 @@ window.cards = [
     "description": "Ladybugs release a yellow fluid from their legs to deter predators.",
     "baseEffects": [
       {
+        "type": "currencyPerPoke",
+        "currency": "pollen",
+        "value": 2.0
+      },
+      {
         "type": "maxCardsPerPoke",
         "value": 0.001
       },
@@ -1291,13 +1361,13 @@ window.cards = [
     "description": "Wasps inspired medical adhesives that work on wet surfaces.",
     "baseEffects": [
       {
-        "type": "cooldownDivider",
-        "value": 0.0015
-      },
-      {
         "type": "currencyPerPoke",
         "currency": "pollen",
         "value": 20.0
+      },
+      {
+        "type": "cooldownDivider",
+        "value": 0.0015
       }
     ]
   },
@@ -1349,6 +1419,11 @@ window.cards = [
     "description": "Fireflies glow without heat using a chemical reaction in their abdomen.",
     "baseEffects": [
       {
+        "type": "currencyPerPoke",
+        "currency": "pollen",
+        "value": 3.0
+      },
+      {
         "type": "rarityOddsReduction",
         "realm": 3,
         "rarity": "junk"
@@ -1375,6 +1450,11 @@ window.cards = [
     },
     "description": "Hexagonal honeycomb cells store the most honey with zero waste.",
     "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "pollen",
+        "value": 3.0
+      },
       {
         "type": "rarityOddsReduction",
         "realm": 2,
@@ -1435,6 +1515,11 @@ window.cards = [
     "description": "Praying mantis claws strike at over 50 mph to catch prey.",
     "baseEffects": [
       {
+        "type": "currencyPerSec",
+        "currency": "pollen",
+        "value": 2.0
+      },
+      {
         "type": "cooldownDivider",
         "value": 0.002
       }
@@ -1455,6 +1540,11 @@ window.cards = [
     },
     "description": "Cicadas emerge in synchronized broods every 13 or 17 years.",
     "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "pollen",
+        "value": 10.0
+      },
       {
         "type": "rarityOddsReduction",
         "realm": 3,
@@ -1483,14 +1573,14 @@ window.cards = [
     "description": "Termite mounds maintain constant temperature and humidity inside their tunnels.",
     "baseEffects": [
       {
-        "type": "currencyPerSec",
-        "currency": "pollen",
-        "value": 3.0
-      },
-      {
         "type": "currencyPerPoke",
         "currency": "pollen",
         "value": 25.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "pollen",
+        "value": 3.0
       }
     ]
   },
@@ -1509,6 +1599,11 @@ window.cards = [
     },
     "description": "A queen bee can lay over 2 000 eggs per day at peak season.",
     "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "pollen",
+        "value": 25.0
+      },
       {
         "type": "rarityOddsReduction",
         "realm": 3,
@@ -1536,6 +1631,11 @@ window.cards = [
     },
     "description": "Praying mantises can rotate their heads 180° to scan for prey.",
     "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "pollen",
+        "value": 20.0
+      },
       {
         "type": "rarityOddsReduction",
         "realm": 3,
@@ -1569,6 +1669,11 @@ window.cards = [
     "description": "Atlas moths have wingspans up to 12 inches—among the largest insects.",
     "baseEffects": [
       {
+        "type": "currencyPerSec",
+        "currency": "pollen",
+        "value": 3.0
+      },
+      {
         "type": "cooldownDivider",
         "value": 0.002
       }
@@ -1590,14 +1695,14 @@ window.cards = [
     "description": "Goliath beetles can grow over 4 inches long, making them one of the largest insects.",
     "baseEffects": [
       {
-        "type": "currencyPerSec",
-        "currency": "pollen",
-        "value": 5.0
-      },
-      {
         "type": "currencyPerPoke",
         "currency": "pollen",
         "value": 10.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "pollen",
+        "value": 5.0
       }
     ]
   },
@@ -1612,10 +1717,15 @@ window.cards = [
     "levelScaling": 2.0,
     "levelCost": {
       "currency": "pollen",
-      "amount": 1.0
+      "amount": 20.0
     },
     "description": "Ant queens can live for decades—far longer than worker ants.",
     "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "pollen",
+        "value": 10.0
+      },
       {
         "type": "rarityOddsReduction",
         "realm": 3,
@@ -1648,6 +1758,11 @@ window.cards = [
     },
     "description": "Titan scarabs can roll dung balls over 1 000× their own weight.",
     "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "pollen",
+        "value": 100.0
+      },
       {
         "type": "rarityOddsReduction",
         "realm": 3,
@@ -1686,13 +1801,13 @@ window.cards = [
     "description": "Warden wasps defend their colonies with some of the strongest insect stings.",
     "baseEffects": [
       {
-        "type": "maxCardsPerPoke",
-        "value": 0.001
-      },
-      {
         "type": "currencyPerPoke",
         "currency": "royal_jelly",
         "value": 1.0
+      },
+      {
+        "type": "maxCardsPerPoke",
+        "value": 0.001
       },
       {
         "type": "rarityOddsReduction",
@@ -1738,8 +1853,8 @@ window.cards = [
       },
       {
         "type": "rarityOddsReduction",
-        "realm": 2,
-        "rarity": "rare"
+        "realm": 0,
+        "rarity": ""
       }
     ]
   },
@@ -1759,10 +1874,6 @@ window.cards = [
     "description": "The Dreamspinner weaves silk that unlocks visions in your dreams.",
     "baseEffects": [
       {
-        "type": "minCardsPerPoke",
-        "value": 0.002
-      },
-      {
         "type": "currencyPerPoke",
         "currency": "royal_jelly",
         "value": 2.0
@@ -1771,6 +1882,15 @@ window.cards = [
         "type": "currencyPerSec",
         "currency": "pollen",
         "value": 20.0
+      },
+      {
+        "type": "minCardsPerPoke",
+        "value": 0.002
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 3,
+        "rarity": "basic"
       },
       {
         "type": "rarityOddsReduction",
@@ -1861,19 +1981,19 @@ window.cards = [
     "levelScaling": 2.0,
     "levelCost": {
       "currency": "egg",
-      "amount": 50.0
+      "amount": 40.0
     },
     "description": "Robins can hear worms moving underground using their keen sense of hearing.",
     "baseEffects": [
       {
-        "type": "rarityOddsReduction",
-        "realm": 4,
-        "rarity": "basic"
-      },
-      {
         "type": "currencyPerPoke",
         "currency": "egg",
         "value": 1.0
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 4,
+        "rarity": "basic"
       }
     ]
   },
@@ -1893,14 +2013,14 @@ window.cards = [
     "description": "Blue Jays mimic the calls of hawks to scare away other birds.",
     "baseEffects": [
       {
-        "type": "rarityOddsReduction",
-        "realm": 4,
-        "rarity": "basic"
-      },
-      {
         "type": "currencyPerPoke",
         "currency": "egg",
         "value": 1.0
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 4,
+        "rarity": "basic"
       }
     ]
   },
@@ -1942,13 +2062,13 @@ window.cards = [
     "description": "Hummingbirds can flap their wings over 70 times per second.",
     "baseEffects": [
       {
-        "type": "cooldownDivider",
-        "value": 0.001
-      },
-      {
         "type": "currencyPerPoke",
         "currency": "egg",
         "value": 20.0
+      },
+      {
+        "type": "cooldownDivider",
+        "value": 0.001
       }
     ]
   },
@@ -1967,6 +2087,11 @@ window.cards = [
     },
     "description": "Woodpeckers have specially adapted skulls to absorb the shock of pecking.",
     "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "egg",
+        "value": 3.0
+      },
       {
         "type": "rarityOddsReduction",
         "realm": 4,
@@ -2017,6 +2142,11 @@ window.cards = [
     "description": "Parrots can learn to say over 100 words and use them in context.",
     "baseEffects": [
       {
+        "type": "currencyPerPoke",
+        "currency": "egg",
+        "value": 2.0
+      },
+      {
         "type": "minCardsPerPoke",
         "value": 0.0005
       },
@@ -2042,6 +2172,11 @@ window.cards = [
     "description": "Flamingos get their pink color from the shrimp and algae they eat.",
     "baseEffects": [
       {
+        "type": "currencyPerPoke",
+        "currency": "egg",
+        "value": 10.0
+      },
+      {
         "type": "cooldownDivider",
         "value": 0.002
       }
@@ -2062,6 +2197,11 @@ window.cards = [
     },
     "description": "Swans have more neck vertebrae than giraffes—up to 25!",
     "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "egg",
+        "value": 5.0
+      },
       {
         "type": "rarityOddsReduction",
         "realm": 3,
@@ -2117,6 +2257,11 @@ window.cards = [
     "description": "Albatrosses can sleep while flying over the ocean.",
     "baseEffects": [
       {
+        "type": "currencyPerSec",
+        "currency": "egg",
+        "value": 5.0
+      },
+      {
         "type": "minCardsPerPoke",
         "value": 0.001
       },
@@ -2141,6 +2286,11 @@ window.cards = [
     },
     "description": "Falcons are the fastest animals on Earth, diving at speeds over 200 mph.",
     "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "egg",
+        "value": 25.0
+      },
       {
         "type": "rarityOddsReduction",
         "realm": 4,
@@ -2174,6 +2324,11 @@ window.cards = [
     "description": "Hawks have vision about 8 times sharper than that of humans.",
     "baseEffects": [
       {
+        "type": "currencyPerPoke",
+        "currency": "egg",
+        "value": 25.0
+      },
+      {
         "type": "rarityOddsReduction",
         "realm": 3,
         "rarity": "junk"
@@ -2201,13 +2356,13 @@ window.cards = [
     "description": "Eagles build the largest nests of any bird, sometimes weighing over a ton.",
     "baseEffects": [
       {
-        "type": "cooldownDivider",
-        "value": 0.002
-      },
-      {
         "type": "currencyPerPoke",
         "currency": "egg",
         "value": 50.0
+      },
+      {
+        "type": "cooldownDivider",
+        "value": 0.002
       }
     ]
   },
@@ -2254,10 +2409,15 @@ window.cards = [
     "levelScaling": 2.0,
     "levelCost": {
       "currency": "egg",
-      "amount": 5.0
+      "amount": 25.0
     },
     "description": "Condors have a wingspan of over 10 feet, among the largest of any land bird.",
     "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "egg",
+        "value": 50.0
+      },
       {
         "type": "rarityOddsReduction",
         "realm": 4,
@@ -2304,6 +2464,11 @@ window.cards = [
         "type": "rarityOddsReduction",
         "realm": 4,
         "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 4,
+        "rarity": "decent"
       }
     ]
   },
@@ -2323,13 +2488,13 @@ window.cards = [
     "description": "Thunderbirds are legendary creatures said to cause thunder with their wings.",
     "baseEffects": [
       {
-        "type": "minCardsPerPoke",
-        "value": 0.001
-      },
-      {
         "type": "currencyPerSec",
         "currency": "egg",
         "value": 20.0
+      },
+      {
+        "type": "minCardsPerPoke",
+        "value": 0.001
       }
     ]
   },
@@ -2349,6 +2514,15 @@ window.cards = [
     "description": "Rocs are giant birds in mythology capable of carrying off elephants.",
     "baseEffects": [
       {
+        "type": "currencyPerPoke",
+        "currency": "egg",
+        "value": 100.0
+      },
+      {
+        "type": "maxCardsPerPoke",
+        "value": 0.001
+      },
+      {
         "type": "rarityOddsReduction",
         "realm": 4,
         "rarity": "fine"
@@ -2357,11 +2531,6 @@ window.cards = [
         "type": "rarityOddsReduction",
         "realm": 4,
         "rarity": "rare"
-      },
-      {
-        "type": "currencyPerPoke",
-        "currency": "egg",
-        "value": 100.0
       }
     ]
   },
@@ -2380,6 +2549,11 @@ window.cards = [
     },
     "description": "Garuda is a divine bird in Hindu mythology, often seen as a protector.",
     "baseEffects": [
+      {
+        "type": "currencyPerSec",
+        "currency": "egg",
+        "value": 20.0
+      },
       {
         "type": "cooldownDivider",
         "value": 0.002
@@ -2401,6 +2575,11 @@ window.cards = [
     },
     "description": "The Simurgh is a Persian mythical bird believed to purify the land and sky.",
     "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "egg",
+        "value": 100.0
+      },
       {
         "type": "rarityOddsReduction",
         "realm": 4,
@@ -2480,13 +2659,13 @@ window.cards = [
     "description": "Zapdos is an Electric-type Legendary Pokémon with powers over storms.",
     "baseEffects": [
       {
-        "type": "cooldownDivider",
-        "value": 0.003
-      },
-      {
         "type": "currencyPerPoke",
         "currency": "feather",
         "value": 2.0
+      },
+      {
+        "type": "cooldownDivider",
+        "value": 0.003
       },
       {
         "type": "maxCardsPerPoke",
@@ -2519,6 +2698,16 @@ window.cards = [
     },
     "description": "Moltres is a Fire-type Legendary Pokémon with wings of flame.",
     "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "egg",
+        "value": 1000.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "egg",
+        "value": 50.0
+      },
       {
         "type": "rarityOddsReduction",
         "realm": 1,

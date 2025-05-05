@@ -22,30 +22,30 @@ def load_cards(csv_path):
             "description": row["description"]
         }
 
-        # parse up to 5 effects
+        # parse up to 8 effects, each with 2 arguments
         base_effects = []
-        for i in range(1, 6):
+        for i in range(1, 9):
             etype = row.get(f"effect{i}_type", "").strip()
             if not etype:
                 continue
 
             effect = {"type": etype}
+            arg1 = row.get(f"effect{i}_arg1", "").strip()
+            arg2 = row.get(f"effect{i}_arg2", "").strip()
 
             if etype in ("minCardsPerPoke", "maxCardsPerPoke", "cooldownDivider"):
-                # single numeric value
-                val = row.get(f"effect{i}_arg1", "")
-                effect["value"] = float(val) if val else 0
+                # single numeric value in arg1
+                effect["value"] = float(arg1) if arg1 else 0
 
             elif etype in ("currencyPerPoke", "currencyPerSec"):
-                # currency + numeric value
-                effect["currency"] = row.get(f"effect{i}_arg1", "")
-                val = row.get(f"effect{i}_arg2", "")
-                effect["value"] = float(val) if val else 0
+                # currency in arg1, numeric value in arg2
+                effect["currency"] = arg1
+                effect["value"] = float(arg2) if arg2 else 0
 
             elif etype == "rarityOddsReduction":
-                # realm + rarity only (no value)
-                effect["realm"]  = int(row.get(f"effect{i}_arg1", 0))
-                effect["rarity"] = row.get(f"effect{i}_arg2", "")
+                # realm in arg1, rarity in arg2
+                effect["realm"] = int(arg1) if arg1 else 0
+                effect["rarity"] = arg2
 
             else:
                 print(f"Unknown effect type: {etype} for card {row['id']}")
