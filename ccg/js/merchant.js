@@ -162,7 +162,7 @@ const merchants = [
         .filter(r => !skip.includes(r))
         .forEach((r, idx) => {
           boosted[r] = (realm.rarityWeights[r] || 0)
-                     * Decimal.pow(1.5, idx).toNumber();
+                     * Decimal.pow(3, idx).toNumber();
         });
       const rarity = weightedPick(boosted);
   
@@ -281,6 +281,14 @@ const merchants = [
         buyOffer(idx);
       });
       front.appendChild(buyBtn);
+
+        // add NEW badge if player doesn't own this card yet
+        if (card.quantity === 0 || card.isNew) {
+            const newBadge = document.createElement('div');
+            newBadge.className = 'reveal-badge new-badge';
+            newBadge.textContent = 'NEW';
+            front.appendChild(newBadge);
+        }
   
       inner.append(front);
       outer.append(inner);
