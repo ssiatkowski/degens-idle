@@ -209,18 +209,17 @@ const merchants = [
       // compute price
       const rateSec  = new Decimal(curSec[currency] || 0);
       const ratePoke = new Decimal(curPoke[currency] || 0);
-      let price = rateSec.times(15).plus(ratePoke.times(10))
+      let price = rateSec.times(10).plus(ratePoke.times(5))
                   .times(RARITY_PRICE_MULT[rarity] || 1);
   
       // randomness ±99%
-      price = price.times(Math.random()*1.98 + 0.01).ceil();
+      price = price.times(Math.random()*1.98 + 0.01).times(state.currentMerchant.priceMultiplier).ceil();
   
-      // maybe sell a stack if you own many
       let quantity = 1;
-      if (ownQty > 9 && Math.random() < 0.1) {
+      if (ownQty > 9 && Math.random() < 0.25) {
         const maxStack = Math.floor(Math.cbrt(ownQty));
         quantity = Math.max(1, Math.floor(Math.random() * maxStack) + 1);
-        price = price.times(Math.cbrt(quantity)).times(state.currentMerchant.priceMultiplier).ceil();
+        price = price.times(Math.cbrt(quantity)).ceil();
       }
   
       if (price.lessThan(1)) price = new Decimal(1);
@@ -228,6 +227,7 @@ const merchants = [
     }
   
     state.merchantOffers = offers;
+    console.log(state.merchantOffers);
     saveState();
   
     const btn = document.getElementById('tab-btn-merchant');
@@ -279,6 +279,14 @@ const merchants = [
       a.className = 'card-image';
       a.src = `assets/images/cards/${slugify(card.name)}.jpg`;
       front.append(f, a);
+  
+      // add quantity badge if more than 1
+      if (o.quantity > 1) {
+        const qtyBadge = document.createElement('div');
+        qtyBadge.className = 'count-badge';
+        qtyBadge.textContent = o.quantity;
+        front.appendChild(qtyBadge);
+      }
   
       // buy button
       const cm = currencies.find(cu => cu.id === o.currency) || { icon: 'question.png' };
