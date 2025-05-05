@@ -54,7 +54,7 @@ window.skills = [
     id: 2004,
     name: "More Cards 4",
     description: "+10 to max cards per poke.",
-    cost: { realmId: 4, currencyId: "eggs", amount: 2e4 },
+    cost: { realmId: 4, currencyId: "egg", amount: 2e4 },
     unlocked: false,
     purchased: false
   },
@@ -86,7 +86,7 @@ window.skills = [
     id: 2404,
     name: "Massive Black Hole 4",
     description: "+100 to max cards per poke.",
-    cost: { realmId: 4, currencyId: "eggs", amount: 4e7 },
+    cost: { realmId: 4, currencyId: "egg", amount: 4e7 },
     unlocked: false,
     purchased: false
   },
@@ -118,7 +118,7 @@ window.skills = [
     id: 3004,
     name: "Faster Poke 4",
     description: "Decrease base cooldown for Aviary by 10s.",
-    cost: { realmId: 4, currencyId: "eggs",  amount: 4000 },
+    cost: { realmId: 4, currencyId: "egg",  amount: 4000 },
     unlocked: false,
     purchased: false
   },
@@ -150,7 +150,7 @@ window.skills = [
     id: 4004,
     name: "Not Less Cards 4",
     description: "+4 to min cards per poke.",
-    cost: { realmId: 4, currencyId: "eggs", amount: 1e6 },
+    cost: { realmId: 4, currencyId: "egg", amount: 1e6 },
     unlocked: false,
     purchased: false
   },
@@ -206,7 +206,7 @@ window.skills = [
     id: 6004,
     name: "Fan of Capitalism 4",
     description: "+1 card offered by merchants.",
-    cost: { realmId: 4, currencyId: "eggs", amount: 2e5 },
+    cost: { realmId: 4, currencyId: "egg", amount: 2e5 },
     unlocked: false,
     purchased: false
   },
