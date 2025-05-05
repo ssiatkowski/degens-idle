@@ -47,7 +47,7 @@ const merchants = [
       unlocked: false
     },
     {
-      id: 4,
+      id: 5,
       name: 'Orin Saltstride',
       cardMultiplier: 0.5,
       refreshTime: 300,
