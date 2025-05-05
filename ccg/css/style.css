@@ -17,9 +17,13 @@
   --rarity-mythic:    #FF4500;   /* orangered */
   --rarity-exotic:    #00CED1;   /* dark turquoise */
   --rarity-divine:    #E6E6FA;   /* lavender */
-  --realm1-color: #888888;
-  --realm2-color: #3498db;
-  --realm3-color: #f1c40f;
+  --realm1-color:     #888888;  /* rocks */
+  --realm2-color:     #3498db;  /* sea world */
+  --realm3-color:     #f1c40f;  /* budgom */
+  --realm4-color:     #f39c12;  /* aviary */
+  --realm5-color:     #9b59b6;  /* ancient relics */
+  --realm6-color:     #2c3e50;  /* celestial bodies */
+  --realm7-color:     #e74c3c;  /* mythical beasts */
   --modal-opacity: 0.8;
 
   /* Texture + fonts */
@@ -536,6 +540,12 @@ nav#tabs { margin-bottom: 15px; }
   color: var(--dark);
 }
 
+.stats-header {
+  border-bottom: 2px solid var(--dark);
+  padding-bottom: 4px;
+  margin-bottom: 8px;
+}
+
 .stat-value {
   font-size: 2.5em;
   margin: 8px 0;
@@ -594,6 +604,45 @@ nav#tabs { margin-bottom: 15px; }
   width: 20px;
   height: 20px;
   margin-right: 4px;
+}
+
+/* container for the three top panels */
+.stats-top-container {
+  display: flex;
+  gap: 1rem;
+}
+
+/* make merchants section grow to fill remaining space */
+.stats-section.realm-section.merchants-section {
+  flex: 1;
+}
+
+/* grid layout for merchant icons */
+.merchants-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 80px));
+  grid-auto-rows: 80px;
+  gap: 8px;
+}
+
+/* merchant thumbnails */
+.merchant-thumb {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  cursor: pointer;
+  border: 2px solid transparent;
+  border-radius: 4px;
+}
+
+.merchant-thumb.selected-thumb {
+  border-color: var(--accent);
+}
+
+.merchant-thumb.locked-thumb {
+  filter: grayscale(100%);
+  opacity: 0.5;
+  cursor: default;  /* no pointer */
 }
 
 /* Realm sections */
@@ -716,6 +765,13 @@ nav#tabs { margin-bottom: 15px; }
   z-index: 1000;
 }
 
+.card-level-up-btn.unaffordable {
+  background: #ccc;
+  color: #666;
+  cursor: not-allowed;
+}
+
+
 /* spin the *revealed* card once all the way around */
 @keyframes spinOnce {
   from { transform: rotateY(180deg) rotate(0deg); }
@@ -834,12 +890,50 @@ nav#tabs { margin-bottom: 15px; }
   pointer-events: none;
 }
 
-/* merchant tab container */
-#merchant-offers {
+#merchant-panel {
+  display: grid;
+  grid-template-areas:
+    "image offers"
+    "message offers"
+    "timer  offers";
+  grid-template-columns: auto 1fr;
+  grid-auto-rows: auto;
+  gap: 8px 16px;
+  align-items: center;
+}
+
+.merchant-image {
+  grid-area: image;
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.merchant-message {
+  grid-area: message;
+  font-style: italic;
+  max-width: 300px;
+  text-wrap: normal;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.merchant-offers {
+  grid-area: offers;
   display: flex;
-  gap: 12px;
   flex-wrap: wrap;
-  justify-content: center;
+  gap: 12px;
+  background: url('../assets/images/table_texture.jpg') top left/auto repeat;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.merchant-timer {
+  grid-area: timer;
+  font-size: 1.5em;
+  font-weight: 600;
+  text-align: left;
 }
 
 /* offer card tweaks */
@@ -881,13 +975,6 @@ nav#tabs { margin-bottom: 15px; }
   width: 16px;
   height: 16px;
   margin-left: 4px;
-}
-
-/* countdown */
-#merchant-timer {
-  font-size: 0.9rem;
-  font-weight: 600;
-  text-align: center;
 }
 
 #tab-btn-merchant.new-offers {

@@ -20,16 +20,19 @@ window.state = {
   currencies: {},
   unlockedCurrencies: [],
   stats: {
-    totalPokes: 0
+    totalPokes: 0,
+    merchantPurchases: 0,
   },
   effects: {
     minCardsPerPoke: 1,
     maxCardsPerPoke: 2,
     currencyPerPoke: {},
     currencyPerSec:   {},
-    cooldownDivider: 1
+    cooldownDivider: 1,
+    merchantNumCards: 2,
   },
   selectedRealms: [],      // newly added
+  currentMerchant: null,
   merchantOffers: [],
   cooldownDone: true,      // flag
   flipsDone: false         // flag
@@ -66,10 +69,15 @@ function loadState() {
         c.quantity = data.quantity;
         c.level    = data.level;
         c.tier     = data.tier;
-        c.isNew    = !!data.isNew;
+        c.isNew    = data.isNew;
       }
     });
     state.stats.totalPokes = obj.stats.totalPokes || 0;
+    state.stats.merchantPurchases = obj.stats.merchantPurchases || 0;
+    if (obj.currentMerchantId != null) {
+      const m = merchants.find(m=>m.id===obj.currentMerchantId);
+      state.currentMerchant = m || null;
+    }
     if (Array.isArray(obj.merchantOffers)) {
       state.merchantOffers = obj.merchantOffers.map(o => ({
         cardId:   o.cardId,
@@ -90,7 +98,8 @@ function saveState() {
     currencies:      {},
     unlockedCurrencies: state.unlockedCurrencies,
     ownedCards:      {},
-    stats:           { totalPokes: state.stats.totalPokes },
+    stats:           { totalPokes: state.stats.totalPokes, merchantPurchases: state.stats.merchantPurchases },
+    currentMerchantId: state.currentMerchant?.id ?? null,
     merchantOffers: state.merchantOffers.map(o => ({
       cardId:   o.cardId,
       currency: o.currency,
@@ -105,12 +114,11 @@ function saveState() {
       quantity: c.quantity,
       level:    c.level,
       tier:     c.tier,
-      isNew:    !!c.isNew
+      isNew:    c.isNew
     };
   });
   localStorage.setItem(SAVE_KEY, JSON.stringify(obj));
 }
-setInterval(saveState, 10000);
 
 // js/main.js (excerpt)
 
@@ -138,7 +146,6 @@ allRarities.forEach(rarity => {
   rarityCardMap[rarity] = [];
 });
 
-// 5) Populate all three maps in one pass
 cards.forEach(c => {
   // by realm
   realmCardMap[c.realm].push(c.id);
@@ -399,6 +406,9 @@ function performPoke() {
   });
 
   startCooldown();
+  
+  saveState();
+
 }
 
 
@@ -451,10 +461,7 @@ function openModal(cardId) {
   const alpha = parseFloat(getComputedStyle(document.documentElement)
     .getPropertyValue('--modal-opacity'));
 
-  if (c.isNew) {
-    c.isNew = false;
-    saveState();    // immediately persist
-  }
+  c.isNew = false;
 
   // OVERLAY
   const ov = document.createElement('div');
@@ -597,8 +604,9 @@ function openModal(cardId) {
   
     effectsList.forEach(def => {
       // compute the per‐tier multiplier
-      const tierMult = Math.pow(2, c.tier - 1);
-
+      const scale   = EFFECT_SCALES[def.type] ?? 2;
+      const tierMult = Math.pow(scale, c.tier - 1);
+      
       let sign;
 
       // 1) compute the raw total & breakdown differently for odds vs. other effects
@@ -625,10 +633,14 @@ function openModal(cardId) {
         label = `<img class="currency-effect-icon" src="${iconPath}" alt="${def.currency}" /> ${verb}`;
       }
       else if (def.type === "rarityOddsReduction") {
-        const realmName = realmMap[def.realm].name;
+        const realmObj   = realmMap[def.realm];
+        const realmColor = realmColors[def.realm];
         const rarityColor = getComputedStyle(document.documentElement)
           .getPropertyValue(`--rarity-${def.rarity.trim()}`);
-        label = `${realmName} <span style="color:${rarityColor}">${def.rarity.toUpperCase()}</span> odds reduction`;
+        label = [
+          `<span style="color:${realmColor};font-weight:bold;">${realmObj.name}</span>`,
+          `<span style="color:${rarityColor}">${def.rarity.toUpperCase()}</span> odds reduction`
+        ].join(' ');
       }
       else {
         label = EFFECT_NAMES[def.type] || def.type;
@@ -756,32 +768,37 @@ function renderCardsCollection() {
         front.appendChild(lvlLabel);
       }
 
-      // "Level Up" button if affordable
+      // “Level Up” button (always visible, but disabled if unaffordable)
       if (c.quantity > 0) {
         const baseCost = new Decimal(c.levelCost.amount);
         const rawCost  = baseCost.times(Decimal.pow(c.levelScaling, c.level - 1));
         const cost     = rawCost.ceil();
         const curAmt   = state.currencies[c.levelCost.currency] || new Decimal(0);
-        if (curAmt.greaterThanOrEqualTo(cost)) {
-          const btn = document.createElement('button');
-          btn.className = 'card-level-up-btn';
-          btn.innerHTML = `
+        const canAfford = curAmt.greaterThanOrEqualTo(cost);
+
+        const btn = document.createElement('button');
+        btn.className = 'card-level-up-btn ' + (canAfford ? 'affordable' : 'unaffordable');
+        btn.innerHTML = `
           Level Up<br>
           <span class="level-cost">
             ${formatNumber(cost)}
             <img class="icon" src="assets/images/currencies/${c.levelCost.currency}.png"/>
           </span>
         `;
+        if (canAfford) {
           btn.addEventListener('click', e => {
             e.stopPropagation();
-            // spend & level up
             state.currencies[c.levelCost.currency] = curAmt.minus(cost);
             levelUp(c.id);
             updateCurrencyBar();
           });
-          front.appendChild(btn);
+        } else {
+          btn.disabled = true;
         }
+        front.appendChild(btn);
       }
+
+
 
       // quantity badge
       if (c.quantity >= 1) {
@@ -941,6 +958,7 @@ function startCooldown() {
   const timer = setInterval(() => {
     elapsed += 0.1; // 100ms
     const rem = totalSec - elapsed;
+    localStorage.setItem('ccgCooldownRem', rem.toString());
     if (rem <= 0) {
       clearInterval(timer);
       countdownEl.remove();
@@ -957,6 +975,37 @@ function startCooldown() {
     tryEnableHole();
   };
 }
+
+// ——— Add this below your existing startCooldown() ———
+function resumeCooldown(rem) {
+  // disable the hole-button immediately
+  holeBtn.disabled = true;
+  holeBtn.classList.add('disabled');
+
+  // show just the countdown text (no CSS bar)
+  const countdownEl = holeBtn.querySelector('.countdown')
+    || Object.assign(document.createElement('div'), { className: 'countdown' });
+  countdownEl.textContent = formatDuration(rem);
+  holeBtn.appendChild(countdownEl);
+
+  // drive a pure-JS timer & persist every 100ms
+  let remaining = rem;
+  const timer = setInterval(() => {
+    remaining = Math.max(0, remaining - 0.1);
+    countdownEl.textContent = formatDuration(remaining);
+    localStorage.setItem('ccgCooldownRem', remaining.toString());
+
+    if (remaining <= 0) {
+      clearInterval(timer);
+      countdownEl.remove();
+      holeBtn.disabled = false;
+      holeBtn.classList.remove('disabled');
+      localStorage.removeItem('ccgCooldownRem');
+      tryEnableHole();
+    }
+  }, 100);
+}
+
 
 function calculateCooldown() {
   let sum = state.selectedRealms.reduce((a,id)=>a + realmMap[id].cooldown, 0);
@@ -1082,12 +1131,22 @@ document.addEventListener('DOMContentLoaded', ()=>{
   renderCardsCollection();
   updatePokeFilterStats();
 
-  // initial
-  if (!state.merchantOffers || !state.merchantOffers.length) {
+  if (state.currentMerchant) {
+    // we have a saved merchant + offers,
+    // so restore our refresh timer and just render
+    nextRefresh =
+      Date.now()
+      + state.currentMerchant.refreshTime * 1000;
+    renderMerchantTab();
+  } else {
+    // first time ever, pick a new one
+    state.currentMerchant = pickMerchant();
+    nextRefresh =
+      Date.now()
+      + state.currentMerchant.refreshTime * 1000;
     genMerchantOffers();
+    renderMerchantTab();
   }
-  renderMerchantTab();
-  refreshMerchantIfNeeded();
 
   // tick every 100ms
   setInterval(refreshMerchantIfNeeded, 100);
@@ -1104,7 +1163,11 @@ document.addEventListener('DOMContentLoaded', ()=>{
     updateCurrencyBar();
   }, 1000);
 
-  // initial enable
-  holeBtn.disabled = false;
-  holeBtn.classList.remove('disabled');
+  const savedRem = parseFloat(localStorage.getItem('ccgCooldownRem'));
+  if (!isNaN(savedRem) && savedRem > 0) {
+    resumeCooldown(savedRem);
+  } else{
+    holeBtn.disabled = false;
+    holeBtn.classList.remove('disabled');
+  }
 });

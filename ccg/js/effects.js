@@ -87,7 +87,7 @@ window.EFFECT_NAMES = {
           const rarity  = parts[2];
           const prev    = realmMap[realmId].rarityWeights[rarity] || 0;
           // always subtract for odds-reduction
-          const updated = prev - v;
+          const updated = prev -  sign * v;
           const minVal  = RARITY_ODDS_MIN[rarity] || 0;
           realmMap[realmId].rarityWeights[rarity] = Math.max(minVal, updated);
           break;

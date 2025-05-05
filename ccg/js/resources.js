@@ -1,16 +1,16 @@
 
 // Define all available rarities in order of increasing quality
 window.rarities = [
-    "junk",     // ~1 effect
-    "basic",    // ~1 effect
-    "decent",   // ~1 effect
-    "fine",     // ~2 effects
-    "rare",     // ~2 effects
-    "epic",     // ~2 effects
-    "legendary",// ~3 effects
-    "mythic",   // ~3 effects
-    "exotic",   // ~4 effects
-    "divine"    // ~5 effects
+    "junk",
+    "basic",
+    "decent",
+    "fine",
+    "rare",
+    "epic",
+    "legendary",
+    "mythic",
+    "exotic",
+    "divine"
 ];
 
 // 1) define your “master” rarity-weights
@@ -53,9 +53,10 @@ const RARITY_ODDS_MIN = {
 
 // 2) create your realms without individual rarityWeights
 window.realms = [
-  { id: 1, name: "Rocks",      unlocked: true,  cooldown: 3,  deselectMultiplier: 10, pokeWeight: 1e11 },
-  { id: 2, name: "Sea World",  unlocked: false, cooldown: 7,  deselectMultiplier: 10, pokeWeight: 3e10 },
-  { id: 3, name: "Bugdom",     unlocked: false, cooldown: 20, deselectMultiplier: 10, pokeWeight: 1e10 },
+  { id: 1, name: "Rocks",      unlocked: true,  cooldown: 3,  deselectMultiplier: 5, pokeWeight: 1e11 },
+  { id: 2, name: "Sea World",  unlocked: false, cooldown: 7,  deselectMultiplier: 5, pokeWeight: 3e10 },
+  { id: 3, name: "Bugdom",     unlocked: false, cooldown: 20, deselectMultiplier: 5, pokeWeight: 1e10 },
+  { id: 4, name: "Aviary",     unlocked: false, cooldown: 40, deselectMultiplier: 5, pokeWeight: 5e9  },
 ];
 
 // 3) give every realm its own copy of the default weights
@@ -93,10 +94,14 @@ window.currencies = [
 
 
 window.realmColors = {
-1: "#888888",
-2: "#3498db",
-3: "#f1c40f"
-};
+    1: "#888888",   // rocks
+    2: "#3498db",   // sea world
+    3: "#f1c40f",   // budgom
+    4: "#f39c12",   // aviary (warm golden-orange, like feathers and sunrise)
+    5: "#9b59b6",   // ancient relics (royal purple, conveys mystery & age)
+    6: "#2c3e50",   // celestial bodies (deep space navy)
+    7: "#e74c3c"    // mythical beasts (bold crimson, evokes danger & power)
+  };
     
 // Generate tier thresholds (powers of base)
 window.tierThresholds = {

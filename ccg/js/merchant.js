@@ -1,7 +1,51 @@
 // js/merchant.js
 
-// ——— RARITY PRICE MULTIPLIERS ———
-const RARITY_PRICE_MULT = {
+// ——— MERCHANT DEFINITIONS ———
+const merchants = [
+    {
+      id: 1,
+      name: 'Aldric Farwander',
+      cardMultiplier: 1,
+      refreshTime: 300,
+      merchantOdds: 1000,
+      raritiesSkipped: [],
+      description: 'Your standard traveling merchant',
+      unlocked: true
+    },
+    {
+      id: 2,
+      name: 'Maribel Tealeaf',
+      cardMultiplier: 1,
+      refreshTime: 150,
+      merchantOdds: 800,
+      raritiesSkipped: [],
+      description: 'Always on the move. She only stays for half as long.',
+      unlocked: true
+    },
+    {
+      id: 3,
+      name: 'Cedric Stormforge',
+      cardMultiplier: 2,
+      refreshTime: 300,
+      merchantOdds: 600,
+      raritiesSkipped: [],
+      description: 'A strong dude. Carries twice as many cards.',
+      unlocked: true
+    },
+    {
+      id: 4,
+      name: 'Yvette Ambervale',
+      cardMultiplier: 1,
+      refreshTime: 300,
+      merchantOdds: 400,
+      raritiesSkipped: ['junk'],
+      description: 'A fancy lady. She does not carry junk.',
+      unlocked: false
+    }
+  ];
+  
+  // ——— RARITY PRICE MULTIPLIERS ———
+  const RARITY_PRICE_MULT = {
     junk:      new Decimal(1),
     basic:     new Decimal(2),
     decent:    new Decimal(5),
@@ -14,38 +58,78 @@ const RARITY_PRICE_MULT = {
     divine:    new Decimal(5000),
   };
   
-  // uniform random picker
+  // ——— HELPERS ———
   function pickRandom(arr) {
     return arr[Math.floor(Math.random() * arr.length)];
   }
   
-  // insert timer above #merchant-offers
-  const offersCont = document.getElementById('merchant-offers');
-  const timerEl   = document.createElement('div');
-  timerEl.id      = 'merchant-timer';
-  timerEl.style.marginBottom = '8px';
-  offersCont.parentNode.insertBefore(timerEl, offersCont);
-  
-  // refresh interval
-  const REFRESH_MS = 300000; // 300000
-  let nextRefresh  = Date.now() + REFRESH_MS;
-  
-  function refreshMerchantIfNeeded() {
-    const now = Date.now();
-    if (now >= nextRefresh) {
-      genMerchantOffers();
-      renderMerchantTab();
-      nextRefresh = now + REFRESH_MS;
+  // only pick among unlocked merchants, weighted by merchantOdds
+  function pickMerchant() {
+    const pool = merchants.filter(m => m.unlocked);
+    const total = pool.reduce((sum, m) => sum + m.merchantOdds, 0);
+    let rnd = Math.random() * total;
+    for (const m of pool) {
+      if (rnd < m.merchantOdds) return m;
+      rnd -= m.merchantOdds;
     }
-    const remS = (nextRefresh - now) / 1000;
-    timerEl.textContent = remS > 0
-      ? `Merchant will leave in ${formatDuration(remS)}`
-      : `Refreshing…`;
-    timerEl.style.color = (remS > 0 && remS < 10) ? 'red' : '';
+    return pool[0] || null;
   }
   
-  // ——— CORE: Generate Offers ———
+  // optional helper: unlock a merchant by name
+  function unlockMerchantByName(name) {
+    const m = merchants.find(m => m.name === name);
+    if (!m) {
+      console.warn(`No merchant found with name “${name}”`);
+      return false;
+    }
+    m.unlocked = true;
+    return true;
+  }
+  
+  // relies on weightedPick being defined globally (from main.js)
+  function weightedPick(weights) {
+    let total = 0;
+    for (let w of Object.values(weights)) total += w;
+    let rnd = Math.random() * total;
+    for (let [k, w] of Object.entries(weights)) {
+      if (rnd < w) return k;
+      rnd -= w;
+    }
+    return Object.keys(weights)[0];
+  }
+  
+  // ——— DOM CACHE ———
+  const imgEl    = document.getElementById('merchant-image');
+  const msgEl    = document.getElementById('merchant-message');
+  const offersEl = document.getElementById('merchant-offers');
+  const timerEl  = document.getElementById('merchant-timer');
+  
+  let nextRefresh = Date.now();
+  
+  // ——— REFRESH CHECK & TIMER ———
+  function refreshMerchantIfNeeded() {
+    const now = Date.now();
+    if (!state.currentMerchant || now >= nextRefresh) {
+      state.currentMerchant = pickMerchant();
+      nextRefresh = now + state.currentMerchant.refreshTime * 1000;
+      genMerchantOffers();
+      renderMerchantTab();
+    }
+    const rem = (nextRefresh - now) / 1000;
+    timerEl.textContent = rem > 0
+      ? `Leaves in ${formatDuration(rem)}`
+      : `Refreshing…`;
+    timerEl.style.color = rem > 0 && rem < 10 ? 'red' : '';
+  }
+  
+  // ——— GENERATE MERCHANT OFFERS ———
   function genMerchantOffers() {
+    // ensure we always have a merchant
+    if (!state.currentMerchant) {
+      state.currentMerchant = pickMerchant();
+      nextRefresh = Date.now() + state.currentMerchant.refreshTime * 1000;
+    }
+  
     const offers = [];
     const unlockedRealms = realms.filter(r => r.unlocked).map(r => r.id);
     if (!unlockedRealms.length) {
@@ -53,7 +137,7 @@ const RARITY_PRICE_MULT = {
       return;
     }
   
-    // precompute per-realm totals & discovered counts
+    // precompute totals per realm
     const totalByRealm = {}, discByRealm = {};
     cards.forEach(c => {
       totalByRealm[c.realm] = (totalByRealm[c.realm] || 0) + 1;
@@ -62,17 +146,24 @@ const RARITY_PRICE_MULT = {
       }
     });
   
-    for (let slot = 0; slot < 2; slot++) {
+    // # of slots
+    const slots = state.effects.merchantNumCards
+                * state.currentMerchant.cardMultiplier;
+  
+    for (let i = 0; i < slots; i++) {
       // 1) pick a realm
       const realmId = pickRandom(unlockedRealms);
       const realm   = realmMap[realmId];
   
-      // 2) merchant-boosted rarity weights
+      // 2) build boosted rarity weights, skipping any merchant‐specific rarities
+      const skip = state.currentMerchant.raritiesSkipped || [];
       const boosted = {};
-      rarities.forEach((r, idx) => {
-        boosted[r] = (realm.rarityWeights[r] || 0)
-                   * Decimal.pow(1.5, idx).toNumber();
-      });
+      rarities
+        .filter(r => !skip.includes(r))
+        .forEach((r, idx) => {
+          boosted[r] = (realm.rarityWeights[r] || 0)
+                     * Decimal.pow(1.5, idx).toNumber();
+        });
       const rarity = weightedPick(boosted);
   
       // 3) pick a card from that realm+rarity
@@ -81,80 +172,75 @@ const RARITY_PRICE_MULT = {
       const cardId = pickRandom(pool);
       const ownQty = cardMap[cardId].quantity;
   
-      // 4) base price = (30s × rate/sec) + (10 × rate/poke)
-      const curSec  = state.effects.currencyPerSec;
-      const curPoke = state.effects.currencyPerPoke;
-      // choose currency *first*, so we know which rates to use
-      // we'll filter currencies next…
+        // 4) choose currency: only those you actually earn via per‐sec or per‐poke
+        const curSec  = state.effects.currencyPerSec;
+        const curPoke = state.effects.currencyPerPoke;
+
+        let validCurrencies = currencies.filter(cur => {
+        const id = cur.id;
+        const earnsSec  = (curSec[id]  || 0) > 0;
+        const earnsPoke = (curPoke[id] || 0) > 0;
+        return earnsSec || earnsPoke;
+        });
+
+        // if for some reason nothing qualifies, fall back to all currencies
+        if (!validCurrencies.length) validCurrencies = currencies;
+
+        const currencyMeta = pickRandom(validCurrencies);
+        const currency     = currencyMeta.id;
+
   
-      // 5) filter currencies by scarcity rule
-      let validCurrencies = currencies.filter(cur => {
-        if (!unlockedRealms.includes(cur.realm)) return false;
-        if (cur.scarcity === 1) return true;
-        const total     = totalByRealm[cur.realm]  || 0;
-        const discovered = discByRealm[cur.realm] || 0;
-        return discovered > (total / 2);
-      });
-      if (!validCurrencies.length) {
-        validCurrencies = currencies.filter(cur =>
-          unlockedRealms.includes(cur.realm) && cur.scarcity === 1
-        );
-      }
-      if (!validCurrencies.length) {
-        validCurrencies = currencies.filter(cur =>
-          unlockedRealms.includes(cur.realm)
-        );
-      }
-      if (!validCurrencies.length) {
-        validCurrencies = currencies;
-      }
-      const currencyMeta = pickRandom(validCurrencies);
-      const currency     = currencyMeta.id;
-  
-      // now compute basePrice with that currency's rates
+      // compute price
       const rateSec  = new Decimal(curSec[currency] || 0);
       const ratePoke = new Decimal(curPoke[currency] || 0);
-      const basePrice = rateSec.times(15).plus(ratePoke.times(10));
+      let price = rateSec.times(15).plus(ratePoke.times(10))
+                  .times(RARITY_PRICE_MULT[rarity] || 1);
   
-      // 6) scale by rarity multiplier
-      let price = basePrice.times(RARITY_PRICE_MULT[rarity] || 1);
+      // randomness ±99%
+      price = price.times(Math.random()*1.98 + 0.01).ceil();
   
-      // 7) ±99% randomness
-      const factor = Math.random() * 1.98 + 0.01;
-      price = price.times(factor).ceil();
-  
-      // 8) divide by scarcity
-      price = price.dividedBy(currencyMeta.scarcity).ceil();
-  
-      // 9) maybe sell a stack (>1)?
+      // maybe sell a stack if you own many
       let quantity = 1;
       if (ownQty > 9 && Math.random() < 0.1) {
         const maxStack = Math.floor(Math.cbrt(ownQty));
         quantity = Math.max(1, Math.floor(Math.random() * maxStack) + 1);
-        // cost × cube-root of stack size
         price = price.times(Math.cbrt(quantity)).ceil();
       }
   
-      if (price.lessThan(1)) {
-        price = new Decimal(1);
-      }
-
+      if (price.lessThan(1)) price = new Decimal(1);
       offers.push({ cardId, price, currency, quantity });
     }
   
     state.merchantOffers = offers;
     saveState();
   
-    // highlight new offers if tab closed
     const btn = document.getElementById('tab-btn-merchant');
     if (!btn.classList.contains('active')) btn.classList.add('new-offers');
   }
   
   // ——— RENDER & BUY ———
   function renderMerchantTab() {
-    const cont = document.getElementById('merchant-offers');
-    cont.innerHTML = '';
+    if (!state.currentMerchant) {
+      refreshMerchantIfNeeded();
+      return;
+    }
   
+    // clear old
+    offersEl.innerHTML = '';
+  
+    // set image & greeting
+    const slug = slugify(state.currentMerchant.name);
+    imgEl.src = `assets/images/merchants/${slug}.jpg`;
+    imgEl.alt = state.currentMerchant.name;
+  
+    const greeting = pickRandom(window.merchantGreetings);
+    const pitch    = pickRandom(window.merchantPitches);
+    msgEl.innerHTML = `
+      <div class="merchant-greeting">${greeting}</div>
+      <div class="merchant-pitch">${pitch}</div>
+    `;
+  
+    // render offers
     state.merchantOffers.forEach((o, idx) => {
       const card  = cardMap[o.cardId];
       const realm = realmMap[card.realm];
@@ -167,76 +253,69 @@ const RARITY_PRICE_MULT = {
   
       const front = document.createElement('div');
       front.className = 'card-face front';
-      front.style.position    = 'relative';
       front.style.borderColor = realmColors[realm.id];
   
-      // frame & art
+      // artwork
       const f = document.createElement('img');
       f.className = 'card-frame';
-      f.src       = `assets/images/frames/${card.rarity}_frame.jpg`;
+      f.src = `assets/images/frames/${card.rarity}_frame.jpg`;
       const a = document.createElement('img');
       a.className = 'card-image';
-      a.src       = `assets/images/cards/${slugify(card.name)}.jpg`;
+      a.src = `assets/images/cards/${slugify(card.name)}.jpg`;
       front.append(f, a);
   
-      // tier & level
-      if (card.tier > 0) {
-        const ti = document.createElement('img');
-        ti.className = 'tier-icon';
-        ti.src       = `assets/images/tiers/tier_${card.tier}.png`;
-        const ll = document.createElement('div');
-        ll.className = 'level-label';
-        ll.textContent = `Lvl: ${formatNumber(card.level)}`;
-        front.append(ti, ll);
-      }
-  
-        // look up currency meta
-        const cm = currencies.find(cu => cu.id === o.currency) || { icon: 'question.png' };
-
-        // BUY button
-        const buyBtn = document.createElement('button');
-        buyBtn.className = 'offer-buy-btn';
-
-        // two-line content
-        buyBtn.innerHTML = `
+      // buy button
+      const cm = currencies.find(cu => cu.id === o.currency) || { icon: 'question.png' };
+      const buyBtn = document.createElement('button');
+      buyBtn.className = 'offer-buy-btn';
+      buyBtn.innerHTML = `
         <span>Buy:</span>
         <span>
-            ${formatNumber(o.price)}
-            <img class="icon" src="assets/images/currencies/${cm.icon}"/>
+          ${formatNumber(o.price)}
+          <img class="icon" src="assets/images/currencies/${cm.icon}"/>
         </span>
-        `;
-
-        buyBtn.addEventListener('click', e => {
+      `;
+      buyBtn.addEventListener('click', e => {
         e.stopPropagation();
         buyOffer(idx);
-        });
-
-        front.appendChild(buyBtn);
-  
-      // quantity badge if stack
-      if (o.quantity > 1) {
-        const badge = document.createElement('div');
-        badge.className = 'count-badge';
-        badge.textContent = o.quantity;
-        front.appendChild(badge);
-      }
+      });
+      front.appendChild(buyBtn);
   
       inner.append(front);
       outer.append(inner);
-      cont.append(outer);
+      offersEl.appendChild(outer);
     });
   }
   
   function buyOffer(i) {
-    const o = state.merchantOffers[i];
-    if (!o) return;
+    const o   = state.merchantOffers[i];
     const bal = state.currencies[o.currency] || new Decimal(0);
     if (bal.lessThan(o.price)) return;
   
+    // spend & award
     state.currencies[o.currency] = bal.minus(o.price);
     giveCard(o.cardId, o.quantity || 1);
+  
+    // remove the offer
     state.merchantOffers.splice(i, 1);
+  
+    // if that was the *last* card, force remaining cooldown ≤ 10s
+    if (state.merchantOffers.length === 0) {
+      const now       = Date.now();
+      const maxRemain = 10 * 1000; // 10s in ms
+      const rem       = nextRefresh - now;
+      if (rem > maxRemain) {
+        nextRefresh = now + maxRemain;
+      }
+    }
+  
+    // re-render
     renderMerchantTab();
     updateCurrencyBar();
+    state.stats.merchantPurchases++;
   }
+  
+  
+  // expose unlock helper if needed elsewhere
+  window.unlockMerchantByName = unlockMerchantByName;
   

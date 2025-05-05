@@ -11,11 +11,11 @@ id,name,realm,rarity,levelScaling,levelCost_currency,levelCost_amount,effect1_ty
 110,Shale,1,basic,1.5,stone,100,currencyPerPoke,stone,10,,,,,,,,,,,,,,,,,,"Shale layers can trap natural gas and oil, shaping modern fracking.",0,0,1
 111,Marble Slab,1,basic,5,stone,200,maxCardsPerPoke,0.001,,,currencyPerSec,stone,10,,,,,,,,,,,,,,Marble is metamorphosed limestone and was used by Michelangelo to carve David.,0,0,1
 112,Quartz Crystal,1,decent,2,stone,30,rarityOddsReduction,1,junk,,rarityOddsReduction,1,basic,,rarityOddsReduction,1,decent,,,,,,,,,,Quartz powers timepieces—its vibrations keep watches ticking!,0,0,1
-113,Basalt Boulder,1,decent,3,stone,1000,cooldownDivider,0.001,,,,,,,,,,,,,,,,,,,Basalt forms the vast ocean floors and the Giant’s Causeway in Ireland.,0,0,1
+113,Basalt Boulder,1,decent,3,stone,1000,cooldownDivider,0.001,,,currencyPerPoke,stone,10,,,,,,,,,,,,,,Basalt forms the vast ocean floors and the Giant’s Causeway in Ireland.,0,0,1
 114,Obsidian Shard,1,fine,3,stone,1000,cooldownDivider,0.002,,,currencyPerPoke,stone,100,,,,,,,,,,,,,,Obsidian was prized by ancient cultures for making razor-sharp blades.,0,0,1
 115,Fossil Fragment,1,fine,2.5,stone,25,currencyPerSec,stone,5,,currencyPerPoke,stone,100,,,,,,,,,,,,,,Fossils can reveal creatures that roamed Earth over 65 million years ago.,0,0,1
 116,Ruby Geode,1,fine,2,stone,20,rarityOddsReduction,1,junk,,rarityOddsReduction,1,basic,,rarityOddsReduction,1,decent,,rarityOddsReduction,1,fine,,,,,,Geodes form when minerals deposit inside gas bubbles in rocks over eons.,0,0,1
-117,Emerald Deposit,1,fine,3,rune,10,cooldownDivider,0.002,,,,,,,,,,,,,,,,,,,Emeralds get their green from trace chromium and vanadium.,0,0,1
+117,Emerald Deposit,1,fine,3,rune,10,cooldownDivider,0.002,,,currencyPerPoke,stone,50,,,,,,,,,,,,,,Emeralds get their green from trace chromium and vanadium.,0,0,1
 118,Sapphire Stone,1,fine,5,stone,50,currencyPerPoke,rune,10,,,,,,,,,,,,,,,,,,Sapphires come in many colors—even pink and yellow!,0,0,1
 119,Meteorite,1,fine,2,stone,2000,currencyPerSec,stone,5,,rarityOddsReduction,1,junk,,rarityOddsReduction,1,basic,,rarityOddsReduction,1,decent,,,,,,Meteorites can be up to 4.5 billion years old—older than Earth!,0,0,1
 120,Ancient Relic,1,rare,2,rune,1,currencyPerPoke,rune,1,,rarityOddsReduction,1,decent,,rarityOddsReduction,1,basic,,rarityOddsReduction,1,junk,,,,,,Many ancient relics are carbon-dated to reveal secrets of past civilizations.,0,0,1
@@ -25,12 +25,12 @@ id,name,realm,rarity,levelScaling,levelCost_currency,levelCost_amount,effect1_ty
 204,Driftwood,2,junk,2.5,coral,25,currencyPerSec,coral,1,,,,,,,,,,,,,,,,,,"Driftwood can float for years, carried across entire oceans.",0,0,1
 205,Old Boot,2,junk,2,coral,50,rarityOddsReduction,2,junk,,,,,,,,,,,,,,,,,,Ancient footwear found in rivers helps archaeologists date human settlements.,0,0,1
 206,Coral Fragment,2,basic,2,coral,40,currencyPerPoke,coral,5,,rarityOddsReduction,1,basic,,,,,,,,,,,,,,Coral reefs support 25% of all marine species while covering less than 1% of the ocean.,0,0,1
-207,Jellyfish,2,basic,3,coral,1000,cooldownDivider,0.001,,,,,,,,,,,,,,,,,,,"Some jellyfish species are biologically immortal, reverting to juvenile form to avoid death.",0,0,1
-208,Shipwreck,2,basic,2,coral,40,rarityOddsReduction,2,junk,,rarityOddsReduction,2,basic,,,,,,,,,,,,,,"Over 3 million shipwrecks lie on the ocean floor, preserving maritime history.",0,0,1
-209,Lobster,2,decent,2,coral,1000,rarityOddsReduction,2,junk,,rarityOddsReduction,2,basic,,,,,,,,,,,,,,Lobsters taste with their legs and chew with their stomachs!,0,0,1
-210,Seahorse,2,decent,2.5,coral,25,currencyPerSec,coral,5,,,,,,,,,,,,,,,,,,Male seahorses carry and give birth to their young.,0,0,1
+207,Jellyfish,2,basic,3,coral,1000,cooldownDivider,0.001,,,currencyPerPoke,coral,2,,,,,,,,,,,,,,"Some jellyfish species are biologically immortal, reverting to juvenile form to avoid death.",0,0,1
+208,Shipwreck,2,basic,2,coral,50,rarityOddsReduction,2,junk,,rarityOddsReduction,2,basic,,,,,,,,,,,,,,"Over 3 million shipwrecks lie on the ocean floor, preserving maritime history.",0,0,1
+209,Lobster,2,decent,2,coral,1000,rarityOddsReduction,2,junk,,rarityOddsReduction,2,basic,,rarityOddsReduction,2,decent,,,,,,,,,,Lobsters taste with their legs and chew with their stomachs!,0,0,1
+210,Seahorse,2,decent,2.5,coral,25,currencyPerSec,coral,5,,currencyPerPoke,coral,10,,,,,,,,,,,,,,Male seahorses carry and give birth to their young.,0,0,1
 211,Clownfish,2,decent,5,coral,500,minCardsPerPoke,0.0005,,,maxCardsPerPoke,0.001,,,,,,,,,,,,,,,Clownfish live among anemones and are immune to their stinging cells.,0,0,1
-212,Swordfish,2,fine,3,coral,1000,cooldownDivider,0.0025,,,,,,,,,,,,,,,,,,,Swordfish can swim up to 60 mph—one of the ocean’s fastest predators.,0,0,1
+212,Swordfish,2,fine,3,coral,1000,cooldownDivider,0.002,,,currencyPerPoke,coral,20,,,,,,,,,,,,,,Swordfish can swim up to 60 mph—one of the ocean’s fastest predators.,0,0,1
 213,Anglerfish,2,fine,2,coral,1000,rarityOddsReduction,2,junk,,rarityOddsReduction,1,junk,,,,,,,,,,,,,,Deep-sea anglerfish use a bioluminescent lure to attract prey in darkness.,0,0,1
 214,Electric Eel,2,fine,2,coral,1000,rarityOddsReduction,1,junk,,rarityOddsReduction,1,basic,,,,,,,,,,,,,,Electric eels can generate over 600 volts of electricity to stun prey.,0,0,1
 215,Pearl Oyster,2,fine,5,coral,1000,currencyPerPoke,pearl,1,,,,,,,,,,,,,,,,,,"Pearls form when oysters coat irritants with nacre, creating the gem.",0,0,1
@@ -43,10 +43,10 @@ id,name,realm,rarity,levelScaling,levelCost_currency,levelCost_amount,effect1_ty
 302,Beetle,3,junk,1.5,pollen,5,currencyPerPoke,pollen,1,,,,,,,,,,,,,,,,,,Beetles make up about 40% of all known insect species.,0,0,1
 303,Grasshopper,3,junk,2.5,pollen,25,currencyPerSec,pollen,1,,,,,,,,,,,,,,,,,,Some grasshoppers can jump over 20 times their body length.,0,0,1
 304,Butterfly,3,basic,2.5,pollen,25,currencyPerSec,pollen,2,,,,,,,,,,,,,,,,,,Butterflies taste with their feet to find host plants.,0,0,1
-305,Spider,3,basic,3,pollen,1000,cooldownDivider,0.001,,,,,,,,,,,,,,,,,,,Spider silk is stronger than steel of the same thickness.,0,0,1
+305,Spider,3,basic,3,pollen,1000,cooldownDivider,0.001,,,currencyPerPoke,pollen,1,,,,,,,,,,,,,,Spider silk is stronger than steel of the same thickness.,0,0,1
 306,Caterpillar,3,basic,1.5,pollen,50,currencyPerPoke,pollen,5,,,,,,,,,,,,,,,,,,Caterpillars can increase their body mass up to 100 times before metamorphosis.,0,0,1
 307,Ladybug,3,basic,5,pollen,50,maxCardsPerPoke,0.001,,,,,,,,,,,,,,,,,,,Ladybugs release a yellow fluid from their legs to deter predators.,0,0,1
-308,Wasp,3,decent,3,pollen,1000,cooldownDivider,0.0015,,,,,,,,,,,,,,,,,,,Wasps inspired medical adhesives that work on wet surfaces.,0,0,1
+308,Wasp,3,decent,3,pollen,1000,cooldownDivider,0.0015,,,currencyPerPoke,pollen,20,,,,,,,,,,,,,,Wasps inspired medical adhesives that work on wet surfaces.,0,0,1
 309,Dragonfly,3,decent,2.5,pollen,25,currencyPerSec,pollen,2,,,,,,,,,,,,,,,,,,Dragonflies can reach flying speeds of 35 mph—among the fastest insects.,0,0,1
 310,Firefly,3,decent,2,pollen,50,rarityOddsReduction,3,junk,,rarityOddsReduction,3,basic,,,,,,,,,,,,,,Fireflies glow without heat using a chemical reaction in their abdomen.,0,0,1
 311,Honeycomb,3,decent,2,pollen,50,rarityOddsReduction,2,junk,,rarityOddsReduction,3,junk,,,,,,,,,,,,,,Hexagonal honeycomb cells store the most honey with zero waste.,0,0,1
@@ -63,3 +63,30 @@ id,name,realm,rarity,levelScaling,levelCost_currency,levelCost_amount,effect1_ty
 322,Warden Wasp,3,epic,3,royal_jelly,1,maxCardsPerPoke,0.001,,,currencyPerPoke,royal_jelly,1,,rarityOddsReduction,3,rare,,,,,,,,,,Warden wasps defend their colonies with some of the strongest insect stings.,0,0,1
 323,Celestial Cicada,3,epic,2,royal_jelly,1,currencyPerPoke,royal_jelly,1,,rarityOddsReduction,3,fine,,rarityOddsReduction,2,fine,,rarityOddsReduction,3,rare,,rarityOddsReduction,2,rare,,Celestial cicadas emerge in synchronized swarms once every century.,0,0,1
 324,Dreamspinner,3,legendary,3,royal_jelly,10,minCardsPerPoke,0.002,,,currencyPerPoke,royal_jelly,2,,currencyPerSec,pollen,20,,rarityOddsReduction,3,decent,,rarityOddsReduction,3,fine,,The Dreamspinner weaves silk that unlocks visions in your dreams.,0,0,1
+401,Sparrow,4,basic,1.5,egg,10,currencyPerPoke,egg,2,,,,,,,,,,,,,,,,,,Sparrows can swim short distances by flapping their wings and hopping across the water.,0,0,1
+402,Pigeon,4,basic,1.5,egg,10,currencyPerPoke,egg,2,,,,,,,,,,,,,,,,,,Pigeons can recognize themselves in mirrors—one of the few species with this ability.,0,0,1
+403,Crow,4,basic,2.5,egg,25,currencyPerSec,egg,2,,,,,,,,,,,,,,,,,,Crows remember human faces and can hold grudges for years.,0,0,1
+404,Robin,4,basic,2,egg,50,rarityOddsReduction,4,basic,,currencyPerPoke,egg,1,,,,,,,,,,,,,,Robins can hear worms moving underground using their keen sense of hearing.,0,0,1
+405,Blue Jay,4,basic,2,egg,40,rarityOddsReduction,4,basic,,currencyPerPoke,egg,1,,,,,,,,,,,,,,Blue Jays mimic the calls of hawks to scare away other birds.,0,0,1
+406,Goldfinch,4,basic,1.5,egg,50,currencyPerPoke,egg,5,,,,,,,,,,,,,,,,,,"Goldfinches are strict vegetarians, unlike most other birds.",0,0,1
+407,Hummingbird,4,decent,3,egg,1000,cooldownDivider,0.001,,,currencyPerPoke,egg,20,,,,,,,,,,,,,,Hummingbirds can flap their wings over 70 times per second.,0,0,1
+408,Woodpecker,4,decent,2,egg,100,rarityOddsReduction,4,basic,,rarityOddsReduction,2,junk,,,,,,,,,,,,,,Woodpeckers have specially adapted skulls to absorb the shock of pecking.,0,0,1
+409,Kingfisher,4,decent,2.5,egg,25,currencyPerSec,egg,5,,,,,,,,,,,,,,,,,,Kingfishers can dive into water without making a splash thanks to their streamlined beaks.,0,0,1
+410,Parrot,4,decent,5,egg,500,minCardsPerPoke,0.0005,,,maxCardsPerPoke,0.001,,,,,,,,,,,,,,,Parrots can learn to say over 100 words and use them in context.,0,0,1
+411,Flamingo,4,fine,3,egg,1000,cooldownDivider,0.002,,,,,,,,,,,,,,,,,,,Flamingos get their pink color from the shrimp and algae they eat.,0,0,1
+412,Swan,4,fine,2,egg,1000,rarityOddsReduction,3,junk,,rarityOddsReduction,4,basic,,rarityOddsReduction,4,decent,,,,,,,,,,Swans have more neck vertebrae than giraffes—up to 25!,0,0,1
+413,Pelican,4,fine,1.5,egg,50,currencyPerPoke,egg,25,,,,,,,,,,,,,,,,,,Pelicans can hold up to 3 gallons of water in their throat pouches.,0,0,1
+414,Albatross,4,rare,5,egg,800,minCardsPerPoke,0.001,,,maxCardsPerPoke,0.0015,,,,,,,,,,,,,,,Albatrosses can sleep while flying over the ocean.,0,0,1
+415,Falcon,4,rare,2,egg,500,rarityOddsReduction,4,basic,,rarityOddsReduction,4,decent,,rarityOddsReduction,4,fine,,,,,,,,,,"Falcons are the fastest animals on Earth, diving at speeds over 200 mph.",0,0,1
+416,Hawk,4,rare,2,egg,500,rarityOddsReduction,3,junk,,rarityOddsReduction,3,basic,,,,,,,,,,,,,,Hawks have vision about 8 times sharper than that of humans.,0,0,1
+417,Eagle,4,rare,3,egg,1000,cooldownDivider,0.002,,,currencyPerPoke,egg,50,,,,,,,,,,,,,,"Eagles build the largest nests of any bird, sometimes weighing over a ton.",0,0,1
+418,Owl,4,rare,2,egg,50,currencyPerPoke,egg,100,,rarityOddsReduction,4,basic,,rarityOddsReduction,4,decent,,,,,,,,,,Owls can rotate their heads up to 270 degrees.,0,0,1
+419,Condor,4,rare,2,egg,5,rarityOddsReduction,4,basic,,rarityOddsReduction,3,basic,,rarityOddsReduction,2,basic,,rarityOddsReduction,1,basic,,,,,,"Condors have a wingspan of over 10 feet, among the largest of any land bird.",0,0,1
+420,Phoenix,4,epic,2,feather,5,currencyPerPoke,feather,1,,rarityOddsReduction,4,fine,,,,,,,,,,,,,,Phoenixes are mythical birds said to be reborn from their ashes.,0,0,1
+421,Thunderbird,4,epic,5,feather,10,minCardsPerPoke,0.001,,,currencyPerSec,egg,20,,,,,,,,,,,,,,Thunderbirds are legendary creatures said to cause thunder with their wings.,0,0,1
+422,Roc,4,epic,3,feather,5,rarityOddsReduction,4,fine,,rarityOddsReduction,4,rare,,currencyPerPoke,egg,100,,,,,,,,,,Rocs are giant birds in mythology capable of carrying off elephants.,0,0,1
+423,Garuda,4,epic,3,feather,10,cooldownDivider,0.002,,,,,,,,,,,,,,,,,,,"Garuda is a divine bird in Hindu mythology, often seen as a protector.",0,0,1
+424,Simurgh,4,epic,4,feather,10,rarityOddsReduction,4,basic,,rarityOddsReduction,4,decent,,rarityOddsReduction,4,fine,,rarityOddsReduction,4,rare,,,,,,The Simurgh is a Persian mythical bird believed to purify the land and sky.,0,0,1
+425,Articuno,4,legendary,5,feather,25,currencyPerPoke,feather,5,,currencyPerSec,feather,1,,maxCardsPerPoke,0.001,,,rarityOddsReduction,4,basic,,rarityOddsReduction,4,decent,,Articuno is an Ice-type Legendary Pokémon inspired by arctic birds.,0,0,1
+426,Zapdos,4,legendary,3,feather,25,cooldownDivider,0.003,,,currencyPerPoke,feather,2,,maxCardsPerPoke,0.001,,,rarityOddsReduction,4,decent,,rarityOddsReduction,4,fine,,Zapdos is an Electric-type Legendary Pokémon with powers over storms.,0,0,1
+427,Moltres,4,legendary,5,feather,25,rarityOddsReduction,1,junk,,rarityOddsReduction,2,junk,,rarityOddsReduction,3,junk,,rarityOddsReduction,3,basic,,rarityOddsReduction,4,basic,,Moltres is a Fire-type Legendary Pokémon with wings of flame.,0,0,1

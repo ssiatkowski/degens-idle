@@ -300,6 +300,11 @@ window.cards = [
       {
         "type": "cooldownDivider",
         "value": 0.001
+      },
+      {
+        "type": "currencyPerPoke",
+        "currency": "stone",
+        "value": 10.0
       }
     ]
   },
@@ -411,6 +416,11 @@ window.cards = [
       {
         "type": "cooldownDivider",
         "value": 0.002
+      },
+      {
+        "type": "currencyPerPoke",
+        "currency": "stone",
+        "value": 50.0
       }
     ]
   },
@@ -665,6 +675,11 @@ window.cards = [
       {
         "type": "cooldownDivider",
         "value": 0.001
+      },
+      {
+        "type": "currencyPerPoke",
+        "currency": "coral",
+        "value": 2.0
       }
     ]
   },
@@ -679,7 +694,7 @@ window.cards = [
     "levelScaling": 2.0,
     "levelCost": {
       "currency": "coral",
-      "amount": 40.0
+      "amount": 50.0
     },
     "description": "Over 3 million shipwrecks lie on the ocean floor, preserving maritime history.",
     "baseEffects": [
@@ -719,6 +734,11 @@ window.cards = [
         "type": "rarityOddsReduction",
         "realm": 2,
         "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 2,
+        "rarity": "decent"
       }
     ]
   },
@@ -741,6 +761,11 @@ window.cards = [
         "type": "currencyPerSec",
         "currency": "coral",
         "value": 5.0
+      },
+      {
+        "type": "currencyPerPoke",
+        "currency": "coral",
+        "value": 10.0
       }
     ]
   },
@@ -786,7 +811,12 @@ window.cards = [
     "baseEffects": [
       {
         "type": "cooldownDivider",
-        "value": 0.0025
+        "value": 0.002
+      },
+      {
+        "type": "currencyPerPoke",
+        "currency": "coral",
+        "value": 20.0
       }
     ]
   },
@@ -1139,6 +1169,11 @@ window.cards = [
       {
         "type": "cooldownDivider",
         "value": 0.001
+      },
+      {
+        "type": "currencyPerPoke",
+        "currency": "pollen",
+        "value": 1.0
       }
     ]
   },
@@ -1203,6 +1238,11 @@ window.cards = [
       {
         "type": "cooldownDivider",
         "value": 0.0015
+      },
+      {
+        "type": "currencyPerPoke",
+        "currency": "pollen",
+        "value": 20.0
       }
     ]
   },
@@ -1676,6 +1716,768 @@ window.cards = [
         "type": "rarityOddsReduction",
         "realm": 3,
         "rarity": "fine"
+      }
+    ]
+  },
+  {
+    "id": "401",
+    "name": "Sparrow",
+    "realm": 4,
+    "rarity": "basic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 1.5,
+    "levelCost": {
+      "currency": "egg",
+      "amount": 10.0
+    },
+    "description": "Sparrows can swim short distances by flapping their wings and hopping across the water.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "egg",
+        "value": 2.0
+      }
+    ]
+  },
+  {
+    "id": "402",
+    "name": "Pigeon",
+    "realm": 4,
+    "rarity": "basic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 1.5,
+    "levelCost": {
+      "currency": "egg",
+      "amount": 10.0
+    },
+    "description": "Pigeons can recognize themselves in mirrors—one of the few species with this ability.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "egg",
+        "value": 2.0
+      }
+    ]
+  },
+  {
+    "id": "403",
+    "name": "Crow",
+    "realm": 4,
+    "rarity": "basic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.5,
+    "levelCost": {
+      "currency": "egg",
+      "amount": 25.0
+    },
+    "description": "Crows remember human faces and can hold grudges for years.",
+    "baseEffects": [
+      {
+        "type": "currencyPerSec",
+        "currency": "egg",
+        "value": 2.0
+      }
+    ]
+  },
+  {
+    "id": "404",
+    "name": "Robin",
+    "realm": 4,
+    "rarity": "basic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.0,
+    "levelCost": {
+      "currency": "egg",
+      "amount": 50.0
+    },
+    "description": "Robins can hear worms moving underground using their keen sense of hearing.",
+    "baseEffects": [
+      {
+        "type": "rarityOddsReduction",
+        "realm": 4,
+        "rarity": "basic"
+      },
+      {
+        "type": "currencyPerPoke",
+        "currency": "egg",
+        "value": 1.0
+      }
+    ]
+  },
+  {
+    "id": "405",
+    "name": "Blue Jay",
+    "realm": 4,
+    "rarity": "basic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.0,
+    "levelCost": {
+      "currency": "egg",
+      "amount": 40.0
+    },
+    "description": "Blue Jays mimic the calls of hawks to scare away other birds.",
+    "baseEffects": [
+      {
+        "type": "rarityOddsReduction",
+        "realm": 4,
+        "rarity": "basic"
+      },
+      {
+        "type": "currencyPerPoke",
+        "currency": "egg",
+        "value": 1.0
+      }
+    ]
+  },
+  {
+    "id": "406",
+    "name": "Goldfinch",
+    "realm": 4,
+    "rarity": "basic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 1.5,
+    "levelCost": {
+      "currency": "egg",
+      "amount": 50.0
+    },
+    "description": "Goldfinches are strict vegetarians, unlike most other birds.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "egg",
+        "value": 5.0
+      }
+    ]
+  },
+  {
+    "id": "407",
+    "name": "Hummingbird",
+    "realm": 4,
+    "rarity": "decent",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 3.0,
+    "levelCost": {
+      "currency": "egg",
+      "amount": 1000.0
+    },
+    "description": "Hummingbirds can flap their wings over 70 times per second.",
+    "baseEffects": [
+      {
+        "type": "cooldownDivider",
+        "value": 0.001
+      },
+      {
+        "type": "currencyPerPoke",
+        "currency": "egg",
+        "value": 20.0
+      }
+    ]
+  },
+  {
+    "id": "408",
+    "name": "Woodpecker",
+    "realm": 4,
+    "rarity": "decent",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.0,
+    "levelCost": {
+      "currency": "egg",
+      "amount": 100.0
+    },
+    "description": "Woodpeckers have specially adapted skulls to absorb the shock of pecking.",
+    "baseEffects": [
+      {
+        "type": "rarityOddsReduction",
+        "realm": 4,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 2,
+        "rarity": "junk"
+      }
+    ]
+  },
+  {
+    "id": "409",
+    "name": "Kingfisher",
+    "realm": 4,
+    "rarity": "decent",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.5,
+    "levelCost": {
+      "currency": "egg",
+      "amount": 25.0
+    },
+    "description": "Kingfishers can dive into water without making a splash thanks to their streamlined beaks.",
+    "baseEffects": [
+      {
+        "type": "currencyPerSec",
+        "currency": "egg",
+        "value": 5.0
+      }
+    ]
+  },
+  {
+    "id": "410",
+    "name": "Parrot",
+    "realm": 4,
+    "rarity": "decent",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 5.0,
+    "levelCost": {
+      "currency": "egg",
+      "amount": 500.0
+    },
+    "description": "Parrots can learn to say over 100 words and use them in context.",
+    "baseEffects": [
+      {
+        "type": "minCardsPerPoke",
+        "value": 0.0005
+      },
+      {
+        "type": "maxCardsPerPoke",
+        "value": 0.001
+      }
+    ]
+  },
+  {
+    "id": "411",
+    "name": "Flamingo",
+    "realm": 4,
+    "rarity": "fine",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 3.0,
+    "levelCost": {
+      "currency": "egg",
+      "amount": 1000.0
+    },
+    "description": "Flamingos get their pink color from the shrimp and algae they eat.",
+    "baseEffects": [
+      {
+        "type": "cooldownDivider",
+        "value": 0.002
+      }
+    ]
+  },
+  {
+    "id": "412",
+    "name": "Swan",
+    "realm": 4,
+    "rarity": "fine",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.0,
+    "levelCost": {
+      "currency": "egg",
+      "amount": 1000.0
+    },
+    "description": "Swans have more neck vertebrae than giraffes—up to 25!",
+    "baseEffects": [
+      {
+        "type": "rarityOddsReduction",
+        "realm": 3,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 4,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 4,
+        "rarity": "decent"
+      }
+    ]
+  },
+  {
+    "id": "413",
+    "name": "Pelican",
+    "realm": 4,
+    "rarity": "fine",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 1.5,
+    "levelCost": {
+      "currency": "egg",
+      "amount": 50.0
+    },
+    "description": "Pelicans can hold up to 3 gallons of water in their throat pouches.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "egg",
+        "value": 25.0
+      }
+    ]
+  },
+  {
+    "id": "414",
+    "name": "Albatross",
+    "realm": 4,
+    "rarity": "rare",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 5.0,
+    "levelCost": {
+      "currency": "egg",
+      "amount": 800.0
+    },
+    "description": "Albatrosses can sleep while flying over the ocean.",
+    "baseEffects": [
+      {
+        "type": "minCardsPerPoke",
+        "value": 0.001
+      },
+      {
+        "type": "maxCardsPerPoke",
+        "value": 0.0015
+      }
+    ]
+  },
+  {
+    "id": "415",
+    "name": "Falcon",
+    "realm": 4,
+    "rarity": "rare",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.0,
+    "levelCost": {
+      "currency": "egg",
+      "amount": 500.0
+    },
+    "description": "Falcons are the fastest animals on Earth, diving at speeds over 200 mph.",
+    "baseEffects": [
+      {
+        "type": "rarityOddsReduction",
+        "realm": 4,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 4,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 4,
+        "rarity": "fine"
+      }
+    ]
+  },
+  {
+    "id": "416",
+    "name": "Hawk",
+    "realm": 4,
+    "rarity": "rare",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.0,
+    "levelCost": {
+      "currency": "egg",
+      "amount": 500.0
+    },
+    "description": "Hawks have vision about 8 times sharper than that of humans.",
+    "baseEffects": [
+      {
+        "type": "rarityOddsReduction",
+        "realm": 3,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 3,
+        "rarity": "basic"
+      }
+    ]
+  },
+  {
+    "id": "417",
+    "name": "Eagle",
+    "realm": 4,
+    "rarity": "rare",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 3.0,
+    "levelCost": {
+      "currency": "egg",
+      "amount": 1000.0
+    },
+    "description": "Eagles build the largest nests of any bird, sometimes weighing over a ton.",
+    "baseEffects": [
+      {
+        "type": "cooldownDivider",
+        "value": 0.002
+      },
+      {
+        "type": "currencyPerPoke",
+        "currency": "egg",
+        "value": 50.0
+      }
+    ]
+  },
+  {
+    "id": "418",
+    "name": "Owl",
+    "realm": 4,
+    "rarity": "rare",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.0,
+    "levelCost": {
+      "currency": "egg",
+      "amount": 50.0
+    },
+    "description": "Owls can rotate their heads up to 270 degrees.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "egg",
+        "value": 100.0
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 4,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 4,
+        "rarity": "decent"
+      }
+    ]
+  },
+  {
+    "id": "419",
+    "name": "Condor",
+    "realm": 4,
+    "rarity": "rare",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.0,
+    "levelCost": {
+      "currency": "egg",
+      "amount": 5.0
+    },
+    "description": "Condors have a wingspan of over 10 feet, among the largest of any land bird.",
+    "baseEffects": [
+      {
+        "type": "rarityOddsReduction",
+        "realm": 4,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 3,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 2,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 1,
+        "rarity": "basic"
+      }
+    ]
+  },
+  {
+    "id": "420",
+    "name": "Phoenix",
+    "realm": 4,
+    "rarity": "epic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.0,
+    "levelCost": {
+      "currency": "feather",
+      "amount": 5.0
+    },
+    "description": "Phoenixes are mythical birds said to be reborn from their ashes.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "feather",
+        "value": 1.0
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 4,
+        "rarity": "fine"
+      }
+    ]
+  },
+  {
+    "id": "421",
+    "name": "Thunderbird",
+    "realm": 4,
+    "rarity": "epic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 5.0,
+    "levelCost": {
+      "currency": "feather",
+      "amount": 10.0
+    },
+    "description": "Thunderbirds are legendary creatures said to cause thunder with their wings.",
+    "baseEffects": [
+      {
+        "type": "minCardsPerPoke",
+        "value": 0.001
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "egg",
+        "value": 20.0
+      }
+    ]
+  },
+  {
+    "id": "422",
+    "name": "Roc",
+    "realm": 4,
+    "rarity": "epic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 3.0,
+    "levelCost": {
+      "currency": "feather",
+      "amount": 5.0
+    },
+    "description": "Rocs are giant birds in mythology capable of carrying off elephants.",
+    "baseEffects": [
+      {
+        "type": "rarityOddsReduction",
+        "realm": 4,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 4,
+        "rarity": "rare"
+      },
+      {
+        "type": "currencyPerPoke",
+        "currency": "egg",
+        "value": 100.0
+      }
+    ]
+  },
+  {
+    "id": "423",
+    "name": "Garuda",
+    "realm": 4,
+    "rarity": "epic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 3.0,
+    "levelCost": {
+      "currency": "feather",
+      "amount": 10.0
+    },
+    "description": "Garuda is a divine bird in Hindu mythology, often seen as a protector.",
+    "baseEffects": [
+      {
+        "type": "cooldownDivider",
+        "value": 0.002
+      }
+    ]
+  },
+  {
+    "id": "424",
+    "name": "Simurgh",
+    "realm": 4,
+    "rarity": "epic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 4.0,
+    "levelCost": {
+      "currency": "feather",
+      "amount": 10.0
+    },
+    "description": "The Simurgh is a Persian mythical bird believed to purify the land and sky.",
+    "baseEffects": [
+      {
+        "type": "rarityOddsReduction",
+        "realm": 4,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 4,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 4,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 4,
+        "rarity": "rare"
+      }
+    ]
+  },
+  {
+    "id": "425",
+    "name": "Articuno",
+    "realm": 4,
+    "rarity": "legendary",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 5.0,
+    "levelCost": {
+      "currency": "feather",
+      "amount": 25.0
+    },
+    "description": "Articuno is an Ice-type Legendary Pokémon inspired by arctic birds.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "feather",
+        "value": 5.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "feather",
+        "value": 1.0
+      },
+      {
+        "type": "maxCardsPerPoke",
+        "value": 0.001
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 4,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 4,
+        "rarity": "decent"
+      }
+    ]
+  },
+  {
+    "id": "426",
+    "name": "Zapdos",
+    "realm": 4,
+    "rarity": "legendary",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 3.0,
+    "levelCost": {
+      "currency": "feather",
+      "amount": 25.0
+    },
+    "description": "Zapdos is an Electric-type Legendary Pokémon with powers over storms.",
+    "baseEffects": [
+      {
+        "type": "cooldownDivider",
+        "value": 0.003
+      },
+      {
+        "type": "currencyPerPoke",
+        "currency": "feather",
+        "value": 2.0
+      },
+      {
+        "type": "maxCardsPerPoke",
+        "value": 0.001
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 4,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 4,
+        "rarity": "fine"
+      }
+    ]
+  },
+  {
+    "id": "427",
+    "name": "Moltres",
+    "realm": 4,
+    "rarity": "legendary",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 5.0,
+    "levelCost": {
+      "currency": "feather",
+      "amount": 25.0
+    },
+    "description": "Moltres is a Fire-type Legendary Pokémon with wings of flame.",
+    "baseEffects": [
+      {
+        "type": "rarityOddsReduction",
+        "realm": 1,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 2,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 3,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 3,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 4,
+        "rarity": "basic"
       }
     ]
   }

@@ -19,9 +19,17 @@ window.skills = [
     purchased: false
   },
   {
+    id: 1003,
+    name: "Unlock Aviary Realm",
+    description: "Black Hole pokes can now give cards from Aviary realm.",
+    cost: { realmId: 3, currencyId: "pollen", amount: 2e5 },
+    unlocked: false,
+    purchased: false
+  },
+  {
     id: 2001,
     name: "More Cards",
-    description: "+1 to max cards per poke.",
+    description: "+2 to max cards per poke.",
     cost: { realmId: 1, currencyId: "stone", amount: 5e3 },
     unlocked: false,
     purchased: false
@@ -29,16 +37,56 @@ window.skills = [
   {
     id: 2002,
     name: "More Cards 2",
-    description: "+2 to max cards per poke.",
-    cost: { realmId: 2, currencyId: "coral", amount: 2e4 },
+    description: "+5 to max cards per poke.",
+    cost: { realmId: 2, currencyId: "coral", amount: 1e4 },
     unlocked: false,
     purchased: false
   },
   {
     id: 2003,
     name: "More Cards 3",
-    description: "+3 to max cards per poke.",
-    cost: { realmId: 3, currencyId: "pollen", amount: 2e4 },
+    description: "+8 to max cards per poke.",
+    cost: { realmId: 3, currencyId: "pollen", amount: 1.5e4 },
+    unlocked: false,
+    purchased: false
+  },
+  {
+    id: 2004,
+    name: "More Cards 4",
+    description: "+10 to max cards per poke.",
+    cost: { realmId: 4, currencyId: "eggs", amount: 2e4 },
+    unlocked: false,
+    purchased: false
+  },
+  {
+    id: 2101,
+    name: "Massive Black Hole",
+    description: "+10 to max cards per poke.",
+    cost: { realmId: 1, currencyId: "stone", amount: 1e7 },
+    unlocked: false,
+    purchased: false
+  },
+  {
+    id: 2202,
+    name: "Massive Black Hole 2",
+    description: "+20 to max cards per poke.",
+    cost: { realmId: 2, currencyId: "coral", amount: 2e7 },
+    unlocked: false,
+    purchased: false
+  },
+  {
+    id: 2303,
+    name: "Massive Black Hole 3",
+    description: "+50 to max cards per poke.",
+    cost: { realmId: 3, currencyId: "pollen", amount: 3e7 },
+    unlocked: false,
+    purchased: false
+  },
+  {
+    id: 2404,
+    name: "Massive Black Hole 4",
+    description: "+100 to max cards per poke.",
+    cost: { realmId: 4, currencyId: "eggs", amount: 4e7 },
     unlocked: false,
     purchased: false
   },
@@ -54,15 +102,23 @@ window.skills = [
     id: 3002,
     name: "Faster Poke 2",
     description: "Decrease base cooldown for Sea World by 2s.",
-    cost: { realmId: 2, currencyId: "coral", amount: 5000 },
+    cost: { realmId: 2, currencyId: "coral", amount: 2000 },
     unlocked: false,
     purchased: false
   },
   {
     id: 3003,
     name: "Faster Poke 3",
-    description: "Decrease base cooldown for Sea World by 5s.",
-    cost: { realmId: 3, currencyId: "pollen", amount: 5000 },
+    description: "Decrease base cooldown for Bugdom by 5s.",
+    cost: { realmId: 3, currencyId: "pollen", amount: 3000 },
+    unlocked: false,
+    purchased: false
+  },
+  {
+    id: 3004,
+    name: "Faster Poke 4",
+    description: "Decrease base cooldown for Aviary by 10s.",
+    cost: { realmId: 4, currencyId: "eggs",  amount: 4000 },
     unlocked: false,
     purchased: false
   },
@@ -85,8 +141,16 @@ window.skills = [
   {
     id: 4003,
     name: "Not Less Cards 3",
-    description: "+2 to min cards per poke.",
+    description: "+3 to min cards per poke.",
     cost: { realmId: 3, currencyId: "pollen", amount: 1e6 },
+    unlocked: false,
+    purchased: false
+  },
+  {
+    id: 4004,
+    name: "Not Less Cards 4",
+    description: "+4 to min cards per poke.",
+    cost: { realmId: 4, currencyId: "eggs", amount: 1e6 },
     unlocked: false,
     purchased: false
   },
@@ -105,7 +169,55 @@ window.skills = [
     cost: { realmId: 3, currencyId: "coral", amount: 1e9 },
     unlocked: false,
     purchased: false
-  }
+  },
+  {
+    id: 5003,
+    name: "To Hell with Bugs",
+    description: "Bugdom realm deselect multiplier reduced by 50%.",
+    cost: { realmId: 4, currencyId: "pollen", amount: 1e9 },
+    unlocked: false,
+    purchased: false
+  },
+  {
+    id: 6001,
+    name: "Fan of Capitalism",
+    description: "+1 card offered by merchants.",
+    cost: { realmId: 1, currencyId: "stone", amount: 2e5 },
+    unlocked: false,
+    purchased: false
+  },
+  {
+    id: 6002,
+    name: "Fan of Capitalism 2",
+    description: "+1 card offered by merchants.",
+    cost: { realmId: 2, currencyId: "coral", amount: 2e5 },
+    unlocked: false,
+    purchased: false
+  },
+  {
+    id: 6003,
+    name: "Fan of Capitalism 3",
+    description: "+1 card offered by merchants.",
+    cost: { realmId: 3, currencyId: "pollen", amount: 2e5 },
+    unlocked: false,
+    purchased: false
+  },
+  {
+    id: 6004,
+    name: "Fan of Capitalism 4",
+    description: "+1 card offered by merchants.",
+    cost: { realmId: 4, currencyId: "eggs", amount: 2e5 },
+    unlocked: false,
+    purchased: false
+  },
+  {
+    id: 7001,
+    name: "Unlock New Merchant",
+    description: "Yvette Ambervale is added to pool of traveling merchants.",
+    cost: { realmId: 2, currencyId: "coral", amount: 5e5 },
+    unlocked: false,
+    purchased: false
+  },
 ];
 
 // --- FILTER STATE ---
@@ -252,32 +364,62 @@ function applySkill(id, skipCost = false) {
   switch (s.id) {
     case 1001: // Unlock Sea World Realm
       realms[1].unlocked = true;
-      initCardsFilters(); renderRealmFilters();
+      initCardsFilters();
+      renderRealmFilters();
       break;
     case 1002: // Unlock Bugdom Realm
       realms[2].unlocked = true;
-      initCardsFilters(); renderRealmFilters();
+      initCardsFilters();
+      renderRealmFilters();
+      break;
+    case 1003: // Unlock Aviary Realm
+      realms[3].unlocked = true;
+      initCardsFilters();
+      renderRealmFilters();
       break;
     case 2001: // More Cards
-      state.effects.maxCardsPerPoke += 1;
-      break;
-    case 2002:
       state.effects.maxCardsPerPoke += 2;
       break;
+    case 2002:
+      state.effects.maxCardsPerPoke += 5;
+      break;
     case 2003:
-      state.effects.maxCardsPerPoke += 3;
+      state.effects.maxCardsPerPoke += 8;
+      break;
+    case 2004:
+      state.effects.maxCardsPerPoke += 10;
+      break;
+    case 2101: // Massive Black Hole
+      state.effects.maxCardsPerPoke += 10;
+      break;
+    case 2202:
+      state.effects.maxCardsPerPoke += 20;
+      break;
+    case 2303:
+      state.effects.maxCardsPerPoke += 50;
+      break;
+    case 2404:
+      state.effects.maxCardsPerPoke += 100;
       break;
     case 3001: // Faster Poke
       realms[s.cost.realmId - 1].cooldown -= 0.5;
       updatePokeFilterStats();
+      renderRealmFilters();
       break;
     case 3002:
       realms[s.cost.realmId - 1].cooldown -= 2;
       updatePokeFilterStats();
+      renderRealmFilters();
       break;
     case 3003:
       realms[s.cost.realmId - 1].cooldown -= 5;
       updatePokeFilterStats();
+      renderRealmFilters();
+      break;
+    case 3004:
+      realms[s.cost.realmId - 1].cooldown -= 10;
+      updatePokeFilterStats();
+      renderRealmFilters();
       break;
     case 4001: // Not Less Cards
       state.effects.minCardsPerPoke += 1;
@@ -286,17 +428,38 @@ function applySkill(id, skipCost = false) {
       state.effects.minCardsPerPoke += 2;
       break;
     case 4003:
-      state.effects.minCardsPerPoke += 2;
+      state.effects.minCardsPerPoke += 3;
+      break;
+    case 4004:
+      state.effects.minCardsPerPoke += 4;
       break;
     case 5001: // Nobody Likes Rocks
-      realms[0].deselectMultiplier -= 5;
+      realms[0].deselectMultiplier /= 2;
       updatePokeFilterStats();
       break;
     case 5002: // The Sea Scares Me
-      realms[1].deselectMultiplier -= 5;
+      realms[1].deselectMultiplier /= 2;
       updatePokeFilterStats();
       break;
-    // add more cases as-needed…
+    case 5003: // To Hell with Bugs
+      realms[2].deselectMultiplier /= 2;
+      updatePokeFilterStats();
+      break;
+    case 6001: // Fan of Capitalism
+      state.effects.merchantNumCards += 1;
+      break;
+    case 6002: // Fan of Capitalism 2
+      state.effects.merchantNumCards += 1;
+      break;
+    case 6003: // Fan of Capitalism 3
+      state.effects.merchantNumCards += 1;
+      break;
+    case 6004: // Fan of Capitalism 4
+      state.effects.merchantNumCards += 1;
+      break;
+    case 7001: // Unlock New Merchant
+      unlockMerchantByName('Yvette Ambervale');
+      break;
   }
 
   // 4) refresh UI
