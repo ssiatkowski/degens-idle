@@ -169,7 +169,8 @@ function updateStatsUI() {
     const detail = document.createElement('div');
     detail.style.marginTop = '12px';
     const sel = merchants.find(m => m.id === selectedStatsMerchantId) || {};
-    const totalOdds = merchants.reduce((sum, m) => sum + (m.merchantOdds||0), 0);
+    const unlockedMerchants = merchants.filter(m => m.unlocked);
+    const totalOdds = unlockedMerchants.reduce((sum, m) => sum + (m.merchantOdds || 0), 0);
     const prob = totalOdds > 0
       ? ((sel.merchantOdds||0) / totalOdds * 100).toFixed(2) + '%'
       : '—';

@@ -214,7 +214,15 @@ window.skills = [
     id: 7001,
     name: "Unlock New Merchant",
     description: "Yvette Ambervale is added to pool of traveling merchants.",
-    cost: { realmId: 2, currencyId: "coral", amount: 5e5 },
+    cost: { realmId: 2, currencyId: "coral", amount: 3e5 },
+    unlocked: false,
+    purchased: false
+  },
+  {
+    id: 7002,
+    name: "Unlock New Merchant 2",
+    description: "Orin Saltstride is added to pool of traveling merchants.",
+    cost: { realmId: 3, currencyId: "pollen", amount: 3e5 },
     unlocked: false,
     purchased: false
   },
@@ -529,6 +537,9 @@ function applySkill(id, skipCost = false) {
       break;
     case 7001: // Unlock New Merchant
       unlockMerchantByName('Yvette Ambervale');
+      break;
+    case 7002: // Unlock New Merchant 2
+      unlockMerchantByName('Orin Saltstride');
       break;
   }
 

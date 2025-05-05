@@ -9,6 +9,7 @@ const merchants = [
       refreshTime: 300,
       merchantOdds: 1000,
       raritiesSkipped: [],
+      priceMultiplier: 1,
       description: 'Your standard traveling merchant',
       unlocked: true
     },
@@ -17,8 +18,9 @@ const merchants = [
       name: 'Maribel Tealeaf',
       cardMultiplier: 1,
       refreshTime: 150,
-      merchantOdds: 800,
+      merchantOdds: 900,
       raritiesSkipped: [],
+      priceMultiplier: 1,
       description: 'Always on the move. She only stays for half as long.',
       unlocked: true
     },
@@ -27,8 +29,9 @@ const merchants = [
       name: 'Cedric Stormforge',
       cardMultiplier: 2,
       refreshTime: 300,
-      merchantOdds: 600,
+      merchantOdds: 800,
       raritiesSkipped: [],
+      priceMultiplier: 1,
       description: 'A strong dude. Carries twice as many cards.',
       unlocked: true
     },
@@ -37,9 +40,21 @@ const merchants = [
       name: 'Yvette Ambervale',
       cardMultiplier: 1,
       refreshTime: 300,
-      merchantOdds: 400,
+      merchantOdds: 700,
       raritiesSkipped: ['junk'],
+      priceMultiplier: 1,
       description: 'A fancy lady. She does not carry junk.',
+      unlocked: false
+    },
+    {
+      id: 4,
+      name: 'Orin Saltstride',
+      cardMultiplier: 0.5,
+      refreshTime: 300,
+      merchantOdds: 600,
+      raritiesSkipped: [],
+      priceMultiplier: 0.1,
+      description: 'Fair old guy. Carries half as many cards but sells them at 1/10 of the price.',
       unlocked: false
     }
   ];
@@ -147,8 +162,8 @@ const merchants = [
     });
   
     // # of slots
-    const slots = state.effects.merchantNumCards
-                * state.currentMerchant.cardMultiplier;
+    const slots = Math.ceil(state.effects.merchantNumCards
+                          * state.currentMerchant.cardMultiplier);
   
     for (let i = 0; i < slots; i++) {
       // 1) pick a realm
@@ -205,7 +220,7 @@ const merchants = [
       if (ownQty > 9 && Math.random() < 0.1) {
         const maxStack = Math.floor(Math.cbrt(ownQty));
         quantity = Math.max(1, Math.floor(Math.random() * maxStack) + 1);
-        price = price.times(Math.cbrt(quantity)).ceil();
+        price = price.times(Math.cbrt(quantity)).times(state.currentMerchant.priceMultiplier).ceil();
       }
   
       if (price.lessThan(1)) price = new Decimal(1);
