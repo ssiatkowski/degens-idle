@@ -5,7 +5,7 @@ window.skills = [
   {
     id: 1001,
     name: "Unlock Sea World Realm",
-    description: "Black Hole pokes can now give cards from Sea World realm.",
+    description: "Black Hole pokes and Merchants can now give cards from Sea World realm.",
     cost: { realmId: 1, currencyId: "stone", amount: 5e4 },
     unlocked: false,
     purchased: false
@@ -13,7 +13,7 @@ window.skills = [
   {
     id: 1002,
     name: "Unlock Bugdom Realm",
-    description: "Black Hole pokes can now give cards from Bugdom realm.",
+    description: "Black Hole pokes and Merchants can now give cards from Bugdom realm.",
     cost: { realmId: 2, currencyId: "coral", amount: 1e5 },
     unlocked: false,
     purchased: false
@@ -21,7 +21,7 @@ window.skills = [
   {
     id: 1003,
     name: "Unlock Aviary Realm",
-    description: "Black Hole pokes can now give cards from Aviary realm.",
+    description: "Black Hole pokes and Merchants can now give cards from Aviary realm.",
     cost: { realmId: 3, currencyId: "pollen", amount: 2e5 },
     unlocked: false,
     purchased: false

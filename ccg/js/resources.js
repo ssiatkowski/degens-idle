@@ -54,9 +54,9 @@ const RARITY_ODDS_MIN = {
 // 2) create your realms without individual rarityWeights
 window.realms = [
   { id: 1, name: "Rocks",      unlocked: true,  cooldown: 3,  deselectMultiplier: 5, pokeWeight: 1e11 },
-  { id: 2, name: "Sea World",  unlocked: false, cooldown: 7,  deselectMultiplier: 5, pokeWeight: 3e10 },
-  { id: 3, name: "Bugdom",     unlocked: false, cooldown: 20, deselectMultiplier: 5, pokeWeight: 1e10 },
-  { id: 4, name: "Aviary",     unlocked: false, cooldown: 40, deselectMultiplier: 5, pokeWeight: 5e9  },
+  { id: 2, name: "Sea World",  unlocked: false, cooldown: 7,  deselectMultiplier: 5, pokeWeight: 8e10 },
+  { id: 3, name: "Bugdom",     unlocked: false, cooldown: 20, deselectMultiplier: 5, pokeWeight: 6e10 },
+  { id: 4, name: "Aviary",     unlocked: false, cooldown: 40, deselectMultiplier: 5, pokeWeight: 4e10 },
 ];
 
 // 3) give every realm its own copy of the default weights

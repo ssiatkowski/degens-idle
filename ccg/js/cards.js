@@ -169,6 +169,11 @@ window.cards = [
     "description": "Sandstone can form stunning canyons like Antelope Canyon in Arizona.",
     "baseEffects": [
       {
+        "type": "currencyPerPoke",
+        "currency": "stone",
+        "value": 1.0
+      },
+      {
         "type": "rarityOddsReduction",
         "realm": 1,
         "rarity": "junk"
@@ -305,6 +310,11 @@ window.cards = [
         "type": "currencyPerPoke",
         "currency": "stone",
         "value": 10.0
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 1,
+        "rarity": "junk"
       }
     ]
   },
@@ -625,6 +635,11 @@ window.cards = [
     "baseEffects": [
       {
         "type": "rarityOddsReduction",
+        "realm": 1,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsReduction",
         "realm": 2,
         "rarity": "junk"
       }
@@ -649,6 +664,11 @@ window.cards = [
         "type": "currencyPerPoke",
         "currency": "coral",
         "value": 5.0
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 1,
+        "rarity": "junk"
       },
       {
         "type": "rarityOddsReduction",
@@ -893,6 +913,16 @@ window.cards = [
         "type": "currencyPerPoke",
         "currency": "pearl",
         "value": 1.0
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 2,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 2,
+        "rarity": "basic"
       }
     ]
   },
@@ -1126,6 +1156,11 @@ window.cards = [
         "type": "currencyPerSec",
         "currency": "pollen",
         "value": 1.0
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 3,
+        "rarity": "junk"
       }
     ]
   },
@@ -1148,6 +1183,16 @@ window.cards = [
         "type": "currencyPerSec",
         "currency": "pollen",
         "value": 2.0
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 3,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 3,
+        "rarity": "basic"
       }
     ]
   },
@@ -1217,6 +1262,16 @@ window.cards = [
       {
         "type": "maxCardsPerPoke",
         "value": 0.001
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 3,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 3,
+        "rarity": "basic"
       }
     ]
   },
@@ -1265,6 +1320,16 @@ window.cards = [
         "type": "currencyPerSec",
         "currency": "pollen",
         "value": 2.0
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 2,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 2,
+        "rarity": "basic"
       }
     ]
   },
