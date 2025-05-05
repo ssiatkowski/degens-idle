@@ -89,7 +89,9 @@ window.currencies = [
 { id: 'coral',       name: 'Coral',       realm: 2, scarcity: 1,   icon: 'coral.png'       },
 { id: 'pearl',       name: 'Pearl',       realm: 2, scarcity: 100, icon: 'pearl.png'       },
 { id: 'pollen',      name: 'Pollen',      realm: 3, scarcity: 1,   icon: 'pollen.png'      },
-{ id: 'royal_jelly', name: 'Royal Jelly', realm: 3, scarcity: 100, icon: 'royal_jelly.png' }
+{ id: 'royal_jelly', name: 'Royal Jelly', realm: 3, scarcity: 100, icon: 'royal_jelly.png' },
+{ id: 'egg',         name: 'Egg',         realm: 4, scarcity: 1,   icon: 'egg.png'         },
+{ id: 'feather',     name: 'Feather',     realm: 4, scarcity: 100, icon: 'feather.png'     },
 ];
 
 

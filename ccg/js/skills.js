@@ -224,36 +224,50 @@ window.skills = [
 const skillFilterState = {
   purchased:     'all',  // 'all' | 'purchased' | 'unpurchased'
   affordability: 'all',  // 'all' | 'affordable' | 'unaffordable'
-  lock:          'all'   // 'all' | 'locked' | 'unlocked'
+  lock:          'all',   // 'all' | 'locked' | 'unlocked'
+  currency:      'all'        // 'all' | <currencyId>
 };
 
 // --- RENDER FILTER CONTROLS ---
 function initSkillsFilters() {
   const container = document.getElementById('skills-list');
+  // remove any previous filter row
   container.querySelectorAll('.skills-filters').forEach(el => el.remove());
 
+  // ensure we always have a currency filter state
+  if (!skillFilterState.currency) {
+    skillFilterState.currency = 'all';
+  }
+
+  // build the filter bar
   const filters = document.createElement('div');
   filters.className = 'skills-filters';
 
-  const purchasedOpts = ['unpurchased','all','purchased'];
-  const affordOpts    = ['all','affordable','unaffordable'];
-  const lockOpts      = ['unlocked','all','locked'];
-
-  const makeToggle = (labelMap, opts, key) => {
+  // --- helper to build the three toggles ---
+  function makeToggle(labelMap, opts, key) {
     const btn = document.createElement('button');
     btn.className = 'filter-btn';
     btn.dataset.filterKey = key;
     btn.dataset.idx = opts.indexOf(skillFilterState[key]);
     btn.textContent = labelMap[ skillFilterState[key] ];
     btn.onclick = () => {
-      let idx = (parseInt(btn.dataset.idx) + 1) % opts.length;
+      let idx = (parseInt(btn.dataset.idx, 10) + 1) % opts.length;
       btn.dataset.idx = idx;
       skillFilterState[key] = opts[idx];
       btn.textContent = labelMap[ opts[idx] ];
       renderSkillsTab();
     };
     return btn;
-  };
+  }
+
+  // reset to sensible defaults
+  skillFilterState.purchased     = 'unpurchased';
+  skillFilterState.affordability = 'all';
+  skillFilterState.lock          = 'unlocked';
+
+  const purchasedOpts = ['unpurchased','all','purchased'];
+  const affordOpts    = ['all','affordable','unaffordable'];
+  const lockOpts      = ['unlocked','all','locked'];
 
   const purchasedLabels = {
     all: 'All',
@@ -271,76 +285,132 @@ function initSkillsFilters() {
     unlocked: 'Unlocked'
   };
 
-  skillFilterState.purchased     = 'unpurchased';
-  skillFilterState.affordability = 'all';
-  skillFilterState.lock          = 'unlocked';
-
+  // add the three toggle‐buttons
   filters.append(
     makeToggle(purchasedLabels, purchasedOpts, 'purchased'),
     makeToggle(affordLabels,    affordOpts,    'affordability'),
     makeToggle(lockLabels,      lockOpts,      'lock')
   );
+
+  // --- now build the currency dropdown with external icon ---
+  // ——— currency dropdown with optional icon ———
+  const wrapper = document.createElement('div');
+  wrapper.className = 'currency-filter-wrapper';
+
+  // icon for the currently selected currency
+  const iconEl = document.createElement('img');
+  iconEl.className = 'currency-filter-icon';
+  // hide the icon if “all” is selected
+  if (skillFilterState.currency !== 'all') {
+    const meta = currencies.find(c => c.id === skillFilterState.currency);
+    iconEl.src = `assets/images/currencies/${meta.icon}`;
+  } else {
+    iconEl.style.display = 'none';
+  }
+  wrapper.appendChild(iconEl);
+
+  const select = document.createElement('select');
+  select.className = 'currency-filter-select';
+  select.appendChild(new Option('All Currencies','all'));
+  currencies.forEach(cur => {
+    select.appendChild(new Option(cur.name, cur.id));
+  });
+  select.value = skillFilterState.currency;
+  select.onchange = () => {
+    skillFilterState.currency = select.value;
+    if (select.value === 'all') {
+      iconEl.style.display = 'none';
+    } else {
+      const meta = currencies.find(c => c.id === select.value);
+      iconEl.src = `assets/images/currencies/${meta.icon}`;
+      iconEl.style.display = '';
+    }
+    renderSkillsTab();
+  };
+  wrapper.appendChild(select);
+
+  filters.appendChild(wrapper);
+
+
   container.prepend(filters);
 }
+
+
 
 // --- RENDER SKILLS GRID ---
 function renderSkillsTab() {
   const list = document.getElementById('skills-list');
-  // clear old tiles and grid (keep filters)
+  // remove any existing skill tiles and grid, but keep the filter controls
   list.querySelectorAll('.skill-tile, .skills-grid').forEach(el => el.remove());
 
   const grid = document.createElement('div');
   grid.className = 'skills-grid';
 
-  skills.forEach(s => {
-    const realmUnlocked = realmMap[s.cost.realmId].unlocked;
-    const owned         = s.purchased;
-    const curAmt        = state.currencies[s.cost.currencyId] || new Decimal(0);
-    const affordable    = curAmt.greaterThanOrEqualTo(s.cost.amount);
-    const locked        = !realmUnlocked;
+  // take a sorted copy of skills: first by currencyId, then by amount
+  [...skills]
+    .sort((a, b) => {
+      if (a.cost.currencyId !== b.cost.currencyId) {
+        return a.cost.currencyId.localeCompare(b.cost.currencyId);
+      }
+      return a.cost.amount - b.cost.amount;
+    })
+    .forEach(s => {
+      const realmUnlocked = realmMap[s.cost.realmId].unlocked;
+      const owned         = s.purchased;
+      const curAmt        = state.currencies[s.cost.currencyId] || new Decimal(0);
+      const affordable    = curAmt.greaterThanOrEqualTo(s.cost.amount);
+      const locked        = !realmUnlocked;
 
-    // filters
-    if (skillFilterState.purchased==='purchased'   && !owned)      return;
-    if (skillFilterState.purchased==='unpurchased' &&  owned)      return;
-    if (skillFilterState.lock==='locked'     && !locked)           return;
-    if (skillFilterState.lock==='unlocked'   &&  locked)           return;
-    if (skillFilterState.affordability==='affordable'   && !affordable)   return;
-    if (skillFilterState.affordability==='unaffordable' &&  affordable)   return;
+      // filter by purchased / unpurchased
+      if (skillFilterState.purchased === 'purchased'   && !owned)      return;
+      if (skillFilterState.purchased === 'unpurchased' &&  owned)      return;
+      // filter by lock state
+      if (skillFilterState.lock === 'locked'    && !locked)           return;
+      if (skillFilterState.lock === 'unlocked'  &&  locked)           return;
+      // filter by affordability
+      if (skillFilterState.affordability === 'affordable'   && !affordable)   return;
+      if (skillFilterState.affordability === 'unaffordable' &&  affordable)   return;
+      // NEW: filter by currency
+      if (skillFilterState.currency !== 'all'
+          && s.cost.currencyId !== skillFilterState.currency) {
+        return;
+      }
 
-    const tile = document.createElement('button');
-    tile.className = 'skill-tile';
-    tile.style.borderColor = realmColors[s.cost.realmId];
+      // build the tile
+      const tile = document.createElement('button');
+      tile.className = 'skill-tile';
+      tile.style.borderColor = realmColors[s.cost.realmId];
 
-    if (locked)           tile.classList.add('locked');
-    else if (owned)       tile.classList.add('purchased');
-    else if (!affordable) tile.classList.add('unaffordable');
-    else                  tile.classList.add('affordable');
+      if (locked)           tile.classList.add('locked');
+      else if (owned)       tile.classList.add('purchased');
+      else if (!affordable) tile.classList.add('unaffordable');
+      else                  tile.classList.add('affordable');
 
-    // build content
-    const iconName = s.cost.currencyId + '.png';
-    tile.innerHTML = `
-      <h4>${s.name}</h4>
-      <p class="skill-desc">${locked ? '' : s.description}</p>
-      ${locked ? '' : `
-      <div class="skill-cost">
-        ${formatNumber(s.cost.amount)}
-        <img src="assets/images/currencies/${iconName}" class="icon"/>
-      </div>`}
-    `;
+      const iconName = s.cost.currencyId + '.png';
+      tile.innerHTML = `
+        <h4>${s.name}</h4>
+        <p class="skill-desc">${locked ? '' : s.description}</p>
+        ${locked ? '' : `
+        <div class="skill-cost">
+          ${formatNumber(s.cost.amount)}
+          <img src="assets/images/currencies/${iconName}" class="icon"/>
+        </div>`}
+      `;
 
-    if (!locked && !owned && affordable) {
-      tile.onclick = () => {
-        buySkill(s.id);
-        s.purchased = true;
-        renderSkillsTab();
-      };
-    }
+      if (!locked && !owned && affordable) {
+        tile.onclick = () => {
+          buySkill(s.id);
+          s.purchased = true;
+          renderSkillsTab();
+        };
+      }
 
-    grid.appendChild(tile);
-  });
+      grid.appendChild(tile);
+    });
 
   list.appendChild(grid);
 }
+
 
 // --- PURCHASE LOGIC ---
 function applySkill(id, skipCost = false) {

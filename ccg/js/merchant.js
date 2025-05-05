@@ -183,8 +183,9 @@ const merchants = [
         return earnsSec || earnsPoke;
         });
 
-        // if for some reason nothing qualifies, fall back to all currencies
-        if (!validCurrencies.length) validCurrencies = currencies;
+        if (!validCurrencies.length) {
+            validCurrencies = currencies.filter(cur => cur.id === 'stone');
+        }
 
         const currencyMeta = pickRandom(validCurrencies);
         const currency     = currencyMeta.id;
