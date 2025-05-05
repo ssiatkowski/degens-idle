@@ -1037,7 +1037,9 @@ function updatePokeFilterStats() {
   });
 
   // 3) Realm odds
-  const unlocked     = state.selectedRealms.filter(rid => realmMap[rid].unlocked);
+  const unlocked = realms
+  .filter(r => r.unlocked && state.selectedRealms.includes(r.id))
+  .map(r => r.id);
   const weights      = unlocked.map(rid => realmMap[rid].pokeWeight);
   const totalWeight  = weights.reduce((a,b) => a + b, 0);
 
