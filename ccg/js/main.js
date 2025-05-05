@@ -239,8 +239,9 @@ function performPoke() {
 
   // how many cards to draw this poke
   const e     = state.effects;
+  const r = (Math.random() + Math.random()) / 2; // center-biased
   const draws = Math.floor(
-    Math.random() * (e.maxCardsPerPoke - e.minCardsPerPoke + 1)
+    r * (e.maxCardsPerPoke - e.minCardsPerPoke + 1)
   ) + e.minCardsPerPoke;
 
   // build realm → weight map
