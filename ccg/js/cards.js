@@ -3214,6 +3214,11 @@ window.cards = [
         "type": "rarityOddsReduction",
         "realm": 3,
         "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 5,
+        "rarity": "rare"
       }
     ]
   },
@@ -3251,6 +3256,11 @@ window.cards = [
         "type": "rarityOddsReduction",
         "realm": 1,
         "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 5,
+        "rarity": "rare"
       }
     ]
   },
@@ -3634,7 +3644,7 @@ window.cards = [
     "id": "527",
     "name": "Cup of Eternal Youth",
     "realm": 5,
-    "rarity": "epic",
+    "rarity": "mythic",
     "quantity": 0,
     "tier": 0,
     "level": 1,
