@@ -7,6 +7,9 @@ window.EFFECT_NAMES = {
     currencyPerSec:       "Currency / Sec",
     rarityOddsReduction:  "Rarity Odds Reduction",
     cooldownDivider:      "Cooldown Divider",
+    cooldownSkipChance:   "Cooldown Skip Chance",
+    merchantCooldownReduction: "Merchant Cooldown Reduction",
+    merchantRarityScaling: "Merchant Rarity Scaling",
   };
   
   const EFFECT_SCALES = {
@@ -49,7 +52,7 @@ window.EFFECT_NAMES = {
         }
   
         case "cooldownDivider": {
-          const total = def.value * c.level * multiplier;
+          const total = Math.min(def.value * c.level * multiplier, 1);
           effs.cooldownDivider = (effs.cooldownDivider || 0) + total;
           break;
         }
@@ -71,8 +74,11 @@ window.EFFECT_NAMES = {
       switch (parts[0]) {
         case "minCardsPerPoke":
         case "maxCardsPerPoke":
-        case "cooldownDivider":
           E[parts[0]] = (E[parts[0]] || 0) + sign * v;
+          break;
+  
+        case "cooldownDivider":
+          E[parts[0]] = Math.min((E[parts[0]] || 0) + sign * v, 1);
           break;
   
         case "currencyPerPoke":

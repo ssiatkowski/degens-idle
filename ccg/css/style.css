@@ -72,7 +72,7 @@ nav#tabs { margin-bottom: 15px; }
   grid-auto-columns: 100px;
   gap: 6px 12px;
 
-  background: #fff;
+  background: #e4e8ec;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   border-radius: 8px;
   padding: 12px 16px;
@@ -223,7 +223,7 @@ nav#tabs { margin-bottom: 15px; }
   z-index: 2000;
 }
 
-/* Replace your entire modal-content + modal-frame rules with this */
+/* Replace your entire modal‐content + modal‐frame rules with this */
 
 .modal-content {
   display: grid;
@@ -874,7 +874,7 @@ nav#tabs { margin-bottom: 15px; }
 .poke-hole-wrapper {
   grid-column: 1;
   grid-row:    1;
-  background: url('../assets/images/starry_night_texture.jpg') center/cover;
+  background: url('../assets/images/starry_night_texture.jpg') repeat;
   border-radius: 12px;
   padding: 24px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.15);
@@ -1027,4 +1027,38 @@ nav#tabs { margin-bottom: 15px; }
   background-color: #f4f4f4;
   text-align: left;
   font-weight: 600;
+}
+
+/* Floating text animation */
+@keyframes floatUp {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%);
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50px);
+  }
+}
+
+.skip-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #4caf50;
+  font-size: 1.5em;
+  font-weight: bold;
+  text-shadow: 0 0 4px rgba(0,0,0,0.5);
+  pointer-events: none;
+  animation: floatUp 1.0s ease-out forwards;
+  z-index: 10;
+  text-align: center;
+  width: 100%;
 }

@@ -1,4 +1,3 @@
-
 // Define all available rarities in order of increasing quality
 window.rarities = [
     "junk",
@@ -13,7 +12,7 @@ window.rarities = [
     "divine"
 ];
 
-// 1) define your “master” rarity-weights
+// 1) define your "master" rarity-weights
 const defaultRarityWeights = {
   junk:      1e20,
   basic:     1e18,
@@ -53,10 +52,11 @@ const RARITY_ODDS_MIN = {
 
 // 2) create your realms without individual rarityWeights
 window.realms = [
-  { id: 1, name: "Rocks",      unlocked: true,  cooldown: 3,  deselectMultiplier: 5, pokeWeight: 1e11 },
-  { id: 2, name: "Sea World",  unlocked: false, cooldown: 6,  deselectMultiplier: 5, pokeWeight: 8e10 },
-  { id: 3, name: "Bugdom",     unlocked: false, cooldown: 15, deselectMultiplier: 5, pokeWeight: 6e10 },
-  { id: 4, name: "Aviary",     unlocked: false, cooldown: 30, deselectMultiplier: 5, pokeWeight: 4e10 },
+  { id: 1, name: "Rocks",           unlocked: true,  cooldown: 3,  deselectMultiplier: 5, pokeWeight: 1e11 },
+  { id: 2, name: "Sea World",       unlocked: false, cooldown: 6,  deselectMultiplier: 5, pokeWeight: 8e10 },
+  { id: 3, name: "Bugdom",          unlocked: false, cooldown: 15, deselectMultiplier: 5, pokeWeight: 6e10 },
+  { id: 4, name: "Aviary",          unlocked: false, cooldown: 30, deselectMultiplier: 5, pokeWeight: 4e10 },
+  { id: 5, name: "Ancient Relics",  unlocked: false, cooldown: 50, deselectMultiplier: 5, pokeWeight: 2e10 },
 ];
 
 // 3) give every realm its own copy of the default weights
@@ -71,7 +71,7 @@ const cardsByRealm = window.cards.reduce((acc, card) => {
   return acc;
 }, {});
 
-// 5) zero out weights for any rarity not present in that realm’s cards
+// 5) zero out weights for any rarity not present in that realm's cards
 window.realms.forEach(r => {
   const present = cardsByRealm[r.id] || new Set();
   for (const rarity in r.rarityWeights) {
@@ -92,6 +92,7 @@ window.currencies = [
 { id: 'royal_jelly', name: 'Royal Jelly', realm: 3, scarcity: 100, icon: 'royal_jelly.png' },
 { id: 'egg',         name: 'Egg',         realm: 4, scarcity: 1,   icon: 'egg.png'         },
 { id: 'feather',     name: 'Feather',     realm: 4, scarcity: 100, icon: 'feather.png'     },
+{ id: 'crystal',     name: 'Crystal',     realm: 5, scarcity: 1,   icon: 'crystal.png'     },
 ];
 
 
@@ -218,6 +219,7 @@ function formatDuration(sec) {
 function slugify(str) {
     return str
       .replace(/['’]/g, '')             // strip apostrophes first
+      .replace(/ö/g, 'o')               // replace ö with o
       .toLowerCase()                 
       .replace(/[^a-z0-9]+/g, '_')   // convert spaces & invalid chars to _
       .replace(/^_|_$/g, '');        // trim leading/trailing _

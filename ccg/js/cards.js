@@ -516,7 +516,7 @@ window.cards = [
     "quantity": 0,
     "tier": 0,
     "level": 1,
-    "levelScaling": 2.0,
+    "levelScaling": 2.5,
     "levelCost": {
       "currency": "rune",
       "amount": 1.0
@@ -527,6 +527,11 @@ window.cards = [
         "type": "currencyPerPoke",
         "currency": "rune",
         "value": 5.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "rune",
+        "value": 1.0
       },
       {
         "type": "rarityOddsReduction",
@@ -2732,6 +2737,952 @@ window.cards = [
         "type": "rarityOddsReduction",
         "realm": 4,
         "rarity": "basic"
+      }
+    ]
+  },
+  {
+    "id": "501",
+    "name": "Quill Pen",
+    "realm": 5,
+    "rarity": "junk",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 1.5,
+    "levelCost": {
+      "currency": "crystal",
+      "amount": 10.0
+    },
+    "description": "Writing tools like these were essential for scribes across ancient civilizations.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "crystal",
+        "value": 1.0
+      }
+    ]
+  },
+  {
+    "id": "502",
+    "name": "Parchment Scroll",
+    "realm": 5,
+    "rarity": "junk",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 1.5,
+    "levelCost": {
+      "currency": "crystal",
+      "amount": 10.0
+    },
+    "description": "Ancient texts were often recorded on parchment made from animal skins.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "crystal",
+        "value": 1.0
+      }
+    ]
+  },
+  {
+    "id": "503",
+    "name": "Ink Vial",
+    "realm": 5,
+    "rarity": "junk",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.0,
+    "levelCost": {
+      "currency": "rune",
+      "amount": 1.0
+    },
+    "description": "Some ancient inks used soot or crushed berries for pigmentation.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "crystal",
+        "value": 1.0
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 5,
+        "rarity": "junk"
+      }
+    ]
+  },
+  {
+    "id": "504",
+    "name": "Wax Seal",
+    "realm": 5,
+    "rarity": "junk",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.0,
+    "levelCost": {
+      "currency": "rune",
+      "amount": 1.0
+    },
+    "description": "Wax seals were used to authenticate important documents.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "crystal",
+        "value": 1.0
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 5,
+        "rarity": "junk"
+      }
+    ]
+  },
+  {
+    "id": "505",
+    "name": "Candle Stub",
+    "realm": 5,
+    "rarity": "junk",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.5,
+    "levelCost": {
+      "currency": "crystal",
+      "amount": 10.0
+    },
+    "description": "Candles were among the earliest portable sources of light.",
+    "baseEffects": [
+      {
+        "type": "currencyPerSec",
+        "currency": "crystal",
+        "value": 1.0
+      }
+    ]
+  },
+  {
+    "id": "506",
+    "name": "Crystal Lens",
+    "realm": 5,
+    "rarity": "basic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 1.5,
+    "levelCost": {
+      "currency": "crystal",
+      "amount": 50.0
+    },
+    "description": "The first lenses were made from naturally transparent crystals.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "crystal",
+        "value": 5.0
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 5,
+        "rarity": "junk"
+      }
+    ]
+  },
+  {
+    "id": "507",
+    "name": "Bronze Compass",
+    "realm": 5,
+    "rarity": "basic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 1.5,
+    "levelCost": {
+      "currency": "crystal",
+      "amount": 50.0
+    },
+    "description": "Compasses helped ancient sailors navigate the seas.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "crystal",
+        "value": 5.0
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 5,
+        "rarity": "junk"
+      }
+    ]
+  },
+  {
+    "id": "508",
+    "name": "Rune Stone",
+    "realm": 5,
+    "rarity": "basic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.0,
+    "levelCost": {
+      "currency": "rune",
+      "amount": 5.0
+    },
+    "description": "Rune stones were used to record significant events and messages.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "crystal",
+        "value": 20.0
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 5,
+        "rarity": "basic"
+      }
+    ]
+  },
+  {
+    "id": "509",
+    "name": "Spell Tome",
+    "realm": 5,
+    "rarity": "basic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.0,
+    "levelCost": {
+      "currency": "rune",
+      "amount": 5.0
+    },
+    "description": "Ancient tomes were believed to contain powerful magical knowledge.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "crystal",
+        "value": 20.0
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 5,
+        "rarity": "basic"
+      }
+    ]
+  },
+  {
+    "id": "510",
+    "name": "Alchemist’s Flask",
+    "realm": 5,
+    "rarity": "basic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.5,
+    "levelCost": {
+      "currency": "rune",
+      "amount": 10.0
+    },
+    "description": "Alchemists sought to turn lead into gold using tools like this.",
+    "baseEffects": [
+      {
+        "type": "currencyPerSec",
+        "currency": "crystal",
+        "value": 10.0
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 5,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 5,
+        "rarity": "basic"
+      }
+    ]
+  },
+  {
+    "id": "511",
+    "name": "Sorcerer’s Ring",
+    "realm": 5,
+    "rarity": "decent",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.0,
+    "levelCost": {
+      "currency": "crystal",
+      "amount": 20.0
+    },
+    "description": "Mythical rings were thought to grant invisibility or control over elements.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "crystal",
+        "value": 25.0
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 5,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 5,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 5,
+        "rarity": "decent"
+      }
+    ]
+  },
+  {
+    "id": "512",
+    "name": "Enchanted Mirror",
+    "realm": 5,
+    "rarity": "decent",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.0,
+    "levelCost": {
+      "currency": "crystal",
+      "amount": 20.0
+    },
+    "description": "Some cultures believed mirrors could trap or reveal spirits.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "crystal",
+        "value": 25.0
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 5,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 5,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 1,
+        "rarity": "decent"
+      }
+    ]
+  },
+  {
+    "id": "513",
+    "name": "Mystic Amulet",
+    "realm": 5,
+    "rarity": "decent",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.5,
+    "levelCost": {
+      "currency": "rune",
+      "amount": 10.0
+    },
+    "description": "Amulets were worn to protect the wearer from evil forces.",
+    "baseEffects": [
+      {
+        "type": "currencyPerSec",
+        "currency": "crystal",
+        "value": 20.0
+      }
+    ]
+  },
+  {
+    "id": "514",
+    "name": "Elemental Orb",
+    "realm": 5,
+    "rarity": "fine",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 3.0,
+    "levelCost": {
+      "currency": "rune",
+      "amount": 10.0
+    },
+    "description": "Orbs were symbols of power, representing elemental control.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "crystal",
+        "value": 50.0
+      },
+      {
+        "type": "maxCardsPerPoke",
+        "value": 0.001
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 5,
+        "rarity": "junk"
+      }
+    ]
+  },
+  {
+    "id": "515",
+    "name": "Astral Prism",
+    "realm": 5,
+    "rarity": "fine",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 4.0,
+    "levelCost": {
+      "currency": "rune",
+      "amount": 10.0
+    },
+    "description": "Prisms symbolized enlightenment and celestial understanding.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "crystal",
+        "value": 50.0
+      },
+      {
+        "type": "cooldownDivider",
+        "value": 0.002
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 5,
+        "rarity": "basic"
+      }
+    ]
+  },
+  {
+    "id": "516",
+    "name": "Celestial Globe",
+    "realm": 5,
+    "rarity": "rare",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 1.5,
+    "levelCost": {
+      "currency": "rune",
+      "amount": 50.0
+    },
+    "description": "Globes mapped the stars and aided early astronomy.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "rune",
+        "value": 5.0
+      }
+    ]
+  },
+  {
+    "id": "517",
+    "name": "Philosopher’s Stone",
+    "realm": 5,
+    "rarity": "rare",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 4.0,
+    "levelCost": {
+      "currency": "rune",
+      "amount": 50.0
+    },
+    "description": "Said to grant immortality and turn metals to gold.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "crystal",
+        "value": 100.0
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 5,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 4,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 3,
+        "rarity": "junk"
+      }
+    ]
+  },
+  {
+    "id": "518",
+    "name": "Excalibur",
+    "realm": 5,
+    "rarity": "rare",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 4.0,
+    "levelCost": {
+      "currency": "rune",
+      "amount": 100.0
+    },
+    "description": "The legendary sword of King Arthur, bestowed by the Lady of the Lake.",
+    "baseEffects": [
+      {
+        "type": "currencyPerSec",
+        "currency": "crystal",
+        "value": 25.0
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 5,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 2,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 1,
+        "rarity": "junk"
+      }
+    ]
+  },
+  {
+    "id": "519",
+    "name": "Mjölnir",
+    "realm": 5,
+    "rarity": "legendary",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.0,
+    "levelCost": {
+      "currency": "rune",
+      "amount": 1000.0
+    },
+    "description": "Thor’s hammer, capable of leveling mountains.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "crystal",
+        "value": 1000.0
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 5,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 5,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 5,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 5,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 5,
+        "rarity": "rare"
+      }
+    ]
+  },
+  {
+    "id": "520",
+    "name": "Golden Fleece",
+    "realm": 5,
+    "rarity": "legendary",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 3.0,
+    "levelCost": {
+      "currency": "rune",
+      "amount": 200.0
+    },
+    "description": "Jason and the Argonauts quested for this powerful artifact.",
+    "baseEffects": [
+      {
+        "type": "currencyPerSec",
+        "currency": "rune",
+        "value": 5.0
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 1,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 1,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 1,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 1,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 2,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 2,
+        "rarity": "basic"
+      }
+    ]
+  },
+  {
+    "id": "521",
+    "name": "Caduceus of Hermes",
+    "realm": 5,
+    "rarity": "legendary",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 3.0,
+    "levelCost": {
+      "currency": "rune",
+      "amount": 200.0
+    },
+    "description": "Symbol of trade and negotiation, wielded by Hermes.",
+    "baseEffects": [
+      {
+        "type": "currencyPerSec",
+        "currency": "rune",
+        "value": 5.0
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 2,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 2,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 2,
+        "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 3,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 3,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 3,
+        "rarity": "decent"
+      }
+    ]
+  },
+  {
+    "id": "522",
+    "name": "Aegis Shield",
+    "realm": 5,
+    "rarity": "legendary",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 3.0,
+    "levelCost": {
+      "currency": "rune",
+      "amount": 200.0
+    },
+    "description": "A powerful shield carried by Athena and Zeus.",
+    "baseEffects": [
+      {
+        "type": "currencyPerSec",
+        "currency": "rune",
+        "value": 5.0
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 3,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 3,
+        "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 4,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 4,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 4,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 4,
+        "rarity": "rare"
+      }
+    ]
+  },
+  {
+    "id": "523",
+    "name": "Eye of Ra",
+    "realm": 5,
+    "rarity": "legendary",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 1.5,
+    "levelCost": {
+      "currency": "rune",
+      "amount": 50.0
+    },
+    "description": "An ancient Egyptian symbol of protection and royal power.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "rune",
+        "value": 25.0
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 5,
+        "rarity": "basic"
+      }
+    ]
+  },
+  {
+    "id": "524",
+    "name": "Staff of the Magi",
+    "realm": 5,
+    "rarity": "legendary",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 5.0,
+    "levelCost": {
+      "currency": "rune",
+      "amount": 100.0
+    },
+    "description": "An artifact said to channel immense magical energy.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "crystal",
+        "value": 1000.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "crystal",
+        "value": 25.0
+      },
+      {
+        "type": "cooldownDivider",
+        "value": 0.002
+      },
+      {
+        "type": "maxCardsPerPoke",
+        "value": 0.001
+      },
+      {
+        "type": "minCardsPerPoke",
+        "value": 0.0005
+      }
+    ]
+  },
+  {
+    "id": "525",
+    "name": "Enchanted Cloak",
+    "realm": 5,
+    "rarity": "legendary",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.0,
+    "levelCost": {
+      "currency": "rune",
+      "amount": 50.0
+    },
+    "description": "Invisibility cloaks appear in legends from many cultures.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "rune",
+        "value": 50.0
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 5,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 5,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 5,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 5,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 5,
+        "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 5,
+        "rarity": "legendary"
+      }
+    ]
+  },
+  {
+    "id": "526",
+    "name": "Sorcerer’s Chalice",
+    "realm": 5,
+    "rarity": "legendary",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 3.0,
+    "levelCost": {
+      "currency": "rune",
+      "amount": 500.0
+    },
+    "description": "A cup said to grant insight or eternal youth.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "rune",
+        "value": 100.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "crystal",
+        "value": 25.0
+      },
+      {
+        "type": "maxCardsPerPoke",
+        "value": 0.001
+      },
+      {
+        "type": "minCardsPerPoke",
+        "value": 0.0005
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 1,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 2,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 3,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 4,
+        "rarity": "basic"
+      }
+    ]
+  },
+  {
+    "id": "527",
+    "name": "Cup of Eternal Youth",
+    "realm": 5,
+    "rarity": "epic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 5.0,
+    "levelCost": {
+      "currency": "rune",
+      "amount": 2000.0
+    },
+    "description": "Sought by many, this relic offers everlasting vitality.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "rune",
+        "value": 5000.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "rune",
+        "value": 25.0
+      },
+      {
+        "type": "cooldownDivider",
+        "value": 0.002
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 1,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 2,
+        "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 3,
+        "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 4,
+        "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsReduction",
+        "realm": 5,
+        "rarity": "rare"
       }
     ]
   }

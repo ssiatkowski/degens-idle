@@ -1,0 +1,38 @@
+.modal-flex-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+}
+
+.offline-earnings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 0 20px;
+}
+
+.offline-earnings-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px;
+  background: var(--light);
+  border-radius: 8px;
+}
+
+.offline-earnings-item .icon {
+  width: 32px;
+  height: 32px;
+}
+
+.offline-earnings-item .amount {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: var(--success);
+}
+
+.offline-earnings-item .name {
+  color: var(--dark);
+  margin-left: auto;
+} 

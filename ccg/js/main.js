@@ -30,12 +30,16 @@ window.state = {
     currencyPerSec:   {},
     cooldownDivider: 1,
     merchantNumCards: 2,
+    cooldownSkipChance: 0,
+    merchantCooldownReduction: 0,
+    merchantRarityScaling: 2.5,  // Initialize to 2.5
   },
   selectedRealms: [],      // newly added
   currentMerchant: null,
   merchantOffers: [],
   cooldownDone: true,      // flag
-  flipsDone: false         // flag
+  flipsDone: false,        // flag
+  resourceGeneratorContribution: {}  // Track contributions for each resource
 };
 
 // init currencies & effects
@@ -104,7 +108,8 @@ function saveState() {
       cardId:   o.cardId,
       currency: o.currency,
       price:    o.price.toString()
-    }))
+    })),
+    lastSaveTime: Date.now()  // Add timestamp of last save
   };
   currencies.forEach(c => {
     obj.currencies[c.id] = state.currencies[c.id].toString();
@@ -356,8 +361,6 @@ function performPoke() {
     }
 
     if (wasNew || c.isNew) {
-      initCardsFilters();
-      c.isNew = true;
       const badge = document.createElement('div');
       badge.className = 'reveal-badge new-badge';
       badge.textContent = 'NEW';
@@ -660,10 +663,6 @@ function openModal(cardId) {
     right.appendChild(effContainer);
   }
 
-  
-
-
-
   mc.append(left, right);
   ov.append(mc);
   document.body.append(ov);
@@ -769,7 +768,7 @@ function renderCardsCollection() {
         front.appendChild(lvlLabel);
       }
 
-      // “Level Up” button (always visible, but disabled if unaffordable)
+      // "Level Up" button (always visible, but disabled if unaffordable)
       if (c.quantity > 0) {
         const baseCost = new Decimal(c.levelCost.amount);
         const rawCost  = baseCost.times(Decimal.pow(c.levelScaling, c.level - 1));
@@ -811,6 +810,7 @@ function renderCardsCollection() {
 
       // NEW banner persists until opened
       if (c.isNew) {
+        initCardsFilters();
         const badge = document.createElement('div');
         badge.className = 'reveal-badge new-badge';
         badge.textContent = 'NEW';
@@ -835,8 +835,79 @@ function renderCardsCollection() {
 
 // --- CARDS & SKILLS TABS ---
 
+function updateGeneratorRates() {
+  // Stone Generator (skill 10001)
+  if (skillMap[10001].purchased) {
+    // Count discovered Realm 1 cards
+    const discoveredCount = cards.filter(c => c.realm === 1 && c.quantity > 0).length;
+    
+    // Calculate new contribution
+    const newContribution = discoveredCount * discoveredCount;
+    
+    // Remove old contribution and add new one
+    state.effects.currencyPerSec.stone = (state.effects.currencyPerSec.stone || 0) 
+      - (state.resourceGeneratorContribution.stone || 0) 
+      + newContribution;
+    
+    // Store the new contribution
+    state.resourceGeneratorContribution.stone = newContribution;
+  }
+
+  // Coral Generator (skill 10002)
+  if (skillMap[10002].purchased) {
+    // Count discovered Realm 2 cards
+    const discoveredCount = cards.filter(c => c.realm === 2 && c.quantity > 0).length;
+    
+    // Calculate new contribution
+    const newContribution = discoveredCount * discoveredCount;
+    
+    // Remove old contribution and add new one
+    state.effects.currencyPerSec.coral = (state.effects.currencyPerSec.coral || 0) 
+      - (state.resourceGeneratorContribution.coral || 0) 
+      + newContribution;
+    
+    // Store the new contribution
+    state.resourceGeneratorContribution.coral = newContribution;
+  }
+
+  // Pollen Generator (skill 10003)
+  if (skillMap[10003].purchased) {
+    // Count discovered Realm 3 cards
+    const discoveredCount = cards.filter(c => c.realm === 3 && c.quantity > 0).length;
+    
+    // Calculate new contribution
+    const newContribution = discoveredCount * discoveredCount;
+    
+    // Remove old contribution and add new one
+    state.effects.currencyPerSec.pollen = (state.effects.currencyPerSec.pollen || 0) 
+      - (state.resourceGeneratorContribution.pollen || 0) 
+      + newContribution;
+    
+    // Store the new contribution
+    state.resourceGeneratorContribution.pollen = newContribution;
+  }
+
+  // Egg Generator (skill 10004)
+  if (skillMap[10004].purchased) {
+    // Count discovered Realm 4 cards
+    const discoveredCount = cards.filter(c => c.realm === 4 && c.quantity > 0).length;
+    
+    // Calculate new contribution 
+    const newContribution = discoveredCount * discoveredCount;
+
+    // Remove old contribution and add new one
+    state.effects.currencyPerSec.egg = (state.effects.currencyPerSec.egg || 0)
+      - (state.resourceGeneratorContribution.egg || 0)
+      + newContribution;
+
+    // Store the new contribution
+    state.resourceGeneratorContribution.egg = newContribution;
+  }
+}
+
 function giveCard(cardId, amount = 1) {
   const c = cardMap[cardId];
+  const wasNew = c.quantity === 0;  // Track if this is a new discovery
 
   // --- 1. Figure out old tier & old effect-contribution ---
   const oldTier = c.tier;
@@ -857,11 +928,17 @@ function giveCard(cardId, amount = 1) {
 
   // --- 4. Only apply the delta if tier actually changed ---
   if (newTier !== oldTier) {
-    // remove old‐tier contribution
+    // remove old-tier contribution
     applyEffectsDelta(oldEffs, -1);
-    // apply new‐tier contribution
+    // apply new-tier contribution
     applyEffectsDelta(newEffs, +1);
     c.lastAppliedEffects = newEffs;
+  }
+
+  // Update generator rates if this is a new card discovery
+  if (wasNew) {
+    c.isNew = true;
+    updateGeneratorRates();
   }
 }
 
@@ -935,6 +1012,25 @@ function renderRealmFilters() {
 let _cooldownTimer = null;
 
 function startCooldown() {
+  // Check for cooldown skip
+  const skipChance = state.effects.cooldownSkipChance || 0;
+  if (Math.random() < skipChance) {
+    // Create and show the floating text
+    const skipText = document.createElement('div');
+    skipText.className = 'skip-text';
+    skipText.textContent = 'Cooldown Skipped!';
+    holeBtn.appendChild(skipText);
+    
+    // Remove the text after animation completes
+    skipText.addEventListener('animationend', () => {
+      skipText.remove();
+    });
+
+    state.cooldownDone = true;
+    tryEnableHole();
+    return;
+  }
+
   state.cooldownDone = false;
 
   // calculate totalSec as before…
@@ -1100,8 +1196,60 @@ function updatePokeFilterStats() {
   container.appendChild(flex);
 }
 
+// Add this function before DOMContentLoaded
+function showOfflineEarningsModal(earnings) {
+  // Only show if there are any earnings
+  if (Object.keys(earnings).length === 0) return;
 
+  // OVERLAY
+  const ov = document.createElement('div');
+  ov.className = 'modal-overlay';
+  ov.onclick = () => ov.remove();
 
+  // MODAL CONTAINER
+  const mc = document.createElement('div');
+  mc.className = 'modal-content';
+  mc.onclick = e => e.stopPropagation();
+
+  // Create flex container for vertical stacking
+  const flexContainer = document.createElement('div');
+  flexContainer.className = 'modal-flex-container';
+
+  // HEADER
+  const header = document.createElement('h3');
+  header.textContent = 'Offline Earnings';
+  header.style.textAlign = 'center';
+  header.style.marginBottom = '20px';
+  flexContainer.appendChild(header);
+
+  // EARNINGS LIST
+  const list = document.createElement('div');
+  list.className = 'offline-earnings-list';
+  
+  Object.entries(earnings).forEach(([curId, amount]) => {
+    if (amount.lessThanOrEqualTo(0)) return;
+    
+    const meta = currencies.find(c => c.id === curId);
+    if (!meta) return;
+
+    const item = document.createElement('div');
+    item.className = 'offline-earnings-item';
+    item.innerHTML = `
+      <img class="icon" src="assets/images/currencies/${meta.icon}" alt="${meta.name}" />
+      <span class="amount">+${formatNumber(amount)}</span>
+      <span class="name">${meta.name}</span>
+    `;
+    list.appendChild(item);
+  });
+
+  flexContainer.appendChild(list);
+  mc.appendChild(flexContainer);
+  ov.appendChild(mc);
+  document.body.appendChild(ov);
+
+  // Auto-remove after 5 seconds
+  setTimeout(() => ov.remove(), 5000);
+}
 
 // --- INIT AFTER DOM READY ---
 document.addEventListener('DOMContentLoaded', ()=>{
@@ -1117,6 +1265,27 @@ document.addEventListener('DOMContentLoaded', ()=>{
     }
   });
 
+  // Calculate offline progress after all effects are computed
+  const savedState = JSON.parse(localStorage.getItem(SAVE_KEY) || '{}');
+  if (savedState.lastSaveTime) {
+    const currentTime = Date.now();
+    const timeDiff = Math.floor((currentTime - savedState.lastSaveTime) / 1000); // Convert to seconds
+    
+    // Track earnings for the modal
+    const offlineEarnings = {};
+    
+    // Award currency based on currencyPerSec and time difference
+    Object.entries(state.effects.currencyPerSec).forEach(([curId, rate]) => {
+      if (rate && state.currencies[curId] != null) {
+        const offlineGain = new Decimal(rate).times(timeDiff);
+        state.currencies[curId] = state.currencies[curId].plus(offlineGain);
+        offlineEarnings[curId] = offlineGain;
+      }
+    });
+
+    // Show earnings modal
+    showOfflineEarningsModal(offlineEarnings);
+  }
 
   ['hole','cards','skills','merchant','stats'].forEach(t=>{
     document.getElementById(`tab-btn-${t}`).onclick = ()=> showTab(t);
@@ -1133,6 +1302,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
   initCardsFilters();
   renderCardsCollection();
   updatePokeFilterStats();
+  updateGeneratorRates();
 
   if (state.currentMerchant) {
     // we have a saved merchant + offers,

@@ -72,15 +72,22 @@ function updateStatsUI() {
     tblC.innerHTML = `
         <thead>
             <tr>
-                <th>Currency</th>
-                <th>Gain / Poke</th>
-                <th>Gain / Second</th>
+                <th rowspan="2">Currency</th>
+                <th rowspan="2">Gain / Poke</th>
+                <th colspan="2">Gain / Second</th>
+            </tr>
+            <tr>
+                <th>From Cards</th>
+                <th>From Generators</th>
             </tr>
         </thead>
         <tbody>
             ${currencies.map(cur => {
                 const ip = e.currencyPerPoke[cur.id] || 0;
-                const is = e.currencyPerSec[cur.id]  || 0;
+                const is = e.currencyPerSec[cur.id] || 0;
+                const gen = state.resourceGeneratorContribution[cur.id] || 0;
+                const card = is - gen;  // Total minus generator contribution
+                
                 if (ip === 0 && is === 0) return '';
                 return `
                 <tr>
@@ -89,7 +96,8 @@ function updateStatsUI() {
                       ${cur.name}
                     </td>
                     <td>${formatNumber(ip)}</td>
-                    <td>${formatNumber(is)}</td>
+                    <td>${formatNumber(card)}</td>
+                    <td>${formatNumber(gen)}</td>
                 </tr>`;
             }).join('')}
         </tbody>
@@ -102,20 +110,34 @@ function updateStatsUI() {
         <thead>
             <tr>
                 <th>Effect</th>
-                <th>Total</th>
+                <th>Value</th>
             </tr>
         </thead>
         <tbody>
-            ${['minCardsPerPoke','maxCardsPerPoke','cooldownDivider']
-              .map(key => {
-                const name = EFFECT_NAMES[key] || key;
-                const val  = e[key] || 0;
-                return `
-                <tr>
-                    <td>${name}</td>
-                    <td>${formatNumber(val)}</td>
-                </tr>`;
-              }).join('')}
+            <tr>
+                <td>${EFFECT_NAMES.minCardsPerPoke}</td>
+                <td>${formatNumber(state.effects.minCardsPerPoke)}</td>
+            </tr>
+            <tr>
+                <td>${EFFECT_NAMES.maxCardsPerPoke}</td>
+                <td>${formatNumber(state.effects.maxCardsPerPoke)}</td>
+            </tr>
+            <tr>
+                <td>${EFFECT_NAMES.cooldownDivider}</td>
+                <td>${formatNumber(state.effects.cooldownDivider)}</td>
+            </tr>
+            <tr>
+                <td>${EFFECT_NAMES.cooldownSkipChance}</td>
+                <td>${state.effects.cooldownSkipChance * 100}%</td>
+            </tr>
+            <tr>
+                <td>${EFFECT_NAMES.merchantCooldownReduction}</td>
+                <td>${state.effects.merchantCooldownReduction}s</td>
+            </tr>
+            <tr>
+                <td>${EFFECT_NAMES.merchantRarityScaling}</td>
+                <td>${state.effects.merchantRarityScaling.toFixed(1)}</td>
+            </tr>
         </tbody>
     `;
 
@@ -177,7 +199,7 @@ function updateStatsUI() {
     detail.innerHTML = `
       <p><strong>Name:</strong> ${sel.name||''}</p>
       <p><strong>Description:</strong> ${sel.description||''}</p>
-      <p><strong>Odds:</strong> ${prob}</p>
+      <p><strong>Probability:</strong> ${prob}</p>
     `;
     merchantsSection.appendChild(detail);
 

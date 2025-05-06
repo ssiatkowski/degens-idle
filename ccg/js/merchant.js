@@ -10,6 +10,7 @@ const merchants = [
       merchantOdds: 1000,
       raritiesSkipped: [],
       priceMultiplier: 1,
+      additionalRarityScaling: 0,
       description: 'Your standard traveling merchant',
       unlocked: true
     },
@@ -21,6 +22,7 @@ const merchants = [
       merchantOdds: 900,
       raritiesSkipped: [],
       priceMultiplier: 1,
+      additionalRarityScaling: 0,
       description: 'Always on the move. She only stays for half as long.',
       unlocked: true
     },
@@ -32,6 +34,7 @@ const merchants = [
       merchantOdds: 800,
       raritiesSkipped: [],
       priceMultiplier: 1,
+      additionalRarityScaling: 0,
       description: 'A strong dude. Carries twice as many cards.',
       unlocked: true
     },
@@ -43,6 +46,7 @@ const merchants = [
       merchantOdds: 700,
       raritiesSkipped: ['junk'],
       priceMultiplier: 1,
+      additionalRarityScaling: 0,
       description: 'A fancy lady. She does not carry junk.',
       unlocked: false
     },
@@ -54,7 +58,32 @@ const merchants = [
       merchantOdds: 600,
       raritiesSkipped: [],
       priceMultiplier: 0.1,
+      additionalRarityScaling: 0,
       description: 'Fair old guy. Carries half as many cards but sells them at 1/10 of the price.',
+      unlocked: false
+    },
+    {
+      id: 6,
+      name: 'Petra Moonclasp',
+      cardMultiplier: 1,
+      refreshTime: 300,
+      merchantOdds: 500,
+      raritiesSkipped: [],
+      priceMultiplier: 1,
+      additionalRarityScaling: 1.5,
+      description: 'A lucky girl. Has better odds of offering rarer cards (+1.5 to exponential scaling).',
+      unlocked: false
+    },
+    {
+      id: 7,
+      name: 'Fergus Grainhand',
+      cardMultiplier: 1.5,
+      refreshTime: 200,
+      merchantOdds: 400,
+      raritiesSkipped: ['junk'],
+      priceMultiplier: 0.5,
+      additionalRarityScaling: 0,
+      description: 'An all around good guy. Carries 1.5x as many cards (no junk), sells them at 1/2 of the price, and stays 2/3 as long.',
       unlocked: false
     }
   ];
@@ -126,7 +155,9 @@ const merchants = [
     const now = Date.now();
     if (!state.currentMerchant || now >= nextRefresh) {
       state.currentMerchant = pickMerchant();
-      nextRefresh = now + state.currentMerchant.refreshTime * 1000;
+      const baseRefreshTime = state.currentMerchant.refreshTime;
+      const reducedTime = Math.max(15, baseRefreshTime - (state.effects.merchantCooldownReduction || 0));
+      nextRefresh = now + reducedTime * 1000;
       genMerchantOffers();
       renderMerchantTab();
     }
@@ -177,7 +208,7 @@ const merchants = [
         .filter(r => !skip.includes(r))
         .forEach((r, idx) => {
           boosted[r] = (realm.rarityWeights[r] || 0)
-                     * Decimal.pow(3, idx).toNumber();
+                     * Decimal.pow(state.effects.merchantRarityScaling + state.currentMerchant.additionalRarityScaling, idx).toNumber();
         });
       const rarity = weightedPick(boosted);
   
