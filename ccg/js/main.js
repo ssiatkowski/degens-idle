@@ -707,13 +707,6 @@ function initCardsFilters() {
     }
     filtersContainer.appendChild(btn);
   });
-  // select first unlocked
-  const first = realms.find(r=>r.unlocked);
-  if (first) {
-    const firstBtn = filtersContainer.querySelector(`button[data-realm="${first.id}"]`);
-    firstBtn.classList.add('active');
-    currentCollectionRealm = first.id;
-  }
 }
 
 function ownedCountInRealm(rid) {

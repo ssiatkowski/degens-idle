@@ -70,8 +70,8 @@ const merchants = [
       merchantOdds: 500,
       raritiesSkipped: [],
       priceMultiplier: 1,
-      additionalRarityScaling: 1.5,
-      description: 'A lucky girl. Has better odds of offering rarer cards (+1.5 to exponential scaling).',
+      additionalRarityScaling: 2,
+      description: 'A lucky girl. Has better odds of offering rarer cards (+2 to exponential scaling).',
       unlocked: false
     },
     {

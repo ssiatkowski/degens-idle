@@ -52,7 +52,7 @@ window.EFFECT_NAMES = {
         }
   
         case "cooldownDivider": {
-          const total = Math.min(def.value * c.level * multiplier, 1);
+          const total = Math.min(def.value * c.level * multiplier, 1);  // Cap individual card contribution at 1
           effs.cooldownDivider = (effs.cooldownDivider || 0) + total;
           break;
         }
@@ -78,7 +78,7 @@ window.EFFECT_NAMES = {
           break;
   
         case "cooldownDivider":
-          E[parts[0]] = Math.min((E[parts[0]] || 0) + sign * v, 1);
+          E[parts[0]] = (E[parts[0]] || 0) + sign * v;
           break;
   
         case "currencyPerPoke":
