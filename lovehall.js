@@ -503,6 +503,50 @@ const loveHallSkills = [
     },
   },
 
+  {
+    name: "Serene Boost 3",
+    cost: 150000000,
+    description: "2x Serenity gain. (Serenity Boosts stack)",
+    unlocked: false,
+    level: "Quantum Harmony (2.8x)",
+    pair: 15,
+    requirement: "Serene Boost 2",
+    onUnlock: (duringLoad) => {
+      serenityBoostMultiplier *= 2;
+      if (!duringLoad) {
+        updateEffectiveMultipliers();
+      }
+    },
+    onRespec: (duringLoad) => {
+      serenityBoostMultiplier = 1;
+      if (!duringLoad) {
+        updateEffectiveMultipliers();
+      }
+    },
+  },
+
+  {
+    name: "Knowledge Infusion 2",
+    cost: 150000000,
+    description: "9x more Knowledge gain. (Knowledge Infusions stack)",
+    unlocked: false,
+    level: "Quantum Harmony (2.8x)",
+    pair: 15,
+    requirement: "Knowledge Infusion",
+    onUnlock: (duringLoad) => {
+      knowledgeInfusionMultiplier *= 9;
+      if (!duringLoad) {
+        updateEffectiveMultipliers();
+      }
+    },
+    onRespec: (duringLoad) => {
+      knowledgeInfusionMultiplier = 1;
+      if (!duringLoad) {
+        updateEffectiveMultipliers();
+      }
+    },
+  },
+
   // 27x Level - dimensions in string theory
   {
     name: "Yacht Money Surge",
@@ -588,7 +632,7 @@ const loveHallSkills = [
     level: "Dimensional Shift (27x)",
     pair: 23,
     onUnlock: (duringLoad) => {
-      knowledgeInfusionMultiplier = 9;
+      knowledgeInfusionMultiplier *= 9;
       if (!duringLoad) {
         updateEffectiveMultipliers();
       }
@@ -1001,7 +1045,36 @@ const loveHallSkills = [
       pricyTranquilitySkill = false;
       enableQuickModeMiniGameSkip = false;
     },
-    
+  },
+
+  {
+    name: "Oversurged Power 2",
+    cost: 15555555.556,
+    description: "Increase Power Surge skill multiplier from 2x to 4x.",
+    unlocked: false,
+    level: "Dimensional Shift (27x)",
+    pair: 36,
+    onUnlock: () => {
+      oversurgedPower = 4;
+    },
+    onRespec: () => {
+      oversurgedPower = 1;
+    },
+  },
+  {
+    name: "Grandmaster of Bargains",
+    cost: 15555555.556,
+    description:
+      "Further improve Trade Ratios skill for basic resources from 3:1 to 2:1.",
+    unlocked: false,
+    level: "Dimensional Shift (27x)",
+    pair: 36,
+    onUnlock: () => {
+      grandMasterOfBargainsSkill = true;
+    },
+    onRespec: () => {
+      grandMasterOfBargainsSkill = false;
+    },
   },
 
   // 42x Level - the meaning of life

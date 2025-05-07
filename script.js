@@ -77,6 +77,7 @@ let largestEmbrace = 0;
 
 let altruisticEmbraceSkill = false;
 let masterOfBargainsSkill = false;
+let grandMasterOfBargainsSkill = false;
 let stoicEmbraceSkill = false;
 
 let currentNumberFormat = 'Mixed';
@@ -1224,6 +1225,7 @@ async function restartGame(isPrestige = false, forceRestart = false, isInfiniteE
 
                 altruisticEmbraceSkill = false;
                 masterOfBargainsSkill = false;
+                grandMasterOfBargainsSkill = false;
                 stoicEmbraceSkill = false;
                 
                 serenityFlowSkill = false;
@@ -1605,7 +1607,9 @@ function updateTradeRatio() {
         tradeRatioDisplay.textContent = 'Only Copium can convert to Hopium';
     } else {
         if (improvedTradeRatio){
-            if (masterOfBargainsSkill){
+            if (grandMasterOfBargainsSkill){
+                tradeRatioDisplay.textContent = 'Trade ratio is 2:1';
+            } else if (masterOfBargainsSkill){
                 tradeRatioDisplay.textContent = 'Trade ratio is 3:1';
             } else {
                 tradeRatioDisplay.textContent = 'Trade ratio is 5:1';
@@ -1761,7 +1765,10 @@ function tradeResources(tradeAmountInput = null) {
         }
         resourceAmount[fromResource] -= tradeAmount;
         if (improvedTradeRatio) {
-            if (masterOfBargainsSkill){
+            if (grandMasterOfBargainsSkill){
+                resourceAmount[toResource] += tradeAmount / 2;
+                showStatusMessage(tradeButton, `Traded ${formatNumber(tradeAmount)} ${fromResource} for ${formatNumber(tradeAmount / 2)} ${toResource}.`, true);
+            } else if (masterOfBargainsSkill){
                 resourceAmount[toResource] += tradeAmount / 3;
                 showStatusMessage(tradeButton, `Traded ${formatNumber(tradeAmount)} ${fromResource} for ${formatNumber(tradeAmount / 3)} ${toResource}.`, true);
             } else {
