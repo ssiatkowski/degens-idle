@@ -42,7 +42,7 @@ body {
 }
 
 html, body {
-  touch-action: none;     /* disables double-tap/pinch zoom globally */
+  touch-action: pan-y;     /* disables double-tap/pinch zoom globally */
 }
 
 /* Tabs */
@@ -54,6 +54,7 @@ nav#tabs { margin-bottom: 15px; }
   cursor: pointer;
   transition: background 0.2s;
   font-family: var(--ui-font);
+  touch-action: manipulation;
 }
 .tab-btn:hover { background:#ddd; }
 .tab-btn.active { background:#ccc; font-weight:bold; }
@@ -133,6 +134,7 @@ nav#tabs { margin-bottom: 15px; }
   display: flex;
   gap: 8px;
   position: relative;
+  touch-action: manipulation;
 }
 .hole-button:hover {
   animation: holePulse 1.5s infinite;
@@ -406,6 +408,7 @@ nav#tabs { margin-bottom: 15px; }
   white-space: nowrap;
   background: var(--accent);
   transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+  touch-action: manipulation;
 }
 
 .modal-right button:hover, .modal-right button:focus {
@@ -606,6 +609,7 @@ nav#tabs { margin-bottom: 15px; }
   cursor: pointer;
   transition: background 0.2s, color 0.2s, box-shadow 0.2s;
   box-shadow: 0 2px 4px var(--card-shadow);
+  touch-action: manipulation;
 }
 .filter-btn:hover {
   background: var(--accent);
@@ -863,6 +867,7 @@ nav#tabs { margin-bottom: 15px; }
   flex-direction: column;
   align-items: flex-start;
   max-width: 65%;
+  touch-action: manipulation;
 }
 .card-level-up-btn .level-cost {
   margin-top: 2px;
@@ -918,6 +923,7 @@ nav#tabs { margin-bottom: 15px; }
   opacity: 0.6;
   transition: opacity 0.2s, box-shadow 0.2s, transform 0.2s;
   font-size: clamp(0.8em, 2.4vh, 1.1em);
+  touch-action: manipulation;
 }
 
 .realm-filter-btn:hover {
@@ -1151,6 +1157,7 @@ nav#tabs { margin-bottom: 15px; }
   flex-direction: column;
   align-items: flex-start;
   max-width: 75%;
+  touch-action: manipulation;
 }
 .offer-buy-btn .icon {
   width: 16px;
@@ -1435,6 +1442,7 @@ nav#tabs { margin-bottom: 15px; }
   margin-top: 0.5em;
   margin-bottom: 0.2em;
   max-width: 90vw;
+  touch-action: manipulation;
 }
 
 .welcome-close-btn:hover {
@@ -1495,6 +1503,7 @@ nav#tabs { margin-bottom: 15px; }
   transition: transform 0.2s;
   z-index: 10; /* Lower z-index than the counter */
   position: relative; /* Ensure it is the positioning context for the counter */
+  touch-action: manipulation;
 }
 
 .harvester-button:hover:not(:disabled) {
