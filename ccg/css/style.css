@@ -19,7 +19,7 @@
   --rarity-divine:    #E6E6FA;   /* lavender */
   --realm1-color:     #888888;  /* rocks */
   --realm2-color:     #3498db;  /* sea world */
-  --realm3-color:     #f1c40f;  /* budgom */
+  --realm3-color:     #e6bb11;  /* budgom */
   --realm4-color:     #f39c12;  /* aviary */
   --realm5-color:     #9b59b6;  /* ancient relics */
   --realm6-color:     #2c3e50;  /* celestial bodies */
@@ -108,23 +108,27 @@ nav#tabs { margin-bottom: 15px; }
 
 #poke-grid {
   display: grid;
-  grid-template-columns: 1fr 2fr;    /* left 1, right 2 */
-  grid-template-rows: auto 1fr;      /* top auto (hole), bottom 1fr (controls) */
+  grid-template-columns: 25% 75%;
+  grid-template-rows: auto 1fr;
   gap: 16px;
+  height: 100%;
 }
 
 /* Hole Button */
 .hole-button {
-  width:400px; height:400px;
-  background:url('../assets/images/black_hole.png') center/cover no-repeat;
-  border:none; border-radius:50%;
-  margin:0 auto; cursor:pointer;
-  outline:none;
-  /* Hover pulse */
+  width: 90%;
+  max-width: 100%;
+  aspect-ratio: 1 / 1;
+  background: url('../assets/images/black_hole.png') center/cover no-repeat;
+  border: none;
+  border-radius: 50%;
+  margin: 0 auto;
+  cursor: pointer;
+  outline: none;
   transition: transform 0.2s;
   display: flex;
   gap: 8px;
-  position: relative;    /* make it a positioning context */
+  position: relative;
 }
 .hole-button:hover {
   animation: holePulse 1.5s infinite;
@@ -169,10 +173,12 @@ nav#tabs { margin-bottom: 15px; }
 }
 
 .card-outer {
-  width:120px; height:180px;
-  perspective:800px;
-  position:relative;
-  transition:transform 0.2s;
+  width: 100%;
+  aspect-ratio: 5 / 7;
+  max-width: 160px;
+  perspective: 800px;
+  position: relative;
+  transition: transform 0.2s;
 }
 .card-outer:hover { transform:translateY(-4px); }
 .card-outer.zoomed {
@@ -209,6 +215,7 @@ nav#tabs { margin-bottom: 15px; }
   width:40px; height:40px;
   display:flex; align-items:center; justify-content:center;
   font-size:0.8em; pointer-events:none;
+  z-index: 10;
 }
 
 /* Modal overlay & content */
@@ -223,48 +230,49 @@ nav#tabs { margin-bottom: 15px; }
   z-index: 2000;
 }
 
-/* Replace your entire modal‐content + modal‐frame rules with this */
-
 .modal-content {
   display: grid;
-  /* left = content-sized; right = fill remaining */
   grid-template-columns: max-content 1fr;
   grid-template-rows: 1fr;
-  gap: 24px;
-
-  /* remove any width constraints */
-  width: auto;
-  max-width: none;
-  height: 90vh;
-  overflow: hidden;
-
+  width: min(90vw, max-content);
+  max-width: 90vw;
+  max-height: 90vh;
+  height: 100%;
   background: rgba(255,255,255,var(--modal-opacity));
   border: 4px solid var(--dark);
   border-radius: 8px;
-  padding: 24px;
+  padding: 8px;
   box-shadow: 0 4px 8px var(--card-shadow);
-
   align-items: stretch;
 }
 
+/* Left Column: fill vertical space and center content */
+.modal-left {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+}
 
+/* Frame Container: fill parent vertically */
 .modal-frame {
   position: relative;
   background: var(--card-bg);
-  padding: 12px;
+  padding: 5px;
   border-radius: 8px;
   box-shadow: 0 2px 4px var(--card-shadow);
-
-  /* fill the full height of the modal's left column */
+  width: fit-content;
   height: 100%;
-  align-self: stretch;
-
-  /* maintain 5:7 aspect ratio based on that height */
   aspect-ratio: 5 / 7;
-  width: auto;
-  overflow: hidden;  /* clip any overflow */
+  overflow: hidden;
+  max-height: 100%;
+  max-width: 100%;
 }
 
+/* Frame Elements */
 .modal-frame-img {
   display: block;
   width: 100%;
@@ -272,38 +280,100 @@ nav#tabs { margin-bottom: 15px; }
   object-fit: contain;
 }
 
-.modal-name {
-  position:absolute; top:5%; left:20%; width: 60%;
-  background:rgba(0,0,0,0.5); color:#fff;
-  font-family:var(--card-font); font-size:2em;
-  text-align:center; padding:4px; border-radius:4px;
-}
-.modal-image { 
-  position:absolute; 
-  top:15%; 
-  left:10%; 
-  width:80%; 
-  max-height: 50%;
+.modal-image {
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 50%;
   object-fit: contain;
-}
-.modal-desc {
-  position:absolute; top:77%; left:10%; width:80%;
-  transform:translateY(-10%);
-  background:rgba(0,0,0,0.5); color:#fff;
-  font-family:var(--card-font); font-size:1.2em;
-  text-align:center; padding:6px; border-radius:4px;
+  aspect-ratio: 1 / 1;
 }
 
-/* Right panel */
-.modal-right { display:flex; width: max-content;flex-direction:column; gap:12px; }
+.modal-tier-icon {
+  position: absolute;
+  top: -1%;
+  left: 2.5%;
+  width: 18%;
+  height: 18%;
+  aspect-ratio: 1 / 1;
+  pointer-events: none;
+  z-index: 5;
+  object-fit: contain;
+}
+
+.modal-name {
+  position: absolute;
+  top: 4%;
+  left: 20%;
+  width: 60%;
+  height: 10%;
+  background: rgba(0,0,0,0.5);
+  color: #fff;
+  font-family: var(--card-font);
+  font-size: clamp(1.2em, 3vw, 3em);
+  text-align: center;
+  padding: 4px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-desc {
+  position: absolute;
+  top: 67.5%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 73%;
+  height: 25%;
+  background: rgba(0,0,0,0.5);
+  color: #fff;
+  font-family: var(--card-font);
+  font-size: clamp(1em, 2vw, 2em);
+  text-align: center;
+  padding: 6px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+}
+
+/* Right panel: reduce spacing and allow scroll if needed */
+.modal-right {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 1fr;
+  max-height: 100%;
+  overflow-y: auto;
+  font-size: clamp(0.8em, 1.2vw, 1.2em);
+  padding: 4px 0 4px 8px;
+}
+
 .modal-right .label {
-  font-weight:600; display:flex; justify-content:space-between;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  font-size: clamp(0.9em, 1.3vw, 1.3em);
+  margin-bottom: 2px;
 }
+
 .modal-bar-container {
-  position:relative; background:#ddd;
-  border-radius:6px; overflow:hidden; height:24px;
+  position: relative;
+  background: #ddd;
+  border-radius: 6px;
+  overflow: hidden;
+  height: 24px;
+  margin-bottom: 4px;
 }
-.modal-bar { height:100%; background:var(--accent); }
+
+.modal-bar {
+  height: 100%;
+  background: var(--accent);
+}
+
 .modal-bar-container .threshold {
   position:absolute; left:50%; top:50%;
   text-align: center;
@@ -312,48 +382,52 @@ nav#tabs { margin-bottom: 15px; }
   font-size:0.85em; color:#333; font-weight:bold;
 }
 .modal-right button {
-  display: inline-flex;      /* size to content */
-  align-self: flex-start;    /* don't stretch in the column */
+  display: inline-flex;
+  align-self: flex-start;
   align-items: center;
   gap: 6px;
-  padding: 8px 14px;
+  padding: 8px 18px;
   border: none;
   border-radius: 4px;
   font-family: var(--ui-font);
-  font-size: 1.2em;
+  font-size: clamp(1em, 2vw, 1em);
+  font-weight: bold;
   color: #fff;
   cursor: pointer;
   width: auto;
   white-space: nowrap;
-}
-
-.modal-right button img.icon {
-  /* shrink the icon */
-  width: 24px;
-  height: 24px;
-}
-
-.modal-right button.affordable {
   background: var(--accent);
+  transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+}
+
+.modal-right button:hover, .modal-right button:focus {
+  background: #388e3c;
+  box-shadow: 0 4px 16px rgba(60,180,80,0.25);
+  transform: scale(1.05);
 }
 
 .modal-right button.unaffordable {
   background: var(--dark);
   cursor: not-allowed;
 }
+
+.modal-right button img.icon {
+  width: clamp(20px, 2vw, 24px);
+  height: clamp(20px, 2vw, 24px);
+}
+
 .effect-line {
-  margin-top:8px; font-family:var(--ui-font); font-size:0.95em;
+  margin-top: 4px;
 }
 .modal-effects {
-  border-top: 1px solid #444;
-  padding-top: 0.5rem;
+  padding-top: 0.2rem;
 }
 .modal-effects .effect-line {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.2rem;
 }
 .modal-effects .eff-breakdown {
   color: #666;
-  font-size: 0.9em;
+  font-size: clamp(0.8em, 1vw, 1em);
   margin-left: 0.5em;
 }
 .currency-effect-icon {
@@ -367,7 +441,7 @@ nav#tabs { margin-bottom: 15px; }
 .modal-rarity {
   margin: 2px 0 2px;
   font-family: var(--ui-font);
-  font-size: 1.1em;
+  font-size: clamp(1em, 1.2vw, 1.2em);
   font-weight: normal;
   text-align: left;
 }
@@ -377,11 +451,12 @@ nav#tabs { margin-bottom: 15px; }
 .modal-effects-header {
   text-align: center;
   font-family: var(--ui-font);
-  font-size: 1.2em;
+  font-size: clamp(1.1em, 1.3vw, 1.3em);
   font-weight: 600;
+  margin-top: 4px;
+  margin-bottom: 4px;
 }
 
-/* CSS additions in style.css */
 
 /* gray out unfound cards */
 .card-outer.unfound {
@@ -390,8 +465,10 @@ nav#tabs { margin-bottom: 15px; }
 }
 .cards-filter {
   display: inline-block;
-  width: 80px;
-  height: 120px;
+  width: 100%;
+  min-width: 63px;
+  max-width: 90px;
+  height: auto;
   margin: 0 8px;
   padding: 0;
   border: none;
@@ -399,6 +476,7 @@ nav#tabs { margin-bottom: 15px; }
   cursor: pointer;
   position: relative;
   transition: transform 0.2s, filter 0.2s;
+  font-size: clamp(0.8em, 1.2vw, 1.1em);
 }
 .cards-filter:hover {
   transform: scale(1.05);
@@ -543,17 +621,19 @@ nav#tabs { margin-bottom: 15px; }
 /* statistics */
 
 .stats-section {
-  margin-bottom: 24px;
-  padding: 16px;
+  margin-bottom: clamp(12px, 2vw, 24px);
+  padding: clamp(8px, 1.5vw, 16px);
   border-radius: 6px;
   box-shadow: 0 2px 4px var(--card-shadow);
-  background: #e8f5e9; /* light green-gray */
+  background: #e8f5e9;
+  font-size: clamp(0.9em, 1.2vw, 1.1em);
 }
 
 .stats-section h3 {
   margin-top: 0;
   font-family: var(--card-font);
   color: var(--dark);
+  font-size: clamp(1.1em, 1.4vw, 1.3em);
 }
 
 .stats-header {
@@ -563,8 +643,8 @@ nav#tabs { margin-bottom: 15px; }
 }
 
 .stat-value {
-  font-size: 2.5em;
-  margin: 8px 0;
+  font-size: clamp(1.8em, 2.5vw, 2.5em);
+  margin: clamp(4px, 1vw, 8px) 0;
 }
 
 .stat-list {
@@ -601,11 +681,10 @@ nav#tabs { margin-bottom: 15px; }
 
 /* Currency / Effects flex container */
 .flex-table-section {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-  gap: 2rem;
-  align-items: flex-start;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: clamp(8px, 1.5vw, 16px);
+  align-items: start;
 }
 
 .currency-table th,
@@ -616,38 +695,37 @@ nav#tabs { margin-bottom: 15px; }
 
 /* Center-align icons in currency table */
 .currency-table td img.icon {
-  vertical-align: middle;
-  width: 20px;
-  height: 20px;
+  width: clamp(16px, 1.5vw, 20px);
+  height: clamp(16px, 1.5vw, 20px);
   margin-right: 4px;
 }
 
 /* container for the three top panels */
 .stats-top-container {
-  display: flex;
-  gap: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: clamp(8px, 1.5vw, 16px);
 }
 
-/* make merchants section grow to fill remaining space */
+/* make merchants section grow but not too much */
 .stats-section.realm-section.merchants-section {
-  flex: 1;
+  min-width: 300px;
+  max-width: 100%;
 }
 
 /* grid layout for merchant icons */
 .merchants-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(80px, 80px));
-  grid-auto-rows: 80px;
-  gap: 8px;
+  grid-template-columns: repeat(auto-fit, minmax(60px, 80px));
+  grid-auto-rows: minmax(60px, 80px);
+  gap: clamp(4px, 1vw, 8px);
 }
 
 /* merchant thumbnails */
 .merchant-thumb {
-  width: 80px;
-  height: 80px;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  cursor: pointer;
-  border: 2px solid transparent;
   border-radius: 4px;
 }
 
@@ -688,9 +766,9 @@ nav#tabs { margin-bottom: 15px; }
 #realm-tiles,
 .realm-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 16px;
-  margin-top: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: clamp(8px, 1.5vw, 16px);
+  margin-top: clamp(8px, 1.5vw, 16px);
 }
 
 
@@ -730,16 +808,6 @@ nav#tabs { margin-bottom: 15px; }
   z-index: 5;
 }
 
-.modal-tier-icon {
-  position: absolute;
-  top: 13px;
-  left: 13px;
-  width: 80px;
-  height: 80px;
-  pointer-events: none;
-  z-index: 5;
-}
-
 /* small card tiles & collection */
 .level-label {
   position: absolute;
@@ -762,14 +830,15 @@ nav#tabs { margin-bottom: 15px; }
   color: #fff;
   border: none;
   border-radius: 4px;
-  padding: 2px 6px;
-  font-size: 0.8em;
+  padding: clamp(1px, 1vw, 2px) clamp(2px, 2vw, 6px);
+  font-size: clamp(0.4em, 1vw, 0.8em);
   display: flex;
   align-items: center;
   gap: 4px;
   cursor: pointer;
   flex-direction: column;
   align-items: flex-start;
+  max-width: 65%;
 }
 .card-level-up-btn .level-cost {
   margin-top: 2px;
@@ -810,15 +879,16 @@ nav#tabs { margin-bottom: 15px; }
 /* make buttons a bit bigger + spaced */
 .realm-filter-btn {
   position: relative;
-  width: 60px;
-  height: 80px;
-  margin: 0 8px 8px 0;
+  width: 23%;
+  aspect-ratio: 5 / 7;
+  margin: 0 3px 4px 0;
   background: none;
   border: none;
   padding: 0;
   cursor: pointer;
   opacity: 0.6;
   transition: opacity 0.2s, box-shadow 0.2s, transform 0.2s;
+  font-size: clamp(0.8em, 1.2vw, 1.1em);
 }
 
 .realm-filter-btn:hover {
@@ -848,13 +918,28 @@ nav#tabs { margin-bottom: 15px; }
   left: 0;
   width: 100%;
   text-align: center;
-  font-size: 0.75rem;
+  font-size: clamp(0.7em, 1vw, 0.9em);
   background: rgba(0, 0, 0, 0.5);
   color: #fff;
-  padding: 2px 0;
+  padding: clamp(2px, 0.5vw, 4px) 0;
   pointer-events: none;
   border-radius: 0 0 4px 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 2px 4px;
 }
+
+/* Add a container for the text to help with scaling */
+.realm-filter-btn .filter-effect span {
+  display: inline-block;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 /* under the currency bar */
 #global-cooldown-bar {
   width: 100%;
@@ -873,38 +958,84 @@ nav#tabs { margin-bottom: 15px; }
 
 .poke-hole-wrapper {
   grid-column: 1;
-  grid-row:    1;
+  grid-row: 1;
   background: url('../assets/images/starry_night_texture.jpg') repeat;
   border-radius: 12px;
-  padding: 24px;
+  padding: 2vw;
   box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Controls (filters|stats) bottom-left */
 .poke-controls {
   grid-column: 1;
-  grid-row:    2;
-  display: grid;
-  grid-template-columns: 1fr 1fr;  /* two equal columns inside controls */
-  gap: 16px;
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 1vw;
   background: #ffffff;
   border-radius: 8px;
-  padding: 16px;
+  padding: 1vw;
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 100%;
+  margin-top: 1vw;
+}
+
+#poke-filters, #poke-filter-stats {
+  width: 100%;
+  max-width: 100%;
 }
 
 /* Draw area spans both rows on the right */
 .draw-area {
   grid-column: 2;
-  grid-row:    1 / span 2;
-  display:flex;
-  flex-wrap:wrap;
-  gap:16px;
+  grid-row: 1 / span 2;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 120px);
+  gap: 1vw;
   background: url('../assets/images/table_texture.jpg') top left/auto repeat;
   border-radius: 12px;
   padding: 16px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  align-items: start;
+  align-content: start;
+  justify-content: start;
+  touch-action: pan-y; /* Allow vertical scrolling */
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
 }
+
+/* Prevent touch events from propagating to parent when touching cards */
+.draw-area .card-outer {
+  touch-action: none;
+}
+
+/* Only apply touch handling to draw area in hole tab */
+#tab-content-hole .draw-area {
+  touch-action: pan-y;
+}
+
+/* Allow normal scrolling in cards collection */
+#tab-content-cards .draw-area {
+  touch-action: auto;
+}
+
+@media (max-height: 600px) {
+  .draw-area {
+    grid-template-columns: repeat(auto-fit, 85px);
+    gap: 2vw;
+  }
+  .card-outer {
+    max-width: 90px;
+  }
+}
+
 /* cooldown counter styling */
 #cooldown-counter {
   position: absolute;
@@ -917,19 +1048,18 @@ nav#tabs { margin-bottom: 15px; }
 #merchant-panel {
   display: grid;
   grid-template-areas:
+    "timer timer"
     "image offers"
-    "message offers"
-    "timer  offers";
-  grid-template-columns: auto 1fr;
+    "message offers";
+  grid-template-columns: 25% 1fr;
   grid-auto-rows: auto;
   gap: 8px 16px;
-  align-items: center;
+  align-items: start;
 }
 
 .merchant-image {
   grid-area: image;
-  width: 300px;
-  height: 300px;
+  width: 100%;
   object-fit: cover;
   border-radius: 4px;
 }
@@ -937,9 +1067,11 @@ nav#tabs { margin-bottom: 15px; }
 .merchant-message {
   grid-area: message;
   font-style: italic;
-  max-width: 300px;
+  max-width: 100%;
   text-wrap: normal;
   background: rgba(255, 255, 255, 0.5);
+  padding: 8px;
+  border-radius: 4px;
 }
 
 .merchant-offers {
@@ -958,6 +1090,7 @@ nav#tabs { margin-bottom: 15px; }
   font-size: 1.5em;
   font-weight: 600;
   text-align: left;
+  margin-bottom: 8px;
 }
 
 /* offer card tweaks */
@@ -974,26 +1107,21 @@ nav#tabs { margin-bottom: 15px; }
 /* Style your Buy button */
 .offer-buy-btn {
   position: absolute;
-  bottom: 8px;
-  left: 40%;
-  transform: translateX(-50%);
-  z-index: 2;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  margin: 6px auto 0;
-  padding: 4px 6px;
-  background: var(--accent);
+  bottom: 4px;
+  left: 2px;
+  background: #4caf50;
   color: #fff;
-  font-weight: bold;
   border: none;
   border-radius: 4px;
+  padding: clamp(1px, 1vw, 2px) clamp(2px, 2vw, 6px);
+  font-size: clamp(0.4em, 1vw, 0.8em);
+  display: flex;
+  align-items: center;
+  gap: 4px;
   cursor: pointer;
-  white-space: nowrap;
-  width: auto;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 75%;
 }
 .offer-buy-btn .icon {
   width: 16px;
@@ -1008,8 +1136,9 @@ nav#tabs { margin-bottom: 15px; }
 
 /* flex container for side-by-side tables */
 .poke-filter-stats-flex {
-  display: flex;
-  gap: 24px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
   align-items: flex-start;
 }
 
@@ -1017,11 +1146,13 @@ nav#tabs { margin-bottom: 15px; }
 .poke-filter-stats-table {
   border-collapse: collapse;
   width: 100%;
+  font-size: clamp(0.9em, 1.3vw, 1.2em);
 }
 .poke-filter-stats-table th,
 .poke-filter-stats-table td {
   border: 1px solid #ddd;
   padding: 6px 8px;
+  font-size: clamp(0.9em, 1.3vw, 1.2em);
 }
 .poke-filter-stats-table th {
   background-color: #f4f4f4;
@@ -1061,4 +1192,35 @@ nav#tabs { margin-bottom: 15px; }
   z-index: 10;
   text-align: center;
   width: 100%;
+}
+
+/* Media query for very small screens */
+@media (max-width: 600px) {
+  .stats-top-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .flex-table-section {
+    grid-template-columns: 1fr;
+  }
+  
+  .merchants-grid {
+    grid-template-columns: repeat(auto-fit, minmax(50px, 60px));
+    grid-auto-rows: minmax(50px, 60px);
+  }
+  
+  .rarity-table,
+  .currency-table,
+  .effects-table,
+  .realm-table {
+    font-size: 0.85em;
+  }
+  
+  .realm-filter-btn {
+    font-size: 0.8em;
+  }
+  .realm-filter-btn .filter-effect {
+    font-size: 0.7em;
+    padding: 2px 0;
+  }
 }

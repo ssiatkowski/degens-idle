@@ -1076,7 +1076,7 @@ function applySkill(id, skipCost = false) {
     case 11001: // Better Merchants
     case 11002: // Better Merchants 2
     case 11003: // Better Merchants 3
-      state.effects.merchantRarityScaling += 0.1;
+      state.effects.extraMerchantRarityScaling += 0.1;
       break;
   }
 

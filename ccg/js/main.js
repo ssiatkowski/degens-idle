@@ -32,7 +32,7 @@ window.state = {
     merchantNumCards: 2,
     cooldownSkipChance: 0,
     merchantCooldownReduction: 0,
-    merchantRarityScaling: 2.5,  // Initialize to 2.5
+    extraMerchantRarityScaling: 0,
   },
   selectedRealms: [],      // newly added
   currentMerchant: null,
@@ -403,6 +403,65 @@ function performPoke() {
       }
     });
 
+    // touch to flip (mobile)
+    let isScrolling = false;
+    let lastFlippedCard = null;
+
+    // Track touch position relative to this card
+    outer.addEventListener('touchmove', (e) => {
+      const touch = e.touches[0];
+      const rect = outer.getBoundingClientRect();
+      const isOverCard = (
+        touch.clientX >= rect.left &&
+        touch.clientX <= rect.right &&
+        touch.clientY >= rect.top &&
+        touch.clientY <= rect.bottom
+      );
+
+      // If we're over this card and it's not the last one we flipped
+      if (isOverCard && lastFlippedCard !== outer && !inner.classList.contains('revealed')) {
+        // Check if we're scrolling
+        const touchY = touch.clientY;
+        const touchX = touch.clientX;
+        const deltaY = Math.abs(touchY - e.touches[0].clientY);
+        const deltaX = Math.abs(touchX - e.touches[0].clientX);
+
+        if (deltaY > deltaX && deltaY > 10) {
+          isScrolling = true;
+          return;
+        }
+
+        // Flip the card
+        inner.classList.add('revealed');
+        lastFlippedCard = outer;
+        revealedCount++;
+
+        const onFlipEnd = e => {
+          if (e.propertyName === 'transform') {
+            if (wasNew) {
+              inner.classList.add('spin');
+              inner.addEventListener('animationend', () => inner.classList.remove('spin'), { once: true });
+            } else if (newTier > oldTier) {
+              inner.classList.add('shake');
+              inner.addEventListener('animationend', () => inner.classList.remove('shake'), { once: true });
+            }
+          }
+          inner.removeEventListener('transitionend', onFlipEnd);
+        };
+        inner.addEventListener('transitionend', onFlipEnd);
+
+        if (revealedCount === currentPackCount) {
+          state.flipsDone = true;
+          tryEnableHole();
+        }
+      }
+    }, { passive: true });
+
+    // Reset scrolling state when touch ends
+    outer.addEventListener('touchend', () => {
+      isScrolling = false;
+    }, { passive: true });
+
     // click to open modal
     outer.addEventListener('click', () => {
       if (inner.classList.contains('revealed')) openModal(cid);
@@ -535,15 +594,9 @@ function openModal(cardId) {
   barContainer.append(bar, thresholdLab);
   right.append(barContainer);
 
-  // level display
-  const lvlLine = document.createElement('p');
-  lvlLine.className = 'label';
-  lvlLine.textContent = `Level: ${c.level}`;
-  right.append(lvlLine);
-
   // level up button
   const baseCost = new Decimal(c.levelCost.amount);
-  const cost = baseCost.times(Decimal.pow(c.levelScaling, c.level - 1)).ceil();
+  const cost = floorTo3SigDigits(baseCost.times(Decimal.pow(c.levelScaling, c.level - 1)));
   const costTxt = formatNumber(cost);
 
   // look up currency icon directly
@@ -552,7 +605,7 @@ function openModal(cardId) {
   const ico = curEntry.icon || 'question.png';
 
   const btn = document.createElement('button');
-  btn.innerHTML = `Level Up: ${costTxt}
+  btn.innerHTML = `<b>Level ${c.level}</b> Up: ${costTxt}
     <img class="icon" src="assets/images/currencies/${ico}"/>`;
 
   // can afford?
@@ -596,6 +649,10 @@ function openModal(cardId) {
   effHeader.className = 'modal-effects-header';
   effHeader.textContent = 'Effects';
   right.appendChild(effHeader);
+
+  const hr = document.createElement('hr');
+  hr.style.margin = '0 0 4px 0';
+  right.appendChild(hr);
 
   // --- EFFECT LINES ---
   const effectsList = Array.isArray(c.baseEffects)
@@ -765,7 +822,7 @@ function renderCardsCollection() {
       if (c.quantity > 0) {
         const baseCost = new Decimal(c.levelCost.amount);
         const rawCost  = baseCost.times(Decimal.pow(c.levelScaling, c.level - 1));
-        const cost     = rawCost.ceil();
+        const cost     = floorTo3SigDigits(rawCost);
         const curAmt   = state.currencies[c.levelCost.currency] || new Decimal(0);
         const canAfford = curAmt.greaterThanOrEqualTo(cost);
 

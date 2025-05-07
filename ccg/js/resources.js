@@ -249,3 +249,12 @@ function multinomialSample(N, weights) {
     }
     return counts;
 }
+
+function floorTo3SigDigits(num) {
+  if (typeof num === 'object' && num.toNumber) num = num.toNumber();
+  if (num === 0) return 0;
+  const absNum = Math.abs(num);
+  const digits = Math.floor(Math.log10(absNum)) + 1;
+  const factor = Math.pow(10, digits - 3);
+  return Math.sign(num) * Math.floor(absNum / factor) * factor;
+}

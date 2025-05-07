@@ -135,8 +135,12 @@ function updateStatsUI() {
                 <td>${state.effects.merchantCooldownReduction}s</td>
             </tr>
             <tr>
-                <td>${EFFECT_NAMES.merchantRarityScaling}</td>
-                <td>${state.effects.merchantRarityScaling.toFixed(1)}</td>
+                <td>${EFFECT_NAMES.merchantNumCards}</td>
+                <td>${state.effects.merchantNumCards}</td>
+            </tr>
+            <tr>
+                <td>${EFFECT_NAMES.extraMerchantRarityScaling}</td>
+                <td>${state.effects.extraMerchantRarityScaling.toFixed(1)}</td>
             </tr>
         </tbody>
     `;
@@ -200,6 +204,9 @@ function updateStatsUI() {
       <p><strong>Name:</strong> ${sel.name||''}</p>
       <p><strong>Description:</strong> ${sel.description||''}</p>
       <p><strong>Probability:</strong> ${prob}</p>
+      <p><strong>Cards Offered:</strong> ${Math.ceil(state.effects.merchantNumCards * sel.cardMultiplier)}</p>
+      <p><strong>Rarity Scaling:</strong> ${(sel.rarityScaling + state.effects.extraMerchantRarityScaling).toFixed(1)}</p>
+      <p><strong>Offer Duration:</strong> ${formatDuration(sel.refreshTime - state.effects.merchantCooldownReduction)}</p>
     `;
     merchantsSection.appendChild(detail);
 
@@ -209,7 +216,7 @@ function updateStatsUI() {
     topContainer.append(generalSection, globalSection, merchantsSection);
     container.appendChild(topContainer);
 
-    // --- Per-Realm Statistics (unchanged) ---
+    // --- Per-Realm Statistics ---
     const realmContainer = document.createElement('div');
     realmContainer.className = 'realm-container';
     realms.forEach(r => {
@@ -232,7 +239,7 @@ function updateStatsUI() {
         const rs = document.createElement('section');
         rs.className = 'stats-section realm-section';
         rs.innerHTML = `
-          <h3 style="border-bottom:2px solid ${realmColors[r.id]};">
+          <h3 style="border-bottom:2px solid ${realmColors[r.id]}; color: ${realmColors[r.id]};">
             ${r.name}
           </h3>
         `;

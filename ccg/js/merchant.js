@@ -10,7 +10,7 @@ const merchants = [
       merchantOdds: 1000,
       raritiesSkipped: [],
       priceMultiplier: 1,
-      additionalRarityScaling: 0,
+      rarityScaling: 2.5,
       description: 'Your standard traveling merchant',
       unlocked: true
     },
@@ -22,7 +22,7 @@ const merchants = [
       merchantOdds: 900,
       raritiesSkipped: [],
       priceMultiplier: 1,
-      additionalRarityScaling: 0,
+      rarityScaling: 2.5,
       description: 'Always on the move. She only stays for half as long.',
       unlocked: true
     },
@@ -34,7 +34,7 @@ const merchants = [
       merchantOdds: 800,
       raritiesSkipped: [],
       priceMultiplier: 1,
-      additionalRarityScaling: 0,
+      rarityScaling: 2.5,
       description: 'A strong dude. Carries twice as many cards.',
       unlocked: true
     },
@@ -46,7 +46,7 @@ const merchants = [
       merchantOdds: 700,
       raritiesSkipped: ['junk'],
       priceMultiplier: 1,
-      additionalRarityScaling: 0,
+      rarityScaling: 2.5,
       description: 'A fancy lady. She does not carry junk.',
       unlocked: false
     },
@@ -58,7 +58,7 @@ const merchants = [
       merchantOdds: 600,
       raritiesSkipped: [],
       priceMultiplier: 0.1,
-      additionalRarityScaling: 0,
+      rarityScaling: 2.5,
       description: 'Fair old guy. Carries half as many cards but sells them at 1/10 of the price.',
       unlocked: false
     },
@@ -70,8 +70,8 @@ const merchants = [
       merchantOdds: 500,
       raritiesSkipped: [],
       priceMultiplier: 1,
-      additionalRarityScaling: 2,
-      description: 'A lucky girl. Has better odds of offering rarer cards (+2 to exponential scaling).',
+      rarityScaling: 4.5,
+      description: 'A lucky girl. Has better odds of offering rarer cards (+2 to scaling).',
       unlocked: false
     },
     {
@@ -82,7 +82,7 @@ const merchants = [
       merchantOdds: 400,
       raritiesSkipped: ['junk'],
       priceMultiplier: 0.5,
-      additionalRarityScaling: 0,
+      rarityScaling: 2.5,
       description: 'An all around good guy. Carries 1.5x as many cards (no junk), sells them at 1/2 of the price, and stays 2/3 as long.',
       unlocked: false
     }
@@ -159,6 +159,15 @@ const merchants = [
       const reducedTime = Math.max(15, baseRefreshTime - (state.effects.merchantCooldownReduction || 0));
       nextRefresh = now + reducedTime * 1000;
       genMerchantOffers();
+      
+      // Set merchant message only on refresh
+      const greeting = pickRandom(window.merchantGreetings);
+      const pitch = pickRandom(window.merchantPitches);
+      state.currentMerchantMessage = `
+        <div class="merchant-greeting">${greeting}</div>
+        <div class="merchant-pitch">${pitch}</div>
+      `;
+      
       renderMerchantTab();
     }
     const rem = (nextRefresh - now) / 1000;
@@ -208,7 +217,7 @@ const merchants = [
         .filter(r => !skip.includes(r))
         .forEach((r, idx) => {
           boosted[r] = (realm.rarityWeights[r] || 0)
-                     * Decimal.pow(state.effects.merchantRarityScaling + state.currentMerchant.additionalRarityScaling, idx).toNumber();
+                     * Decimal.pow(state.currentMerchant.rarityScaling + state.effects.extraMerchantRarityScaling, idx).toNumber();
         });
       const rarity = weightedPick(boosted);
   
@@ -216,6 +225,7 @@ const merchants = [
       let pool = realmRarityCardMap[realmId][rarity] || [];
       if (!pool.length) pool = realmRarityCardMap[realmId].junk;
       const cardId = pickRandom(pool);
+      
       const ownQty = cardMap[cardId].quantity;
   
         // 4) choose currency: only those you actually earn via per‐sec or per‐poke
@@ -250,10 +260,12 @@ const merchants = [
       if (ownQty > 9 && Math.random() < 0.25) {
         const maxStack = Math.floor(Math.cbrt(ownQty));
         quantity = Math.max(1, Math.floor(Math.random() * maxStack) + 1);
-        price = price.times(Math.cbrt(quantity)).ceil();
+        price = price.times(Math.cbrt(quantity));
       }
+
   
       if (price.lessThan(1)) price = new Decimal(1);
+      price = floorTo3SigDigits(price);
       offers.push({ cardId, price, currency, quantity });
     }
   
@@ -280,12 +292,18 @@ const merchants = [
     imgEl.src = `assets/images/merchants/${slug}.jpg`;
     imgEl.alt = state.currentMerchant.name;
   
-    const greeting = pickRandom(window.merchantGreetings);
-    const pitch    = pickRandom(window.merchantPitches);
-    msgEl.innerHTML = `
-      <div class="merchant-greeting">${greeting}</div>
-      <div class="merchant-pitch">${pitch}</div>
-    `;
+    // Generate new message if undefined
+    if (!state.currentMerchantMessage) {
+      const greeting = pickRandom(window.merchantGreetings);
+      const pitch = pickRandom(window.merchantPitches);
+      state.currentMerchantMessage = `
+        <div class="merchant-greeting">${greeting}</div>
+        <div class="merchant-pitch">${pitch}</div>
+      `;
+    }
+  
+    // Use stored message
+    msgEl.innerHTML = state.currentMerchantMessage;
   
     // render offers
     state.merchantOffers.forEach((o, idx) => {
