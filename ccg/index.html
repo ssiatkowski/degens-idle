@@ -5,8 +5,43 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Incremental Card Game</title>
   <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/main.css" />
 </head>
 <body>
+  <!-- Landscape Mode Overlay -->
+  <div id="landscape-overlay" style="display: none;">
+    <div class="landscape-content">
+      <img src="assets/images/rotate_device.png" alt="Rotate Device" class="rotate-icon">
+      <h2>Please Rotate Your Device</h2>
+      <p>This game is best played in landscape mode</p>
+    </div>
+  </div>
+
+  <!-- Welcome Modal -->
+  <div id="welcome-modal" class="welcome-modal" style="display: none;">
+    <div class="welcome-content">
+      <h2>Welcome to (yet to be named) Incremental Collectible Card Game!</h2>
+      <div class="welcome-tips">
+        <div class="tip-item">
+          <div class="tip-text">Poke the black hole and see what it spits out</div>
+        </div>
+        <div class="tip-item">
+          <div class="tip-text">Swipe cards to flip them over</div>
+        </div>
+        <div class="tip-item">
+          <div class="tip-text">Click cards to see details</div>
+        </div>
+        <div class="tip-item">
+          <div class="tip-text">Explore the tabs on top to see your collection, skills, and more</div>
+        </div>
+        <div class="tip-item">
+          <div class="tip-text">I'm sure you can figure the rest out. Enjoy!</div>
+        </div>
+      </div>
+      <button class="welcome-close-btn">Got it!</button>
+    </div>
+  </div>
+
   <!-- Currency Bar -->
   <div id="currency-bar"></div>
   <!-- Cooldown bar pinned under the currency bar -->

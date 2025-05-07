@@ -270,7 +270,6 @@ const merchants = [
     }
   
     state.merchantOffers = offers;
-    console.log(state.merchantOffers);
     saveState();
   
     const btn = document.getElementById('tab-btn-merchant');

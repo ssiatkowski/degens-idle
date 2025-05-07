@@ -9,6 +9,12 @@ const holeBtn  = document.getElementById('hole-button');
 let revealedCount    = 0;
 let currentPackCount = 0;
 
+// Add this at the top of the file, after the state initialization
+let lastTouchX = 0;
+let lastTouchY = 0;
+let isScrolling = false;
+let lastFlippedCard = null;
+
 // --- LOOKUP MAPS ---
 const realmMap = {}, cardMap = {}, skillMap = {};
 realms.forEach(r => realmMap[r.id] = r);
@@ -57,7 +63,7 @@ function loadState() {
   try {
     const obj = JSON.parse(raw);
     obj.unlockedRealms.forEach(rid  => realmMap[rid].unlocked = true);
-    obj.unlockedSkills.forEach(sid => skillMap[sid].unlocked = true);
+    // First apply purchased skills
     if (Array.isArray(obj.purchasedSkills)) {
       obj.purchasedSkills.forEach(sid => {
         applySkill(Number(sid), /*skipCost=*/true);
@@ -97,7 +103,6 @@ function loadState() {
 function saveState() {
   const obj = {
     unlockedRealms:  realms.filter(r=>r.unlocked).map(r=>r.id),
-    unlockedSkills: skills.filter(s=>s.unlocked).map(s=>s.id),
     purchasedSkills: skills.filter(s=>s.purchased).map(s=>s.id),
     currencies:      {},
     unlockedCurrencies: state.unlockedCurrencies,
@@ -233,7 +238,6 @@ function showTab(tab) {
 // --- POKE & REVEAL ---
 
 function performPoke() {
-
   holeBtn.disabled = true;
   holeBtn.classList.add('disabled');
 
@@ -297,6 +301,9 @@ function performPoke() {
     state.currencies[curId] =
       state.currencies[curId].plus(new Decimal(rate));
   });
+
+  // Check for affordable skills after currency update
+  checkAffordableSkills();
 
   // how many unique cards to reveal
   currentPackCount = Object.keys(picksCounts).length;
@@ -403,65 +410,6 @@ function performPoke() {
       }
     });
 
-    // touch to flip (mobile)
-    let isScrolling = false;
-    let lastFlippedCard = null;
-
-    // Track touch position relative to this card
-    outer.addEventListener('touchmove', (e) => {
-      const touch = e.touches[0];
-      const rect = outer.getBoundingClientRect();
-      const isOverCard = (
-        touch.clientX >= rect.left &&
-        touch.clientX <= rect.right &&
-        touch.clientY >= rect.top &&
-        touch.clientY <= rect.bottom
-      );
-
-      // If we're over this card and it's not the last one we flipped
-      if (isOverCard && lastFlippedCard !== outer && !inner.classList.contains('revealed')) {
-        // Check if we're scrolling
-        const touchY = touch.clientY;
-        const touchX = touch.clientX;
-        const deltaY = Math.abs(touchY - e.touches[0].clientY);
-        const deltaX = Math.abs(touchX - e.touches[0].clientX);
-
-        if (deltaY > deltaX && deltaY > 10) {
-          isScrolling = true;
-          return;
-        }
-
-        // Flip the card
-        inner.classList.add('revealed');
-        lastFlippedCard = outer;
-        revealedCount++;
-
-        const onFlipEnd = e => {
-          if (e.propertyName === 'transform') {
-            if (wasNew) {
-              inner.classList.add('spin');
-              inner.addEventListener('animationend', () => inner.classList.remove('spin'), { once: true });
-            } else if (newTier > oldTier) {
-              inner.classList.add('shake');
-              inner.addEventListener('animationend', () => inner.classList.remove('shake'), { once: true });
-            }
-          }
-          inner.removeEventListener('transitionend', onFlipEnd);
-        };
-        inner.addEventListener('transitionend', onFlipEnd);
-
-        if (revealedCount === currentPackCount) {
-          state.flipsDone = true;
-          tryEnableHole();
-        }
-      }
-    }, { passive: true });
-
-    // Reset scrolling state when touch ends
-    outer.addEventListener('touchend', () => {
-      isScrolling = false;
-    }, { passive: true });
-
     // click to open modal
     outer.addEventListener('click', () => {
       if (inner.classList.contains('revealed')) openModal(cid);
@@ -471,9 +419,73 @@ function performPoke() {
   startCooldown();
   
   saveState();
-
 }
 
+// Add this after the performPoke function
+document.addEventListener('touchmove', (e) => {
+  const touch = e.touches[0];
+  
+  // Check if we're scrolling
+  const deltaY = Math.abs(touch.clientY - lastTouchY);
+  const deltaX = Math.abs(touch.clientX - lastTouchX);
+  lastTouchX = touch.clientX;
+  lastTouchY = touch.clientY;
+
+  if (deltaY > deltaX && deltaY > 10) {
+    isScrolling = true;
+    return;
+  }
+
+  // Check all cards in the draw area
+  const cards = drawArea.querySelectorAll('.card-outer');
+  cards.forEach(outer => {
+    const inner = outer.querySelector('.card-inner');
+    if (!inner) return;
+
+    const rect = outer.getBoundingClientRect();
+    const isOverCard = (
+      touch.clientX >= rect.left &&
+      touch.clientX <= rect.right &&
+      touch.clientY >= rect.top &&
+      touch.clientY <= rect.bottom
+    );
+
+    // If we're over this card and it's not the last one we flipped
+    if (isOverCard && lastFlippedCard !== outer && !inner.classList.contains('revealed')) {
+      // Flip the card
+      inner.classList.add('revealed');
+      lastFlippedCard = outer;
+      revealedCount++;
+
+      const onFlipEnd = e => {
+        if (e.propertyName === 'transform') {
+          const cid = inner.dataset.id;
+          const c = cardMap[cid];
+          if (c.isNew) {
+            inner.classList.add('spin');
+            inner.addEventListener('animationend', () => inner.classList.remove('spin'), { once: true });
+          } else if (c.tier > c.lastTier) {
+            inner.classList.add('shake');
+            inner.addEventListener('animationend', () => inner.classList.remove('shake'), { once: true });
+          }
+        }
+        inner.removeEventListener('transitionend', onFlipEnd);
+      };
+      inner.addEventListener('transitionend', onFlipEnd);
+
+      if (revealedCount === currentPackCount) {
+        state.flipsDone = true;
+        tryEnableHole();
+      }
+    }
+  });
+}, { passive: true });
+
+// Reset scrolling state when touch ends
+document.addEventListener('touchend', () => {
+  isScrolling = false;
+  lastFlippedCard = null;
+}, { passive: true });
 
 function tryEnableHole() {
   if (state.cooldownDone && state.flipsDone) {
@@ -1006,6 +1018,9 @@ function levelUp(cardId) {
   applyEffectsDelta(now, +1);
   c.lastAppliedEffects = now;
 
+  // Check for affordable skills after spending currency
+  checkAffordableSkills();
+
   renderCardsCollection();
 }
 
@@ -1253,17 +1268,17 @@ function showOfflineEarningsModal(earnings) {
 
   // OVERLAY
   const ov = document.createElement('div');
-  ov.className = 'modal-overlay';
+  ov.className = 'offline-earnings-modal';
   ov.onclick = () => ov.remove();
 
   // MODAL CONTAINER
   const mc = document.createElement('div');
-  mc.className = 'modal-content';
+  mc.className = 'offline-earnings-content';
   mc.onclick = e => e.stopPropagation();
 
   // Create flex container for vertical stacking
   const flexContainer = document.createElement('div');
-  flexContainer.className = 'modal-flex-container';
+  flexContainer.className = 'offline-earnings-flex';
 
   // HEADER
   const header = document.createElement('h3');
@@ -1285,8 +1300,8 @@ function showOfflineEarningsModal(earnings) {
     const item = document.createElement('div');
     item.className = 'offline-earnings-item';
     item.innerHTML = `
-      <img class="icon" src="assets/images/currencies/${meta.icon}" alt="${meta.name}" />
       <span class="amount">+${formatNumber(amount)}</span>
+      <img class="icon" src="assets/images/currencies/${meta.icon}" alt="${meta.name}" />
       <span class="name">${meta.name}</span>
     `;
     list.appendChild(item);
@@ -1297,6 +1312,9 @@ function showOfflineEarningsModal(earnings) {
   ov.appendChild(mc);
   document.body.appendChild(ov);
 
+  // Force a reflow to ensure proper positioning
+  void ov.offsetHeight;
+
   // Auto-remove after 5 seconds
   setTimeout(() => ov.remove(), 5000);
 }
@@ -1304,7 +1322,32 @@ function showOfflineEarningsModal(earnings) {
 // --- INIT AFTER DOM READY ---
 document.addEventListener('DOMContentLoaded', ()=>{
 
+  // Check initial orientation
+  const checkOrientation = () => {
+    const overlay = document.getElementById('landscape-overlay');
+    const isPortrait = window.innerHeight > window.innerWidth * 1.1;
+    overlay.style.display = isPortrait ? 'flex' : 'none';
+  };
+
+  // Check orientation on load and resize
+  checkOrientation();
+  window.addEventListener('resize', checkOrientation);
+  window.addEventListener('orientationchange', checkOrientation);
+
   loadState();
+
+  // Show welcome modal for new users
+  const savedState = JSON.parse(localStorage.getItem(SAVE_KEY) || '{}');
+  if (!savedState.lastSaveTime) {
+    const welcomeModal = document.getElementById('welcome-modal');
+    welcomeModal.style.display = 'flex';
+    
+    // Close button handler
+    const closeBtn = welcomeModal.querySelector('.welcome-close-btn');
+    closeBtn.onclick = () => {
+      welcomeModal.style.display = 'none';
+    };
+  }
 
   cards.forEach(c => {
     c.lastAppliedEffects = {};
@@ -1316,7 +1359,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
   });
 
   // Calculate offline progress after all effects are computed
-  const savedState = JSON.parse(localStorage.getItem(SAVE_KEY) || '{}');
   if (savedState.lastSaveTime) {
     const currentTime = Date.now();
     const timeDiff = Math.floor((currentTime - savedState.lastSaveTime) / 1000); // Convert to seconds
@@ -1353,6 +1395,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
   renderCardsCollection();
   updatePokeFilterStats();
   updateGeneratorRates();
+  checkAffordableSkills();
 
   if (state.currentMerchant) {
     // we have a saved merchant + offers,
