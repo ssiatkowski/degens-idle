@@ -7,16 +7,16 @@ id,name,realm,rarity,levelScaling,levelCost_currency,levelCost_amount,effect1_ty
 106,Copper Nugget,1,junk,2.5,stone,25,,,,currencyPerSec,stone,1,,,,,,,,,,,,,,,,,,,"Copper was the first metal ever used by humans, over 10,000 years ago.",0,0,1
 107,Limestone,1,junk,2.5,stone,25,,,,currencyPerSec,stone,1,,,,,,,,,,,,,,,,,,,Limestone makes up most coral reefs and contains the skeletons of ancient sea life.,0,0,1
 108,Sandstone,1,junk,2,stone,50,currencyPerPoke,stone,1,,,,rarityOddsReduction,1,junk,,,,,,,,,,,,,,,,Sandstone can form stunning canyons like Antelope Canyon in Arizona.,0,0,1
-109,Granite Chunk,1,basic,2,stone,40,currencyPerPoke,stone,1,,,,rarityOddsReduction,1,junk,rarityOddsReduction,1,basic,,,,,,,,,,,,,Granite makes up most of Earth’s continental crust and can be over a billion years old.,0,0,1
+109,Granite Chunk,1,basic,2,stone,40,currencyPerPoke,stone,3,,,,rarityOddsReduction,1,junk,rarityOddsReduction,1,basic,,,,,,,,,,,,,Granite makes up most of Earth’s continental crust and can be over a billion years old.,0,0,1
 110,Shale,1,basic,1.5,stone,100,currencyPerPoke,stone,10,,,,,,,,,,,,,,,,,,,,,,"Shale layers can trap natural gas and oil, shaping modern fracking.",0,0,1
 111,Marble Slab,1,basic,5,stone,200,,,,currencyPerSec,stone,10,maxCardsPerPoke,0.001,,,,,,,,,,,,,,,,,Marble is metamorphosed limestone and was used by Michelangelo to carve David.,0,0,1
-112,Quartz Crystal,1,decent,2,stone,30,currencyPerPoke,stone,1,,,,rarityOddsReduction,1,junk,rarityOddsReduction,1,basic,rarityOddsReduction,1,decent,,,,,,,,,,Quartz powers timepieces—its vibrations keep watches ticking!,0,0,1
-113,Basalt Boulder,1,decent,3,stone,1000,currencyPerPoke,stone,10,,,,rarityOddsReduction,1,junk,cooldownDivider,0.001,,,,,,,,,,,,,,Basalt forms the vast ocean floors and the Giant’s Causeway in Ireland.,0,0,1
+112,Quartz Crystal,1,decent,2,stone,30,currencyPerPoke,stone,10,,,,rarityOddsReduction,1,junk,rarityOddsReduction,1,basic,rarityOddsReduction,1,decent,,,,,,,,,,Quartz powers timepieces—its vibrations keep watches ticking!,0,0,1
+113,Basalt Boulder,1,decent,3,stone,1000,currencyPerPoke,stone,25,,,,rarityOddsReduction,1,junk,cooldownDivider,0.001,,,,,,,,,,,,,,Basalt forms the vast ocean floors and the Giant’s Causeway in Ireland.,0,0,1
 114,Obsidian Shard,1,fine,3,stone,1000,currencyPerPoke,stone,100,,,,cooldownDivider,0.002,,,,,,,,,,,,,,,,,Obsidian was prized by ancient cultures for making razor-sharp blades.,0,0,1
 115,Fossil Fragment,1,fine,2.5,stone,25,currencyPerPoke,stone,100,currencyPerSec,stone,5,,,,,,,,,,,,,,,,,,,Fossils can reveal creatures that roamed Earth over 65 million years ago.,0,0,1
 116,Ruby Geode,1,fine,2,stone,20,currencyPerPoke,stone,25,,,,rarityOddsReduction,1,junk,rarityOddsReduction,1,basic,rarityOddsReduction,1,decent,rarityOddsReduction,1,fine,,,,,,,Geodes form when minerals deposit inside gas bubbles in rocks over eons.,0,0,1
 117,Emerald Deposit,1,fine,3,rune,10,currencyPerPoke,stone,50,,,,cooldownDivider,0.002,,,,,,,,,,,,,,,,,Emeralds get their green from trace chromium and vanadium.,0,0,1
-118,Sapphire Stone,1,fine,5,stone,50,currencyPerPoke,rune,5,,,,,,,,,,,,,,,,,,,,,,Sapphires come in many colors—even pink and yellow!,0,0,1
+118,Sapphire Stone,1,fine,3,stone,100,currencyPerPoke,rune,3,,,,,,,,,,,,,,,,,,,,,,Sapphires come in many colors—even pink and yellow!,0,0,1
 119,Meteorite,1,fine,2,stone,2000,,,,currencyPerSec,stone,5,rarityOddsReduction,1,junk,rarityOddsReduction,1,basic,rarityOddsReduction,1,decent,,,,,,,,,,Meteorites can be up to 4.5 billion years old—older than Earth!,0,0,1
 120,Ancient Relic,1,rare,2.5,rune,1,currencyPerPoke,rune,5,currencyPerSec,rune,1,rarityOddsReduction,1,decent,rarityOddsReduction,1,basic,rarityOddsReduction,1,junk,,,,,,,,,,Many ancient relics are carbon-dated to reveal secrets of past civilizations.,0,0,1
 201,Seaweed,2,junk,1.5,coral,5,currencyPerPoke,coral,1,,,,,,,,,,,,,,,,,,,,,,Seaweed produces about 80% of Earth’s oxygen through photosynthesis.,0,0,1
@@ -25,7 +25,7 @@ id,name,realm,rarity,levelScaling,levelCost_currency,levelCost_amount,effect1_ty
 204,Driftwood,2,junk,2.5,coral,25,,,,currencyPerSec,coral,1,,,,,,,,,,,,,,,,,,,"Driftwood can float for years, carried across entire oceans.",0,0,1
 205,Old Boot,2,junk,2,coral,50,currencyPerPoke,coral,1,,,,rarityOddsReduction,1,junk,rarityOddsReduction,2,junk,,,,,,,,,,,,,Ancient footwear found in rivers helps archaeologists date human settlements.,0,0,1
 206,Coral Fragment,2,basic,2,coral,40,currencyPerPoke,coral,5,,,,rarityOddsReduction,1,junk,rarityOddsReduction,1,basic,,,,,,,,,,,,,Coral reefs support 25% of all marine species while covering less than 1% of the ocean.,0,0,1
-207,Jellyfish,2,basic,3,coral,1000,currencyPerPoke,coral,10,,,,cooldownDivider,0.001,,,,,,,,,,,,,,,,,"Some jellyfish species are biologically immortal, reverting to juvenile form to avoid death.",0,0,1
+207,Jellyfish,2,basic,3,coral,1000,,,,currencyPerSec,coral,4,cooldownDivider,0.001,,,,,,,,,,,,,,,,,"Some jellyfish species are biologically immortal, reverting to juvenile form to avoid death.",0,0,1
 208,Shipwreck,2,basic,2,coral,50,currencyPerPoke,coral,2,,,,rarityOddsReduction,2,junk,rarityOddsReduction,2,basic,,,,,,,,,,,,,"Over 3 million shipwrecks lie on the ocean floor, preserving maritime history.",0,0,1
 209,Lobster,2,decent,2,coral,1000,currencyPerPoke,coral,10,,,,rarityOddsReduction,2,junk,rarityOddsReduction,2,basic,rarityOddsReduction,2,decent,,,,,,,,,,Lobsters taste with their legs and chew with their stomachs!,0,0,1
 210,Seahorse,2,decent,2.5,coral,25,currencyPerPoke,coral,15,currencyPerSec,coral,5,,,,,,,,,,,,,,,,,,,Male seahorses carry and give birth to their young.,0,0,1
@@ -38,7 +38,7 @@ id,name,realm,rarity,levelScaling,levelCost_currency,levelCost_amount,effect1_ty
 217,Kraken Tentacle,2,rare,5,coral,800,currencyPerPoke,coral,50,,,,minCardsPerPoke,0.001,,maxCardsPerPoke,0.0015,,,,,,,,,,,,,,Legends of the kraken may have originated from giant squid sightings.,0,0,1
 218,Sunken Idol,2,rare,2,coral,500,currencyPerPoke,coral,50,,,,rarityOddsReduction,1,decent,rarityOddsReduction,2,junk,rarityOddsReduction,1,basic,rarityOddsReduction,1,decent,,,,,,,Sunken idols often stay pristine underwater for centuries.,0,0,1
 219,Leviathan Scale,2,epic,2,pearl,5,currencyPerPoke,coral,500,,,,rarityOddsReduction,2,junk,rarityOddsReduction,2,basic,rarityOddsReduction,2,decent,rarityOddsReduction,2,fine,,,,,,,The name ‘leviathan’ appears in ancient texts describing sea monsters.,0,0,1
-220,Poseidon’s Trident,2,legendary,2,pearl,1,currencyPerPoke,pearl,2,currencyPerSec,coral,5,rarityOddsReduction,2,basic,rarityOddsReduction,2,decent,rarityOddsReduction,2,fine,rarityOddsReduction,2,rare,,,,,,,"The trident symbol is linked to Poseidon, god of the sea.",0,0,1
+220,Poseidon’s Trident,2,legendary,2,pearl,1,currencyPerPoke,pearl,3,currencyPerSec,pearl,1,rarityOddsReduction,2,basic,rarityOddsReduction,2,decent,rarityOddsReduction,2,fine,rarityOddsReduction,2,rare,,,,,,,"The trident symbol is linked to Poseidon, god of the sea.",0,0,1
 301,Ant,3,junk,1.5,pollen,5,currencyPerPoke,pollen,1,,,,,,,,,,,,,,,,,,,,,,Ants can lift objects over 50 times their body weight.,0,0,1
 302,Beetle,3,junk,1.5,pollen,5,currencyPerPoke,pollen,1,,,,,,,,,,,,,,,,,,,,,,Beetles make up about 40% of all known insect species.,0,0,1
 303,Grasshopper,3,junk,2.5,pollen,25,,,,currencyPerSec,pollen,1,rarityOddsReduction,3,junk,,,,,,,,,,,,,,,,Some grasshoppers can jump over 20 times their body length.,0,0,1
@@ -57,9 +57,9 @@ id,name,realm,rarity,levelScaling,levelCost_currency,levelCost_amount,effect1_ty
 316,Queen Bee,3,rare,2,pollen,50,currencyPerPoke,pollen,25,,,,rarityOddsReduction,3,basic,rarityOddsReduction,2,basic,,,,,,,,,,,,,A queen bee can lay over 2 000 eggs per day at peak season.,0,0,1
 317,Praying Mantis,3,rare,2,pollen,50,currencyPerPoke,pollen,20,,,,rarityOddsReduction,3,junk,rarityOddsReduction,3,basic,rarityOddsReduction,3,decent,,,,,,,,,,Praying mantises can rotate their heads 180° to scan for prey.,0,0,1
 318,Atlas Moth,3,rare,3,pollen,1000,,,,currencyPerSec,pollen,3,cooldownDivider,0.002,,,,,,,,,,,,,,,,,Atlas moths have wingspans up to 12 inches—among the largest insects.,0,0,1
-319,Goliath Beetle,3,rare,2,pollen,50,currencyPerPoke,pollen,10,currencyPerSec,pollen,5,,,,,,,,,,,,,,,,,,,"Goliath beetles can grow over 4 inches long, making them one of the largest insects.",0,0,1
-320,Ant Queen,3,rare,2,pollen,20,currencyPerPoke,pollen,10,,,,rarityOddsReduction,3,junk,rarityOddsReduction,3,basic,rarityOddsReduction,3,decent,,,,,,,,,,Ant queens can live for decades—far longer than worker ants.,0,0,1
-321,Titan Scarab,3,epic,2,royal_jelly,10,currencyPerPoke,pollen,100,,,,rarityOddsReduction,3,junk,rarityOddsReduction,3,basic,rarityOddsReduction,3,decent,rarityOddsReduction,3,fine,,,,,,,Titan scarabs can roll dung balls over 1 000× their own weight.,0,0,1
+319,Goliath Beetle,3,rare,2.5,pollen,50,currencyPerPoke,pollen,50,currencyPerSec,pollen,5,,,,,,,,,,,,,,,,,,,"Goliath beetles can grow over 4 inches long, making them one of the largest insects.",0,0,1
+320,Ant Queen,3,rare,2,pollen,20,currencyPerPoke,pollen,15,,,,rarityOddsReduction,3,junk,rarityOddsReduction,3,basic,rarityOddsReduction,3,decent,,,,,,,,,,Ant queens can live for decades—far longer than worker ants.,0,0,1
+321,Titan Scarab,3,epic,2,royal_jelly,10,currencyPerPoke,pollen,200,,,,rarityOddsReduction,3,junk,rarityOddsReduction,3,basic,rarityOddsReduction,3,decent,rarityOddsReduction,3,fine,,,,,,,Titan scarabs can roll dung balls over 1 000× their own weight.,0,0,1
 322,Warden Wasp,3,epic,3,royal_jelly,1,currencyPerPoke,royal_jelly,1,,,,maxCardsPerPoke,0.001,,rarityOddsReduction,3,rare,,,,,,,,,,,,,Warden wasps defend their colonies with some of the strongest insect stings.,0,0,1
 323,Celestial Cicada,3,epic,2,royal_jelly,1,currencyPerPoke,royal_jelly,1,,,,rarityOddsReduction,3,fine,rarityOddsReduction,2,fine,rarityOddsReduction,3,rare,rarityOddsReduction,,,,,,,,,Celestial cicadas emerge in synchronized swarms once every century.,0,0,1
 324,Dreamspinner,3,legendary,3,royal_jelly,10,currencyPerPoke,royal_jelly,2,currencyPerSec,pollen,20,minCardsPerPoke,0.002,,rarityOddsReduction,3,basic,rarityOddsReduction,3,decent,rarityOddsReduction,3,fine,,,,,,,The Dreamspinner weaves silk that unlocks visions in your dreams.,0,0,1
@@ -69,10 +69,10 @@ id,name,realm,rarity,levelScaling,levelCost_currency,levelCost_amount,effect1_ty
 404,Robin,4,basic,2,egg,40,currencyPerPoke,egg,2,,,,rarityOddsReduction,4,basic,,,,,,,,,,,,,,,,Robins can hear worms moving underground using their keen sense of hearing.,0,0,1
 405,Blue Jay,4,basic,2,egg,40,currencyPerPoke,egg,2,,,,rarityOddsReduction,4,basic,,,,,,,,,,,,,,,,Blue Jays mimic the calls of hawks to scare away other birds.,0,0,1
 406,Goldfinch,4,basic,1.5,egg,50,currencyPerPoke,egg,5,,,,,,,,,,,,,,,,,,,,,,"Goldfinches are strict vegetarians, unlike most other birds.",0,0,1
-407,Hummingbird,4,decent,3,egg,1000,currencyPerPoke,egg,20,,,,cooldownDivider,0.001,,,,,,,,,,,,,,,,,Hummingbirds can flap their wings over 70 times per second.,0,0,1
+407,Hummingbird,4,decent,4,egg,1000,currencyPerPoke,egg,20,,,,cooldownDivider,0.001,,,,,,,,,,,,,,,,,Hummingbirds can flap their wings over 70 times per second.,0,0,1
 408,Woodpecker,4,decent,2,egg,100,currencyPerPoke,egg,3,,,,rarityOddsReduction,4,basic,rarityOddsReduction,2,junk,,,,,,,,,,,,,Woodpeckers have specially adapted skulls to absorb the shock of pecking.,0,0,1
 409,Kingfisher,4,decent,2.5,egg,25,,,,currencyPerSec,egg,5,,,,,,,,,,,,,,,,,,,Kingfishers can dive into water without making a splash thanks to their streamlined beaks.,0,0,1
-410,Parrot,4,decent,5,egg,500,currencyPerPoke,egg,2,,,,minCardsPerPoke,0.0005,,maxCardsPerPoke,0.001,,,,,,,,,,,,,,Parrots can learn to say over 100 words and use them in context.,0,0,1
+410,Parrot,4,decent,5,egg,500,currencyPerPoke,egg,25,,,,minCardsPerPoke,0.0005,,maxCardsPerPoke,0.001,,,,,,,,,,,,,,Parrots can learn to say over 100 words and use them in context.,0,0,1
 411,Flamingo,4,fine,3,egg,1000,currencyPerPoke,egg,10,,,,cooldownDivider,0.002,,,,,,,,,,,,,,,,,Flamingos get their pink color from the shrimp and algae they eat.,0,0,1
 412,Swan,4,fine,2,egg,1000,currencyPerPoke,egg,5,,,,rarityOddsReduction,3,junk,rarityOddsReduction,4,basic,rarityOddsReduction,4,decent,,,,,,,,,,Swans have more neck vertebrae than giraffes—up to 25!,0,0,1
 413,Pelican,4,fine,1.5,egg,50,currencyPerPoke,egg,25,,,,,,,,,,,,,,,,,,,,,,Pelicans can hold up to 3 gallons of water in their throat pouches.,0,0,1
@@ -104,7 +104,7 @@ id,name,realm,rarity,levelScaling,levelCost_currency,levelCost_amount,effect1_ty
 512,Enchanted Mirror,5,decent,2,crystal,20,currencyPerPoke,crystal,25,,,,rarityOddsReduction,5,junk,rarityOddsReduction,5,basic,rarityOddsReduction,1,decent,,,,,,,,,,Some cultures believed mirrors could trap or reveal spirits.,0,0,1
 513,Mystic Amulet,5,decent,2.5,rune,10,,,,currencyPerSec,crystal,20,,,,,,,,,,,,,,,,,,,Amulets were worn to protect the wearer from evil forces.,0,0,1
 514,Elemental Orb,5,fine,3,rune,10,currencyPerPoke,crystal,50,,,,maxCardsPerPoke,0.001,,rarityOddsReduction,5,junk,,,,,,,,,,,,,"Orbs were symbols of power, representing elemental control.",0,0,1
-515,Astral Prism,5,fine,4,rune,10,currencyPerPoke,crystal,50,,,,cooldownDivider,0.002,,rarityOddsReduction,5,basic,,,,,,,,,,,,,Prisms symbolized enlightenment and celestial understanding.,0,0,1
+515,Astral Prism,5,fine,3,rune,10,currencyPerPoke,crystal,25,,,,cooldownDivider,0.002,,rarityOddsReduction,5,basic,,,,,,,,,,,,,Prisms symbolized enlightenment and celestial understanding.,0,0,1
 516,Celestial Globe,5,rare,1.5,rune,50,currencyPerPoke,rune,5,,,,,,,,,,,,,,,,,,,,,,Globes mapped the stars and aided early astronomy.,0,0,1
 517,Philosopher’s Stone,5,rare,4,rune,50,currencyPerPoke,crystal,100,,,,rarityOddsReduction,5,junk,rarityOddsReduction,4,basic,rarityOddsReduction,3,junk,rarityOddsReduction,5,rare,,,,,,,Said to grant immortality and turn metals to gold.,0,0,1
 518,Excalibur,5,rare,4,rune,100,,,,currencyPerSec,crystal,25,rarityOddsReduction,5,junk,rarityOddsReduction,2,junk,rarityOddsReduction,1,junk,rarityOddsReduction,5,rare,,,,,,,"The legendary sword of King Arthur, bestowed by the Lady of the Lake.",0,0,1
@@ -116,4 +116,4 @@ id,name,realm,rarity,levelScaling,levelCost_currency,levelCost_amount,effect1_ty
 524,Staff of the Magi,5,legendary,5,rune,100,currencyPerPoke,crystal,1000,currencyPerSec,crystal,25,cooldownDivider,0.002,,maxCardsPerPoke,0.001,,minCardsPerPoke,0.0005,,,,,,,,,,,An artifact said to channel immense magical energy.,0,0,1
 525,Enchanted Cloak,5,legendary,2,rune,50,currencyPerPoke,rune,50,,,,rarityOddsReduction,5,junk,rarityOddsReduction,5,basic,rarityOddsReduction,5,decent,rarityOddsReduction,5,fine,rarityOddsReduction,5,rare,rarityOddsReduction,5,legendary,Invisibility cloaks appear in legends from many cultures.,0,0,1
 526,Sorcerer’s Chalice,5,legendary,3,rune,500,currencyPerPoke,rune,100,currencyPerSec,crystal,25,maxCardsPerPoke,0.001,,minCardsPerPoke,0.0005,,rarityOddsReduction,1,basic,rarityOddsReduction,2,basic,rarityOddsReduction,3,basic,rarityOddsReduction,4,basic,A cup said to grant insight or eternal youth.,0,0,1
-527,Cup of Eternal Youth,5,mythic,5,rune,2000,currencyPerPoke,rune,5000,currencyPerSec,rune,25,cooldownDivider,0.002,,rarityOddsReduction,1,fine,rarityOddsReduction,2,rare,rarityOddsReduction,3,rare,rarityOddsReduction,4,rare,rarityOddsReduction,5,rare,"Sought by many, this relic offers everlasting vitality.",0,0,1
+527,Cup of Eternal Youth,5,mythic,4,rune,2000,currencyPerPoke,rune,5000,currencyPerSec,rune,25,cooldownDivider,0.002,,rarityOddsReduction,1,fine,rarityOddsReduction,2,rare,rarityOddsReduction,3,rare,rarityOddsReduction,4,rare,rarityOddsReduction,5,rare,"Sought by many, this relic offers everlasting vitality.",0,0,1

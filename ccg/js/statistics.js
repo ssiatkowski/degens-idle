@@ -201,12 +201,12 @@ function updateStatsUI() {
       ? ((sel.merchantOdds||0) / totalOdds * 100).toFixed(2) + '%'
       : '—';
     detail.innerHTML = `
-      <p><strong>Name:</strong> ${sel.name||''}</p>
-      <p><strong>Description:</strong> ${sel.description||''}</p>
-      <p><strong>Probability:</strong> ${prob}</p>
-      <p><strong>Cards Offered:</strong> ${Math.ceil(state.effects.merchantNumCards * sel.cardMultiplier)}</p>
-      <p><strong>Rarity Scaling:</strong> ${(sel.rarityScaling + state.effects.extraMerchantRarityScaling).toFixed(1)}</p>
-      <p><strong>Offer Duration:</strong> ${formatDuration(sel.refreshTime - state.effects.merchantCooldownReduction)}</p>
+      <p style="line-height: 1.4; margin: 0;"><strong>Name:</strong> ${sel.name || ''}</p>
+      <p style="line-height: 1.4; margin: 0;"><strong>Description:</strong> ${sel.description || ''}</p>
+      <p style="line-height: 1.4; margin: 0;"><strong>Probability:</strong> ${prob}</p>
+      <p style="line-height: 1.4; margin: 0;"><strong>Cards Offered:</strong> ${Math.ceil(state.effects.merchantNumCards * sel.cardMultiplier)}</p>
+      <p style="line-height: 1.4; margin: 0;"><strong>Rarity Scaling:</strong> ${(sel.rarityScaling + state.effects.extraMerchantRarityScaling).toFixed(1)}</p>
+      <p style="line-height: 1.4; margin: 0;"><strong>Offer Duration:</strong> ${formatDuration(sel.refreshTime - state.effects.merchantCooldownReduction)}</p>
     `;
     merchantsSection.appendChild(detail);
 
@@ -214,7 +214,18 @@ function updateStatsUI() {
     const topContainer = document.createElement('div');
     topContainer.className = 'stats-top-container';
     topContainer.append(generalSection, globalSection, merchantsSection);
+
     container.appendChild(topContainer);
+
+    // Check if the last item is overflowing
+    const lastItem = topContainer.lastElementChild;
+    const firstItemRect = topContainer.firstElementChild.getBoundingClientRect();
+    const lastItemRect = lastItem.getBoundingClientRect();
+
+    // If the last item is overflowing, apply the full-width class
+    if (lastItemRect.bottom > firstItemRect.bottom) {
+      lastItem.classList.add('grid-full-width');
+    }
 
     // --- Per-Realm Statistics ---
     const realmContainer = document.createElement('div');

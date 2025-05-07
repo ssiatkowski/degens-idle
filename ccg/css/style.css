@@ -232,7 +232,7 @@ nav#tabs { margin-bottom: 15px; }
 .modal-overlay {
   position: fixed;
   top: 0; left: 0;
-  width: 100vw; height: 100vh;
+  width: 100vw; height: 100dvh;
   background: rgba(0,0,0,var(--modal-opacity));
   display: flex;
   align-items: center;
@@ -246,7 +246,7 @@ nav#tabs { margin-bottom: 15px; }
   grid-template-rows: 1fr;
   width: min(90vw, max-content);
   max-width: 90vw;
-  max-height: 90vh;
+  max-height: 90dvh;
   height: 100%;
   background: rgba(255,255,255,var(--modal-opacity));
   border: 4px solid var(--dark);
@@ -321,7 +321,7 @@ nav#tabs { margin-bottom: 15px; }
   background: rgba(0,0,0,0.5);
   color: #fff;
   font-family: var(--card-font);
-  font-size: clamp(0.8em, 4vh, 3em);
+  font-size: clamp(0.8em, 4dvh, 3em);
   text-align: center;
   padding: 4px;
   border-radius: 4px;
@@ -340,7 +340,7 @@ nav#tabs { margin-bottom: 15px; }
   background: rgba(0,0,0,0.5);
   color: #fff;
   font-family: var(--card-font);
-  font-size: clamp(0.7em, 3.4vh, 2em);
+  font-size: clamp(0.7em, 3.4dvh, 2em);
   text-align: center;
   padding: 6px;
   border-radius: 4px;
@@ -358,7 +358,7 @@ nav#tabs { margin-bottom: 15px; }
   width: 1fr;
   max-height: 100%;
   overflow-y: auto;
-  font-size: clamp(0.8em, 2.4vh, 1.2em);
+  font-size: clamp(0.8em, 2.4dvh, 1.2em);
   padding: 4px 0 4px 8px;
 }
 
@@ -366,7 +366,7 @@ nav#tabs { margin-bottom: 15px; }
   font-weight: 600;
   display: flex;
   justify-content: space-between;
-  font-size: clamp(0.9em, 1.6vh, 1.3em);
+  font-size: clamp(0.9em, 1.6dvh, 1.3em);
   margin-bottom: 2px;
 }
 
@@ -400,7 +400,7 @@ nav#tabs { margin-bottom: 15px; }
   border: none;
   border-radius: 4px;
   font-family: var(--ui-font);
-  font-size: clamp(1em, 4vh, 1em);
+  font-size: clamp(1em, 4dvh, 1em);
   font-weight: bold;
   color: #fff;
   cursor: pointer;
@@ -423,8 +423,8 @@ nav#tabs { margin-bottom: 15px; }
 }
 
 .modal-right button img.icon {
-  width: clamp(20px, 4vh, 24px);
-  height: clamp(20px, 4vh, 24px);
+  width: clamp(20px, 4dvh, 24px);
+  height: clamp(20px, 4dvh, 24px);
 }
 
 .effect-line {
@@ -438,7 +438,7 @@ nav#tabs { margin-bottom: 15px; }
 }
 .modal-effects .eff-breakdown {
   color: #666;
-  font-size: clamp(0.8em, 2vh, 1em);
+  font-size: clamp(0.8em, 2dvh, 1em);
   margin-left: 0.5em;
 }
 .currency-effect-icon {
@@ -452,7 +452,7 @@ nav#tabs { margin-bottom: 15px; }
 .modal-rarity {
   margin: 2px 0 2px;
   font-family: var(--ui-font);
-  font-size: clamp(1em, 2.4vh, 1.2em);
+  font-size: clamp(1em, 2.4dvh, 1.2em);
   font-weight: normal;
   text-align: left;
 }
@@ -462,7 +462,7 @@ nav#tabs { margin-bottom: 15px; }
 .modal-effects-header {
   text-align: center;
   font-family: var(--ui-font);
-  font-size: clamp(1.1em, 2.6vh, 1.5em);
+  font-size: clamp(1.1em, 2.6dvh, 1.5em);
   font-weight: 600;
   margin-top: 4px;
   margin-bottom: 4px;
@@ -476,7 +476,7 @@ nav#tabs { margin-bottom: 15px; }
 }
 .cards-filter {
   display: inline-block;
-  width: clamp(63px, 16vh, 120px);
+  width: clamp(63px, 16dvh, 120px);
   height: auto;
   margin: 0 8px;
   padding: 0;
@@ -485,7 +485,7 @@ nav#tabs { margin-bottom: 15px; }
   cursor: pointer;
   position: relative;
   transition: transform 0.2s, filter 0.2s;
-  font-size: clamp(0.8em, 2.4vh, 1.1em);
+  font-size: clamp(0.8em, 2.4dvh, 1.1em);
   border-radius: 8px;
   overflow: hidden;
 }
@@ -513,7 +513,7 @@ nav#tabs { margin-bottom: 15px; }
 }
 .cards-filter .filter-label {
   top: 10%;
-  font-size: clamp(0.9em, 2.2vh, 1.2em);
+  font-size: clamp(0.9em, 2.2dvh, 1.2em);
   font-weight: bold;
   white-space: normal;
   overflow: visible;
@@ -640,19 +640,19 @@ nav#tabs { margin-bottom: 15px; }
 /* statistics */
 
 .stats-section {
-  margin-bottom: clamp(12px, 4vh, 24px);
-  padding: clamp(8px, 3vh, 16px);
+  margin-bottom: clamp(12px, 4dvh, 24px);
+  padding: clamp(8px, 3dvh, 16px);
   border-radius: 6px;
   box-shadow: 0 2px 4px var(--card-shadow);
   background: #e8f5e9;
-  font-size: clamp(0.9em, 2.4vh, 1.1em);
+  font-size: clamp(0.9em, 2.4dvh, 1.1em);
 }
 
 .stats-section h3 {
   margin-top: 0;
   font-family: var(--card-font);
   color: var(--dark);
-  font-size: clamp(1.1em, 2.8vh, 1.3em);
+  font-size: clamp(1.1em, 2.8dvh, 1.3em);
 }
 
 .stats-header {
@@ -662,8 +662,8 @@ nav#tabs { margin-bottom: 15px; }
 }
 
 .stat-value {
-  font-size: clamp(1.8em, 5vh, 2.5em);
-  margin: clamp(4px, 2vh, 8px) 0;
+  font-size: clamp(1.8em, 5dvh, 2.5em);
+  margin: clamp(4px, 2dvh, 8px) 0;
 }
 
 .stat-list {
@@ -722,8 +722,8 @@ nav#tabs { margin-bottom: 15px; }
 
 /* Center-align icons in currency table */
 .currency-table td img.icon {
-  width: clamp(16px, 3vh, 20px);
-  height: clamp(16px, 3vh, 20px);
+  width: clamp(16px, 3dvh, 20px);
+  height: clamp(16px, 3dvh, 20px);
   margin-right: 4px;
 }
 
@@ -731,7 +731,11 @@ nav#tabs { margin-bottom: 15px; }
 .stats-top-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: clamp(8px, 3vh, 16px);
+  gap: clamp(8px, 3dvh, 16px);
+}
+
+.grid-full-width {
+  grid-column: 1 / -1; /* Span from the first to the last column */
 }
 
 /* make merchants section grow but not too much */
@@ -745,7 +749,7 @@ nav#tabs { margin-bottom: 15px; }
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(60px, 80px));
   grid-auto-rows: minmax(60px, 80px);
-  gap: clamp(4px, 2vh, 8px);
+  gap: clamp(4px, 2dvh, 8px);
 }
 
 /* merchant thumbnails */
@@ -795,8 +799,8 @@ nav#tabs { margin-bottom: 15px; }
 .realm-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: clamp(8px, 3vh, 16px);
-  margin-top: clamp(8px, 3vh, 16px);
+  gap: clamp(8px, 3dvh, 16px);
+  margin-top: clamp(8px, 3dvh, 16px);
 }
 
 
@@ -818,11 +822,11 @@ nav#tabs { margin-bottom: 15px; }
 
 .card-face.front .new-badge { 
   background-color: rgba(40,167,69,0.7); 
-  font-size: clamp(1em, 8vh, 2em);
+  font-size: clamp(1em, 8dvh, 2em);
 }
 .card-face.front .tierup-badge { 
   background-color: rgba(255,152,0,0.7); 
-  font-size: clamp(0.7em, 5vh, 1.3em);
+  font-size: clamp(0.7em, 5dvh, 1.3em);
 }
 
 /* anywhere in your style.css */
@@ -858,8 +862,8 @@ nav#tabs { margin-bottom: 15px; }
   color: #fff;
   border: none;
   border-radius: 4px;
-  padding: clamp(1px, 2vh, 2px) clamp(2px, 4vh, 6px);
-  font-size: clamp(0.4em, 2vh, 0.8em);
+  padding: clamp(1px, 2dvh, 2px) clamp(2px, 4dvh, 6px);
+  font-size: clamp(0.4em, 2dvh, 0.8em);
   display: flex;
   align-items: center;
   gap: 4px;
@@ -922,7 +926,7 @@ nav#tabs { margin-bottom: 15px; }
   cursor: pointer;
   opacity: 0.6;
   transition: opacity 0.2s, box-shadow 0.2s, transform 0.2s;
-  font-size: clamp(0.8em, 2.4vh, 1.1em);
+  font-size: clamp(0.8em, 2.4dvh, 1.1em);
   touch-action: manipulation;
 }
 
@@ -953,10 +957,10 @@ nav#tabs { margin-bottom: 15px; }
   left: 0;
   width: 100%;
   text-align: center;
-  font-size: clamp(0.7em, 2vh, 0.9em);
+  font-size: clamp(0.7em, 2dvh, 0.9em);
   background: rgba(0, 0, 0, 0.5);
   color: #fff;
-  padding: clamp(2px, 1vh, 4px) 0;
+  padding: clamp(2px, 1dvh, 4px) 0;
   pointer-events: none;
   border-radius: 0 0 4px 4px;
   white-space: nowrap;
@@ -1148,8 +1152,8 @@ nav#tabs { margin-bottom: 15px; }
   color: #fff;
   border: none;
   border-radius: 4px;
-  padding: clamp(1px, 2vh, 2px) clamp(2px, 4vh, 6px);
-  font-size: clamp(0.4em, 2vh, 0.8em);
+  padding: clamp(1px, 2dvh, 2px) clamp(2px, 4dvh, 6px);
+  font-size: clamp(0.4em, 2dvh, 0.8em);
   display: flex;
   align-items: center;
   gap: 4px;
@@ -1196,7 +1200,7 @@ nav#tabs { margin-bottom: 15px; }
   padding: 0.5em 0.75em;
   text-align: left;
   border-right: 1px solid #b2dfdb;
-  font-size: clamp(0.8em, 4vh, 1em);
+  font-size: clamp(0.8em, 4dvh, 1em);
   line-height: 1.2;
 }
 
@@ -1236,7 +1240,7 @@ nav#tabs { margin-bottom: 15px; }
 @media (max-height: 600px) {
   .poke-filter-stats-table th,
   .poke-filter-stats-table td {
-    font-size: clamp(0.75em, 2vh, 1em);
+    font-size: clamp(0.75em, 2dvh, 1em);
     padding: 0.4em 0.5em;
   }
   
@@ -1347,18 +1351,18 @@ nav#tabs { margin-bottom: 15px; }
 }
 
 .landscape-content h2 {
-  font-size: clamp(1.5em, 8vh, 2.5em);
+  font-size: clamp(1.5em, 8dvh, 2.5em);
   margin: 20px 0;
   color: #fff;
 }
 
 .landscape-content p {
-  font-size: clamp(1em, 4vh, 1.2em);
+  font-size: clamp(1em, 4dvh, 1.2em);
   color: #ccc;
 }
 
 .rotate-icon {
-  width: clamp(60px, 30vh, 120px);
+  width: clamp(60px, 30dvh, 120px);
   height: auto;
   animation: rotate 2s infinite ease-in-out;
 }
@@ -1390,7 +1394,7 @@ nav#tabs { margin-bottom: 15px; }
   border-radius: 12px;
   max-width: 98vw;
   max-height: 96vh;
-  width: clamp(220px, 180vh, 420px);
+  width: clamp(220px, 180dvh, 420px);
   text-align: center;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   overflow-y: auto;
@@ -1402,7 +1406,7 @@ nav#tabs { margin-bottom: 15px; }
 .welcome-content h2 {
   color: #333;
   margin-bottom: 0.7em;
-  font-size: clamp(1.1em, 6vh, 1.5em);
+  font-size: clamp(1.1em, 6dvh, 1.5em);
   line-height: 1.2;
 }
 
@@ -1424,7 +1428,7 @@ nav#tabs { margin-bottom: 15px; }
 }
 
 .tip-text {
-  font-size: clamp(0.8em, 2.4vh, 1em);
+  font-size: clamp(0.8em, 2.4dvh, 1em);
   color: #444;
   line-height: 1.3;
   word-break: break-word;
@@ -1487,10 +1491,10 @@ nav#tabs { margin-bottom: 15px; }
 
 .harvester-counter {
   position: absolute;
-  bottom: 25%; /* Center vertically */
-  left: 3%; /* Center horizontally */
+  bottom: 26%; /* Center vertically */
+  left: 2.5%; /* Center horizontally */
   font-family: monospace;
-  font-size: clamp(0.8em, 2.4vh, 1.5em);
+  font-size: clamp(0.7em, 2.2dvh, 1.4em);
   text-align: center;
   pointer-events: none; /* Keep this to ensure the counter is not clickable */
   z-index: 20; /* Higher z-index to ensure it appears on top */

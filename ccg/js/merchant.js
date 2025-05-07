@@ -250,7 +250,7 @@ const merchants = [
       // compute price
       const rateSec  = new Decimal(curSec[currency] || 0);
       const ratePoke = new Decimal(curPoke[currency] || 0);
-      let price = rateSec.times(10).plus(ratePoke.times(5))
+      let price = rateSec.times(10).plus(ratePoke.times(2))
                   .times(RARITY_PRICE_MULT[rarity] || 1);
   
       // randomness ±99%

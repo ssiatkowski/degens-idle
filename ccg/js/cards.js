@@ -198,7 +198,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "stone",
-        "value": 1.0
+        "value": 3.0
       },
       {
         "type": "rarityOddsReduction",
@@ -278,7 +278,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "stone",
-        "value": 1.0
+        "value": 10.0
       },
       {
         "type": "rarityOddsReduction",
@@ -315,7 +315,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "stone",
-        "value": 10.0
+        "value": 25.0
       },
       {
         "type": "rarityOddsReduction",
@@ -457,17 +457,17 @@ window.cards = [
     "quantity": 0,
     "tier": 0,
     "level": 1,
-    "levelScaling": 5.0,
+    "levelScaling": 3.0,
     "levelCost": {
       "currency": "stone",
-      "amount": 50.0
+      "amount": 100.0
     },
     "description": "Sapphires come in many colors—even pink and yellow!",
     "baseEffects": [
       {
         "type": "currencyPerPoke",
         "currency": "rune",
-        "value": 5.0
+        "value": 3.0
       }
     ]
   },
@@ -718,9 +718,9 @@ window.cards = [
     "description": "Some jellyfish species are biologically immortal, reverting to juvenile form to avoid death.",
     "baseEffects": [
       {
-        "type": "currencyPerPoke",
+        "type": "currencyPerSec",
         "currency": "coral",
-        "value": 10.0
+        "value": 4.0
       },
       {
         "type": "cooldownDivider",
@@ -1139,12 +1139,12 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "pearl",
-        "value": 2.0
+        "value": 3.0
       },
       {
         "type": "currencyPerSec",
-        "currency": "coral",
-        "value": 5.0
+        "currency": "pearl",
+        "value": 1.0
       },
       {
         "type": "rarityOddsReduction",
@@ -1697,7 +1697,7 @@ window.cards = [
     "quantity": 0,
     "tier": 0,
     "level": 1,
-    "levelScaling": 2.0,
+    "levelScaling": 2.5,
     "levelCost": {
       "currency": "pollen",
       "amount": 50.0
@@ -1707,7 +1707,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "pollen",
-        "value": 10.0
+        "value": 50.0
       },
       {
         "type": "currencyPerSec",
@@ -1734,7 +1734,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "pollen",
-        "value": 10.0
+        "value": 15.0
       },
       {
         "type": "rarityOddsReduction",
@@ -1771,7 +1771,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "pollen",
-        "value": 100.0
+        "value": 200.0
       },
       {
         "type": "rarityOddsReduction",
@@ -2064,7 +2064,7 @@ window.cards = [
     "quantity": 0,
     "tier": 0,
     "level": 1,
-    "levelScaling": 3.0,
+    "levelScaling": 4.0,
     "levelCost": {
       "currency": "egg",
       "amount": 1000.0
@@ -2154,7 +2154,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "egg",
-        "value": 2.0
+        "value": 25.0
       },
       {
         "type": "minCardsPerPoke",
@@ -3140,7 +3140,7 @@ window.cards = [
     "quantity": 0,
     "tier": 0,
     "level": 1,
-    "levelScaling": 4.0,
+    "levelScaling": 3.0,
     "levelCost": {
       "currency": "rune",
       "amount": 10.0
@@ -3150,7 +3150,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "crystal",
-        "value": 50.0
+        "value": 25.0
       },
       {
         "type": "cooldownDivider",
@@ -3653,7 +3653,7 @@ window.cards = [
     "quantity": 0,
     "tier": 0,
     "level": 1,
-    "levelScaling": 5.0,
+    "levelScaling": 4.0,
     "levelCost": {
       "currency": "rune",
       "amount": 2000.0
