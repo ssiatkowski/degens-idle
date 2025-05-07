@@ -1055,7 +1055,7 @@ const loveHallSkills = [
     level: "Dimensional Shift (27x)",
     pair: 36,
     onUnlock: () => {
-      oversurgedPower = 4;
+      oversurgedPower *= 2;
     },
     onRespec: () => {
       oversurgedPower = 1;
@@ -1218,7 +1218,7 @@ const loveHallSkills = [
     level: "Cosmic Truth (42x)",
     pair: 45,
     onUnlock: () => {
-      oversurgedPower = 2;
+      oversurgedPower *= 2;
     },
     onRespec: () => {
       oversurgedPower = 1;
