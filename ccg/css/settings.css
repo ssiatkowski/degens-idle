@@ -1,0 +1,85 @@
+.settings-container {
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.danger-button {
+    background-color: #ff4444;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.danger-button:hover {
+    background-color: #cc0000;
+}
+
+.safe-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.safe-button:hover {
+    background-color: #45a049;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+/* Modal Overlay Styles */
+#resetWarningModal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,var(--modal-opacity));
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    pointer-events: auto;
+}
+
+#resetWarningModal .modal-content {
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    max-width: 90vw;
+    background: rgba(255,255,255,var(--modal-opacity));
+    border: 4px solid var(--dark);
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 4px 8px var(--card-shadow);
+    position: relative;
+    margin: auto;
+    pointer-events: auto;
+    text-align: center;
+}
+
+#resetWarningModal h2 {
+    color: #ff4444;
+    margin-bottom: 15px;
+    font-size: 1.5em;
+}
+
+#resetWarningModal p {
+    margin-bottom: 20px;
+    line-height: 1.5;
+    font-size: 1.1em;
+} 

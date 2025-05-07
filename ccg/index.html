@@ -6,6 +6,7 @@
   <title>Incremental Card Game</title>
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/settings.css" />
 </head>
 <body>
   <!-- Landscape Mode Overlay -->
@@ -56,6 +57,7 @@
     <button id="tab-btn-skills"  class="tab-btn">Skills</button>
     <button id="tab-btn-merchant"class="tab-btn">Merchant</button>
     <button id="tab-btn-stats"   class="tab-btn">Stats</button>
+    <button id="tab-btn-settings" class="tab-btn">Settings</button>
   </nav>
 
   <!-- HOLE TAB -->
@@ -64,6 +66,10 @@
       <div class="poke-hole-wrapper">
         <div id="hole-button" class="hole-button">
           <span id="cooldown-counter"></span>
+        </div>
+        <div id="harvester-container" class="harvester-container" style="display: none;">
+          <img id="harvester-button" class="harvester-button" src="assets/images/harvester.png" alt="Harvester" onclick="handleHarvesterClick()" />
+          <div class="harvester-counter">0.00</div>
         </div>
       </div>
     
@@ -112,6 +118,25 @@
   <div id="tab-content-stats" class="tab-content" style="display:none;">
   </div>
 
+  <div id="tab-content-settings" class="tab-content" style="display:none;">
+    <h2>Settings</h2>
+    <div class="settings-container">
+      <button id="resetGameButton" class="danger-button">Reset Game Progress</button>
+    </div>
+  </div>
+
+  <!-- Reset Game Warning Modal -->
+  <div id="resetWarningModal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <h2>Warning: Reset Game Progress</h2>
+      <p>Are you sure you want to reset all game progress? This action cannot be undone.</p>
+      <div class="modal-buttons">
+        <button id="confirmResetButton" class="danger-button">Yes, Reset Everything</button>
+        <button id="cancelResetButton" class="safe-button">Cancel</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Modal Structure -->
   <div class="modal-overlay" id="card-modal" style="display: none;">
     <div class="modal-content">
@@ -147,6 +172,8 @@
   <script src="js/statistics.js"></script>
   <script src="js/merchant_helpers.js"></script>
   <script src="js/merchant.js"></script>
+  <script src="js/settings.js"></script>
+  <script src="js/harvester.js"></script>
 
   <!-- Main Behavior -->
   <script src="js/main.js"></script>

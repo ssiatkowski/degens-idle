@@ -569,6 +569,13 @@ window.skills = [
     cost: { realmId: 5, currencyId: "crystal", amount: 5e6 },
     purchased: false
   },
+  {
+    id: 12001,
+    name: "Hawking Radiation Harvester",
+    description: "Unlocks a device that can passively harvest Hawking radiation from the black hole to reduce its cooldown. (10x slower offline)",
+    cost: { realmId: 2, currencyId: "coral", amount: 25000 },
+    purchased: false
+  },
 ];
 
 // --- FILTER STATE ---
@@ -996,6 +1003,9 @@ function applySkill(id, skipCost = false) {
     case 11003: // Better Merchants 3
       state.effects.extraMerchantRarityScaling += 0.1;
       break;
+      case 12001: // Hawking Radiation Harvester
+        window.initHarvester();
+        break;
   }
 
   // 4) refresh UI

@@ -4,6 +4,8 @@ const Decimal = window.Decimal;
 const anime   = window.anime;
 
 const globalFill = document.getElementById('global-cooldown-fill');
+let fillAnim = null;
+
 const drawArea = document.getElementById('draw-area');
 const holeBtn  = document.getElementById('hole-button');
 let revealedCount    = 0;
@@ -14,6 +16,9 @@ let lastTouchX = 0;
 let lastTouchY = 0;
 let isScrolling = false;
 let lastFlippedCard = null;
+
+let blackHoleTimer; // Declare timer in a higher scope
+let countdownEl;
 
 // --- LOOKUP MAPS ---
 const realmMap = {}, cardMap = {}, skillMap = {};
@@ -44,8 +49,9 @@ window.state = {
   currentMerchant: null,
   merchantOffers: [],
   cooldownDone: true,      // flag
-  flipsDone: false,        // flag
-  resourceGeneratorContribution: {}  // Track contributions for each resource
+  flipsDone: true,        // flag
+  resourceGeneratorContribution: {},  // Track contributions for each resource
+  harvesterValue: 0,
 };
 
 // init currencies & effects
@@ -73,6 +79,7 @@ function loadState() {
       state.currencies[cid] = new Decimal(val);
     });
     state.unlockedCurrencies = obj.unlockedCurrencies || [];
+    state.harvesterValue = obj.harvesterValue || 0;
     Object.entries(obj.ownedCards).forEach(([cid,data])=>{
       const c = cardMap[cid];
       if (c) {
@@ -108,6 +115,7 @@ function saveState() {
     unlockedCurrencies: state.unlockedCurrencies,
     ownedCards:      {},
     stats:           { totalPokes: state.stats.totalPokes, merchantPurchases: state.stats.merchantPurchases },
+    harvesterValue: state.harvesterValue,
     currentMerchantId: state.currentMerchant?.id ?? null,
     merchantOffers: state.merchantOffers.map(o => ({
       cardId:   o.cardId,
@@ -219,7 +227,7 @@ function updateCurrencyBar() {
 
 
 function showTab(tab) {
-  const tabs = ['hole','cards','skills','merchant','stats'];
+  const tabs = ['hole','cards','skills','merchant','stats','settings'];
   tabs.forEach(t=>{
     document.getElementById(`tab-content-${t}`)
       .style.display = (t===tab ? 'block' : 'none');
@@ -417,6 +425,8 @@ function performPoke() {
   });
 
   startCooldown();
+
+  updateHarvesterUI();
   
   saveState();
 }
@@ -491,6 +501,9 @@ function tryEnableHole() {
   if (state.cooldownDone && state.flipsDone) {
     holeBtn.disabled = false;
     holeBtn.classList.remove('disabled');
+
+    // update harvester UI
+    updateHarvesterUI();
 
     // grow from a point
     anime({
@@ -617,7 +630,7 @@ function openModal(cardId) {
   const ico = curEntry.icon || 'question.png';
 
   const btn = document.createElement('button');
-  btn.innerHTML = `<b>Level ${c.level}</b> Up: ${costTxt}
+  btn.innerHTML = `<b>Level ${c.level}</b>   Up: ${costTxt}
     <img class="icon" src="assets/images/currencies/${ico}"/>`;
 
   // can afford?
@@ -872,7 +885,6 @@ function renderCardsCollection() {
 
       // NEW banner persists until opened
       if (c.isNew) {
-        initCardsFilters();
         const badge = document.createElement('div');
         badge.className = 'reveal-badge new-badge';
         badge.textContent = 'NEW';
@@ -1000,6 +1012,7 @@ function giveCard(cardId, amount = 1) {
   // Update generator rates if this is a new card discovery
   if (wasNew) {
     c.isNew = true;
+    initCardsFilters();
     updateGeneratorRates();
   }
 }
@@ -1073,99 +1086,117 @@ function renderRealmFilters() {
   });
 }
 
-
-let _cooldownTimer = null;
-
 function startCooldown() {
-  // Check for cooldown skip
+  // 1) Check for cooldown skip
   const skipChance = state.effects.cooldownSkipChance || 0;
   if (Math.random() < skipChance) {
-    // Create and show the floating text
     const skipText = document.createElement('div');
     skipText.className = 'skip-text';
     skipText.textContent = 'Cooldown Skipped!';
     holeBtn.appendChild(skipText);
-    
-    // Remove the text after animation completes
-    skipText.addEventListener('animationend', () => {
-      skipText.remove();
-    });
+    skipText.addEventListener('animationend', () => skipText.remove());
 
     state.cooldownDone = true;
     tryEnableHole();
     return;
   }
 
+  // 2) Begin real cooldown
   state.cooldownDone = false;
-
-  // calculate totalSec as before…
   const totalSec = calculateCooldown();
 
-  // reset & animate fill
-  globalFill.style.transition = 'none';
-  globalFill.style.width = '0%';
-  // force a reflow to pick up the zero width
-  void globalFill.offsetWidth;
-  globalFill.style.transition = `width ${totalSec}s linear`;
-  globalFill.style.width = '100%';
+  // 3) Clear any prior animations & timers
+  if (fillAnim) anime.remove(globalFill);
+  clearInterval(blackHoleTimer);
 
-  // put the remaining‐time text inside the hole
-  const countdownEl = holeBtn.querySelector('.countdown') 
-                      || Object.assign(document.createElement('div'), { className: 'countdown' });
+  // 4) Reset fill bar & make sure it’s at 0%
+  globalFill.style.width = '0%';
+
+  // 5) (Re)create your countdown element
+  countdownEl = holeBtn.querySelector('.countdown')
+    || Object.assign(document.createElement('div'), { className: 'countdown' });
   countdownEl.textContent = formatDuration(totalSec);
   holeBtn.appendChild(countdownEl);
 
-  // interval to tick it down
-  let elapsed = 0;
-  const timer = setInterval(() => {
-    elapsed += 0.1; // 100ms
-    const rem = totalSec - elapsed;
-    localStorage.setItem('ccgCooldownRem', rem.toString());
-    if (rem <= 0) {
-      clearInterval(timer);
-      countdownEl.remove();
-    } else {
+  // 6) Persist start time
+  localStorage.setItem('ccgCooldownRem', totalSec.toString());
+
+  // 7) Anime.js driving the bar + live update
+  fillAnim = anime({
+    targets: globalFill,
+    width: ['0%', '100%'],
+    duration: totalSec * 1000,
+    easing: 'linear',
+    update: anim => {
+      const elapsed = anim.currentTime / 1000;
+      const rem = Math.max(0, totalSec - elapsed);
       countdownEl.textContent = formatDuration(rem);
+      localStorage.setItem('ccgCooldownRem', rem.toString());
+      state.cooldownDone = false;
+    },
+    complete: () => {
+      clearInterval(blackHoleTimer);
+      countdownEl.remove();
+      state.cooldownDone = true;
+      tryEnableHole();
+    }
+  });
+
+  // 8) Fallback interval to keep state.cooldownDone accurate
+  let last = performance.now();
+  blackHoleTimer = setInterval(() => {
+    const now = performance.now();
+    const delta = (now - last) / 1000;
+    last = now;
+    const stored = parseFloat(localStorage.getItem('ccgCooldownRem')) || 0;
+    if (stored <= 0) {
+      clearInterval(blackHoleTimer);
     }
   }, 100);
-
-  // when fill animation ends
-  globalFill.ontransitionend = () => {
-    clearInterval(timer);
-    countdownEl.remove();
-    state.cooldownDone = true;
-    tryEnableHole();
-  };
 }
 
-// ——— Add this below your existing startCooldown() ———
 function resumeCooldown(rem) {
-  // disable the hole-button immediately
+  // 1) Disable button
   holeBtn.disabled = true;
   holeBtn.classList.add('disabled');
 
-  // show just the countdown text (no CSS bar)
-  const countdownEl = holeBtn.querySelector('.countdown')
+  state.cooldownDone = false;
+  clearInterval(blackHoleTimer);
+  if (fillAnim) anime.remove(globalFill);
+  globalFill.style.width = '0%';
+
+  // 2) Recreate countdown
+  countdownEl = holeBtn.querySelector('.countdown')
     || Object.assign(document.createElement('div'), { className: 'countdown' });
   countdownEl.textContent = formatDuration(rem);
   holeBtn.appendChild(countdownEl);
+  localStorage.setItem('ccgCooldownRem', rem.toString());
 
-  // drive a pure-JS timer & persist every 100ms
+  // 3) Pure-JS tick
   let remaining = rem;
-  const timer = setInterval(() => {
+  blackHoleTimer = setInterval(() => {
     remaining = Math.max(0, remaining - 0.1);
     countdownEl.textContent = formatDuration(remaining);
     localStorage.setItem('ccgCooldownRem', remaining.toString());
 
     if (remaining <= 0) {
-      clearInterval(timer);
+      clearInterval(blackHoleTimer);
       countdownEl.remove();
       holeBtn.disabled = false;
       holeBtn.classList.remove('disabled');
       localStorage.removeItem('ccgCooldownRem');
+      state.cooldownDone = true;
       tryEnableHole();
     }
   }, 100);
+
+  // 4) Also re-run anime bar to keep visuals in sync
+  fillAnim = anime({
+    targets: globalFill,
+    width: ['0%', '100%'],
+    duration: rem * 1000,
+    easing: 'linear'
+  });
 }
 
 
@@ -1307,6 +1338,19 @@ function showOfflineEarningsModal(earnings) {
     list.appendChild(item);
   });
 
+  // HARVESTER VALUE
+  if (earnings.harvester) {
+    list.appendChild(document.createElement('div')); //spacing
+    const harvesterItem = document.createElement('div');
+    harvesterItem.className = 'offline-earnings-item';
+    harvesterItem.innerHTML = `
+      <span class="amount">+${formatDuration(earnings.harvester)}</span>
+      <img class="icon" src="assets/images/harvester.png" alt="Harvester" />
+      <span class="name">Harvester</span>
+    `;
+    list.appendChild(harvesterItem);
+  }
+
   flexContainer.appendChild(list);
   mc.appendChild(flexContainer);
   ov.appendChild(mc);
@@ -1375,11 +1419,19 @@ document.addEventListener('DOMContentLoaded', ()=>{
       }
     });
 
+    const harvesterSkill = window.skills.find(s => s.id === 12001);
+    if (harvesterSkill && harvesterSkill.purchased) {
+      // Award harvester value based on time difference
+      const harvesterGain = timeDiff / 1000;
+      state.harvesterValue = state.harvesterValue + harvesterGain;
+      offlineEarnings['harvester'] = new Decimal(harvesterGain);
+    }
+
     // Show earnings modal
     showOfflineEarningsModal(offlineEarnings);
   }
 
-  ['hole','cards','skills','merchant','stats'].forEach(t=>{
+  ['hole','cards','skills','merchant','stats','settings'].forEach(t=>{
     document.getElementById(`tab-btn-${t}`).onclick = ()=> showTab(t);
   });
   

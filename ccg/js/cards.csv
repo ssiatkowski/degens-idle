@@ -25,15 +25,15 @@ id,name,realm,rarity,levelScaling,levelCost_currency,levelCost_amount,effect1_ty
 204,Driftwood,2,junk,2.5,coral,25,,,,currencyPerSec,coral,1,,,,,,,,,,,,,,,,,,,"Driftwood can float for years, carried across entire oceans.",0,0,1
 205,Old Boot,2,junk,2,coral,50,currencyPerPoke,coral,1,,,,rarityOddsReduction,1,junk,rarityOddsReduction,2,junk,,,,,,,,,,,,,Ancient footwear found in rivers helps archaeologists date human settlements.,0,0,1
 206,Coral Fragment,2,basic,2,coral,40,currencyPerPoke,coral,5,,,,rarityOddsReduction,1,junk,rarityOddsReduction,1,basic,,,,,,,,,,,,,Coral reefs support 25% of all marine species while covering less than 1% of the ocean.,0,0,1
-207,Jellyfish,2,basic,3,coral,1000,currencyPerPoke,coral,2,,,,cooldownDivider,0.001,,,,,,,,,,,,,,,,,"Some jellyfish species are biologically immortal, reverting to juvenile form to avoid death.",0,0,1
-208,Shipwreck,2,basic,2,coral,50,currencyPerPoke,coral,1,,,,rarityOddsReduction,2,junk,rarityOddsReduction,2,basic,,,,,,,,,,,,,"Over 3 million shipwrecks lie on the ocean floor, preserving maritime history.",0,0,1
-209,Lobster,2,decent,2,coral,1000,currencyPerPoke,coral,1,,,,rarityOddsReduction,2,junk,rarityOddsReduction,2,basic,rarityOddsReduction,2,decent,,,,,,,,,,Lobsters taste with their legs and chew with their stomachs!,0,0,1
-210,Seahorse,2,decent,2.5,coral,25,currencyPerPoke,coral,10,currencyPerSec,coral,5,,,,,,,,,,,,,,,,,,,Male seahorses carry and give birth to their young.,0,0,1
-211,Clownfish,2,decent,5,coral,500,currencyPerPoke,coral,1,,,,minCardsPerPoke,0.0005,,maxCardsPerPoke,0.001,,,,,,,,,,,,,,Clownfish live among anemones and are immune to their stinging cells.,0,0,1
+207,Jellyfish,2,basic,3,coral,1000,currencyPerPoke,coral,10,,,,cooldownDivider,0.001,,,,,,,,,,,,,,,,,"Some jellyfish species are biologically immortal, reverting to juvenile form to avoid death.",0,0,1
+208,Shipwreck,2,basic,2,coral,50,currencyPerPoke,coral,2,,,,rarityOddsReduction,2,junk,rarityOddsReduction,2,basic,,,,,,,,,,,,,"Over 3 million shipwrecks lie on the ocean floor, preserving maritime history.",0,0,1
+209,Lobster,2,decent,2,coral,1000,currencyPerPoke,coral,10,,,,rarityOddsReduction,2,junk,rarityOddsReduction,2,basic,rarityOddsReduction,2,decent,,,,,,,,,,Lobsters taste with their legs and chew with their stomachs!,0,0,1
+210,Seahorse,2,decent,2.5,coral,25,currencyPerPoke,coral,15,currencyPerSec,coral,5,,,,,,,,,,,,,,,,,,,Male seahorses carry and give birth to their young.,0,0,1
+211,Clownfish,2,decent,5,coral,500,currencyPerPoke,coral,10,currencyPerSec,coral,2,minCardsPerPoke,0.0005,,maxCardsPerPoke,0.001,,,,,,,,,,,,,,Clownfish live among anemones and are immune to their stinging cells.,0,0,1
 212,Swordfish,2,fine,3,coral,1000,currencyPerPoke,coral,20,,,,cooldownDivider,0.002,,,,,,,,,,,,,,,,,Swordfish can swim up to 60 mph—one of the ocean’s fastest predators.,0,0,1
-213,Anglerfish,2,fine,2,coral,1000,currencyPerPoke,coral,25,,,,rarityOddsReduction,2,junk,rarityOddsReduction,1,junk,,,,,,,,,,,,,Deep-sea anglerfish use a bioluminescent lure to attract prey in darkness.,0,0,1
-214,Electric Eel,2,fine,2,coral,1000,currencyPerPoke,coral,25,,,,rarityOddsReduction,1,junk,rarityOddsReduction,1,basic,,,,,,,,,,,,,Electric eels can generate over 600 volts of electricity to stun prey.,0,0,1
-215,Pearl Oyster,2,fine,5,coral,1000,currencyPerPoke,pearl,1,,,,rarityOddsReduction,2,junk,rarityOddsReduction,2,basic,,,,,,,,,,,,,"Pearls form when oysters coat irritants with nacre, creating the gem.",0,0,1
+213,Anglerfish,2,fine,2,coral,500,currencyPerPoke,coral,25,,,,rarityOddsReduction,2,junk,rarityOddsReduction,1,junk,,,,,,,,,,,,,Deep-sea anglerfish use a bioluminescent lure to attract prey in darkness.,0,0,1
+214,Electric Eel,2,fine,2,coral,500,currencyPerPoke,coral,25,,,,rarityOddsReduction,1,junk,rarityOddsReduction,1,basic,,,,,,,,,,,,,Electric eels can generate over 600 volts of electricity to stun prey.,0,0,1
+215,Pearl Oyster,2,fine,4,coral,1000,currencyPerPoke,pearl,1,,,,rarityOddsReduction,2,junk,rarityOddsReduction,2,basic,,,,,,,,,,,,,"Pearls form when oysters coat irritants with nacre, creating the gem.",0,0,1
 216,Manta Ray,2,fine,5,coral,50,currencyPerPoke,coral,25,,,,maxCardsPerPoke,0.002,,,,,,,,,,,,,,,,,Manta rays have the largest brain-to-body ratio of any fish.,0,0,1
 217,Kraken Tentacle,2,rare,5,coral,800,currencyPerPoke,coral,50,,,,minCardsPerPoke,0.001,,maxCardsPerPoke,0.0015,,,,,,,,,,,,,,Legends of the kraken may have originated from giant squid sightings.,0,0,1
 218,Sunken Idol,2,rare,2,coral,500,currencyPerPoke,coral,50,,,,rarityOddsReduction,1,decent,rarityOddsReduction,2,junk,rarityOddsReduction,1,basic,rarityOddsReduction,1,decent,,,,,,,Sunken idols often stay pristine underwater for centuries.,0,0,1
@@ -43,13 +43,13 @@ id,name,realm,rarity,levelScaling,levelCost_currency,levelCost_amount,effect1_ty
 302,Beetle,3,junk,1.5,pollen,5,currencyPerPoke,pollen,1,,,,,,,,,,,,,,,,,,,,,,Beetles make up about 40% of all known insect species.,0,0,1
 303,Grasshopper,3,junk,2.5,pollen,25,,,,currencyPerSec,pollen,1,rarityOddsReduction,3,junk,,,,,,,,,,,,,,,,Some grasshoppers can jump over 20 times their body length.,0,0,1
 304,Butterfly,3,basic,2.5,pollen,25,,,,currencyPerSec,pollen,2,rarityOddsReduction,3,junk,rarityOddsReduction,3,basic,,,,,,,,,,,,,Butterflies taste with their feet to find host plants.,0,0,1
-305,Spider,3,basic,3,pollen,1000,currencyPerPoke,pollen,2,,,,cooldownDivider,0.001,,,,,,,,,,,,,,,,,Spider silk is stronger than steel of the same thickness.,0,0,1
+305,Spider,3,basic,3,pollen,1000,currencyPerPoke,pollen,3,,,,cooldownDivider,0.001,,,,,,,,,,,,,,,,,Spider silk is stronger than steel of the same thickness.,0,0,1
 306,Caterpillar,3,basic,1.5,pollen,50,currencyPerPoke,pollen,5,,,,,,,,,,,,,,,,,,,,,,Caterpillars can increase their body mass up to 100 times before metamorphosis.,0,0,1
-307,Ladybug,3,basic,5,pollen,50,currencyPerPoke,pollen,2,,,,maxCardsPerPoke,0.001,,rarityOddsReduction,3,junk,rarityOddsReduction,3,basic,,,,,,,,,,Ladybugs release a yellow fluid from their legs to deter predators.,0,0,1
+307,Ladybug,3,basic,5,pollen,50,currencyPerPoke,pollen,15,,,,maxCardsPerPoke,0.001,,rarityOddsReduction,3,junk,rarityOddsReduction,3,basic,,,,,,,,,,Ladybugs release a yellow fluid from their legs to deter predators.,0,0,1
 308,Wasp,3,decent,3,pollen,1000,currencyPerPoke,pollen,20,,,,cooldownDivider,0.0015,,,,,,,,,,,,,,,,,Wasps inspired medical adhesives that work on wet surfaces.,0,0,1
 309,Dragonfly,3,decent,2.5,pollen,25,,,,currencyPerSec,pollen,2,rarityOddsReduction,2,junk,rarityOddsReduction,2,basic,,,,,,,,,,,,,Dragonflies can reach flying speeds of 35 mph—among the fastest insects.,0,0,1
-310,Firefly,3,decent,2,pollen,50,currencyPerPoke,pollen,3,,,,rarityOddsReduction,3,junk,rarityOddsReduction,3,basic,,,,,,,,,,,,,Fireflies glow without heat using a chemical reaction in their abdomen.,0,0,1
-311,Honeycomb,3,decent,2,pollen,50,currencyPerPoke,pollen,3,,,,rarityOddsReduction,2,junk,rarityOddsReduction,3,junk,,,,,,,,,,,,,Hexagonal honeycomb cells store the most honey with zero waste.,0,0,1
+310,Firefly,3,decent,2,pollen,50,currencyPerPoke,pollen,5,,,,rarityOddsReduction,3,junk,rarityOddsReduction,3,basic,,,,,,,,,,,,,Fireflies glow without heat using a chemical reaction in their abdomen.,0,0,1
+311,Honeycomb,3,decent,2,pollen,50,currencyPerPoke,pollen,5,,,,rarityOddsReduction,2,junk,rarityOddsReduction,3,junk,,,,,,,,,,,,,Hexagonal honeycomb cells store the most honey with zero waste.,0,0,1
 312,Beetle Carapace,3,fine,2,pollen,80,currencyPerPoke,pollen,10,,,,rarityOddsReduction,3,junk,rarityOddsReduction,3,basic,,,,,,,,,,,,,Beetle shells inspired new lightweight armor materials.,0,0,1
 313,Mantis Claw,3,fine,3,pollen,1000,,,,currencyPerSec,pollen,2,cooldownDivider,0.002,,,,,,,,,,,,,,,,,Praying mantis claws strike at over 50 mph to catch prey.,0,0,1
 314,Cicada Shell,3,fine,2,pollen,80,currencyPerPoke,pollen,10,,,,rarityOddsReduction,3,junk,rarityOddsReduction,3,basic,,,,,,,,,,,,,Cicadas emerge in synchronized broods every 13 or 17 years.,0,0,1
@@ -66,8 +66,8 @@ id,name,realm,rarity,levelScaling,levelCost_currency,levelCost_amount,effect1_ty
 401,Sparrow,4,basic,1.5,egg,10,currencyPerPoke,egg,2,,,,,,,,,,,,,,,,,,,,,,Sparrows can swim short distances by flapping their wings and hopping across the water.,0,0,1
 402,Pigeon,4,basic,1.5,egg,10,currencyPerPoke,egg,2,,,,,,,,,,,,,,,,,,,,,,Pigeons can recognize themselves in mirrors—one of the few species with this ability.,0,0,1
 403,Crow,4,basic,2.5,egg,25,,,,currencyPerSec,egg,2,,,,,,,,,,,,,,,,,,,Crows remember human faces and can hold grudges for years.,0,0,1
-404,Robin,4,basic,2,egg,40,currencyPerPoke,egg,1,,,,rarityOddsReduction,4,basic,,,,,,,,,,,,,,,,Robins can hear worms moving underground using their keen sense of hearing.,0,0,1
-405,Blue Jay,4,basic,2,egg,40,currencyPerPoke,egg,1,,,,rarityOddsReduction,4,basic,,,,,,,,,,,,,,,,Blue Jays mimic the calls of hawks to scare away other birds.,0,0,1
+404,Robin,4,basic,2,egg,40,currencyPerPoke,egg,2,,,,rarityOddsReduction,4,basic,,,,,,,,,,,,,,,,Robins can hear worms moving underground using their keen sense of hearing.,0,0,1
+405,Blue Jay,4,basic,2,egg,40,currencyPerPoke,egg,2,,,,rarityOddsReduction,4,basic,,,,,,,,,,,,,,,,Blue Jays mimic the calls of hawks to scare away other birds.,0,0,1
 406,Goldfinch,4,basic,1.5,egg,50,currencyPerPoke,egg,5,,,,,,,,,,,,,,,,,,,,,,"Goldfinches are strict vegetarians, unlike most other birds.",0,0,1
 407,Hummingbird,4,decent,3,egg,1000,currencyPerPoke,egg,20,,,,cooldownDivider,0.001,,,,,,,,,,,,,,,,,Hummingbirds can flap their wings over 70 times per second.,0,0,1
 408,Woodpecker,4,decent,2,egg,100,currencyPerPoke,egg,3,,,,rarityOddsReduction,4,basic,rarityOddsReduction,2,junk,,,,,,,,,,,,,Woodpeckers have specially adapted skulls to absorb the shock of pecking.,0,0,1

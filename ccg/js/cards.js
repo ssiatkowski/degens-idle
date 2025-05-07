@@ -720,7 +720,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "coral",
-        "value": 2.0
+        "value": 10.0
       },
       {
         "type": "cooldownDivider",
@@ -746,7 +746,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "coral",
-        "value": 1.0
+        "value": 2.0
       },
       {
         "type": "rarityOddsReduction",
@@ -778,7 +778,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "coral",
-        "value": 1.0
+        "value": 10.0
       },
       {
         "type": "rarityOddsReduction",
@@ -815,7 +815,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "coral",
-        "value": 10.0
+        "value": 15.0
       },
       {
         "type": "currencyPerSec",
@@ -842,7 +842,12 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "coral",
-        "value": 1.0
+        "value": 10.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "coral",
+        "value": 2.0
       },
       {
         "type": "minCardsPerPoke",
@@ -891,7 +896,7 @@ window.cards = [
     "levelScaling": 2.0,
     "levelCost": {
       "currency": "coral",
-      "amount": 1000.0
+      "amount": 500.0
     },
     "description": "Deep-sea anglerfish use a bioluminescent lure to attract prey in darkness.",
     "baseEffects": [
@@ -923,7 +928,7 @@ window.cards = [
     "levelScaling": 2.0,
     "levelCost": {
       "currency": "coral",
-      "amount": 1000.0
+      "amount": 500.0
     },
     "description": "Electric eels can generate over 600 volts of electricity to stun prey.",
     "baseEffects": [
@@ -952,7 +957,7 @@ window.cards = [
     "quantity": 0,
     "tier": 0,
     "level": 1,
-    "levelScaling": 5.0,
+    "levelScaling": 4.0,
     "levelCost": {
       "currency": "coral",
       "amount": 1000.0
@@ -1284,7 +1289,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "pollen",
-        "value": 2.0
+        "value": 3.0
       },
       {
         "type": "cooldownDivider",
@@ -1332,7 +1337,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "pollen",
-        "value": 2.0
+        "value": 15.0
       },
       {
         "type": "maxCardsPerPoke",
@@ -1426,7 +1431,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "pollen",
-        "value": 3.0
+        "value": 5.0
       },
       {
         "type": "rarityOddsReduction",
@@ -1458,7 +1463,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "pollen",
-        "value": 3.0
+        "value": 5.0
       },
       {
         "type": "rarityOddsReduction",
@@ -1993,7 +1998,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "egg",
-        "value": 1.0
+        "value": 2.0
       },
       {
         "type": "rarityOddsReduction",
@@ -2020,7 +2025,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "egg",
-        "value": 1.0
+        "value": 2.0
       },
       {
         "type": "rarityOddsReduction",
