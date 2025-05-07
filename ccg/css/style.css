@@ -41,6 +41,10 @@ body {
   font-family: var(--ui-font);
 }
 
+html, body {
+  touch-action: none;     /* disables double-tap/pinch zoom globally */
+}
+
 /* Tabs */
 nav#tabs { margin-bottom: 15px; }
 .tab-btn {
