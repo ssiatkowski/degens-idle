@@ -170,7 +170,7 @@ function addSkillsForRealm(realmId) {
   });
 }
 
-// Modified renderSkillsTab to use sortedSkillsByCurrency
+// --- RENDER SKILLS GRID ---
 function renderSkillsTab() {
   const list = document.getElementById('skills-list');
   // remove any existing skill tiles and grid, but keep the filter controls
@@ -179,40 +179,48 @@ function renderSkillsTab() {
   const grid = document.createElement('div');
   grid.className = 'skills-grid';
 
-  // Determine which currencies to render based on filter
-const currenciesToRender = skillFilterState.currency === 'all'
-  // this will give you exactly the IDs in the order you declared them
-  ? window.currencies.map(c => c.id)
-  : [skillFilterState.currency];
+  // Create a set to track rendered skill IDs to avoid duplicates
+  const renderedSkillIds = new Set();
 
-  currenciesToRender.forEach(currencyId => {
+  // First, render skills from sortedSkillsByCurrency for unlocked and unpurchased skills
+  currencies.forEach(currency => {
+    const currencyId = currency.id; // Get the currency ID
     const skillsList = sortedSkillsByCurrency[currencyId] || [];
+
     skillsList.forEach(s => {
-      const realmUnlocked = realmMap[s.cost.realmId].unlocked;
-      const owned         = s.purchased;
-      const curAmt        = state.currencies[s.cost.currencyId] || new Decimal(0);
-      const affordable    = curAmt.greaterThanOrEqualTo(s.cost.amount);
-      const locked        = !realmUnlocked;
+      const realmUnlocked = realmMap[s.cost.realmId]?.unlocked;
+      const owned = s.purchased;
+      const curAmt = state.currencies[s.cost.currencyId] || new Decimal(0);
+      const affordable = curAmt.greaterThanOrEqualTo(s.cost.amount);
+      const locked = !realmUnlocked;
 
-      // filter by purchased / unpurchased
-      if (skillFilterState.purchased === 'purchased'   && !owned)      return;
-      if (skillFilterState.purchased === 'unpurchased' &&  owned)      return;
-      // filter by lock state
-      if (skillFilterState.lock === 'locked'    && !locked)           return;
-      if (skillFilterState.lock === 'unlocked'  &&  locked)           return;
-      // filter by affordability
-      if (skillFilterState.affordability === 'affordable'   && !affordable)   return;
-      if (skillFilterState.affordability === 'unaffordable' &&  affordable)   return;
+      // Apply filtering logic for unpurchased/unlocked skills
+      if (skillFilterState.purchased === 'purchased' && !owned) return;
+      if (skillFilterState.purchased === 'unpurchased' && owned) return;
+      if (skillFilterState.lock === 'locked' && !locked) return;
+      if (skillFilterState.lock === 'unlocked' && locked) return;
 
-      // build the tile
+      // Check affordability only if the affordable filter is active
+      if (skillFilterState.affordability === 'affordable' && !affordable) {
+        // Stop processing further skills for this currency if we hit an unaffordable skill
+        return; // Skip this skill
+      }
+
+      // Check if the skill has already been rendered
+      if (renderedSkillIds.has(s.id)) return;
+
+      // Add the skill ID to the set to avoid duplicates
+      renderedSkillIds.add(s.id);
+
+      // Build the tile
       const tile = document.createElement('button');
       tile.className = 'skill-tile';
       tile.style.borderColor = realmColors[s.cost.realmId];
 
-      if (locked)           tile.classList.add('locked');
-      else if (owned)       tile.classList.add('purchased');
+      if (locked) tile.classList.add('locked');
+      else if (owned) tile.classList.add('purchased');
       else if (!affordable) tile.classList.add('unaffordable');
-      else                  tile.classList.add('affordable');
+      else tile.classList.add('affordable');
 
       const iconName = s.cost.currencyId + '.png';
       tile.innerHTML = `
@@ -228,14 +236,74 @@ const currenciesToRender = skillFilterState.currency === 'all'
       if (!locked && !owned && affordable) {
         tile.onclick = () => {
           buySkill(s.id);
-          s.purchased = true;
-          renderSkillsTab();
+          renderSkillsTab(); // Re-render the skills tab
         };
       }
 
       grid.appendChild(tile);
     });
   });
+
+  // Now, check the original skills array for purchased and locked skills
+  window.skills.forEach(s => {
+    const owned = s.purchased;
+    const realmUnlocked = realmMap[s.cost.realmId]?.unlocked;
+    const locked = !realmUnlocked;
+    const curAmt = state.currencies[s.cost.currencyId] || new Decimal(0);
+    const affordable = curAmt.greaterThanOrEqualTo(s.cost.amount);
+
+    // Apply filtering logic for purchased and locked skills
+    if (skillFilterState.purchased === 'purchased' && !owned) return;
+    if (skillFilterState.purchased === 'unpurchased' && owned) return;
+    if (skillFilterState.lock === 'locked' && !locked) return;
+    if (skillFilterState.lock === 'unlocked' && locked) return;
+
+    // Check affordability for original skills only if the affordable filter is active
+    if (skillFilterState.affordability === 'affordable' && !affordable) return; // Skip if not affordable
+
+    // Check if the skill has already been rendered
+    if (renderedSkillIds.has(s.id)) return;
+
+    // Add the skill ID to the set to avoid duplicates
+    renderedSkillIds.add(s.id);
+
+    // Build the tile
+    const tile = document.createElement('button');
+    tile.className = 'skill-tile';
+    tile.style.borderColor = realmColors[s.cost.realmId];
+
+    if (locked) tile.classList.add('locked');
+    else if (owned) tile.classList.add('purchased');
+    else tile.classList.add('affordable'); // Assuming affordable if not owned and not locked
+
+    const iconName = s.cost.currencyId + '.png';
+    tile.innerHTML = `
+      <h4>${s.name}</h4>
+      <p class="skill-desc">${locked ? '' : s.description}</p>
+      ${locked ? '' : `
+      <div class="skill-cost">
+        ${formatNumber(s.cost.amount)}
+        <img src="assets/images/currencies/${iconName}" class="icon"/>
+      </div>`}
+    `;
+
+    if (!locked && !owned) {
+      tile.onclick = () => {
+        buySkill(s.id);
+        renderSkillsTab(); // Re-render the skills tab
+      };
+    }
+
+    grid.appendChild(tile);
+  });
+
+  // If no skills are rendered, you might want to show a message
+  if (grid.children.length === 0) {
+    const noSkillsMessage = document.createElement('div');
+    noSkillsMessage.className = 'no-skills-message';
+    noSkillsMessage.textContent = 'No skills match the current filters.';
+    grid.appendChild(noSkillsMessage);
+  }
 
   list.appendChild(grid);
 }
@@ -280,16 +348,6 @@ function checkAffordableSkills() {
 // Updated buySkill to update sortedSkillsByCurrency after purchase
 function buySkill(id) {
   applySkill(id, /*skipCost=*/false);
-
-  // Remove purchased skill from sortedSkillsByCurrency
-  for (const currencyId in sortedSkillsByCurrency) {
-    const list = sortedSkillsByCurrency[currencyId];
-    const index = list.findIndex(s => s.id === id);
-    if (index !== -1) {
-      list.splice(index, 1);
-      break;
-    }
-  }
 
   checkAffordableSkills(); // Check if any other skills are affordable after purchase
 }

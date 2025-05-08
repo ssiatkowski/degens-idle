@@ -206,6 +206,7 @@ function updateStatsUI() {
       <p style="line-height: 1.4; margin: 0;"><strong>Probability:</strong> ${prob}</p>
       <p style="line-height: 1.4; margin: 0;"><strong>Cards Offered:</strong> ${Math.ceil(state.effects.merchantNumCards * sel.cardMultiplier)}</p>
       <p style="line-height: 1.4; margin: 0;"><strong>Rarity Scaling:</strong> ${(sel.rarityScaling + state.effects.extraMerchantRarityScaling).toFixed(1)}</p>
+      <p style="line-height: 1.4; margin: 0;"><strong>Sale Price:</strong> ${sel.priceMultiplier*100}%</p>
       <p style="line-height: 1.4; margin: 0;"><strong>Offer Duration:</strong> ${formatDuration(sel.refreshTime - state.effects.merchantCooldownReduction)}</p>
     `;
     merchantsSection.appendChild(detail);

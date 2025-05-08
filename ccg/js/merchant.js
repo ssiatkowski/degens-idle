@@ -85,7 +85,44 @@ const merchants = [
       rarityScaling: 2.5,
       description: 'An all around good guy. Carries 1.5x as many cards (no junk), sells them at 1/2 of the price, and stays 2/3 as long.',
       unlocked: false
-    }
+    },
+    // {
+    //   id: 8,
+    //   name: 'Runa Frostpelt',
+    //   cardMultiplier: 1,
+    //   refreshTime: 300,
+    //   merchantOdds: 300,
+    //   raritiesSkipped: ['basic'],
+    //   priceMultiplier: 1,
+    //   rarityScaling: 2.5,
+    //   description: 'Not a basic bitch. No basic cards. That is all.',
+    //   unlocked: false
+    // },
+    // {
+    //   id: 9,
+    //   name: 'Tobias Quickpouch',
+    //   cardMultiplier: 10,
+    //   refreshTime: 100,
+    //   merchantOdds: 300,
+    //   raritiesSkipped: [],
+    //   priceMultiplier: 0.75,
+    //   rarityScaling: 2.5,
+    //   description: 'The only BS this guy knows is Bulk Sales. Carries 10x as many cards, sells them at 75% of the price, and stays 1/3 as long.',
+    //   unlocked: false
+    // },
+    // {
+    //   id: 10,
+    //   name: 'Selene Starwhistle',
+    //   cardMultiplier: 0,
+    //   refreshTime: 300,
+    //   merchantOdds: 300,
+    //   raritiesSkipped: ['junk', 'basic', 'decent', 'fine'],
+    //   priceMultiplier: 2,
+    //   rarityScaling: 3.5,
+    //   description: 'Some say she is a real magician. Only offers one card at a time for double the price, but it is always rare or better. (and +1 to rarity scaling).',
+    //   unlocked: false
+    // }
+
   ];
   
   // ——— RARITY PRICE MULTIPLIERS ———
@@ -93,13 +130,13 @@ const merchants = [
     junk:      new Decimal(1),
     basic:     new Decimal(2),
     decent:    new Decimal(5),
-    fine:      new Decimal(10),
-    rare:      new Decimal(20),
-    epic:      new Decimal(50),
-    legendary: new Decimal(100),
-    mythic:    new Decimal(200),
-    exotic:    new Decimal(500),
-    divine:    new Decimal(5000),
+    fine:      new Decimal(12),
+    rare:      new Decimal(30),
+    epic:      new Decimal(100),
+    legendary: new Decimal(300),
+    mythic:    new Decimal(800),
+    exotic:    new Decimal(3000),
+    divine:    new Decimal(15000),
   };
   
   // ——— HELPERS ———
@@ -202,8 +239,8 @@ const merchants = [
     });
   
     // # of slots
-    const slots = Math.ceil(state.effects.merchantNumCards
-                          * state.currentMerchant.cardMultiplier);
+    const slots = Math.max(Math.ceil(state.effects.merchantNumCards
+                          * state.currentMerchant.cardMultiplier), 1);
   
     for (let i = 0; i < slots; i++) {
       // 1) pick a realm

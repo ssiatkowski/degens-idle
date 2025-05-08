@@ -42,7 +42,7 @@ def load_cards(csv_path):
                 effect["currency"] = arg1
                 effect["value"] = float(arg2) if arg2 else 0
 
-            elif etype == "rarityOddsReduction":
+            elif etype == "rarityOddsDivider":
                 # realm in arg1, rarity in arg2
                 effect["realm"] = int(arg1) if arg1 else 0
                 effect["rarity"] = arg2

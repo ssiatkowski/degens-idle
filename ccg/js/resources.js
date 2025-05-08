@@ -26,18 +26,6 @@ const defaultRarityWeights = {
   divine:    1,
 };
 
-// 1) base odds reduction for each rarity
-const RARITY_ODDS_BASE = {
-  junk:      1e14,
-  basic:     1e12,
-  decent:    1e10,
-  fine:      1e8,
-  rare:      1e6,
-  epic:      1e4,
-  legendary: 1e2,
-  mythic:    0.1,
-};
-
 // 2) minimum odds for each rarity
 const RARITY_ODDS_MIN = {
   junk:      8e6,
@@ -52,11 +40,12 @@ const RARITY_ODDS_MIN = {
 
 // 2) create your realms without individual rarityWeights
 window.realms = [
-  { id: 1, name: "Rocks",           unlocked: true,  cooldown: 3,  deselectMultiplier: 5, pokeWeight: 1e11 },
-  { id: 2, name: "Sea World",       unlocked: false, cooldown: 6,  deselectMultiplier: 5, pokeWeight: 8e10 },
-  { id: 3, name: "Bugdom",          unlocked: false, cooldown: 15, deselectMultiplier: 5, pokeWeight: 6e10 },
-  { id: 4, name: "Aviary",          unlocked: false, cooldown: 30, deselectMultiplier: 5, pokeWeight: 4e10 },
-  { id: 5, name: "Ancient Relics",  unlocked: false, cooldown: 50, deselectMultiplier: 5, pokeWeight: 2e10 },
+  { id: 1, name: "Rocks",             unlocked: true,  cooldown: 3,  deselectMultiplier: 5, pokeWeight: 1e11 },
+  { id: 2, name: "Sea World",         unlocked: false, cooldown: 6,  deselectMultiplier: 5, pokeWeight: 8e10 },
+  { id: 3, name: "Bugdom",            unlocked: false, cooldown: 15, deselectMultiplier: 5, pokeWeight: 6e10 },
+  { id: 4, name: "Aviary",            unlocked: false, cooldown: 30, deselectMultiplier: 5, pokeWeight: 4e10 },
+  { id: 5, name: "Ancient Relics",    unlocked: false, cooldown: 50, deselectMultiplier: 5, pokeWeight: 2e10 },
+  { id: 6, name: "Celestial Bodies",  unlocked: false, cooldown: 80, deselectMultiplier: 5, pokeWeight: 1e10 },
 ];
 
 // 3) give every realm its own copy of the default weights
@@ -93,6 +82,7 @@ window.currencies = [
 { id: 'egg',         name: 'Egg',         realm: 4, scarcity: 1,   icon: 'egg.png'         },
 { id: 'feather',     name: 'Feather',     realm: 4, scarcity: 100, icon: 'feather.png'     },
 { id: 'crystal',     name: 'Crystal',     realm: 5, scarcity: 1,   icon: 'crystal.png'     },
+{ id: 'cosmic_ray',  name: 'Cosmic Ray',  realm: 6, scarcity: 100, icon: 'cosmic_ray.png'  },
 ];
 
 
@@ -223,7 +213,7 @@ function formatDuration(sec, decimals = 1) {
 // — Slugify helper for filenames —
 function slugify(str) {
     return str
-      .replace(/['’]/g, '')             // strip apostrophes first
+      .replace(/['’*]/g, '')             // strip apostrophes and asterisksfirst
       .replace(/ö/g, 'o')               // replace ö with o
       .toLowerCase()                 
       .replace(/[^a-z0-9]+/g, '_')   // convert spaces & invalid chars to _

@@ -682,35 +682,44 @@ function openModal(cardId) {
   // --- EFFECT LINES ---
   const effectsList = Array.isArray(c.baseEffects)
     ? c.baseEffects
-    : [ c.baseEffect ].filter(e => e && e.type);
+    : [c.baseEffect].filter(e => e && e.type);
 
   if (effectsList.length) {
     const effContainer = document.createElement('div');
     effContainer.className = 'modal-effects';
-  
-    effectsList.forEach(def => {
-      // compute the per‐tier multiplier
-      const scale   = EFFECT_SCALES[def.type] ?? 2;
-      const tierMult = Math.pow(scale, c.tier - 1);
-      
-      let sign;
 
-      // 1) compute the raw total & breakdown differently for odds vs. other effects
+    effectsList.forEach(def => {
+      const scale = EFFECT_SCALES[def.type] ?? 2;
+      const tierMult = Math.pow(scale, c.tier - 1);
+
       let total, breakdown;
-      if (def.type === "rarityOddsReduction") {
-        // grab your external lookup
-        const base = RARITY_ODDS_BASE[def.rarity] || 0;
-        total     = base * c.level * tierMult;
-        breakdown = `(base: ${formatNumber(base)} ×${formatNumber(c.level)} lvl ×${formatNumber(tierMult)} tier)`;
-        sign = '-';
+      let valueHtml;
+
+      if (def.type === "rarityOddsDivider") {
+        const baseDivider = 0.0025;
+        total = baseDivider * c.level * tierMult;
+        const cappedTotal = Math.min(total, 4);
+        const resultingDivider = cappedTotal;
+        total = 1 + resultingDivider;
+        if (resultingDivider < 4) {
+          breakdown = `(1 + base: ${formatNumber(baseDivider)} × ${formatNumber(c.level)} lvl × ${formatNumber(tierMult)} tier)`;
+          valueHtml = `${total.toFixed(4)}`;
+        } else {
+          breakdown = `(Capped)`;
+          valueHtml = `${total.toFixed(0)}`;
+        }
       } else {
-        total     = def.value * c.level * tierMult;
-        breakdown = `(base: ${formatNumber(def.value)} ×${formatNumber(c.level)} lvl ×${formatNumber(tierMult)} tier)`;
-        sign = total >= 0 ? '+' : ''
+        total = def.value * c.level * tierMult;
+        if (def.type === "cooldownDivider" && total >= 1) {
+          breakdown = `(Capped)`;
+          valueHtml = `+${1}`;
+        } else {
+          breakdown = `(base: ${formatNumber(def.value)} × ${formatNumber(c.level)} lvl × ${formatNumber(tierMult)} tier)`;
+          valueHtml = `+${formatNumber(total)}`;
+        }
       }
 
-      const valueHtml = `${sign}${formatNumber(total)}`;
-
+    
       // 3) figure out the label
       let label;
       if (def.type === "currencyPerPoke" || def.type === "currencyPerSec") {
@@ -718,32 +727,33 @@ function openModal(cardId) {
         const verb = def.type === "currencyPerPoke" ? "/ Poke" : "/ Sec";
         label = `<img class="currency-effect-icon" src="${iconPath}" alt="${def.currency}" /> ${verb}`;
       }
-      else if (def.type === "rarityOddsReduction") {
-        const realmObj   = realmMap[def.realm];
-        const realmColor = realmColors[def.realm];
+      else if (def.type === "rarityOddsDivider") {
+        // exactly the same formatting you had before, just change the words
+        const realmObj    = realmMap[def.realm];
+        const realmColor  = realmColors[def.realm];
         const rarityColor = getComputedStyle(document.documentElement)
           .getPropertyValue(`--rarity-${def.rarity.trim()}`);
         label = [
           `<span style="color:${realmColor};font-weight:bold;">${realmObj.name}</span>`,
-          `<span style="color:${rarityColor}">${def.rarity.toUpperCase()}</span> odds reduction`
+          `<span style="color:${rarityColor};font-weight:bold;">${def.rarity.toUpperCase()}</span> odds divider`
         ].join(' ');
       }
       else {
         label = EFFECT_NAMES[def.type] || def.type;
       }
 
-      // 4) render
-      const li = document.createElement('p');
-      li.className = 'effect-line';
-      li.innerHTML = `
-        ${label}: <strong>${valueHtml}</strong>
-        <span class="eff-breakdown">${breakdown}</span>
-      `;
-      effContainer.appendChild(li);
-    });
-  
-    right.appendChild(effContainer);
-  }
+        // 4) render
+        const li = document.createElement('p');
+        li.className = 'effect-line';
+        li.innerHTML =
+          `${label}: <strong>${valueHtml}</strong>` +
+          `<span class="eff-breakdown">${breakdown}</span>`;
+        effContainer.appendChild(li);
+      });
+    
+      right.appendChild(effContainer);
+    }
+
 
   mc.append(left, right);
   ov.append(mc);

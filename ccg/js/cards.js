@@ -174,7 +174,7 @@ window.cards = [
         "value": 1.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 1,
         "rarity": "junk"
       }
@@ -201,12 +201,12 @@ window.cards = [
         "value": 3.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 1,
         "rarity": "junk"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 1,
         "rarity": "basic"
       }
@@ -281,17 +281,17 @@ window.cards = [
         "value": 10.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 1,
         "rarity": "junk"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 1,
         "rarity": "basic"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 1,
         "rarity": "decent"
       }
@@ -318,7 +318,7 @@ window.cards = [
         "value": 25.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 1,
         "rarity": "junk"
       },
@@ -402,22 +402,22 @@ window.cards = [
         "value": 25.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 1,
         "rarity": "junk"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 1,
         "rarity": "basic"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 1,
         "rarity": "decent"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 1,
         "rarity": "fine"
       }
@@ -492,17 +492,17 @@ window.cards = [
         "value": 5.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 1,
         "rarity": "junk"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 1,
         "rarity": "basic"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 1,
         "rarity": "decent"
       }
@@ -534,17 +534,17 @@ window.cards = [
         "value": 1.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 1,
         "rarity": "decent"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 1,
         "rarity": "basic"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 1,
         "rarity": "junk"
       }
@@ -659,12 +659,12 @@ window.cards = [
         "value": 1.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 1,
         "rarity": "junk"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 2,
         "rarity": "junk"
       }
@@ -691,12 +691,12 @@ window.cards = [
         "value": 5.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 1,
         "rarity": "junk"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 1,
         "rarity": "basic"
       }
@@ -749,12 +749,12 @@ window.cards = [
         "value": 2.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 2,
         "rarity": "junk"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 2,
         "rarity": "basic"
       }
@@ -781,17 +781,17 @@ window.cards = [
         "value": 10.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 2,
         "rarity": "junk"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 2,
         "rarity": "basic"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 2,
         "rarity": "decent"
       }
@@ -906,12 +906,12 @@ window.cards = [
         "value": 25.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 2,
         "rarity": "junk"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 1,
         "rarity": "junk"
       }
@@ -938,12 +938,12 @@ window.cards = [
         "value": 25.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 1,
         "rarity": "junk"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 1,
         "rarity": "basic"
       }
@@ -970,12 +970,12 @@ window.cards = [
         "value": 1.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 2,
         "rarity": "junk"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 2,
         "rarity": "basic"
       }
@@ -1058,22 +1058,22 @@ window.cards = [
         "value": 50.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 1,
         "rarity": "decent"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 2,
         "rarity": "junk"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 1,
         "rarity": "basic"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 1,
         "rarity": "decent"
       }
@@ -1100,22 +1100,22 @@ window.cards = [
         "value": 500.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 2,
         "rarity": "junk"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 2,
         "rarity": "basic"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 2,
         "rarity": "decent"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 2,
         "rarity": "fine"
       }
@@ -1147,22 +1147,22 @@ window.cards = [
         "value": 1.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 2,
         "rarity": "basic"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 2,
         "rarity": "decent"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 2,
         "rarity": "fine"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 2,
         "rarity": "rare"
       }
@@ -1233,7 +1233,7 @@ window.cards = [
         "value": 1.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "junk"
       }
@@ -1260,12 +1260,12 @@ window.cards = [
         "value": 2.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "junk"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "basic"
       }
@@ -1344,12 +1344,12 @@ window.cards = [
         "value": 0.001
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "junk"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "basic"
       }
@@ -1402,12 +1402,12 @@ window.cards = [
         "value": 2.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 2,
         "rarity": "junk"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 2,
         "rarity": "basic"
       }
@@ -1434,12 +1434,12 @@ window.cards = [
         "value": 5.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "junk"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "basic"
       }
@@ -1466,12 +1466,12 @@ window.cards = [
         "value": 5.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 2,
         "rarity": "junk"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "junk"
       }
@@ -1498,12 +1498,12 @@ window.cards = [
         "value": 10.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "junk"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "basic"
       }
@@ -1556,12 +1556,12 @@ window.cards = [
         "value": 10.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "junk"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "basic"
       }
@@ -1615,12 +1615,12 @@ window.cards = [
         "value": 25.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "basic"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 2,
         "rarity": "basic"
       }
@@ -1647,17 +1647,17 @@ window.cards = [
         "value": 20.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "junk"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "basic"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "decent"
       }
@@ -1737,17 +1737,17 @@ window.cards = [
         "value": 15.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "junk"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "basic"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "decent"
       }
@@ -1774,22 +1774,22 @@ window.cards = [
         "value": 200.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "junk"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "basic"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "decent"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "fine"
       }
@@ -1820,7 +1820,7 @@ window.cards = [
         "value": 0.001
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "rare"
       }
@@ -1847,22 +1847,22 @@ window.cards = [
         "value": 1.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "fine"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 2,
         "rarity": "fine"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "rare"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 0,
         "rarity": ""
       }
@@ -1898,17 +1898,17 @@ window.cards = [
         "value": 0.002
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "basic"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "decent"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "fine"
       }
@@ -2001,7 +2001,7 @@ window.cards = [
         "value": 2.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 4,
         "rarity": "basic"
       }
@@ -2028,7 +2028,7 @@ window.cards = [
         "value": 2.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 4,
         "rarity": "basic"
       }
@@ -2103,12 +2103,12 @@ window.cards = [
         "value": 3.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 4,
         "rarity": "basic"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 2,
         "rarity": "junk"
       }
@@ -2213,17 +2213,17 @@ window.cards = [
         "value": 5.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "junk"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 4,
         "rarity": "basic"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 4,
         "rarity": "decent"
       }
@@ -2302,17 +2302,17 @@ window.cards = [
         "value": 25.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 4,
         "rarity": "basic"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 4,
         "rarity": "decent"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 4,
         "rarity": "fine"
       }
@@ -2339,12 +2339,12 @@ window.cards = [
         "value": 25.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "junk"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "basic"
       }
@@ -2397,12 +2397,12 @@ window.cards = [
         "value": 100.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 4,
         "rarity": "basic"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 4,
         "rarity": "decent"
       }
@@ -2429,22 +2429,22 @@ window.cards = [
         "value": 50.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 4,
         "rarity": "basic"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "basic"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 2,
         "rarity": "basic"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 1,
         "rarity": "basic"
       }
@@ -2471,12 +2471,12 @@ window.cards = [
         "value": 1.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 4,
         "rarity": "fine"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 4,
         "rarity": "decent"
       }
@@ -2533,12 +2533,12 @@ window.cards = [
         "value": 0.001
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 4,
         "rarity": "fine"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 4,
         "rarity": "rare"
       }
@@ -2591,22 +2591,22 @@ window.cards = [
         "value": 100.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 4,
         "rarity": "basic"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 4,
         "rarity": "decent"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 4,
         "rarity": "fine"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 4,
         "rarity": "rare"
       }
@@ -2642,12 +2642,12 @@ window.cards = [
         "value": 0.001
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 4,
         "rarity": "basic"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 4,
         "rarity": "decent"
       }
@@ -2682,12 +2682,12 @@ window.cards = [
         "value": 0.001
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 4,
         "rarity": "decent"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 4,
         "rarity": "fine"
       }
@@ -2719,27 +2719,27 @@ window.cards = [
         "value": 50.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 1,
         "rarity": "junk"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 2,
         "rarity": "junk"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "junk"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "basic"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 4,
         "rarity": "basic"
       }
@@ -2810,7 +2810,7 @@ window.cards = [
         "value": 1.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 5,
         "rarity": "junk"
       }
@@ -2837,7 +2837,7 @@ window.cards = [
         "value": 1.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 5,
         "rarity": "junk"
       }
@@ -2886,7 +2886,7 @@ window.cards = [
         "value": 5.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 5,
         "rarity": "junk"
       }
@@ -2913,7 +2913,7 @@ window.cards = [
         "value": 5.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 5,
         "rarity": "junk"
       }
@@ -2940,7 +2940,7 @@ window.cards = [
         "value": 20.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 5,
         "rarity": "basic"
       }
@@ -2967,7 +2967,7 @@ window.cards = [
         "value": 20.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 5,
         "rarity": "basic"
       }
@@ -2994,12 +2994,12 @@ window.cards = [
         "value": 10.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 5,
         "rarity": "junk"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 5,
         "rarity": "basic"
       }
@@ -3026,17 +3026,17 @@ window.cards = [
         "value": 25.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 5,
         "rarity": "junk"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 5,
         "rarity": "basic"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 5,
         "rarity": "decent"
       }
@@ -3063,17 +3063,17 @@ window.cards = [
         "value": 25.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 5,
         "rarity": "junk"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 5,
         "rarity": "basic"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 1,
         "rarity": "decent"
       }
@@ -3126,7 +3126,7 @@ window.cards = [
         "value": 0.001
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 5,
         "rarity": "junk"
       }
@@ -3157,7 +3157,7 @@ window.cards = [
         "value": 0.002
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 5,
         "rarity": "basic"
       }
@@ -3206,22 +3206,22 @@ window.cards = [
         "value": 100.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 5,
         "rarity": "junk"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 4,
         "rarity": "basic"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "junk"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 5,
         "rarity": "rare"
       }
@@ -3248,22 +3248,22 @@ window.cards = [
         "value": 25.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 5,
         "rarity": "junk"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 2,
         "rarity": "junk"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 1,
         "rarity": "junk"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 5,
         "rarity": "rare"
       }
@@ -3290,27 +3290,27 @@ window.cards = [
         "value": 1000.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 5,
         "rarity": "junk"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 5,
         "rarity": "basic"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 5,
         "rarity": "decent"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 5,
         "rarity": "fine"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 5,
         "rarity": "rare"
       }
@@ -3337,32 +3337,32 @@ window.cards = [
         "value": 5.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 1,
         "rarity": "junk"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 1,
         "rarity": "basic"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 1,
         "rarity": "decent"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 1,
         "rarity": "fine"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 2,
         "rarity": "junk"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 2,
         "rarity": "basic"
       }
@@ -3389,32 +3389,32 @@ window.cards = [
         "value": 5.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 2,
         "rarity": "decent"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 2,
         "rarity": "fine"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 2,
         "rarity": "rare"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "junk"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "basic"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "decent"
       }
@@ -3441,32 +3441,32 @@ window.cards = [
         "value": 5.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "fine"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "rare"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 4,
         "rarity": "basic"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 4,
         "rarity": "decent"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 4,
         "rarity": "fine"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 4,
         "rarity": "rare"
       }
@@ -3493,7 +3493,7 @@ window.cards = [
         "value": 25.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 5,
         "rarity": "basic"
       }
@@ -3559,32 +3559,32 @@ window.cards = [
         "value": 50.0
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 5,
         "rarity": "junk"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 5,
         "rarity": "basic"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 5,
         "rarity": "decent"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 5,
         "rarity": "fine"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 5,
         "rarity": "rare"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 5,
         "rarity": "legendary"
       }
@@ -3624,22 +3624,22 @@ window.cards = [
         "value": 0.0005
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 1,
         "rarity": "basic"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 2,
         "rarity": "basic"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "basic"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 4,
         "rarity": "basic"
       }
@@ -3675,27 +3675,772 @@ window.cards = [
         "value": 0.002
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 1,
         "rarity": "fine"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 2,
         "rarity": "rare"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "rare"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
         "realm": 4,
         "rarity": "rare"
       },
       {
-        "type": "rarityOddsReduction",
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "rare"
+      }
+    ]
+  },
+  {
+    "id": "601",
+    "name": "Asteroid",
+    "realm": 6,
+    "rarity": "basic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 1.5,
+    "levelCost": {
+      "currency": "stone",
+      "amount": 10.0
+    },
+    "description": "Asteroids in our solar system are remnants from its formation over 4.6 billion years ago.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "stone",
+        "value": 3.0
+      }
+    ]
+  },
+  {
+    "id": "602",
+    "name": "Comet",
+    "realm": 6,
+    "rarity": "basic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.5,
+    "levelCost": {
+      "currency": "stone",
+      "amount": 25.0
+    },
+    "description": "Some comets complete their orbits around the Sun in thousands of years.",
+    "baseEffects": [
+      {
+        "type": "currencyPerSec",
+        "currency": "stone",
+        "value": 2.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "basic"
+      }
+    ]
+  },
+  {
+    "id": "603",
+    "name": "Hoba",
+    "realm": 6,
+    "rarity": "decent",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.0,
+    "levelCost": {
+      "currency": "stone",
+      "amount": 40.0
+    },
+    "description": "The Hoba meteorite is the largest known intact meteorite on Earth at 60 tons.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "stone",
+        "value": 5.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 1,
+        "rarity": "junk"
+      }
+    ]
+  },
+  {
+    "id": "604",
+    "name": "Earth",
+    "realm": 6,
+    "rarity": "decent",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 3.0,
+    "levelCost": {
+      "currency": "stone",
+      "amount": 1000.0
+    },
+    "description": "Earth is the only known planet with liquid water on its surface and life.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "stone",
+        "value": 10.0
+      },
+      {
+        "type": "cooldownDivider",
+        "value": 0.001
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 3,
+        "rarity": "junk"
+      }
+    ]
+  },
+  {
+    "id": "605",
+    "name": "Mars",
+    "realm": 6,
+    "rarity": "decent",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.5,
+    "levelCost": {
+      "currency": "stone",
+      "amount": 25.0
+    },
+    "description": "Mars has the largest dust storms in our solar system sometimes covering the entire planet.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "stone",
+        "value": 15.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "stone",
+        "value": 5.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 1,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "basic"
+      }
+    ]
+  },
+  {
+    "id": "606",
+    "name": "Saturn",
+    "realm": 6,
+    "rarity": "decent",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 5.0,
+    "levelCost": {
+      "currency": "stone",
+      "amount": 500.0
+    },
+    "description": "Saturn's rings are made mostly of ice particles with some rocky debris and dust.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "stone",
+        "value": 20.0
+      },
+      {
+        "type": "maxCardsPerPoke",
+        "value": 0.001
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "decent"
+      }
+    ]
+  },
+  {
+    "id": "607",
+    "name": "Sun",
+    "realm": 6,
+    "rarity": "fine",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 3.0,
+    "levelCost": {
+      "currency": "stone",
+      "amount": 1000.0
+    },
+    "description": "The Sun accounts for 99.86% of the mass in our solar system.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "stone",
+        "value": 25.0
+      },
+      {
+        "type": "cooldownDivider",
+        "value": 0.002
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "decent"
+      }
+    ]
+  },
+  {
+    "id": "608",
+    "name": "Proxima Centauri",
+    "realm": 6,
+    "rarity": "fine",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.0,
+    "levelCost": {
+      "currency": "stone",
+      "amount": 80.0
+    },
+    "description": "Proxima Centauri is the closest star to our solar system at just 4.2 light-years away.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "stone",
+        "value": 25.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "basic"
+      }
+    ]
+  },
+  {
+    "id": "609",
+    "name": "Sirius",
+    "realm": 6,
+    "rarity": "rare",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.0,
+    "levelCost": {
+      "currency": "stone",
+      "amount": 500.0
+    },
+    "description": "Sirius is twice as massive as our Sun and 25 times more luminous.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "stone",
+        "value": 50.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "fine"
+      }
+    ]
+  },
+  {
+    "id": "610",
+    "name": "Betelgeuse",
+    "realm": 6,
+    "rarity": "rare",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.5,
+    "levelCost": {
+      "currency": "stone",
+      "amount": 50.0
+    },
+    "description": "Betelgeuse is so large that if placed in our solar system it would extend past Jupiter's orbit.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "stone",
+        "value": 50.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "stone",
+        "value": 10.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 4,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 4,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 4,
+        "rarity": "fine"
+      }
+    ]
+  },
+  {
+    "id": "611",
+    "name": "Orion Nebula",
+    "realm": 6,
+    "rarity": "rare",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 3.0,
+    "levelCost": {
+      "currency": "stone",
+      "amount": 1000.0
+    },
+    "description": "The Orion Nebula is visible to the naked eye and is 24 light-years across.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "stone",
+        "value": 75.0
+      },
+      {
+        "type": "cooldownDivider",
+        "value": 0.002
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 4,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "basic"
+      }
+    ]
+  },
+  {
+    "id": "612",
+    "name": "Crab Nebula",
+    "realm": 6,
+    "rarity": "rare",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 5.0,
+    "levelCost": {
+      "currency": "stone",
+      "amount": 800.0
+    },
+    "description": "The Crab Nebula is the remnant of a supernova observed in 1054 AD.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "stone",
+        "value": 100.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "stone",
+        "value": 5.0
+      },
+      {
+        "type": "minCardsPerPoke",
+        "value": 0.001
+      },
+      {
+        "type": "maxCardsPerPoke",
+        "value": 0.0015
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 3,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "decent"
+      }
+    ]
+  },
+  {
+    "id": "613",
+    "name": "Milky Way",
+    "realm": 6,
+    "rarity": "epic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 1.5,
+    "levelCost": {
+      "currency": "cosmic_ray",
+      "amount": 5.0
+    },
+    "description": "Our Milky Way galaxy contains between 100-400 billion stars.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "stone",
+        "value": 300.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "rare"
+      }
+    ]
+  },
+  {
+    "id": "614",
+    "name": "Andromeda Galaxy",
+    "realm": 6,
+    "rarity": "epic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 3.0,
+    "levelCost": {
+      "currency": "cosmic_ray",
+      "amount": 10.0
+    },
+    "description": "The Andromeda Galaxy is on a collision course with our Milky Way and will merge in about 4.5 billion years.",
+    "baseEffects": [
+      {
+        "type": "currencyPerSec",
+        "currency": "stone",
+        "value": 25.0
+      },
+      {
+        "type": "cooldownDivider",
+        "value": 0.002
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 1,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 3,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 4,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "junk"
+      }
+    ]
+  },
+  {
+    "id": "615",
+    "name": "Triangulum Galaxy",
+    "realm": 6,
+    "rarity": "epic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 1.5,
+    "levelCost": {
+      "currency": "cosmic_ray",
+      "amount": 10.0
+    },
+    "description": "The Triangulum Galaxy is the third-largest galaxy in our Local Group after Andromeda and the Milky Way.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "stone",
+        "value": 500.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 1,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 3,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 4,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "basic"
+      }
+    ]
+  },
+  {
+    "id": "616",
+    "name": "Sagittarius A*",
+    "realm": 6,
+    "rarity": "legendary",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 5.0,
+    "levelCost": {
+      "currency": "cosmic_ray",
+      "amount": 25.0
+    },
+    "description": "Sagittarius A* is the supermassive black hole at the center of our Milky Way galaxy.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "cosmic_ray",
+        "value": 5.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "cosmic_ray",
+        "value": 1.0
+      },
+      {
+        "type": "maxCardsPerPoke",
+        "value": 0.001
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 1,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 3,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 4,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "decent"
+      }
+    ]
+  },
+  {
+    "id": "617",
+    "name": "Messier 87 Black Hole",
+    "realm": 6,
+    "rarity": "legendary",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 3.0,
+    "levelCost": {
+      "currency": "cosmic_ray",
+      "amount": 25.0
+    },
+    "description": "The M87 black hole was the first ever to be directly imaged by the Event Horizon Telescope in 2019.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "cosmic_ray",
+        "value": 3.0
+      },
+      {
+        "type": "cooldownDivider",
+        "value": 0.002
+      },
+      {
+        "type": "maxCardsPerPoke",
+        "value": 0.001
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 1,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 3,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 4,
+        "rarity": "fine"
+      }
+    ]
+  },
+  {
+    "id": "618",
+    "name": "Quasar 3C 273",
+    "realm": 6,
+    "rarity": "mythic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 4.0,
+    "levelCost": {
+      "currency": "cosmic_ray",
+      "amount": 2000.0
+    },
+    "description": "Quasar 3C 273 is one of the brightest objects in the universe and is powered by a supermassive black hole.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "cosmic_ray",
+        "value": 50.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "cosmic_ray",
+        "value": 10.0
+      },
+      {
+        "type": "cooldownDivider",
+        "value": 0.002
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 1,
+        "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 3,
+        "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 4,
+        "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsDivider",
         "realm": 5,
         "rarity": "rare"
       }

@@ -586,6 +586,7 @@ nav#tabs { margin-bottom: 15px; }
   justify-content: center;   /* center horizontally */
   gap: 4px;
   font-weight: bold;
+  font-size: 1.2em;
 }
 
 /* style.css additions */
@@ -700,17 +701,17 @@ nav#tabs { margin-bottom: 15px; }
 
 /* Currency / Effects flex container */
 .flex-table-section {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 24px;
-  align-items: start;
+  display: flex; /* Use flexbox for layout */
+  flex-wrap: wrap; /* Allow items to wrap to the next line */
+  gap: 24px; /* Space between tables */
   width: 100%;
+  justify-content: space-between; 
 }
 
 .currency-table,
 .effects-table {
-  width: 100%;
-  min-width: 0;
+  flex: 1 1 300px; /* Allow tables to grow and shrink, with a base width */
+  max-width: 100%; /* Prevent tables from exceeding the container width */
   margin: 0;
 }
 
