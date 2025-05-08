@@ -1435,36 +1435,39 @@ document.addEventListener('DOMContentLoaded', ()=>{
     document.getElementById(`tab-btn-${t}`).onclick = ()=> showTab(t);
   });
   
-  state.selectedRealms = realms.filter(r => r.unlocked).map(r => r.id);
-  renderRealmFilters();
-  showTab('hole');
+// Initialize sorted skills on load
+initializeSortedSkills();
 
-  updateCurrencyBar();
-  initSkillsFilters();
-  renderSkillsTab();
-  updateStatsUI();
-  initCardsFilters();
-  renderCardsCollection();
-  updatePokeFilterStats();
-  updateGeneratorRates();
-  checkAffordableSkills();
+state.selectedRealms = realms.filter(r => r.unlocked).map(r => r.id);
+renderRealmFilters();
+showTab('hole');
 
-  if (state.currentMerchant) {
-    // we have a saved merchant + offers,
-    // so restore our refresh timer and just render
-    nextRefresh =
-      Date.now()
-      + state.currentMerchant.refreshTime * 1000;
-    renderMerchantTab();
-  } else {
-    // first time ever, pick a new one
-    state.currentMerchant = pickMerchant();
-    nextRefresh =
-      Date.now()
-      + state.currentMerchant.refreshTime * 1000;
-    genMerchantOffers();
-    renderMerchantTab();
-  }
+updateCurrencyBar();
+initSkillsFilters();
+renderSkillsTab();
+updateStatsUI();
+initCardsFilters();
+renderCardsCollection();
+updatePokeFilterStats();
+updateGeneratorRates();
+checkAffordableSkills();
+
+if (state.currentMerchant) {
+  // we have a saved merchant + offers,
+  // so restore our refresh timer and just render
+  nextRefresh =
+    Date.now()
+    + state.currentMerchant.refreshTime * 1000;
+  renderMerchantTab();
+} else {
+  // first time ever, pick a new one
+  state.currentMerchant = pickMerchant();
+  nextRefresh =
+    Date.now()
+    + state.currentMerchant.refreshTime * 1000;
+  genMerchantOffers();
+  renderMerchantTab();
+}
 
   // tick every 100ms
   setInterval(refreshMerchantIfNeeded, 100);
