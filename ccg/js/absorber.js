@@ -9,8 +9,7 @@ const absorberButton = document.getElementById('absorber-button');
 // Initialize absorber
 function initGravitationalWaveAbsorber() {
   // Check if the skill is purchased
-  const absorberSkill = window.skills.find(s => s.id === 12002); // Update with correct skill ID
-  if (absorberSkill && absorberSkill.purchased) {
+  if (skillMap[12001].purchased) {
     absorberContainer.style.display = 'flex';
     updateAbsorberUI();
   }
@@ -38,7 +37,7 @@ function handleAbsorberClick() {
 function incrementAbsorber() {
     if (state.absorberValue < 5) {
         // 1) Add
-        let next = state.absorberValue + 0.05;
+        let next = state.absorberValue + (0.05 * (skillMap[12102].purchased ? 2 : 1));
         // 2) Round to 2 decimals
         next = Math.round(next * 100) / 100;
         // 3) Clamp at 5

@@ -9,8 +9,7 @@ const harvesterButton = document.getElementById('harvester-button');
 // Initialize harvester
 function initHarvester() {
   // Check if the skill is purchased
-  const harvesterSkill = window.skills.find(s => s.id === 12001);
-  if (harvesterSkill && harvesterSkill.purchased) {
+  if (skillMap[12001].purchased) {
     harvesterContainer.style.display = 'flex';
     startHarvester();
   }
@@ -21,7 +20,7 @@ function startHarvester() {
   if (harvesterInterval) return;
   
   harvesterInterval = setInterval(() => {
-    state.harvesterValue += 0.01;
+    state.harvesterValue += 0.01 * (skillMap[12002].purchased ? 2 : 1);
     updateHarvesterUI();
   }, 1000);
 }

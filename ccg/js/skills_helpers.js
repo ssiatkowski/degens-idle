@@ -681,9 +681,23 @@ window.skills = [
     },
     {
       id: 12002,
+      name: "Harvester Upgrade",
+      description: "Double radiation harvesting rate.",
+      cost: { realmId: 5, currencyId: "coral", amount: 5e6 },
+      purchased: false
+    },
+    {
+      id: 12101,
       name: "Gravitational Wave Absorber",
       description: "Unlocks a device that absorbs gravitational waves each time black hole is poked. Can be activated to multiply card count for next poke. (Max 5x)",
       cost: { realmId: 3, currencyId: "pollen", amount: 500000 },
+      purchased: false
+    },
+    {
+      id: 12102,
+      name: "Absorber Upgrade",
+      description: "Double gravitational waves absorbed.",
+      cost: { realmId: 6, currencyId: "pollen", amount: 5e7 },
       purchased: false
     },
     {
@@ -705,6 +719,20 @@ window.skills = [
       name: "Anomaly 3",
       description: "Reduce merchant refresh time by 4.04 seconds.",
       cost: { realmId: 6, currencyId: "pollen", amount: 4.04e11 },
+      purchased: false
+    },
+    {
+      id: 14001,
+      name: "Go Away Aldric!",
+      description: "Lower odds that merchant is Aldric Farwander by 4x.",
+      cost: { realmId: 6, currencyId: "stone", amount: 4e9 },
+      purchased: false
+    },
+    {
+      id: 15001,
+      name: "Fleeting Realm",
+      description: "Reduce Rocks realm odds by 5x.",
+      cost: { realmId: 6, currencyId: "rune", amount: 1e7 },
       purchased: false
     },
   ];
@@ -984,7 +1012,9 @@ function applySkill(id, skipCost = false) {
       case 12001: // Hawking Radiation Harvester
         window.initHarvester();
         break;
-      case 12002: // Gravitational Wave Absorber
+      case 12002: // Harvester Upgrade
+        break;
+      case 12101: // Gravitational Wave Absorber
         window.initGravitationalWaveAbsorber();
         break;
       case 13001: // Anomaly
@@ -995,6 +1025,13 @@ function applySkill(id, skipCost = false) {
         break;
       case 13003: // Anomaly 3
         state.effects.merchantCooldownReduction += 4.04;
+        break;
+      case 14001: // Go Away Aldric!
+        merchants[0].merchantOdds /= 4;
+        break;
+      case 15001: // Fleeting Realm
+        realms[0].pokeWeight /= 5;
+        updatePokeFilterStats();
         break;
     }
 

@@ -51,10 +51,10 @@ window.cards = [
     "quantity": 0,
     "tier": 0,
     "level": 1,
-    "levelScaling": 1.5,
+    "levelScaling": 2.0,
     "levelCost": {
       "currency": "stone",
-      "amount": 10.0
+      "amount": 20.0
     },
     "description": "Flint was used for tools and fire-starting by early humans over 2 million years ago.",
     "baseEffects": [
@@ -62,6 +62,11 @@ window.cards = [
         "type": "currencyPerPoke",
         "currency": "stone",
         "value": 1.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 1,
+        "rarity": "junk"
       }
     ]
   },
@@ -73,10 +78,10 @@ window.cards = [
     "quantity": 0,
     "tier": 0,
     "level": 1,
-    "levelScaling": 1.5,
+    "levelScaling": 2.0,
     "levelCost": {
       "currency": "stone",
-      "amount": 10.0
+      "amount": 20.0
     },
     "description": "Coal is formed from ancient plants that lived over 300 million years ago!",
     "baseEffects": [
@@ -84,6 +89,11 @@ window.cards = [
         "type": "currencyPerPoke",
         "currency": "stone",
         "value": 1.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 1,
+        "rarity": "junk"
       }
     ]
   },
@@ -179,7 +189,7 @@ window.cards = [
       {
         "type": "rarityOddsDivider",
         "realm": 1,
-        "rarity": "junk"
+        "rarity": "basic"
       }
     ]
   },
@@ -223,7 +233,7 @@ window.cards = [
     "quantity": 0,
     "tier": 0,
     "level": 1,
-    "levelScaling": 1.5,
+    "levelScaling": 2.0,
     "levelCost": {
       "currency": "stone",
       "amount": 100.0
@@ -234,6 +244,16 @@ window.cards = [
         "type": "currencyPerPoke",
         "currency": "stone",
         "value": 10.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 1,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 1,
+        "rarity": "basic"
       }
     ]
   },
@@ -259,6 +279,11 @@ window.cards = [
       },
       {
         "type": "maxCardsPerPoke"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 1,
+        "rarity": "junk"
       }
     ]
   },
@@ -351,6 +376,11 @@ window.cards = [
       },
       {
         "type": "cooldownDivider"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 1,
+        "rarity": "basic"
       }
     ]
   },
@@ -378,6 +408,16 @@ window.cards = [
         "type": "currencyPerSec",
         "currency": "stone",
         "value": 5.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 1,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 1,
+        "rarity": "decent"
       }
     ]
   },
@@ -445,6 +485,21 @@ window.cards = [
       },
       {
         "type": "cooldownDivider"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 1,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 1,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 1,
+        "rarity": "decent"
       }
     ]
   },
@@ -456,7 +511,7 @@ window.cards = [
     "quantity": 0,
     "tier": 0,
     "level": 1,
-    "levelScaling": 3.0,
+    "levelScaling": 2.0,
     "levelCost": {
       "currency": "stone",
       "amount": 100.0
@@ -467,6 +522,21 @@ window.cards = [
         "type": "currencyPerPoke",
         "currency": "rune",
         "value": 3.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 1,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 1,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 1,
+        "rarity": "decent"
       }
     ]
   },
@@ -545,6 +615,21 @@ window.cards = [
       {
         "type": "rarityOddsDivider",
         "realm": 1,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
         "rarity": "junk"
       }
     ]
@@ -827,6 +912,11 @@ window.cards = [
         "type": "currencyPerSec",
         "currency": "coral",
         "value": 5.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "basic"
       }
     ]
   },
@@ -960,7 +1050,7 @@ window.cards = [
     "quantity": 0,
     "tier": 0,
     "level": 1,
-    "levelScaling": 4.0,
+    "levelScaling": 2.0,
     "levelCost": {
       "currency": "coral",
       "amount": 1000.0
@@ -1273,6 +1363,16 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 1,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 1,
+        "rarity": "basic"
       }
     ]
   },
@@ -1309,7 +1409,7 @@ window.cards = [
     "quantity": 0,
     "tier": 0,
     "level": 1,
-    "levelScaling": 1.5,
+    "levelScaling": 2.0,
     "levelCost": {
       "currency": "pollen",
       "amount": 50.0
@@ -1320,6 +1420,21 @@ window.cards = [
         "type": "currencyPerPoke",
         "currency": "pollen",
         "value": 5.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 1,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 1,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "junk"
       }
     ]
   },
@@ -1533,6 +1648,16 @@ window.cards = [
       },
       {
         "type": "cooldownDivider"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 3,
+        "rarity": "basic"
       }
     ]
   },
@@ -1592,6 +1717,16 @@ window.cards = [
         "type": "currencyPerSec",
         "currency": "pollen",
         "value": 3.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "basic"
       }
     ]
   },
@@ -1686,6 +1821,16 @@ window.cards = [
       },
       {
         "type": "cooldownDivider"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "fine"
       }
     ]
   },
@@ -1813,7 +1958,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "royal_jelly",
-        "value": 1.0
+        "value": 4.0
       },
       {
         "type": "maxCardsPerPoke"
@@ -1885,12 +2030,12 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "royal_jelly",
-        "value": 2.0
+        "value": 10.0
       },
       {
         "type": "currencyPerSec",
-        "currency": "pollen",
-        "value": 20.0
+        "currency": "royal_jelly",
+        "value": 1.0
       },
       {
         "type": "minCardsPerPoke"
@@ -2084,6 +2229,26 @@ window.cards = [
       },
       {
         "type": "cooldownDivider"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 1,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 1,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "basic"
       }
     ]
   },
@@ -2579,7 +2744,7 @@ window.cards = [
     "quantity": 0,
     "tier": 0,
     "level": 1,
-    "levelScaling": 4.0,
+    "levelScaling": 2.0,
     "levelCost": {
       "currency": "feather",
       "amount": 10.0
@@ -2699,7 +2864,7 @@ window.cards = [
     "quantity": 0,
     "tier": 0,
     "level": 1,
-    "levelScaling": 5.0,
+    "levelScaling": 2.5,
     "levelCost": {
       "currency": "feather",
       "amount": 25.0
@@ -2773,7 +2938,7 @@ window.cards = [
     "quantity": 0,
     "tier": 0,
     "level": 1,
-    "levelScaling": 1.5,
+    "levelScaling": 2.0,
     "levelCost": {
       "currency": "crystal",
       "amount": 10.0
@@ -2784,6 +2949,16 @@ window.cards = [
         "type": "currencyPerPoke",
         "currency": "crystal",
         "value": 1.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 1,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 1,
+        "rarity": "basic"
       }
     ]
   },
@@ -2860,6 +3035,16 @@ window.cards = [
         "type": "currencyPerSec",
         "currency": "crystal",
         "value": 1.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 1,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 1,
+        "rarity": "basic"
       }
     ]
   },
@@ -2941,6 +3126,11 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 5,
         "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 1,
+        "rarity": "basic"
       }
     ]
   },
@@ -2967,6 +3157,11 @@ window.cards = [
       {
         "type": "rarityOddsDivider",
         "realm": 5,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 1,
         "rarity": "basic"
       }
     ]
@@ -3073,6 +3268,11 @@ window.cards = [
       {
         "type": "rarityOddsDivider",
         "realm": 1,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 1,
         "rarity": "decent"
       }
     ]
@@ -3096,6 +3296,21 @@ window.cards = [
         "type": "currencyPerSec",
         "currency": "crystal",
         "value": 20.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 1,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 3,
+        "rarity": "junk"
       }
     ]
   },
@@ -3126,6 +3341,11 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 5,
         "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "basic"
       }
     ]
   },
@@ -3156,6 +3376,11 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 5,
         "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "decent"
       }
     ]
   },
@@ -3178,6 +3403,21 @@ window.cards = [
         "type": "currencyPerPoke",
         "currency": "rune",
         "value": 5.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 4,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 3,
+        "rarity": "junk"
       }
     ]
   },
@@ -3189,7 +3429,7 @@ window.cards = [
     "quantity": 0,
     "tier": 0,
     "level": 1,
-    "levelScaling": 4.0,
+    "levelScaling": 1.5,
     "levelCost": {
       "currency": "rune",
       "amount": 50.0
@@ -3709,7 +3949,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "stone",
-        "value": 3.0
+        "value": 5.0
       },
       {
         "type": "rarityOddsDivider",
@@ -3761,7 +4001,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "stone",
-        "value": 5.0
+        "value": 10.0
       },
       {
         "type": "rarityOddsDivider",
@@ -3793,10 +4033,15 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "stone",
-        "value": 10.0
+        "value": 25.0
       },
       {
         "type": "cooldownDivider"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 1,
+        "rarity": "junk"
       },
       {
         "type": "rarityOddsDivider",
@@ -3900,7 +4145,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "stone",
-        "value": 25.0
+        "value": 50.0
       },
       {
         "type": "cooldownDivider"
@@ -3977,7 +4222,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "stone",
-        "value": 50.0
+        "value": 75.0
       },
       {
         "type": "rarityOddsDivider",
@@ -4014,7 +4259,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "stone",
-        "value": 50.0
+        "value": 75.0
       },
       {
         "type": "currencyPerSec",
@@ -4056,7 +4301,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "stone",
-        "value": 75.0
+        "value": 100.0
       },
       {
         "type": "cooldownDivider"
@@ -4096,7 +4341,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "stone",
-        "value": 100.0
+        "value": 150.0
       },
       {
         "type": "currencyPerSec",
@@ -4139,7 +4384,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "stone",
-        "value": 300.0
+        "value": 500.0
       },
       {
         "type": "rarityOddsDivider",
@@ -4241,7 +4486,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "stone",
-        "value": 500.0
+        "value": 1000.0
       },
       {
         "type": "rarityOddsDivider",
@@ -4408,8 +4653,8 @@ window.cards = [
       },
       {
         "type": "rarityOddsDivider",
-        "realm": 1,
-        "rarity": "rare"
+        "realm": 2,
+        "rarity": "epic"
       },
       {
         "type": "rarityOddsDivider",

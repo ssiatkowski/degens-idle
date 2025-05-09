@@ -25,55 +25,55 @@ window.EFFECT_NAMES = {
       cooldownDividerBaseValue: 0.0005,  //cost scaling 5
       maxCardsPerPokeBaseValue: 0.01,
       minCardsPerPokeBaseValue: 0.005,
-      oddsDividerCap: 2
+      oddsDividerCap: 3
     },
     basic: { 
       cooldownDividerBaseValue: 0.001,  //cost scaling 5
       maxCardsPerPokeBaseValue: 0.02,
       minCardsPerPokeBaseValue: 0.01,
-      oddsDividerCap: 2.5
+      oddsDividerCap: 3.5
     },
     decent: { 
       cooldownDividerBaseValue: 0.002, //cost scaling 4.5
       maxCardsPerPokeBaseValue: 0.03,
       minCardsPerPokeBaseValue: 0.015,
-      oddsDividerCap: 3
+      oddsDividerCap: 4
     },
     fine: { 
       cooldownDividerBaseValue: 0.003,  //cost scaling 4.5
       maxCardsPerPokeBaseValue: 0.04,
       minCardsPerPokeBaseValue: 0.02,
-      oddsDividerCap: 3.5
+      oddsDividerCap: 4.5
     },
     rare: { 
       cooldownDividerBaseValue: 0.004,  //cost scaling 4
       maxCardsPerPokeBaseValue: 0.05,
       minCardsPerPokeBaseValue: 0.025,
-      oddsDividerCap: 4
+      oddsDividerCap: 5
     },
     epic: { 
       cooldownDividerBaseValue: 0.005,  //cost scaling 4
       maxCardsPerPokeBaseValue: 0.06,
       minCardsPerPokeBaseValue: 0.03,
-      oddsDividerCap: 4.5
+      oddsDividerCap: 6
     },
     legendary: { 
       cooldownDividerBaseValue: 0.006, //cost scaling 3.5
       maxCardsPerPokeBaseValue: 0.07,
       minCardsPerPokeBaseValue: 0.035,
-      oddsDividerCap: 5
+      oddsDividerCap: 7
     },
     mythic: { 
       cooldownDividerBaseValue: 0.007, //cost scaling 3.5
       maxCardsPerPokeBaseValue: 0.08,
       minCardsPerPokeBaseValue: 0.04,
-      oddsDividerCap: 6
+      oddsDividerCap: 8
     },
     exotic: { 
       cooldownDividerBaseValue: 0.008, //cost scaling 3
       maxCardsPerPokeBaseValue: 0.09,
       minCardsPerPokeBaseValue: 0.045,
-      oddsDividerCap: 8
+      oddsDividerCap: 9
     },
     divine: { 
       cooldownDividerBaseValue: 0.01, //cost scaling 3
@@ -116,7 +116,7 @@ window.EFFECT_NAMES = {
   
         case "rarityOddsDivider": {
           // Start with a base divider
-          let baseDivider = 0.0025;
+          let baseDivider = 0.01;
           const total = baseDivider * c.level * multiplier;
   
           // Cap the total based on card's rarity
@@ -176,15 +176,38 @@ window.EFFECT_NAMES = {
                 console.error(`Realm ${realmId} not found`);
                 break;
               }
-              const weights = realmMap[realmId].rarityWeights;
+              const weights = realmMap[realmId].uncappedRarityWeights;
               const current = weights[rarity] ?? 0;
       
-              // new correct logic:
+              // Apply effect to uncapped weights
               if (sign > 0) {
-                const minVal  = RARITY_ODDS_MIN[rarity] || 0;
-                weights[rarity] = Math.max(minVal, current / (1 + v));
+                weights[rarity] = current / (1 + v);
               } else {
                 weights[rarity] = current * (1 + v);
+              }
+
+              // Apply capping logic
+              const realm = realmMap[realmId];
+              const rarities = Object.keys(realm.rarityWeights).filter(r => realm.rarityWeights[r] > 0);
+              rarities.sort((a, b) => {
+                const aIndex = window.rarities.indexOf(a);
+                const bIndex = window.rarities.indexOf(b);
+                return bIndex - aIndex; // Reverse order
+              });
+
+              // Single pass capping - since we're in reverse order, each higher rarity is already properly capped
+              let highestWeight = 0;
+              for (let i = 0; i < rarities.length; i++) {
+                const currentRarity = rarities[i];
+                const uncapped = realm.uncappedRarityWeights[currentRarity];
+                
+                // If this rarity's weight is less than the highest weight seen so far, cap it
+                if (uncapped < highestWeight) {
+                  realm.rarityWeights[currentRarity] = highestWeight;
+                } else {
+                  realm.rarityWeights[currentRarity] = uncapped;
+                  highestWeight = uncapped;
+                }
               }
               break;
             }

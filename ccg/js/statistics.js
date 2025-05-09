@@ -296,15 +296,20 @@ function updateStatsUI() {
           <tbody>
             ${Object.entries(r.rarityWeights).map(([ra, wt]) => {
               if (wt <= 0) return '';
+              const uncapped = r.uncappedRarityWeights[ra];
+              const isCapped = uncapped !== wt;
               const pct   = formatPct(wt/totalWeight*100);
               const color = getComputedStyle(document.documentElement)
                               .getPropertyValue('--rarity-' + ra);
+              const weightDisplay = isCapped 
+                ? `<span title="Soft capped from ${formatNumber(uncapped)}">${formatNumber(wt)}*</span>`
+                : formatNumber(wt);
               return `
                 <tr>
                   <td style="color:${color};font-weight:bold;">
                     ${ra.charAt(0).toUpperCase() + ra.slice(1)}
                   </td>
-                  <td>${formatNumber(wt)}</td>
+                  <td>${weightDisplay}</td>
                   <td>${pct}</td>
                 </tr>`;  
             }).join('')}

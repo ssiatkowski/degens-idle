@@ -35,6 +35,26 @@
   padding: 12px;
 }
 
+.offline-earnings-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  width: 100%;
+}
+
+.offline-earnings-column {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.offline-earnings-column h4 {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  color: #666;
+}
+
 .offline-earnings-list {
   display: flex;
   flex-direction: column;
@@ -46,20 +66,22 @@
   align-items: center;
   gap: 8px;
   padding: 8px;
-  background: rgba(0,0,0,0.05);
+  background: rgba(0, 0, 0, 0.05);
   border-radius: 4px;
+}
+
+.offline-earnings-item .amount {
+  font-weight: bold;
+  min-width: 80px;
 }
 
 .offline-earnings-item .icon {
   width: 24px;
   height: 24px;
-}
-
-.offline-earnings-item .amount {
-  font-weight: bold;
-  font-family: monospace;
+  object-fit: contain;
 }
 
 .offline-earnings-item .name {
-  color: var(--dark);
+  flex: 1;
+  color: #666;
 }

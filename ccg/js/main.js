@@ -710,7 +710,7 @@ function openModal(cardId) {
       let valueHtml;
 
       if (def.type === "rarityOddsDivider") {
-        const baseDivider = 0.0025;
+        const baseDivider = 0.01;
         total = baseDivider * c.level * tierMult;
         const cap = EFFECTS_RARITY_VALUES[c.rarity]?.oddsDividerCap;
         const cappedTotal = Math.min(total, cap);
@@ -1354,23 +1354,31 @@ function showOfflineEarningsModal(earnings) {
   mc.className = 'offline-earnings-content';
   mc.onclick = e => e.stopPropagation();
 
-  // Create flex container for vertical stacking
-  const flexContainer = document.createElement('div');
-  flexContainer.className = 'offline-earnings-flex';
+  // Create grid container for two columns
+  const gridContainer = document.createElement('div');
+  gridContainer.className = 'offline-earnings-grid';
 
   // HEADER
   const header = document.createElement('h3');
   header.textContent = 'Offline Earnings';
   header.style.textAlign = 'center';
   header.style.marginBottom = '20px';
-  flexContainer.appendChild(header);
+  header.style.gridColumn = '1 / -1'; // Span both columns
+  gridContainer.appendChild(header);
 
-  // EARNINGS LIST
-  const list = document.createElement('div');
-  list.className = 'offline-earnings-list';
+  // LEFT COLUMN - Currencies
+  const currencyColumn = document.createElement('div');
+  currencyColumn.className = 'offline-earnings-column';
+  
+  const currencyHeader = document.createElement('h4');
+  currencyHeader.textContent = 'Resources';
+  currencyColumn.appendChild(currencyHeader);
+
+  const currencyList = document.createElement('div');
+  currencyList.className = 'offline-earnings-list';
   
   Object.entries(earnings).forEach(([curId, amount]) => {
-    if (amount.lessThanOrEqualTo(0)) return;
+    if (amount.lessThanOrEqualTo(0) || curId === 'harvester') return;
     
     const meta = currencies.find(c => c.id === curId);
     if (!meta) return;
@@ -1382,12 +1390,49 @@ function showOfflineEarningsModal(earnings) {
       <img class="icon" src="assets/images/currencies/${meta.icon}" alt="${meta.name}" />
       <span class="name">${meta.name}</span>
     `;
-    list.appendChild(item);
+    currencyList.appendChild(item);
   });
+  currencyColumn.appendChild(currencyList);
 
-  // HARVESTER VALUE
+  // RIGHT COLUMN - Progress
+  const progressColumn = document.createElement('div');
+  progressColumn.className = 'offline-earnings-column';
+  
+  const progressHeader = document.createElement('h4');
+  progressHeader.textContent = 'Progress';
+  progressColumn.appendChild(progressHeader);
+
+  const progressList = document.createElement('div');
+  progressList.className = 'offline-earnings-list';
+
+  // Check for cooldown progression
+  const savedRem = parseFloat(localStorage.getItem('ccgCooldownRem'));
+  if (!isNaN(savedRem) && savedRem > 0) {
+    const timeDiff = Math.floor((Date.now() - JSON.parse(localStorage.getItem(SAVE_KEY) || '{}').lastSaveTime) / 1000);
+    const cooldownReduction = Math.min(savedRem, timeDiff);
+    
+    if (cooldownReduction > 0) {
+      const cooldownItem = document.createElement('div');
+      cooldownItem.className = 'offline-earnings-item';
+      cooldownItem.innerHTML = `
+        <span class="amount">-${formatDuration(cooldownReduction)}</span>
+        <img class="icon" src="assets/images/black_hole.png" alt="Cooldown" />
+        <span class="name">Cooldown</span>
+      `;
+      progressList.appendChild(cooldownItem);
+
+      // Update stored cooldown
+      const newRem = savedRem - cooldownReduction;
+      if (newRem <= 0) {
+        localStorage.removeItem('ccgCooldownRem');
+      } else {
+        localStorage.setItem('ccgCooldownRem', newRem.toString());
+      }
+    }
+  }
+
+  // Add harvester progress if applicable
   if (earnings.harvester) {
-    list.appendChild(document.createElement('div')); //spacing
     const harvesterItem = document.createElement('div');
     harvesterItem.className = 'offline-earnings-item';
     harvesterItem.innerHTML = `
@@ -1395,11 +1440,16 @@ function showOfflineEarningsModal(earnings) {
       <img class="icon" src="assets/images/harvester.png" alt="Harvester" />
       <span class="name">Harvester</span>
     `;
-    list.appendChild(harvesterItem);
+    progressList.appendChild(harvesterItem);
   }
 
-  flexContainer.appendChild(list);
-  mc.appendChild(flexContainer);
+  progressColumn.appendChild(progressList);
+
+  // Add columns to grid
+  gridContainer.appendChild(currencyColumn);
+  gridContainer.appendChild(progressColumn);
+
+  mc.appendChild(gridContainer);
   ov.appendChild(mc);
   document.body.appendChild(ov);
 
@@ -1466,10 +1516,9 @@ document.addEventListener('DOMContentLoaded', ()=>{
       }
     });
 
-    const harvesterSkill = window.skills.find(s => s.id === 12001);
-    if (harvesterSkill && harvesterSkill.purchased) {
+    if (skillMap[12001].purchased) {
       // Award harvester value based on time difference
-      const harvesterGain = timeDiff / 1000;
+      const harvesterGain = timeDiff / 1000 * (skillMap[12002].purchased ? 2 : 1);
       state.harvesterValue = state.harvesterValue + harvesterGain;
       offlineEarnings['harvester'] = new Decimal(harvesterGain);
     }

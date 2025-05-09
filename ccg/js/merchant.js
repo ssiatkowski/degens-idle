@@ -103,7 +103,7 @@ const merchants = [
     //   name: 'Tobias Quickpouch',
     //   cardMultiplier: 10,
     //   refreshTime: 100,
-    //   merchantOdds: 300,
+    //   merchantOdds: 200,
     //   raritiesSkipped: [],
     //   priceMultiplier: 0.75,
     //   rarityScaling: 2.5,
@@ -115,7 +115,7 @@ const merchants = [
     //   name: 'Selene Starwhistle',
     //   cardMultiplier: 0,
     //   refreshTime: 300,
-    //   merchantOdds: 300,
+    //   merchantOdds: 100,
     //   raritiesSkipped: ['junk', 'basic', 'decent', 'fine'],
     //   priceMultiplier: 2,
     //   rarityScaling: 3.5,
@@ -138,7 +138,7 @@ const merchants = [
     exotic:    new Decimal(3000),
     divine:    new Decimal(15000),
   };
-  
+
   // ——— HELPERS ———
   function pickRandom(arr) {
     return arr[Math.floor(Math.random() * arr.length)];
@@ -396,6 +396,20 @@ const merchants = [
             newBadge.className = 'reveal-badge new-badge';
             newBadge.textContent = 'NEW';
             front.appendChild(newBadge);
+        }
+
+        // Check if purchasing would increase tier
+        const thresholds = window.tierThresholds[card.rarity];
+        const currentTier = card.tier;
+        let newTier = 1;
+        while (newTier < thresholds.length && (card.quantity + o.quantity) >= thresholds[newTier]) {
+          newTier++;
+        }
+        if (newTier > currentTier) {
+          const tierUpBadge = document.createElement('div');
+          tierUpBadge.className = 'reveal-badge tierup-badge';
+          tierUpBadge.textContent = 'TIER UP';
+          front.appendChild(tierUpBadge);
         }
   
       inner.append(front);

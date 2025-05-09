@@ -26,18 +26,6 @@ const defaultRarityWeights = {
   divine:    1,
 };
 
-// 2) minimum odds for each rarity
-const RARITY_ODDS_MIN = {
-  junk:      8e6,
-  basic:     4e6,
-  decent:    2e6,
-  fine:      1e6,
-  rare:      8e5,
-  epic:      4e5,
-  legendary: 2e5,
-  mythic:    1e5,
-};
-
 // 2) create your realms without individual rarityWeights
 window.realms = [
   { id: 1, name: "Rocks",             unlocked: true,  cooldown: 3,  deselectMultiplier: 5, pokeWeight: 1e11 },
@@ -48,9 +36,10 @@ window.realms = [
   { id: 6, name: "Celestial Bodies",  unlocked: false, cooldown: 80, deselectMultiplier: 5, pokeWeight: 1e10 },
 ];
 
-// 3) give every realm its own copy of the default weights
+// 3) give every realm its own copy of the default weights for both capped and uncapped
 window.realms.forEach(r => {
   r.rarityWeights = { ...defaultRarityWeights };
+  r.uncappedRarityWeights = { ...defaultRarityWeights };
 });
 
 // 4) build a lookup of which rarities actually exist per realm
@@ -66,6 +55,7 @@ window.realms.forEach(r => {
   for (const rarity in r.rarityWeights) {
     if (!present.has(rarity)) {
       r.rarityWeights[rarity] = 0;
+      r.uncappedRarityWeights[rarity] = 0;
     }
   }
 });
