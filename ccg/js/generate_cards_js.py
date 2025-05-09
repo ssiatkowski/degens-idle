@@ -34,8 +34,8 @@ def load_cards(csv_path):
             arg2 = row.get(f"effect{i}_arg2", "").strip()
 
             if etype in ("minCardsPerPoke", "maxCardsPerPoke", "cooldownDivider"):
-                # single numeric value in arg1
-                effect["value"] = float(arg1) if arg1 else 0
+                # These effects no longer need values
+                pass
 
             elif etype in ("currencyPerPoke", "currencyPerSec"):
                 # currency in arg1, numeric value in arg2

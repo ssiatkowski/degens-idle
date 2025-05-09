@@ -1,0 +1,193 @@
+/* Statistics Sections */
+.stats-section {
+  margin-bottom: clamp(12px, 4dvh, 24px);
+  padding: clamp(8px, 3dvh, 16px);
+  border-radius: 6px;
+  box-shadow: 0 2px 4px var(--card-shadow);
+  background: #e8f5e9;
+  font-size: clamp(0.9em, 2.4dvh, 1.1em);
+}
+
+.stats-section h3 {
+  margin-top: 0;
+  font-family: var(--card-font);
+  color: var(--dark);
+  font-size: clamp(1.1em, 2.8dvh, 1.3em);
+}
+
+.stats-header {
+  border-bottom: 2px solid var(--dark);
+  padding-bottom: 4px;
+  margin-bottom: 8px;
+}
+
+.stat-value {
+  font-size: clamp(1.8em, 5dvh, 2.5em);
+  margin: clamp(4px, 2dvh, 8px) 0;
+}
+
+.stat-list {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0;
+}
+
+.stat-list li {
+  margin: 4px 0;
+}
+
+/* Tables */
+.stats-section table {
+  margin: 0 auto 1rem;
+  border-collapse: collapse;
+  text-align: center;
+  width: auto;
+}
+
+.stats-section th,
+.stats-section td {
+  padding: 6px 12px;
+  border: 1px solid #bbb;
+  font-family: var(--ui-font);
+  font-size: 0.95em;
+}
+
+/* Rarity Table */
+.rarity-table th {
+  background: var(--light);
+  font-weight: bold;
+}
+
+/* Currency & Effects Tables */
+.flex-table-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.currency-table,
+.effects-table {
+  flex: 1 1 300px;
+  max-width: 100%;
+  margin: 0;
+}
+
+.currency-table th,
+.effects-table th {
+  background: var(--light);
+  font-weight: bold;
+}
+
+.currency-table td img.icon {
+  width: clamp(16px, 3dvh, 20px);
+  height: clamp(16px, 3dvh, 20px);
+  margin-right: 4px;
+}
+
+/* Top Container */
+.stats-top-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: clamp(8px, 3dvh, 16px);
+}
+
+.grid-full-width {
+  grid-column: 1 / -1;
+}
+
+/* Merchants Section */
+.stats-section.realm-section.merchants-section {
+  min-width: 300px;
+  max-width: 100%;
+}
+
+.merchants-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(60px, 80px));
+  grid-auto-rows: minmax(60px, 80px);
+  gap: clamp(4px, 2dvh, 8px);
+}
+
+.merchant-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 2px solid transparent;
+}
+
+.merchant-thumb.selected-thumb {
+  border-color: var(--accent);
+}
+
+.merchant-thumb.locked-thumb {
+  filter: grayscale(100%);
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* Realm Sections */
+.realm-section {
+  background: #e8f5e9;
+  padding: 12px;
+  border-radius: 6px;
+}
+
+.realm-section h3 {
+  padding-bottom: 4px;
+  border-bottom: 2px solid var(--dark);
+}
+
+.realm-stats-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.realm-stats-grid > div {
+  flex: 1 1 120px;
+}
+
+#realm-tiles,
+.realm-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: clamp(8px, 3dvh, 16px);
+  margin-top: clamp(8px, 3dvh, 16px);
+}
+
+.realm-table {
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+}
+
+.realm-table th {
+  background: var(--light);
+  font-weight: bold;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .stats-top-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .flex-table-section {
+    grid-template-columns: 1fr;
+  }
+  
+  .merchants-grid {
+    grid-template-columns: repeat(auto-fit, minmax(50px, 60px));
+    grid-auto-rows: minmax(50px, 60px);
+  }
+  
+  .rarity-table,
+  .currency-table,
+  .effects-table,
+  .realm-table {
+    font-size: 0.85em;
+  }
+} 

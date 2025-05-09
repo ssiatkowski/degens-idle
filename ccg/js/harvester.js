@@ -87,13 +87,3 @@ function handleHarvesterClick() {
 
   saveState();
 }
-
-
-// Initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', initHarvester);
-
-// Export functions for use in other files
-window.initHarvester = initHarvester;
-window.startHarvester = startHarvester;
-window.updateHarvesterUI = updateHarvesterUI; 
-window.handleHarvesterClick = handleHarvesterClick; // Export the click handler

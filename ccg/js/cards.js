@@ -95,7 +95,7 @@ window.cards = [
     "quantity": 0,
     "tier": 0,
     "level": 1,
-    "levelScaling": 1.5,
+    "levelScaling": 5.0,
     "levelCost": {
       "currency": "stone",
       "amount": 10.0
@@ -106,6 +106,9 @@ window.cards = [
         "type": "currencyPerPoke",
         "currency": "stone",
         "value": 1.0
+      },
+      {
+        "type": "cooldownDivider"
       }
     ]
   },
@@ -255,8 +258,7 @@ window.cards = [
         "value": 10.0
       },
       {
-        "type": "maxCardsPerPoke",
-        "value": 0.001
+        "type": "maxCardsPerPoke"
       }
     ]
   },
@@ -305,7 +307,7 @@ window.cards = [
     "quantity": 0,
     "tier": 0,
     "level": 1,
-    "levelScaling": 3.0,
+    "levelScaling": 4.5,
     "levelCost": {
       "currency": "stone",
       "amount": 1000.0
@@ -318,13 +320,12 @@ window.cards = [
         "value": 25.0
       },
       {
+        "type": "cooldownDivider"
+      },
+      {
         "type": "rarityOddsDivider",
         "realm": 1,
         "rarity": "junk"
-      },
-      {
-        "type": "cooldownDivider",
-        "value": 0.001
       }
     ]
   },
@@ -336,7 +337,7 @@ window.cards = [
     "quantity": 0,
     "tier": 0,
     "level": 1,
-    "levelScaling": 3.0,
+    "levelScaling": 4.5,
     "levelCost": {
       "currency": "stone",
       "amount": 1000.0
@@ -349,8 +350,7 @@ window.cards = [
         "value": 100.0
       },
       {
-        "type": "cooldownDivider",
-        "value": 0.002
+        "type": "cooldownDivider"
       }
     ]
   },
@@ -431,7 +431,7 @@ window.cards = [
     "quantity": 0,
     "tier": 0,
     "level": 1,
-    "levelScaling": 3.0,
+    "levelScaling": 4.5,
     "levelCost": {
       "currency": "rune",
       "amount": 10.0
@@ -444,8 +444,7 @@ window.cards = [
         "value": 50.0
       },
       {
-        "type": "cooldownDivider",
-        "value": 0.002
+        "type": "cooldownDivider"
       }
     ]
   },
@@ -602,7 +601,7 @@ window.cards = [
     "quantity": 0,
     "tier": 0,
     "level": 1,
-    "levelScaling": 1.5,
+    "levelScaling": 5.0,
     "levelCost": {
       "currency": "coral",
       "amount": 5.0
@@ -613,6 +612,9 @@ window.cards = [
         "type": "currencyPerPoke",
         "currency": "coral",
         "value": 1.0
+      },
+      {
+        "type": "cooldownDivider"
       }
     ]
   },
@@ -635,6 +637,11 @@ window.cards = [
         "type": "currencyPerSec",
         "currency": "coral",
         "value": 1.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "junk"
       }
     ]
   },
@@ -710,7 +717,7 @@ window.cards = [
     "quantity": 0,
     "tier": 0,
     "level": 1,
-    "levelScaling": 3.0,
+    "levelScaling": 5.0,
     "levelCost": {
       "currency": "coral",
       "amount": 1000.0
@@ -723,8 +730,7 @@ window.cards = [
         "value": 4.0
       },
       {
-        "type": "cooldownDivider",
-        "value": 0.001
+        "type": "cooldownDivider"
       }
     ]
   },
@@ -850,12 +856,10 @@ window.cards = [
         "value": 2.0
       },
       {
-        "type": "minCardsPerPoke",
-        "value": 0.0005
+        "type": "minCardsPerPoke"
       },
       {
-        "type": "maxCardsPerPoke",
-        "value": 0.001
+        "type": "maxCardsPerPoke"
       }
     ]
   },
@@ -867,7 +871,7 @@ window.cards = [
     "quantity": 0,
     "tier": 0,
     "level": 1,
-    "levelScaling": 3.0,
+    "levelScaling": 4.5,
     "levelCost": {
       "currency": "coral",
       "amount": 1000.0
@@ -880,8 +884,7 @@ window.cards = [
         "value": 20.0
       },
       {
-        "type": "cooldownDivider",
-        "value": 0.002
+        "type": "cooldownDivider"
       }
     ]
   },
@@ -1002,8 +1005,12 @@ window.cards = [
         "value": 25.0
       },
       {
-        "type": "maxCardsPerPoke",
-        "value": 0.002
+        "type": "maxCardsPerPoke"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "decent"
       }
     ]
   },
@@ -1028,12 +1035,10 @@ window.cards = [
         "value": 50.0
       },
       {
-        "type": "minCardsPerPoke",
-        "value": 0.001
+        "type": "minCardsPerPoke"
       },
       {
-        "type": "maxCardsPerPoke",
-        "value": 0.0015
+        "type": "maxCardsPerPoke"
       }
     ]
   },
@@ -1279,7 +1284,7 @@ window.cards = [
     "quantity": 0,
     "tier": 0,
     "level": 1,
-    "levelScaling": 3.0,
+    "levelScaling": 5.0,
     "levelCost": {
       "currency": "pollen",
       "amount": 1000.0
@@ -1292,8 +1297,7 @@ window.cards = [
         "value": 3.0
       },
       {
-        "type": "cooldownDivider",
-        "value": 0.001
+        "type": "cooldownDivider"
       }
     ]
   },
@@ -1340,8 +1344,7 @@ window.cards = [
         "value": 15.0
       },
       {
-        "type": "maxCardsPerPoke",
-        "value": 0.001
+        "type": "maxCardsPerPoke"
       },
       {
         "type": "rarityOddsDivider",
@@ -1363,7 +1366,7 @@ window.cards = [
     "quantity": 0,
     "tier": 0,
     "level": 1,
-    "levelScaling": 3.0,
+    "levelScaling": 4.5,
     "levelCost": {
       "currency": "pollen",
       "amount": 1000.0
@@ -1376,8 +1379,7 @@ window.cards = [
         "value": 20.0
       },
       {
-        "type": "cooldownDivider",
-        "value": 0.0015
+        "type": "cooldownDivider"
       }
     ]
   },
@@ -1517,7 +1519,7 @@ window.cards = [
     "quantity": 0,
     "tier": 0,
     "level": 1,
-    "levelScaling": 3.0,
+    "levelScaling": 4.5,
     "levelCost": {
       "currency": "pollen",
       "amount": 1000.0
@@ -1530,8 +1532,7 @@ window.cards = [
         "value": 2.0
       },
       {
-        "type": "cooldownDivider",
-        "value": 0.002
+        "type": "cooldownDivider"
       }
     ]
   },
@@ -1671,7 +1672,7 @@ window.cards = [
     "quantity": 0,
     "tier": 0,
     "level": 1,
-    "levelScaling": 3.0,
+    "levelScaling": 4.0,
     "levelCost": {
       "currency": "pollen",
       "amount": 1000.0
@@ -1684,8 +1685,7 @@ window.cards = [
         "value": 3.0
       },
       {
-        "type": "cooldownDivider",
-        "value": 0.002
+        "type": "cooldownDivider"
       }
     ]
   },
@@ -1803,7 +1803,7 @@ window.cards = [
     "quantity": 0,
     "tier": 0,
     "level": 1,
-    "levelScaling": 3.0,
+    "levelScaling": 5.0,
     "levelCost": {
       "currency": "royal_jelly",
       "amount": 1.0
@@ -1816,8 +1816,7 @@ window.cards = [
         "value": 1.0
       },
       {
-        "type": "maxCardsPerPoke",
-        "value": 0.001
+        "type": "maxCardsPerPoke"
       },
       {
         "type": "rarityOddsDivider",
@@ -1876,7 +1875,7 @@ window.cards = [
     "quantity": 0,
     "tier": 0,
     "level": 1,
-    "levelScaling": 3.0,
+    "levelScaling": 5.0,
     "levelCost": {
       "currency": "royal_jelly",
       "amount": 10.0
@@ -1894,8 +1893,7 @@ window.cards = [
         "value": 20.0
       },
       {
-        "type": "minCardsPerPoke",
-        "value": 0.002
+        "type": "minCardsPerPoke"
       },
       {
         "type": "rarityOddsDivider",
@@ -2015,7 +2013,7 @@ window.cards = [
     "quantity": 0,
     "tier": 0,
     "level": 1,
-    "levelScaling": 2.0,
+    "levelScaling": 5.0,
     "levelCost": {
       "currency": "egg",
       "amount": 40.0
@@ -2026,6 +2024,9 @@ window.cards = [
         "type": "currencyPerPoke",
         "currency": "egg",
         "value": 2.0
+      },
+      {
+        "type": "cooldownDivider"
       },
       {
         "type": "rarityOddsDivider",
@@ -2053,6 +2054,11 @@ window.cards = [
         "type": "currencyPerPoke",
         "currency": "egg",
         "value": 5.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "basic"
       }
     ]
   },
@@ -2064,7 +2070,7 @@ window.cards = [
     "quantity": 0,
     "tier": 0,
     "level": 1,
-    "levelScaling": 4.0,
+    "levelScaling": 4.5,
     "levelCost": {
       "currency": "egg",
       "amount": 1000.0
@@ -2077,8 +2083,7 @@ window.cards = [
         "value": 20.0
       },
       {
-        "type": "cooldownDivider",
-        "value": 0.001
+        "type": "cooldownDivider"
       }
     ]
   },
@@ -2133,6 +2138,11 @@ window.cards = [
         "type": "currencyPerSec",
         "currency": "egg",
         "value": 5.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 3,
+        "rarity": "basic"
       }
     ]
   },
@@ -2157,12 +2167,10 @@ window.cards = [
         "value": 25.0
       },
       {
-        "type": "minCardsPerPoke",
-        "value": 0.0005
+        "type": "minCardsPerPoke"
       },
       {
-        "type": "maxCardsPerPoke",
-        "value": 0.001
+        "type": "maxCardsPerPoke"
       }
     ]
   },
@@ -2174,7 +2182,7 @@ window.cards = [
     "quantity": 0,
     "tier": 0,
     "level": 1,
-    "levelScaling": 3.0,
+    "levelScaling": 4.5,
     "levelCost": {
       "currency": "egg",
       "amount": 1000.0
@@ -2187,8 +2195,7 @@ window.cards = [
         "value": 10.0
       },
       {
-        "type": "cooldownDivider",
-        "value": 0.002
+        "type": "cooldownDivider"
       }
     ]
   },
@@ -2272,12 +2279,10 @@ window.cards = [
         "value": 5.0
       },
       {
-        "type": "minCardsPerPoke",
-        "value": 0.001
+        "type": "minCardsPerPoke"
       },
       {
-        "type": "maxCardsPerPoke",
-        "value": 0.0015
+        "type": "maxCardsPerPoke"
       }
     ]
   },
@@ -2358,7 +2363,7 @@ window.cards = [
     "quantity": 0,
     "tier": 0,
     "level": 1,
-    "levelScaling": 3.0,
+    "levelScaling": 4.0,
     "levelCost": {
       "currency": "egg",
       "amount": 1000.0
@@ -2371,8 +2376,7 @@ window.cards = [
         "value": 50.0
       },
       {
-        "type": "cooldownDivider",
-        "value": 0.002
+        "type": "cooldownDivider"
       }
     ]
   },
@@ -2503,8 +2507,7 @@ window.cards = [
         "value": 20.0
       },
       {
-        "type": "minCardsPerPoke",
-        "value": 0.001
+        "type": "minCardsPerPoke"
       }
     ]
   },
@@ -2516,7 +2519,7 @@ window.cards = [
     "quantity": 0,
     "tier": 0,
     "level": 1,
-    "levelScaling": 3.0,
+    "levelScaling": 5.0,
     "levelCost": {
       "currency": "feather",
       "amount": 5.0
@@ -2529,8 +2532,7 @@ window.cards = [
         "value": 100.0
       },
       {
-        "type": "maxCardsPerPoke",
-        "value": 0.001
+        "type": "maxCardsPerPoke"
       },
       {
         "type": "rarityOddsDivider",
@@ -2552,7 +2554,7 @@ window.cards = [
     "quantity": 0,
     "tier": 0,
     "level": 1,
-    "levelScaling": 3.0,
+    "levelScaling": 4.0,
     "levelCost": {
       "currency": "feather",
       "amount": 10.0
@@ -2565,8 +2567,7 @@ window.cards = [
         "value": 20.0
       },
       {
-        "type": "cooldownDivider",
-        "value": 0.002
+        "type": "cooldownDivider"
       }
     ]
   },
@@ -2638,8 +2639,7 @@ window.cards = [
         "value": 1.0
       },
       {
-        "type": "maxCardsPerPoke",
-        "value": 0.001
+        "type": "maxCardsPerPoke"
       },
       {
         "type": "rarityOddsDivider",
@@ -2661,7 +2661,7 @@ window.cards = [
     "quantity": 0,
     "tier": 0,
     "level": 1,
-    "levelScaling": 3.0,
+    "levelScaling": 5.0,
     "levelCost": {
       "currency": "feather",
       "amount": 25.0
@@ -2674,12 +2674,10 @@ window.cards = [
         "value": 2.0
       },
       {
-        "type": "cooldownDivider",
-        "value": 0.003
+        "type": "cooldownDivider"
       },
       {
-        "type": "maxCardsPerPoke",
-        "value": 0.001
+        "type": "maxCardsPerPoke"
       },
       {
         "type": "rarityOddsDivider",
@@ -3109,7 +3107,7 @@ window.cards = [
     "quantity": 0,
     "tier": 0,
     "level": 1,
-    "levelScaling": 3.0,
+    "levelScaling": 5.0,
     "levelCost": {
       "currency": "rune",
       "amount": 10.0
@@ -3122,8 +3120,7 @@ window.cards = [
         "value": 50.0
       },
       {
-        "type": "maxCardsPerPoke",
-        "value": 0.001
+        "type": "maxCardsPerPoke"
       },
       {
         "type": "rarityOddsDivider",
@@ -3140,7 +3137,7 @@ window.cards = [
     "quantity": 0,
     "tier": 0,
     "level": 1,
-    "levelScaling": 3.0,
+    "levelScaling": 4.5,
     "levelCost": {
       "currency": "rune",
       "amount": 10.0
@@ -3153,8 +3150,7 @@ window.cards = [
         "value": 25.0
       },
       {
-        "type": "cooldownDivider",
-        "value": 0.002
+        "type": "cooldownDivider"
       },
       {
         "type": "rarityOddsDivider",
@@ -3525,16 +3521,13 @@ window.cards = [
         "value": 25.0
       },
       {
-        "type": "cooldownDivider",
-        "value": 0.002
+        "type": "cooldownDivider"
       },
       {
-        "type": "maxCardsPerPoke",
-        "value": 0.001
+        "type": "maxCardsPerPoke"
       },
       {
-        "type": "minCardsPerPoke",
-        "value": 0.0005
+        "type": "minCardsPerPoke"
       }
     ]
   },
@@ -3598,7 +3591,7 @@ window.cards = [
     "quantity": 0,
     "tier": 0,
     "level": 1,
-    "levelScaling": 3.0,
+    "levelScaling": 5.0,
     "levelCost": {
       "currency": "rune",
       "amount": 500.0
@@ -3616,12 +3609,10 @@ window.cards = [
         "value": 25.0
       },
       {
-        "type": "maxCardsPerPoke",
-        "value": 0.001
+        "type": "maxCardsPerPoke"
       },
       {
-        "type": "minCardsPerPoke",
-        "value": 0.0005
+        "type": "minCardsPerPoke"
       },
       {
         "type": "rarityOddsDivider",
@@ -3653,7 +3644,7 @@ window.cards = [
     "quantity": 0,
     "tier": 0,
     "level": 1,
-    "levelScaling": 4.0,
+    "levelScaling": 3.5,
     "levelCost": {
       "currency": "rune",
       "amount": 2000.0
@@ -3663,7 +3654,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "rune",
-        "value": 5000.0
+        "value": 1000.0
       },
       {
         "type": "currencyPerSec",
@@ -3671,8 +3662,7 @@ window.cards = [
         "value": 25.0
       },
       {
-        "type": "cooldownDivider",
-        "value": 0.002
+        "type": "cooldownDivider"
       },
       {
         "type": "rarityOddsDivider",
@@ -3709,7 +3699,7 @@ window.cards = [
     "quantity": 0,
     "tier": 0,
     "level": 1,
-    "levelScaling": 1.5,
+    "levelScaling": 2.0,
     "levelCost": {
       "currency": "stone",
       "amount": 10.0
@@ -3720,6 +3710,11 @@ window.cards = [
         "type": "currencyPerPoke",
         "currency": "stone",
         "value": 3.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "basic"
       }
     ]
   },
@@ -3731,7 +3726,7 @@ window.cards = [
     "quantity": 0,
     "tier": 0,
     "level": 1,
-    "levelScaling": 2.5,
+    "levelScaling": 5.0,
     "levelCost": {
       "currency": "stone",
       "amount": 25.0
@@ -3744,9 +3739,7 @@ window.cards = [
         "value": 2.0
       },
       {
-        "type": "rarityOddsDivider",
-        "realm": 6,
-        "rarity": "basic"
+        "type": "cooldownDivider"
       }
     ]
   },
@@ -3790,7 +3783,7 @@ window.cards = [
     "quantity": 0,
     "tier": 0,
     "level": 1,
-    "levelScaling": 3.0,
+    "levelScaling": 4.5,
     "levelCost": {
       "currency": "stone",
       "amount": 1000.0
@@ -3803,8 +3796,7 @@ window.cards = [
         "value": 10.0
       },
       {
-        "type": "cooldownDivider",
-        "value": 0.001
+        "type": "cooldownDivider"
       },
       {
         "type": "rarityOddsDivider",
@@ -3876,8 +3868,7 @@ window.cards = [
         "value": 20.0
       },
       {
-        "type": "maxCardsPerPoke",
-        "value": 0.001
+        "type": "maxCardsPerPoke"
       },
       {
         "type": "rarityOddsDivider",
@@ -3899,7 +3890,7 @@ window.cards = [
     "quantity": 0,
     "tier": 0,
     "level": 1,
-    "levelScaling": 3.0,
+    "levelScaling": 4.5,
     "levelCost": {
       "currency": "stone",
       "amount": 1000.0
@@ -3912,8 +3903,7 @@ window.cards = [
         "value": 25.0
       },
       {
-        "type": "cooldownDivider",
-        "value": 0.002
+        "type": "cooldownDivider"
       },
       {
         "type": "rarityOddsDivider",
@@ -4056,7 +4046,7 @@ window.cards = [
     "quantity": 0,
     "tier": 0,
     "level": 1,
-    "levelScaling": 3.0,
+    "levelScaling": 4.0,
     "levelCost": {
       "currency": "stone",
       "amount": 1000.0
@@ -4069,8 +4059,7 @@ window.cards = [
         "value": 75.0
       },
       {
-        "type": "cooldownDivider",
-        "value": 0.002
+        "type": "cooldownDivider"
       },
       {
         "type": "rarityOddsDivider",
@@ -4115,12 +4104,10 @@ window.cards = [
         "value": 5.0
       },
       {
-        "type": "minCardsPerPoke",
-        "value": 0.001
+        "type": "minCardsPerPoke"
       },
       {
-        "type": "maxCardsPerPoke",
-        "value": 0.0015
+        "type": "maxCardsPerPoke"
       },
       {
         "type": "rarityOddsDivider",
@@ -4189,7 +4176,7 @@ window.cards = [
     "quantity": 0,
     "tier": 0,
     "level": 1,
-    "levelScaling": 3.0,
+    "levelScaling": 4.0,
     "levelCost": {
       "currency": "cosmic_ray",
       "amount": 10.0
@@ -4197,13 +4184,17 @@ window.cards = [
     "description": "The Andromeda Galaxy is on a collision course with our Milky Way and will merge in about 4.5 billion years.",
     "baseEffects": [
       {
+        "type": "currencyPerPoke",
+        "currency": "cosmic_ray",
+        "value": 1.0
+      },
+      {
         "type": "currencyPerSec",
         "currency": "stone",
         "value": 25.0
       },
       {
-        "type": "cooldownDivider",
-        "value": 0.002
+        "type": "cooldownDivider"
       },
       {
         "type": "rarityOddsDivider",
@@ -4302,7 +4293,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "cosmic_ray",
-        "value": 5.0
+        "value": 10.0
       },
       {
         "type": "currencyPerSec",
@@ -4310,8 +4301,7 @@ window.cards = [
         "value": 1.0
       },
       {
-        "type": "maxCardsPerPoke",
-        "value": 0.001
+        "type": "maxCardsPerPoke"
       },
       {
         "type": "rarityOddsDivider",
@@ -4348,7 +4338,7 @@ window.cards = [
     "quantity": 0,
     "tier": 0,
     "level": 1,
-    "levelScaling": 3.0,
+    "levelScaling": 5.0,
     "levelCost": {
       "currency": "cosmic_ray",
       "amount": 25.0
@@ -4358,15 +4348,13 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "cosmic_ray",
-        "value": 3.0
+        "value": 5.0
       },
       {
-        "type": "cooldownDivider",
-        "value": 0.002
+        "type": "cooldownDivider"
       },
       {
-        "type": "maxCardsPerPoke",
-        "value": 0.001
+        "type": "maxCardsPerPoke"
       },
       {
         "type": "rarityOddsDivider",
@@ -4398,7 +4386,7 @@ window.cards = [
     "quantity": 0,
     "tier": 0,
     "level": 1,
-    "levelScaling": 4.0,
+    "levelScaling": 3.5,
     "levelCost": {
       "currency": "cosmic_ray",
       "amount": 2000.0
@@ -4408,16 +4396,15 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "cosmic_ray",
-        "value": 50.0
+        "value": 500.0
       },
       {
         "type": "currencyPerSec",
         "currency": "cosmic_ray",
-        "value": 10.0
+        "value": 20.0
       },
       {
-        "type": "cooldownDivider",
-        "value": 0.002
+        "type": "cooldownDivider"
       },
       {
         "type": "rarityOddsDivider",

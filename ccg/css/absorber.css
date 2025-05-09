@@ -1,0 +1,46 @@
+.absorber-container {
+    width: 20%;
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    z-index: 10;
+  }
+  
+  .absorber-button {
+    height: auto; /* Maintain aspect ratio */
+    cursor: pointer;
+    transition: transform 0.2s;
+    z-index: 10; /* Lower z-index than the counter */
+    position: relative; /* Ensure it is the positioning context for the counter */
+    touch-action: manipulation;
+  }
+
+.absorber-button:hover {
+  transform: scale(1.05);
+}
+
+.absorber-button.active {
+    filter:
+      grayscale(1)
+      sepia(1)
+      hue-rotate(120deg)
+      saturate(10);
+}
+
+.absorber-button.maxed {
+  filter: hue-rotate(120deg); /* Red filter */
+}
+
+.absorber-counter {
+    position: absolute;
+    bottom: 9%; /* Center vertically */
+    right: 10%; /* Center horizontally */
+    font-family: monospace;
+    font-size: clamp(0.7em, 2.2dvh, 1.1em);
+    text-align: center;
+    pointer-events: none; /* Keep this to ensure the counter is not clickable */
+    z-index: 20; /* Higher z-index to ensure it appears on top */
+  }

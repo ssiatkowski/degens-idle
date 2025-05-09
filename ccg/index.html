@@ -8,6 +8,12 @@
                maximum-scale=1,
                user-scalable=no">
   <title>Incremental Card Game</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <link rel="stylesheet" href="css/merchant.css" />
+  <link rel="stylesheet" href="css/skills.css" />
+  <link rel="stylesheet" href="css/statistics.css" />
+  <link rel="stylesheet" href="css/harvester.css" />
+  <link rel="stylesheet" href="css/absorber.css" />
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/main.css" />
   <link rel="stylesheet" href="css/settings.css" />
@@ -75,6 +81,10 @@
           <img id="harvester-button" class="harvester-button" src="assets/images/harvester.png" alt="Harvester" onclick="handleHarvesterClick()" />
           <div class="harvester-counter">0.00</div>
         </div>
+        <div id="absorber-container" class="absorber-container" style="display: none;">
+          <img id="absorber-button" class="absorber-button" src="assets/images/absorber.png" alt="Absorber" onclick="handleAbsorberClick()" />
+          <div class="absorber-counter">0.00</div>
+        </div>
       </div>
     
       <div class="poke-controls">
@@ -123,20 +133,43 @@
   </div>
 
   <div id="tab-content-settings" class="tab-content" style="display:none;">
-    <h2>Settings</h2>
     <div class="settings-container">
-      <button id="resetGameButton" class="danger-button">Reset Game Progress</button>
+      <div class="settings-section">
+        <h2>Save & Load</h2>
+        <div class="settings-buttons">
+          <button id="saveToFileBtn" class="settings-button save-button">
+            <i class="fas fa-file-download"></i> Save to File
+          </button>
+          <button id="loadFromFileBtn" class="settings-button load-button">
+            <i class="fas fa-file-upload"></i> Load from File
+          </button>
+          <button id="saveToClipboardBtn" class="settings-button save-button">
+            <i class="fas fa-copy"></i> Save to Clipboard
+          </button>
+          <button id="loadFromClipboardBtn" class="settings-button load-button">
+            <i class="fas fa-paste"></i> Load from Clipboard
+          </button>
+        </div>
+      </div>
+      <div class="settings-section">
+        <h2>Danger Zone</h2>
+        <div class="settings-buttons">
+          <button id="resetGameButton" class="settings-button danger-button">
+            <i class="fas fa-trash"></i> Reset Game
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 
   <!-- Reset Game Warning Modal -->
-  <div id="resetWarningModal" class="modal" style="display: none;">
+  <div id="resetWarningModal" class="modal-overlay" style="display: none;">
     <div class="modal-content">
-      <h2>Warning: Reset Game Progress</h2>
-      <p>Are you sure you want to reset all game progress? This action cannot be undone.</p>
+      <h2>Reset Game</h2>
+      <p>Are you sure you want to reset your game? This will delete all your progress and cannot be undone.</p>
       <div class="modal-buttons">
-        <button id="confirmResetButton" class="danger-button">Yes, Reset Everything</button>
-        <button id="cancelResetButton" class="safe-button">Cancel</button>
+        <button id="confirmResetButton" class="settings-button danger-button">Reset</button>
+        <button id="cancelResetButton" class="settings-button safe-button">Cancel</button>
       </div>
     </div>
   </div>
@@ -179,6 +212,7 @@
   <script src="js/merchant.js"></script>
   <script src="js/settings.js"></script>
   <script src="js/harvester.js"></script>
+  <script src="js/absorber.js"></script>
 
   <!-- Main Behavior -->
   <script src="js/main.js"></script>

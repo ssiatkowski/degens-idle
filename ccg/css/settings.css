@@ -4,15 +4,43 @@
     margin: 0 auto;
 }
 
-.danger-button {
-    background-color: #ff4444;
-    color: white;
+.settings-section {
+    margin-bottom: 30px;
+}
+
+.settings-section h2 {
+    color: var(--dark);
+    margin-bottom: 15px;
+    font-size: 1.5em;
+}
+
+.settings-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.settings-button {
+    padding: 12px 20px;
     border: none;
-    padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
-    transition: background-color 0.3s;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.settings-button i {
+    font-size: 18px;
+}
+
+.danger-button {
+    background-color: #ff4444;
+    color: white;
 }
 
 .danger-button:hover {
@@ -22,16 +50,28 @@
 .safe-button {
     background-color: #4CAF50;
     color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s;
 }
 
 .safe-button:hover {
     background-color: #45a049;
+}
+
+.save-button {
+    background-color: #2196F3;
+    color: white;
+}
+
+.save-button:hover {
+    background-color: #1976D2;
+}
+
+.load-button {
+    background-color: #FF9800;
+    color: white;
+}
+
+.load-button:hover {
+    background-color: #F57C00;
 }
 
 .modal-buttons {

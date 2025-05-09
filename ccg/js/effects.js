@@ -14,11 +14,73 @@ window.EFFECT_NAMES = {
   };
   
   const EFFECT_SCALES = {
-    cooldownDivider: 1.5,
     minCardsPerPoke: 1.75,
     maxCardsPerPoke: 1.75,
     rarityOddsDivider: 1.25,
     // in future you can add more types here...
+  };
+
+  const EFFECTS_RARITY_VALUES = {
+    junk: { 
+      cooldownDividerBaseValue: 0.0005,  //cost scaling 5
+      maxCardsPerPokeBaseValue: 0.01,
+      minCardsPerPokeBaseValue: 0.005,
+      oddsDividerCap: 2
+    },
+    basic: { 
+      cooldownDividerBaseValue: 0.001,  //cost scaling 5
+      maxCardsPerPokeBaseValue: 0.02,
+      minCardsPerPokeBaseValue: 0.01,
+      oddsDividerCap: 2.5
+    },
+    decent: { 
+      cooldownDividerBaseValue: 0.002, //cost scaling 4.5
+      maxCardsPerPokeBaseValue: 0.03,
+      minCardsPerPokeBaseValue: 0.015,
+      oddsDividerCap: 3
+    },
+    fine: { 
+      cooldownDividerBaseValue: 0.003,  //cost scaling 4.5
+      maxCardsPerPokeBaseValue: 0.04,
+      minCardsPerPokeBaseValue: 0.02,
+      oddsDividerCap: 3.5
+    },
+    rare: { 
+      cooldownDividerBaseValue: 0.004,  //cost scaling 4
+      maxCardsPerPokeBaseValue: 0.05,
+      minCardsPerPokeBaseValue: 0.025,
+      oddsDividerCap: 4
+    },
+    epic: { 
+      cooldownDividerBaseValue: 0.005,  //cost scaling 4
+      maxCardsPerPokeBaseValue: 0.06,
+      minCardsPerPokeBaseValue: 0.03,
+      oddsDividerCap: 4.5
+    },
+    legendary: { 
+      cooldownDividerBaseValue: 0.006, //cost scaling 3.5
+      maxCardsPerPokeBaseValue: 0.07,
+      minCardsPerPokeBaseValue: 0.035,
+      oddsDividerCap: 5
+    },
+    mythic: { 
+      cooldownDividerBaseValue: 0.007, //cost scaling 3.5
+      maxCardsPerPokeBaseValue: 0.08,
+      minCardsPerPokeBaseValue: 0.04,
+      oddsDividerCap: 6
+    },
+    exotic: { 
+      cooldownDividerBaseValue: 0.008, //cost scaling 3
+      maxCardsPerPokeBaseValue: 0.09,
+      minCardsPerPokeBaseValue: 0.045,
+      oddsDividerCap: 8
+    },
+    divine: { 
+      cooldownDividerBaseValue: 0.01, //cost scaling 3
+      maxCardsPerPokeBaseValue: 0.1,
+      minCardsPerPokeBaseValue: 0.5,
+      oddsDividerCap: 10
+    }
   };
 
   function computeCardEffects(c) {
@@ -30,9 +92,16 @@ window.EFFECT_NAMES = {
       const multiplier = Math.pow(scale, c.tier - 1);
   
       switch (def.type) {
-        case "minCardsPerPoke":
+        case "minCardsPerPoke": {
+          const baseValue = EFFECTS_RARITY_VALUES[c.rarity]?.minCardsPerPokeBaseValue || 0;
+          const total = baseValue * c.level * multiplier;
+          effs[def.type] = (effs[def.type] || 0) + total;
+          break;
+        }
+  
         case "maxCardsPerPoke": {
-          const total = def.value * c.level * multiplier;
+          const baseValue = EFFECTS_RARITY_VALUES[c.rarity]?.maxCardsPerPokeBaseValue || 0;
+          const total = baseValue * c.level * multiplier;
           effs[def.type] = (effs[def.type] || 0) + total;
           break;
         }
@@ -49,18 +118,21 @@ window.EFFECT_NAMES = {
           // Start with a base divider
           let baseDivider = 0.0025;
           const total = baseDivider * c.level * multiplier;
-   
-          // Cap the total at 4  (divider of 5)
-          const cappedTotal = Math.min(total, 4);
-   
+  
+          // Cap the total based on card's rarity
+          const cap = EFFECTS_RARITY_VALUES[c.rarity]?.oddsDividerCap - 1;
+          const cappedTotal = Math.min(total, cap);
+  
           // Store the effect with the correct key format
           const key = `rarityOddsDivider.${def.realm}.${def.rarity}`;
           effs[key] = (effs[key] || 0) + cappedTotal;
           break;
-      }
+        }
   
         case "cooldownDivider": {
-          const total = Math.min(def.value * c.level * multiplier, 1);  // Cap individual card contribution at 1
+          const baseValue = EFFECTS_RARITY_VALUES[c.rarity]?.cooldownDividerBaseValue || 0;
+          const tierContribution = (c.tier * (c.tier + 1)) / 2;
+          const total = baseValue * c.level * tierContribution;
           effs.cooldownDivider = (effs.cooldownDivider || 0) + total;
           break;
         }
@@ -109,14 +181,13 @@ window.EFFECT_NAMES = {
       
               // new correct logic:
               if (sign > 0) {
-                
                 const minVal  = RARITY_ODDS_MIN[rarity] || 0;
                 weights[rarity] = Math.max(minVal, current / (1 + v));
               } else {
                 weights[rarity] = current * (1 + v);
               }
               break;
-              }
+            }
 
             default:
                 console.warn("Unknown effect key:", parts[0]);

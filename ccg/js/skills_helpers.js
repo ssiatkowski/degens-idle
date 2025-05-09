@@ -680,6 +680,13 @@ window.skills = [
       purchased: false
     },
     {
+      id: 12002,
+      name: "Gravitational Wave Absorber",
+      description: "Unlocks a device that absorbs gravitational waves each time black hole is poked. Can be activated to multiply card count for next poke. (Max 5x)",
+      cost: { realmId: 3, currencyId: "pollen", amount: 500000 },
+      purchased: false
+    },
+    {
       id: 13001,
       name: "Anomaly",
       description: "Increases max cards per poke by 4.04.",
@@ -976,6 +983,9 @@ function applySkill(id, skipCost = false) {
         break;
       case 12001: // Hawking Radiation Harvester
         window.initHarvester();
+        break;
+      case 12002: // Gravitational Wave Absorber
+        window.initGravitationalWaveAbsorber();
         break;
       case 13001: // Anomaly
         state.effects.maxCardsPerPoke += 4.04;

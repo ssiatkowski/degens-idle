@@ -1,0 +1,198 @@
+/* Skills Grid */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px,1fr));
+  gap: 16px;
+}
+
+/* Skill Tile Base */
+.skill-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px;
+  border: 2px solid;
+  border-radius: 8px;
+  background: #f8f8f8;
+  cursor: pointer;
+  transition: transform 0.1s;
+  font-family: var(--ui-font);
+}
+
+.skill-tile:hover {
+  transform: translateY(-2px);
+}
+
+/* Skill Tile States */
+.skill-tile.locked {
+  background: #ddd;
+  color: #888;
+  cursor: not-allowed;
+}
+
+.skill-tile.purchased {
+  background: #e0f0e0;
+}
+
+.skill-tile.unaffordable {
+  background: #f0e0e0;
+}
+
+.skill-tile.affordable {
+  background: #e0f8f8;
+}
+
+/* Skill Tile Inner Elements */
+.skill-desc {
+  font-size: 0.9em;
+  flex-grow: 1;
+}
+
+.skill-cost {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+/* Filter Buttons */
+.skills-filters {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.filter-btn {
+  padding: 6px 12px;
+  min-width: 100px;
+  border: 2px solid var(--accent);
+  border-radius: 6px;
+  background: var(--card-bg);
+  color: var(--font-color);
+  font-family: var(--ui-font);
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 4px var(--card-shadow);
+  touch-action: manipulation;
+}
+
+.filter-btn:hover {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.filter-btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+/* Currency Filter */
+.currency-filter-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.currency-filter-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  min-width: 120px;
+  border: 2px solid var(--accent);
+  border-radius: 6px;
+  background: var(--card-bg);
+  color: var(--font-color);
+  font-family: var(--ui-font);
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 4px var(--card-shadow);
+  touch-action: manipulation;
+}
+
+.currency-filter-btn:hover {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.currency-filter-label {
+  flex-grow: 1;
+}
+
+.currency-filter-count {
+  background: rgba(0,0,0,0.1);
+  padding: 2px 6px;
+  border-radius: 10px;
+  font-size: 0.9em;
+}
+
+.currency-filter-dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 200px;
+  max-height: 300px;
+  overflow-y: auto;
+  background: var(--card-bg);
+  border: 2px solid var(--accent);
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  z-index: 1000;
+  margin-top: 4px;
+}
+
+.currency-filter-dropdown.show {
+  display: block;
+}
+
+.currency-filter-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.currency-filter-option:hover {
+  background: rgba(0,0,0,0.05);
+}
+
+.currency-filter-option input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+}
+
+.currency-filter-option .currency-filter-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+.currency-filter-option span {
+  flex-grow: 1;
+  font-size: 0.9em;
+}
+
+/* No Skills Message */
+.no-skills-message {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 20px;
+  color: #666;
+  font-style: italic;
+}
+
+#tab-btn-skills.new-offers {
+  box-shadow: 0 0 8px rgba(0,200,0,0.7);
+  border-color: limegreen;
+} 

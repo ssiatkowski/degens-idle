@@ -52,6 +52,7 @@ window.state = {
   flipsDone: true,        // flag
   resourceGeneratorContribution: {},  // Track contributions for each resource
   harvesterValue: 0,
+  absorberValue: 1,
 };
 
 // init currencies & effects
@@ -80,6 +81,7 @@ function loadState() {
     });
     state.unlockedCurrencies = obj.unlockedCurrencies || [];
     state.harvesterValue = obj.harvesterValue || 0;
+    state.absorberValue = obj.absorberValue || 1;
     Object.entries(obj.ownedCards).forEach(([cid,data])=>{
       const c = cardMap[cid];
       if (c) {
@@ -116,6 +118,7 @@ function saveState() {
     ownedCards:      {},
     stats:           { totalPokes: state.stats.totalPokes, merchantPurchases: state.stats.merchantPurchases },
     harvesterValue: state.harvesterValue,
+    absorberValue: state.absorberValue,
     currentMerchantId: state.currentMerchant?.id ?? null,
     merchantOffers: state.merchantOffers.map(o => ({
       cardId:   o.cardId,
@@ -246,8 +249,18 @@ function showTab(tab) {
 // --- POKE & REVEAL ---
 
 function performPoke() {
+
   holeBtn.disabled = true;
   holeBtn.classList.add('disabled');
+
+  
+  // Increment absorber value
+  if (window.incrementAbsorber) {
+    window.incrementAbsorber();
+  }
+
+  // Get absorber multiplier
+  const absorberMultiplier = window.getAbsorberMultiplier ? window.getAbsorberMultiplier() : 1;
 
   // reset UI & state
   drawArea.innerHTML = '';
@@ -257,9 +270,10 @@ function performPoke() {
   // how many cards to draw this poke
   const e     = state.effects;
   const r = (Math.random() + Math.random()) / 2; // center-biased
-  const draws = Math.floor(
-    r * (e.maxCardsPerPoke - e.minCardsPerPoke + 1)
-  ) + e.minCardsPerPoke;
+  const draws = Math.floor(Math.floor(
+    ((r * (e.maxCardsPerPoke - e.minCardsPerPoke + 1)
+  ) + e.minCardsPerPoke))
+  * absorberMultiplier);
 
   // build realm → weight map
   const realmWeights = {};
@@ -698,29 +712,38 @@ function openModal(cardId) {
       if (def.type === "rarityOddsDivider") {
         const baseDivider = 0.0025;
         total = baseDivider * c.level * tierMult;
-        const cappedTotal = Math.min(total, 4);
-        const resultingDivider = cappedTotal;
-        total = 1 + resultingDivider;
-        if (resultingDivider < 4) {
-          breakdown = `(1 + base: ${formatNumber(baseDivider)} × ${formatNumber(c.level)} lvl × ${formatNumber(tierMult)} tier)`;
-          valueHtml = `${total.toFixed(4)}`;
+        const cap = EFFECTS_RARITY_VALUES[c.rarity]?.oddsDividerCap;
+        const cappedTotal = Math.min(total, cap);
+        if (total < cap - 1) {
+          breakdown = `(base: 1+ ${formatNumber(baseDivider)} × ${formatNumber(c.level)} lvl × ${formatNumber(tierMult)} tier)`;
+          valueHtml = `${formatNumber(1+cappedTotal)}`;
         } else {
           breakdown = `(Capped)`;
-          valueHtml = `${total.toFixed(0)}`;
+          valueHtml = `${formatNumber(cap)}`;
         }
-      } else {
+      } else if (def.type === "minCardsPerPoke") {
+        const baseValue = EFFECTS_RARITY_VALUES[c.rarity]?.minCardsPerPokeBaseValue || 0;
+        total = baseValue * c.level * tierMult;
+        breakdown = `(base: ${formatNumber(baseValue)} × ${formatNumber(c.level)} lvl × ${formatNumber(tierMult)} tier)`;
+        valueHtml = `+${formatNumber(total)}`;
+      } else if (def.type === "maxCardsPerPoke") {
+        const baseValue = EFFECTS_RARITY_VALUES[c.rarity]?.maxCardsPerPokeBaseValue || 0;
+        total = baseValue * c.level * tierMult;
+        breakdown = `(base: ${formatNumber(baseValue)} × ${formatNumber(c.level)} lvl × ${formatNumber(tierMult)} tier)`;
+        valueHtml = `+${formatNumber(total)}`;
+      } else if (def.type === "cooldownDivider") {
+        const baseValue = EFFECTS_RARITY_VALUES[c.rarity]?.cooldownDividerBaseValue || 0;
+        const tierContribution = (c.tier * (c.tier + 1)) / 2;
+        total = baseValue * c.level * tierContribution;
+        breakdown = `(base: ${formatNumber(baseValue)} × ${formatNumber(c.level)} lvl × ${formatNumber(tierContribution)} tier)`;
+        valueHtml = `+${formatNumber(total)}`;
+      } else if (def.type === "currencyPerPoke" || def.type === "currencyPerSec") {
         total = def.value * c.level * tierMult;
-        if (def.type === "cooldownDivider" && total >= 1) {
-          breakdown = `(Capped)`;
-          valueHtml = `+${1}`;
-        } else {
-          breakdown = `(base: ${formatNumber(def.value)} × ${formatNumber(c.level)} lvl × ${formatNumber(tierMult)} tier)`;
-          valueHtml = `+${formatNumber(total)}`;
-        }
+        breakdown = `(base: ${formatNumber(def.value)} × ${formatNumber(c.level)} lvl × ${formatNumber(tierMult)} tier)`;
+        valueHtml = `+${formatNumber(total)}`;
       }
 
-    
-      // 3) figure out the label
+      // figure out the label
       let label;
       if (def.type === "currencyPerPoke" || def.type === "currencyPerSec") {
         const iconPath = `assets/images/currencies/${def.currency}.png`;
@@ -728,7 +751,6 @@ function openModal(cardId) {
         label = `<img class="currency-effect-icon" src="${iconPath}" alt="${def.currency}" /> ${verb}`;
       }
       else if (def.type === "rarityOddsDivider") {
-        // exactly the same formatting you had before, just change the words
         const realmObj    = realmMap[def.realm];
         const realmColor  = realmColors[def.realm];
         const rarityColor = getComputedStyle(document.documentElement)
@@ -742,17 +764,17 @@ function openModal(cardId) {
         label = EFFECT_NAMES[def.type] || def.type;
       }
 
-        // 4) render
-        const li = document.createElement('p');
-        li.className = 'effect-line';
-        li.innerHTML =
-          `${label}: <strong>${valueHtml}</strong>` +
-          `<span class="eff-breakdown">${breakdown}</span>`;
-        effContainer.appendChild(li);
-      });
+      // render
+      const li = document.createElement('p');
+      li.className = 'effect-line';
+      li.innerHTML =
+        `${label}: <strong>${valueHtml}</strong>` +
+        `<span class="eff-breakdown">${breakdown}</span>`;
+      effContainer.appendChild(li);
+    });
     
-      right.appendChild(effContainer);
-    }
+    right.appendChild(effContainer);
+  }
 
 
   mc.append(left, right);
@@ -1119,7 +1141,7 @@ function startCooldown() {
   if (fillAnim) anime.remove(globalFill);
   clearInterval(blackHoleTimer);
 
-  // 4) Reset fill bar & make sure it’s at 0%
+  // 4) Reset fill bar & make sure it's at 0%
   globalFill.style.width = '0%';
 
   // 5) (Re)create your countdown element
@@ -1219,7 +1241,14 @@ function calculateCooldown() {
       sum *= realmMap[id].deselectMultiplier;
     }
   }
-  return sum / state.effects.cooldownDivider;
+  return Math.max(sum / state.effects.cooldownDivider, 0.5);
+}
+
+function getCooldownColor(cooldown) {
+  if (cooldown <= 0.5) return 'green';
+  if (cooldown < 10 * 60) return 'black';
+  if (cooldown < 60 * 60) return 'orange';
+  return 'red';
 }
 
 function updatePokeFilterStats() {
@@ -1258,10 +1287,18 @@ function updatePokeFilterStats() {
     th.textContent = label;
     row.appendChild(th);
     const td  = document.createElement('td');
-    td.textContent = val;
+    if (label === 'Poke Cooldown') {
+      td.textContent = val;
+      td.style.color = getCooldownColor(cooldownSum);
+      if (cooldownSum <= 0.5 || cooldownSum >= 3600) {
+        td.style.fontWeight = 'bold';
+      }
+    } else {
+      td.textContent = val;
+    }
     row.appendChild(td);
   });
-
+  
   // — build realm odds table —
   const oddsTable = document.createElement('table');
   oddsTable.className = 'poke-filter-stats-table';
@@ -1461,6 +1498,9 @@ renderCardsCollection();
 updatePokeFilterStats();
 updateGeneratorRates();
 checkAffordableSkills();
+
+initHarvester();
+initGravitationalWaveAbsorber();
 
 if (state.currentMerchant) {
   // we have a saved merchant + offers,
