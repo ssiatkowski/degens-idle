@@ -459,9 +459,7 @@ function performPoke() {
           revealedCount++;
 
           // Increment interceptor value
-          if (window.incrementInterceptor) {
-            window.incrementInterceptor();
-          }
+          window.incrementInterceptor();
 
           const onFlipEnd = e => {
             if (e.propertyName === 'transform') {
@@ -533,6 +531,9 @@ document.addEventListener('touchmove', (e) => {
       inner.classList.add('revealed');
       lastFlippedCard = outer;
       revealedCount++;
+
+      // Increment interceptor value
+      window.incrementInterceptor();
 
       const onFlipEnd = e => {
         if (e.propertyName === 'transform') {

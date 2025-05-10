@@ -128,7 +128,7 @@ function updateStatsUI() {
             </tr>
             <tr>
                 <td>${EFFECT_NAMES.cooldownSkipChance}</td>
-                <td>${state.effects.cooldownSkipChance * 100}%</td>
+                <td>${(state.effects.cooldownSkipChance * 100).toFixed(0)}%</td>
             </tr>
             <tr>
                 <td>${EFFECT_NAMES.merchantCooldownReduction}</td>

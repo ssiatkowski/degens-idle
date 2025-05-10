@@ -56,7 +56,7 @@ function handleInterceptorClick() {
 
 // Increment interceptor value
 function incrementInterceptor() {
-  if (!interceptorActive) {
+  if (!interceptorActive && skillMap[12201].purchased) {
     state.interceptorValue += 0.01 * (skillMap[12202].purchased ? 2 : 1);
     updateInterceptorUI();
   }
