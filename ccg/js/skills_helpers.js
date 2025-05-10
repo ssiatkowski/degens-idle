@@ -36,6 +36,13 @@ window.skills = [
       purchased: false
     },
     {
+      id: 1006,
+      name: "Unlock Mythical Beasts Realm",
+      description: "Black Hole pokes and Merchants can now give cards from Mythical Beasts realm.",
+      cost: { realmId: 6, currencyId: "rune", amount: 1e5 },
+      purchased: false
+    },
+    {
       id: 2001,
       name: "More Cards",
       description: "+2 to max cards per poke.",
@@ -103,6 +110,13 @@ window.skills = [
       name: "More Cards 10",
       description: "+40 to max cards per poke.",
       cost: { realmId: 6, currencyId: "cosmic_ray", amount: 3e4 },
+      purchased: false
+    },
+    {
+      id: 2011,
+      name: "More Cards 11",
+      description: "+50 to max cards per poke.",
+      cost: { realmId: 7, currencyId: "tooth", amount: 3.5e4 },
       purchased: false
     },
     {
@@ -176,6 +190,13 @@ window.skills = [
       purchased: false
     },
     {
+      id: 2111,
+      name: "Massive Black Hole 11",
+      description: "+700 to max cards per poke.",
+      cost: { realmId: 7, currencyId: "tooth", amount: 7e6 },
+      purchased: false
+    },
+    {
       id: 3001,
       name: "Faster Poke",
       description: "Decrease base cooldown for Rocks by 0.5s.",
@@ -218,6 +239,13 @@ window.skills = [
       purchased: false
     },
     {
+      id: 3007,
+      name: "Faster Poke 7",
+      description: "Decrease base cooldown for Mythical Beasts by 30s.",
+      cost: { realmId: 7, currencyId: "tooth", amount: 7000 },
+      purchased: false
+    },
+    {
       id: 3101,
       name: "Even Faster Poke",
       description: "Decrease base cooldown for Rocks by 0.5s.",
@@ -243,6 +271,13 @@ window.skills = [
       name: "Even Faster Poke 4",
       description: "Decrease base cooldown for Aviary by 10s.",
       cost: { realmId: 6, currencyId: "rune", amount: 1e7 },
+      purchased: false
+    },
+    {
+      id: 3105,
+      name: "Even Faster Poke 5",
+      description: "Decrease base cooldown for Ancient Relics by 15s.",
+      cost: { realmId: 7, currencyId: "tooth", amount: 2e7 },
       purchased: false
     },
     {
@@ -311,8 +346,15 @@ window.skills = [
     {
       id: 4010,
       name: "Not Less Cards 10",
-      description: "+12 to min cards per poke.",
+      description: "+15 to min cards per poke.",
       cost: { realmId: 6, currencyId: "cosmic_ray", amount: 1e6 },
+      purchased: false
+    },
+    {
+      id: 4011,
+      name: "Not Less Cards 11",
+      description: "+20 to min cards per poke.",
+      cost: { realmId: 7, currencyId: "tooth", amount: 1e6 },
       purchased: false
     },
     {
@@ -348,6 +390,13 @@ window.skills = [
       name: "Who Cares About Old Junk",
       description: "Ancient Relics realm deselect multiplier reduced by 50%.",
       cost: { realmId: 6, currencyId: "crystal", amount: 1e9 },
+      purchased: false
+    },
+    {
+      id: 5006,
+      name: "Astronomy Bores Me",
+      description: "Celestial Bodies realm deselect multiplier reduced by 50%.",
+      cost: { realmId: 7, currencyId: "tooth", amount: 1e9 },
       purchased: false
     },
     {
@@ -421,6 +470,13 @@ window.skills = [
       purchased: false
     },
     {
+      id: 6011,
+      name: "Fan of Capitalism 11",
+      description: "+1 card offered by merchants.",
+      cost: { realmId: 7, currencyId: "tooth", amount: 2e5 },
+      purchased: false
+    },
+    {
       id: 7001,
       name: "Unlock New Merchant",
       description: "Yvette Ambervale is added to pool of traveling merchants.",
@@ -455,13 +511,13 @@ window.skills = [
       cost: { realmId: 6, currencyId: "stone", amount: 5e8 },
       purchased: false
     },
-    // {
-    //   id: 7006,
-    //   name: "Unlock New Merchant 6",
-    //   description: "Tobias Quickpouch is added to pool of traveling merchants.",
-    //   cost: { realmId: 7, currencyId: "rune", amount: ? },
-    //   purchased: false
-    // },
+    {
+      id: 7006,
+      name: "Unlock New Merchant 6",
+      description: "Tobias Quickpouch is added to pool of traveling merchants.",
+      cost: { realmId: 7, currencyId: "rune", amount: 1e7 },
+      purchased: false
+    },
     // {
     //   id: 7007,
     //   name: "Unlock New Merchant 7",
@@ -540,6 +596,13 @@ window.skills = [
       purchased: false
     },
     {
+      id: 8011,
+      name: "Lucky Skip 11",
+      description: "+1% chance to skip Black Hole cooldown.",
+      cost: { realmId: 7, currencyId: "tooth", amount: 5e4 },
+      purchased: false
+    },
+    {
       id: 9001,
       name: "Faster Merchant",
       description: "Reduce merchant refresh time by 5 seconds.",
@@ -610,6 +673,13 @@ window.skills = [
       purchased: false
     },
     {
+      id: 9011,
+      name: "Faster Merchant 11",
+      description: "Reduce merchant refresh time by 5 seconds.",
+      cost: { realmId: 7, currencyId: "tooth", amount: 1.5e4 },
+      purchased: false
+    },
+    {
       id: 10001,
       name: "Resource Generator",
       description: "Generate stone equal to number of Realm 1 cards discovered squared per second.",
@@ -645,6 +715,13 @@ window.skills = [
       purchased: false
     },
     {
+      id: 10006,
+      name: "Resource Generator 6",
+      description: "Generate rune equal to number of Realm 6 cards discovered squared per second.",
+      cost: { realmId: 7, currencyId: "tooth", amount: 8e5 },
+      purchased: false
+    },
+    {
       id: 11001,
       name: "Better Merchants",
       description: "Increase Merchant Rarity Scaling by 0.1.",
@@ -670,6 +747,13 @@ window.skills = [
       name: "Better Merchants 4",
       description: "Increase Merchant Rarity Scaling by 0.1.",
       cost: { realmId: 6, currencyId: "rune", amount: 5e6 },
+      purchased: false
+    },
+    {
+      id: 11005,
+      name: "Better Merchants 5",
+      description: "Increase Merchant Rarity Scaling by 0.1.",
+      cost: { realmId: 7, currencyId: "tooth", amount: 5e6 },
       purchased: false
     },
     {
@@ -701,6 +785,20 @@ window.skills = [
       purchased: false
     },
     {
+      id: 12201,
+      name: "Space Bending Interceptor",
+      description: "Unlocks a device that intercepts space bending (both passivly and when you flip over cards), which can be activated automate flipping over cards.",
+      cost: { realmId: 5, currencyId: "egg", amount: 1e7 },
+      purchased: false
+    },
+    {
+      id: 12202,
+      name: "Interceptor Upgrade",
+      description: "Double space bending interceptor rate.",
+      cost: { realmId: 6, currencyId: "crystal", amount: 1e8 },
+      purchased: false
+    },
+    {
       id: 13001,
       name: "Anomaly",
       description: "Increases max cards per poke by 4.04.",
@@ -722,10 +820,24 @@ window.skills = [
       purchased: false
     },
     {
+      id: 13004,
+      name: "Anomaly 4",
+      description: "Multiply all generators by 4.04.",
+      cost: { realmId: 7, currencyId: "egg", amount: 4.04e14 },
+      purchased: false
+    },
+    {
       id: 14001,
       name: "Go Away Aldric!",
       description: "Lower odds that merchant is Aldric Farwander by 4x.",
       cost: { realmId: 6, currencyId: "stone", amount: 4e9 },
+      purchased: false
+    },
+    {
+      id: 14002,
+      name: "I'm Sick of you Maribel",
+      description: "Lower odds that merchant is Maribel Tealeaf by 3x.",
+      cost: { realmId: 7, currencyId: "coral", amount: 3e10 },
       purchased: false
     },
     {
@@ -735,6 +847,20 @@ window.skills = [
       cost: { realmId: 6, currencyId: "rune", amount: 1e7 },
       purchased: false
     },
+    {
+      id: 15002,
+      name: "Fleeting Realm 2",
+      description: "Reduce Sea World realm odds by 5x.",
+      cost: { realmId: 7, currencyId: "pearl", amount: 1e7 },
+      purchased: false
+    },
+    {
+      id: 16001,
+      name: "Gotta Catch 'Em All",
+      description: "+1 min card draw per total discovered cards.",
+      cost: { realmId: 7, currencyId: "feather", amount: 2e7},
+      purchased: false
+    }
   ];
 
   // --- PURCHASE LOGIC ---
@@ -785,6 +911,12 @@ function applySkill(id, skipCost = false) {
         renderRealmFilters();
         initializeSortedSkills();
         break;
+      case 1006: // Unlock Mythical Beasts Realm
+        realms[6].unlocked = true;
+        initCardsFilters();
+        renderRealmFilters();
+        initializeSortedSkills();
+        break;
       case 2001: // More Cards
         state.effects.maxCardsPerPoke += 2;
         break;
@@ -814,6 +946,9 @@ function applySkill(id, skipCost = false) {
         break;
       case 2010:
         state.effects.maxCardsPerPoke += 40;
+        break;
+      case 2011:
+        state.effects.maxCardsPerPoke += 50;
         break;
       case 2101: // Massive Black Hole
         state.effects.maxCardsPerPoke += 10;
@@ -845,6 +980,9 @@ function applySkill(id, skipCost = false) {
       case 2110:
         state.effects.maxCardsPerPoke += 600;
         break;
+      case 2111:
+        state.effects.maxCardsPerPoke += 700;
+        break;
       case 3001: // Faster Poke
         realms[s.cost.realmId - 1].cooldown -= 0.5;
         updatePokeFilterStats();
@@ -875,6 +1013,11 @@ function applySkill(id, skipCost = false) {
         updatePokeFilterStats();
         renderRealmFilters();
         break;
+      case 3007:
+        realms[s.cost.realmId - 1].cooldown -= 30;
+        updatePokeFilterStats();
+        renderRealmFilters();
+        break;
       case 3101: // Even Faster Poke
         realms[s.cost.realmId - 3].cooldown -= 0.5;
         updatePokeFilterStats();
@@ -892,6 +1035,11 @@ function applySkill(id, skipCost = false) {
         break;
       case 3104:
         realms[s.cost.realmId - 3].cooldown -= 10;
+        updatePokeFilterStats();
+        renderRealmFilters();
+        break;
+      case 3105:
+        realms[s.cost.realmId - 3].cooldown -= 15;
         updatePokeFilterStats();
         renderRealmFilters();
         break;
@@ -923,7 +1071,10 @@ function applySkill(id, skipCost = false) {
         state.effects.minCardsPerPoke += 10;
         break;
       case 4010:
-        state.effects.minCardsPerPoke += 12;
+        state.effects.minCardsPerPoke += 15;
+        break;
+      case 4011:
+        state.effects.minCardsPerPoke += 20;
         break;
       case 5001: // Nobody Likes Rocks
         realms[0].deselectMultiplier /= 2;
@@ -945,6 +1096,10 @@ function applySkill(id, skipCost = false) {
         realms[4].deselectMultiplier /= 2;
         updatePokeFilterStats();
         break;
+      case 5006:
+        realms[5].deselectMultiplier /= 2;
+        updatePokeFilterStats();
+        break;
       case 6001: // Merchant Card Increase
       case 6002:
       case 6003:
@@ -955,6 +1110,7 @@ function applySkill(id, skipCost = false) {
       case 6008:
       case 6009:
       case 6010:
+      case 6011:
         state.effects.merchantNumCards += 1;
         break;
       case 7001: // Unlock New Merchant
@@ -972,6 +1128,9 @@ function applySkill(id, skipCost = false) {
       case 7005: // Unlock New Merchant 5
         unlockMerchantByName('Runa Frostpelt');
         break;
+      case 7006: // Unlock New Merchant 6
+        unlockMerchantByName('Tobias Quickpouch');
+        break;
       case 8001: // Lucky Skip
       case 8002: // Lucky Skip 2
       case 8003: // Lucky Skip 3
@@ -982,6 +1141,7 @@ function applySkill(id, skipCost = false) {
       case 8008: // Lucky Skip 8
       case 8009: // Lucky Skip 9
       case 8010: // Lucky Skip 10
+      case 8011: // Lucky Skip 11
         state.effects.cooldownSkipChance = (state.effects.cooldownSkipChance || 0) + 0.01;
         break;
       case 9001: // Merchant Cooldown Reduction
@@ -994,6 +1154,7 @@ function applySkill(id, skipCost = false) {
       case 9008:
       case 9009:
       case 9010:
+      case 9011:
         state.effects.merchantCooldownReduction += 5;
         break;
       case 10001: // Resource Generator
@@ -1001,12 +1162,14 @@ function applySkill(id, skipCost = false) {
       case 10003:
       case 10004:
       case 10005:
+      case 10006:
         updateGeneratorRates();
         break;
       case 11001: // Better Merchants
       case 11002: // Better Merchants 2
       case 11003: // Better Merchants 3
       case 11004: // Better Merchants 4
+      case 11005: // Better Merchants 5
         state.effects.extraMerchantRarityScaling += 0.1;
         break;
       case 12001: // Hawking Radiation Harvester
@@ -1017,6 +1180,13 @@ function applySkill(id, skipCost = false) {
       case 12101: // Gravitational Wave Absorber
         window.initGravitationalWaveAbsorber();
         break;
+      case 12102: // Absorber Upgrade
+        break;
+      case 12201: // Space Bending Interceptor
+        window.initSpaceBendingInterceptor();
+        break;
+      case 12202: // Interceptor Upgrade
+        break;
       case 13001: // Anomaly
         state.effects.maxCardsPerPoke += 4.04;
         break;
@@ -1026,12 +1196,25 @@ function applySkill(id, skipCost = false) {
       case 13003: // Anomaly 3
         state.effects.merchantCooldownReduction += 4.04;
         break;
+      case 13004: // Anomaly 4
+        updateGeneratorRates();
+        break;
       case 14001: // Go Away Aldric!
         merchants[0].merchantOdds /= 4;
+        break;
+      case 14002: // I'm Sick of you Maribel
+        merchants[1].merchantOdds /= 3;
         break;
       case 15001: // Fleeting Realm
         realms[0].pokeWeight /= 5;
         updatePokeFilterStats();
+        break;
+      case 15002: // Fleeting Realm 2
+        realms[1].pokeWeight /= 5;
+        updatePokeFilterStats();
+        break;
+      case 16001: // Gotta Catch 'Em All
+        addMinCardsPerDiscovered();
         break;
     }
 

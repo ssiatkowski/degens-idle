@@ -98,18 +98,18 @@ const merchants = [
       description: 'Not a basic bitch. No basic cards. That is all.',
       unlocked: false
     },
-    // {
-    //   id: 9,
-    //   name: 'Tobias Quickpouch',
-    //   cardMultiplier: 10,
-    //   refreshTime: 100,
-    //   merchantOdds: 200,
-    //   raritiesSkipped: [],
-    //   priceMultiplier: 0.75,
-    //   rarityScaling: 2.5,
-    //   description: 'The only BS this guy knows is Bulk Sales. Carries 10x as many cards, sells them at 75% of the price, and stays 1/3 as long.',
-    //   unlocked: false
-    // },
+    {
+      id: 9,
+      name: 'Tobias Quickpouch',
+      cardMultiplier: 10,
+      refreshTime: 100,
+      merchantOdds: 200,
+      raritiesSkipped: [],
+      priceMultiplier: 0.75,
+      rarityScaling: 2.5,
+      description: 'The only BS this guy knows is Bulk Sales. Carries 10x as many cards, sells them at 75% of the price, and stays 1/3 as long.',
+      unlocked: false
+    },
     // {
     //   id: 10,
     //   name: 'Selene Starwhistle',

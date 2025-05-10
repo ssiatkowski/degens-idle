@@ -624,12 +624,12 @@ window.cards = [
       },
       {
         "type": "rarityOddsDivider",
-        "realm": 2,
+        "realm": 5,
         "rarity": "basic"
       },
       {
         "type": "rarityOddsDivider",
-        "realm": 2,
+        "realm": 5,
         "rarity": "junk"
       }
     ]
@@ -975,6 +975,11 @@ window.cards = [
       },
       {
         "type": "cooldownDivider"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "decent"
       }
     ]
   },
@@ -1100,40 +1105,17 @@ window.cards = [
       {
         "type": "rarityOddsDivider",
         "realm": 2,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
         "rarity": "decent"
       }
     ]
   },
   {
     "id": "217",
-    "name": "Kraken Tentacle",
-    "realm": 2,
-    "rarity": "rare",
-    "quantity": 0,
-    "tier": 0,
-    "level": 1,
-    "levelScaling": 5.0,
-    "levelCost": {
-      "currency": "coral",
-      "amount": 800.0
-    },
-    "description": "Legends of the kraken may have originated from giant squid sightings.",
-    "baseEffects": [
-      {
-        "type": "currencyPerPoke",
-        "currency": "coral",
-        "value": 250.0
-      },
-      {
-        "type": "minCardsPerPoke"
-      },
-      {
-        "type": "maxCardsPerPoke"
-      }
-    ]
-  },
-  {
-    "id": "218",
     "name": "Sunken Idol",
     "realm": 2,
     "rarity": "rare",
@@ -1171,6 +1153,44 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 2,
         "rarity": "decent"
+      }
+    ]
+  },
+  {
+    "id": "218",
+    "name": "Kraken Tentacle",
+    "realm": 2,
+    "rarity": "epic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 5.0,
+    "levelCost": {
+      "currency": "coral",
+      "amount": 800.0
+    },
+    "description": "Legends of the kraken may have originated from giant squid sightings.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "coral",
+        "value": 2000.0
+      },
+      {
+        "type": "minCardsPerPoke"
+      },
+      {
+        "type": "maxCardsPerPoke"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "basic"
       }
     ]
   },
@@ -1213,6 +1233,16 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 2,
         "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "basic"
       }
     ]
   },
@@ -1916,7 +1946,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "pollen",
-        "value": 250.0
+        "value": 500.0
       },
       {
         "type": "rarityOddsDivider",
@@ -2054,6 +2084,16 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "decent"
       }
     ]
   },
@@ -2361,6 +2401,11 @@ window.cards = [
       },
       {
         "type": "cooldownDivider"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 3,
+        "rarity": "decent"
       }
     ]
   },
@@ -2425,6 +2470,11 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 4,
         "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 3,
+        "rarity": "junk"
       }
     ]
   },
@@ -2536,7 +2586,7 @@ window.cards = [
     "levelScaling": 4.0,
     "levelCost": {
       "currency": "egg",
-      "amount": 1000.0
+      "amount": 100.0
     },
     "description": "Eagles build the largest nests of any bird, sometimes weighing over a ton.",
     "baseEffects": [
@@ -2547,6 +2597,11 @@ window.cards = [
       },
       {
         "type": "cooldownDivider"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 3,
+        "rarity": "decent"
       }
     ]
   },
@@ -2678,6 +2733,16 @@ window.cards = [
       },
       {
         "type": "minCardsPerPoke"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 3,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 3,
+        "rarity": "fine"
       }
     ]
   },
@@ -2738,6 +2803,11 @@ window.cards = [
       },
       {
         "type": "cooldownDivider"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 3,
+        "rarity": "fine"
       }
     ]
   },
@@ -2820,6 +2890,11 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 4,
         "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "junk"
       }
     ]
   },
@@ -2858,6 +2933,11 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 4,
         "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "basic"
       }
     ]
   },
@@ -2879,7 +2959,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "egg",
-        "value": 1500.0
+        "value": 5000.0
       },
       {
         "type": "currencyPerSec",
@@ -2910,6 +2990,11 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 4,
         "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "decent"
       }
     ]
   },
@@ -3416,6 +3501,11 @@ window.cards = [
       },
       {
         "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
         "realm": 4,
         "rarity": "basic"
       },
@@ -3521,7 +3611,7 @@ window.cards = [
     "levelScaling": 2.0,
     "levelCost": {
       "currency": "rune",
-      "amount": 1000.0
+      "amount": 250.0
     },
     "description": "Thor’s hammer, capable of leveling mountains.",
     "baseEffects": [
@@ -3732,6 +3822,11 @@ window.cards = [
         "type": "currencyPerPoke",
         "currency": "rune",
         "value": 25.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "junk"
       },
       {
         "type": "rarityOddsDivider",
@@ -4285,6 +4380,11 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 4,
         "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "decent"
       }
     ]
   },
@@ -4368,6 +4468,11 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 6,
         "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "rare"
       }
     ]
   },
@@ -4389,7 +4494,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "stone",
-        "value": 500.0
+        "value": 750.0
       },
       {
         "type": "rarityOddsDivider",
@@ -4680,6 +4785,1467 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 5,
         "rarity": "rare"
+      }
+    ]
+  },
+  {
+    "id": "701",
+    "name": "Mouse",
+    "realm": 7,
+    "rarity": "junk",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 1.5,
+    "levelCost": {
+      "currency": "tooth",
+      "amount": 5.0
+    },
+    "description": "A mouse's teeth never stop growing throughout its entire life.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "tooth",
+        "value": 1.0
+      }
+    ]
+  },
+  {
+    "id": "702",
+    "name": "Rat",
+    "realm": 7,
+    "rarity": "junk",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.0,
+    "levelCost": {
+      "currency": "tooth",
+      "amount": 5.0
+    },
+    "description": "Rats are so intelligent they can learn their names and come when called.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "tooth",
+        "value": 1.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "junk"
+      }
+    ]
+  },
+  {
+    "id": "703",
+    "name": "Rabbit",
+    "realm": 7,
+    "rarity": "junk",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.0,
+    "levelCost": {
+      "currency": "tooth",
+      "amount": 5.0
+    },
+    "description": "Rabbits' teeth grow up to 5 inches per year and must be constantly worn down.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "tooth",
+        "value": 1.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "junk"
+      }
+    ]
+  },
+  {
+    "id": "704",
+    "name": "Pixie",
+    "realm": 7,
+    "rarity": "basic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.5,
+    "levelCost": {
+      "currency": "tooth",
+      "amount": 25.0
+    },
+    "description": "In folklore pixies were known for leading travelers astray in the wilderness.",
+    "baseEffects": [
+      {
+        "type": "currencyPerSec",
+        "currency": "tooth",
+        "value": 1.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "basic"
+      }
+    ]
+  },
+  {
+    "id": "705",
+    "name": "Fox",
+    "realm": 7,
+    "rarity": "basic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.0,
+    "levelCost": {
+      "currency": "tooth",
+      "amount": 40.0
+    },
+    "description": "Foxes can hear rodents digging underground from nearly 40 feet away.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "tooth",
+        "value": 10.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "basic"
+      }
+    ]
+  },
+  {
+    "id": "706",
+    "name": "Wolf",
+    "realm": 7,
+    "rarity": "basic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.0,
+    "levelCost": {
+      "currency": "tooth",
+      "amount": 40.0
+    },
+    "description": "Wolves can smell prey up to 1.5 miles away even in dense forests.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "tooth",
+        "value": 10.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "basic"
+      }
+    ]
+  },
+  {
+    "id": "707",
+    "name": "Bear",
+    "realm": 7,
+    "rarity": "decent",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.0,
+    "levelCost": {
+      "currency": "tooth",
+      "amount": 50.0
+    },
+    "description": "Bears can smell food from over 18 miles away and have better noses than bloodhounds.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "tooth",
+        "value": 15.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "basic"
+      }
+    ]
+  },
+  {
+    "id": "708",
+    "name": "Lion",
+    "realm": 7,
+    "rarity": "decent",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 4.5,
+    "levelCost": {
+      "currency": "tooth",
+      "amount": 100.0
+    },
+    "description": "A lion's roar can be heard from up to 5 miles away.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "tooth",
+        "value": 50.0
+      },
+      {
+        "type": "cooldownDivider"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "basic"
+      }
+    ]
+  },
+  {
+    "id": "709",
+    "name": "Leopard",
+    "realm": 7,
+    "rarity": "decent",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 1.5,
+    "levelCost": {
+      "currency": "tooth",
+      "amount": 100.0
+    },
+    "description": "Leopards can carry prey twice their weight up into trees, even full-grown antelopes.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "tooth",
+        "value": 15.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "junk"
+      }
+    ]
+  },
+  {
+    "id": "710",
+    "name": "Panther",
+    "realm": 7,
+    "rarity": "decent",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.5,
+    "levelCost": {
+      "currency": "tooth",
+      "amount": 25.0
+    },
+    "description": "Panthers actually aren't a separate species but are black variants of leopards or jaguars.",
+    "baseEffects": [
+      {
+        "type": "currencyPerSec",
+        "currency": "tooth",
+        "value": 5.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "basic"
+      }
+    ]
+  },
+  {
+    "id": "711",
+    "name": "Tiger",
+    "realm": 7,
+    "rarity": "fine",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.0,
+    "levelCost": {
+      "currency": "tooth",
+      "amount": 50.0
+    },
+    "description": "Tigers have striped skin beneath their fur—not just striped fur.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "tooth",
+        "value": 25.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "decent"
+      }
+    ]
+  },
+  {
+    "id": "712",
+    "name": "Dire Wolf",
+    "realm": 7,
+    "rarity": "fine",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 4.5,
+    "levelCost": {
+      "currency": "tooth",
+      "amount": 200.0
+    },
+    "description": "Dire wolves were 25% larger than modern wolves and went extinct about 10000 years ago.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "tooth",
+        "value": 100.0
+      },
+      {
+        "type": "cooldownDivider"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 3,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 4,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "basic"
+      }
+    ]
+  },
+  {
+    "id": "713",
+    "name": "Griffin",
+    "realm": 7,
+    "rarity": "fine",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.5,
+    "levelCost": {
+      "currency": "feather",
+      "amount": 10.0
+    },
+    "description": "Griffins were believed to guard massive gold deposits in ancient mountains.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "tooth",
+        "value": 25.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "tooth",
+        "value": 10.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 3,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 4,
+        "rarity": "decent"
+      }
+    ]
+  },
+  {
+    "id": "714",
+    "name": "Unicorn",
+    "realm": 7,
+    "rarity": "fine",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.0,
+    "levelCost": {
+      "currency": "tooth",
+      "amount": 50.0
+    },
+    "description": "Unicorn horns were believed to purify water and neutralize poison in medieval times.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "tooth",
+        "value": 25.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "basic"
+      }
+    ]
+  },
+  {
+    "id": "715",
+    "name": "Pegasus",
+    "realm": 7,
+    "rarity": "rare",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 5.0,
+    "levelCost": {
+      "currency": "feather",
+      "amount": 10.0
+    },
+    "description": "In Greek mythology Pegasus was born from the blood of Medusa when Perseus beheaded her.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "feather",
+        "value": 10.0
+      },
+      {
+        "type": "maxCardsPerPoke"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "fine"
+      }
+    ]
+  },
+  {
+    "id": "716",
+    "name": "Centaur",
+    "realm": 7,
+    "rarity": "rare",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.0,
+    "levelCost": {
+      "currency": "tooth",
+      "amount": 50.0
+    },
+    "description": "Centaurs were exceptional astronomers in Greek mythology who taught humans about the stars.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "tooth",
+        "value": 100.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "decent"
+      }
+    ]
+  },
+  {
+    "id": "717",
+    "name": "Satyr",
+    "realm": 7,
+    "rarity": "rare",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 4.0,
+    "levelCost": {
+      "currency": "tooth",
+      "amount": 200.0
+    },
+    "description": "Satyrs were companions of Dionysus who could play panpipes so beautifully they could enchant anyone who heard.",
+    "baseEffects": [
+      {
+        "type": "currencyPerSec",
+        "currency": "tooth",
+        "value": 40.0
+      },
+      {
+        "type": "cooldownDivider"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "fine"
+      }
+    ]
+  },
+  {
+    "id": "718",
+    "name": "Minotaur",
+    "realm": 7,
+    "rarity": "rare",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.0,
+    "levelCost": {
+      "currency": "tooth",
+      "amount": 50.0
+    },
+    "description": "The original Minotaur lived in a labyrinth designed by Daedalus that was so complex no one could escape.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "tooth",
+        "value": 100.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "decent"
+      }
+    ]
+  },
+  {
+    "id": "719",
+    "name": "Cerberus",
+    "realm": 7,
+    "rarity": "rare",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.5,
+    "levelCost": {
+      "currency": "tooth",
+      "amount": 25.0
+    },
+    "description": "Cerberus had three heads and a serpent for a tail guarding the gates of the Underworld.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "tooth",
+        "value": 100.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "tooth",
+        "value": 25.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "fine"
+      }
+    ]
+  },
+  {
+    "id": "720",
+    "name": "Basilisk",
+    "realm": 7,
+    "rarity": "rare",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.0,
+    "levelCost": {
+      "currency": "royal_jelly",
+      "amount": 10.0
+    },
+    "description": "Medieval legends claimed basilisks could kill with just a glance or breath.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "tooth",
+        "value": 100.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "rare"
+      }
+    ]
+  },
+  {
+    "id": "721",
+    "name": "Chimera",
+    "realm": 7,
+    "rarity": "epic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.0,
+    "levelCost": {
+      "currency": "tooth",
+      "amount": 50.0
+    },
+    "description": "The Chimera had the head of a lion, body of a goat, and tail of a serpent—each representing past, present, and future.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "tooth",
+        "value": 500.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 4,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 4,
+        "rarity": "rare"
+      }
+    ]
+  },
+  {
+    "id": "722",
+    "name": "Sphinx",
+    "realm": 7,
+    "rarity": "epic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.5,
+    "levelCost": {
+      "currency": "feather",
+      "amount": 5.0
+    },
+    "description": "The Sphinx's famous riddle asked travelers \"What walks on four feet in the morning, two in the afternoon, and three at night?\"",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "tooth",
+        "value": 750.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 3,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 3,
+        "rarity": "rare"
+      }
+    ]
+  },
+  {
+    "id": "723",
+    "name": "Hydra",
+    "realm": 7,
+    "rarity": "epic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 4.0,
+    "levelCost": {
+      "currency": "royal_jelly",
+      "amount": 10.0
+    },
+    "description": "For each head cut from the Hydra two more would grow in its place.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "tooth",
+        "value": 1000.0
+      },
+      {
+        "type": "cooldownDivider"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "fine"
+      }
+    ]
+  },
+  {
+    "id": "724",
+    "name": "Cockatrice",
+    "realm": 7,
+    "rarity": "epic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 5.0,
+    "levelCost": {
+      "currency": "royal_jelly",
+      "amount": 10.0
+    },
+    "description": "The cockatrice was believed to be born from a rooster's egg incubated by a serpent or toad.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "tooth",
+        "value": 1250.0
+      },
+      {
+        "type": "minCardsPerPoke"
+      },
+      {
+        "type": "maxCardsPerPoke"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "rare"
+      }
+    ]
+  },
+  {
+    "id": "725",
+    "name": "Tarrasque",
+    "realm": 7,
+    "rarity": "epic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.5,
+    "levelCost": {
+      "currency": "royal_jelly",
+      "amount": 5.0
+    },
+    "description": "The Tarrasque was a legendary dragon-like creature from Provence, France that could only be tamed by a saint.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "tooth",
+        "value": 750.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "tooth",
+        "value": 75.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "fine"
+      }
+    ]
+  },
+  {
+    "id": "726",
+    "name": "Chrysomallos",
+    "realm": 7,
+    "rarity": "legendary",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.0,
+    "levelCost": {
+      "currency": "tooth",
+      "amount": 25.0
+    },
+    "description": "Chrysomallos was the golden-fleeced ram in Greek mythology that could fly and speak human language.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "tooth",
+        "value": 1000.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "fine"
+      }
+    ]
+  },
+  {
+    "id": "727",
+    "name": "Manticore",
+    "realm": 7,
+    "rarity": "legendary",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.0,
+    "levelCost": {
+      "currency": "tooth",
+      "amount": 25.0
+    },
+    "description": "The manticore had the body of a lion, face of a human, and tail of a scorpion with poisonous spines.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "tooth",
+        "value": 1000.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "rare"
+      }
+    ]
+  },
+  {
+    "id": "728",
+    "name": "Wyvern",
+    "realm": 7,
+    "rarity": "legendary",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 3.5,
+    "levelCost": {
+      "currency": "tooth",
+      "amount": 10.0
+    },
+    "description": "Unlike dragons, wyverns have only two legs and use their wings as forelegs when on the ground.",
+    "baseEffects": [
+      {
+        "type": "currencyPerSec",
+        "currency": "tooth",
+        "value": 100.0
+      },
+      {
+        "type": "cooldownDivider"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 3,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 4,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "decent"
+      }
+    ]
+  },
+  {
+    "id": "729",
+    "name": "Ancient Dragon",
+    "realm": 7,
+    "rarity": "legendary",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 1.5,
+    "levelCost": {
+      "currency": "royal_jelly",
+      "amount": 10.0
+    },
+    "description": "Ancient dragons were believed to be as old as the world itself and repositories of all knowledge.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "tooth",
+        "value": 250.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 3,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 4,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "basic"
+      }
+    ]
+  },
+  {
+    "id": "730",
+    "name": "Leviathan",
+    "realm": 7,
+    "rarity": "legendary",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 5.0,
+    "levelCost": {
+      "currency": "pearl",
+      "amount": 10.0
+    },
+    "description": "The Leviathan is described in the Bible as a massive sea monster that no human could subdue.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "pearl",
+        "value": 20.0
+      },
+      {
+        "type": "minCardsPerPoke"
+      },
+      {
+        "type": "maxCardsPerPoke"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "epic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "epic"
+      }
+    ]
+  },
+  {
+    "id": "731",
+    "name": "Kraken",
+    "realm": 7,
+    "rarity": "legendary",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 5.0,
+    "levelCost": {
+      "currency": "pearl",
+      "amount": 25.0
+    },
+    "description": "Sailors once believed the Kraken could create whirlpools that could sink entire fleets of ships.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "royal_jelly",
+        "value": 20.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "royal_jelly",
+        "value": 5.0
+      },
+      {
+        "type": "maxCardsPerPoke"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 3,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 4,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "decent"
+      }
+    ]
+  },
+  {
+    "id": "732",
+    "name": "Ziz",
+    "realm": 7,
+    "rarity": "mythic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 5.0,
+    "levelCost": {
+      "currency": "feather",
+      "amount": 25.0
+    },
+    "description": "In Jewish mythology, Ziz was a massive bird so large its wingspan could block out the sun.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "feather",
+        "value": 100.0
+      },
+      {
+        "type": "cooldownDivider"
+      },
+      {
+        "type": "maxCardsPerPoke"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 3,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 4,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "fine"
+      }
+    ]
+  },
+  {
+    "id": "733",
+    "name": "Quetzalcoatl",
+    "realm": 7,
+    "rarity": "mythic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 3.5,
+    "levelCost": {
+      "currency": "feather",
+      "amount": 25.0
+    },
+    "description": "Quetzalcoatl, the \"Feathered Serpent\", was worshipped as a creator deity in Mesoamerican cultures.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "tooth",
+        "value": 7500.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "royal_jelly",
+        "value": 20.0
+      },
+      {
+        "type": "cooldownDivider"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 3,
+        "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 4,
+        "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "decent"
+      }
+    ]
+  },
+  {
+    "id": "734",
+    "name": "Fenrir",
+    "realm": 7,
+    "rarity": "mythic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 5.0,
+    "levelCost": {
+      "currency": "tooth",
+      "amount": 10.0
+    },
+    "description": "In Norse mythology, Fenrir was a monstrous wolf destined to kill Odin during Ragnarök.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "royal_jelly",
+        "value": 50.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "tooth",
+        "value": 500.0
+      },
+      {
+        "type": "maxCardsPerPoke"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 3,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 4,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "junk"
+      }
+    ]
+  },
+  {
+    "id": "735",
+    "name": "Jörmungandr",
+    "realm": 7,
+    "rarity": "mythic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 5.0,
+    "levelCost": {
+      "currency": "pearl",
+      "amount": 10.0
+    },
+    "description": "Jörmungandr was a sea serpent so large it encircled the entire world and grasped its own tail.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "royal_jelly",
+        "value": 100.0
+      },
+      {
+        "type": "cooldownDivider"
+      },
+      {
+        "type": "maxCardsPerPoke"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 3,
+        "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 4,
+        "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "rare"
+      }
+    ]
+  },
+  {
+    "id": "736",
+    "name": "Bahamut",
+    "realm": 7,
+    "rarity": "exotic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 3.0,
+    "levelCost": {
+      "currency": "royal_jelly",
+      "amount": 10.0
+    },
+    "description": "In Arabian mythology, Bahamut was a massive fish that supported the world on its back.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "royal_jelly",
+        "value": 1000.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "royal_jelly",
+        "value": 100.0
+      },
+      {
+        "type": "cooldownDivider"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "epic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 3,
+        "rarity": "epic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 4,
+        "rarity": "epic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "legendary"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "epic"
       }
     ]
   }

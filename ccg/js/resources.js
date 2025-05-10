@@ -28,12 +28,13 @@ const defaultRarityWeights = {
 
 // 2) create your realms without individual rarityWeights
 window.realms = [
-  { id: 1, name: "Rocks",             unlocked: true,  cooldown: 3,  deselectMultiplier: 5, pokeWeight: 1e11 },
-  { id: 2, name: "Sea World",         unlocked: false, cooldown: 6,  deselectMultiplier: 5, pokeWeight: 8e10 },
-  { id: 3, name: "Bugdom",            unlocked: false, cooldown: 15, deselectMultiplier: 5, pokeWeight: 6e10 },
-  { id: 4, name: "Aviary",            unlocked: false, cooldown: 30, deselectMultiplier: 5, pokeWeight: 4e10 },
-  { id: 5, name: "Ancient Relics",    unlocked: false, cooldown: 50, deselectMultiplier: 5, pokeWeight: 2e10 },
-  { id: 6, name: "Celestial Bodies",  unlocked: false, cooldown: 80, deselectMultiplier: 5, pokeWeight: 1e10 },
+  { id: 1, name: "Rocks",             unlocked: true,  cooldown: 3,   deselectMultiplier: 5, pokeWeight: 1e11 },
+  { id: 2, name: "Sea World",         unlocked: false, cooldown: 6,   deselectMultiplier: 5, pokeWeight: 8e10 },
+  { id: 3, name: "Bugdom",            unlocked: false, cooldown: 15,  deselectMultiplier: 5, pokeWeight: 6e10 },
+  { id: 4, name: "Aviary",            unlocked: false, cooldown: 30,  deselectMultiplier: 5, pokeWeight: 4e10 },
+  { id: 5, name: "Ancient Relics",    unlocked: false, cooldown: 50,  deselectMultiplier: 5, pokeWeight: 2e10 },
+  { id: 6, name: "Celestial Bodies",  unlocked: false, cooldown: 80,  deselectMultiplier: 5, pokeWeight: 1e10 },
+  { id: 7, name: "Mythical Beasts",   unlocked: false, cooldown: 120, deselectMultiplier: 5, pokeWeight: 8e9 },
 ];
 
 // 3) give every realm its own copy of the default weights for both capped and uncapped
@@ -73,6 +74,7 @@ window.currencies = [
 { id: 'feather',     name: 'Feather',     realm: 4, scarcity: 100, icon: 'feather.png'     },
 { id: 'crystal',     name: 'Crystal',     realm: 5, scarcity: 1,   icon: 'crystal.png'     },
 { id: 'cosmic_ray',  name: 'Cosmic Ray',  realm: 6, scarcity: 100, icon: 'cosmic_ray.png'  },
+{ id: 'tooth',       name: 'Tooth',       realm: 7, scarcity: 1,   icon: 'tooth.png'       },
 ];
 
 

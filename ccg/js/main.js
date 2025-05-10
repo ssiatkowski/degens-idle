@@ -53,6 +53,7 @@ window.state = {
   resourceGeneratorContribution: {},  // Track contributions for each resource
   harvesterValue: 0,
   absorberValue: 1,
+  interceptorValue: 0,     // Add interceptor value
 };
 
 // init currencies & effects
@@ -82,6 +83,7 @@ function loadState() {
     state.unlockedCurrencies = obj.unlockedCurrencies || [];
     state.harvesterValue = obj.harvesterValue || 0;
     state.absorberValue = obj.absorberValue || 1;
+    state.interceptorValue = obj.interceptorValue || 0;
     Object.entries(obj.ownedCards).forEach(([cid,data])=>{
       const c = cardMap[cid];
       if (c) {
@@ -119,6 +121,7 @@ function saveState() {
     stats:           { totalPokes: state.stats.totalPokes, merchantPurchases: state.stats.merchantPurchases },
     harvesterValue: state.harvesterValue,
     absorberValue: state.absorberValue,
+    interceptorValue: state.interceptorValue,
     currentMerchantId: state.currentMerchant?.id ?? null,
     merchantOffers: state.merchantOffers.map(o => ({
       cardId:   o.cardId,
@@ -249,11 +252,9 @@ function showTab(tab) {
 // --- POKE & REVEAL ---
 
 function performPoke() {
-
   holeBtn.disabled = true;
   holeBtn.classList.add('disabled');
 
-  
   // Increment absorber value
   if (window.incrementAbsorber) {
     window.incrementAbsorber();
@@ -274,6 +275,23 @@ function performPoke() {
     ((r * (e.maxCardsPerPoke - e.minCardsPerPoke + 1)
   ) + e.minCardsPerPoke))
   * absorberMultiplier);
+
+  // Create and animate floating number
+  const floatingNumber = document.createElement('div');
+  floatingNumber.className = 'floating-number';
+  floatingNumber.textContent = formatNumber(draws);
+  
+  // Position it at the center of the black hole, accounting for scroll
+  const holeRect = holeBtn.getBoundingClientRect();
+  floatingNumber.style.left = (holeRect.left + holeRect.width / 2) + 'px';
+  floatingNumber.style.top = (holeRect.top + holeRect.height / 2) + 'px';
+  
+  document.body.appendChild(floatingNumber);
+  
+  // Remove the element after animation completes
+  floatingNumber.addEventListener('animationend', () => {
+    floatingNumber.remove();
+  });
 
   // build realm → weight map
   const realmWeights = {};
@@ -405,32 +423,67 @@ function performPoke() {
     outer.append(inner);
     drawArea.append(outer);
 
-    // hover to flip
-    outer.addEventListener('mouseenter', () => {
-      if (!inner.classList.contains('revealed')) {
-        inner.classList.add('revealed');
-        revealedCount++;
+    // Check if interceptor is active
+    if (window.isInterceptorActive && window.isInterceptorActive()) {
+      // Auto-flip after a short delay
+      setTimeout(() => {
+        if (!inner.classList.contains('revealed')) {
+          inner.classList.add('revealed');
+          revealedCount++;
 
-        const onFlipEnd = e => {
-          if (e.propertyName === 'transform') {
-            if (wasNew) {
-              inner.classList.add('spin');
-              inner.addEventListener('animationend', () => inner.classList.remove('spin'), { once: true });
-            } else if (newTier > oldTier) {
-              inner.classList.add('shake');
-              inner.addEventListener('animationend', () => inner.classList.remove('shake'), { once: true });
+          const onFlipEnd = e => {
+            if (e.propertyName === 'transform') {
+              if (wasNew) {
+                inner.classList.add('spin');
+                inner.addEventListener('animationend', () => inner.classList.remove('spin'), { once: true });
+              } else if (newTier > oldTier) {
+                inner.classList.add('shake');
+                inner.addEventListener('animationend', () => inner.classList.remove('shake'), { once: true });
+              }
             }
-          }
-          inner.removeEventListener('transitionend', onFlipEnd);
-        };
-        inner.addEventListener('transitionend', onFlipEnd);
+            inner.removeEventListener('transitionend', onFlipEnd);
+          };
+          inner.addEventListener('transitionend', onFlipEnd);
 
-        if (revealedCount === currentPackCount) {
-          state.flipsDone = true;
-          tryEnableHole();
+          if (revealedCount === currentPackCount) {
+            state.flipsDone = true;
+            tryEnableHole();
+          }
         }
-      }
-    });
+      }, 500);
+    } else {
+      // Normal hover to flip behavior
+      outer.addEventListener('mouseenter', () => {
+        if (!inner.classList.contains('revealed')) {
+          inner.classList.add('revealed');
+          revealedCount++;
+
+          // Increment interceptor value
+          if (window.incrementInterceptor) {
+            window.incrementInterceptor();
+          }
+
+          const onFlipEnd = e => {
+            if (e.propertyName === 'transform') {
+              if (wasNew) {
+                inner.classList.add('spin');
+                inner.addEventListener('animationend', () => inner.classList.remove('spin'), { once: true });
+              } else if (newTier > oldTier) {
+                inner.classList.add('shake');
+                inner.addEventListener('animationend', () => inner.classList.remove('shake'), { once: true });
+              }
+            }
+            inner.removeEventListener('transitionend', onFlipEnd);
+          };
+          inner.addEventListener('transitionend', onFlipEnd);
+
+          if (revealedCount === currentPackCount) {
+            state.flipsDone = true;
+            tryEnableHole();
+          }
+        }
+      });
+    }
 
     // click to open modal
     outer.addEventListener('click', () => {
@@ -564,6 +617,8 @@ function openModal(cardId) {
     .getPropertyValue('--modal-opacity'));
 
   c.isNew = false;
+
+  checkForNewCards();
 
   // OVERLAY
   const ov = document.createElement('div');
@@ -948,7 +1003,7 @@ function updateGeneratorRates() {
     const discoveredCount = cards.filter(c => c.realm === 1 && c.quantity > 0).length;
     
     // Calculate new contribution
-    const newContribution = discoveredCount * discoveredCount;
+    const newContribution = discoveredCount * discoveredCount * skillMap[13004].purchased ? 4.04 : 1;
     
     // Remove old contribution and add new one
     state.effects.currencyPerSec.stone = (state.effects.currencyPerSec.stone || 0) 
@@ -965,7 +1020,7 @@ function updateGeneratorRates() {
     const discoveredCount = cards.filter(c => c.realm === 2 && c.quantity > 0).length;
     
     // Calculate new contribution
-    const newContribution = discoveredCount * discoveredCount;
+    const newContribution = discoveredCount * discoveredCount * skillMap[13004].purchased ? 4.04 : 1;
     
     // Remove old contribution and add new one
     state.effects.currencyPerSec.coral = (state.effects.currencyPerSec.coral || 0) 
@@ -982,7 +1037,7 @@ function updateGeneratorRates() {
     const discoveredCount = cards.filter(c => c.realm === 3 && c.quantity > 0).length;
     
     // Calculate new contribution
-    const newContribution = discoveredCount * discoveredCount;
+    const newContribution = discoveredCount * discoveredCount * skillMap[13004].purchased ? 4.04 : 1;
     
     // Remove old contribution and add new one
     state.effects.currencyPerSec.pollen = (state.effects.currencyPerSec.pollen || 0) 
@@ -999,7 +1054,7 @@ function updateGeneratorRates() {
     const discoveredCount = cards.filter(c => c.realm === 4 && c.quantity > 0).length;
     
     // Calculate new contribution 
-    const newContribution = discoveredCount * discoveredCount;
+    const newContribution = discoveredCount * discoveredCount * skillMap[13004].purchased ? 4.04 : 1;
 
     // Remove old contribution and add new one
     state.effects.currencyPerSec.egg = (state.effects.currencyPerSec.egg || 0)
@@ -1008,6 +1063,40 @@ function updateGeneratorRates() {
 
     // Store the new contribution
     state.resourceGeneratorContribution.egg = newContribution;
+  }
+
+  // Crystal Generator 5 (skill 10005)
+  if (skillMap[10005].purchased) {
+    // Count discovered Realm 5 cards
+    const discoveredCount = cards.filter(c => c.realm === 5 && c.quantity > 0).length;
+    
+    // Calculate new contribution
+    const newContribution = discoveredCount * discoveredCount * skillMap[13004].purchased ? 4.04 : 1;
+
+    // Remove old contribution and add new one
+    state.effects.currencyPerSec.crystal = (state.effects.currencyPerSec.crystal || 0)
+      - (state.resourceGeneratorContribution.crystal || 0)
+      + newContribution;
+
+    // Store the new contribution
+    state.resourceGeneratorContribution.crystal = newContribution;
+  }
+
+  // Rune Generator 6 (skill 10006)
+  if (skillMap[10006].purchased) {
+    // Count discovered Realm 6 cards
+    const discoveredCount = cards.filter(c => c.realm === 6 && c.quantity > 0).length;
+
+    // Calculate new contribution
+    const newContribution = discoveredCount * discoveredCount * skillMap[13004].purchased ? 4.04 : 1;
+
+    // Remove old contribution and add new one
+    state.effects.currencyPerSec.rune = (state.effects.currencyPerSec.rune || 0)
+      - (state.resourceGeneratorContribution.rune || 0)
+      + newContribution;
+
+    // Store the new contribution
+    state.resourceGeneratorContribution.rune = newContribution;
   }
 }
 
@@ -1046,6 +1135,8 @@ function giveCard(cardId, amount = 1) {
     c.isNew = true;
     initCardsFilters();
     updateGeneratorRates();
+    checkForNewCards();
+    addMinCardsPerDiscovered();
   }
 }
 
@@ -1339,6 +1430,35 @@ function updatePokeFilterStats() {
   container.appendChild(flex);
 }
 
+function checkForNewCards() {
+  const cardsTab = document.getElementById('tab-btn-cards');
+  if (!cardsTab) {
+    console.error('Cards tab button not found!');
+    return;
+  }
+
+  // Check if any card has isNew flag
+  const hasNewCards = cards.some(c => c.isNew);
+  
+  if (hasNewCards) {
+    cardsTab.classList.add('new-offers');
+  } else {
+    cardsTab.classList.remove('new-offers');
+  }
+}
+
+let minCardsPerDiscovered = 0;
+
+function addMinCardsPerDiscovered() {
+  //compute total discovered cards
+  const totalDiscovered = cards.filter(c => c.quantity > 0).length;
+  
+  //compare to minCardsPerDiscovered and add difference to state.effects.minCardsPerPoke
+  const difference = totalDiscovered - minCardsPerDiscovered;
+  state.effects.minCardsPerPoke += difference;
+  minCardsPerDiscovered = totalDiscovered;
+}
+
 // Add this function before DOMContentLoaded
 function showOfflineEarningsModal(earnings) {
   // Only show if there are any earnings
@@ -1443,6 +1563,17 @@ function showOfflineEarningsModal(earnings) {
     progressList.appendChild(harvesterItem);
   }
 
+  if (earnings.interceptor) {
+    const interceptorItem = document.createElement('div');
+    interceptorItem.className = 'offline-earnings-item';
+    interceptorItem.innerHTML = `
+      <span class="amount">+${formatDuration(earnings.interceptor)}</span>
+      <img class="icon" src="assets/images/interceptor.png" alt="Interceptor" />
+      <span class="name">Interceptor</span>
+    `;
+    progressList.appendChild(interceptorItem);
+  }
+  
   progressColumn.appendChild(progressList);
 
   // Add columns to grid
@@ -1523,6 +1654,13 @@ document.addEventListener('DOMContentLoaded', ()=>{
       offlineEarnings['harvester'] = new Decimal(harvesterGain);
     }
 
+    if (skillMap[12201].purchased) {
+      // Award interceptor value based on time difference
+      const interceptorGain = timeDiff / 1000 * (skillMap[12202].purchased ? 2 : 1);
+      state.interceptorValue = state.interceptorValue + interceptorGain;
+      offlineEarnings['interceptor'] = new Decimal(interceptorGain);
+    }
+
     // Show earnings modal
     showOfflineEarningsModal(offlineEarnings);
   }
@@ -1544,12 +1682,14 @@ renderSkillsTab();
 updateStatsUI();
 initCardsFilters();
 renderCardsCollection();
+checkForNewCards();
 updatePokeFilterStats();
 updateGeneratorRates();
 checkAffordableSkills();
 
 initHarvester();
 initGravitationalWaveAbsorber();
+initSpaceBendingInterceptor();
 
 if (state.currentMerchant) {
   // we have a saved merchant + offers,
