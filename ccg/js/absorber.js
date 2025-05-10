@@ -9,7 +9,7 @@ const absorberButton = document.getElementById('absorber-button');
 // Initialize absorber
 function initGravitationalWaveAbsorber() {
   // Check if the skill is purchased
-  if (skillMap[12001].purchased) {
+  if (skillMap[12101].purchased) {
     absorberContainer.style.display = 'flex';
     updateAbsorberUI();
   }

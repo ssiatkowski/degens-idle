@@ -83,8 +83,3 @@
   height: 16px;
   margin-left: 4px;
 }
-
-#tab-btn-merchant.new-offers {
-  box-shadow: 0 0 8px rgba(0,200,0,0.7);
-  border-color: limegreen;
-} 

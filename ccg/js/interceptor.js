@@ -10,7 +10,7 @@ const interceptorButton = document.getElementById('interceptor-button');
 // Initialize interceptor
 function initSpaceBendingInterceptor() {
   // Check if the skill is purchased
-  if (skillMap[13001].purchased) {
+  if (skillMap[12201].purchased) {
     interceptorContainer.style.display = 'flex';
     startInterceptor();
   }

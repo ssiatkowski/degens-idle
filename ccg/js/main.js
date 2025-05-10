@@ -450,7 +450,7 @@ function performPoke() {
             tryEnableHole();
           }
         }
-      }, 500);
+      }, 200);
     } else {
       // Normal hover to flip behavior
       outer.addEventListener('mouseenter', () => {
