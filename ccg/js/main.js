@@ -1450,13 +1450,15 @@ function checkForNewCards() {
 let minCardsPerDiscovered = 0;
 
 function addMinCardsPerDiscovered() {
-  //compute total discovered cards
-  const totalDiscovered = cards.filter(c => c.quantity > 0).length;
-  
-  //compare to minCardsPerDiscovered and add difference to state.effects.minCardsPerPoke
-  const difference = totalDiscovered - minCardsPerDiscovered;
-  state.effects.minCardsPerPoke += difference;
-  minCardsPerDiscovered = totalDiscovered;
+  if (skillMap[16001].purchased){
+    //compute total discovered cards
+    const totalDiscovered = cards.filter(c => c.quantity > 0).length;
+    
+    //compare to minCardsPerDiscovered and add difference to state.effects.minCardsPerPoke
+    const difference = totalDiscovered - minCardsPerDiscovered;
+    state.effects.minCardsPerPoke += difference;
+    minCardsPerDiscovered = totalDiscovered;
+  }
 }
 
 // Add this function before DOMContentLoaded
