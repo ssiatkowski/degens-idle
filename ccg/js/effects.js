@@ -8,7 +8,7 @@ window.EFFECT_NAMES = {
     rarityOddsDivider:    "Rarity Odds Divider",
     cooldownDivider:      "Cooldown Divider",
     cooldownSkipChance:   "Cooldown Skip Chance",
-    merchantNumCards: "Merchant # Cards",
+    merchantNumCards:     "Merchant # Cards",
     merchantCooldownReduction: "Merchant Cooldown Reduction",
     extraMerchantRarityScaling: "Extra Merchant Rarity Scaling",
   };

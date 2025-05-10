@@ -204,14 +204,14 @@ window.cards = [
     "levelScaling": 2.0,
     "levelCost": {
       "currency": "stone",
-      "amount": 40.0
+      "amount": 50.0
     },
     "description": "Granite makes up most of Earth’s continental crust and can be over a billion years old.",
     "baseEffects": [
       {
         "type": "currencyPerPoke",
         "currency": "stone",
-        "value": 3.0
+        "value": 10.0
       },
       {
         "type": "rarityOddsDivider",
@@ -236,7 +236,7 @@ window.cards = [
     "levelScaling": 2.0,
     "levelCost": {
       "currency": "stone",
-      "amount": 100.0
+      "amount": 50.0
     },
     "description": "Shale layers can trap natural gas and oil, shaping modern fracking.",
     "baseEffects": [
@@ -305,7 +305,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "stone",
-        "value": 10.0
+        "value": 20.0
       },
       {
         "type": "rarityOddsDivider",
@@ -780,7 +780,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "coral",
-        "value": 5.0
+        "value": 10.0
       },
       {
         "type": "rarityOddsDivider",
@@ -837,7 +837,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "coral",
-        "value": 2.0
+        "value": 10.0
       },
       {
         "type": "rarityOddsDivider",
@@ -869,7 +869,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "coral",
-        "value": 10.0
+        "value": 20.0
       },
       {
         "type": "rarityOddsDivider",
@@ -938,12 +938,12 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "coral",
-        "value": 10.0
+        "value": 50.0
       },
       {
         "type": "currencyPerSec",
         "currency": "coral",
-        "value": 2.0
+        "value": 5.0
       },
       {
         "type": "minCardsPerPoke"
@@ -971,7 +971,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "coral",
-        "value": 20.0
+        "value": 100.0
       },
       {
         "type": "cooldownDivider"
@@ -996,7 +996,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "coral",
-        "value": 25.0
+        "value": 50.0
       },
       {
         "type": "rarityOddsDivider",
@@ -1028,7 +1028,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "coral",
-        "value": 25.0
+        "value": 50.0
       },
       {
         "type": "rarityOddsDivider",
@@ -1092,7 +1092,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "coral",
-        "value": 25.0
+        "value": 50.0
       },
       {
         "type": "maxCardsPerPoke"
@@ -1122,7 +1122,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "coral",
-        "value": 50.0
+        "value": 250.0
       },
       {
         "type": "minCardsPerPoke"
@@ -1140,17 +1140,17 @@ window.cards = [
     "quantity": 0,
     "tier": 0,
     "level": 1,
-    "levelScaling": 2.0,
+    "levelScaling": 1.5,
     "levelCost": {
       "currency": "coral",
-      "amount": 500.0
+      "amount": 10.0
     },
     "description": "Sunken idols often stay pristine underwater for centuries.",
     "baseEffects": [
       {
         "type": "currencyPerPoke",
         "currency": "coral",
-        "value": 50.0
+        "value": 200.0
       },
       {
         "type": "rarityOddsDivider",
@@ -1164,12 +1164,12 @@ window.cards = [
       },
       {
         "type": "rarityOddsDivider",
-        "realm": 1,
+        "realm": 2,
         "rarity": "basic"
       },
       {
         "type": "rarityOddsDivider",
-        "realm": 1,
+        "realm": 2,
         "rarity": "decent"
       }
     ]
@@ -1192,7 +1192,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "coral",
-        "value": 500.0
+        "value": 1000.0
       },
       {
         "type": "rarityOddsDivider",
@@ -1394,7 +1394,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "pollen",
-        "value": 3.0
+        "value": 25.0
       },
       {
         "type": "cooldownDivider"
@@ -1419,7 +1419,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "pollen",
-        "value": 5.0
+        "value": 10.0
       },
       {
         "type": "rarityOddsDivider",
@@ -1456,7 +1456,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "pollen",
-        "value": 15.0
+        "value": 25.0
       },
       {
         "type": "maxCardsPerPoke"
@@ -1491,7 +1491,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "pollen",
-        "value": 20.0
+        "value": 50.0
       },
       {
         "type": "cooldownDivider"
@@ -1548,7 +1548,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "pollen",
-        "value": 5.0
+        "value": 25.0
       },
       {
         "type": "rarityOddsDivider",
@@ -1580,7 +1580,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "pollen",
-        "value": 5.0
+        "value": 25.0
       },
       {
         "type": "rarityOddsDivider",
@@ -1612,7 +1612,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "pollen",
-        "value": 10.0
+        "value": 50.0
       },
       {
         "type": "rarityOddsDivider",
@@ -1679,7 +1679,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "pollen",
-        "value": 10.0
+        "value": 50.0
       },
       {
         "type": "rarityOddsDivider",
@@ -1711,7 +1711,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "pollen",
-        "value": 25.0
+        "value": 40.0
       },
       {
         "type": "currencyPerSec",
@@ -1748,7 +1748,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "pollen",
-        "value": 25.0
+        "value": 100.0
       },
       {
         "type": "rarityOddsDivider",
@@ -1780,7 +1780,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "pollen",
-        "value": 20.0
+        "value": 100.0
       },
       {
         "type": "rarityOddsDivider",
@@ -1817,7 +1817,7 @@ window.cards = [
       {
         "type": "currencyPerSec",
         "currency": "pollen",
-        "value": 3.0
+        "value": 10.0
       },
       {
         "type": "cooldownDivider"
@@ -1852,7 +1852,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "pollen",
-        "value": 50.0
+        "value": 75.0
       },
       {
         "type": "currencyPerSec",
@@ -1879,7 +1879,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "pollen",
-        "value": 15.0
+        "value": 100.0
       },
       {
         "type": "rarityOddsDivider",
@@ -1916,7 +1916,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "pollen",
-        "value": 200.0
+        "value": 250.0
       },
       {
         "type": "rarityOddsDivider",
@@ -2141,7 +2141,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "egg",
-        "value": 2.0
+        "value": 10.0
       },
       {
         "type": "rarityOddsDivider",
@@ -2168,7 +2168,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "egg",
-        "value": 2.0
+        "value": 5.0
       },
       {
         "type": "cooldownDivider"
@@ -2225,7 +2225,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "egg",
-        "value": 20.0
+        "value": 25.0
       },
       {
         "type": "cooldownDivider"
@@ -2270,7 +2270,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "egg",
-        "value": 3.0
+        "value": 15.0
       },
       {
         "type": "rarityOddsDivider",
@@ -2357,7 +2357,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "egg",
-        "value": 10.0
+        "value": 50.0
       },
       {
         "type": "cooldownDivider"
@@ -2382,7 +2382,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "egg",
-        "value": 5.0
+        "value": 25.0
       },
       {
         "type": "rarityOddsDivider",
@@ -2419,7 +2419,12 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "egg",
-        "value": 25.0
+        "value": 20.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 4,
+        "rarity": "basic"
       }
     ]
   },
@@ -2469,7 +2474,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "egg",
-        "value": 25.0
+        "value": 50.0
       },
       {
         "type": "rarityOddsDivider",
@@ -2506,7 +2511,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "egg",
-        "value": 25.0
+        "value": 50.0
       },
       {
         "type": "rarityOddsDivider",
@@ -2538,7 +2543,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "egg",
-        "value": 50.0
+        "value": 100.0
       },
       {
         "type": "cooldownDivider"
@@ -2694,7 +2699,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "egg",
-        "value": 100.0
+        "value": 1000.0
       },
       {
         "type": "maxCardsPerPoke"
@@ -2754,7 +2759,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "egg",
-        "value": 100.0
+        "value": 500.0
       },
       {
         "type": "rarityOddsDivider",
@@ -2874,7 +2879,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "egg",
-        "value": 1000.0
+        "value": 1500.0
       },
       {
         "type": "currencyPerSec",
@@ -3332,7 +3337,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "crystal",
-        "value": 50.0
+        "value": 100.0
       },
       {
         "type": "maxCardsPerPoke"
@@ -3367,7 +3372,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "crystal",
-        "value": 25.0
+        "value": 75.0
       },
       {
         "type": "cooldownDivider"
@@ -3753,7 +3758,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "crystal",
-        "value": 1000.0
+        "value": 2500.0
       },
       {
         "type": "currencyPerSec",
@@ -3949,7 +3954,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "stone",
-        "value": 5.0
+        "value": 10.0
       },
       {
         "type": "rarityOddsDivider",
@@ -3976,7 +3981,7 @@ window.cards = [
       {
         "type": "currencyPerSec",
         "currency": "stone",
-        "value": 2.0
+        "value": 10.0
       },
       {
         "type": "cooldownDivider"
@@ -4001,7 +4006,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "stone",
-        "value": 10.0
+        "value": 15.0
       },
       {
         "type": "rarityOddsDivider",
@@ -4033,7 +4038,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "stone",
-        "value": 25.0
+        "value": 40.0
       },
       {
         "type": "cooldownDivider"
@@ -4073,7 +4078,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "stone",
-        "value": 15.0
+        "value": 20.0
       },
       {
         "type": "currencyPerSec",
@@ -4110,7 +4115,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "stone",
-        "value": 20.0
+        "value": 50.0
       },
       {
         "type": "maxCardsPerPoke"
@@ -4145,7 +4150,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "stone",
-        "value": 50.0
+        "value": 100.0
       },
       {
         "type": "cooldownDivider"
@@ -4222,7 +4227,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "stone",
-        "value": 75.0
+        "value": 100.0
       },
       {
         "type": "rarityOddsDivider",
@@ -4259,7 +4264,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "stone",
-        "value": 75.0
+        "value": 125.0
       },
       {
         "type": "currencyPerSec",
@@ -4301,7 +4306,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "stone",
-        "value": 100.0
+        "value": 150.0
       },
       {
         "type": "cooldownDivider"
@@ -4341,7 +4346,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "stone",
-        "value": 150.0
+        "value": 200.0
       },
       {
         "type": "currencyPerSec",

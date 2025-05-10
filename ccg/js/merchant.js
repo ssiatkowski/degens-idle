@@ -86,18 +86,18 @@ const merchants = [
       description: 'An all around good guy. Carries 1.5x as many cards (no junk), sells them at 1/2 of the price, and stays 2/3 as long.',
       unlocked: false
     },
-    // {
-    //   id: 8,
-    //   name: 'Runa Frostpelt',
-    //   cardMultiplier: 1,
-    //   refreshTime: 300,
-    //   merchantOdds: 300,
-    //   raritiesSkipped: ['basic'],
-    //   priceMultiplier: 1,
-    //   rarityScaling: 2.5,
-    //   description: 'Not a basic bitch. No basic cards. That is all.',
-    //   unlocked: false
-    // },
+    {
+      id: 8,
+      name: 'Runa Frostpelt',
+      cardMultiplier: 1,
+      refreshTime: 300,
+      merchantOdds: 300,
+      raritiesSkipped: ['basic'],
+      priceMultiplier: 1,
+      rarityScaling: 2.5,
+      description: 'Not a basic bitch. No basic cards. That is all.',
+      unlocked: false
+    },
     // {
     //   id: 9,
     //   name: 'Tobias Quickpouch',
@@ -396,20 +396,20 @@ const merchants = [
             newBadge.className = 'reveal-badge new-badge';
             newBadge.textContent = 'NEW';
             front.appendChild(newBadge);
-        }
-
-        // Check if purchasing would increase tier
-        const thresholds = window.tierThresholds[card.rarity];
-        const currentTier = card.tier;
-        let newTier = 1;
-        while (newTier < thresholds.length && (card.quantity + o.quantity) >= thresholds[newTier]) {
-          newTier++;
-        }
-        if (newTier > currentTier) {
-          const tierUpBadge = document.createElement('div');
-          tierUpBadge.className = 'reveal-badge tierup-badge';
-          tierUpBadge.textContent = 'TIER UP';
-          front.appendChild(tierUpBadge);
+        } else {
+          // Check if purchasing would increase tier
+          const thresholds = window.tierThresholds[card.rarity];
+          const currentTier = card.tier;
+          let newTier = 1;
+          while (newTier < thresholds.length && (card.quantity + o.quantity) >= thresholds[newTier]) {
+            newTier++;
+          }
+          if (newTier > currentTier) {
+            const tierUpBadge = document.createElement('div');
+            tierUpBadge.className = 'reveal-badge tierup-badge';
+            tierUpBadge.textContent = 'TIER UP';
+            front.appendChild(tierUpBadge);
+          }
         }
   
       inner.append(front);
