@@ -1003,7 +1003,7 @@ function updateGeneratorRates() {
     const discoveredCount = cards.filter(c => c.realm === 1 && c.quantity > 0).length;
     
     // Calculate new contribution
-    const newContribution = discoveredCount * discoveredCount * skillMap[13004].purchased ? 4.04 : 1;
+    const newContribution = discoveredCount * discoveredCount * (skillMap[13004].purchased ? 4.04 : 1);
     
     // Remove old contribution and add new one
     state.effects.currencyPerSec.stone = (state.effects.currencyPerSec.stone || 0) 
@@ -1020,7 +1020,7 @@ function updateGeneratorRates() {
     const discoveredCount = cards.filter(c => c.realm === 2 && c.quantity > 0).length;
     
     // Calculate new contribution
-    const newContribution = discoveredCount * discoveredCount * skillMap[13004].purchased ? 4.04 : 1;
+    const newContribution = discoveredCount * discoveredCount * (skillMap[13004].purchased ? 4.04 : 1);
     
     // Remove old contribution and add new one
     state.effects.currencyPerSec.coral = (state.effects.currencyPerSec.coral || 0) 
@@ -1037,7 +1037,7 @@ function updateGeneratorRates() {
     const discoveredCount = cards.filter(c => c.realm === 3 && c.quantity > 0).length;
     
     // Calculate new contribution
-    const newContribution = discoveredCount * discoveredCount * skillMap[13004].purchased ? 4.04 : 1;
+    const newContribution = discoveredCount * discoveredCount * (skillMap[13004].purchased ? 4.04 : 1);
     
     // Remove old contribution and add new one
     state.effects.currencyPerSec.pollen = (state.effects.currencyPerSec.pollen || 0) 
@@ -1054,7 +1054,7 @@ function updateGeneratorRates() {
     const discoveredCount = cards.filter(c => c.realm === 4 && c.quantity > 0).length;
     
     // Calculate new contribution 
-    const newContribution = discoveredCount * discoveredCount * skillMap[13004].purchased ? 4.04 : 1;
+    const newContribution = discoveredCount * discoveredCount * (skillMap[13004].purchased ? 4.04 : 1);
 
     // Remove old contribution and add new one
     state.effects.currencyPerSec.egg = (state.effects.currencyPerSec.egg || 0)
@@ -1071,7 +1071,7 @@ function updateGeneratorRates() {
     const discoveredCount = cards.filter(c => c.realm === 5 && c.quantity > 0).length;
     
     // Calculate new contribution
-    const newContribution = discoveredCount * discoveredCount * skillMap[13004].purchased ? 4.04 : 1;
+    const newContribution = discoveredCount * discoveredCount * (skillMap[13004].purchased ? 4.04 : 1);
 
     // Remove old contribution and add new one
     state.effects.currencyPerSec.crystal = (state.effects.currencyPerSec.crystal || 0)
@@ -1088,7 +1088,7 @@ function updateGeneratorRates() {
     const discoveredCount = cards.filter(c => c.realm === 6 && c.quantity > 0).length;
 
     // Calculate new contribution
-    const newContribution = discoveredCount * discoveredCount * skillMap[13004].purchased ? 4.04 : 1;
+    const newContribution = discoveredCount * discoveredCount * (skillMap[13004].purchased ? 4.04 : 1);
 
     // Remove old contribution and add new one
     state.effects.currencyPerSec.rune = (state.effects.currencyPerSec.rune || 0)
