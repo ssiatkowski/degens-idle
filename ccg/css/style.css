@@ -19,11 +19,17 @@
   --rarity-divine:    #E6E6FA;   /* lavender */
   --realm1-color:     #888888;  /* rocks */
   --realm2-color:     #3498db;  /* sea world */
-  --realm3-color:     #e6bb11;  /* budgom */
+  --realm3-color:     #f1c40f;  /* budgom */
   --realm4-color:     #f39c12;  /* aviary */
   --realm5-color:     #9b59b6;  /* ancient relics */
   --realm6-color:     #2c3e50;  /* celestial bodies */
   --realm7-color:     #e74c3c;  /* mythical beasts */
+  --realm8-color:     #1abc9c;  /* incremental games */
+  --realm9-color:     #c49bd4;  /* spirit familiars */
+  --realm10-color:    #985112;  /* greek gods */
+  --realm11-color:    #093526;  /* weapons */
+  --realm12-color:    #a5134d;  /* bosses */
+
   --modal-opacity: 0.8;
 
   /* Texture + fonts */

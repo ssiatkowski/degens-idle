@@ -383,7 +383,7 @@ function performPoke() {
 
     const contentImg = document.createElement('img');
     contentImg.className = 'card-image';
-    contentImg.src = `assets/images/cards/${slugify(c.name)}.jpg`;
+    contentImg.src = `assets/images/cards/${c.realm}/${slugify(c.name)}.jpg`;
 
     front.append(frameImg, contentImg);
 
@@ -656,7 +656,7 @@ function openModal(cardId) {
 
   const img = document.createElement('img');
   img.className = 'modal-image';
-  img.src = `assets/images/cards/${slugify(c.name)}.jpg`;
+  img.src = `assets/images/cards/${c.realm}/${slugify(c.name)}.jpg`;
 
   const desc = document.createElement('div');
   desc.className = 'modal-desc';
@@ -914,7 +914,7 @@ function renderCardsCollection() {
       frameImg.src = `assets/images/frames/${c.rarity}_frame.jpg`;
       const contentImg = document.createElement('img');
       contentImg.className = 'card-image';
-      contentImg.src = `assets/images/cards/${slugify(c.name)}.jpg`;
+      contentImg.src = `assets/images/cards/${c.realm}/${slugify(c.name)}.jpg`;
       front.append(frameImg, contentImg);
 
       // tier icon + level label
@@ -1099,6 +1099,25 @@ function updateGeneratorRates() {
     // Store the new contribution
     state.resourceGeneratorContribution.rune = newContribution;
   }
+
+  // Resource Generator 7 (skill 10007)
+  if (skillMap[10007].purchased) {
+    // Count discovered Realm 7 cards
+    const discoveredCount = cards.filter(c => c.realm === 7 && c.quantity > 0).length;
+
+    // Calculate new contribution
+    const newContribution = discoveredCount * discoveredCount * (skillMap[13004].purchased ? 4.04 : 1);
+
+    // Remove old contribution and add new one
+    state.effects.currencyPerSec.tooth = (state.effects.currencyPerSec.tooth || 0)
+      - (state.resourceGeneratorContribution.tooth || 0)
+      + newContribution;
+
+    // Store the new contribution
+    state.resourceGeneratorContribution.tooth = newContribution;
+  }
+
+  
 }
 
 function giveCard(cardId, amount = 1) {
@@ -1448,17 +1467,19 @@ function checkForNewCards() {
   }
 }
 
-let minCardsPerDiscovered = 0;
+let maxCardsPerDiscovered = 0;
 
 function addMinCardsPerDiscovered() {
   if (skillMap[16001].purchased){
     //compute total discovered cards
-    const totalDiscovered = cards.filter(c => c.quantity > 0).length;
-    
-    //compare to minCardsPerDiscovered and add difference to state.effects.minCardsPerPoke
-    const difference = totalDiscovered - minCardsPerDiscovered;
-    state.effects.minCardsPerPoke += difference;
-    minCardsPerDiscovered = totalDiscovered;
+    let totalDiscovered = cards.filter(c => c.quantity > 0).length ;
+    if (skillMap[16002].purchased){
+      totalDiscovered *= totalDiscovered;
+    }
+    //compare to maxCardsPerDiscovered and add difference to state.effects.maxCardsPerPoke
+    const difference = totalDiscovered - maxCardsPerDiscovered;
+    state.effects.maxCardsPerPoke += difference;
+    maxCardsPerDiscovered = totalDiscovered;
   }
 }
 
@@ -1652,7 +1673,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
     if (skillMap[12001].purchased) {
       // Award harvester value based on time difference
-      const harvesterGain = timeDiff / 1000 * (skillMap[12002].purchased ? 2 : 1);
+      const harvesterGain = timeDiff / 1000 * (skillMap[12002].purchased ? 2 : 1) * (skillMap[12003].purchased ? 10 : 1);
       state.harvesterValue = state.harvesterValue + harvesterGain;
       offlineEarnings['harvester'] = new Decimal(harvesterGain);
     }

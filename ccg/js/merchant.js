@@ -79,7 +79,7 @@ const merchants = [
       name: 'Fergus Grainhand',
       cardMultiplier: 1.5,
       refreshTime: 200,
-      merchantOdds: 400,
+      merchantOdds: 450,
       raritiesSkipped: ['junk'],
       priceMultiplier: 0.5,
       rarityScaling: 2.5,
@@ -91,7 +91,7 @@ const merchants = [
       name: 'Runa Frostpelt',
       cardMultiplier: 1,
       refreshTime: 300,
-      merchantOdds: 300,
+      merchantOdds: 400,
       raritiesSkipped: ['basic'],
       priceMultiplier: 1,
       rarityScaling: 2.5,
@@ -103,25 +103,25 @@ const merchants = [
       name: 'Tobias Quickpouch',
       cardMultiplier: 10,
       refreshTime: 100,
-      merchantOdds: 200,
+      merchantOdds: 350,
       raritiesSkipped: [],
       priceMultiplier: 0.75,
       rarityScaling: 2.5,
       description: 'The only BS this guy knows is Bulk Sales. Carries 10x as many cards, sells them at 75% of the price, and stays 1/3 as long.',
       unlocked: false
     },
-    // {
-    //   id: 10,
-    //   name: 'Selene Starwhistle',
-    //   cardMultiplier: 0,
-    //   refreshTime: 300,
-    //   merchantOdds: 100,
-    //   raritiesSkipped: ['junk', 'basic', 'decent', 'fine'],
-    //   priceMultiplier: 2,
-    //   rarityScaling: 3.5,
-    //   description: 'Some say she is a real magician. Only offers one card at a time for double the price, but it is always rare or better. (and +1 to rarity scaling).',
-    //   unlocked: false
-    // }
+    {
+      id: 10,
+      name: 'Selene Starwhistle',
+      cardMultiplier: 0,
+      refreshTime: 300,
+      merchantOdds: 300,
+      raritiesSkipped: ['junk', 'basic', 'decent', 'fine'],
+      priceMultiplier: 2,
+      rarityScaling: 3.5,
+      description: 'Some say she is a real magician. Only offers one card at a time for double the price, but it is always rare or better. (and +1 to rarity scaling).',
+      unlocked: false
+    }
 
   ];
   
@@ -362,7 +362,7 @@ const merchants = [
       f.src = `assets/images/frames/${card.rarity}_frame.jpg`;
       const a = document.createElement('img');
       a.className = 'card-image';
-      a.src = `assets/images/cards/${slugify(card.name)}.jpg`;
+      a.src = `assets/images/cards/${card.realm}/${slugify(card.name)}.jpg`;
       front.append(f, a);
   
       // add quantity badge if more than 1

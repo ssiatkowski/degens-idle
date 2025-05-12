@@ -268,7 +268,7 @@ window.cards = [
     "levelScaling": 5.0,
     "levelCost": {
       "currency": "stone",
-      "amount": 200.0
+      "amount": 100.0
     },
     "description": "Marble is metamorphosed limestone and was used by Michelangelo to carve David.",
     "baseEffects": [
@@ -305,7 +305,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "stone",
-        "value": 20.0
+        "value": 50.0
       },
       {
         "type": "rarityOddsDivider",
@@ -335,14 +335,14 @@ window.cards = [
     "levelScaling": 4.5,
     "levelCost": {
       "currency": "stone",
-      "amount": 1000.0
+      "amount": 100.0
     },
     "description": "Basalt forms the vast ocean floors and the Giant’s Causeway in Ireland.",
     "baseEffects": [
       {
         "type": "currencyPerPoke",
         "currency": "stone",
-        "value": 25.0
+        "value": 75.0
       },
       {
         "type": "cooldownDivider"
@@ -365,14 +365,14 @@ window.cards = [
     "levelScaling": 4.5,
     "levelCost": {
       "currency": "stone",
-      "amount": 1000.0
+      "amount": 100.0
     },
     "description": "Obsidian was prized by ancient cultures for making razor-sharp blades.",
     "baseEffects": [
       {
         "type": "currencyPerPoke",
         "currency": "stone",
-        "value": 100.0
+        "value": 500.0
       },
       {
         "type": "cooldownDivider"
@@ -402,12 +402,12 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "stone",
-        "value": 100.0
+        "value": 250.0
       },
       {
         "type": "currencyPerSec",
         "currency": "stone",
-        "value": 5.0
+        "value": 15.0
       },
       {
         "type": "rarityOddsDivider",
@@ -439,7 +439,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "stone",
-        "value": 25.0
+        "value": 200.0
       },
       {
         "type": "rarityOddsDivider",
@@ -481,7 +481,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "stone",
-        "value": 50.0
+        "value": 500.0
       },
       {
         "type": "cooldownDivider"
@@ -551,14 +551,14 @@ window.cards = [
     "levelScaling": 2.0,
     "levelCost": {
       "currency": "stone",
-      "amount": 2000.0
+      "amount": 500.0
     },
     "description": "Meteorites can be up to 4.5 billion years old—older than Earth!",
     "baseEffects": [
       {
         "type": "currencyPerSec",
         "currency": "stone",
-        "value": 5.0
+        "value": 15.0
       },
       {
         "type": "rarityOddsDivider",
@@ -805,7 +805,7 @@ window.cards = [
     "levelScaling": 5.0,
     "levelCost": {
       "currency": "coral",
-      "amount": 1000.0
+      "amount": 100.0
     },
     "description": "Some jellyfish species are biologically immortal, reverting to juvenile form to avoid death.",
     "baseEffects": [
@@ -862,14 +862,14 @@ window.cards = [
     "levelScaling": 2.0,
     "levelCost": {
       "currency": "coral",
-      "amount": 1000.0
+      "amount": 100.0
     },
     "description": "Lobsters taste with their legs and chew with their stomachs!",
     "baseEffects": [
       {
         "type": "currencyPerPoke",
         "currency": "coral",
-        "value": 20.0
+        "value": 50.0
       },
       {
         "type": "rarityOddsDivider",
@@ -906,7 +906,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "coral",
-        "value": 15.0
+        "value": 40.0
       },
       {
         "type": "currencyPerSec",
@@ -931,14 +931,14 @@ window.cards = [
     "levelScaling": 5.0,
     "levelCost": {
       "currency": "coral",
-      "amount": 500.0
+      "amount": 200.0
     },
     "description": "Clownfish live among anemones and are immune to their stinging cells.",
     "baseEffects": [
       {
         "type": "currencyPerPoke",
         "currency": "coral",
-        "value": 50.0
+        "value": 100.0
       },
       {
         "type": "currencyPerSec",
@@ -964,14 +964,14 @@ window.cards = [
     "levelScaling": 4.5,
     "levelCost": {
       "currency": "coral",
-      "amount": 1000.0
+      "amount": 300.0
     },
     "description": "Swordfish can swim up to 60 mph—one of the ocean’s fastest predators.",
     "baseEffects": [
       {
         "type": "currencyPerPoke",
         "currency": "coral",
-        "value": 100.0
+        "value": 400.0
       },
       {
         "type": "cooldownDivider"
@@ -994,14 +994,14 @@ window.cards = [
     "levelScaling": 2.0,
     "levelCost": {
       "currency": "coral",
-      "amount": 500.0
+      "amount": 100.0
     },
     "description": "Deep-sea anglerfish use a bioluminescent lure to attract prey in darkness.",
     "baseEffects": [
       {
         "type": "currencyPerPoke",
         "currency": "coral",
-        "value": 50.0
+        "value": 250.0
       },
       {
         "type": "rarityOddsDivider",
@@ -1026,14 +1026,14 @@ window.cards = [
     "levelScaling": 2.0,
     "levelCost": {
       "currency": "coral",
-      "amount": 500.0
+      "amount": 100.0
     },
     "description": "Electric eels can generate over 600 volts of electricity to stun prey.",
     "baseEffects": [
       {
         "type": "currencyPerPoke",
         "currency": "coral",
-        "value": 50.0
+        "value": 250.0
       },
       {
         "type": "rarityOddsDivider",
@@ -1058,7 +1058,7 @@ window.cards = [
     "levelScaling": 2.0,
     "levelCost": {
       "currency": "coral",
-      "amount": 1000.0
+      "amount": 200.0
     },
     "description": "Pearls form when oysters coat irritants with nacre, creating the gem.",
     "baseEffects": [
@@ -1097,7 +1097,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "coral",
-        "value": 50.0
+        "value": 250.0
       },
       {
         "type": "maxCardsPerPoke"
@@ -1132,7 +1132,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "coral",
-        "value": 200.0
+        "value": 1000.0
       },
       {
         "type": "rarityOddsDivider",
@@ -1167,14 +1167,14 @@ window.cards = [
     "levelScaling": 5.0,
     "levelCost": {
       "currency": "coral",
-      "amount": 800.0
+      "amount": 200.0
     },
     "description": "Legends of the kraken may have originated from giant squid sightings.",
     "baseEffects": [
       {
         "type": "currencyPerPoke",
         "currency": "coral",
-        "value": 2000.0
+        "value": 7500.0
       },
       {
         "type": "minCardsPerPoke"
@@ -1212,7 +1212,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "coral",
-        "value": 1000.0
+        "value": 5000.0
       },
       {
         "type": "rarityOddsDivider",
@@ -1290,6 +1290,16 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 2,
         "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "fine"
       }
     ]
   },
@@ -1417,7 +1427,7 @@ window.cards = [
     "levelScaling": 5.0,
     "levelCost": {
       "currency": "pollen",
-      "amount": 1000.0
+      "amount": 200.0
     },
     "description": "Spider silk is stronger than steel of the same thickness.",
     "baseEffects": [
@@ -1514,14 +1524,14 @@ window.cards = [
     "levelScaling": 4.5,
     "levelCost": {
       "currency": "pollen",
-      "amount": 1000.0
+      "amount": 200.0
     },
     "description": "Wasps inspired medical adhesives that work on wet surfaces.",
     "baseEffects": [
       {
         "type": "currencyPerPoke",
         "currency": "pollen",
-        "value": 50.0
+        "value": 75.0
       },
       {
         "type": "cooldownDivider"
@@ -1578,7 +1588,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "pollen",
-        "value": 25.0
+        "value": 50.0
       },
       {
         "type": "rarityOddsDivider",
@@ -1610,7 +1620,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "pollen",
-        "value": 25.0
+        "value": 50.0
       },
       {
         "type": "rarityOddsDivider",
@@ -1642,7 +1652,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "pollen",
-        "value": 50.0
+        "value": 250.0
       },
       {
         "type": "rarityOddsDivider",
@@ -1667,7 +1677,7 @@ window.cards = [
     "levelScaling": 4.5,
     "levelCost": {
       "currency": "pollen",
-      "amount": 1000.0
+      "amount": 200.0
     },
     "description": "Praying mantis claws strike at over 50 mph to catch prey.",
     "baseEffects": [
@@ -1709,7 +1719,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "pollen",
-        "value": 50.0
+        "value": 250.0
       },
       {
         "type": "rarityOddsDivider",
@@ -1741,7 +1751,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "pollen",
-        "value": 40.0
+        "value": 250.0
       },
       {
         "type": "currencyPerSec",
@@ -1778,7 +1788,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "pollen",
-        "value": 100.0
+        "value": 1000.0
       },
       {
         "type": "rarityOddsDivider",
@@ -1789,6 +1799,11 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 2,
         "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "junk"
       }
     ]
   },
@@ -1810,7 +1825,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "pollen",
-        "value": 100.0
+        "value": 1000.0
       },
       {
         "type": "rarityOddsDivider",
@@ -1840,14 +1855,14 @@ window.cards = [
     "levelScaling": 4.0,
     "levelCost": {
       "currency": "pollen",
-      "amount": 1000.0
+      "amount": 200.0
     },
     "description": "Atlas moths have wingspans up to 12 inches—among the largest insects.",
     "baseEffects": [
       {
         "type": "currencyPerSec",
         "currency": "pollen",
-        "value": 10.0
+        "value": 15.0
       },
       {
         "type": "cooldownDivider"
@@ -1882,12 +1897,22 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "pollen",
-        "value": 75.0
+        "value": 1500.0
       },
       {
         "type": "currencyPerSec",
         "currency": "pollen",
-        "value": 5.0
+        "value": 10.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 3,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "junk"
       }
     ]
   },
@@ -1909,7 +1934,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "pollen",
-        "value": 100.0
+        "value": 1000.0
       },
       {
         "type": "rarityOddsDivider",
@@ -1946,7 +1971,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "pollen",
-        "value": 500.0
+        "value": 5000.0
       },
       {
         "type": "rarityOddsDivider",
@@ -1997,6 +2022,21 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 3,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 3,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "decent"
       }
     ]
   },
@@ -2037,8 +2077,8 @@ window.cards = [
       },
       {
         "type": "rarityOddsDivider",
-        "realm": 0,
-        "rarity": ""
+        "realm": 2,
+        "rarity": "rare"
       }
     ]
   },
@@ -2115,7 +2155,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "egg",
-        "value": 2.0
+        "value": 5.0
       }
     ]
   },
@@ -2137,7 +2177,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "egg",
-        "value": 2.0
+        "value": 5.0
       }
     ]
   },
@@ -2208,7 +2248,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "egg",
-        "value": 5.0
+        "value": 15.0
       },
       {
         "type": "cooldownDivider"
@@ -2258,14 +2298,14 @@ window.cards = [
     "levelScaling": 4.5,
     "levelCost": {
       "currency": "egg",
-      "amount": 1000.0
+      "amount": 200.0
     },
     "description": "Hummingbirds can flap their wings over 70 times per second.",
     "baseEffects": [
       {
         "type": "currencyPerPoke",
         "currency": "egg",
-        "value": 25.0
+        "value": 50.0
       },
       {
         "type": "cooldownDivider"
@@ -2310,7 +2350,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "egg",
-        "value": 15.0
+        "value": 25.0
       },
       {
         "type": "rarityOddsDivider",
@@ -2362,14 +2402,14 @@ window.cards = [
     "levelScaling": 5.0,
     "levelCost": {
       "currency": "egg",
-      "amount": 500.0
+      "amount": 100.0
     },
     "description": "Parrots can learn to say over 100 words and use them in context.",
     "baseEffects": [
       {
         "type": "currencyPerPoke",
         "currency": "egg",
-        "value": 25.0
+        "value": 50.0
       },
       {
         "type": "minCardsPerPoke"
@@ -2390,14 +2430,14 @@ window.cards = [
     "levelScaling": 4.5,
     "levelCost": {
       "currency": "egg",
-      "amount": 1000.0
+      "amount": 200.0
     },
     "description": "Flamingos get their pink color from the shrimp and algae they eat.",
     "baseEffects": [
       {
         "type": "currencyPerPoke",
         "currency": "egg",
-        "value": 50.0
+        "value": 400.0
       },
       {
         "type": "cooldownDivider"
@@ -2406,6 +2446,11 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "junk"
       }
     ]
   },
@@ -2420,14 +2465,14 @@ window.cards = [
     "levelScaling": 2.0,
     "levelCost": {
       "currency": "egg",
-      "amount": 1000.0
+      "amount": 200.0
     },
     "description": "Swans have more neck vertebrae than giraffes—up to 25!",
     "baseEffects": [
       {
         "type": "currencyPerPoke",
         "currency": "egg",
-        "value": 25.0
+        "value": 250.0
       },
       {
         "type": "rarityOddsDivider",
@@ -2464,7 +2509,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "egg",
-        "value": 20.0
+        "value": 200.0
       },
       {
         "type": "rarityOddsDivider",
@@ -2475,6 +2520,11 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "basic"
       }
     ]
   },
@@ -2489,7 +2539,7 @@ window.cards = [
     "levelScaling": 5.0,
     "levelCost": {
       "currency": "egg",
-      "amount": 800.0
+      "amount": 150.0
     },
     "description": "Albatrosses can sleep while flying over the ocean.",
     "baseEffects": [
@@ -2503,6 +2553,16 @@ window.cards = [
       },
       {
         "type": "maxCardsPerPoke"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "basic"
       }
     ]
   },
@@ -2517,14 +2577,14 @@ window.cards = [
     "levelScaling": 2.0,
     "levelCost": {
       "currency": "egg",
-      "amount": 500.0
+      "amount": 50.0
     },
     "description": "Falcons are the fastest animals on Earth, diving at speeds over 200 mph.",
     "baseEffects": [
       {
         "type": "currencyPerPoke",
         "currency": "egg",
-        "value": 50.0
+        "value": 1000.0
       },
       {
         "type": "rarityOddsDivider",
@@ -2554,14 +2614,14 @@ window.cards = [
     "levelScaling": 2.0,
     "levelCost": {
       "currency": "egg",
-      "amount": 500.0
+      "amount": 100.0
     },
     "description": "Hawks have vision about 8 times sharper than that of humans.",
     "baseEffects": [
       {
         "type": "currencyPerPoke",
         "currency": "egg",
-        "value": 50.0
+        "value": 1000.0
       },
       {
         "type": "rarityOddsDivider",
@@ -2586,14 +2646,14 @@ window.cards = [
     "levelScaling": 4.0,
     "levelCost": {
       "currency": "egg",
-      "amount": 100.0
+      "amount": 50.0
     },
     "description": "Eagles build the largest nests of any bird, sometimes weighing over a ton.",
     "baseEffects": [
       {
         "type": "currencyPerPoke",
         "currency": "egg",
-        "value": 100.0
+        "value": 1500.0
       },
       {
         "type": "cooldownDivider"
@@ -2602,6 +2662,11 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "junk"
       }
     ]
   },
@@ -2623,7 +2688,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "egg",
-        "value": 100.0
+        "value": 1000.0
       },
       {
         "type": "rarityOddsDivider",
@@ -2633,6 +2698,16 @@ window.cards = [
       {
         "type": "rarityOddsDivider",
         "realm": 4,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 3,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 3,
         "rarity": "decent"
       }
     ]
@@ -2655,7 +2730,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "egg",
-        "value": 50.0
+        "value": 1000.0
       },
       {
         "type": "rarityOddsDivider",
@@ -2707,7 +2782,17 @@ window.cards = [
       {
         "type": "rarityOddsDivider",
         "realm": 4,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 4,
         "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 4,
+        "rarity": "fine"
       }
     ]
   },
@@ -2729,7 +2814,7 @@ window.cards = [
       {
         "type": "currencyPerSec",
         "currency": "egg",
-        "value": 20.0
+        "value": 25.0
       },
       {
         "type": "minCardsPerPoke"
@@ -2764,7 +2849,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "egg",
-        "value": 1000.0
+        "value": 7500.0
       },
       {
         "type": "maxCardsPerPoke"
@@ -2799,15 +2884,30 @@ window.cards = [
       {
         "type": "currencyPerSec",
         "currency": "egg",
-        "value": 20.0
+        "value": 25.0
       },
       {
         "type": "cooldownDivider"
       },
       {
         "type": "rarityOddsDivider",
-        "realm": 3,
+        "realm": 2,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
         "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 4,
+        "rarity": "basic"
       }
     ]
   },
@@ -2829,7 +2929,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "egg",
-        "value": 500.0
+        "value": 5000.0
       },
       {
         "type": "rarityOddsDivider",
@@ -2871,7 +2971,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "feather",
-        "value": 5.0
+        "value": 25.0
       },
       {
         "type": "currencyPerSec",
@@ -2895,6 +2995,16 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 7,
         "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "rare"
       }
     ]
   },
@@ -2916,7 +3026,12 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "feather",
-        "value": 2.0
+        "value": 25.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "egg",
+        "value": 100.0
       },
       {
         "type": "cooldownDivider"
@@ -2938,6 +3053,11 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 7,
         "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 3,
+        "rarity": "fine"
       }
     ]
   },
@@ -2959,12 +3079,12 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "egg",
-        "value": 5000.0
+        "value": 25000.0
       },
       {
         "type": "currencyPerSec",
-        "currency": "egg",
-        "value": 50.0
+        "currency": "feather",
+        "value": 1.0
       },
       {
         "type": "rarityOddsDivider",
@@ -3156,7 +3276,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "crystal",
-        "value": 5.0
+        "value": 10.0
       },
       {
         "type": "rarityOddsDivider",
@@ -3183,7 +3303,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "crystal",
-        "value": 5.0
+        "value": 10.0
       },
       {
         "type": "rarityOddsDivider",
@@ -3210,7 +3330,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "crystal",
-        "value": 20.0
+        "value": 25.0
       },
       {
         "type": "rarityOddsDivider",
@@ -3242,7 +3362,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "crystal",
-        "value": 20.0
+        "value": 25.0
       },
       {
         "type": "rarityOddsDivider",
@@ -3306,7 +3426,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "crystal",
-        "value": 25.0
+        "value": 50.0
       },
       {
         "type": "rarityOddsDivider",
@@ -3343,7 +3463,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "crystal",
-        "value": 25.0
+        "value": 50.0
       },
       {
         "type": "rarityOddsDivider",
@@ -3422,7 +3542,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "crystal",
-        "value": 100.0
+        "value": 400.0
       },
       {
         "type": "maxCardsPerPoke"
@@ -3457,7 +3577,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "crystal",
-        "value": 75.0
+        "value": 300.0
       },
       {
         "type": "cooldownDivider"
@@ -3534,7 +3654,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "crystal",
-        "value": 100.0
+        "value": 1000.0
       },
       {
         "type": "rarityOddsDivider",
@@ -3569,7 +3689,7 @@ window.cards = [
     "levelScaling": 4.0,
     "levelCost": {
       "currency": "rune",
-      "amount": 100.0
+      "amount": 50.0
     },
     "description": "The legendary sword of King Arthur, bestowed by the Lady of the Lake.",
     "baseEffects": [
@@ -3611,14 +3731,14 @@ window.cards = [
     "levelScaling": 2.0,
     "levelCost": {
       "currency": "rune",
-      "amount": 250.0
+      "amount": 100.0
     },
     "description": "Thor’s hammer, capable of leveling mountains.",
     "baseEffects": [
       {
         "type": "currencyPerPoke",
         "currency": "crystal",
-        "value": 1000.0
+        "value": 25000.0
       },
       {
         "type": "rarityOddsDivider",
@@ -3658,7 +3778,7 @@ window.cards = [
     "levelScaling": 3.0,
     "levelCost": {
       "currency": "rune",
-      "amount": 200.0
+      "amount": 75.0
     },
     "description": "Jason and the Argonauts quested for this powerful artifact.",
     "baseEffects": [
@@ -3710,7 +3830,7 @@ window.cards = [
     "levelScaling": 3.0,
     "levelCost": {
       "currency": "rune",
-      "amount": 200.0
+      "amount": 75.0
     },
     "description": "Symbol of trade and negotiation, wielded by Hermes.",
     "baseEffects": [
@@ -3762,7 +3882,7 @@ window.cards = [
     "levelScaling": 3.0,
     "levelCost": {
       "currency": "rune",
-      "amount": 200.0
+      "amount": 75.0
     },
     "description": "A powerful shield carried by Athena and Zeus.",
     "baseEffects": [
@@ -3832,6 +3952,26 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 5,
         "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 1,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 3,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 4,
+        "rarity": "decent"
       }
     ]
   },
@@ -3846,19 +3986,19 @@ window.cards = [
     "levelScaling": 5.0,
     "levelCost": {
       "currency": "rune",
-      "amount": 100.0
+      "amount": 50.0
     },
     "description": "An artifact said to channel immense magical energy.",
     "baseEffects": [
       {
         "type": "currencyPerPoke",
         "currency": "crystal",
-        "value": 2500.0
+        "value": 30000.0
       },
       {
         "type": "currencyPerSec",
         "currency": "crystal",
-        "value": 25.0
+        "value": 100.0
       },
       {
         "type": "cooldownDivider"
@@ -3868,6 +4008,21 @@ window.cards = [
       },
       {
         "type": "minCardsPerPoke"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 3,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 4,
+        "rarity": "basic"
       }
     ]
   },
@@ -3934,7 +4089,7 @@ window.cards = [
     "levelScaling": 5.0,
     "levelCost": {
       "currency": "rune",
-      "amount": 500.0
+      "amount": 100.0
     },
     "description": "A cup said to grant insight or eternal youth.",
     "baseEffects": [
@@ -3946,7 +4101,7 @@ window.cards = [
       {
         "type": "currencyPerSec",
         "currency": "crystal",
-        "value": 25.0
+        "value": 100.0
       },
       {
         "type": "maxCardsPerPoke"
@@ -3987,7 +4142,7 @@ window.cards = [
     "levelScaling": 3.5,
     "levelCost": {
       "currency": "rune",
-      "amount": 2000.0
+      "amount": 500.0
     },
     "description": "Sought by many, this relic offers everlasting vitality.",
     "baseEffects": [
@@ -4101,7 +4256,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "stone",
-        "value": 15.0
+        "value": 50.0
       },
       {
         "type": "rarityOddsDivider",
@@ -4126,14 +4281,14 @@ window.cards = [
     "levelScaling": 4.5,
     "levelCost": {
       "currency": "stone",
-      "amount": 1000.0
+      "amount": 200.0
     },
     "description": "Earth is the only known planet with liquid water on its surface and life.",
     "baseEffects": [
       {
         "type": "currencyPerPoke",
         "currency": "stone",
-        "value": 40.0
+        "value": 75.0
       },
       {
         "type": "cooldownDivider"
@@ -4173,7 +4328,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "stone",
-        "value": 20.0
+        "value": 50.0
       },
       {
         "type": "currencyPerSec",
@@ -4203,14 +4358,14 @@ window.cards = [
     "levelScaling": 5.0,
     "levelCost": {
       "currency": "stone",
-      "amount": 500.0
+      "amount": 100.0
     },
     "description": "Saturn's rings are made mostly of ice particles with some rocky debris and dust.",
     "baseEffects": [
       {
         "type": "currencyPerPoke",
         "currency": "stone",
-        "value": 50.0
+        "value": 100.0
       },
       {
         "type": "maxCardsPerPoke"
@@ -4238,14 +4393,14 @@ window.cards = [
     "levelScaling": 4.5,
     "levelCost": {
       "currency": "stone",
-      "amount": 1000.0
+      "amount": 200.0
     },
     "description": "The Sun accounts for 99.86% of the mass in our solar system.",
     "baseEffects": [
       {
         "type": "currencyPerPoke",
         "currency": "stone",
-        "value": 100.0
+        "value": 300.0
       },
       {
         "type": "cooldownDivider"
@@ -4285,7 +4440,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "stone",
-        "value": 25.0
+        "value": 250.0
       },
       {
         "type": "rarityOddsDivider",
@@ -4315,14 +4470,14 @@ window.cards = [
     "levelScaling": 2.0,
     "levelCost": {
       "currency": "stone",
-      "amount": 500.0
+      "amount": 100.0
     },
     "description": "Sirius is twice as massive as our Sun and 25 times more luminous.",
     "baseEffects": [
       {
         "type": "currencyPerPoke",
         "currency": "stone",
-        "value": 100.0
+        "value": 1000.0
       },
       {
         "type": "rarityOddsDivider",
@@ -4359,12 +4514,12 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "stone",
-        "value": 125.0
+        "value": 1000.0
       },
       {
         "type": "currencyPerSec",
         "currency": "stone",
-        "value": 10.0
+        "value": 25.0
       },
       {
         "type": "rarityOddsDivider",
@@ -4399,14 +4554,14 @@ window.cards = [
     "levelScaling": 4.0,
     "levelCost": {
       "currency": "stone",
-      "amount": 1000.0
+      "amount": 200.0
     },
     "description": "The Orion Nebula is visible to the naked eye and is 24 light-years across.",
     "baseEffects": [
       {
         "type": "currencyPerPoke",
         "currency": "stone",
-        "value": 150.0
+        "value": 1500.0
       },
       {
         "type": "cooldownDivider"
@@ -4439,19 +4594,19 @@ window.cards = [
     "levelScaling": 5.0,
     "levelCost": {
       "currency": "stone",
-      "amount": 800.0
+      "amount": 150.0
     },
     "description": "The Crab Nebula is the remnant of a supernova observed in 1054 AD.",
     "baseEffects": [
       {
         "type": "currencyPerPoke",
         "currency": "stone",
-        "value": 200.0
+        "value": 1500.0
       },
       {
         "type": "currencyPerSec",
         "currency": "stone",
-        "value": 5.0
+        "value": 25.0
       },
       {
         "type": "minCardsPerPoke"
@@ -4494,7 +4649,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "stone",
-        "value": 750.0
+        "value": 5000.0
       },
       {
         "type": "rarityOddsDivider",
@@ -4520,6 +4675,11 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 6,
         "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "decent"
       }
     ]
   },
@@ -4546,7 +4706,7 @@ window.cards = [
       {
         "type": "currencyPerSec",
         "currency": "stone",
-        "value": 25.0
+        "value": 50.0
       },
       {
         "type": "cooldownDivider"
@@ -4596,7 +4756,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "stone",
-        "value": 1000.0
+        "value": 5000.0
       },
       {
         "type": "rarityOddsDivider",
@@ -4744,7 +4904,7 @@ window.cards = [
     "levelScaling": 3.5,
     "levelCost": {
       "currency": "cosmic_ray",
-      "amount": 2000.0
+      "amount": 500.0
     },
     "description": "Quasar 3C 273 is one of the brightest objects in the universe and is powered by a supermassive black hole.",
     "baseEffects": [
@@ -4882,7 +5042,7 @@ window.cards = [
       {
         "type": "currencyPerSec",
         "currency": "tooth",
-        "value": 1.0
+        "value": 2.0
       },
       {
         "type": "rarityOddsDivider",
@@ -4978,7 +5138,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "tooth",
-        "value": 15.0
+        "value": 50.0
       },
       {
         "type": "rarityOddsDivider",
@@ -5008,14 +5168,14 @@ window.cards = [
     "levelScaling": 4.5,
     "levelCost": {
       "currency": "tooth",
-      "amount": 100.0
+      "amount": 50.0
     },
     "description": "A lion's roar can be heard from up to 5 miles away.",
     "baseEffects": [
       {
         "type": "currencyPerPoke",
         "currency": "tooth",
-        "value": 50.0
+        "value": 75.0
       },
       {
         "type": "cooldownDivider"
@@ -5043,14 +5203,14 @@ window.cards = [
     "levelScaling": 1.5,
     "levelCost": {
       "currency": "tooth",
-      "amount": 100.0
+      "amount": 50.0
     },
     "description": "Leopards can carry prey twice their weight up into trees, even full-grown antelopes.",
     "baseEffects": [
       {
         "type": "currencyPerPoke",
         "currency": "tooth",
-        "value": 15.0
+        "value": 50.0
       },
       {
         "type": "rarityOddsDivider",
@@ -5109,7 +5269,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "tooth",
-        "value": 25.0
+        "value": 250.0
       },
       {
         "type": "rarityOddsDivider",
@@ -5139,14 +5299,14 @@ window.cards = [
     "levelScaling": 4.5,
     "levelCost": {
       "currency": "tooth",
-      "amount": 200.0
+      "amount": 50.0
     },
     "description": "Dire wolves were 25% larger than modern wolves and went extinct about 10000 years ago.",
     "baseEffects": [
       {
         "type": "currencyPerPoke",
         "currency": "tooth",
-        "value": 100.0
+        "value": 400.0
       },
       {
         "type": "cooldownDivider"
@@ -5186,7 +5346,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "tooth",
-        "value": 25.0
+        "value": 250.0
       },
       {
         "type": "currencyPerSec",
@@ -5223,7 +5383,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "tooth",
-        "value": 25.0
+        "value": 250.0
       },
       {
         "type": "rarityOddsDivider",
@@ -5300,7 +5460,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "tooth",
-        "value": 100.0
+        "value": 1000.0
       },
       {
         "type": "rarityOddsDivider",
@@ -5330,7 +5490,7 @@ window.cards = [
     "levelScaling": 4.0,
     "levelCost": {
       "currency": "tooth",
-      "amount": 200.0
+      "amount": 50.0
     },
     "description": "Satyrs were companions of Dionysus who could play panpipes so beautifully they could enchant anyone who heard.",
     "baseEffects": [
@@ -5372,7 +5532,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "tooth",
-        "value": 100.0
+        "value": 1000.0
       },
       {
         "type": "rarityOddsDivider",
@@ -5414,7 +5574,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "tooth",
-        "value": 100.0
+        "value": 1000.0
       },
       {
         "type": "currencyPerSec",
@@ -5451,7 +5611,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "tooth",
-        "value": 100.0
+        "value": 1000.0
       },
       {
         "type": "rarityOddsDivider",
@@ -5498,7 +5658,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "tooth",
-        "value": 500.0
+        "value": 5000.0
       },
       {
         "type": "rarityOddsDivider",
@@ -5550,7 +5710,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "tooth",
-        "value": 750.0
+        "value": 5000.0
       },
       {
         "type": "rarityOddsDivider",
@@ -5560,6 +5720,11 @@ window.cards = [
       {
         "type": "rarityOddsDivider",
         "realm": 7,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 3,
         "rarity": "decent"
       },
       {
@@ -5592,7 +5757,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "tooth",
-        "value": 1000.0
+        "value": 6000.0
       },
       {
         "type": "cooldownDivider"
@@ -5611,6 +5776,11 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 7,
         "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 3,
+        "rarity": "decent"
       }
     ]
   },
@@ -5632,7 +5802,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "tooth",
-        "value": 1250.0
+        "value": 7500.0
       },
       {
         "type": "minCardsPerPoke"
@@ -5649,6 +5819,11 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 7,
         "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 4,
+        "rarity": "decent"
       }
     ]
   },
@@ -5670,7 +5845,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "tooth",
-        "value": 750.0
+        "value": 5000.0
       },
       {
         "type": "currencyPerSec",
@@ -5722,7 +5897,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "tooth",
-        "value": 1000.0
+        "value": 25000.0
       },
       {
         "type": "rarityOddsDivider",
@@ -5742,6 +5917,11 @@ window.cards = [
       {
         "type": "rarityOddsDivider",
         "realm": 7,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
         "rarity": "fine"
       }
     ]
@@ -5764,7 +5944,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "tooth",
-        "value": 1000.0
+        "value": 25000.0
       },
       {
         "type": "rarityOddsDivider",
@@ -5785,6 +5965,11 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 7,
         "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "fine"
       }
     ]
   },
@@ -5806,7 +5991,7 @@ window.cards = [
       {
         "type": "currencyPerSec",
         "currency": "tooth",
-        "value": 100.0
+        "value": 150.0
       },
       {
         "type": "cooldownDivider"
@@ -5851,7 +6036,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "tooth",
-        "value": 250.0
+        "value": 25000.0
       },
       {
         "type": "rarityOddsDivider",
@@ -6054,7 +6239,7 @@ window.cards = [
       {
         "type": "currencyPerPoke",
         "currency": "tooth",
-        "value": 7500.0
+        "value": 250000.0
       },
       {
         "type": "currencyPerSec",
@@ -6246,6 +6431,1834 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 6,
         "rarity": "epic"
+      }
+    ]
+  },
+  {
+    "id": "801",
+    "name": "IdleOn",
+    "realm": 8,
+    "rarity": "junk",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 1.5,
+    "levelCost": {
+      "currency": "coin",
+      "amount": 10.0
+    },
+    "description": "An pay-to-win idle MMO that's more grind than game.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "coin",
+        "value": 1.0
+      }
+    ]
+  },
+  {
+    "id": "802",
+    "name": "AdVenture Capitalist",
+    "realm": 8,
+    "rarity": "junk",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 1.5,
+    "levelCost": {
+      "currency": "coin",
+      "amount": 10.0
+    },
+    "description": "The OG tap-to-profit simulator, with zero interesting mechanics.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "coin",
+        "value": 1.0
+      }
+    ]
+  },
+  {
+    "id": "803",
+    "name": "Adventure Communist",
+    "realm": 8,
+    "rarity": "junk",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 1.5,
+    "levelCost": {
+      "currency": "coin",
+      "amount": 10.0
+    },
+    "description": "A blatant reskin of its predecessor with no new mechanics added.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "coin",
+        "value": 1.0
+      }
+    ]
+  },
+  {
+    "id": "804",
+    "name": "Tap Tycoon",
+    "realm": 8,
+    "rarity": "junk",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.0,
+    "levelCost": {
+      "currency": "coin",
+      "amount": 15.0
+    },
+    "description": "Tycoon mechanics with a side of tapping. Good for falling asleep.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "coin",
+        "value": 1.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "junk"
+      }
+    ]
+  },
+  {
+    "id": "805",
+    "name": "Idle Miner Tycoon",
+    "realm": 8,
+    "rarity": "junk",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.0,
+    "levelCost": {
+      "currency": "coin",
+      "amount": 15.0
+    },
+    "description": "Digging for profit... endlessly.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "coin",
+        "value": 1.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "junk"
+      }
+    ]
+  },
+  {
+    "id": "806",
+    "name": "Bitcoin Billionaire",
+    "realm": 8,
+    "rarity": "junk",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.5,
+    "levelCost": {
+      "currency": "coin",
+      "amount": 25.0
+    },
+    "description": "Mine coins, time travel, repeat. How long before you uninstall?",
+    "baseEffects": [
+      {
+        "type": "currencyPerSec",
+        "currency": "coin",
+        "value": 1.0
+      }
+    ]
+  },
+  {
+    "id": "807",
+    "name": "Make It Rain",
+    "realm": 8,
+    "rarity": "junk",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.5,
+    "levelCost": {
+      "currency": "coin",
+      "amount": 25.0
+    },
+    "description": "Just flick your screen and get rich! Pure nonsense.",
+    "baseEffects": [
+      {
+        "type": "currencyPerSec",
+        "currency": "coin",
+        "value": 1.0
+      }
+    ]
+  },
+  {
+    "id": "808",
+    "name": "Idle Tap Zoo",
+    "realm": 8,
+    "rarity": "junk",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.5,
+    "levelCost": {
+      "currency": "coin",
+      "amount": 25.0
+    },
+    "description": "Collect adorable animals while doing nothing. And never feel like you did anything.",
+    "baseEffects": [
+      {
+        "type": "currencyPerSec",
+        "currency": "coin",
+        "value": 1.0
+      }
+    ]
+  },
+  {
+    "id": "809",
+    "name": "Banana",
+    "realm": 8,
+    "rarity": "junk",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 3.0,
+    "levelCost": {
+      "currency": "coin",
+      "amount": 30.0
+    },
+    "description": "You don’t know why you tapped it. But you did.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "coin",
+        "value": 1.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "coin",
+        "value": 1.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "junk"
+      }
+    ]
+  },
+  {
+    "id": "810",
+    "name": "Firestone Online",
+    "realm": 8,
+    "rarity": "basic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.0,
+    "levelCost": {
+      "currency": "coin",
+      "amount": 20.0
+    },
+    "description": "Basic fantasy idle with light RPG elements.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "coin",
+        "value": 10.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "basic"
+      }
+    ]
+  },
+  {
+    "id": "811",
+    "name": "Idle Heroes",
+    "realm": 8,
+    "rarity": "basic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.0,
+    "levelCost": {
+      "currency": "coin",
+      "amount": 20.0
+    },
+    "description": "Collection-based idle RPG with gacha elements and paywalls.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "coin",
+        "value": 10.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "basic"
+      }
+    ]
+  },
+  {
+    "id": "812",
+    "name": "Idle Apocalypse",
+    "realm": 8,
+    "rarity": "basic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.0,
+    "levelCost": {
+      "currency": "coin",
+      "amount": 20.0
+    },
+    "description": "Post-apocalyptic tower-themed idle.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "coin",
+        "value": 10.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 4,
+        "rarity": "basic"
+      }
+    ]
+  },
+  {
+    "id": "813",
+    "name": "Almost A Hero",
+    "realm": 8,
+    "rarity": "basic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.5,
+    "levelCost": {
+      "currency": "coin",
+      "amount": 50.0
+    },
+    "description": "Roguelike mechanics meet idle hero training.",
+    "baseEffects": [
+      {
+        "type": "currencyPerSec",
+        "currency": "coin",
+        "value": 2.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 3,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "junk"
+      }
+    ]
+  },
+  {
+    "id": "814",
+    "name": "Idle Balls",
+    "realm": 8,
+    "rarity": "basic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.5,
+    "levelCost": {
+      "currency": "coin",
+      "amount": 50.0
+    },
+    "description": "Physics-based ball dropper meets idle scaling.",
+    "baseEffects": [
+      {
+        "type": "currencyPerSec",
+        "currency": "coin",
+        "value": 2.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 4,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "basic"
+      }
+    ]
+  },
+  {
+    "id": "815",
+    "name": "Exponential Idle",
+    "realm": 8,
+    "rarity": "basic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 5.0,
+    "levelCost": {
+      "currency": "coin",
+      "amount": 25.0
+    },
+    "description": "Math-driven idle focused on equation growth.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "coin",
+        "value": 15.0
+      },
+      {
+        "type": "maxCardsPerPoke"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "basic"
+      }
+    ]
+  },
+  {
+    "id": "816",
+    "name": "Idle Skilling",
+    "realm": 8,
+    "rarity": "basic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 5.0,
+    "levelCost": {
+      "currency": "coin",
+      "amount": 25.0
+    },
+    "description": "Multi-layered idle with lots of systems.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "coin",
+        "value": 15.0
+      },
+      {
+        "type": "maxCardsPerPoke"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "junk"
+      }
+    ]
+  },
+  {
+    "id": "817",
+    "name": "Mr Mine",
+    "realm": 8,
+    "rarity": "basic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 5.0,
+    "levelCost": {
+      "currency": "coin",
+      "amount": 50.0
+    },
+    "description": "Dig and upgrade through oddities underground.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "coin",
+        "value": 15.0
+      },
+      {
+        "type": "cooldownDivider"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "basic"
+      }
+    ]
+  },
+  {
+    "id": "818",
+    "name": "Kittens Game",
+    "realm": 8,
+    "rarity": "decent",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 1.5,
+    "levelCost": {
+      "currency": "coin",
+      "amount": 25.0
+    },
+    "description": "Civ-building with deep resource strategy.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "coin",
+        "value": 50.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "junk"
+      }
+    ]
+  },
+  {
+    "id": "819",
+    "name": "A Dark Room",
+    "realm": 8,
+    "rarity": "decent",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 1.5,
+    "levelCost": {
+      "currency": "coin",
+      "amount": 25.0
+    },
+    "description": "Narrative-driven idle with eerie tone.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "coin",
+        "value": 50.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "basic"
+      }
+    ]
+  },
+  {
+    "id": "820",
+    "name": "Universal Paperclips",
+    "realm": 8,
+    "rarity": "decent",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 1.5,
+    "levelCost": {
+      "currency": "coin",
+      "amount": 25.0
+    },
+    "description": "From paperclip to AI dominance.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "coin",
+        "value": 50.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 4,
+        "rarity": "decent"
+      }
+    ]
+  },
+  {
+    "id": "821",
+    "name": "Cell to Singularity",
+    "realm": 8,
+    "rarity": "decent",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.5,
+    "levelCost": {
+      "currency": "coin",
+      "amount": 20.0
+    },
+    "description": "Evolution from DNA to tech singularity.",
+    "baseEffects": [
+      {
+        "type": "currencyPerSec",
+        "currency": "coin",
+        "value": 5.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "basic"
+      }
+    ]
+  },
+  {
+    "id": "822",
+    "name": "Realm Grinder",
+    "realm": 8,
+    "rarity": "decent",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.5,
+    "levelCost": {
+      "currency": "coin",
+      "amount": 20.0
+    },
+    "description": "Align with factions and go deeper in this snoozefest.",
+    "baseEffects": [
+      {
+        "type": "currencyPerSec",
+        "currency": "coin",
+        "value": 5.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "decent"
+      }
+    ]
+  },
+  {
+    "id": "823",
+    "name": "Tap Titans",
+    "realm": 8,
+    "rarity": "decent",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 5.0,
+    "levelCost": {
+      "currency": "coin",
+      "amount": 25.0
+    },
+    "description": "Flashy clicker with sword-wielding heroes.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "coin",
+        "value": 75.0
+      },
+      {
+        "type": "maxCardsPerPoke"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "decent"
+      }
+    ]
+  },
+  {
+    "id": "824",
+    "name": "Download RAM Idle",
+    "realm": 8,
+    "rarity": "decent",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 5.0,
+    "levelCost": {
+      "currency": "coin",
+      "amount": 25.0
+    },
+    "description": "Absurdist idle about downloading RAM.",
+    "baseEffects": [
+      {
+        "type": "currencyPerSec",
+        "currency": "coin",
+        "value": 8.0
+      },
+      {
+        "type": "maxCardsPerPoke"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "decent"
+      }
+    ]
+  },
+  {
+    "id": "825",
+    "name": "Leafblower Revolution",
+    "realm": 8,
+    "rarity": "decent",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 4.5,
+    "levelCost": {
+      "currency": "coin",
+      "amount": 10.0
+    },
+    "description": "Blow leaves and ascend. Yes, really.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "coin",
+        "value": 60.0
+      },
+      {
+        "type": "cooldownDivider"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "decent"
+      }
+    ]
+  },
+  {
+    "id": "826",
+    "name": "Increlution",
+    "realm": 8,
+    "rarity": "fine",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.0,
+    "levelCost": {
+      "currency": "coin",
+      "amount": 10.0
+    },
+    "description": "Strategic idle with evolutionary theme.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "coin",
+        "value": 250.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "decent"
+      }
+    ]
+  },
+  {
+    "id": "827",
+    "name": "Melvor Idle",
+    "realm": 8,
+    "rarity": "fine",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.0,
+    "levelCost": {
+      "currency": "coin",
+      "amount": 10.0
+    },
+    "description": "RuneScape-style idle with stats and skills.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "coin",
+        "value": 250.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "decent"
+      }
+    ]
+  },
+  {
+    "id": "828",
+    "name": "Idle Wizard",
+    "realm": 8,
+    "rarity": "fine",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.0,
+    "levelCost": {
+      "currency": "coin",
+      "amount": 10.0
+    },
+    "description": "Choose magic paths, climb spell trees.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "coin",
+        "value": 250.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "fine"
+      }
+    ]
+  },
+  {
+    "id": "829",
+    "name": "Midnight Idle",
+    "realm": 8,
+    "rarity": "fine",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.0,
+    "levelCost": {
+      "currency": "coin",
+      "amount": 10.0
+    },
+    "description": "Darkness and rituals in idle form.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "coin",
+        "value": 250.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "decent"
+      }
+    ]
+  },
+  {
+    "id": "830",
+    "name": "Time Clickers",
+    "realm": 8,
+    "rarity": "fine",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.5,
+    "levelCost": {
+      "currency": "coin",
+      "amount": 20.0
+    },
+    "description": "FPS meets idle with color-coded chaos.",
+    "baseEffects": [
+      {
+        "type": "currencyPerSec",
+        "currency": "coin",
+        "value": 10.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "basic"
+      }
+    ]
+  },
+  {
+    "id": "831",
+    "name": "Idle Breakout",
+    "realm": 8,
+    "rarity": "fine",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.5,
+    "levelCost": {
+      "currency": "coin",
+      "amount": 20.0
+    },
+    "description": "Brick-breaking arcade merges with idle.",
+    "baseEffects": [
+      {
+        "type": "currencyPerSec",
+        "currency": "coin",
+        "value": 10.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 4,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 3,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 1,
+        "rarity": "basic"
+      }
+    ]
+  },
+  {
+    "id": "832",
+    "name": "What Lurks Below",
+    "realm": 8,
+    "rarity": "fine",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 5.0,
+    "levelCost": {
+      "currency": "coin",
+      "amount": 10.0
+    },
+    "description": "Horror-themed idle with deep digging.",
+    "baseEffects": [
+      {
+        "type": "currencyPerSec",
+        "currency": "coin",
+        "value": 15.0
+      },
+      {
+        "type": "cooldownDivider"
+      },
+      {
+        "type": "maxCardsPerPoke"
+      },
+      {
+        "type": "minCardsPerPoke"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "fine"
+      }
+    ]
+  },
+  {
+    "id": "833",
+    "name": "Idle Slayer",
+    "realm": 8,
+    "rarity": "rare",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 1.5,
+    "levelCost": {
+      "currency": "coin",
+      "amount": 15.0
+    },
+    "description": "Platforming and idle? It works.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "coin",
+        "value": 1000.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "decent"
+      }
+    ]
+  },
+  {
+    "id": "834",
+    "name": "Swarm Simulator",
+    "realm": 8,
+    "rarity": "rare",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 1.5,
+    "levelCost": {
+      "currency": "coin",
+      "amount": 15.0
+    },
+    "description": "Swarm up. Multiply. Exponentiate.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "coin",
+        "value": 1000.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "basic"
+      }
+    ]
+  },
+  {
+    "id": "835",
+    "name": "Farmer Against Potatoes",
+    "realm": 8,
+    "rarity": "rare",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.5,
+    "levelCost": {
+      "currency": "coin",
+      "amount": 20.0
+    },
+    "description": "It’s weird. It’s good.",
+    "baseEffects": [
+      {
+        "type": "currencyPerSec",
+        "currency": "coin",
+        "value": 25.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "decent"
+      }
+    ]
+  },
+  {
+    "id": "836",
+    "name": "Synergism",
+    "realm": 8,
+    "rarity": "rare",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 5.0,
+    "levelCost": {
+      "currency": "coin",
+      "amount": 50.0
+    },
+    "description": "Math-heavy idle with corruption.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "coin",
+        "value": 1500.0
+      },
+      {
+        "type": "maxCardsPerPoke"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "junk"
+      }
+    ]
+  },
+  {
+    "id": "837",
+    "name": "Idle Loops",
+    "realm": 8,
+    "rarity": "rare",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 4.0,
+    "levelCost": {
+      "currency": "coin",
+      "amount": 40.0
+    },
+    "description": "Time loop idle built around code.",
+    "baseEffects": [
+      {
+        "type": "currencyPerSec",
+        "currency": "coin",
+        "value": 40.0
+      },
+      {
+        "type": "cooldownDivider"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "junk"
+      }
+    ]
+  },
+  {
+    "id": "838",
+    "name": "Shark Incremental",
+    "realm": 8,
+    "rarity": "rare",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 4.0,
+    "levelCost": {
+      "currency": "coin",
+      "amount": 40.0
+    },
+    "description": "An idle empire under the sea.",
+    "baseEffects": [
+      {
+        "type": "currencyPerSec",
+        "currency": "coin",
+        "value": 40.0
+      },
+      {
+        "type": "cooldownDivider"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "basic"
+      }
+    ]
+  },
+  {
+    "id": "839",
+    "name": "Egg Inc.",
+    "realm": 8,
+    "rarity": "epic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 1.5,
+    "levelCost": {
+      "currency": "coin",
+      "amount": 10.0
+    },
+    "description": "Build the chicken egg multiverse.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "coin",
+        "value": 5000.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 1,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "rare"
+      }
+    ]
+  },
+  {
+    "id": "840",
+    "name": "Trimps",
+    "realm": 8,
+    "rarity": "epic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.5,
+    "levelCost": {
+      "currency": "coin",
+      "amount": 25.0
+    },
+    "description": "Train, fight, gather. Repeat.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "coin",
+        "value": 5000.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "coin",
+        "value": 50.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 4,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 4,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 4,
+        "rarity": "rare"
+      }
+    ]
+  },
+  {
+    "id": "841",
+    "name": "Cookie Clicker",
+    "realm": 8,
+    "rarity": "epic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 5.0,
+    "levelCost": {
+      "currency": "coin",
+      "amount": 50.0
+    },
+    "description": "The cookie godfather of all idles.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "coin",
+        "value": 7500.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "coin",
+        "value": 100.0
+      },
+      {
+        "type": "cooldownDivider"
+      },
+      {
+        "type": "maxCardsPerPoke"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 3,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 3,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 3,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 3,
+        "rarity": "rare"
+      }
+    ]
+  },
+  {
+    "id": "842",
+    "name": "Dodecadragons",
+    "realm": 8,
+    "rarity": "legendary",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.0,
+    "levelCost": {
+      "currency": "coin",
+      "amount": 10.0
+    },
+    "description": "12 dimensions of math and pain.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "coin",
+        "value": 25000.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 4,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "rare"
+      }
+    ]
+  },
+  {
+    "id": "843",
+    "name": "Idle Research",
+    "realm": 8,
+    "rarity": "legendary",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.0,
+    "levelCost": {
+      "currency": "coin",
+      "amount": 10.0
+    },
+    "description": "Scientific breakthrough simulator.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "coin",
+        "value": 25000.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "rare"
+      }
+    ]
+  },
+  {
+    "id": "844",
+    "name": "Clicker Heroes",
+    "realm": 8,
+    "rarity": "legendary",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 3.5,
+    "levelCost": {
+      "currency": "coin",
+      "amount": 30.0
+    },
+    "description": "Classic monster-clicking progression.",
+    "baseEffects": [
+      {
+        "type": "currencyPerSec",
+        "currency": "coin",
+        "value": 150.0
+      },
+      {
+        "type": "cooldownDivider"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "epic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "rare"
+      }
+    ]
+  },
+  {
+    "id": "845",
+    "name": "Antimatter Dimensions",
+    "realm": 8,
+    "rarity": "mythic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 1.5,
+    "levelCost": {
+      "currency": "coin",
+      "amount": 10.0
+    },
+    "description": "Infinite layers. Infinite resets.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "coin",
+        "value": 250000.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "epic"
+      }
+    ]
+  },
+  {
+    "id": "846",
+    "name": "Unnamed Space Idle",
+    "realm": 8,
+    "rarity": "mythic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.5,
+    "levelCost": {
+      "currency": "coin",
+      "amount": 25.0
+    },
+    "description": "Deep space meets deep systems.",
+    "baseEffects": [
+      {
+        "type": "currencyPerSec",
+        "currency": "coin",
+        "value": 250.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "epic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "fine"
+      }
+    ]
+  },
+  {
+    "id": "847",
+    "name": "NGU Idle",
+    "realm": 8,
+    "rarity": "mythic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 3.5,
+    "levelCost": {
+      "currency": "coin",
+      "amount": 30.0
+    },
+    "description": "Hilarious and complex in equal parts.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "coin",
+        "value": 350000.0
+      },
+      {
+        "type": "cooldownDivider"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "epic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "legendary"
+      }
+    ]
+  },
+  {
+    "id": "848",
+    "name": "Degens Adventure",
+    "realm": 8,
+    "rarity": "exotic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.5,
+    "levelCost": {
+      "currency": "coin",
+      "amount": 20.0
+    },
+    "description": "Strategic roguelite meets incremental.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "coin",
+        "value": 5000000.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "coin",
+        "value": 1500.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "epic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "legendary"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "mythic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "legendary"
+      }
+    ]
+  },
+  {
+    "id": "849",
+    "name": "Bitburner",
+    "realm": 8,
+    "rarity": "exotic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 5.0,
+    "levelCost": {
+      "currency": "coin",
+      "amount": 10.0
+    },
+    "description": "Hack and code your way through idle.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "coin",
+        "value": 7500000.0
+      },
+      {
+        "type": "maxCardsPerPoke"
+      },
+      {
+        "type": "minCardsPerPoke"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "epic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "legendary"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "mythic"
+      }
+    ]
+  },
+  {
+    "id": "850",
+    "name": "Degens Idle",
+    "realm": 8,
+    "rarity": "divine",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 3.0,
+    "levelCost": {
+      "currency": "coin",
+      "amount": 10.0
+    },
+    "description": "The pinnacle of incremental design.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "coin",
+        "value": 100000000.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "coin",
+        "value": 10000.0
+      },
+      {
+        "type": "cooldownDivider"
+      },
+      {
+        "type": "maxCardsPerPoke"
+      },
+      {
+        "type": "minCardsPerPoke"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "epic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "legendary"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "mythic"
       }
     ]
   }
