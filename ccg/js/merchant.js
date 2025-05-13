@@ -133,7 +133,7 @@ const merchants = [
     fine:      new Decimal(12),
     rare:      new Decimal(30),
     epic:      new Decimal(100),
-    legendary: new Decimal(300),
+    legend:    new Decimal(300),
     mythic:    new Decimal(800),
     exotic:    new Decimal(3000),
     divine:    new Decimal(15000),

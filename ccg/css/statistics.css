@@ -226,9 +226,10 @@
 
 .tier-progress-table th,
 .tier-progress-table td {
-  padding: 6px 12px;
+  padding: 4px 6px;
   border: 1px solid #bbb;
   text-align: center;
+  position: relative;
 }
 
 .tier-progress-table th {
@@ -236,38 +237,71 @@
   font-weight: bold;
 }
 
-.tier-progress-table td.tier-cell {
+.tier-progress-table td.rarity-cell {
   font-weight: bold;
-}
-
-.tier-progress-table td.threshold-cell {
-  font-family: monospace;
-  text-align: right;
-}
-
-.tier-progress-table td.progress-cell {
   text-align: left;
-  padding-left: 16px;
+  padding-left: 12px;
 }
 
-.tier-progress-bar {
-  display: inline-block;
-  height: 16px;
-  background: #ddd;
-  border-radius: 4px;
-  overflow: hidden;
-  width: 100%;
-  max-width: 200px;
+.tier-progress-table td.legend-cell {
+  font-size: 0.8em;
+  color: #666;
+  text-align: left;
+  padding-left: 8px;
+  white-space: nowrap;
 }
 
-.tier-progress-fill {
-  height: 100%;
-  background: var(--accent);
-  transition: width 0.3s ease;
+.tier-progress-table td.tier-cell {
+  position: relative;
+  min-width: 40px;
 }
 
-.tier-progress-text {
-  display: inline-block;
-  margin-left: 8px;
-  min-width: 60px;
+.tier-threshold {
+  font-family: monospace;
+  font-size: 0.9em;
+  color: #666;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.tier-count {
+  font-weight: bold;
+  font-size: 1.1em;
+  color: var(--accent);
+  display: block;
+}
+
+.tier-cell.empty {
+  background: #f5f5f5;
+}
+
+.tier-cell .zero-count {
+  color: #ff4444;
+}
+
+.tier-cell .unowned-count {
+  color: #ff4444;
+}
+
+.tier-cell .behind-count {
+  color: #ffa500;
+}
+
+@media (max-width: 1200px) {
+  .tier-progress-table {
+    font-size: clamp(0.7em, 2dvh, 1em);
+  }
+  
+  .tier-progress-table th,
+  .tier-progress-table td {
+    padding: 3px 4px;
+  }
+  
+  .tier-threshold {
+    font-size: 0.8em;
+  }
+  
+  .tier-count {
+    font-size: 1em;
+  }
 } 

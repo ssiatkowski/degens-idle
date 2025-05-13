@@ -1374,7 +1374,7 @@ window.cards = [
     "id": "220",
     "name": "Poseidon’s Trident",
     "realm": 2,
-    "rarity": "legendary",
+    "rarity": "legend",
     "quantity": 0,
     "tier": 0,
     "level": 1,
@@ -2288,7 +2288,7 @@ window.cards = [
     "id": "324",
     "name": "Dreamspinner",
     "realm": 3,
-    "rarity": "legendary",
+    "rarity": "legend",
     "quantity": 0,
     "tier": 0,
     "level": 1,
@@ -3221,7 +3221,7 @@ window.cards = [
     "id": "425",
     "name": "Articuno",
     "realm": 4,
-    "rarity": "legendary",
+    "rarity": "legend",
     "quantity": 0,
     "tier": 0,
     "level": 1,
@@ -3296,7 +3296,7 @@ window.cards = [
     "id": "426",
     "name": "Zapdos",
     "realm": 4,
-    "rarity": "legendary",
+    "rarity": "legend",
     "quantity": 0,
     "tier": 0,
     "level": 1,
@@ -3369,7 +3369,7 @@ window.cards = [
     "id": "427",
     "name": "Moltres",
     "realm": 4,
-    "rarity": "legendary",
+    "rarity": "legend",
     "quantity": 0,
     "tier": 0,
     "level": 1,
@@ -4080,7 +4080,7 @@ window.cards = [
     "id": "519",
     "name": "Mjölnir",
     "realm": 5,
-    "rarity": "legendary",
+    "rarity": "legend",
     "quantity": 0,
     "tier": 0,
     "level": 1,
@@ -4127,7 +4127,7 @@ window.cards = [
     "id": "520",
     "name": "Golden Fleece",
     "realm": 5,
-    "rarity": "legendary",
+    "rarity": "legend",
     "quantity": 0,
     "tier": 0,
     "level": 1,
@@ -4179,7 +4179,7 @@ window.cards = [
     "id": "521",
     "name": "Caduceus of Hermes",
     "realm": 5,
-    "rarity": "legendary",
+    "rarity": "legend",
     "quantity": 0,
     "tier": 0,
     "level": 1,
@@ -4231,7 +4231,7 @@ window.cards = [
     "id": "522",
     "name": "Aegis Shield",
     "realm": 5,
-    "rarity": "legendary",
+    "rarity": "legend",
     "quantity": 0,
     "tier": 0,
     "level": 1,
@@ -4283,7 +4283,7 @@ window.cards = [
     "id": "523",
     "name": "Eye of Ra",
     "realm": 5,
-    "rarity": "legendary",
+    "rarity": "legend",
     "quantity": 0,
     "tier": 0,
     "level": 1,
@@ -4335,7 +4335,7 @@ window.cards = [
     "id": "524",
     "name": "Staff of the Magi",
     "realm": 5,
-    "rarity": "legendary",
+    "rarity": "legend",
     "quantity": 0,
     "tier": 0,
     "level": 1,
@@ -4386,7 +4386,7 @@ window.cards = [
     "id": "525",
     "name": "Enchanted Cloak",
     "realm": 5,
-    "rarity": "legendary",
+    "rarity": "legend",
     "quantity": 0,
     "tier": 0,
     "level": 1,
@@ -4438,7 +4438,7 @@ window.cards = [
     "id": "526",
     "name": "Sorcerer’s Chalice",
     "realm": 5,
-    "rarity": "legendary",
+    "rarity": "legend",
     "quantity": 0,
     "tier": 0,
     "level": 1,
@@ -5183,7 +5183,7 @@ window.cards = [
     "id": "616",
     "name": "Sagittarius A*",
     "realm": 6,
-    "rarity": "legendary",
+    "rarity": "legend",
     "quantity": 0,
     "tier": 0,
     "level": 1,
@@ -5238,7 +5238,7 @@ window.cards = [
     "id": "617",
     "name": "Messier 87 Black Hole",
     "realm": 6,
-    "rarity": "legendary",
+    "rarity": "legend",
     "quantity": 0,
     "tier": 0,
     "level": 1,
@@ -6305,7 +6305,7 @@ window.cards = [
     "id": "726",
     "name": "Chrysomallos",
     "realm": 7,
-    "rarity": "legendary",
+    "rarity": "legend",
     "quantity": 0,
     "tier": 0,
     "level": 1,
@@ -6363,7 +6363,7 @@ window.cards = [
     "id": "727",
     "name": "Manticore",
     "realm": 7,
-    "rarity": "legendary",
+    "rarity": "legend",
     "quantity": 0,
     "tier": 0,
     "level": 1,
@@ -6410,7 +6410,7 @@ window.cards = [
     "id": "728",
     "name": "Wyvern",
     "realm": 7,
-    "rarity": "legendary",
+    "rarity": "legend",
     "quantity": 0,
     "tier": 0,
     "level": 1,
@@ -6455,7 +6455,7 @@ window.cards = [
     "id": "729",
     "name": "Ancient Dragon",
     "realm": 7,
-    "rarity": "legendary",
+    "rarity": "legend",
     "quantity": 0,
     "tier": 0,
     "level": 1,
@@ -6507,7 +6507,7 @@ window.cards = [
     "id": "730",
     "name": "Leviathan",
     "realm": 7,
-    "rarity": "legendary",
+    "rarity": "legend",
     "quantity": 0,
     "tier": 0,
     "level": 1,
@@ -6555,7 +6555,7 @@ window.cards = [
     "id": "731",
     "name": "Kraken",
     "realm": 7,
-    "rarity": "legendary",
+    "rarity": "legend",
     "quantity": 0,
     "tier": 0,
     "level": 1,
@@ -6858,7 +6858,7 @@ window.cards = [
       {
         "type": "rarityOddsDivider",
         "realm": 5,
-        "rarity": "legendary"
+        "rarity": "legend"
       },
       {
         "type": "rarityOddsDivider",
@@ -8257,7 +8257,7 @@ window.cards = [
     "id": "842",
     "name": "Dodecadragons",
     "realm": 8,
-    "rarity": "legendary",
+    "rarity": "legend",
     "quantity": 0,
     "tier": 0,
     "level": 1,
@@ -8309,7 +8309,7 @@ window.cards = [
     "id": "843",
     "name": "Idle Research",
     "realm": 8,
-    "rarity": "legendary",
+    "rarity": "legend",
     "quantity": 0,
     "tier": 0,
     "level": 1,
@@ -8361,7 +8361,7 @@ window.cards = [
     "id": "844",
     "name": "Clicker Heroes",
     "realm": 8,
-    "rarity": "legendary",
+    "rarity": "legend",
     "quantity": 0,
     "tier": 0,
     "level": 1,
@@ -8557,7 +8557,7 @@ window.cards = [
       {
         "type": "rarityOddsDivider",
         "realm": 8,
-        "rarity": "legendary"
+        "rarity": "legend"
       }
     ]
   },
@@ -8604,7 +8604,7 @@ window.cards = [
       {
         "type": "rarityOddsDivider",
         "realm": 7,
-        "rarity": "legendary"
+        "rarity": "legend"
       },
       {
         "type": "rarityOddsDivider",
@@ -8614,7 +8614,7 @@ window.cards = [
       {
         "type": "rarityOddsDivider",
         "realm": 8,
-        "rarity": "legendary"
+        "rarity": "legend"
       }
     ]
   },
@@ -8657,7 +8657,7 @@ window.cards = [
       {
         "type": "rarityOddsDivider",
         "realm": 7,
-        "rarity": "legendary"
+        "rarity": "legend"
       },
       {
         "type": "rarityOddsDivider",
@@ -8708,7 +8708,7 @@ window.cards = [
       {
         "type": "rarityOddsDivider",
         "realm": 8,
-        "rarity": "legendary"
+        "rarity": "legend"
       },
       {
         "type": "rarityOddsDivider",

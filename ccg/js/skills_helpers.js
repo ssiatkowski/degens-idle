@@ -963,7 +963,7 @@ window.skills = [
       id: 15003,
       name: "Fleeting Realm 3",
       description: "Reduce Bugdom realm odds by 5x.",
-      cost: { realmId: 8, currencyId: "feather", amount: 1e7 },
+      cost: { realmId: 8, currencyId: "royal_jelly", amount: 1e7 },
       purchased: false
     },
     {
@@ -978,6 +978,13 @@ window.skills = [
       name: "Gotta Catch 'Em All 2",
       description: "Increass bonus to # discovered cards squared.",
       cost: { realmId: 8, currencyId: "royal_jelly", amount: 2e7},
+      purchased: false
+    },
+    {
+      id: 17001,
+      name: "Realm Conqueror",
+      description: "Each fully completed realm doubles all card-based currency gain (stacks multiplicatively).",
+      cost: { realmId: 8, currencyId: "cosmic_ray", amount: 1e7},
       purchased: false
     }
   ];
@@ -1380,10 +1387,13 @@ function applySkill(id, skipCost = false) {
         updatePokeFilterStats();
         break;
       case 16001: // Gotta Catch 'Em All
-        addMinCardsPerDiscovered();
+        processNewCardDiscovered();
         break;
       case 16002: // Gotta Catch 'Em All 2
-        addMinCardsPerDiscovered();
+        processNewCardDiscovered();
+        break;
+      case 17001: // Realm Conqueror
+        processNewCardDiscovered();
         break;
     }
 

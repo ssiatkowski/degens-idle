@@ -6,7 +6,7 @@ window.rarities = [
     "fine",
     "rare",
     "epic",
-    "legendary",
+    "legend",
     "mythic",
     "exotic",
     "divine"
@@ -20,7 +20,7 @@ const defaultRarityWeights = {
   fine:      1e14,
   rare:      1e12,
   epic:      1e10,
-  legendary: 1e8,
+  legend:    1e8,
   mythic:    1e6,
   exotic:    1e3,
   divine:    1,
@@ -90,7 +90,7 @@ window.realmColors = {
     7: "#e74c3c",    // mythical beasts (bold crimson, evokes danger & power)
     8: "#1abc9c",   // incremental games (teal — energetic and digital)
     9: "#c49bd4",   // spirit familiars (lavender violet — magical, soft, spiritual)
-   10: "#985112",   // greek gods (rich orange — Olympian fire and divine command)
+   10: "#985112",   // greek gods (rich orange — Olympian fire and command)
    11: "#093526",   // weapons (a rich dark green)
    12: "#a5134d"    // bosses (deep magenta — intense, climactic energy)
   };
@@ -104,7 +104,7 @@ window.tierThresholds = {
     fine:      [1,   5,    20,     50,   100,    500,   5000,  20000,    1e5,     2e5,   5e5,   3e6,    5e6,  1e7,    2e7,     3e7,  8e7,   4e8,    5e8,  1e9 ],
     rare:      [1,   4,    10,     25,    50,    100,   1000,   5000,    3e4,     1e5,   5e5,   2e6,    5e6,  1e7,    2e7,     3e7,  4e7,   3e8,    4e8,  1e9 ],
     epic:      [1,   4,    10,     25,    50,    100,   1000,   5000,    3e4,     1e5,   5e5,   1e6,    2e6,  3e6,    5e6,     1e7,  3e7,   2e8,    3e8,  1e9 ],
-    legendary: [1,   4,    10,     20,    35,     80,    150,    300,    1e3,     1e4,   2e4,   1e5,    2e5,  1e6,    2e6,     1e7,  1e7,   1e8,    2e8,  1e9 ],
+    legend:    [1,   4,    10,     20,    35,     80,    150,    300,    1e3,     1e4,   2e4,   1e5,    2e5,  1e6,    2e6,     1e7,  1e7,   1e8,    2e8,  1e9 ],
     mythic:    [1,   3,     8,     16,    32,     64,    128,    256,    512,    1024,  2056,  4096,   8192, 16384,  32768,    1e5,  1e6,   1e7,    1e8,  1e9 ],
     exotic:    [1,   3,     6,     10,    20,     60,    100,    200,    500,    1000,  2000,  4000,   8000, 16000,  32000,    1e5,  1e6,   1e7,    1e8,  1e9 ],
     divine:    [1,   2,     3,     4,      5,     10,     20,    30,      40,     50,   100,    500,   1000,  5000,   1e4,     1e5,  1e6,   1e7,    1e8,  1e9 ],

@@ -8,7 +8,7 @@ RESET = "\033[0m"
 
 RARITY_ORDER = [
     "junk", "basic", "decent", "fine", "rare",
-    "epic", "legendary", "mythic", "exotic", "divine"
+    "epic", "legend", "mythic", "exotic", "divine"
 ]
 
 def load_cards(csv_path):

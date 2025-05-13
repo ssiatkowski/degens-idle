@@ -1144,10 +1144,7 @@ function giveCard(cardId, amount = 1) {
   const wasNew = c.quantity === 0;  // Track if this is a new discovery
   const oldTier = c.tier;           // <-- Add this line back
 
-  // --- 1. Remove all previous effects (base + special) if present ---
-  if (c.lastAppliedEffects) {
-    applyEffectsDelta(c.lastAppliedEffects, -1);
-  }
+
 
   // --- 2. Update quantity ---
   c.quantity += amount;
@@ -1158,17 +1155,24 @@ function giveCard(cardId, amount = 1) {
   while (newTier < thresholds.length && c.quantity >= thresholds[newTier]) {
     newTier++;
   }
-  c.tier = newTier;
 
-  const newEffs = computeCardEffects(c);
-  const specialEffs = computeSpecialEffects(c);
-
-  // --- 4. Only apply the delta if tier actually changed ---
-  if (newTier !== oldTier) {
+  // Only apply new effects if tier increased
+  if (newTier > oldTier) {
+      // --- 1. Remove all previous effects (base + special) if present ---
+    if (c.lastAppliedEffects) {
+      applyEffectsDelta(c.lastAppliedEffects, -1);
+    }
+    if (c.lastAppliedSpecialEffects) {
+      applyEffectsDelta(c.lastAppliedSpecialEffects, -1);
+    }
+    c.tier = newTier;
+    const newEffs = computeCardEffects(c);
+    const specialEffs = computeSpecialEffects(c);
     applyEffectsDelta(newEffs, +1);
     applyEffectsDelta(specialEffs, +1);
-    c.lastAppliedEffects = { ...newEffs, ...specialEffs };
-  }
+    c.lastAppliedEffects = newEffs;
+    c.lastAppliedSpecialEffects = specialEffs;
+  } 
 
   // Update generator rates if this is a new card discovery
   if (wasNew) {
@@ -1176,7 +1180,7 @@ function giveCard(cardId, amount = 1) {
     initCardsFilters();
     updateGeneratorRates();
     checkForNewCards();
-    addMinCardsPerDiscovered();
+    processNewCardDiscovered();
   }
 }
 
@@ -1187,6 +1191,9 @@ function levelUp(cardId) {
   if (c.lastAppliedEffects) {
     applyEffectsDelta(c.lastAppliedEffects, -1);
   }
+  if (c.lastAppliedSpecialEffects) {
+    applyEffectsDelta(c.lastAppliedSpecialEffects, -1);
+  }
 
   // pay cost…
   c.level++;
@@ -1196,7 +1203,8 @@ function levelUp(cardId) {
   const specialEffs = computeSpecialEffects(c);
   applyEffectsDelta(now, +1);
   applyEffectsDelta(specialEffs, +1);
-  c.lastAppliedEffects = { ...now, ...specialEffs };
+  c.lastAppliedEffects = now;
+  c.lastAppliedSpecialEffects = specialEffs;
 
   // Check for affordable skills after spending currency
   checkAffordableSkills();
@@ -1492,8 +1500,9 @@ function checkForNewCards() {
 }
 
 let maxCardsPerDiscovered = 0;
+let lastFullyDiscoveredRealms = 0;
 
-function addMinCardsPerDiscovered() {
+function processNewCardDiscovered() {
   if (skillMap[16001].purchased){
     //compute total discovered cards
     let totalDiscovered = cards.filter(c => c.quantity > 0).length ;
@@ -1504,6 +1513,20 @@ function addMinCardsPerDiscovered() {
     const difference = totalDiscovered - maxCardsPerDiscovered;
     state.effects.maxCardsPerPoke += difference;
     maxCardsPerDiscovered = totalDiscovered;
+  }
+  if (skillMap[17001].purchased){
+
+    //compute total # realms where all cards are discovered
+    const fullyDiscoveredRealms = realms.filter(r => r.unlocked && cards.every(c => c.realm === r.id && c.quantity > 0)).length;
+
+    //make this only apply the difference from the last time this was applied. 
+    const difference = fullyDiscoveredRealms - lastFullyDiscoveredRealms;
+    if (difference > 0){  
+      lastFullyDiscoveredRealms = fullyDiscoveredRealms;
+      //multiply currencyPerSecMultiplier and currencyPerPokeMultiplier by 2^difference
+      state.effects.currencyPerSecMultiplier *= Math.pow(2, difference);
+      state.effects.currencyPerPokeMultiplier *= Math.pow(2, difference);
+    }
   }
 }
 

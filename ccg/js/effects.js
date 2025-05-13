@@ -67,7 +67,7 @@ const EFFECT_SCALES = {
       minCardsPerPokeBaseValue: 0.03,
       oddsDividerCap: 6
     },
-    legendary: { 
+    legend: { 
       cooldownDividerBaseValue: 0.006, //cost scaling 3.5
       maxCardsPerPokeBaseValue: 0.07,
       minCardsPerPokeBaseValue: 0.035,

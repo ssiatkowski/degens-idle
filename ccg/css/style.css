@@ -13,10 +13,10 @@
   --rarity-fine:      #DAA520;   /* goldenrod */
   --rarity-rare:      #4169E1;   /* royal blue */
   --rarity-epic:      #8A2BE2;   /* blue violet */
-  --rarity-legendary: #FFD700;   /* gold */
+  --rarity-legend:    #FFD700;   /* gold */
   --rarity-mythic:    #FF4500;   /* orangered */
   --rarity-exotic:    #00CED1;   /* dark turquoise */
-  --rarity-divine:    #E6E6FA;   /* lavender */
+  --rarity-divine:    #FF00FF;   /* bright pink */
   --realm1-color:     #888888;  /* rocks */
   --realm2-color:     #3498db;  /* sea world */
   --realm3-color:     #f1c40f;  /* budgom */

@@ -326,6 +326,127 @@ function updateStatsUI() {
     });
 
     container.appendChild(realmContainer);
+
+    // --- Tier Progress Table ---
+    const tierProgressSection = document.createElement('section');
+    tierProgressSection.className = 'tier-progress-section';
+    tierProgressSection.innerHTML = `
+      <h3>Tier Progress (Experimental/Spoilers)</h3>
+    `;
+
+    const tierProgressTable = document.createElement('table');
+    tierProgressTable.className = 'tier-progress-table';
+    
+    // Create header row with tier numbers
+    const headerRow = document.createElement('tr');
+    headerRow.innerHTML = `
+      <th>Rarity</th>
+      <th></th>
+      ${Array(21).fill(0).map((_, i) => `<th>T${i}</th>`).join('')}
+    `;
+    
+    const thead = document.createElement('thead');
+    thead.appendChild(headerRow);
+    tierProgressTable.appendChild(thead);
+
+    // Create table body
+    const tbody = document.createElement('tbody');
+    
+    // Process each rarity
+    Object.entries(window.tierThresholds).forEach(([rarity, thresholds]) => {
+      // Count total cards of this rarity
+      const totalCards = cards.filter(c => c.rarity === rarity).length;
+      if (totalCards === 0) return;
+
+      // Count cards at each tier
+      const cardsByTier = Array(21).fill(0); // 0-20 tiers
+      const ownedCards = new Set();
+      cards.forEach(c => {
+        if (c.rarity === rarity && c.quantity > 0) {
+          cardsByTier[c.tier]++;
+          ownedCards.add(c.id);
+        }
+      });
+
+      // Calculate T0 (unowned cards)
+      const unownedCount = cards.filter(c => c.rarity === rarity && !ownedCards.has(c.id)).length;
+      cardsByTier[0] = unownedCount;
+
+      const row = document.createElement('tr');
+      
+      // Add rarity cell
+      const rarityCell = document.createElement('td');
+      rarityCell.className = 'rarity-cell';
+      rarityCell.style.color = getComputedStyle(document.documentElement)
+        .getPropertyValue(`--rarity-${rarity}`);
+      rarityCell.textContent = rarity.charAt(0).toUpperCase() + rarity.slice(1);
+      row.appendChild(rarityCell);
+
+      // Add legend cell
+      const legendCell = document.createElement('td');
+      legendCell.className = 'legend-cell';
+      legendCell.innerHTML = `
+        <div>↑ req</div>
+        <div>↓ owned</div>
+      `;
+      row.appendChild(legendCell);
+
+      // Find the first tier with non-zero cards
+      let firstNonZeroTier = -1;
+      let lastNonZeroTier = -1;
+      for (let t = 1; t <= thresholds.length; t++) {
+        if (cardsByTier[t] > 0) {
+          if (firstNonZeroTier === -1) firstNonZeroTier = t;
+          lastNonZeroTier = t;
+        }
+      }
+
+      // Check if row is all zeros (except T0)
+      const isAllZeros = firstNonZeroTier === -1;
+
+      // Add cells for each tier
+      for (let tier = 0; tier <= 20; tier++) {
+        const cell = document.createElement('td');
+        cell.className = 'tier-cell';
+        
+        if (tier === 0) {
+          // For tier 0, just show the count of unowned cards
+          const count = cardsByTier[0];
+          cell.innerHTML = `<span class="tier-count ${count > 0 ? 'unowned-count' : ''}">${count}</span>`;
+        } else if (tier <= thresholds.length) {
+          // For other tiers, show threshold and count
+          const threshold = thresholds[tier - 1];
+          const count = cardsByTier[tier];
+          
+          let countClass = '';
+          if (count === 0) {
+            // Color red if all zeros or if to the right of last non-zero tier
+            if (isAllZeros || (lastNonZeroTier !== -1 && tier > lastNonZeroTier)) {
+              countClass = 'zero-count';
+            }
+          } else if (lastNonZeroTier !== -1 && tier < lastNonZeroTier) {
+            // Color yellow-orange if non-zero but to the left of last non-zero
+            countClass = 'behind-count';
+          }
+          
+          cell.innerHTML = `
+            <span class="tier-threshold">${formatNumber(threshold)}</span>
+            <span class="tier-count ${countClass}">${count}</span>
+          `;
+        } else {
+          // For tiers beyond the thresholds, show empty cell
+          cell.className += ' empty';
+        }
+        
+        row.appendChild(cell);
+      }
+
+      tbody.appendChild(row);
+    });
+
+    tierProgressTable.appendChild(tbody);
+    tierProgressSection.appendChild(tierProgressTable);
+    container.appendChild(tierProgressSection);
 }
 
 window.updateStatsUI = updateStatsUI;
