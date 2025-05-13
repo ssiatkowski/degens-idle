@@ -349,8 +349,8 @@ window.cards = [
       {
         "type": "merchantPriceReduction",
         "requirement": {
-          "type": "tier",
-          "amount": 6
+          "type": "level",
+          "amount": 20
         },
         "value": 0.1
       }
@@ -710,8 +710,8 @@ window.cards = [
       {
         "type": "currencyPerSecMultiplier",
         "requirement": {
-          "type": "tier",
-          "amount": 8
+          "type": "level",
+          "amount": 15
         },
         "currency": "stone",
         "value": 2.0
@@ -944,7 +944,7 @@ window.cards = [
         "type": "currencyPerSecMultiplier",
         "requirement": {
           "type": "level",
-          "amount": 30
+          "amount": 20
         },
         "currency": "coral",
         "value": 1.5
@@ -953,7 +953,7 @@ window.cards = [
         "type": "currencyPerSecMultiplier",
         "requirement": {
           "type": "level",
-          "amount": 40
+          "amount": 30
         },
         "currency": "coral",
         "value": 1.5
@@ -1065,8 +1065,8 @@ window.cards = [
       {
         "type": "merchantPriceReduction",
         "requirement": {
-          "type": "tier",
-          "amount": 6
+          "type": "level",
+          "amount": 5
         },
         "value": 0.1
       }
@@ -1299,8 +1299,8 @@ window.cards = [
       {
         "type": "currencyPerSecMultiplier",
         "requirement": {
-          "type": "tier",
-          "amount": 8
+          "type": "level",
+          "amount": 20
         },
         "currency": "coral",
         "value": 2.0
@@ -1477,8 +1477,8 @@ window.cards = [
       {
         "type": "flatCurrencyPerPoke",
         "requirement": {
-          "type": "tier",
-          "amount": 10
+          "type": "level",
+          "amount": 15
         },
         "currency": "coral",
         "value": 1000000.0
@@ -1610,8 +1610,8 @@ window.cards = [
       {
         "type": "flatCurrencyPerPoke",
         "requirement": {
-          "type": "tier",
-          "amount": 5
+          "type": "level",
+          "amount": 10
         },
         "currency": "pollen",
         "value": 690.0
@@ -1758,8 +1758,8 @@ window.cards = [
       {
         "type": "merchantPriceReduction",
         "requirement": {
-          "type": "tier",
-          "amount": 6
+          "type": "level",
+          "amount": 8
         },
         "value": 0.1
       }
@@ -1864,8 +1864,8 @@ window.cards = [
       {
         "type": "flatCurrencyPerSecond",
         "requirement": {
-          "type": "tier",
-          "amount": 4
+          "type": "level",
+          "amount": 15
         },
         "currency": "pollen",
         "value": 2000.0
@@ -2241,8 +2241,8 @@ window.cards = [
       {
         "type": "flatCurrencyPerPoke",
         "requirement": {
-          "type": "tier",
-          "amount": 5
+          "type": "level",
+          "amount": 15
         },
         "currency": "royal_jelly",
         "value": 5000.0
@@ -2421,7 +2421,7 @@ window.cards = [
       {
         "type": "currencyPerSecMultiplier",
         "requirement": {
-          "type": "tier",
+          "type": "level",
           "amount": 10
         },
         "currency": "pollen",
@@ -2431,7 +2431,7 @@ window.cards = [
         "type": "flatCurrencyPerSecond",
         "requirement": {
           "type": "level",
-          "amount": 25
+          "amount": 20
         },
         "currency": "royal_jelly",
         "value": 10000.0
@@ -2734,8 +2734,8 @@ window.cards = [
       {
         "type": "merchantPriceReduction",
         "requirement": {
-          "type": "tier",
-          "amount": 6
+          "type": "level",
+          "amount": 5
         },
         "value": 0.1
       }
@@ -2960,8 +2960,8 @@ window.cards = [
       {
         "type": "flatCurrencyPerSecond",
         "requirement": {
-          "type": "tier",
-          "amount": 3
+          "type": "level",
+          "amount": 10
         },
         "currency": "egg",
         "value": 500.0
@@ -3004,10 +3004,10 @@ window.cards = [
     ],
     "specialEffects": [
       {
-        "type": "flatCurrencyPerSecond",
+        "type": "flatCurrencyPerPoke",
         "requirement": {
-          "type": "tier",
-          "amount": 5
+          "type": "level",
+          "amount": 15
         },
         "currency": "egg",
         "value": 100000.0
@@ -3143,8 +3143,8 @@ window.cards = [
       {
         "type": "flatCurrencyPerPoke",
         "requirement": {
-          "type": "tier",
-          "amount": 5
+          "type": "level",
+          "amount": 10
         },
         "currency": "feather",
         "value": 100.0
@@ -3363,8 +3363,8 @@ window.cards = [
       {
         "type": "currencyPerSecMultiplier",
         "requirement": {
-          "type": "tier",
-          "amount": 10
+          "type": "level",
+          "amount": 15
         },
         "currency": "feather",
         "value": 2.0
@@ -3429,8 +3429,8 @@ window.cards = [
       {
         "type": "currencyPerPokeMultiplier",
         "requirement": {
-          "type": "tier",
-          "amount": 5
+          "type": "level",
+          "amount": 10
         },
         "currency": "egg",
         "value": 2.0
@@ -3438,8 +3438,8 @@ window.cards = [
       {
         "type": "currencyPerSecMultiplier",
         "requirement": {
-          "type": "tier",
-          "amount": 12
+          "type": "level",
+          "amount": 15
         },
         "currency": "egg",
         "value": 3.0
@@ -3502,8 +3502,8 @@ window.cards = [
       {
         "type": "currencyPerPokeMultiplier",
         "requirement": {
-          "type": "tier",
-          "amount": 5
+          "type": "level",
+          "amount": 10
         },
         "currency": "egg",
         "value": 2.0
@@ -3511,8 +3511,8 @@ window.cards = [
       {
         "type": "currencyPerSecMultiplier",
         "requirement": {
-          "type": "tier",
-          "amount": 12
+          "type": "level",
+          "amount": 15
         },
         "currency": "egg",
         "value": 3.0
@@ -3579,8 +3579,8 @@ window.cards = [
       {
         "type": "currencyPerPokeMultiplier",
         "requirement": {
-          "type": "tier",
-          "amount": 5
+          "type": "level",
+          "amount": 10
         },
         "currency": "egg",
         "value": 2.0
@@ -3588,8 +3588,8 @@ window.cards = [
       {
         "type": "currencyPerSecMultiplier",
         "requirement": {
-          "type": "tier",
-          "amount": 12
+          "type": "level",
+          "amount": 15
         },
         "currency": "egg",
         "value": 3.0
@@ -3937,8 +3937,8 @@ window.cards = [
       {
         "type": "flatCurrencyPerSecond",
         "requirement": {
-          "type": "tier",
-          "amount": 3
+          "type": "level",
+          "amount": 15
         },
         "currency": "crystal",
         "value": 1000.0
@@ -4027,7 +4027,7 @@ window.cards = [
       {
         "type": "merchantPriceReduction",
         "requirement": {
-          "type": "tier",
+          "type": "level",
           "amount": 6
         },
         "value": 0.1
@@ -4280,8 +4280,8 @@ window.cards = [
       {
         "type": "currencyPerPokeMultiplier",
         "requirement": {
-          "type": "tier",
-          "amount": 8
+          "type": "level",
+          "amount": 15
         },
         "currency": "crystal",
         "value": 2.0
@@ -4532,8 +4532,8 @@ window.cards = [
       {
         "type": "flatCurrencyPerPoke",
         "requirement": {
-          "type": "tier",
-          "amount": 5
+          "type": "level",
+          "amount": 15
         },
         "currency": "rune",
         "value": 5000.0
@@ -4665,8 +4665,8 @@ window.cards = [
       {
         "type": "flatCurrencyPerSecond",
         "requirement": {
-          "type": "tier",
-          "amount": 5
+          "type": "level",
+          "amount": 10
         },
         "currency": "rune",
         "value": 50.0
@@ -4795,8 +4795,8 @@ window.cards = [
       {
         "type": "currencyPerSecMultiplier",
         "requirement": {
-          "type": "tier",
-          "amount": 10
+          "type": "level",
+          "amount": 15
         },
         "currency": "rune",
         "value": 10.0
@@ -4804,8 +4804,8 @@ window.cards = [
       {
         "type": "currencyPerPokeMultiplier",
         "requirement": {
-          "type": "tier",
-          "amount": 15
+          "type": "level",
+          "amount": 20
         },
         "currency": "rune",
         "value": 10.0
@@ -4939,8 +4939,8 @@ window.cards = [
       {
         "type": "flatCurrencyPerPoke",
         "requirement": {
-          "type": "tier",
-          "amount": 3
+          "type": "level",
+          "amount": 8
         },
         "currency": "stone",
         "value": 2500.0
@@ -4988,7 +4988,7 @@ window.cards = [
         "type": "currencyPerPokeMultiplier",
         "requirement": {
           "type": "level",
-          "amount": 30
+          "amount": 25
         },
         "currency": "stone",
         "value": 2.0
@@ -5158,8 +5158,8 @@ window.cards = [
       {
         "type": "merchantPriceReduction",
         "requirement": {
-          "type": "tier",
-          "amount": 5
+          "type": "level",
+          "amount": 8
         },
         "value": 0.1
       }
@@ -5484,8 +5484,8 @@ window.cards = [
       {
         "type": "flatCurrencyPerSecond",
         "requirement": {
-          "type": "tier",
-          "amount": 5
+          "type": "level",
+          "amount": 20
         },
         "currency": "stone",
         "value": 1000000.0
@@ -5675,8 +5675,8 @@ window.cards = [
       {
         "type": "currencyPerSecMultiplier",
         "requirement": {
-          "type": "tier",
-          "amount": 10
+          "type": "level",
+          "amount": 15
         },
         "currency": "cosmic_ray",
         "value": 10.0
@@ -5684,8 +5684,8 @@ window.cards = [
       {
         "type": "currencyPerPokeMultiplier",
         "requirement": {
-          "type": "tier",
-          "amount": 15
+          "type": "level",
+          "amount": 20
         },
         "currency": "cosmic_ray",
         "value": 10.0
@@ -5950,7 +5950,7 @@ window.cards = [
       {
         "type": "merchantPriceReduction",
         "requirement": {
-          "type": "tier",
+          "type": "level",
           "amount": 6
         },
         "value": 0.1
@@ -6767,8 +6767,8 @@ window.cards = [
       {
         "type": "flatCurrencyPerSecond",
         "requirement": {
-          "type": "tier",
-          "amount": 5
+          "type": "level",
+          "amount": 15
         },
         "currency": "rune",
         "value": 25000.0
@@ -6825,8 +6825,8 @@ window.cards = [
       {
         "type": "currencyPerPokeMultiplier",
         "requirement": {
-          "type": "tier",
-          "amount": 8
+          "type": "level",
+          "amount": 15
         },
         "currency": "tooth",
         "value": 2.0
@@ -6949,8 +6949,8 @@ window.cards = [
       {
         "type": "currencyPerSecMultiplier",
         "requirement": {
-          "type": "tier",
-          "amount": 10
+          "type": "level",
+          "amount": 20
         },
         "currency": "pearl",
         "value": 2.0
@@ -7008,8 +7008,8 @@ window.cards = [
       {
         "type": "flatCurrencyPerSecond",
         "requirement": {
-          "type": "tier",
-          "amount": 5
+          "type": "level",
+          "amount": 10
         },
         "currency": "coral",
         "value": 5000000.0
@@ -7074,8 +7074,8 @@ window.cards = [
       {
         "type": "flatCurrencyPerSecond",
         "requirement": {
-          "type": "tier",
-          "amount": 5
+          "type": "level",
+          "amount": 10
         },
         "currency": "pearl",
         "value": 25000.0
@@ -8036,7 +8036,7 @@ window.cards = [
       {
         "type": "merchantPriceReduction",
         "requirement": {
-          "type": "tier",
+          "type": "level",
           "amount": 6
         },
         "value": 0.1
@@ -8342,8 +8342,8 @@ window.cards = [
       {
         "type": "currencyPerPokeMultiplier",
         "requirement": {
-          "type": "tier",
-          "amount": 10
+          "type": "level",
+          "amount": 15
         },
         "currency": "coin",
         "value": 2.0
@@ -8767,8 +8767,8 @@ window.cards = [
       {
         "type": "currencyPerPokeMultiplier",
         "requirement": {
-          "type": "tier",
-          "amount": 10
+          "type": "level",
+          "amount": 30
         },
         "currency": "egg",
         "value": 5.0
@@ -8947,8 +8947,8 @@ window.cards = [
       {
         "type": "currencyPerPokeMultiplier",
         "requirement": {
-          "type": "tier",
-          "amount": 10
+          "type": "level",
+          "amount": 20
         },
         "currency": "tooth",
         "value": 5.0
@@ -9010,8 +9010,8 @@ window.cards = [
       {
         "type": "currencyPerPokeMultiplier",
         "requirement": {
-          "type": "tier",
-          "amount": 10
+          "type": "level",
+          "amount": 20
         },
         "currency": "coral",
         "value": 5.0
@@ -9071,8 +9071,8 @@ window.cards = [
       {
         "type": "currencyPerPokeMultiplier",
         "requirement": {
-          "type": "tier",
-          "amount": 10
+          "type": "level",
+          "amount": 15
         },
         "currency": "pollen",
         "value": 5.0
@@ -9134,8 +9134,8 @@ window.cards = [
       {
         "type": "currencyPerPokeMultiplier",
         "requirement": {
-          "type": "tier",
-          "amount": 10
+          "type": "level",
+          "amount": 25
         },
         "currency": "crystal",
         "value": 5.0
@@ -9197,8 +9197,8 @@ window.cards = [
       {
         "type": "currencyPerPokeMultiplier",
         "requirement": {
-          "type": "tier",
-          "amount": 10
+          "type": "level",
+          "amount": 20
         },
         "currency": "pearl",
         "value": 5.0
@@ -9258,11 +9258,11 @@ window.cards = [
       {
         "type": "currencyPerPokeMultiplier",
         "requirement": {
-          "type": "tier",
-          "amount": 10
+          "type": "level",
+          "amount": 15
         },
         "currency": "feather",
-        "value": 3.0
+        "value": 5.0
       }
     ]
   },
