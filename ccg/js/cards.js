@@ -19,6 +19,17 @@ window.cards = [
         "currency": "stone",
         "value": 1.0
       }
+    ],
+    "specialEffects": [
+      {
+        "type": "flatCurrencyPerPoke",
+        "requirement": {
+          "type": "level",
+          "amount": 10
+        },
+        "currency": "stone",
+        "value": 100.0
+      }
     ]
   },
   {
@@ -493,6 +504,17 @@ window.cards = [
         "realm": 1,
         "rarity": "fine"
       }
+    ],
+    "specialEffects": [
+      {
+        "type": "currencyPerPokeMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 25
+        },
+        "currency": "stone",
+        "value": 1.5
+      }
     ]
   },
   {
@@ -916,6 +938,26 @@ window.cards = [
         "realm": 2,
         "rarity": "basic"
       }
+    ],
+    "specialEffects": [
+      {
+        "type": "currencyPerSecMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 30
+        },
+        "currency": "coral",
+        "value": 1.5
+      },
+      {
+        "type": "currencyPerSecMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 40
+        },
+        "currency": "coral",
+        "value": 1.5
+      }
     ]
   },
   {
@@ -1165,7 +1207,7 @@ window.cards = [
         "type": "flatCurrencyPerPoke",
         "requirement": {
           "type": "level",
-          "amount": 10
+          "amount": 20
         },
         "currency": "pearl",
         "value": 100.0
@@ -1246,6 +1288,11 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 2,
         "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "junk"
       }
     ],
     "specialEffects": [
@@ -1974,7 +2021,7 @@ window.cards = [
       "currency": "pollen",
       "amount": 50.0
     },
-    "description": "A queen bee can lay over 2 000 eggs per day at peak season.",
+    "description": "A queen bee can lay over 2000 eggs per day at peak season.",
     "baseEffects": [
       {
         "type": "currencyPerPoke",
@@ -2183,6 +2230,11 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 4,
+        "rarity": "basic"
       }
     ],
     "specialEffects": [
@@ -2240,6 +2292,17 @@ window.cards = [
         "realm": 2,
         "rarity": "decent"
       }
+    ],
+    "specialEffects": [
+      {
+        "type": "currencyPerSecMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 20
+        },
+        "currency": "pollen",
+        "value": 1.5
+      }
     ]
   },
   {
@@ -2269,18 +2332,34 @@ window.cards = [
       },
       {
         "type": "rarityOddsDivider",
-        "realm": 2,
-        "rarity": "fine"
-      },
-      {
-        "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "rare"
       },
       {
         "type": "rarityOddsDivider",
         "realm": 2,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
         "rarity": "rare"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "currencyPerPokeMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 40
+        },
+        "currency": "pollen",
+        "value": 2.0
       }
     ]
   },
@@ -2516,7 +2595,7 @@ window.cards = [
           "amount": 40
         },
         "currency": "egg",
-        "value": 1.25
+        "value": 1.5
       }
     ]
   },
@@ -2922,6 +3001,17 @@ window.cards = [
         "realm": 2,
         "rarity": "junk"
       }
+    ],
+    "specialEffects": [
+      {
+        "type": "flatCurrencyPerSecond",
+        "requirement": {
+          "type": "tier",
+          "amount": 5
+        },
+        "currency": "egg",
+        "value": 100000.0
+      }
     ]
   },
   {
@@ -3048,6 +3138,17 @@ window.cards = [
         "realm": 4,
         "rarity": "fine"
       }
+    ],
+    "specialEffects": [
+      {
+        "type": "flatCurrencyPerPoke",
+        "requirement": {
+          "type": "tier",
+          "amount": 5
+        },
+        "currency": "feather",
+        "value": 100.0
+      }
     ]
   },
   {
@@ -3072,6 +3173,11 @@ window.cards = [
       },
       {
         "type": "minCardsPerPoke"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 3,
+        "rarity": "basic"
       },
       {
         "type": "rarityOddsDivider",
@@ -3121,12 +3227,33 @@ window.cards = [
       {
         "type": "rarityOddsDivider",
         "realm": 4,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 4,
         "rarity": "fine"
       },
       {
         "type": "rarityOddsDivider",
         "realm": 4,
         "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "junk"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "currencyPerPokeMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 25
+        },
+        "currency": "feather",
+        "value": 2.0
       }
     ]
   },
@@ -3173,6 +3300,17 @@ window.cards = [
         "realm": 4,
         "rarity": "basic"
       }
+    ],
+    "specialEffects": [
+      {
+        "type": "flatCurrencyPerPoke",
+        "requirement": {
+          "type": "level",
+          "amount": 15
+        },
+        "currency": "feather",
+        "value": 100.0
+      }
     ]
   },
   {
@@ -3214,6 +3352,22 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 4,
         "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "junk"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "currencyPerSecMultiplier",
+        "requirement": {
+          "type": "tier",
+          "amount": 10
+        },
+        "currency": "feather",
+        "value": 2.0
       }
     ]
   },
@@ -3285,7 +3439,7 @@ window.cards = [
         "type": "currencyPerSecMultiplier",
         "requirement": {
           "type": "tier",
-          "amount": 10
+          "amount": 12
         },
         "currency": "egg",
         "value": 3.0
@@ -3358,7 +3512,7 @@ window.cards = [
         "type": "currencyPerSecMultiplier",
         "requirement": {
           "type": "tier",
-          "amount": 10
+          "amount": 12
         },
         "currency": "egg",
         "value": 3.0
@@ -3435,7 +3589,7 @@ window.cards = [
         "type": "currencyPerSecMultiplier",
         "requirement": {
           "type": "tier",
-          "amount": 10
+          "amount": 12
         },
         "currency": "egg",
         "value": 3.0
@@ -3978,7 +4132,7 @@ window.cards = [
       {
         "type": "rarityOddsDivider",
         "realm": 5,
-        "rarity": "junk"
+        "rarity": "basic"
       },
       {
         "type": "rarityOddsDivider",
@@ -4019,6 +4173,11 @@ window.cards = [
       },
       {
         "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsDivider",
         "realm": 4,
         "rarity": "basic"
       },
@@ -4026,11 +4185,6 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "junk"
-      },
-      {
-        "type": "rarityOddsDivider",
-        "realm": 5,
-        "rarity": "rare"
       }
     ]
   },
@@ -4121,6 +4275,17 @@ window.cards = [
         "realm": 5,
         "rarity": "rare"
       }
+    ],
+    "specialEffects": [
+      {
+        "type": "currencyPerPokeMultiplier",
+        "requirement": {
+          "type": "tier",
+          "amount": 8
+        },
+        "currency": "crystal",
+        "value": 2.0
+      }
     ]
   },
   {
@@ -4172,6 +4337,17 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 2,
         "rarity": "basic"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "currencyPerPokeMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 10
+        },
+        "currency": "rune",
+        "value": 1.5
       }
     ]
   },
@@ -4225,6 +4401,17 @@ window.cards = [
         "realm": 3,
         "rarity": "decent"
       }
+    ],
+    "specialEffects": [
+      {
+        "type": "currencyPerPokeMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 10
+        },
+        "currency": "rune",
+        "value": 1.5
+      }
     ]
   },
   {
@@ -4276,6 +4463,17 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 4,
         "rarity": "rare"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "currencyPerPokeMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 10
+        },
+        "currency": "rune",
+        "value": 1.5
       }
     ]
   },
@@ -4329,6 +4527,17 @@ window.cards = [
         "realm": 4,
         "rarity": "decent"
       }
+    ],
+    "specialEffects": [
+      {
+        "type": "flatCurrencyPerPoke",
+        "requirement": {
+          "type": "tier",
+          "amount": 5
+        },
+        "currency": "rune",
+        "value": 5000.0
+      }
     ]
   },
   {
@@ -4379,6 +4588,25 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 4,
         "rarity": "basic"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "allGeneratorMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 10
+        },
+        "value": 1.5
+      },
+      {
+        "type": "currencyPerSecMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 15
+        },
+        "currency": "crystal",
+        "value": 2.0
       }
     ]
   },
@@ -4432,6 +4660,17 @@ window.cards = [
         "realm": 5,
         "rarity": "legendary"
       }
+    ],
+    "specialEffects": [
+      {
+        "type": "flatCurrencyPerSecond",
+        "requirement": {
+          "type": "tier",
+          "amount": 5
+        },
+        "currency": "rune",
+        "value": 50.0
+      }
     ]
   },
   {
@@ -4484,6 +4723,17 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 4,
         "rarity": "basic"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "currencyPerSecMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 10
+        },
+        "currency": "crystal",
+        "value": 2.0
       }
     ]
   },
@@ -4547,6 +4797,15 @@ window.cards = [
         "requirement": {
           "type": "tier",
           "amount": 10
+        },
+        "currency": "rune",
+        "value": 10.0
+      },
+      {
+        "type": "currencyPerPokeMultiplier",
+        "requirement": {
+          "type": "tier",
+          "amount": 15
         },
         "currency": "rune",
         "value": 10.0
@@ -4723,6 +4982,17 @@ window.cards = [
         "realm": 2,
         "rarity": "basic"
       }
+    ],
+    "specialEffects": [
+      {
+        "type": "currencyPerPokeMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 30
+        },
+        "currency": "stone",
+        "value": 2.0
+      }
     ]
   },
   {
@@ -4804,7 +5074,7 @@ window.cards = [
         "type": "flatCurrencyPerSecond",
         "requirement": {
           "type": "level",
-          "amount": 12
+          "amount": 13
         },
         "currency": "cosmic_ray",
         "value": 1.0
@@ -4882,6 +5152,16 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 6,
         "rarity": "fine"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "merchantPriceReduction",
+        "requirement": {
+          "type": "tier",
+          "amount": 5
+        },
+        "value": 0.1
       }
     ]
   },
@@ -5048,11 +5328,6 @@ window.cards = [
       {
         "type": "rarityOddsDivider",
         "realm": 6,
-        "rarity": "basic"
-      },
-      {
-        "type": "rarityOddsDivider",
-        "realm": 6,
         "rarity": "decent"
       },
       {
@@ -5068,7 +5343,23 @@ window.cards = [
       {
         "type": "rarityOddsDivider",
         "realm": 5,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
         "rarity": "decent"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "currencyPerPokeMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 25
+        },
+        "currency": "stone",
+        "value": 3.0
       }
     ]
   },
@@ -5125,6 +5416,17 @@ window.cards = [
         "realm": 5,
         "rarity": "junk"
       }
+    ],
+    "specialEffects": [
+      {
+        "type": "flatCurrencyPerPoke",
+        "requirement": {
+          "type": "level",
+          "amount": 10
+        },
+        "currency": "cosmic_ray",
+        "value": 500.0
+      }
     ]
   },
   {
@@ -5176,6 +5478,17 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 6,
         "rarity": "basic"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "flatCurrencyPerSecond",
+        "requirement": {
+          "type": "tier",
+          "amount": 5
+        },
+        "currency": "stone",
+        "value": 1000000.0
       }
     ]
   },
@@ -5232,6 +5545,17 @@ window.cards = [
         "realm": 5,
         "rarity": "decent"
       }
+    ],
+    "specialEffects": [
+      {
+        "type": "currencyPerSecMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 10
+        },
+        "currency": "stone",
+        "value": 2.0
+      }
     ]
   },
   {
@@ -5279,6 +5603,17 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 4,
         "rarity": "fine"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "flatCurrencyPerPoke",
+        "requirement": {
+          "type": "level",
+          "amount": 10
+        },
+        "currency": "stone",
+        "value": 10000000.0
       }
     ]
   },
@@ -5342,6 +5677,15 @@ window.cards = [
         "requirement": {
           "type": "tier",
           "amount": 10
+        },
+        "currency": "cosmic_ray",
+        "value": 10.0
+      },
+      {
+        "type": "currencyPerPokeMultiplier",
+        "requirement": {
+          "type": "tier",
+          "amount": 15
         },
         "currency": "cosmic_ray",
         "value": 10.0
@@ -5601,6 +5945,16 @@ window.cards = [
         "realm": 7,
         "rarity": "basic"
       }
+    ],
+    "specialEffects": [
+      {
+        "type": "merchantPriceReduction",
+        "requirement": {
+          "type": "tier",
+          "amount": 6
+        },
+        "value": 0.1
+      }
     ]
   },
   {
@@ -5627,6 +5981,16 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 7,
         "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 4,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 3,
+        "rarity": "decent"
       }
     ]
   },
@@ -5851,6 +6215,17 @@ window.cards = [
         "realm": 6,
         "rarity": "fine"
       }
+    ],
+    "specialEffects": [
+      {
+        "type": "flatCurrencyPerPoke",
+        "requirement": {
+          "type": "level",
+          "amount": 10
+        },
+        "currency": "stone",
+        "value": 10000000.0
+      }
     ]
   },
   {
@@ -6000,6 +6375,26 @@ window.cards = [
       {
         "type": "rarityOddsDivider",
         "realm": 7,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
         "rarity": "fine"
       }
     ]
@@ -6247,6 +6642,17 @@ window.cards = [
         "realm": 4,
         "rarity": "decent"
       }
+    ],
+    "specialEffects": [
+      {
+        "type": "currencyPerPokeMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 10
+        },
+        "currency": "tooth",
+        "value": 1.5
+      }
     ]
   },
   {
@@ -6286,17 +6692,22 @@ window.cards = [
       },
       {
         "type": "rarityOddsDivider",
-        "realm": 5,
+        "realm": 6,
         "rarity": "fine"
       },
       {
         "type": "rarityOddsDivider",
-        "realm": 6,
+        "realm": 5,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
         "rarity": "decent"
       },
       {
         "type": "rarityOddsDivider",
-        "realm": 6,
+        "realm": 5,
         "rarity": "fine"
       }
     ]
@@ -6345,6 +6756,11 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 5,
         "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "junk"
       }
     ],
     "specialEffects": [
@@ -6404,6 +6820,17 @@ window.cards = [
         "realm": 5,
         "rarity": "fine"
       }
+    ],
+    "specialEffects": [
+      {
+        "type": "currencyPerPokeMultiplier",
+        "requirement": {
+          "type": "tier",
+          "amount": 8
+        },
+        "currency": "tooth",
+        "value": 2.0
+      }
     ]
   },
   {
@@ -6448,6 +6875,22 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 7,
         "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "fine"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "currencyPerSecMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 15
+        },
+        "currency": "tooth",
+        "value": 2.0
       }
     ]
   },
@@ -6501,6 +6944,17 @@ window.cards = [
         "realm": 7,
         "rarity": "basic"
       }
+    ],
+    "specialEffects": [
+      {
+        "type": "currencyPerSecMultiplier",
+        "requirement": {
+          "type": "tier",
+          "amount": 10
+        },
+        "currency": "pearl",
+        "value": 2.0
+      }
     ]
   },
   {
@@ -6548,6 +7002,17 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 6,
         "rarity": "epic"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "flatCurrencyPerSecond",
+        "requirement": {
+          "type": "tier",
+          "amount": 5
+        },
+        "currency": "coral",
+        "value": 5000000.0
       }
     ]
   },
@@ -6604,6 +7069,17 @@ window.cards = [
         "realm": 6,
         "rarity": "decent"
       }
+    ],
+    "specialEffects": [
+      {
+        "type": "flatCurrencyPerSecond",
+        "requirement": {
+          "type": "tier",
+          "amount": 5
+        },
+        "currency": "pearl",
+        "value": 25000.0
+      }
     ]
   },
   {
@@ -6651,6 +7127,17 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 5,
         "rarity": "fine"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "currencyPerPokeMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 10
+        },
+        "currency": "feather",
+        "value": 2.0
       }
     ]
   },
@@ -6707,6 +7194,17 @@ window.cards = [
         "realm": 7,
         "rarity": "decent"
       }
+    ],
+    "specialEffects": [
+      {
+        "type": "currencyPerPokeMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 15
+        },
+        "currency": "royal_jelly",
+        "value": 2.0
+      }
     ]
   },
   {
@@ -6762,6 +7260,17 @@ window.cards = [
         "realm": 7,
         "rarity": "junk"
       }
+    ],
+    "specialEffects": [
+      {
+        "type": "currencyPerPokeMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 10
+        },
+        "currency": "tooth",
+        "value": 3.0
+      }
     ]
   },
   {
@@ -6809,6 +7318,17 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 6,
         "rarity": "rare"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "currencyPerPokeMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 10
+        },
+        "currency": "pearl",
+        "value": 2.0
       }
     ]
   },
@@ -6864,6 +7384,26 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 6,
         "rarity": "epic"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "currencyPerPokeMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 20
+        },
+        "currency": "royal_jelly",
+        "value": 10.0
+      },
+      {
+        "type": "currencyPerSecMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 25
+        },
+        "currency": "royal_jelly",
+        "value": 10.0
       }
     ]
   },
@@ -7066,7 +7606,7 @@ window.cards = [
       "currency": "coin",
       "amount": 30.0
     },
-    "description": "You don’t know why you tapped it. But you did.",
+    "description": "You don’t know why you downloaded it. But you did.",
     "baseEffects": [
       {
         "type": "currencyPerPoke",
@@ -7090,6 +7630,15 @@ window.cards = [
         "requirement": {
           "type": "level",
           "amount": 10
+        },
+        "currency": "stone",
+        "value": 1.0
+      },
+      {
+        "type": "flatCurrencyPerSecond",
+        "requirement": {
+          "type": "level",
+          "amount": 15
         },
         "currency": "stone",
         "value": 1.0
@@ -7444,6 +7993,11 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 4,
         "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 3,
+        "rarity": "decent"
       }
     ]
   },
@@ -7476,6 +8030,16 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 5,
         "rarity": "basic"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "merchantPriceReduction",
+        "requirement": {
+          "type": "tier",
+          "amount": 6
+        },
+        "value": 0.1
       }
     ]
   },
@@ -7773,6 +8337,17 @@ window.cards = [
         "realm": 5,
         "rarity": "decent"
       }
+    ],
+    "specialEffects": [
+      {
+        "type": "currencyPerPokeMultiplier",
+        "requirement": {
+          "type": "tier",
+          "amount": 10
+        },
+        "currency": "coin",
+        "value": 2.0
+      }
     ]
   },
   {
@@ -7918,12 +8493,28 @@ window.cards = [
       {
         "type": "rarityOddsDivider",
         "realm": 8,
-        "rarity": "fine"
+        "rarity": "decent"
       },
       {
         "type": "rarityOddsDivider",
         "realm": 8,
-        "rarity": "decent"
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "fine"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "currencyPerSecMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 30
+        },
+        "currency": "feather",
+        "value": 2.0
       }
     ]
   },
@@ -7950,12 +8541,22 @@ window.cards = [
       {
         "type": "rarityOddsDivider",
         "realm": 8,
-        "rarity": "fine"
+        "rarity": "junk"
       },
       {
         "type": "rarityOddsDivider",
         "realm": 8,
         "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "fine"
       }
     ]
   },
@@ -8032,6 +8633,11 @@ window.cards = [
       {
         "type": "rarityOddsDivider",
         "realm": 7,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
         "rarity": "junk"
       }
     ]
@@ -8156,6 +8762,17 @@ window.cards = [
         "realm": 2,
         "rarity": "rare"
       }
+    ],
+    "specialEffects": [
+      {
+        "type": "currencyPerPokeMultiplier",
+        "requirement": {
+          "type": "tier",
+          "amount": 10
+        },
+        "currency": "egg",
+        "value": 5.0
+      }
     ]
   },
   {
@@ -8197,6 +8814,17 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 4,
         "rarity": "rare"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "currencyPerSecMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 20
+        },
+        "currency": "coin",
+        "value": 2.0
       }
     ]
   },
@@ -8251,6 +8879,17 @@ window.cards = [
         "realm": 3,
         "rarity": "rare"
       }
+    ],
+    "specialEffects": [
+      {
+        "type": "currencyPerPokeMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 10
+        },
+        "currency": "coin",
+        "value": 3.0
+      }
     ]
   },
   {
@@ -8302,6 +8941,17 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 5,
         "rarity": "rare"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "currencyPerPokeMultiplier",
+        "requirement": {
+          "type": "tier",
+          "amount": 10
+        },
+        "currency": "tooth",
+        "value": 5.0
       }
     ]
   },
@@ -8355,6 +9005,17 @@ window.cards = [
         "realm": 6,
         "rarity": "rare"
       }
+    ],
+    "specialEffects": [
+      {
+        "type": "currencyPerPokeMultiplier",
+        "requirement": {
+          "type": "tier",
+          "amount": 10
+        },
+        "currency": "coral",
+        "value": 5.0
+      }
     ]
   },
   {
@@ -8404,6 +9065,17 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 7,
         "rarity": "rare"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "currencyPerPokeMultiplier",
+        "requirement": {
+          "type": "tier",
+          "amount": 10
+        },
+        "currency": "pollen",
+        "value": 5.0
       }
     ]
   },
@@ -8457,6 +9129,17 @@ window.cards = [
         "realm": 8,
         "rarity": "epic"
       }
+    ],
+    "specialEffects": [
+      {
+        "type": "currencyPerPokeMultiplier",
+        "requirement": {
+          "type": "tier",
+          "amount": 10
+        },
+        "currency": "crystal",
+        "value": 5.0
+      }
     ]
   },
   {
@@ -8509,6 +9192,17 @@ window.cards = [
         "realm": 8,
         "rarity": "fine"
       }
+    ],
+    "specialEffects": [
+      {
+        "type": "currencyPerPokeMultiplier",
+        "requirement": {
+          "type": "tier",
+          "amount": 10
+        },
+        "currency": "pearl",
+        "value": 5.0
+      }
     ]
   },
   {
@@ -8558,6 +9252,17 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 8,
         "rarity": "legend"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "currencyPerPokeMultiplier",
+        "requirement": {
+          "type": "tier",
+          "amount": 10
+        },
+        "currency": "feather",
+        "value": 3.0
       }
     ]
   },
@@ -8616,6 +9321,25 @@ window.cards = [
         "realm": 8,
         "rarity": "legend"
       }
+    ],
+    "specialEffects": [
+      {
+        "type": "allGeneratorMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 15
+        },
+        "value": 5.0
+      },
+      {
+        "type": "currencyPerSecMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 25
+        },
+        "currency": "coin",
+        "value": 10.0
+      }
     ]
   },
   {
@@ -8663,6 +9387,24 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 7,
         "rarity": "mythic"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "allGeneratorMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 10
+        },
+        "value": 5.0
+      },
+      {
+        "type": "merchantPriceReduction",
+        "requirement": {
+          "type": "level",
+          "amount": 15
+        },
+        "value": 0.1
       }
     ]
   },
@@ -8721,9 +9463,18 @@ window.cards = [
         "type": "allGeneratorMultiplier",
         "requirement": {
           "type": "level",
-          "amount": 10
+          "amount": 15
         },
         "value": 10.0
+      },
+      {
+        "type": "currencyPerPokeMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 25
+        },
+        "currency": "coin",
+        "value": 100.0
       }
     ]
   }

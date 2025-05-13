@@ -388,7 +388,7 @@ nav#tabs { margin-bottom: 15px; }
   background: #ddd;
   border-radius: 6px;
   overflow: hidden;
-  height: 24px;
+  min-height: 24px;
   margin-bottom: 4px;
 }
 

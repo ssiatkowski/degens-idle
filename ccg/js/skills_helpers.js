@@ -443,11 +443,18 @@ window.skills = [
     },
     {
       id: 5007,
-      name: "Incremental Games Are For Losers",
-      description: "Incremental Games realm deselect multiplier reduced by 50%.",
+      name: "These Beasts Are Weak",
+      description: "Mythical Beasts realm deselect multiplier reduced by 50%.",
       cost: { realmId: 8, currencyId: "coin", amount: 1e9 },
       purchased: false
     },
+    // {
+    //   id: 5008,
+    //   name: "Incremental Games Are For Losers",
+    //   description: "Incremental Games realm deselect multiplier reduced by 50%.",
+    //   cost: { realmId: 8, currencyId: "", amount: 1e9 },
+    //   purchased: false
+    // },
     {
       id: 6001,
       name: "Fan of Capitalism",
@@ -970,7 +977,7 @@ window.skills = [
       id: 16001,
       name: "Gotta Catch 'Em All",
       description: "+1 max card draw per total discovered cards.",
-      cost: { realmId: 7, currencyId: "feather", amount: 2e7},
+      cost: { realmId: 7, currencyId: "feather", amount: 2e6},
       purchased: false
     },
     {

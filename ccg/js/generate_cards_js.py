@@ -164,12 +164,67 @@ def generate_stats(cards):
     print("\n== Statistics per currency (base effects) ==")
     print(curr_stats)
 
+    # New: Special Effects Summary
     print("\n== Special Effects per Realm ==")
     for card in cards:
         for se in card.get("specialEffects", []):
             realm = card["realm"]
             req = se["requirement"]
             print(f"[Realm {realm}] Card {card['name']} ({card['id']}): {se['type']} — requires {req['type']} {req['amount']}")
+
+    print("\n== Special Effect Aggregates ==")
+    merchant_total = 0
+    flat_poke = {}
+    flat_sec = {}
+    mult_poke = {}
+    mult_sec = {}
+    all_gen_mult = 1
+
+    for card in cards:
+        for se in card.get("specialEffects", []):
+            t = se["type"]
+            if t == "merchantPriceReduction":
+                merchant_total += se.get("value", 0)
+
+            elif t == "flatCurrencyPerPoke":
+                c = se.get("currency", "")
+                flat_poke[c] = flat_poke.get(c, 0) + se.get("value", 0)
+
+            elif t == "flatCurrencyPerSecond":
+                c = se.get("currency", "")
+                flat_sec[c] = flat_sec.get(c, 0) + se.get("value", 0)
+
+            elif t == "currencyPerPokeMultiplier":
+                c = se.get("currency", "")
+                mult_poke[c] = mult_poke.get(c, 1) * se.get("value", 1)
+
+            elif t == "currencyPerSecMultiplier":
+                c = se.get("currency", "")
+                mult_sec[c] = mult_sec.get(c, 1) * se.get("value", 1)
+
+            elif t == "allGeneratorMultiplier":
+                all_gen_mult *= se.get("value", 1)
+
+    print(f"\nMerchant Price Reduction (total): {merchant_total:.3f}")
+
+    print("\nFlat Currency Per Poke (total):")
+    for cur, val in flat_poke.items():
+        print(f"  {cur}: {val:.3f}")
+
+    print("\nFlat Currency Per Second (total):")
+    for cur, val in flat_sec.items():
+        print(f"  {cur}: {val:.3f}")
+
+    print("\nCurrency Per Poke Multiplier (product):")
+    for cur, val in mult_poke.items():
+        print(f"  {cur}: {val:.5f}")
+
+    print("\nCurrency Per Second Multiplier (product):")
+    for cur, val in mult_sec.items():
+        print(f"  {cur}: {val:.5f}")
+
+    print(f"\nAll Generator Multiplier (product): {all_gen_mult:.5f}")
+
 
 
 if __name__ == "__main__":

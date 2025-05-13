@@ -253,7 +253,7 @@
 
 .tier-progress-table td.tier-cell {
   position: relative;
-  min-width: 40px;
+  min-width: 20px;
 }
 
 .tier-threshold {

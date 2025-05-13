@@ -20,6 +20,14 @@ let lastFlippedCard = null;
 let blackHoleTimer; // Declare timer in a higher scope
 let countdownEl;
 
+// Add these at the top with other global variables
+let merchantInterval;
+let currencyInterval;
+let touchMoveHandler;
+let touchEndHandler;
+let resizeHandler;
+let orientationHandler;
+
 // --- LOOKUP MAPS ---
 const realmMap = {}, cardMap = {}, skillMap = {};
 realms.forEach(r => realmMap[r.id] = r);
@@ -892,7 +900,7 @@ function openModal(cardId) {
           case "currencyPerSecMultiplier": {
             const iconPath = `assets/images/currencies/${def.currency}.png`;
             const verb = def.type === "currencyPerPokeMultiplier" ? "/ Poke" : "/ Sec";
-            label = `<img class="currency-effect-icon" src="${iconPath}" alt="${def.currency}" /> ${verb} Multiplier`;
+            label = `Global <img class="currency-effect-icon" src="${iconPath}" alt="${def.currency}" /> ${verb} Multiplier`;
             valueHtml = `×${formatNumber(def.value)}`;
             break;
           }
@@ -1515,17 +1523,23 @@ function processNewCardDiscovered() {
     maxCardsPerDiscovered = totalDiscovered;
   }
   if (skillMap[17001].purchased){
-
     //compute total # realms where all cards are discovered
-    const fullyDiscoveredRealms = realms.filter(r => r.unlocked && cards.every(c => c.realm === r.id && c.quantity > 0)).length;
-
+    const fullyDiscoveredRealms = realms.filter(r => 
+      r.unlocked && 
+      cards.filter(c => c.realm === r.id).every(c => c.quantity > 0)
+    ).length;
     //make this only apply the difference from the last time this was applied. 
     const difference = fullyDiscoveredRealms - lastFullyDiscoveredRealms;
     if (difference > 0){  
       lastFullyDiscoveredRealms = fullyDiscoveredRealms;
       //multiply currencyPerSecMultiplier and currencyPerPokeMultiplier by 2^difference
-      state.effects.currencyPerSecMultiplier *= Math.pow(2, difference);
-      state.effects.currencyPerPokeMultiplier *= Math.pow(2, difference);
+      //apply this to all currencies
+      Object.keys(state.effects.currencyPerSecMultiplier).forEach(cur => {
+        state.effects.currencyPerSecMultiplier[cur] *= Math.pow(2, difference);
+      });
+      Object.keys(state.effects.currencyPerPokeMultiplier).forEach(cur => {
+        state.effects.currencyPerPokeMultiplier[cur] *= Math.pow(2, difference);
+      });
     }
   }
 }
@@ -1768,6 +1782,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
   updatePokeFilterStats();
   updateGeneratorRates();
   checkAffordableSkills();
+  processNewCardDiscovered();
 
   initHarvester();
   initGravitationalWaveAbsorber();
@@ -1790,23 +1805,35 @@ document.addEventListener('DOMContentLoaded', ()=>{
     renderMerchantTab();
   }
 
-  // tick every 100ms
-  setInterval(refreshMerchantIfNeeded, 100);
-
-  // every second, mint your currencyPerSec rewards
-  setInterval(() => {
+  // Store interval IDs for cleanup
+  merchantInterval = setInterval(refreshMerchantIfNeeded, 100);
+  currencyInterval = setInterval(() => {
     Object.entries(state.effects.currencyPerSec).forEach(([curId, rate]) => {
-      // skip zero-rates or unknown currencies
       if (state.currencies[curId] == null) return;
-      // Get generator contribution
       const gen = state.resourceGeneratorContribution[curId] || 0;
-      // Add generator contribution to the rate
       const totalRate = rate * state.effects.currencyPerSecMultiplier[curId] + gen;
       if (!totalRate) return;
       state.currencies[curId] = state.currencies[curId].plus(new Decimal(totalRate));
     });
     updateCurrencyBar();
   }, 1000);
+
+  // Store event handlers for cleanup
+  touchMoveHandler = (e) => {
+    const touch = e.touches[0];
+    // ... existing touchmove code ...
+  };
+  touchEndHandler = () => {
+    isScrolling = false;
+    lastFlippedCard = null;
+  };
+  resizeHandler = checkOrientation;
+  orientationHandler = checkOrientation;
+
+  document.addEventListener('touchmove', touchMoveHandler, { passive: true });
+  document.addEventListener('touchend', touchEndHandler, { passive: true });
+  window.addEventListener('resize', resizeHandler);
+  window.addEventListener('orientationchange', orientationHandler);
 
   const savedRem = parseFloat(localStorage.getItem('ccgCooldownRem'));
   if (!isNaN(savedRem) && savedRem > 0) {
@@ -1816,3 +1843,32 @@ document.addEventListener('DOMContentLoaded', ()=>{
     holeBtn.classList.remove('disabled');
   }
 });
+
+// Add cleanup function
+function cleanup() {
+  // Clear intervals
+  if (merchantInterval) clearInterval(merchantInterval);
+  if (currencyInterval) clearInterval(currencyInterval);
+  if (blackHoleTimer) clearInterval(blackHoleTimer);
+
+  // Remove event listeners
+  document.removeEventListener('touchmove', touchMoveHandler);
+  document.removeEventListener('touchend', touchEndHandler);
+  window.removeEventListener('resize', resizeHandler);
+  window.removeEventListener('orientationchange', orientationHandler);
+
+  // Clear any remaining animations
+  if (fillAnim) anime.remove(globalFill);
+}
+
+// Add cleanup on page unload
+window.addEventListener('unload', cleanup);
+
+// Add cleanup to reset game function if it exists
+if (typeof resetGame === 'function') {
+  const originalResetGame = resetGame;
+  resetGame = function() {
+    cleanup();
+    originalResetGame();
+  };
+}
