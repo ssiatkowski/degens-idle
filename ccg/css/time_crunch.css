@@ -1,0 +1,67 @@
+.time-crunch-container {
+    position: absolute;
+    top: 2%;
+    right: 2%;
+    display: flex;
+    z-index: 10;
+    width: 25%;
+  }
+
+.time-crunch-button {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    overflow: hidden;
+    --charge-angle: 0deg;
+    cursor: not-allowed;
+    pointer-events: none;
+    transition: transform 0.2s, filter 0.2s;
+    /* make sure we actually see the pseudo‐element: */
+    background: var(--button-bg, #666);
+  }
+
+    /* make the image absolutely fill the circular wrapper */
+    .time-crunch-button .time-crunch-image {
+        position: absolute;
+        top: -3%;
+        left: -3%;
+        width: 106%;
+        height: 106%;
+        object-fit: contain;   /* or "cover" if you'd rather crop to fill */
+        display: block;
+        z-index: 1;            /* sit just below the ::before mask */
+    }
+  
+  
+  /* Overlay mask */
+  .time-crunch-button::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    /* dark from 0 → angle, transparent otherwise */
+    background: conic-gradient(
+        transparent 0deg var(--charge-angle),
+        rgba(0,0,0,0.6) var(--charge-angle) 360deg
+      );
+    /* force it above any children */
+    z-index: 2;
+    pointer-events: none;
+  }
+  
+  /* if you put an <img> or icon inside the button, make sure it's below the mask: */
+  .time-crunch-button > * {
+    position: relative;
+    z-index: 1;
+  }
+  
+  .time-crunch-button.ready {
+    pointer-events: auto;
+    cursor: pointer;
+    transform: scale(1.05);
+    border: 2px solid #00ff00;
+  }
+  .time-crunch-button.ready:hover {
+    transform: scale(1.15);
+  }
+  

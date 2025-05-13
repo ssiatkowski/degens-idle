@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="css/harvester.css" />
   <link rel="stylesheet" href="css/absorber.css" />
   <link rel="stylesheet" href="css/interceptor.css" />
+  <link rel="stylesheet" href="css/time_crunch.css" />
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/main.css" />
   <link rel="stylesheet" href="css/settings.css" />
@@ -89,6 +90,15 @@
         <div id="interceptor-container" class="interceptor-container" style="display: none;">
           <img id="interceptor-button" class="interceptor-button" src="assets/images/interceptor.png" alt="Interceptor" onclick="handleInterceptorClick()" />
           <div class="interceptor-counter">0.00</div>
+        </div>
+        <div id="time-crunch-container" class="time-crunch-container" style="display: none;">
+          <div id="time-crunch-button" class="time-crunch-button" onclick="handleTimeCrunchClick()">
+            <img
+              src="assets/images/time_crunch.png"
+              alt="Time Crunch"
+              class="time-crunch-image"
+            />
+          </div>
         </div>
       </div>
     
@@ -219,6 +229,7 @@
   <script src="js/harvester.js"></script>
   <script src="js/absorber.js"></script>
   <script src="js/interceptor.js"></script>
+  <script src="js/time_crunch.js"></script>
 
   <!-- Main Behavior -->
   <script src="js/main.js"></script>

@@ -897,6 +897,13 @@ window.skills = [
       purchased: false
     },
     {
+      id: 12301,
+      name: "Time Crunch Collector",
+      description: "Unlocks a device that can passively collect time from the black hole to release 100x pokes worth of currency when used.",
+      cost: { realmId: 7, currencyId: "tooth", amount: 1e8 },
+      purchased: false
+    },
+    {
       id: 13001,
       name: "Anomaly",
       description: "Increases min cards per poke by 4.04.",
@@ -1358,6 +1365,9 @@ function applySkill(id, skipCost = false) {
         window.initSpaceBendingInterceptor();
         break;
       case 12202: // Interceptor Upgrade
+        break;
+      case 12301: // Time Crunch Collector
+        window.initTimeCrunchCollector();
         break;
       case 13001: // Anomaly
         state.effects.minCardsPerPoke += 4.04;

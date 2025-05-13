@@ -66,6 +66,7 @@ window.state = {
   harvesterValue: 0,
   absorberValue: 1,
   interceptorValue: 0,     // Add interceptor value
+  timeCrunchValue: 0,     // Add Time Crunch value
 };
 
 // init currencies & effects
@@ -98,6 +99,7 @@ function loadState() {
     state.harvesterValue = obj.harvesterValue || 0;
     state.absorberValue = obj.absorberValue || 1;
     state.interceptorValue = obj.interceptorValue || 0;
+    state.timeCrunchValue = obj.timeCrunchValue || 0;  // Load Time Crunch value
     Object.entries(obj.ownedCards).forEach(([cid,data])=>{
       const c = cardMap[cid];
       if (c) {
@@ -136,6 +138,7 @@ function saveState() {
     harvesterValue: state.harvesterValue,
     absorberValue: state.absorberValue,
     interceptorValue: state.interceptorValue,
+    timeCrunchValue: state.timeCrunchValue,  // Save Time Crunch value
     currentMerchantId: state.currentMerchant?.id ?? null,
     merchantOffers: state.merchantOffers.map(o => ({
       cardId:   o.cardId,
@@ -1583,7 +1586,7 @@ function showOfflineEarningsModal(earnings) {
   currencyList.className = 'offline-earnings-list';
   
   Object.entries(earnings).forEach(([curId, amount]) => {
-    if (amount.lessThanOrEqualTo(0) || curId === 'harvester') return;
+    if (amount.lessThanOrEqualTo(0) || curId === 'harvester' || curId === 'timeCrunch') return;
     
     const meta = currencies.find(c => c.id === curId);
     if (!meta) return;
@@ -1658,6 +1661,18 @@ function showOfflineEarningsModal(earnings) {
     `;
     progressList.appendChild(interceptorItem);
   }
+
+  // Add Time Crunch progress if applicable
+  if (earnings.timeCrunch) {
+    const timeCrunchItem = document.createElement('div');
+    timeCrunchItem.className = 'offline-earnings-item';
+    timeCrunchItem.innerHTML = `
+      <span class="amount">+${formatDuration(earnings.timeCrunch)}</span>
+      <img class="icon" src="assets/images/time_crunch.png" alt="Time Crunch" />
+      <span class="name">Time Crunch</span>
+    `;
+    progressList.appendChild(timeCrunchItem);
+  }
   
   progressColumn.appendChild(progressList);
 
@@ -1724,9 +1739,8 @@ document.addEventListener('DOMContentLoaded', ()=>{
   // Calculate offline progress after all effects are computed
   if (savedState.lastSaveTime) {
     const currentTime = Date.now();
-    const timeDiff = Math.floor((currentTime - savedState.lastSaveTime) / 1000); // Convert to seconds
+    const timeDiff = Math.floor((currentTime - savedState.lastSaveTime) / 1000);
     
-    // Track earnings for the modal
     const offlineEarnings = {};
     
     // Award currency based on currencyPerSec and time difference
@@ -1755,6 +1769,14 @@ document.addEventListener('DOMContentLoaded', ()=>{
       const interceptorGain = timeDiff / 1000 * (skillMap[12202].purchased ? 2 : 1);
       state.interceptorValue = state.interceptorValue + interceptorGain;
       offlineEarnings['interceptor'] = new Decimal(interceptorGain);
+    }
+
+    if (skillMap[12301].purchased) {
+      // Award Time Crunch value based on time difference
+      const timeCrunchGain = timeDiff;  // Remove the /1000 division since we want full seconds
+      const actualGain = Math.min(timeCrunchGain, 300 - state.timeCrunchValue); // Only count what actually gets added
+      state.timeCrunchValue = Math.min(state.timeCrunchValue + timeCrunchGain, 300); // Cap at 5 minutes
+      offlineEarnings['timeCrunch'] = new Decimal(actualGain);
     }
 
     // Show earnings modal
@@ -1842,6 +1864,12 @@ document.addEventListener('DOMContentLoaded', ()=>{
     holeBtn.disabled = false;
     holeBtn.classList.remove('disabled');
   }
+
+  // Initialize Time Crunch
+  if (state.timeCrunchValue > 0) {
+    setTimeCrunchValue(state.timeCrunchValue);
+  }
+  initTimeCrunchCollector();
 });
 
 // Add cleanup function
@@ -1850,6 +1878,7 @@ function cleanup() {
   if (merchantInterval) clearInterval(merchantInterval);
   if (currencyInterval) clearInterval(currencyInterval);
   if (blackHoleTimer) clearInterval(blackHoleTimer);
+  if (timeCrunchInterval) clearInterval(timeCrunchInterval);  // Clear Time Crunch interval
 
   // Remove event listeners
   document.removeEventListener('touchmove', touchMoveHandler);
