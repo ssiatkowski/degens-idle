@@ -60,6 +60,9 @@ function setTimeCrunchValue(value) {
 
 // Example init
 function initTimeCrunchCollector() {
+  // Only show and initialize if the skill is purchased
+  if (!skillMap[12301].purchased) return;
+  
   document.getElementById('time-crunch-container').style.display = 'flex';
   // Only start charging if we're not already at max
   if (state.timeCrunchValue < MAX_CHARGE_TIME) {
