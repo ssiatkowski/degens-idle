@@ -44,6 +44,10 @@ window.state = {
     cooldownSkipChance: 0,
     merchantCooldownReduction: 0,
     extraMerchantRarityScaling: 0,
+    merchantPriceReduction: 0,
+    currencyPerPokeMultiplier: {},
+    currencyPerSecMultiplier: {},
+    allGeneratorMultiplier: 1,
   },
   selectedRealms: [],      // newly added
   currentMerchant: null,
@@ -61,6 +65,8 @@ currencies.forEach(c => {
   state.currencies[c.id]              = new Decimal(0);
   state.effects.currencyPerPoke[c.id] = 0;
   state.effects.currencyPerSec[c.id]  = 0;
+  state.effects.currencyPerPokeMultiplier[c.id] = 1;
+  state.effects.currencyPerSecMultiplier[c.id] = 1;
 });
 
 // --- PERSISTENCE ---
@@ -246,6 +252,8 @@ function showTab(tab) {
   else if (tab === 'merchant') {
     document.getElementById('tab-btn-merchant')
       .classList.remove('new-offers');
+  } else if (tab === 'settings') {
+    saveState();
   }
 }
 
@@ -339,7 +347,7 @@ function performPoke() {
   Object.entries(state.effects.currencyPerPoke).forEach(([curId, rate]) => {
     if (!rate || state.currencies[curId] == null) return;
     state.currencies[curId] =
-      state.currencies[curId].plus(new Decimal(rate));
+      state.currencies[curId].plus(new Decimal(rate * state.effects.currencyPerPokeMultiplier[curId]));
   });
 
   // Check for affordable skills after currency update
@@ -384,6 +392,16 @@ function performPoke() {
     const contentImg = document.createElement('img');
     contentImg.className = 'card-image';
     contentImg.src = `assets/images/cards/${c.realm}/${slugify(c.name)}.jpg`;
+
+    // Special Effects S indicator
+    if (Array.isArray(c.specialEffects) && c.specialEffects.length > 0) {
+      // Check if all requirements are met
+      const allMet = c.specialEffects.every(def => isSpecialEffectRequirementMet(c, def.requirement));
+      const sSpan = document.createElement('span');
+      sSpan.className = 'special-s-indicator' + (allMet ? ' special-s-glow' : ' special-s-dull');
+      sSpan.textContent = 'S';
+      front.appendChild(sSpan);
+    }
 
     front.append(frameImg, contentImg);
 
@@ -832,6 +850,65 @@ function openModal(cardId) {
     right.appendChild(effContainer);
   }
 
+  // --- SPECIAL EFFECTS SECTION ---
+  if (c.specialEffects && c.specialEffects.length > 0) {
+    const specialEffHeader = document.createElement('p');
+    specialEffHeader.className = 'modal-effects-header';
+    specialEffHeader.textContent = 'Special Effects';
+    right.appendChild(specialEffHeader);
+
+    const hr = document.createElement('hr');
+    hr.style.margin = '0 0 4px 0';
+    right.appendChild(hr);
+
+    const specialEffContainer = document.createElement('div');
+    specialEffContainer.className = 'modal-effects';
+
+    c.specialEffects.forEach(def => {
+      const isUnlocked = isSpecialEffectRequirementMet(c, def.requirement);
+      
+      const li = document.createElement('p');
+      li.className = 'effect-line' + (isUnlocked ? '' : ' locked');
+
+      if (!isUnlocked) {
+        li.innerHTML = `Special Effect unlocks at ${def.requirement.type} ${def.requirement.amount}`;
+      } else {
+        let label = SPECIAL_EFFECT_NAMES[def.type] || def.type;
+        let valueHtml;
+
+        switch (def.type) {
+          case "merchantPriceReduction":
+            valueHtml = `-${(def.value*100).toFixed(0)}%`;
+            break;
+          case "flatCurrencyPerPoke":
+          case "flatCurrencyPerSecond": {
+            const iconPath = `assets/images/currencies/${def.currency}.png`;
+            const verb = def.type === "flatCurrencyPerPoke" ? "/ Poke" : "/ Sec";
+            label = `<img class="currency-effect-icon" src="${iconPath}" alt="${def.currency}" /> ${verb}`;
+            valueHtml = `+${formatNumber(def.value)}`;
+            break;
+          }
+          case "currencyPerPokeMultiplier":
+          case "currencyPerSecMultiplier": {
+            const iconPath = `assets/images/currencies/${def.currency}.png`;
+            const verb = def.type === "currencyPerPokeMultiplier" ? "/ Poke" : "/ Sec";
+            label = `<img class="currency-effect-icon" src="${iconPath}" alt="${def.currency}" /> ${verb} Multiplier`;
+            valueHtml = `×${formatNumber(def.value)}`;
+            break;
+          }
+          case "allGeneratorMultiplier":
+            valueHtml = `×${formatNumber(def.value)}`;
+            break;
+        }
+
+        li.innerHTML = `${label}: <strong>${valueHtml}</strong>`;
+      }
+
+      specialEffContainer.appendChild(li);
+    });
+
+    right.appendChild(specialEffContainer);
+  }
 
   mc.append(left, right);
   ov.append(mc);
@@ -915,6 +992,17 @@ function renderCardsCollection() {
       const contentImg = document.createElement('img');
       contentImg.className = 'card-image';
       contentImg.src = `assets/images/cards/${c.realm}/${slugify(c.name)}.jpg`;
+
+      // Special Effects S indicator
+      if (Array.isArray(c.specialEffects) && c.specialEffects.length > 0) {
+        // Check if all requirements are met
+        const allMet = c.specialEffects.every(def => isSpecialEffectRequirementMet(c, def.requirement));
+        const sSpan = document.createElement('span');
+        sSpan.className = 'special-s-indicator' + (allMet ? ' special-s-glow' : ' special-s-dull');
+        sSpan.textContent = 'S';
+        front.appendChild(sSpan);
+      }
+
       front.append(frameImg, contentImg);
 
       // tier icon + level label
@@ -1002,131 +1090,64 @@ function updateGeneratorRates() {
   if (skillMap[10001].purchased) {
     // Count discovered Realm 1 cards
     const discoveredCount = cards.filter(c => c.realm === 1 && c.quantity > 0).length;
-    
     // Calculate new contribution
-    const newContribution = discoveredCount * discoveredCount * (skillMap[13004].purchased ? 4.04 : 1);
-    
-    // Remove old contribution and add new one
-    state.effects.currencyPerSec.stone = (state.effects.currencyPerSec.stone || 0) 
-      - (state.resourceGeneratorContribution.stone || 0) 
-      + newContribution;
-    
-    // Store the new contribution
+    const newContribution = discoveredCount * discoveredCount * state.effects.allGeneratorMultiplier;
+    // Only update the generator contribution
     state.resourceGeneratorContribution.stone = newContribution;
   }
 
   // Coral Generator (skill 10002)
   if (skillMap[10002].purchased) {
-    // Count discovered Realm 2 cards
     const discoveredCount = cards.filter(c => c.realm === 2 && c.quantity > 0).length;
-    
-    // Calculate new contribution
-    const newContribution = discoveredCount * discoveredCount * (skillMap[13004].purchased ? 4.04 : 1);
-    
-    // Remove old contribution and add new one
-    state.effects.currencyPerSec.coral = (state.effects.currencyPerSec.coral || 0) 
-      - (state.resourceGeneratorContribution.coral || 0) 
-      + newContribution;
-    
-    // Store the new contribution
+    const newContribution = discoveredCount * discoveredCount * state.effects.allGeneratorMultiplier;
     state.resourceGeneratorContribution.coral = newContribution;
   }
 
   // Pollen Generator (skill 10003)
   if (skillMap[10003].purchased) {
-    // Count discovered Realm 3 cards
     const discoveredCount = cards.filter(c => c.realm === 3 && c.quantity > 0).length;
-    
-    // Calculate new contribution
-    const newContribution = discoveredCount * discoveredCount * (skillMap[13004].purchased ? 4.04 : 1);
-    
-    // Remove old contribution and add new one
-    state.effects.currencyPerSec.pollen = (state.effects.currencyPerSec.pollen || 0) 
-      - (state.resourceGeneratorContribution.pollen || 0) 
-      + newContribution;
-    
-    // Store the new contribution
+    const newContribution = discoveredCount * discoveredCount * state.effects.allGeneratorMultiplier;
     state.resourceGeneratorContribution.pollen = newContribution;
   }
 
   // Egg Generator (skill 10004)
   if (skillMap[10004].purchased) {
-    // Count discovered Realm 4 cards
     const discoveredCount = cards.filter(c => c.realm === 4 && c.quantity > 0).length;
-    
-    // Calculate new contribution 
-    const newContribution = discoveredCount * discoveredCount * (skillMap[13004].purchased ? 4.04 : 1);
-
-    // Remove old contribution and add new one
-    state.effects.currencyPerSec.egg = (state.effects.currencyPerSec.egg || 0)
-      - (state.resourceGeneratorContribution.egg || 0)
-      + newContribution;
-
-    // Store the new contribution
+    const newContribution = discoveredCount * discoveredCount * state.effects.allGeneratorMultiplier;
     state.resourceGeneratorContribution.egg = newContribution;
   }
 
   // Crystal Generator 5 (skill 10005)
   if (skillMap[10005].purchased) {
-    // Count discovered Realm 5 cards
     const discoveredCount = cards.filter(c => c.realm === 5 && c.quantity > 0).length;
-    
-    // Calculate new contribution
-    const newContribution = discoveredCount * discoveredCount * (skillMap[13004].purchased ? 4.04 : 1);
-
-    // Remove old contribution and add new one
-    state.effects.currencyPerSec.crystal = (state.effects.currencyPerSec.crystal || 0)
-      - (state.resourceGeneratorContribution.crystal || 0)
-      + newContribution;
-
-    // Store the new contribution
+    const newContribution = discoveredCount * discoveredCount * state.effects.allGeneratorMultiplier;
     state.resourceGeneratorContribution.crystal = newContribution;
   }
 
   // Rune Generator 6 (skill 10006)
   if (skillMap[10006].purchased) {
-    // Count discovered Realm 6 cards
     const discoveredCount = cards.filter(c => c.realm === 6 && c.quantity > 0).length;
-
-    // Calculate new contribution
-    const newContribution = discoveredCount * discoveredCount * (skillMap[13004].purchased ? 4.04 : 1);
-
-    // Remove old contribution and add new one
-    state.effects.currencyPerSec.rune = (state.effects.currencyPerSec.rune || 0)
-      - (state.resourceGeneratorContribution.rune || 0)
-      + newContribution;
-
-    // Store the new contribution
+    const newContribution = discoveredCount * discoveredCount * state.effects.allGeneratorMultiplier;
     state.resourceGeneratorContribution.rune = newContribution;
   }
 
   // Resource Generator 7 (skill 10007)
   if (skillMap[10007].purchased) {
-    // Count discovered Realm 7 cards
     const discoveredCount = cards.filter(c => c.realm === 7 && c.quantity > 0).length;
-
-    // Calculate new contribution
-    const newContribution = discoveredCount * discoveredCount * (skillMap[13004].purchased ? 4.04 : 1);
-
-    // Remove old contribution and add new one
-    state.effects.currencyPerSec.tooth = (state.effects.currencyPerSec.tooth || 0)
-      - (state.resourceGeneratorContribution.tooth || 0)
-      + newContribution;
-
-    // Store the new contribution
+    const newContribution = discoveredCount * discoveredCount * state.effects.allGeneratorMultiplier;
     state.resourceGeneratorContribution.tooth = newContribution;
   }
-
-  
 }
 
 function giveCard(cardId, amount = 1) {
   const c = cardMap[cardId];
   const wasNew = c.quantity === 0;  // Track if this is a new discovery
+  const oldTier = c.tier;           // <-- Add this line back
 
-  // --- 1. Figure out old tier & old effect-contribution ---
-  const oldTier = c.tier;
-  const oldEffs = computeCardEffects(c);        // uses current c.quantity
+  // --- 1. Remove all previous effects (base + special) if present ---
+  if (c.lastAppliedEffects) {
+    applyEffectsDelta(c.lastAppliedEffects, -1);
+  }
 
   // --- 2. Update quantity ---
   c.quantity += amount;
@@ -1140,14 +1161,13 @@ function giveCard(cardId, amount = 1) {
   c.tier = newTier;
 
   const newEffs = computeCardEffects(c);
+  const specialEffs = computeSpecialEffects(c);
 
   // --- 4. Only apply the delta if tier actually changed ---
   if (newTier !== oldTier) {
-    // remove old-tier contribution
-    applyEffectsDelta(oldEffs, -1);
-    // apply new-tier contribution
     applyEffectsDelta(newEffs, +1);
-    c.lastAppliedEffects = newEffs;
+    applyEffectsDelta(specialEffs, +1);
+    c.lastAppliedEffects = { ...newEffs, ...specialEffs };
   }
 
   // Update generator rates if this is a new card discovery
@@ -1163,16 +1183,20 @@ function giveCard(cardId, amount = 1) {
 // And in levelUp():
 function levelUp(cardId) {
   const c = cardMap[cardId];
-  // remove old
-  applyEffectsDelta(c.lastAppliedEffects, -1);
+  // remove old (base + special)
+  if (c.lastAppliedEffects) {
+    applyEffectsDelta(c.lastAppliedEffects, -1);
+  }
 
   // pay cost…
   c.level++;
 
   // recompute & apply
   const now = computeCardEffects(c);
+  const specialEffs = computeSpecialEffects(c);
   applyEffectsDelta(now, +1);
-  c.lastAppliedEffects = now;
+  applyEffectsDelta(specialEffs, +1);
+  c.lastAppliedEffects = { ...now, ...specialEffs };
 
   // Check for affordable skills after spending currency
   checkAffordableSkills();
@@ -1648,9 +1672,15 @@ document.addEventListener('DOMContentLoaded', ()=>{
   cards.forEach(c => {
     c.lastAppliedEffects = {};
     if (c.quantity > 0) {
+      // Apply base effects
       const cur = computeCardEffects(c);
       applyEffectsDelta(cur, +1);
       c.lastAppliedEffects = cur;
+
+      // Apply special effects
+      const specialEffs = computeSpecialEffects(c);
+      applyEffectsDelta(specialEffs, +1);
+      c.lastAppliedEffects = { ...c.lastAppliedEffects, ...specialEffs };
     }
   });
 
@@ -1665,7 +1695,12 @@ document.addEventListener('DOMContentLoaded', ()=>{
     // Award currency based on currencyPerSec and time difference
     Object.entries(state.effects.currencyPerSec).forEach(([curId, rate]) => {
       if (rate && state.currencies[curId] != null) {
-        const offlineGain = new Decimal(rate).times(timeDiff);
+        // Get generator contribution
+        const gen = state.resourceGeneratorContribution[curId] || 0;
+        // Add generator contribution to the rate
+        const totalRate = rate + gen;
+        if (!totalRate) return;
+        const offlineGain = new Decimal(totalRate).times(timeDiff);
         state.currencies[curId] = state.currencies[curId].plus(offlineGain);
         offlineEarnings[curId] = offlineGain;
       }
@@ -1693,44 +1728,44 @@ document.addEventListener('DOMContentLoaded', ()=>{
     document.getElementById(`tab-btn-${t}`).onclick = ()=> showTab(t);
   });
   
-// Initialize sorted skills on load
-initializeSortedSkills();
+  // Initialize sorted skills on load
+  initializeSortedSkills();
 
-state.selectedRealms = realms.filter(r => r.unlocked).map(r => r.id);
-renderRealmFilters();
-showTab('hole');
+  state.selectedRealms = realms.filter(r => r.unlocked).map(r => r.id);
+  renderRealmFilters();
+  showTab('hole');
 
-updateCurrencyBar();
-initSkillsFilters();
-renderSkillsTab();
-updateStatsUI();
-initCardsFilters();
-renderCardsCollection();
-checkForNewCards();
-updatePokeFilterStats();
-updateGeneratorRates();
-checkAffordableSkills();
+  updateCurrencyBar();
+  initSkillsFilters();
+  renderSkillsTab();
+  updateStatsUI();
+  initCardsFilters();
+  renderCardsCollection();
+  checkForNewCards();
+  updatePokeFilterStats();
+  updateGeneratorRates();
+  checkAffordableSkills();
 
-initHarvester();
-initGravitationalWaveAbsorber();
-initSpaceBendingInterceptor();
+  initHarvester();
+  initGravitationalWaveAbsorber();
+  initSpaceBendingInterceptor();
 
-if (state.currentMerchant) {
-  // we have a saved merchant + offers,
-  // so restore our refresh timer and just render
-  nextRefresh =
-    Date.now()
-    + state.currentMerchant.refreshTime * 1000;
-  renderMerchantTab();
-} else {
-  // first time ever, pick a new one
-  state.currentMerchant = pickMerchant();
-  nextRefresh =
-    Date.now()
-    + state.currentMerchant.refreshTime * 1000;
-  genMerchantOffers();
-  renderMerchantTab();
-}
+  if (state.currentMerchant) {
+    // we have a saved merchant + offers,
+    // so restore our refresh timer and just render
+    nextRefresh =
+      Date.now()
+      + state.currentMerchant.refreshTime * 1000;
+    renderMerchantTab();
+  } else {
+    // first time ever, pick a new one
+    state.currentMerchant = pickMerchant();
+    nextRefresh =
+      Date.now()
+      + state.currentMerchant.refreshTime * 1000;
+    genMerchantOffers();
+    renderMerchantTab();
+  }
 
   // tick every 100ms
   setInterval(refreshMerchantIfNeeded, 100);
@@ -1739,11 +1774,14 @@ if (state.currentMerchant) {
   setInterval(() => {
     Object.entries(state.effects.currencyPerSec).forEach(([curId, rate]) => {
       // skip zero-rates or unknown currencies
-      if (!rate || state.currencies[curId] == null) return;
-      // add rate * 1 (second) to the balance
-      state.currencies[curId] = state.currencies[curId].plus(new Decimal(rate));
+      if (state.currencies[curId] == null) return;
+      // Get generator contribution
+      const gen = state.resourceGeneratorContribution[curId] || 0;
+      // Add generator contribution to the rate
+      const totalRate = rate * state.effects.currencyPerSecMultiplier[curId] + gen;
+      if (!totalRate) return;
+      state.currencies[curId] = state.currencies[curId].plus(new Decimal(totalRate));
     });
-    // update the UI
     updateCurrencyBar();
   }, 1000);
 

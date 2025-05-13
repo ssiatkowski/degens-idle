@@ -12,8 +12,18 @@ window.EFFECT_NAMES = {
     merchantCooldownReduction: "Merchant Cooldown Reduction",
     extraMerchantRarityScaling: "Extra Merchant Rarity Scaling",
   };
+
+// Add special effect names
+window.SPECIAL_EFFECT_NAMES = {
+    merchantPriceReduction: "Merchant Price Reduction",
+    flatCurrencyPerPoke: "Flat Currency per Poke",
+    flatCurrencyPerSecond: "Flat Currency per Second",
+    currencyPerPokeMultiplier: "Currency per Poke Multiplier",
+    currencyPerSecMultiplier: "Currency per Second Multiplier",
+    allGeneratorMultiplier: "All Generator Multiplier"
+};
   
-  const EFFECT_SCALES = {
+const EFFECT_SCALES = {
     minCardsPerPoke: 1.75,
     maxCardsPerPoke: 1.75,
     rarityOddsDivider: 1.25,
@@ -83,69 +93,116 @@ window.EFFECT_NAMES = {
     }
   };
 
-  function computeCardEffects(c) {
+// New function to check if special effect requirements are met
+function isSpecialEffectRequirementMet(card, requirement) {
+    if (requirement.type === "level") {
+        return card.level >= requirement.amount;
+    } else if (requirement.type === "tier") {
+        return card.tier >= requirement.amount;
+    }
+    return false;
+}
+
+// New function to compute special effects
+function computeSpecialEffects(c) {
+    const effs = {};
+    if (!c.specialEffects || c.specialEffects.length === 0) return effs;
+
+    c.specialEffects.forEach(def => {
+        if (!isSpecialEffectRequirementMet(c, def.requirement)) return;
+
+        switch (def.type) {
+            case "merchantPriceReduction":
+                effs.merchantPriceReduction = (effs.merchantPriceReduction || 0) + def.value;
+                break;
+
+            case "flatCurrencyPerPoke":
+                const pokeKey = `flatCurrencyPerPoke.${def.currency}`;
+                effs[pokeKey] = (effs[pokeKey] || 0) + def.value;
+                break;
+
+            case "flatCurrencyPerSecond":
+                const secKey = `flatCurrencyPerSecond.${def.currency}`;
+                effs[secKey] = (effs[secKey] || 0) + def.value;
+                break;
+
+            case "currencyPerPokeMultiplier":
+                const pokeMultKey = `currencyPerPokeMultiplier.${def.currency}`;
+                effs[pokeMultKey] = (effs[pokeMultKey] || 1) * def.value;
+                break;
+
+            case "currencyPerSecMultiplier":
+                const secMultKey = `currencyPerSecMultiplier.${def.currency}`;
+                effs[secMultKey] = (effs[secMultKey] || 1) * def.value;
+                break;
+
+            case "allGeneratorMultiplier":
+                effs.allGeneratorMultiplier = (effs.allGeneratorMultiplier || 1) * def.value;
+                break;
+        }
+    });
+
+    return effs;
+}
+
+function computeCardEffects(c) {
     const effs = {};
     if (!c.baseEffects || c.tier === 0) return effs;
   
     c.baseEffects.forEach(def => {
-      const scale = EFFECT_SCALES[def.type] ?? 2;
-      const multiplier = Math.pow(scale, c.tier - 1);
+        const scale = EFFECT_SCALES[def.type] ?? 2;
+        const multiplier = Math.pow(scale, c.tier - 1);
   
-      switch (def.type) {
-        case "minCardsPerPoke": {
-          const baseValue = EFFECTS_RARITY_VALUES[c.rarity]?.minCardsPerPokeBaseValue || 0;
-          const total = baseValue * c.level * multiplier;
-          effs[def.type] = (effs[def.type] || 0) + total;
-          break;
+        switch (def.type) {
+            case "minCardsPerPoke": {
+                const baseValue = EFFECTS_RARITY_VALUES[c.rarity]?.minCardsPerPokeBaseValue || 0;
+                const total = baseValue * c.level * multiplier;
+                effs[def.type] = (effs[def.type] || 0) + total;
+                break;
+            }
+  
+            case "maxCardsPerPoke": {
+                const baseValue = EFFECTS_RARITY_VALUES[c.rarity]?.maxCardsPerPokeBaseValue || 0;
+                const total = baseValue * c.level * multiplier;
+                effs[def.type] = (effs[def.type] || 0) + total;
+                break;
+            }
+  
+            case "currencyPerPoke":
+            case "currencyPerSec": {
+                const total = def.value * c.level * multiplier;
+                const key   = `${def.type}.${def.currency}`;
+                effs[key]   = (effs[key] || 0) + total;
+                break;
+            }
+  
+            case "rarityOddsDivider": {
+                let baseDivider = 0.01;
+                const total = baseDivider * c.level * multiplier;
+                const cap = EFFECTS_RARITY_VALUES[c.rarity]?.oddsDividerCap - 1;
+                const cappedTotal = Math.min(total, cap);
+                const key = `rarityOddsDivider.${def.realm}.${def.rarity}`;
+                effs[key] = (effs[key] || 0) + cappedTotal;
+                break;
+            }
+  
+            case "cooldownDivider": {
+                const baseValue = EFFECTS_RARITY_VALUES[c.rarity]?.cooldownDividerBaseValue || 0;
+                const tierContribution = (c.tier * (c.tier + 1)) / 2;
+                const total = baseValue * c.level * tierContribution;
+                effs.cooldownDivider = (effs.cooldownDivider || 0) + total;
+                break;
+            }
+  
+            default:
+                console.warn("Unknown effect type:", def.type);
         }
-  
-        case "maxCardsPerPoke": {
-          const baseValue = EFFECTS_RARITY_VALUES[c.rarity]?.maxCardsPerPokeBaseValue || 0;
-          const total = baseValue * c.level * multiplier;
-          effs[def.type] = (effs[def.type] || 0) + total;
-          break;
-        }
-  
-        case "currencyPerPoke":
-        case "currencyPerSec": {
-          const total = def.value * c.level * multiplier;
-          const key   = `${def.type}.${def.currency}`;
-          effs[key]   = (effs[key] || 0) + total;
-          break;
-        }
-  
-        case "rarityOddsDivider": {
-          // Start with a base divider
-          let baseDivider = 0.01;
-          const total = baseDivider * c.level * multiplier;
-  
-          // Cap the total based on card's rarity
-          const cap = EFFECTS_RARITY_VALUES[c.rarity]?.oddsDividerCap - 1;
-          const cappedTotal = Math.min(total, cap);
-  
-          // Store the effect with the correct key format
-          const key = `rarityOddsDivider.${def.realm}.${def.rarity}`;
-          effs[key] = (effs[key] || 0) + cappedTotal;
-          break;
-        }
-  
-        case "cooldownDivider": {
-          const baseValue = EFFECTS_RARITY_VALUES[c.rarity]?.cooldownDividerBaseValue || 0;
-          const tierContribution = (c.tier * (c.tier + 1)) / 2;
-          const total = baseValue * c.level * tierContribution;
-          effs.cooldownDivider = (effs.cooldownDivider || 0) + total;
-          break;
-        }
-  
-        default:
-          console.warn("Unknown effect type:", def.type);
-      }
     });
   
     return effs;
-  }
+}
   
-  function applyEffectsDelta(deltaMap, sign = +1) {
+function applyEffectsDelta(deltaMap, sign = +1) {
     const E = state.effects;
 
     Object.entries(deltaMap).forEach(([k, v]) => {
@@ -168,48 +225,76 @@ window.EFFECT_NAMES = {
                 break;
             }
 
-            case "rarityOddsDivider": {
-              const realmId = parts[1];
-              const rarity  = parts[2];
-              // ensure the realm exists
-              if (!realmMap[realmId]) {
-                console.error(`Realm ${realmId} not found`);
+            case "flatCurrencyPerPoke":
+            case "flatCurrencyPerSecond": {
+                const cur = parts[1];
+                const targetType = parts[0] === "flatCurrencyPerPoke" ? "currencyPerPoke" : "currencyPerSec";
+                E[targetType][cur] = (E[targetType][cur] || 0) + sign * v;
                 break;
-              }
-              const weights = realmMap[realmId].uncappedRarityWeights;
-              const current = weights[rarity] ?? 0;
-      
-              // Apply effect to uncapped weights
-              if (sign > 0) {
-                weights[rarity] = current / (1 + v);
-              } else {
-                weights[rarity] = current * (1 + v);
-              }
+            }
 
-              // Apply capping logic
-              const realm = realmMap[realmId];
-              const rarities = Object.keys(realm.rarityWeights).filter(r => realm.rarityWeights[r] > 0);
-              rarities.sort((a, b) => {
-                const aIndex = window.rarities.indexOf(a);
-                const bIndex = window.rarities.indexOf(b);
-                return bIndex - aIndex; // Reverse order
-              });
-
-              // Single pass capping - since we're in reverse order, each higher rarity is already properly capped
-              let highestWeight = 0;
-              for (let i = 0; i < rarities.length; i++) {
-                const currentRarity = rarities[i];
-                const uncapped = realm.uncappedRarityWeights[currentRarity];
-                
-                // If this rarity's weight is less than the highest weight seen so far, cap it
-                if (uncapped < highestWeight) {
-                  realm.rarityWeights[currentRarity] = highestWeight;
+            case "currencyPerPokeMultiplier":
+            case "currencyPerSecMultiplier": {
+                const cur = parts[1];
+                const targetType = parts[0];
+                if (sign > 0) {
+                    E[targetType][cur] = (E[targetType][cur] || 1) * v;
                 } else {
-                  realm.rarityWeights[currentRarity] = uncapped;
-                  highestWeight = uncapped;
+                    E[targetType][cur] = (E[targetType][cur] || 1) / v;
                 }
-              }
-              break;
+                break;
+            }
+
+            case "merchantPriceReduction":
+                E[parts[0]] = (E[parts[0]] || 0) + sign * v;
+                break;
+
+            case "allGeneratorMultiplier":
+                if (sign > 0) {
+                    E[parts[0]] = (E[parts[0]] || 1) * v;
+                } else {
+                    E[parts[0]] = (E[parts[0]] || 1) / v;
+                }
+                updateGeneratorRates();
+                break;
+
+            case "rarityOddsDivider": {
+                const realmId = parts[1];
+                const rarity  = parts[2];
+                if (!realmMap[realmId]) {
+                    console.error(`Realm ${realmId} not found`);
+                    break;
+                }
+                const weights = realmMap[realmId].uncappedRarityWeights;
+                const current = weights[rarity] ?? 0;
+        
+                if (sign > 0) {
+                    weights[rarity] = current / (1 + v);
+                } else {
+                    weights[rarity] = current * (1 + v);
+                }
+
+                const realm = realmMap[realmId];
+                const rarities = Object.keys(realm.rarityWeights).filter(r => realm.rarityWeights[r] > 0);
+                rarities.sort((a, b) => {
+                    const aIndex = window.rarities.indexOf(a);
+                    const bIndex = window.rarities.indexOf(b);
+                    return bIndex - aIndex;
+                });
+
+                let highestWeight = 0;
+                for (let i = 0; i < rarities.length; i++) {
+                    const currentRarity = rarities[i];
+                    const uncapped = realm.uncappedRarityWeights[currentRarity];
+                    
+                    if (uncapped < highestWeight) {
+                        realm.rarityWeights[currentRarity] = highestWeight;
+                    } else {
+                        realm.rarityWeights[currentRarity] = uncapped;
+                        highestWeight = uncapped;
+                    }
+                }
+                break;
             }
 
             default:

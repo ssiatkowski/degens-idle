@@ -1094,3 +1094,40 @@ nav#tabs { margin-bottom: 15px; }
     font-size: 0.9em;
   }
 }
+
+.special-s-indicator {
+  position: absolute;
+  top: 15%;
+  left: 9%;
+  /* size driven by font-size: adjust to taste */
+  font-size: clamp(0.8em, 2dvh, 1em);
+  /* make it a perfect circle */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5em;
+  height: 1.5em;
+  /* no extra padding */
+  padding: 0;
+  border-radius: 50%;
+  z-index: 20;
+  pointer-events: none;
+  user-select: none;
+  background: rgba(255,255,255,0.7);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+.special-s-glow {
+  color: #2196f3;
+  text-shadow: 0 0 8px #2196f3, 0 0 16px #90caf9;
+  border: 2px solid #2196f3;
+  background: rgba(33,150,243,0.12);
+}
+
+.special-s-dull {
+  color: #222;
+  opacity: 0.6;
+  border: 2px solid #444;
+  background: rgba(0,0,0,0.08);
+  text-shadow: none;
+}

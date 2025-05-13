@@ -285,13 +285,13 @@ const merchants = [
 
   
       // compute price
-      const rateSec  = new Decimal(curSec[currency] || 0);
-      const ratePoke = new Decimal(curPoke[currency] || 0);
+      const rateSec  = new Decimal(curSec[currency] * state.effects.currencyPerSecMultiplier[currency] + state.resourceGeneratorContribution[currency] || 0);
+      const ratePoke = new Decimal(curPoke[currency] * state.effects.currencyPerPokeMultiplier[currency] || 0);
       let price = rateSec.times(10).plus(ratePoke.times(2))
                   .times(RARITY_PRICE_MULT[rarity] || 1);
   
       // randomness ±99%
-      price = price.times(Math.random()*1.98 + 0.01).times(state.currentMerchant.priceMultiplier).ceil();
+      price = price.times(Math.random()*1.98 + 0.01).times(1 - state.effects.merchantPriceReduction).times(state.currentMerchant.priceMultiplier).ceil();
   
       let quantity = 1;
       if (ownQty > 9 && Math.random() < 0.25) {

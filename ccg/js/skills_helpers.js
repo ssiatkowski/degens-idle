@@ -66,14 +66,14 @@ window.skills = [
     {
       id: 2003,
       name: "More Cards 3",
-      description: "+8 to max cards per poke.",
+      description: "+10 to max cards per poke.",
       cost: { realmId: 3, currencyId: "pollen", amount: 1.5e4 },
       purchased: false
     },
     {
       id: 2004,
       name: "More Cards 4",
-      description: "+10 to max cards per poke.",
+      description: "+15 to max cards per poke.",
       cost: { realmId: 4, currencyId: "egg", amount: 2e4 },
       purchased: false
     },
@@ -81,48 +81,48 @@ window.skills = [
       id: 2005,
       name: "More Cards 5",
       description: "+25 to max cards per poke.",
-      cost: { realmId: 1, currencyId: "rune", amount: 5e3 },
+      cost: { realmId: 2, currencyId: "rune", amount: 5e3 },
       purchased: false
     },
     {
       id: 2006,
       name: "More Cards 6",
-      description: "+40 to max cards per poke.",
+      description: "+50 to max cards per poke.",
       cost: { realmId: 2, currencyId: "pearl", amount: 1e4 },
       purchased: false
     },
     {
       id: 2007,
       name: "More Cards 7",
-      description: "+60 to max cards per poke.",
+      description: "+75 to max cards per poke.",
       cost: { realmId: 3, currencyId: "royal_jelly", amount: 1.5e4 },
       purchased: false
     },
     {
       id: 2008,
       name: "More Cards 8",
-      description: "+80 to max cards per poke.",
+      description: "+100 to max cards per poke.",
       cost: { realmId: 4, currencyId: "feather", amount: 2e4 },
       purchased: false
     },
     {
       id: 2009,
       name: "More Cards 9",
-      description: "+40 to max cards per poke.",
+      description: "+50 to max cards per poke.",
       cost: { realmId: 5, currencyId: "crystal", amount: 2.5e4 },
       purchased: false
     },
     {
       id: 2010,
       name: "More Cards 10",
-      description: "+100 to max cards per poke.",
+      description: "+200 to max cards per poke.",
       cost: { realmId: 6, currencyId: "cosmic_ray", amount: 3e4 },
       purchased: false
     },
     {
       id: 2011,
       name: "More Cards 11",
-      description: "+50 to max cards per poke.",
+      description: "+75 to max cards per poke.",
       cost: { realmId: 7, currencyId: "tooth", amount: 3.5e4 },
       purchased: false
     },
@@ -130,7 +130,7 @@ window.skills = [
       id: 2012,
       name: "More Cards 12",
       description: "+100 to max cards per poke.",
-      cost: { realmId: 7, currencyId: "coin", amount: 4e4 },
+      cost: { realmId: 8, currencyId: "coin", amount: 4e4 },
       purchased: false
     },
     {
@@ -143,7 +143,7 @@ window.skills = [
     {
       id: 2102,
       name: "Massive Black Hole 2",
-      description: "+20 to max cards per poke.",
+      description: "+25 to max cards per poke.",
       cost: { realmId: 2, currencyId: "coral", amount: 2e7 },
       purchased: false
     },
@@ -164,8 +164,8 @@ window.skills = [
     {
       id: 2105,
       name: "Massive Black Hole 5",
-      description: "+150 to max cards per poke.",
-      cost: { realmId: 3, currencyId: "rune", amount: 1e6 },
+      description: "+250 to max cards per poke.",
+      cost: { realmId: 4, currencyId: "rune", amount: 1e6 },
       purchased: false
     },
     {
@@ -178,28 +178,28 @@ window.skills = [
     {
       id: 2107,
       name: "Massive Black Hole 7",
-      description: "+300 to max cards per poke.",
+      description: "+400 to max cards per poke.",
       cost: { realmId: 5, currencyId: "pearl", amount: 3e6 },
       purchased: false
     },
     {
       id: 2108,
       name: "Massive Black Hole 8",
-      description: "+400 to max cards per poke.",
+      description: "+500 to max cards per poke.",
       cost: { realmId: 5, currencyId: "royal_jelly", amount: 4e6 },
       purchased: false
     },
     {
       id: 2109,
       name: "Massive Black Hole 9",
-      description: "+500 to max cards per poke.",
+      description: "+750 to max cards per poke.",
       cost: { realmId: 6, currencyId: "feather", amount: 5e6 },
       purchased: false
     },
     {
       id: 2110,
       name: "Massive Black Hole 10",
-      description: "+600 to max cards per poke.",
+      description: "+1000 to max cards per poke.",
       cost: { realmId: 6, currencyId: "cosmic_ray", amount: 6e6 },
       purchased: false
     },
@@ -214,7 +214,7 @@ window.skills = [
       id: 2112,
       name: "Massive Black Hole 12",
       description: "+1000 to max cards per poke.",
-      cost: { realmId: 7, currencyId: "coin", amount: 8e6 },
+      cost: { realmId: 8, currencyId: "coin", amount: 8e6 },
       purchased: false
     },
     {
@@ -332,42 +332,42 @@ window.skills = [
     {
       id: 4003,
       name: "Not Less Cards 3",
-      description: "+3 to min cards per poke.",
+      description: "+5 to min cards per poke.",
       cost: { realmId: 3, currencyId: "pollen", amount: 1e6 },
       purchased: false
     },
     {
       id: 4004,
       name: "Not Less Cards 4",
-      description: "+4 to min cards per poke.",
+      description: "+6 to min cards per poke.",
       cost: { realmId: 4, currencyId: "egg", amount: 1e6 },
       purchased: false
     },
     {
       id: 4005,
       name: "Not Less Cards 5",
-      description: "+2 to min cards per poke.",
+      description: "+8 to min cards per poke.",
       cost: { realmId: 3, currencyId: "rune", amount: 1e6 },
       purchased: false
     },
     {
       id: 4006,
       name: "Not Less Cards 6",
-      description: "+4 to min cards per poke.",
+      description: "+8 to min cards per poke.",
       cost: { realmId: 4, currencyId: "pearl", amount: 1e6 },
       purchased: false
     },
     {
       id: 4007,
       name: "Not Less Cards 7",
-      description: "+6 to min cards per poke.",
+      description: "+12 to min cards per poke.",
       cost: { realmId: 5, currencyId: "royal_jelly", amount: 1e6 },
       purchased: false
     },
     {
       id: 4008,
       name: "Not Less Cards 8",
-      description: "+8 to min cards per poke.",
+      description: "+15 to min cards per poke.",
       cost: { realmId: 5, currencyId: "feather", amount: 1e6 },
       purchased: false
     },
@@ -381,7 +381,7 @@ window.skills = [
     {
       id: 4010,
       name: "Not Less Cards 10",
-      description: "+15 to min cards per poke.",
+      description: "+20 to min cards per poke.",
       cost: { realmId: 6, currencyId: "cosmic_ray", amount: 1e6 },
       purchased: false
     },
@@ -892,14 +892,14 @@ window.skills = [
     {
       id: 13001,
       name: "Anomaly",
-      description: "Increases max cards per poke by 4.04.",
+      description: "Increases min cards per poke by 4.04.",
       cost: { realmId: 3, currencyId: "stone", amount: 404000 },
       purchased: false
     },
     {
       id: 13002,
       name: "Anomaly 2",
-      description: "Increases min cards per poke by 4.04.",
+      description: "Increases max cards per poke by 40.4.",
       cost: { realmId: 4, currencyId: "coral", amount: 4.04e7 },
       purchased: false
     },
@@ -1049,31 +1049,31 @@ function applySkill(id, skipCost = false) {
         state.effects.maxCardsPerPoke += 5;
         break;
       case 2003:
-        state.effects.maxCardsPerPoke += 8;
+        state.effects.maxCardsPerPoke += 10;
         break;
       case 2004:
-        state.effects.maxCardsPerPoke += 10;
+        state.effects.maxCardsPerPoke += 15;
         break;
       case 2005:
         state.effects.maxCardsPerPoke += 25;
         break;
       case 2006:
-        state.effects.maxCardsPerPoke += 40;
+        state.effects.maxCardsPerPoke += 50;
         break;
       case 2007:
-        state.effects.maxCardsPerPoke += 60;
+        state.effects.maxCardsPerPoke += 75;
         break;
       case 2008:
-        state.effects.maxCardsPerPoke += 80;
-        break;
-      case 2009:
-        state.effects.maxCardsPerPoke += 40;
-        break;
-      case 2010:
         state.effects.maxCardsPerPoke += 100;
         break;
-      case 2011:
+      case 2009:
         state.effects.maxCardsPerPoke += 50;
+        break;
+      case 2010:
+        state.effects.maxCardsPerPoke += 200;
+        break;
+      case 2011:
+        state.effects.maxCardsPerPoke += 75;
         break;
       case 2012:
         state.effects.maxCardsPerPoke += 100;
@@ -1082,7 +1082,7 @@ function applySkill(id, skipCost = false) {
         state.effects.maxCardsPerPoke += 10;
         break;
       case 2102:
-        state.effects.maxCardsPerPoke += 20;
+        state.effects.maxCardsPerPoke += 25;
         break;
       case 2103:
         state.effects.maxCardsPerPoke += 50;
@@ -1091,22 +1091,22 @@ function applySkill(id, skipCost = false) {
         state.effects.maxCardsPerPoke += 100;
         break;
       case 2105:
-        state.effects.maxCardsPerPoke += 150;
+        state.effects.maxCardsPerPoke += 250;
         break;
       case 2106:
         state.effects.maxCardsPerPoke += 200;
         break;
       case 2107:
-        state.effects.maxCardsPerPoke += 300;
-        break;
-      case 2108:
         state.effects.maxCardsPerPoke += 400;
         break;
-      case 2109:
+      case 2108:
         state.effects.maxCardsPerPoke += 500;
         break;
+      case 2109:
+        state.effects.maxCardsPerPoke += 750;
+        break;
       case 2110:
-        state.effects.maxCardsPerPoke += 600;
+        state.effects.maxCardsPerPoke += 1000;
         break;
       case 2111:
         state.effects.maxCardsPerPoke += 700;
@@ -1191,28 +1191,28 @@ function applySkill(id, skipCost = false) {
         state.effects.minCardsPerPoke += 2;
         break;
       case 4003:
-        state.effects.minCardsPerPoke += 3;
+        state.effects.minCardsPerPoke += 5;
         break;
       case 4004:
-        state.effects.minCardsPerPoke += 4;
-        break;
-      case 4005:
-        state.effects.minCardsPerPoke += 2;
-        break;
-      case 4006:
-        state.effects.minCardsPerPoke += 4;
-        break;
-      case 4007:
         state.effects.minCardsPerPoke += 6;
         break;
-      case 4008:
+      case 4005:
         state.effects.minCardsPerPoke += 8;
+        break;
+      case 4006:
+        state.effects.minCardsPerPoke += 8;
+        break;
+      case 4007:
+        state.effects.minCardsPerPoke += 12;
+        break;
+      case 4008:
+        state.effects.minCardsPerPoke += 15;
         break;
       case 4009:
         state.effects.minCardsPerPoke += 10;
         break;
       case 4010:
-        state.effects.minCardsPerPoke += 15;
+        state.effects.minCardsPerPoke += 20;
         break;
       case 4011:
         state.effects.minCardsPerPoke += 20;
@@ -1346,15 +1346,16 @@ function applySkill(id, skipCost = false) {
       case 12202: // Interceptor Upgrade
         break;
       case 13001: // Anomaly
-        state.effects.maxCardsPerPoke += 4.04;
+        state.effects.minCardsPerPoke += 4.04;
         break;
       case 13002: // Anomaly 2
-        state.effects.minCardsPerPoke += 4.04;
+        state.effects.maxCardsPerPoke += 40.4;
         break;
       case 13003: // Anomaly 3
         state.effects.merchantCooldownReduction += 4.04;
         break;
       case 13004: // Anomaly 4
+        state.effects.allGeneratorMultiplier *= 4.04;
         updateGeneratorRates();
         break;
       case 14001: // Go Away Aldric!

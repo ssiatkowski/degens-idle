@@ -6,12 +6,10 @@ import sys
 RED = "\033[91m"
 RESET = "\033[0m"
 
-# Define rarity order for proper sorting
 RARITY_ORDER = [
     "junk", "basic", "decent", "fine", "rare",
     "epic", "legendary", "mythic", "exotic", "divine"
 ]
-
 
 def load_cards(csv_path):
     df = pd.read_csv(csv_path, dtype=str).fillna('')
@@ -34,38 +32,63 @@ def load_cards(csv_path):
             "description": row["description"]
         }
 
-        # parse up to 8 effects, each with 2 arguments
         base_effects = []
         for i in range(1, 9):
             etype = row.get(f"effect{i}_type", "").strip()
             if not etype:
                 continue
-
             effect = {"type": etype}
             arg1 = row.get(f"effect{i}_arg1", "").strip()
             arg2 = row.get(f"effect{i}_arg2", "").strip()
 
             if etype in ("minCardsPerPoke", "maxCardsPerPoke", "cooldownDivider"):
-                # These effects no longer need values
                 pass
-
             elif etype in ("currencyPerPoke", "currencyPerSec"):
-                # currency in arg1, numeric value in arg2
                 effect["currency"] = arg1
                 effect["value"] = float(arg2) if arg2 else 0
-
             elif etype == "rarityOddsDivider":
-                # realm in arg1, rarity in arg2
                 effect["realm"] = int(arg1) if arg1 else None
                 effect["rarity"] = arg2
-
             else:
                 print(f"Unknown effect type: {etype} for card {row['id']}", file=sys.stderr)
                 continue
-
             base_effects.append(effect)
 
+        special_effects = []
+        for i in range(1, 3):
+            req_type = row.get(f"specialEffect{i}_req_type", "").strip()
+            req_amount = row.get(f"specialEffect{i}_req_amount", "").strip()
+            se_type = row.get(f"specialEffect{i}_type", "").strip()
+            arg1 = row.get(f"specialEffect{i}_arg1", "").strip()
+            arg2 = row.get(f"specialEffect{i}_arg2", "").strip()
+
+            if not se_type:
+                continue
+
+            se = {
+                "type": se_type,
+                "requirement": {
+                    "type": req_type,
+                    "amount": int(req_amount) if req_amount.isdigit() else 0
+                }
+            }
+
+            if se_type in ("merchantPriceReduction", "allGeneratorMultiplier"):
+                se["value"] = float(arg1) if arg1 else 0
+            elif se_type in ("flatCurrencyPerPoke", "flatCurrencyPerSecond",
+                             "currencyPerPokeMultiplier", "currencyPerSecMultiplier"):
+                se["currency"] = arg1
+                se["value"] = float(arg2) if arg2 else 0
+            else:
+                print(f"Unknown special effect type: {se_type} for card {row['id']}", file=sys.stderr)
+                continue
+
+            special_effects.append(se)
+
         card["baseEffects"] = base_effects
+        if special_effects:
+            card["specialEffects"] = special_effects
+
         cards.append(card)
 
     return cards
@@ -80,15 +103,13 @@ def generate_js(cards, out_path):
 
 
 def generate_stats(cards):
-    # --- build realm→rarities map ---
     realm_rarities = {}
     for card in cards:
         realm_rarities.setdefault(card["realm"], set()).add(card["rarity"])
 
-    # flatten effects into a DataFrame
     records = []
     for card in cards:
-        for eff in card["baseEffects"]:
+        for eff in card.get("baseEffects", []):
             rec = {
                 "card_id": card["id"],
                 "card_name": card["name"],
@@ -105,72 +126,55 @@ def generate_stats(cards):
             records.append(rec)
     df = pd.DataFrame(records)
 
-    # 1. Total counts of each effect
-    total_effect_counts = df["effect_type"].value_counts() \
-        .rename_axis("effect_type") \
-        .reset_index(name="count")
-    print("\n== Total effect counts ==")
-    print(total_effect_counts)
+    print("\n== Total base effect counts ==")
+    print(df["effect_type"].value_counts().rename_axis("effect_type").reset_index(name="count"))
 
-    # focus on rarityOddsDivider
     rod_df = df[df["effect_type"] == "rarityOddsDivider"].copy()
 
-    # 2. find invalid references
     def is_valid(row):
         rlm = row["rarity_realm"]
         rar = row["rarity_value"]
         return (rlm in realm_rarities) and (rar in realm_rarities[rlm])
 
     invalid = rod_df[~rod_df.apply(is_valid, axis=1)]
-    valid   = rod_df[ rod_df.apply(is_valid, axis=1)]
+    valid = rod_df[rod_df.apply(is_valid, axis=1)]
 
     if not invalid.empty:
         print("\n== Invalid RarityOddsDivider entries ==")
         for _, row in invalid.iterrows():
-            txt = (f" card {row['card_id']} → realm {row['rarity_realm']}, "
-                   f"rarity '{row['rarity_value']}'")
-            print(RED + txt + RESET)
+            print(RED + f" card {row['card_id']} → realm {row['rarity_realm']}, rarity '{row['rarity_value']}'" + RESET)
 
-    # 3. valid counts, in the correct rarity order
-    valid["rarity_value"] = pd.Categorical(
-        valid["rarity_value"], categories=RARITY_ORDER, ordered=True
-    )
-    counts = valid.groupby(["rarity_realm", "rarity_value"]) \
-                  .size().reset_index(name="count")
+    valid["rarity_value"] = pd.Categorical(valid["rarity_value"], categories=RARITY_ORDER, ordered=True)
+    counts = valid.groupby(["rarity_realm", "rarity_value"]).size().reset_index(name="count")
 
     print("\n== RarityOddsDivider counts by realm and rarity ==")
     for realm in sorted(realm_rarities):
         print(f"\nRealm {realm}:")
         for rar in RARITY_ORDER:
             if rar in realm_rarities[realm]:
-                row = counts[
-                    (counts["rarity_realm"] == realm) &
-                    (counts["rarity_value"] == rar)
-                ]
+                row = counts[(counts["rarity_realm"] == realm) & (counts["rarity_value"] == rar)]
                 cnt = int(row["count"]) if not row.empty else 0
                 print(f"  {rar}: {cnt}")
 
-    # 4. Statistics per realm (all effects)
-    realm_stats = df.groupby(["card_realm", "effect_type"]) \
-                    .size() \
-                    .reset_index(name="count")
-    print("\n== Statistics per realm ==")
-    print(realm_stats)
+    print("\n== Statistics per realm (base effects) ==")
+    print(df.groupby(["card_realm", "effect_type"]).size().reset_index(name="count"))
 
-    # 5. Statistics per currency (for currency effects)
     curr_df = df[df["effect_type"].isin(["currencyPerPoke", "currencyPerSec"])]
-    curr_stats = curr_df.groupby(["currency", "effect_type"]) \
-                        ["value"].agg(["count", "sum", "mean"]) \
-                        .reset_index()
-    print("\n== Statistics per currency ==")
+    curr_stats = curr_df.groupby(["currency", "effect_type"])["value"].agg(["count", "sum", "mean"]).reset_index()
+    print("\n== Statistics per currency (base effects) ==")
     print(curr_stats)
+
+    print("\n== Special Effects per Realm ==")
+    for card in cards:
+        for se in card.get("specialEffects", []):
+            realm = card["realm"]
+            req = se["requirement"]
+            print(f"[Realm {realm}] Card {card['name']} ({card['id']}): {se['type']} — requires {req['type']} {req['amount']}")
 
 
 if __name__ == "__main__":
     csv_file = "cards.csv"
     js_file = "cards.js"
-
-    # load, write JS, and print stats
     cards = load_cards(csv_file)
     generate_js(cards, js_file)
     generate_stats(cards)

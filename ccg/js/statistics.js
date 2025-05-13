@@ -73,22 +73,29 @@ function updateStatsUI() {
         <thead>
             <tr>
                 <th rowspan="2">Currency</th>
-                <th rowspan="2">Gain / Poke</th>
-                <th colspan="2">Gain / Second</th>
+                <th colspan="2">Gain / Poke</th>
+                <th colspan="4">Gain / Second</th>
             </tr>
             <tr>
+                <th>Base</th>
+                <th>Mult</th>
                 <th>From Cards</th>
+                <th>Mult</th>
                 <th>From Generators</th>
+                <th>Gen Mult</th>
             </tr>
         </thead>
         <tbody>
             ${currencies.map(cur => {
                 const ip = e.currencyPerPoke[cur.id] || 0;
                 const is = e.currencyPerSec[cur.id] || 0;
-                const gen = state.resourceGeneratorContribution[cur.id] || 0;
-                const card = is - gen;  // Total minus generator contribution
+                const gen = state.resourceGeneratorContribution[cur.id] / e.allGeneratorMultiplier || 0;
+                const card = is;  // Card contribution is just the base rate
+                const pokeMult = e.currencyPerPokeMultiplier[cur.id] || 1;
+                const secMult = e.currencyPerSecMultiplier[cur.id] || 1;
+                const genMult = e.allGeneratorMultiplier || 1;
                 
-                if (ip === 0 && is === 0) return '';
+                if (ip === 0 && is === 0 && gen === 0) return '';
                 return `
                 <tr>
                     <td>
@@ -96,8 +103,11 @@ function updateStatsUI() {
                       ${cur.name}
                     </td>
                     <td>${formatNumber(ip)}</td>
+                    <td>×${formatNumber(pokeMult)}</td>
                     <td>${formatNumber(card)}</td>
+                    <td>×${formatNumber(secMult)}</td>
                     <td>${formatNumber(gen)}</td>
+                    <td>×${formatNumber(genMult)}</td>
                 </tr>`;
             }).join('')}
         </tbody>
@@ -142,18 +152,27 @@ function updateStatsUI() {
                 <td>${EFFECT_NAMES.extraMerchantRarityScaling}</td>
                 <td>${state.effects.extraMerchantRarityScaling.toFixed(1)}</td>
             </tr>
+            <tr>
+                <td>${SPECIAL_EFFECT_NAMES.merchantPriceReduction}</td>
+                <td>-${formatNumber(state.effects.merchantPriceReduction*100)}%</td>
+            </tr>
         </tbody>
     `;
 
-    const globalSection = document.createElement('section');
-    globalSection.className = 'stats-section realm-section';
-    globalSection.innerHTML = `
-      <h3 style="border-bottom:2px solid var(--dark); padding-bottom:4px;">Global Gains & Effects</h3>
+    // Create separate sections for Global Gains and Global Effects
+    const globalGainsSection = document.createElement('section');
+    globalGainsSection.className = 'stats-section realm-section';
+    globalGainsSection.innerHTML = `
+      <h3 style="border-bottom:2px solid var(--dark); padding-bottom:4px;">Global Gains</h3>
     `;
-    const innerFlex = document.createElement('div');
-    innerFlex.className = 'flex-table-section';
-    innerFlex.append(tblC, tblE);
-    globalSection.appendChild(innerFlex);
+    globalGainsSection.appendChild(tblC);
+
+    const globalEffectsSection = document.createElement('section');
+    globalEffectsSection.className = 'stats-section realm-section';
+    globalEffectsSection.innerHTML = `
+      <h3 style="border-bottom:2px solid var(--dark); padding-bottom:4px;">Global Effects</h3>
+    `;
+    globalEffectsSection.appendChild(tblE);
 
     // --- Merchants Section ---
     if (!selectedStatsMerchantId && Array.isArray(merchants) && merchants.length) {
@@ -206,27 +225,25 @@ function updateStatsUI() {
       <p style="line-height: 1.4; margin: 0;"><strong>Probability:</strong> ${prob}</p>
       <p style="line-height: 1.4; margin: 0;"><strong>Cards Offered:</strong> ${Math.ceil(state.effects.merchantNumCards * sel.cardMultiplier)}</p>
       <p style="line-height: 1.4; margin: 0;"><strong>Rarity Scaling:</strong> ${(sel.rarityScaling + state.effects.extraMerchantRarityScaling).toFixed(1)}</p>
-      <p style="line-height: 1.4; margin: 0;"><strong>Sale Price:</strong> ${sel.priceMultiplier*100}%</p>
+      <p style="line-height: 1.4; margin: 0;"><strong>Sale Price:</strong> ${((1 - state.effects.merchantPriceReduction)*sel.priceMultiplier*100).toFixed(0)}%</p>
       <p style="line-height: 1.4; margin: 0;"><strong>Offer Duration:</strong> ${formatDuration(sel.refreshTime - state.effects.merchantCooldownReduction)}</p>
     `;
     merchantsSection.appendChild(detail);
 
-    // --- Wrap all three top sections ---
+    // --- Build top stats grid as two separate rows ---
+    // First row: Global Gains | Global Effects
+    const topRow1 = document.createElement('div');
+    topRow1.className = 'stats-top-row';
+    topRow1.append(globalGainsSection, globalEffectsSection);
+    // Second row: General Stats | Merchants
+    const topRow2 = document.createElement('div');
+    topRow2.className = 'stats-top-row';
+    topRow2.append(generalSection, merchantsSection);
+    // Container for both rows
     const topContainer = document.createElement('div');
     topContainer.className = 'stats-top-container';
-    topContainer.append(generalSection, globalSection, merchantsSection);
-
+    topContainer.append(topRow1, topRow2);
     container.appendChild(topContainer);
-
-    // Check if the last item is overflowing
-    const lastItem = topContainer.lastElementChild;
-    const firstItemRect = topContainer.firstElementChild.getBoundingClientRect();
-    const lastItemRect = lastItem.getBoundingClientRect();
-
-    // If the last item is overflowing, apply the full-width class
-    if (lastItemRect.bottom > firstItemRect.bottom) {
-      lastItem.classList.add('grid-full-width');
-    }
 
     // --- Per-Realm Statistics ---
     const realmContainer = document.createElement('div');
@@ -256,24 +273,40 @@ function updateStatsUI() {
           </h3>
         `;
 
-        const ownedTbl = document.createElement('table');
-        ownedTbl.className = 'realm-table';
-        ownedTbl.innerHTML = `
+        const realmTbl = document.createElement('table');
+        realmTbl.className = 'realm-table';
+        realmTbl.innerHTML = `
           <thead>
-            <tr><th>Rarity</th><th>Discovered</th><th>Owned</th></tr>
+            <tr>
+              <th>Rarity</th>
+              <th>Discovered</th>
+              <th>Owned</th>
+              <th>Odds</th>
+              <th>Probability</th>
+            </tr>
           </thead>
           <tbody>
             ${rarities.map(ra => {
               const totalCards = totByR[ra];
               if (totalCards === 0) return '';
               const discovered = discByR[ra];
-              const owned      = cntByR[ra];
-              const color      = getComputedStyle(document.documentElement)
-                                  .getPropertyValue('--rarity-' + ra);
-              const ratio      = `${discovered}/${totalCards}`;
-              const disp       = discovered === totalCards
+              const owned = cntByR[ra];
+              const color = getComputedStyle(document.documentElement)
+                              .getPropertyValue('--rarity-' + ra);
+              const ratio = `${discovered}/${totalCards}`;
+              const disp = discovered === totalCards
                 ? `<span style="color:green;font-weight:bold;">${ratio}</span>`
                 : ratio;
+              
+              const wt = r.rarityWeights[ra];
+              if (wt <= 0) return '';
+              const uncapped = r.uncappedRarityWeights[ra];
+              const isCapped = uncapped !== wt;
+              const pct = formatPct(wt/totalWeight*100);
+              const weightDisplay = isCapped 
+                ? `<span title="Soft capped from ${formatNumber(uncapped)}">${formatNumber(wt)}*</span>`
+                : formatNumber(wt);
+
               return `
                 <tr>
                   <td style="color:${color};font-weight:bold;">
@@ -281,41 +314,13 @@ function updateStatsUI() {
                   </td>
                   <td>${disp}</td>
                   <td>${formatNumber(owned)}</td>
+                  <td>${weightDisplay}</td>
+                  <td>${pct}</td>
                 </tr>`;
             }).join('')}
           </tbody>
         `;
-        rs.appendChild(ownedTbl);
-
-        const oddsTbl = document.createElement('table');
-        oddsTbl.className = 'realm-table';
-        oddsTbl.innerHTML = `
-          <thead>
-            <tr><th>Rarity</th><th>Odds</th><th>Probability</th></tr>
-          </thead>
-          <tbody>
-            ${Object.entries(r.rarityWeights).map(([ra, wt]) => {
-              if (wt <= 0) return '';
-              const uncapped = r.uncappedRarityWeights[ra];
-              const isCapped = uncapped !== wt;
-              const pct   = formatPct(wt/totalWeight*100);
-              const color = getComputedStyle(document.documentElement)
-                              .getPropertyValue('--rarity-' + ra);
-              const weightDisplay = isCapped 
-                ? `<span title="Soft capped from ${formatNumber(uncapped)}">${formatNumber(wt)}*</span>`
-                : formatNumber(wt);
-              return `
-                <tr>
-                  <td style="color:${color};font-weight:bold;">
-                    ${ra.charAt(0).toUpperCase() + ra.slice(1)}
-                  </td>
-                  <td>${weightDisplay}</td>
-                  <td>${pct}</td>
-                </tr>`;  
-            }).join('')}
-          </tbody>
-        `;
-        rs.appendChild(oddsTbl);
+        rs.appendChild(realmTbl);
 
         realmContainer.appendChild(rs);
     });
