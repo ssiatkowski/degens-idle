@@ -1583,6 +1583,15 @@ function updatePokeFilterStats() {
   const cooldownSum = calculateCooldown();
   const cooldownTxt = formatDuration(cooldownSum);
 
+  if (cooldownSum >= 3600) {
+    holeBtn.classList.add('critical-cooldown');
+  } else if (cooldownSum >= 10*60) {
+    holeBtn.classList.add('long-cooldown');
+  } else {
+    holeBtn.classList.remove('critical-cooldown');
+    holeBtn.classList.remove('long-cooldown');
+  }
+
   // 2) Undiscovered cards
   let undiscovered = 0;
   state.selectedRealms.forEach(rid => {
@@ -1613,7 +1622,7 @@ function updatePokeFilterStats() {
     const td  = document.createElement('td');
     if (label === 'Poke Cooldown') {
       td.textContent = val;
-      td.style.color = getCooldownColor(cooldownSum);
+      td.style.setProperty('color', getCooldownColor(cooldownSum), 'important');
       if (cooldownSum <= 0.5 || cooldownSum >= 3600) {
         td.style.fontWeight = 'bold';
       }

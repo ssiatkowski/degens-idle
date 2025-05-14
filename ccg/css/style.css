@@ -337,6 +337,14 @@ nav#tabs { margin-bottom: 15px; }
   z-index: 1;
 }
 
+#hole-button.long-cooldown {
+  outline: 3px dashed orange;
+}
+
+#hole-button.critical-cooldown {
+  outline: 5px dashed red;
+}
+
 .card-outer {
   width: 100%;
   aspect-ratio: 5 / 7;
