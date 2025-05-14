@@ -86,7 +86,7 @@ window.realmColors = {
     3: "#f1c40f",   // budgom
     4: "#f39c12",   // aviary (warm golden-orange, like feathers and sunrise)
     5: "#9b59b6",   // ancient relics (royal purple, conveys mystery & age)
-    6: "#2c3e50",   // celestial bodies (deep space navy)
+    6: "#3b536c",   // celestial bodies (deep space navy)
     7: "#e74c3c",    // mythical beasts (bold crimson, evokes danger & power)
     8: "#1abc9c",   // incremental games (teal — energetic and digital)
     9: "#c49bd4",   // spirit familiars (lavender violet — magical, soft, spiritual)

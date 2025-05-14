@@ -67,51 +67,90 @@ function updateStatsUI() {
 
     // --- Global Gains & Effects Section ---
     // Currency gain table
+  // 1) create table and static header
     const tblC = document.createElement('table');
     tblC.className = 'currency-table';
     tblC.innerHTML = `
-        <thead>
-            <tr>
-                <th rowspan="2">Currency</th>
-                <th colspan="2">Gain / Poke</th>
-                <th colspan="4">Gain / Second</th>
-            </tr>
-            <tr>
-                <th>Base</th>
-                <th>Mult</th>
-                <th>From Cards</th>
-                <th>Mult</th>
-                <th>From Generators</th>
-                <th>Gen Mult</th>
-            </tr>
-        </thead>
-        <tbody>
-            ${currencies.map(cur => {
-                const ip = e.currencyPerPoke[cur.id] || 0;
-                const is = e.currencyPerSec[cur.id] || 0;
-                const gen = state.resourceGeneratorContribution[cur.id] / e.allGeneratorMultiplier || 0;
-                const card = is;  // Card contribution is just the base rate
-                const pokeMult = e.currencyPerPokeMultiplier[cur.id] || 1;
-                const secMult = e.currencyPerSecMultiplier[cur.id] || 1;
-                const genMult = e.allGeneratorMultiplier || 1;
-                
-                if (ip === 0 && is === 0 && gen === 0) return '';
-                return `
-                <tr>
-                    <td>
-                      <img class="icon" src="assets/images/currencies/${cur.icon}" alt="${cur.name}"/>
-                      ${cur.name}
-                    </td>
-                    <td>${formatNumber(ip)}</td>
-                    <td>×${formatNumber(pokeMult)}</td>
-                    <td>${formatNumber(card)}</td>
-                    <td>×${formatNumber(secMult)}</td>
-                    <td>${formatNumber(gen)}</td>
-                    <td>×${formatNumber(genMult)}</td>
-                </tr>`;
-            }).join('')}
-        </tbody>
+      <thead>
+        <tr>
+          <th rowspan="2">Currency</th>
+          <th colspan="2">Gain / Poke</th>
+          <th colspan="4">Gain / Second</th>
+        </tr>
+        <tr>
+          <th>Base</th><th>Mult</th>
+          <th>From Cards</th><th>Mult</th>
+          <th>From Generators</th><th>Gen Mult</th>
+        </tr>
+      </thead>
     `;
+    const tbodyC = document.createElement('tbody');
+
+    // 2) for each currency, build a row immediately
+    currencies.forEach(cur => {
+      const ip     = e.currencyPerPoke[cur.id]             || 0;
+      const sec    = e.currencyPerSec[cur.id]              || 0;
+      const gen    = (state.resourceGeneratorContribution[cur.id] || 0) 
+                      / (e.allGeneratorMultiplier || 1);
+      const card   = sec;   // card contribution is just the base rate
+      const pokeM  = e.currencyPerPokeMultiplier[cur.id]   || 1;
+      const secM   = e.currencyPerSecMultiplier[cur.id]    || 1;
+      const genM   = e.allGeneratorMultiplier               || 1;
+
+      // skip rows with no contribution
+      if (ip === 0 && sec === 0 && gen === 0) return;
+
+      // build the <tr>
+      const tr = document.createElement('tr');
+
+      // 2a) Currency name + icon cell
+      const nameTd = document.createElement('td');
+      const icon = document.createElement('img');
+      icon.className = 'icon';
+      icon.alt = cur.name;
+      // load the real src async
+      const currencyPath = `assets/images/currencies/${cur.icon}`;
+      imageCache.getImage('currencies', currencyPath).then(cachedImg => {
+        if (cachedImg) icon.src = cachedImg.src;
+      });
+      nameTd.append(icon, document.createTextNode(' ' + cur.name));
+      tr.appendChild(nameTd);
+
+      // 2b) poke base
+      const pokeBaseTd = document.createElement('td');
+      pokeBaseTd.textContent = formatNumber(ip);
+      tr.appendChild(pokeBaseTd);
+
+      // 2c) poke mult
+      const pokeMultTd = document.createElement('td');
+      pokeMultTd.textContent = '×' + formatNumber(pokeM);
+      tr.appendChild(pokeMultTd);
+
+      // 2d) card/sec
+      const cardTd = document.createElement('td');
+      cardTd.textContent = formatNumber(card);
+      tr.appendChild(cardTd);
+
+      // 2e) sec mult
+      const secMultTd = document.createElement('td');
+      secMultTd.textContent = '×' + formatNumber(secM);
+      tr.appendChild(secMultTd);
+
+      // 2f) from generators
+      const genTd = document.createElement('td');
+      genTd.textContent = formatNumber(gen);
+      tr.appendChild(genTd);
+
+      // 2g) gen mult
+      const genMultTd = document.createElement('td');
+      genMultTd.textContent = '×' + formatNumber(genM);
+      tr.appendChild(genMultTd);
+
+      tbodyC.appendChild(tr);
+    });
+
+    // 3) attach the body
+    tblC.appendChild(tbodyC);
 
     // Effects table
     const tblE = document.createElement('table');
@@ -187,26 +226,38 @@ function updateStatsUI() {
       grid.className = 'merchants-grid';
   
       merchants.forEach(m => {
-        const img = document.createElement('img');
-        img.src    = `assets/images/merchants/${slugify(m.name)}.jpg`;
-        img.alt    = m.name;
-        img.classList.add('merchant-thumb');
-  
-        if (!m.unlocked) {
-          // gray out locked merchants
-          img.classList.add('locked-thumb');
-        } else {
-          // only highlight & make clickable if unlocked
-          if (m.id === selectedStatsMerchantId) {
-            img.classList.add('selected-thumb');
+        // 1) create the <img> but keep it hidden until loaded
+        const thumb = document.createElement('img');
+        thumb.className = 'merchant-thumb';
+        thumb.alt       = m.name;
+        thumb.style.visibility = 'hidden';      // ② hide until we set src
+    
+        // 2) style/status classes
+        if (!m.unlocked)       thumb.classList.add('locked-thumb');
+        else if (m.id === selectedStatsMerchantId) thumb.classList.add('selected-thumb');
+    
+        // 3) load via cache, *then* unhide
+        const path = `assets/images/merchants/${slugify(m.name)}.jpg`;
+        imageCache.getImage('merchants', path).then(cachedImg => {
+          if (cachedImg) {
+            thumb.src = cachedImg.src;
+            thumb.style.visibility = 'visible';
+          } else {
+            console.warn('missing merchant art:', path);
+            thumb.style.visibility = 'visible'; // or show a fallback icon
           }
-          img.addEventListener('click', () => {
+        });
+    
+        // 4) click handler (only if unlocked)
+        if (m.unlocked) {
+          thumb.addEventListener('click', () => {
             selectedStatsMerchantId = m.id;
             updateStatsUI();
           });
         }
-  
-        grid.appendChild(img);
+    
+        // 5) append **after** setting up everything
+        grid.appendChild(thumb);
       });
   
       merchantsSection.appendChild(grid);

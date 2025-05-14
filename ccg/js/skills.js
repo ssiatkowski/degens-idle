@@ -90,7 +90,10 @@ function initSkillsFilters() {
     checkbox.checked = skillFilterState.currencies.has(cur.id);
     
     const icon = document.createElement('img');
-    icon.src = `assets/images/currencies/${cur.icon}`;
+    const currencyPath = `assets/images/currencies/${cur.icon}`;
+    imageCache.getImage('currencies', currencyPath).then(img => {
+        if (img) icon.src = img.src;
+    });
     icon.className = 'currency-filter-icon';
     
     const name = document.createElement('span');
@@ -236,15 +239,20 @@ function renderSkillsTab() {
       else tile.classList.add('affordable');
 
       const iconName = s.cost.currencyId + '.png';
-      tile.innerHTML = `
-        <h4>${s.name}</h4>
-        <p class="skill-desc">${locked ? '' : s.description}</p>
-        ${locked ? '' : `
-        <div class="skill-cost">
-          ${formatNumber(s.cost.amount)}
-          <img src="assets/images/currencies/${iconName}" class="icon"/>
-        </div>`}
-      `;
+      const currencyPath = `assets/images/currencies/${iconName}`;
+      imageCache.getImage('currencies', currencyPath).then(img => {
+          if (img) {
+              tile.innerHTML = `
+                <h4>${s.name}</h4>
+                <p class="skill-desc">${locked ? '' : s.description}</p>
+                ${locked ? '' : `
+                <div class="skill-cost">
+                  ${formatNumber(s.cost.amount)}
+                  <img src="${img.src}" class="icon"/>
+                </div>`}
+              `;
+          }
+      });
 
       if (!locked && !owned && affordable) {
         tile.onclick = () => {
@@ -293,15 +301,20 @@ function renderSkillsTab() {
     else tile.classList.add('affordable');
 
     const iconName = s.cost.currencyId + '.png';
-    tile.innerHTML = `
-      <h4>${s.name}</h4>
-      <p class="skill-desc">${locked ? '' : s.description}</p>
-      ${locked ? '' : `
-      <div class="skill-cost">
-        ${formatNumber(s.cost.amount)}
-        <img src="assets/images/currencies/${iconName}" class="icon"/>
-      </div>`}
-    `;
+    const currencyPath = `assets/images/currencies/${iconName}`;
+    imageCache.getImage('currencies', currencyPath).then(img => {
+        if (img) {
+            tile.innerHTML = `
+              <h4>${s.name}</h4>
+              <p class="skill-desc">${locked ? '' : s.description}</p>
+              ${locked ? '' : `
+              <div class="skill-cost">
+                ${formatNumber(s.cost.amount)}
+                <img src="${img.src}" class="icon"/>
+              </div>`}
+            `;
+        }
+    });
 
     if (!locked && !owned) {
       tile.onclick = () => {

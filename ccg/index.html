@@ -167,10 +167,21 @@
         </div>
       </div>
       <div class="settings-section">
+        <h2>Preferences</h2>
+        <div class="settings-buttons">
+          <button id="darkThemeToggle" class="settings-button theme-button">
+            <i class="fas fa-moon"></i> Dark Theme
+          </button>
+        </div>
+      </div>
+      <div class="settings-section">
         <h2>Danger Zone</h2>
         <div class="settings-buttons">
           <button id="resetGameButton" class="settings-button danger-button">
             <i class="fas fa-trash"></i> Reset Game
+          </button>
+          <button id="getUnstuckBtn" class="settings-button warning-button">
+            <i class="fas fa-life-ring"></i> Get Unstuck
           </button>
         </div>
       </div>
@@ -215,6 +226,7 @@
   <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
 
   <!-- Core Data -->
+  <script src="js/image_cache.js"></script>
   <script src="js/cards.js"></script>
   <script src="js/skills_helpers.js"></script>
   <script src="js/skills.js"></script>

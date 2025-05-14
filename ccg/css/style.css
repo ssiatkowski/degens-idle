@@ -1,12 +1,69 @@
 :root {
-  /* Theme colors */
-  --bg-color: #f0f2f5;
-  --card-bg: #ffffff;
-  --card-shadow: rgba(0,0,0,0.1);
-  --font-color: #333333;
-  --accent: #4caf50;
-  --dark: #444444;
-  --light: #eeeeee;
+  /* Light theme colors */
+  --light-bg-color: #f0f2f5;
+  --light-card-bg: #ffffff;
+  --light-card-shadow: rgba(0,0,0,0.1);
+  --light-font-color: #333333;
+  --light-header-font-color: #080d0b;
+  --light-accent: #4caf50;
+  --light-dark: #444444;
+  --light-light: #eeeeee;
+  --light-currency-bar-bg: #eafaf9;
+  --light-tab-bg: var(--light-light);
+  --light-tab-hover: #ddd;
+  --light-tab-active: #ccc;
+  --light-tab-content-bg: var(--light-card-bg);
+  --light-tab-content-border: #ccc;
+  --light-table-bg: #fff;
+  --light-table-border: #b2dfdb;
+  --light-table-header-bg: #e0f7fa;
+  --light-table-header-color: #00796b;
+  --light-table-cell-bg: #eafaf9;
+  --light-table-cell-color: #333;
+  --light-table-cell-border: #b2dfdb;
+  --light-stats-bg: #e8f5e9;
+  --light-skill-bg: #f8f8f8;
+  --light-skill-locked: #ddd;
+  --light-skill-purchased: #e0f0e0;
+  --light-skill-unaffordable: #f0e0e0;
+  --light-skill-affordable: #e0f8f8;
+  --light-modal-bg: rgba(255,255,255,0.8);
+  --light-modal-border: var(--light-dark);
+  --light-modal-shadow: var(--light-card-shadow);
+
+  /* Dark theme colors */
+  --dark-bg-color: #1a1a1a;
+  --dark-card-bg: #424242;
+  --dark-card-shadow: rgba(0,0,0,0.3);
+  --dark-font-color: #e0e0e0;
+  --dark-header-font-color: #080d0b;
+  --dark-accent: #66bb6a;
+  --dark-dark: #757575;
+  --dark-light: #424242;
+  --dark-currency-bar-bg: #2d2d2d;
+  --dark-tab-bg: #424242;
+  --dark-tab-hover: #505050;
+  --dark-tab-active: #616161;
+  --dark-tab-content-bg: #2d2d2d;
+  --dark-tab-content-border: #424242;
+  --dark-table-bg: #2d2d2d;
+  --dark-table-border: #424242;
+  --dark-table-header-bg: #424242;
+  --dark-table-header-color: #e0e0e0;
+  --dark-table-cell-bg: #363636;
+  --dark-table-cell-color: #e0e0e0;
+  --dark-table-cell-border: #424242;
+  --dark-stats-bg: #2d2d2d;
+  --dark-skill-bg: #363636;
+  --dark-skill-locked: #400505;
+  --dark-skill-purchased: #485751;
+  --dark-skill-unaffordable: #6e2828;
+  --dark-skill-affordable: #1d5468;
+  --dark-modal-bg: rgba(45,45,45,0.8);
+  --dark-modal-border: var(--dark-light);
+  --dark-modal-shadow: var(--dark-card-shadow);
+
+  /* Common theme colors */
   --rarity-junk:      #666666;   /* dull gray */
   --rarity-basic:     #999999;   /* light gray */
   --rarity-decent:    #B87333;   /* bronze */
@@ -22,7 +79,7 @@
   --realm3-color:     #f1c40f;  /* budgom */
   --realm4-color:     #f39c12;  /* aviary */
   --realm5-color:     #9b59b6;  /* ancient relics */
-  --realm6-color:     #2c3e50;  /* celestial bodies */
+  --realm6-color:     #3b536c;  /* celestial bodies */
   --realm7-color:     #e74c3c;  /* mythical beasts */
   --realm8-color:     #1abc9c;  /* incremental games */
   --realm9-color:     #c49bd4;  /* spirit familiars */
@@ -38,6 +95,74 @@
   --card-font: Georgia, serif;
 }
 
+/* Light theme (default) */
+:root {
+  --bg-color: var(--light-bg-color);
+  --card-bg: var(--light-card-bg);
+  --card-shadow: var(--light-card-shadow);
+  --font-color: var(--light-font-color);
+  --header-font-color: var(--light-header-font-color);
+  --accent: var(--light-accent);
+  --dark: var(--light-dark);
+  --light: var(--light-light);
+  --currency-bar-bg: var(--light-currency-bar-bg);
+  --tab-bg: var(--light-tab-bg);
+  --tab-hover: var(--light-tab-hover);
+  --tab-active: var(--light-tab-active);
+  --tab-content-bg: var(--light-tab-content-bg);
+  --tab-content-border: var(--light-tab-content-border);
+  --table-bg: var(--light-table-bg);
+  --table-border: var(--light-table-border);
+  --table-header-bg: var(--light-table-header-bg);
+  --table-header-color: var(--light-table-header-color);
+  --table-cell-bg: var(--light-table-cell-bg);
+  --table-cell-color: var(--light-table-cell-color);
+  --table-cell-border: var(--light-table-cell-border);
+  --stats-bg: var(--light-stats-bg);
+  --skill-bg: var(--light-skill-bg);
+  --skill-locked: var(--light-skill-locked);
+  --skill-purchased: var(--light-skill-purchased);
+  --skill-unaffordable: var(--light-skill-unaffordable);
+  --skill-affordable: var(--light-skill-affordable);
+  --modal-bg: var(--light-modal-bg);
+  --modal-border: var(--light-modal-border);
+  --modal-shadow: var(--light-modal-shadow);
+}
+
+/* Dark theme class */
+body.dark-theme {
+  --bg-color: var(--dark-bg-color);
+  --card-bg: var(--dark-card-bg);
+  --card-shadow: var(--dark-card-shadow);
+  --font-color: var(--dark-font-color);
+  --header-font-color: var(--dark-header-font-color);
+  --accent: var(--dark-accent);
+  --dark: var(--dark-dark);
+  --light: var(--dark-light);
+  --currency-bar-bg: var(--dark-currency-bar-bg);
+  --tab-bg: var(--dark-tab-bg);
+  --tab-hover: var(--dark-tab-hover);
+  --tab-active: var(--dark-tab-active);
+  --tab-content-bg: var(--dark-tab-content-bg);
+  --tab-content-border: var(--dark-tab-content-border);
+  --table-bg: var(--dark-table-bg);
+  --table-border: var(--dark-table-border);
+  --table-header-bg: var(--dark-table-header-bg);
+  --table-header-color: var(--dark-table-header-color);
+  --table-cell-bg: var(--dark-table-cell-bg);
+  --table-cell-color: var(--dark-table-cell-color);
+  --table-cell-border: var(--dark-table-cell-border);
+  --stats-bg: var(--dark-stats-bg);
+  --skill-bg: var(--dark-skill-bg);
+  --skill-locked: var(--dark-skill-locked);
+  --skill-purchased: var(--dark-skill-purchased);
+  --skill-unaffordable: var(--dark-skill-unaffordable);
+  --skill-affordable: var(--dark-skill-affordable);
+  --modal-bg: var(--dark-modal-bg);
+  --modal-border: var(--dark-modal-border);
+  --modal-shadow: var(--dark-modal-shadow);
+}
+
 /* Reset & Base */
 * { box-sizing: border-box; }
 body {
@@ -45,6 +170,7 @@ body {
   background: var(--bg-color);
   color: var(--font-color);
   font-family: var(--ui-font);
+  transition: background-color 0.3s, color 0.3s;
 }
 
 html, body {
@@ -55,32 +181,56 @@ html, body {
 nav#tabs { margin-bottom: 15px; }
 .tab-btn {
   padding: 8px 16px; margin-right:6px;
-  background: var(--light);
+  background: var(--tab-bg);
   border: none; border-radius:4px;
   cursor: pointer;
   transition: background 0.2s;
   font-family: var(--ui-font);
   touch-action: manipulation;
+  color: var(--font-color);
 }
-.tab-btn:hover { background:#ddd; }
-.tab-btn.active { background:#ccc; font-weight:bold; }
+.tab-btn:hover { background: var(--tab-hover); }
+.tab-btn.active { background: var(--tab-active); font-weight:bold; }
 
 /* Tab content (with texture) */
 .tab-content {
-  background: var(--card-bg) var(--texture) repeat;
-  border:1px solid #ccc;
-  border-radius:6px;
-  padding:16px;
-  margin-bottom:20px;
-  box-shadow:0 2px 4px var(--card-shadow);
+  background: var(--tab-content-bg) var(--texture) repeat;
+  border: 1px solid var(--tab-content-border);
+  border-radius: 6px;
+  padding: 16px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px var(--card-shadow);
 }
 
-/* Add new-offers styling for all tabs */
+/* Tab content headers */
+.tab-content h2 {
+  color: var(--header-font-color);
+  margin-bottom: 1em;
+  font-size: 1.5em;
+  font-weight: bold;
+  text-align: center;
+  text-shadow: 0 1px 2px var(--card-shadow);
+}
+
 #tab-btn-cards.new-offers,
 #tab-btn-skills.new-offers,
 #tab-btn-merchant.new-offers {
-  box-shadow: 0 0 8px rgba(0,200,0,0.7);
+  position: relative;
   border-color: limegreen;
+  box-shadow: 0 0 8px rgba(0, 200, 0, 0.7);
+  overflow: hidden; /* Ensures the overlay doesn't spill out */
+}
+
+#tab-btn-cards.new-offers::after,
+#tab-btn-skills.new-offers::after,
+#tab-btn-merchant.new-offers::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: linear-gradient(135deg, rgba(0,255,0,0.3), rgba(0,128,0,0.3));
+  pointer-events: none;
+  z-index: 1;
 }
 
 #currency-bar {
@@ -91,8 +241,8 @@ nav#tabs { margin-bottom: 15px; }
   grid-auto-columns: 100px;
   gap: 6px 12px;
 
-  background: #e4e8ec;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  background: var(--currency-bar-bg);
+  box-shadow: 0 2px 4px var(--card-shadow);
   border-radius: 8px;
   padding: 12px 16px;
   margin-bottom: 16px;
@@ -102,13 +252,9 @@ nav#tabs { margin-bottom: 15px; }
   display: flex;
   align-items: center;
   padding: 4px 8px;
-  border-radius: 4px;
+  border-radius: 8px;
   /* subtle "pill" */
-  background: rgba(0,0,0,0.03);
-}
-
-.currency-item:nth-child(even) {
-  background: rgba(0,0,0,0.06);
+  background: rgba(146, 146, 146, 0.447);
 }
 
 .currency-item .icon {
@@ -220,9 +366,10 @@ nav#tabs { margin-bottom: 15px; }
   position:absolute; width:100%; height:100%;
   backface-visibility:hidden;
   border:4px solid; border-radius:8px;
+  border-color: #434343;
   box-sizing:border-box;
 }
-.card-face.back  { transform:rotateY(0deg); }
+.card-face.back  { transform:rotateY(0deg);}
 .card-face.front { transform:rotateY(180deg); }
 .card-frame {
   position:absolute; top:0; left:0; width:100%; height:100%;
@@ -261,11 +408,11 @@ nav#tabs { margin-bottom: 15px; }
   max-width: 90vw;
   max-height: 90dvh;
   height: 100%;
-  background: rgba(255,255,255,var(--modal-opacity));
-  border: 4px solid var(--dark);
+  background: var(--modal-bg);
+  border: 4px solid var(--modal-border);
   border-radius: 8px;
   padding: 8px;
-  box-shadow: 0 4px 8px var(--card-shadow);
+  box-shadow: 0 4px 8px var(--modal-shadow);
   align-items: stretch;
 }
 
@@ -373,6 +520,7 @@ nav#tabs { margin-bottom: 15px; }
   overflow-y: auto;
   font-size: clamp(0.8em, 2.4dvh, 1.2em);
   padding: 4px 0 4px 8px;
+  color: var(--font-color);
 }
 
 .modal-right .label {
@@ -381,11 +529,12 @@ nav#tabs { margin-bottom: 15px; }
   justify-content: space-between;
   font-size: clamp(0.9em, 1.6dvh, 1.3em);
   margin-bottom: 2px;
+  color: var(--font-color);
 }
 
 .modal-bar-container {
   position: relative;
-  background: #ddd;
+  background: var(--light);
   border-radius: 6px;
   overflow: hidden;
   min-height: 24px;
@@ -402,8 +551,9 @@ nav#tabs { margin-bottom: 15px; }
   text-align: center;
   width: 150%;
   transform:translate(-50%,-50%);
-  font-size:0.85em; color:#333; font-weight:bold;
+  font-size:0.85em; color:var(--font-color); font-weight:bold;
 }
+
 .modal-right button {
   display: inline-flex;
   align-self: flex-start;
@@ -442,18 +592,23 @@ nav#tabs { margin-bottom: 15px; }
 
 .effect-line {
   margin-top: 4px;
+  color: var(--font-color);
 }
+
 .modal-effects {
   padding-top: 0.2rem;
 }
+
 .modal-effects .effect-line {
   margin-bottom: 0.2rem;
 }
+
 .modal-effects .eff-breakdown {
-  color: #666;
+  color: var(--dark);
   font-size: clamp(0.8em, 2dvh, 1em);
   margin-left: 0.5em;
 }
+
 .currency-effect-icon {
   width: 1em;
   height: 1em;
@@ -468,10 +623,13 @@ nav#tabs { margin-bottom: 15px; }
   font-size: clamp(1em, 2.4dvh, 1.2em);
   font-weight: normal;
   text-align: left;
+  color: var(--font-color);
 }
+
 .modal-rarity span {
   font-weight: bold;
 }
+
 .modal-effects-header {
   text-align: center;
   font-family: var(--ui-font);
@@ -479,6 +637,25 @@ nav#tabs { margin-bottom: 15px; }
   font-weight: 600;
   margin-top: 4px;
   margin-bottom: 4px;
+  color: var(--font-color);
+}
+
+/* Style locked special-effect lines */
+.modal-effects .effect-line.locked {
+  opacity: 0.5;                         /* Gray it out */
+  border: 1px dashed var(--font-color);/* Dashed border in font color */
+  border-radius: 4px;                  /* Rounded corners */
+  padding: 0.25em 0.5em;               /* Give it some breathing room */
+  margin: 0.25em 0;                    /* Space between lines */
+  background: rgba(255,255,255,0.05);  /* Subtle light overlay */
+}
+
+/* Make sure the unlock note stays bold & red */
+.modal-effects .effect-line.locked .unlock-note {
+  color: rgb(160, 0, 0);
+  font-weight: bold;
+  opacity: 1; /* override parent opacity so it’s fully visible */
+  margin-left: 0.5em;
 }
 
 /* gray out unfound cards */
@@ -656,7 +833,6 @@ nav#tabs { margin-bottom: 15px; }
   animation: shake 0.4s ease-in-out;
 }
 
-/* make buttons a bit bigger + spaced */
 .realm-filter-btn {
   position: relative;
   width: 23%;
@@ -670,6 +846,23 @@ nav#tabs { margin-bottom: 15px; }
   transition: opacity 0.2s, box-shadow 0.2s, transform 0.2s;
   font-size: clamp(0.8em, 2.4dvh, 1.1em);
   touch-action: manipulation;
+  overflow: hidden;
+}
+
+.realm-filter-btn::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(128, 128, 128, 0.5); /* gray transparent overlay */
+  z-index: 1;
+  transition: background 0.2s;
+  pointer-events: none;
+  border-radius: 4px;
+}
+
+.realm-filter-btn.selected::before {
+  background: none; /* Remove overlay when selected */
 }
 
 .realm-filter-btn:hover {
@@ -683,16 +876,18 @@ nav#tabs { margin-bottom: 15px; }
   transform: translateY(-2px);
 }
 
-/* ensure the image fills */
+/* Ensure the image appears below the overlay */
 .realm-filter-btn img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
   border-radius: 4px;
+  position: relative;
+  z-index: 0;
 }
 
-/* overlay the effect text */
+
 .realm-filter-btn .filter-effect {
   position: absolute;
   bottom: 4px;
@@ -702,24 +897,28 @@ nav#tabs { margin-bottom: 15px; }
   font-size: clamp(0.7em, 2dvh, 0.9em);
   background: rgba(0, 0, 0, 0.5);
   color: #fff;
-  padding: clamp(2px, 1dvh, 4px) 0;
+  padding: clamp(2px, 1dvh, 4px) 4px;
   pointer-events: none;
   border-radius: 0 0 4px 4px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 100%;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: unset;
   box-sizing: border-box;
-  padding: 2px 4px;
 }
 
-/* Add a container for the text to help with scaling */
+
+.realm-filter-btn.selected .filter-effect {
+  background: #00970566;
+}
+
 .realm-filter-btn .filter-effect span {
   display: inline-block;
   width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: unset;
 }
+
 
 /* under the currency bar */
 #global-cooldown-bar {
@@ -759,10 +958,10 @@ nav#tabs { margin-bottom: 15px; }
   display: flex;
   flex-direction: column;
   gap: 1vw;
-  background: #e8f5e9;
+  background: var(--stats-bg);
   border-radius: 8px;
   padding: 1vw;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  box-shadow: 0 1px 3px var(--card-shadow);
   width: 100%;
   max-width: 100%;
   margin-top: 1vw;
@@ -821,7 +1020,7 @@ nav#tabs { margin-bottom: 15px; }
 #cooldown-counter {
   position: absolute;
   font-size: 2em;
-  color: #fff;
+  color: var(--font-color);
   text-shadow: 0 0 4px rgba(0,0,0,0.7);
   pointer-events: none;
 }
@@ -837,10 +1036,10 @@ nav#tabs { margin-bottom: 15px; }
 }
 
 .poke-filter-stats-table {
-  background: #fff;
+  background: var(--table-bg);
   border-radius: 10px;
-  border: 2px solid #b2dfdb;
-  box-shadow: 0 2px 8px rgba(44, 62, 80, 0.08);
+  border: 2px solid var(--table-border);
+  box-shadow: 0 2px 8px var(--card-shadow);
   margin-bottom: 1.2em;
   overflow: hidden;
   border-spacing: 0;
@@ -851,22 +1050,22 @@ nav#tabs { margin-bottom: 15px; }
 .poke-filter-stats-table td {
   padding: 0.5em 0.75em;
   text-align: left;
-  border-right: 1px solid #b2dfdb;
+  border-right: 1px solid var(--table-cell-border);
   font-size: clamp(0.8em, 4dvh, 1em);
   line-height: 1.2;
 }
 
 .poke-filter-stats-table th {
-  background: #e0f7fa;
-  color: #00796b;
+  background: var(--table-header-bg);
+  color: var(--table-header-color);
   font-weight: bold;
   border-bottom: none;
 }
 
 .poke-filter-stats-table td {
-  background: #eafaf9;
-  color: #333;
-  border-bottom: 1px solid #b2dfdb;
+  background: var(--table-cell-bg);
+  color: var(--table-cell-color);
+  border-bottom: 1px solid var(--table-cell-border);
 }
 
 /* Only round the top corners of the first header row */
@@ -937,17 +1136,6 @@ nav#tabs { margin-bottom: 15px; }
   z-index: 10;
   text-align: center;
   width: 100%;
-}
-
-/* Media query for very small screens */
-@media (max-width: 600px) {
-  .realm-filter-btn {
-    font-size: 0.8em;
-  }
-  .realm-filter-btn .filter-effect {
-    font-size: 0.7em;
-    padding: 2px 0;
-  }
 }
 
 /* Landscape Mode Overlay */
@@ -1130,4 +1318,51 @@ nav#tabs { margin-bottom: 15px; }
   border: 2px solid #444;
   background: rgba(0,0,0,0.08);
   text-shadow: none;
+}
+
+/* Update cooldown text color in stats table */
+.poke-filter-stats-table td[style*="color"] {
+  color: var(--font-color) !important;
+}
+
+/* Merchant message styling */
+.merchant-greeting {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: var(--font-color);
+  margin-bottom: 0.5em;
+}
+
+.merchant-pitch {
+  font-size: 1em;
+  color: var(--font-color);
+  line-height: 1.4;
+}
+
+/* Merchant timer styling */
+.merchant-timer {
+  position: absolute;
+  bottom: 1em;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.2em;
+  color: var(--font-color);
+  text-shadow: 0 0 4px rgba(0,0,0,0.7);
+  pointer-events: none;
+}
+
+/* Update merchant timer red color for low time */
+.merchant-timer[style*="color: red"] {
+  color: var(--error-color) !important;
+}
+
+.settings-button.warning-button {
+  background-color: #ffc107;
+  color: #000;
+  border: 1px solid #ffb300;
+}
+
+.settings-button.warning-button:hover {
+  background-color: #ffb300;
+  box-shadow: 0 2px 8px rgba(255, 193, 7, 0.4);
 }

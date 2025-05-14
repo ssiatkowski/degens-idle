@@ -321,14 +321,16 @@ const merchants = [
       return;
     }
   
-    // clear old
-    offersEl.innerHTML = '';
-  
-    // set image & greeting
+    // Set merchant image
     const slug = slugify(state.currentMerchant.name);
-    imgEl.src = `assets/images/merchants/${slug}.jpg`;
-    imgEl.alt = state.currentMerchant.name;
-  
+    const merchantPath = `assets/images/merchants/${slug}.jpg`;
+    imageCache.getImage('merchants', merchantPath).then(img => {
+        if (img) {
+            imgEl.src = img.src;
+            imgEl.alt = state.currentMerchant.name;
+        }
+    });
+
     // Generate new message if undefined
     if (!state.currentMerchantMessage) {
       const greeting = pickRandom(window.merchantGreetings);
@@ -338,10 +340,13 @@ const merchants = [
         <div class="merchant-pitch">${pitch}</div>
       `;
     }
-  
+
     // Use stored message
     msgEl.innerHTML = state.currentMerchantMessage;
-  
+
+    // Clear previous offers
+    offersEl.innerHTML = '';
+
     // render offers
     state.merchantOffers.forEach((o, idx) => {
       const card  = cardMap[o.cardId];
@@ -360,10 +365,17 @@ const merchants = [
       // artwork
       const f = document.createElement('img');
       f.className = 'card-frame';
-      f.src = `assets/images/frames/${card.rarity}_frame.jpg`;
+      const framePath = `assets/images/frames/${card.rarity}_frame.jpg`;
+      imageCache.getImage('frames', framePath).then(img => {
+          if (img) f.src = img.src;
+      });
+
       const a = document.createElement('img');
       a.className = 'card-image';
-      a.src = `assets/images/cards/${card.realm}/${slugify(card.name)}.jpg`;
+      const cardPath = `assets/images/cards/${card.realm}/${slugify(card.name)}.jpg`;
+      imageCache.getImage('cards', cardPath).then(img => {
+          if (img) a.src = img.src;
+      });
       front.append(f, a);
   
       // Add tier progress bar
@@ -393,13 +405,18 @@ const merchants = [
       const cm = currencies.find(cu => cu.id === o.currency) || { icon: 'question.png' };
       const buyBtn = document.createElement('button');
       buyBtn.className = 'offer-buy-btn';
-      buyBtn.innerHTML = `
-        <span>Buy:</span>
-        <span>
-          ${formatNumber(o.price)}
-          <img class="icon" src="assets/images/currencies/${cm.icon}"/>
-        </span>
-      `;
+      const currencyPath = `assets/images/currencies/${cm.icon}`;
+      imageCache.getImage('currencies', currencyPath).then(img => {
+          if (img) {
+              buyBtn.innerHTML = `
+                <span>Buy:</span>
+                <span>
+                  ${formatNumber(o.price)}
+                  <img class="icon" src="${img.src}"/>
+                </span>
+              `;
+          }
+      });
       buyBtn.addEventListener('click', e => {
         e.stopPropagation();
         buyOffer(idx);

@@ -18,7 +18,7 @@
   padding: clamp(8px, 3dvh, 16px);
   border-radius: 6px;
   box-shadow: 0 2px 4px var(--card-shadow);
-  background: #e8f5e9;
+  background: var(--stats-bg);
   font-size: clamp(0.8em, 2.4dvh, 1.1em);
   width: 100%;
   min-width: 0;
@@ -28,7 +28,7 @@
 .stats-section h3 {
   margin-top: 0;
   font-family: var(--card-font);
-  color: var(--dark);
+  color: var(--font-color);
   font-size: clamp(1em, 2.8dvh, 1.3em);
 }
 
@@ -62,26 +62,32 @@
   margin: 0 auto 1rem;
   border-collapse: collapse;
   text-align: center;
+  background: var(--table-bg);
+  border: 1px solid var(--table-border);
 }
 
 .stats-section th,
 .stats-section td {
   padding: 6px 12px;
-  border: 1px solid #bbb;
+  border: 1px solid var(--table-cell-border);
   font-family: var(--ui-font);
   font-size: clamp(0.6em, 1.5vw, 1.1em);
+  color: var(--table-cell-color);
+  background: var(--table-cell-bg);
 }
 
 /* Rarity Table */
 .rarity-table th {
-  background: var(--light);
+  background: var(--table-header-bg);
+  color: var(--table-header-color);
   font-weight: bold;
 }
 
 /* Currency & Effects Tables */
 .currency-table th,
 .effects-table th {
-  background: var(--light);
+  background: var(--table-header-bg);
+  color: var(--table-header-color);
   font-weight: bold;
 }
 
@@ -131,7 +137,7 @@
 
 /* Realm Sections */
 .realm-section {
-  background: #e8f5e9;
+  background: var(--stats-bg);
   padding: 12px;
   border-radius: 6px;
 }
@@ -203,14 +209,14 @@
   padding: clamp(8px, 3dvh, 16px);
   border-radius: 6px;
   box-shadow: 0 2px 4px var(--card-shadow);
-  background: #e8f5e9;
+  background: var(--stats-bg);
   width: 100%;
 }
 
 .tier-progress-section h3 {
   margin-top: 0;
   font-family: var(--card-font);
-  color: var(--dark);
+  color: var(--font-color);
   font-size: clamp(1em, 2.8dvh, 1.3em);
   border-bottom: 2px solid var(--dark);
   padding-bottom: 4px;
@@ -222,18 +228,23 @@
   border-collapse: collapse;
   margin: 0 auto;
   font-size: clamp(0.8em, 2.4dvh, 1.1em);
+  background: var(--table-bg);
+  border: 1px solid var(--table-border);
 }
 
 .tier-progress-table th,
 .tier-progress-table td {
   padding: 4px 6px;
-  border: 1px solid #bbb;
+  border: 1px solid var(--table-cell-border);
   text-align: center;
   position: relative;
+  color: var(--table-cell-color);
+  background: var(--table-cell-bg);
 }
 
 .tier-progress-table th {
-  background: var(--light);
+  background: var(--table-header-bg);
+  color: var(--table-header-color);
   font-weight: bold;
 }
 
@@ -245,7 +256,7 @@
 
 .tier-progress-table td.legend-cell {
   font-size: 0.8em;
-  color: #666;
+  color: var(--dark);
   text-align: left;
   padding-left: 8px;
   white-space: nowrap;
@@ -259,7 +270,7 @@
 .tier-threshold {
   font-family: monospace;
   font-size: 0.9em;
-  color: #666;
+  color: var(--dark);
   display: block;
   margin-bottom: 2px;
 }
@@ -272,7 +283,7 @@
 }
 
 .tier-cell.empty {
-  background: #f5f5f5;
+  background: var(--light);
 }
 
 .tier-cell .zero-count {

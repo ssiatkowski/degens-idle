@@ -244,10 +244,15 @@ function updateCurrencyBar() {
 
     const div = document.createElement('div');
     div.className = 'currency-item';
-    div.innerHTML = `
-      <img class="icon" src="assets/images/currencies/${meta.icon}" alt="${meta.name}" />
-      <span class="amount">${formatNumber(state.currencies[cid])}</span>
-    `;
+    const currencyPath = `assets/images/currencies/${meta.icon}`;
+    imageCache.getImage('currencies', currencyPath).then(img => {
+      if (img) {
+        div.innerHTML = `
+          <img class="icon" src="${img.src}" alt="${meta.name}" />
+          <span class="amount">${formatNumber(state.currencies[cid])}</span>
+        `;
+      }
+    });
     bar.appendChild(div);
   });
 }
@@ -403,20 +408,29 @@ function performPoke() {
     // back
     const back = document.createElement('img');
     back.className = 'card-face back';
-    back.src = `assets/images/card_backs/${rr.name.toLowerCase().replace(/ /g,'_')}_card_back.jpg`;
+    const backPath = `assets/images/card_backs/${rr.name.toLowerCase().replace(/ /g,'_')}_card_back.jpg`;
+    imageCache.getImage('cardBacks', backPath).then(img => {
+        if (img) back.src = img.src;
+    });
 
     // front
     const front = document.createElement('div');
     front.className = 'card-face front';
     front.style.borderColor = realmColors[rr.id];
 
-    const frameImg   = document.createElement('img');
+    const frameImg = document.createElement('img');
     frameImg.className = 'card-frame';
-    frameImg.src = `assets/images/frames/${c.rarity}_frame.jpg`;
+    const framePath = `assets/images/frames/${c.rarity}_frame.jpg`;
+    imageCache.getImage('frames', framePath).then(img => {
+        if (img) frameImg.src = img.src;
+    });
 
     const contentImg = document.createElement('img');
     contentImg.className = 'card-image';
-    contentImg.src = `assets/images/cards/${c.realm}/${slugify(c.name)}.jpg`;
+    const cardPath = `assets/images/cards/${c.realm}/${slugify(c.name)}.jpg`;
+    imageCache.getImage('cards', cardPath).then(img => {
+        if (img) contentImg.src = img.src;
+    });
 
     // Special Effects S indicator
     if (Array.isArray(c.specialEffects) && c.specialEffects.length > 0) {
@@ -433,7 +447,10 @@ function performPoke() {
     if (c.tier > 0) {
       const tierIcon = document.createElement('img');
       tierIcon.className = 'tier-icon';
-      tierIcon.src = `assets/images/tiers/tier_${c.tier}.png`;
+      const tierPath = `assets/images/tiers/tier_${c.tier}.png`;
+      imageCache.getImage('tiers', tierPath).then(img => {
+          if (img) tierIcon.src = img.src;
+      });
       tierIcon.alt = `Tier ${c.tier}`;
 
       const lvlLabel = document.createElement('div');
@@ -685,27 +702,38 @@ function openModal(cardId) {
   //  - TIER ICON IN MODAL -
   const modalTierIcon = document.createElement('img');
   modalTierIcon.className = 'modal-tier-icon';
-  modalTierIcon.src = `assets/images/tiers/tier_${c.tier}.png`;
+  const tierPath = `assets/images/tiers/tier_${c.tier}.png`;
+  imageCache.getImage('tiers', tierPath).then(img => {
+      if (img) modalTierIcon.src = img.src;
+  });
   modalTierIcon.alt = `Tier ${c.tier}`;
   frame.appendChild(modalTierIcon);
 
   const frameImg = document.createElement('img');
   frameImg.className = 'modal-frame-img';
-  frameImg.src = `assets/images/frames/${rar}_frame.jpg`;
+  const framePath = `assets/images/frames/${rar}_frame.jpg`;
+  imageCache.getImage('frames', framePath).then(img => {
+      if (img) frameImg.src = img.src;
+  });
 
   const nameDiv = document.createElement('div');
   nameDiv.className = 'modal-name';
   nameDiv.textContent = c.name;
 
-  const img = document.createElement('img');
-  img.className = 'modal-image';
-  img.src = `assets/images/cards/${c.realm}/${slugify(c.name)}.jpg`;
+  const cardImg = document.createElement('img');
+  cardImg.className = 'modal-image';
+  cardImg.alt       = c.name;
+  const cardPath = `assets/images/cards/${c.realm}/${slugify(c.name)}.jpg`;
+  imageCache.getImage('cards', cardPath).then(cachedImg => {
+    if (cachedImg) cardImg.src = cachedImg.src;
+    else           console.warn('card image not in cache:', cardPath);
+  });
 
   const desc = document.createElement('div');
   desc.className = 'modal-desc';
   desc.textContent = c.description;
 
-  frame.append(frameImg, nameDiv, img, desc);
+  frame.append(frameImg, nameDiv, cardImg, desc);
   left.append(frame);
 
   // RIGHT SIDE (stats, level-up button)
@@ -734,8 +762,9 @@ function openModal(cardId) {
 
   // level up button
   const baseCost = new Decimal(c.levelCost.amount);
-  const nextLevelCost = baseCost.times(Decimal.pow(c.levelScaling, c.level - 1));
-  
+  let nextLevelCost = baseCost.times(Decimal.pow(c.levelScaling, c.level - 1));
+  nextLevelCost     = Decimal(floorTo3SigDigits(nextLevelCost));
+
   // Calculate max affordable level and total cost
   let maxLevel = c.level;
   let totalMaxCost = new Decimal(0);
@@ -746,6 +775,7 @@ function openModal(cardId) {
     totalMaxCost = totalMaxCost.plus(currentCost);
     maxLevel++;
     currentCost = baseCost.times(Decimal.pow(c.levelScaling, maxLevel - 1));
+    currentCost = Decimal(floorTo3SigDigits(currentCost));
   }
   
   const maxLevelIncrement = maxLevel - c.level;
@@ -757,19 +787,32 @@ function openModal(cardId) {
 
   const levelControls = document.createElement('div');
   levelControls.className = 'level-controls';
+  
+  // Create the level controls HTML with placeholder for currency icon
   levelControls.innerHTML = `
     <span>Level ${c.level}</span>
     <button class="${nextLevelCost.greaterThan(availableCurrency) ? 'unaffordable' : 'affordable'}"
             ${nextLevelCost.greaterThan(availableCurrency) ? 'disabled' : ''}>
-      +1 | ${formatNumber(nextLevelCost)} <img class="icon" src="assets/images/currencies/${ico}"/>
+      +1 | ${formatNumber(nextLevelCost)} <img class="icon" alt="${costCurrency}"/>
     </button>
     ${maxLevelIncrement > 0 ? `
       <button class="${totalMaxCost.greaterThan(availableCurrency) ? 'unaffordable' : 'affordable'}"
               ${totalMaxCost.greaterThan(availableCurrency) ? 'disabled' : ''}>
-        Max: ${maxLevel} | ${formatNumber(totalMaxCost)} <img class="icon" src="assets/images/currencies/${ico}"/>
+        Max: ${maxLevel} | ${formatNumber(totalMaxCost)} <img class="icon" alt="${costCurrency}"/>
       </button>
     ` : ''}
   `;
+
+  // Load and set currency icons
+  const currencyPath = `assets/images/currencies/${ico}`;
+  imageCache.getImage('currencies', currencyPath).then(img => {
+    if (img) {
+      const icons = levelControls.querySelectorAll('img.icon');
+      icons.forEach(icon => {
+        icon.src = img.src;
+      });
+    }
+  });
 
   // Add click handlers
   const plusOneBtn = levelControls.querySelector('button');
@@ -929,53 +972,60 @@ function openModal(cardId) {
 
     c.specialEffects.forEach(def => {
       const isUnlocked = isSpecialEffectRequirementMet(c, def.requirement);
-      
-      const li = document.createElement('p');
-      li.className = 'effect-line' + (isUnlocked ? '' : ' locked');
-
-      if (!isUnlocked) {
-        li.innerHTML = `Special Effect unlocks at ${def.requirement.type} ${def.requirement.amount}`;
-      } else {
-        let label = SPECIAL_EFFECT_NAMES[def.type] || def.type;
-        let valueHtml;
-
-        switch (def.type) {
-          case "merchantPriceReduction":
-            valueHtml = `-${(def.value*100).toFixed(0)}%`;
-            break;
-          case "flatCurrencyPerPoke":
-          case "flatCurrencyPerSecond": {
-            const iconPath = `assets/images/currencies/${def.currency}.png`;
-            const verb = def.type === "flatCurrencyPerPoke" ? "/ Poke" : "/ Sec";
-            label = `<img class="currency-effect-icon" src="${iconPath}" alt="${def.currency}" /> ${verb}`;
-            valueHtml = `+${formatNumber(def.value)}`;
-            break;
-          }
-          case "currencyPerPokeMultiplier":
-          case "currencyPerSecMultiplier": {
-            const iconPath = `assets/images/currencies/${def.currency}.png`;
-            const verb = def.type === "currencyPerPokeMultiplier" ? "/ Poke" : "/ Sec";
-            label = `Global <img class="currency-effect-icon" src="${iconPath}" alt="${def.currency}" /> ${verb} Multiplier`;
-            valueHtml = `×${formatNumber(def.value)}`;
-            break;
-          }
-          case "allGeneratorMultiplier":
-            valueHtml = `×${formatNumber(def.value)}`;
-            break;
-          case "flatMaxCardsPerPoke":
-          case "flatMinCardsPerPoke":
-            valueHtml = `+${formatNumber(def.value)}`;
-            break;
-          case "flatCooldownDivider":
-            valueHtml = `+${formatNumber(def.value)}`;
-            break;
+    
+      // 1) Build label & valueHtml unconditionally
+      let label = SPECIAL_EFFECT_NAMES[def.type] || def.type;
+      let valueHtml;
+      switch (def.type) {
+        case "merchantPriceReduction":
+          valueHtml = `-${(def.value * 100).toFixed(0)}%`;
+          break;
+        case "flatCurrencyPerPoke":
+        case "flatCurrencyPerSecond": {
+          const iconPath = `assets/images/currencies/${def.currency}.png`;
+          const verb = def.type === "flatCurrencyPerPoke" ? "/ Poke" : "/ Sec";
+          label = `<img class="currency-effect-icon" src="${iconPath}" alt="${def.currency}" /> ${verb}`;
+          valueHtml = `+${formatNumber(def.value)}`;
+          break;
         }
-
-        li.innerHTML = `${label}: <strong>${valueHtml}</strong>`;
+        case "currencyPerPokeMultiplier":
+        case "currencyPerSecMultiplier": {
+          const iconPath = `assets/images/currencies/${def.currency}.png`;
+          const verb = def.type === "currencyPerPokeMultiplier" ? "/ Poke" : "/ Sec";
+          label = `Global <img class="currency-effect-icon" src="${iconPath}" alt="${def.currency}" /> ${verb} Multiplier`;
+          valueHtml = `×${formatNumber(def.value)}`;
+          break;
+        }
+        case "allGeneratorMultiplier":
+          valueHtml = `×${formatNumber(def.value)}`;
+          break;
+        case "flatMaxCardsPerPoke":
+        case "flatMinCardsPerPoke":
+          valueHtml = `+${formatNumber(def.value)}`;
+          break;
+        case "flatCooldownDivider":
+          valueHtml = `+${formatNumber(def.value)}`;
+          break;
+        default:
+          valueHtml = def.value ?? '';
       }
-
+    
+      // 2) Create the <p> and always show the effect
+      const li = document.createElement('p');
+      li.className = 'effect-line';
+      li.innerHTML = `${label}: <strong>${valueHtml}</strong>`;
+    
+      // 3) If locked, append requirement text and add the locked class
+      if (!isUnlocked) {
+        li.classList.add('locked');
+        li.innerHTML += 
+          ` <span class="unlock-note">
+              (Unlocks at ${def.requirement.type} ${def.requirement.amount})
+            </span>`;
+      }
+    
       specialEffContainer.appendChild(li);
-    });
+    });    
 
     right.appendChild(specialEffContainer);
   }
@@ -1001,7 +1051,7 @@ function initCardsFilters() {
     const isComplete = ownedInRealm === totalInREalm;
     
     btn.innerHTML = `
-      <img class="filter-back" src="assets/images/card_backs/${slugify(r.name)}_card_back.jpg"/>
+      <img class="filter-back" alt="${r.name} card back"/>
       <div class="filter-label">${r.name}</div>
       <div class="filter-count">
         ${
@@ -1011,6 +1061,16 @@ function initCardsFilters() {
         }
       </div>
     `;
+
+    // Load card back image
+    const backPath = `assets/images/card_backs/${slugify(r.name)}_card_back.jpg`;
+    imageCache.getImage('cardBacks', backPath).then(img => {
+        if (img) {
+            const filterBack = btn.querySelector('.filter-back');
+            if (filterBack) filterBack.src = img.src;
+        }
+    });
+
     if (!r.unlocked) {
       btn.classList.add('locked');
       btn.disabled = true;
@@ -1058,10 +1118,17 @@ function renderCardsCollection() {
       // frame & artwork
       const frameImg = document.createElement('img');
       frameImg.className = 'card-frame';
-      frameImg.src = `assets/images/frames/${c.rarity}_frame.jpg`;
+      const framePath = `assets/images/frames/${c.rarity}_frame.jpg`;
+      imageCache.getImage('frames', framePath).then(img => {
+          if (img) frameImg.src = img.src;
+      });
+
       const contentImg = document.createElement('img');
       contentImg.className = 'card-image';
-      contentImg.src = `assets/images/cards/${c.realm}/${slugify(c.name)}.jpg`;
+      const cardPath = `assets/images/cards/${c.realm}/${slugify(c.name)}.jpg`;
+      imageCache.getImage('cards', cardPath).then(img => {
+          if (img) contentImg.src = img.src;
+      });
 
       // Special Effects S indicator
       if (Array.isArray(c.specialEffects) && c.specialEffects.length > 0) {
@@ -1079,7 +1146,10 @@ function renderCardsCollection() {
       if (c.tier > 0) {
         const tierIcon = document.createElement('img');
         tierIcon.className = 'tier-icon';
-        tierIcon.src = `assets/images/tiers/tier_${c.tier}.png`;
+        const tierPath = `assets/images/tiers/tier_${c.tier}.png`;
+        imageCache.getImage('tiers', tierPath).then(img => {
+            if (img) tierIcon.src = img.src;
+        });
         tierIcon.alt = `Tier ${c.tier}`;
         front.appendChild(tierIcon);
 
@@ -1089,37 +1159,48 @@ function renderCardsCollection() {
         front.appendChild(lvlLabel);
       }
 
-      // "Level Up" button (always visible, but disabled if unaffordable)
+      const btn = document.createElement('button');
+      btn.className = 'card-level-up-btn';
+  
       if (c.quantity > 0) {
+        // affordable/unaffordable styling & content
         const baseCost = new Decimal(c.levelCost.amount);
         const rawCost  = baseCost.times(Decimal.pow(c.levelScaling, c.level - 1));
         const cost     = floorTo3SigDigits(rawCost);
         const curAmt   = state.currencies[c.levelCost.currency] || new Decimal(0);
         const canAfford = curAmt.greaterThanOrEqualTo(cost);
-
-        const btn = document.createElement('button');
-        btn.className = 'card-level-up-btn ' + (canAfford ? 'affordable' : 'unaffordable');
+  
+        btn.classList.add(canAfford ? 'affordable' : 'unaffordable');
         btn.innerHTML = `
           Level Up<br>
           <span class="level-cost">
             ${formatNumber(cost)}
-            <img class="icon" src="assets/images/currencies/${c.levelCost.currency}.png"/>
+            <img class="icon" alt="${c.levelCost.currency}"/>
           </span>
         `;
-        if (canAfford) {
-          btn.addEventListener('click', e => {
-            e.stopPropagation();
-            state.currencies[c.levelCost.currency] = curAmt.minus(cost);
-            levelUp(c.id);
-            updateCurrencyBar();
-          });
-        } else {
-          btn.disabled = true;
-        }
-        front.appendChild(btn);
+  
+        // load the currency icon
+        const currencyPath = `assets/images/currencies/${c.levelCost.currency}.png`;
+        imageCache.getImage('currencies', currencyPath).then(img => {
+          if (img) {
+            const icon = btn.querySelector('img.icon');
+            if (icon) icon.src = img.src;
+          }
+        });
+  
+        btn.addEventListener('click', e => {
+          e.stopPropagation();
+          state.currencies[c.levelCost.currency] = curAmt.minus(cost);
+          levelUp(c.id);
+          updateCurrencyBar();
+        });
+      } else {
+        // if you have zero quantity, disable the button
+        btn.disabled = true;
+        btn.textContent = 'Level Up';  // or whatever fallback text you like
       }
-
-
+  
+      front.appendChild(btn);
 
       // quantity badge
       if (c.quantity >= 1) {
@@ -1793,8 +1874,41 @@ function showOfflineEarningsModal(earnings) {
   setTimeout(() => ov.remove(), 5000);
 }
 
+// Preload all game assets
+async function preloadGameAssets() {
+  // Preload card images
+  const cardPaths = cards.map(c => `assets/images/cards/${c.realm}/${slugify(c.name)}.jpg`);
+  const framePaths = [...new Set(cards.map(c => `assets/images/frames/${c.rarity}_frame.jpg`))];
+  const cardBackPaths = [...new Set(realms.map(r => `assets/images/card_backs/${slugify(r.name)}_card_back.jpg`))];
+  
+  // Preload currency images
+  const currencyPaths = currencies.map(c => `assets/images/currencies/${c.icon}`);
+  
+  // Preload tier images
+  const tierPaths = Array.from({length: 10}, (_, i) => `assets/images/tiers/tier_${i}.png`);
+
+  // Preload merchant images
+  const merchantPaths = [...new Set(merchants.map(m => `assets/images/merchants/${slugify(m.name)}.jpg`))];
+  
+  try {
+      await Promise.all([
+          imageCache.preloadImages('cards', cardPaths),
+          imageCache.preloadImages('frames', framePaths),
+          imageCache.preloadImages('cardBacks', cardBackPaths),
+          imageCache.preloadImages('currencies', currencyPaths),
+          imageCache.preloadImages('tiers', tierPaths),
+          imageCache.preloadImages('merchants', merchantPaths)
+      ]);
+      console.log('All game assets preloaded successfully');
+  } catch (error) {
+      console.error('Failed to preload some game assets:', error);
+  }
+}
+
 // --- INIT AFTER DOM READY ---
-document.addEventListener('DOMContentLoaded', ()=>{
+document.addEventListener('DOMContentLoaded', async ()=>{
+
+  await preloadGameAssets();
 
   // Check initial orientation
   const checkOrientation = () => {

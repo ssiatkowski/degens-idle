@@ -13,10 +13,21 @@
   padding: 12px;
   border: 2px solid;
   border-radius: 8px;
-  background: #f8f8f8;
+  background: var(--skill-bg);
   cursor: pointer;
   transition: transform 0.1s;
   font-family: var(--ui-font);
+}
+
+.skill-tile h4 {
+  margin: 0;
+  font-size: 1.1em;
+  font-weight: 600;
+  color: var(--font-color);
+  text-align: center;
+  line-height: 1.2;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--dark);
 }
 
 .skill-tile:hover {
@@ -25,27 +36,28 @@
 
 /* Skill Tile States */
 .skill-tile.locked {
-  background: #ddd;
-  color: #888;
+  background: var(--skill-locked);
+  color: var(--dark);
   cursor: not-allowed;
 }
 
 .skill-tile.purchased {
-  background: #e0f0e0;
+  background: var(--skill-purchased);
 }
 
 .skill-tile.unaffordable {
-  background: #f0e0e0;
+  background: var(--skill-unaffordable);
 }
 
 .skill-tile.affordable {
-  background: #e0f8f8;
+  background: var(--skill-affordable);
 }
 
 /* Skill Tile Inner Elements */
 .skill-desc {
   font-size: 0.9em;
   flex-grow: 1;
+  color: var(--font-color);
 }
 
 .skill-cost {
@@ -55,6 +67,7 @@
   gap: 4px;
   font-weight: bold;
   font-size: 1.2em;
+  color: var(--font-color);
 }
 
 /* Filter Buttons */
@@ -144,7 +157,7 @@
   background: var(--card-bg);
   border: 2px solid var(--accent);
   border-radius: 6px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 8px var(--card-shadow);
   z-index: 1000;
   margin-top: 4px;
 }
@@ -160,6 +173,7 @@
   padding: 8px 12px;
   cursor: pointer;
   transition: background 0.2s;
+  color: var(--font-color);
 }
 
 .currency-filter-option:hover {
@@ -188,7 +202,7 @@
   grid-column: 1 / -1;
   text-align: center;
   padding: 20px;
-  color: #666;
+  color: var(--dark);
   font-style: italic;
 }
 
