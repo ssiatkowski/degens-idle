@@ -1161,16 +1161,17 @@ function renderCardsCollection() {
 
       const btn = document.createElement('button');
       btn.className = 'card-level-up-btn';
-  
+
       if (c.quantity > 0) {
-        // affordable/unaffordable styling & content
-        const baseCost = new Decimal(c.levelCost.amount);
-        const rawCost  = baseCost.times(Decimal.pow(c.levelScaling, c.level - 1));
-        const cost     = floorTo3SigDigits(rawCost);
-        const curAmt   = state.currencies[c.levelCost.currency] || new Decimal(0);
+        const baseCost  = new Decimal(c.levelCost.amount);
+        const rawCost   = baseCost.times(Decimal.pow(c.levelScaling, c.level - 1));
+        const cost      = floorTo3SigDigits(rawCost);
+        const curAmt    = state.currencies[c.levelCost.currency] || new Decimal(0);
         const canAfford = curAmt.greaterThanOrEqualTo(cost);
-  
+
         btn.classList.add(canAfford ? 'affordable' : 'unaffordable');
+        btn.disabled = !canAfford;
+
         btn.innerHTML = `
           Level Up<br>
           <span class="level-cost">
@@ -1178,29 +1179,37 @@ function renderCardsCollection() {
             <img class="icon" alt="${c.levelCost.currency}"/>
           </span>
         `;
-  
-        // load the currency icon
+
+        const iconEl = btn.querySelector('img.icon');
         const currencyPath = `assets/images/currencies/${c.levelCost.currency}.png`;
-        imageCache.getImage('currencies', currencyPath).then(img => {
-          if (img) {
-            const icon = btn.querySelector('img.icon');
-            if (icon) icon.src = img.src;
-          }
-        });
-  
+        iconEl.src = currencyPath;                 // fallback immediately
+        imageCache
+          .getImage('currencies', currencyPath)
+          .then(cachedImg => {
+            if (cachedImg) iconEl.src = cachedImg.src;
+          });
+
         btn.addEventListener('click', e => {
           e.stopPropagation();
-          state.currencies[c.levelCost.currency] = curAmt.minus(cost);
+          const freshAmt  = state.currencies[c.levelCost.currency] || new Decimal(0);
+          const freshCost = floorTo3SigDigits(
+            new Decimal(c.levelCost.amount)
+              .times(Decimal.pow(c.levelScaling, c.level - 1))
+          );
+          if (freshAmt.lessThan(freshCost)) return;
+          state.currencies[c.levelCost.currency] = freshAmt.minus(freshCost);
           levelUp(c.id);
           updateCurrencyBar();
+          renderCardsCollection();  // re-render to update costs & button states
         });
-      } else {
-        // if you have zero quantity, disable the button
-        btn.disabled = true;
-        btn.textContent = 'Level Up';  // or whatever fallback text you like
       }
-  
+      else {
+        btn.disabled = true;
+        btn.textContent = 'Level Up';
+      }
+
       front.appendChild(btn);
+
 
       // quantity badge
       if (c.quantity >= 1) {

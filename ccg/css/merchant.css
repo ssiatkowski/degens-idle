@@ -6,7 +6,7 @@
     "image offers"
     "message offers";
   grid-template-columns: 25% 1fr;
-  grid-auto-rows: auto;
+  grid-template-rows: auto auto 1fr;
   gap: 8px 16px;
   align-items: start;
 }
@@ -39,12 +39,28 @@
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
-.merchant-timer {
-  grid-area: timer;
+#merchant-timer {
+  /* stick to the top of its container */
+  position: relative;
+  top: 0;
+  z-index: 10;
+  text-align: center;
+
+  /* make it big and bold */
   font-size: 1.5em;
   font-weight: 600;
-  text-align: left;
-  margin-bottom: 8px;
+  padding: 8px 0;
+
+  /* a little background so it always sits cleanly above cards */
+  background: rgba(136, 136, 136, 0.5);
+
+  /* allow the urgent red class to override color */
+  color: inherit;
+  transition: color 0.2s;
+}
+
+#merchant-timer.urgent {
+  color: red;
 }
 
 /* Merchant Offer Card Styles */

@@ -296,7 +296,7 @@ window.merchantPitches = [
     "The deals are limited. Your taste is not.",
     "A little bit of luck. A whole lot of win.",
     "This bundle has been personally shuffled by destiny.",
-    "Pull. Smile. Repeat.",
+    "Poke. Smile. Repeat.",
     "Welcome to the sale of the century. Possibly the millennium.",
     "Pick a card. Any card. Or better yet—pick them all.",
     "Unleash your inner mythic with these bundles.",

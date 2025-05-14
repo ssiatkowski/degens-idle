@@ -209,10 +209,18 @@ const merchants = [
       renderMerchantTab();
     }
     const rem = nextRefresh ? (nextRefresh - now) / 1000 : 0;
-    timerEl.textContent = rem > 0
-      ? `Leaves in ${formatDuration(rem)}`
-      : `Refreshing…`;
-    timerEl.style.color = rem > 0 && rem < 10 ? 'red' : '';
+    if (rem > 0) {
+      timerEl.textContent = `Leaves in ${formatDuration(rem)}`;
+    } else {
+      timerEl.textContent = `Refreshing…`;
+    }
+  
+    // toggle the “urgent” class instead of manually setting style.color
+    if (rem > 0 && rem < 10) {
+      timerEl.classList.add('urgent');
+    } else {
+      timerEl.classList.remove('urgent');
+    }
   }
   
   // ——— GENERATE MERCHANT OFFERS ———

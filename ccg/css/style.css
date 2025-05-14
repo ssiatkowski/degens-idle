@@ -652,7 +652,7 @@ nav#tabs { margin-bottom: 15px; }
 
 /* Make sure the unlock note stays bold & red */
 .modal-effects .effect-line.locked .unlock-note {
-  color: rgb(160, 0, 0);
+  color: rgb(196, 0, 0);
   font-weight: bold;
   opacity: 1; /* override parent opacity so it’s fully visible */
   margin-left: 0.5em;
