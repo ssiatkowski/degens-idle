@@ -2,7 +2,7 @@
 #merchant-panel {
   display: grid;
   grid-template-areas:
-    "timer timer"
+    "timer offers"
     "image offers"
     "message offers";
   grid-template-columns: 25% 1fr;
@@ -47,7 +47,7 @@
   text-align: center;
 
   /* make it big and bold */
-  font-size: 1.5em;
+  font-size: clamp(1em, 3dvh, 1.6em);
   font-weight: 600;
   padding: 8px 0;
 
