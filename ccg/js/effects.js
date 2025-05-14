@@ -16,11 +16,14 @@ window.EFFECT_NAMES = {
 // Add special effect names
 window.SPECIAL_EFFECT_NAMES = {
     merchantPriceReduction: "Merchant Price Reduction",
-    flatCurrencyPerPoke: "Flat Currency per Poke",
-    flatCurrencyPerSecond: "Flat Currency per Second",
+    flatCurrencyPerPoke: "Currency per Poke",
+    flatCurrencyPerSecond: "Currency per Second",
     currencyPerPokeMultiplier: "Currency per Poke Multiplier",
     currencyPerSecMultiplier: "Currency per Second Multiplier",
-    allGeneratorMultiplier: "All Generator Multiplier"
+    allGeneratorMultiplier: "All Generator Multiplier",
+    flatMaxCardsPerPoke: "Max Cards per Poke",
+    flatMinCardsPerPoke: "Min Cards per Poke",
+    flatCooldownDivider: "Cooldown Divider"
 };
   
 const EFFECT_SCALES = {
@@ -138,6 +141,18 @@ function computeSpecialEffects(c) {
 
             case "allGeneratorMultiplier":
                 effs.allGeneratorMultiplier = (effs.allGeneratorMultiplier || 1) * def.value;
+                break;
+
+            case "flatMaxCardsPerPoke":
+                effs.flatMaxCardsPerPoke = (effs.flatMaxCardsPerPoke || 0) + def.value;
+                break;
+
+            case "flatMinCardsPerPoke":
+                effs.flatMinCardsPerPoke = (effs.flatMinCardsPerPoke || 0) + def.value;
+                break;
+
+            case "flatCooldownDivider":
+                effs.flatCooldownDivider = (effs.flatCooldownDivider || 0) + def.value;
                 break;
         }
     });
@@ -257,6 +272,15 @@ function applyEffectsDelta(deltaMap, sign = +1) {
                 }
                 updateGeneratorRates();
                 break;
+
+            case "flatMaxCardsPerPoke":
+            case "flatMinCardsPerPoke":
+            case "flatCooldownDivider": {
+                const targetType = parts[0].replace('flat', '');
+                const finalType = targetType.charAt(0).toLowerCase() + targetType.slice(1);
+                E[finalType] = (E[finalType] || 0) + sign * v;
+                break;
+            }
 
             case "rarityOddsDivider": {
                 const realmId = parts[1];

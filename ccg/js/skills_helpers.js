@@ -429,7 +429,7 @@ window.skills = [
     },
     {
       id: 5005,
-      name: "Who Cares About Old Junk",
+      name: "Who Cares About Old Crap",
       description: "Ancient Relics realm deselect multiplier reduced by 50%.",
       cost: { realmId: 6, currencyId: "crystal", amount: 1e9 },
       purchased: false
@@ -990,8 +990,8 @@ window.skills = [
     {
       id: 16002,
       name: "Gotta Catch 'Em All 2",
-      description: "Increass bonus to # discovered cards squared.",
-      cost: { realmId: 8, currencyId: "royal_jelly", amount: 2e7},
+      description: "Increass max card bonus to # discovered cards squared.",
+      cost: { realmId: 8, currencyId: "royal_jelly", amount: 5e7},
       purchased: false
     },
     {
@@ -999,6 +999,13 @@ window.skills = [
       name: "Realm Conqueror",
       description: "Each fully completed realm doubles all card-based currency gain (stacks multiplicatively).",
       cost: { realmId: 8, currencyId: "cosmic_ray", amount: 1e7},
+      purchased: false
+    },
+    {
+      id: 18001,
+      name: "No More Junk",
+      description: "Junk cards no longer show up after poke (you still get them) unless they gain tier or are new.",
+      cost: { realmId: 5, currencyId: "stone", amount: 2e8},
       purchased: false
     }
   ];
@@ -1411,6 +1418,10 @@ function applySkill(id, skipCost = false) {
         break;
       case 17001: // Realm Conqueror
         processNewCardDiscovered();
+        break;
+      case 18001: // No More Junk
+        state.pokeRaritiesOmitted.push('junk');
+        updatePokeFilterStats();
         break;
     }
 

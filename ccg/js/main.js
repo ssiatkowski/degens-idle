@@ -67,6 +67,8 @@ window.state = {
   absorberValue: 1,
   interceptorValue: 0,     // Add interceptor value
   timeCrunchValue: 0,     // Add Time Crunch value
+  pokeRaritiesOmitted: [],
+  hideOmittedRarities: true,  // New variable for checkbox state
 };
 
 // init currencies & effects
@@ -119,8 +121,8 @@ function loadState() {
       state.merchantOffers = obj.merchantOffers.map(o => ({
         cardId:   o.cardId,
         currency: o.currency,
-        // restore the Decimal price
-        price:    new Decimal(o.price)
+        price:    new Decimal(o.price),
+        quantity: o.quantity || 1
       }));
     }
   } catch(e){
@@ -138,14 +140,16 @@ function saveState() {
     harvesterValue: state.harvesterValue,
     absorberValue: state.absorberValue,
     interceptorValue: state.interceptorValue,
-    timeCrunchValue: state.timeCrunchValue,  // Save Time Crunch value
+    timeCrunchValue: state.timeCrunchValue,
     currentMerchantId: state.currentMerchant?.id ?? null,
     merchantOffers: state.merchantOffers.map(o => ({
       cardId:   o.cardId,
       currency: o.currency,
-      price:    o.price.toString()
+      price:    o.price.toString(),
+      quantity: o.quantity || 1
     })),
-    lastSaveTime: Date.now()  // Add timestamp of last save
+    merchantRefreshTime: nextRefresh ? nextRefresh - Date.now() : null,
+    lastSaveTime: Date.now()
   };
   currencies.forEach(c => {
     obj.currencies[c.id] = state.currencies[c.id].toString();
@@ -366,6 +370,7 @@ function performPoke() {
 
   // how many unique cards to reveal
   currentPackCount = Object.keys(picksCounts).length;
+  skippedCards = 0;
 
   // ————— AWARD & RENDER each unique card —————
   Object.entries(picksCounts).forEach(([cid, count]) => {
@@ -376,6 +381,15 @@ function performPoke() {
     // 3) give the cards (handles quantity, tier/level effects)
     giveCard(cid, count);
     const newTier = c.tier;
+
+    // Skip rendering if card meets omission criteria
+    if (state.hideOmittedRarities && state.pokeRaritiesOmitted.includes(c.rarity) && !wasNew && newTier === oldTier) {
+      skippedCards++;
+      if (currentPackCount === skippedCards) {
+        state.flipsDone = true;
+      }
+      return;
+    }
 
     // 4) build & append the DOM tile
     const rr    = realmMap[c.realm];
@@ -474,7 +488,7 @@ function performPoke() {
           };
           inner.addEventListener('transitionend', onFlipEnd);
 
-          if (revealedCount === currentPackCount) {
+          if (revealedCount === currentPackCount - skippedCards) {
             state.flipsDone = true;
             tryEnableHole();
           }
@@ -504,7 +518,7 @@ function performPoke() {
           };
           inner.addEventListener('transitionend', onFlipEnd);
 
-          if (revealedCount === currentPackCount) {
+          if (revealedCount === currentPackCount - skippedCards) {
             state.flipsDone = true;
             tryEnableHole();
           }
@@ -580,7 +594,7 @@ document.addEventListener('touchmove', (e) => {
       };
       inner.addEventListener('transitionend', onFlipEnd);
 
-      if (revealedCount === currentPackCount) {
+      if (revealedCount === currentPackCount - skippedCards) {
         state.flipsDone = true;
         tryEnableHole();
       }
@@ -720,33 +734,71 @@ function openModal(cardId) {
 
   // level up button
   const baseCost = new Decimal(c.levelCost.amount);
-  const cost = floorTo3SigDigits(baseCost.times(Decimal.pow(c.levelScaling, c.level - 1)));
-  const costTxt = formatNumber(cost);
+  const nextLevelCost = baseCost.times(Decimal.pow(c.levelScaling, c.level - 1));
+  
+  // Calculate max affordable level and total cost
+  let maxLevel = c.level;
+  let totalMaxCost = new Decimal(0);
+  let currentCost = nextLevelCost;
+  const availableCurrency = state.currencies[c.levelCost.currency] || new Decimal(0);
+  
+  while (totalMaxCost.plus(currentCost).lessThanOrEqualTo(availableCurrency)) {
+    totalMaxCost = totalMaxCost.plus(currentCost);
+    maxLevel++;
+    currentCost = baseCost.times(Decimal.pow(c.levelScaling, maxLevel - 1));
+  }
+  
+  const maxLevelIncrement = maxLevel - c.level;
 
   // look up currency icon directly
   const costCurrency = c.levelCost.currency;
   const curEntry = currencies.find(cur => cur.id === costCurrency) || {};
   const ico = curEntry.icon || 'question.png';
 
-  const btn = document.createElement('button');
-  btn.innerHTML = `<b>Level ${c.level}</b>   Up: ${costTxt}
-    <img class="icon" src="assets/images/currencies/${ico}"/>`;
+  const levelControls = document.createElement('div');
+  levelControls.className = 'level-controls';
+  levelControls.innerHTML = `
+    <span>Level ${c.level}</span>
+    <button class="${nextLevelCost.greaterThan(availableCurrency) ? 'unaffordable' : 'affordable'}"
+            ${nextLevelCost.greaterThan(availableCurrency) ? 'disabled' : ''}>
+      +1 | ${formatNumber(nextLevelCost)} <img class="icon" src="assets/images/currencies/${ico}"/>
+    </button>
+    ${maxLevelIncrement > 0 ? `
+      <button class="${totalMaxCost.greaterThan(availableCurrency) ? 'unaffordable' : 'affordable'}"
+              ${totalMaxCost.greaterThan(availableCurrency) ? 'disabled' : ''}>
+        Max: ${maxLevel} | ${formatNumber(totalMaxCost)} <img class="icon" src="assets/images/currencies/${ico}"/>
+      </button>
+    ` : ''}
+  `;
 
-  // can afford?
-  const canAfford = state.currencies[costCurrency].greaterThanOrEqualTo(cost);
-  btn.classList.add(canAfford ? 'affordable' : 'unaffordable');
-
-  if (canAfford) {
-    btn.onclick = e => {
+  // Add click handlers
+  const plusOneBtn = levelControls.querySelector('button');
+  if (plusOneBtn) {
+    plusOneBtn.addEventListener('click', e => {
       e.stopPropagation();
-      state.currencies[costCurrency] = state.currencies[costCurrency].minus(cost);
-      levelUp(cardId);
+      state.currencies[costCurrency] = state.currencies[costCurrency].minus(nextLevelCost);
+      levelUp(cardId, 1);
       updateCurrencyBar();
-      openModal(cardId); // re-open to refresh numbers
+      openModal(cardId);
       ov.remove();
-    };
+    });
   }
-  right.append(btn);
+
+  if (maxLevelIncrement > 0) {
+    const maxBtn = levelControls.querySelectorAll('button')[1];
+    if (maxBtn) {
+      maxBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        state.currencies[costCurrency] = state.currencies[costCurrency].minus(totalMaxCost);
+        levelUp(cardId, maxLevelIncrement);
+        updateCurrencyBar();
+        openModal(cardId);
+        ov.remove();
+      });
+    }
+  }
+
+  right.append(levelControls);
 
   // --- REALM DISPLAY ---
   const realmLine = document.createElement('p');
@@ -909,6 +961,13 @@ function openModal(cardId) {
           }
           case "allGeneratorMultiplier":
             valueHtml = `×${formatNumber(def.value)}`;
+            break;
+          case "flatMaxCardsPerPoke":
+          case "flatMinCardsPerPoke":
+            valueHtml = `+${formatNumber(def.value)}`;
+            break;
+          case "flatCooldownDivider":
+            valueHtml = `+${formatNumber(def.value)}`;
             break;
         }
 
@@ -1192,11 +1251,12 @@ function giveCard(cardId, amount = 1) {
     updateGeneratorRates();
     checkForNewCards();
     processNewCardDiscovered();
+    updatePokeFilterStats();
   }
 }
 
 // And in levelUp():
-function levelUp(cardId) {
+function levelUp(cardId, increment = 1) {
   const c = cardMap[cardId];
   // remove old (base + special)
   if (c.lastAppliedEffects) {
@@ -1207,7 +1267,7 @@ function levelUp(cardId) {
   }
 
   // pay cost…
-  c.level++;
+  c.level += increment;
 
   // recompute & apply
   const now = computeCardEffects(c);
@@ -1221,6 +1281,26 @@ function levelUp(cardId) {
   checkAffordableSkills();
 
   renderCardsCollection();
+}
+
+// Helper function to calculate max affordable level
+function calculateMaxAffordableLevel(cardId) {
+  const c = cardMap[cardId];
+  const baseCost = new Decimal(c.levelCost.amount);
+  const currency = state.currencies[c.levelCost.currency] || new Decimal(0);
+  let totalCost = new Decimal(0);
+  let maxLevel = c.level;
+  
+  while (true) {
+    const nextLevelCost = baseCost.times(Decimal.pow(c.levelScaling, maxLevel));
+    if (totalCost.plus(nextLevelCost).greaterThan(currency)) {
+      break;
+    }
+    totalCost = totalCost.plus(nextLevelCost);
+    maxLevel++;
+  }
+  
+  return maxLevel;
 }
 
 function renderRealmFilters() {
@@ -1489,6 +1569,28 @@ function updatePokeFilterStats() {
   const flex = document.createElement('div');
   flex.className = 'poke-filter-stats-flex';
   flex.append(summaryTable, oddsTable);
+
+  // Add hide rarities checkbox if there are omitted rarities
+  if (state.pokeRaritiesOmitted.length > 0) {
+    const checkboxContainer = document.createElement('div');
+    checkboxContainer.className = 'hide-rarities-checkbox';
+    
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.id = 'hide-rarities-checkbox';
+    checkbox.checked = state.hideOmittedRarities;
+    checkbox.addEventListener('change', (e) => {
+      state.hideOmittedRarities = e.target.checked;
+      saveState();
+    });
+    
+    const label = document.createElement('label');
+    label.htmlFor = 'hide-rarities-checkbox';
+    label.textContent = 'Hide Crappy Rarities';
+    
+    checkboxContainer.append(checkbox, label);
+    flex.appendChild(checkboxContainer);
+  }
 
   container.appendChild(flex);
 }
@@ -1810,19 +1912,20 @@ document.addEventListener('DOMContentLoaded', ()=>{
   initGravitationalWaveAbsorber();
   initSpaceBendingInterceptor();
 
+  // Merchant initialization and refresh time handling
   if (state.currentMerchant) {
     // we have a saved merchant + offers,
     // so restore our refresh timer and just render
-    nextRefresh =
-      Date.now()
-      + state.currentMerchant.refreshTime * 1000;
+    if (savedState.merchantRefreshTime != null) {
+      nextRefresh = Date.now() + savedState.merchantRefreshTime;
+    } else {
+      nextRefresh = Date.now() + state.currentMerchant.refreshTime * 1000;
+    }
     renderMerchantTab();
   } else {
     // first time ever, pick a new one
     state.currentMerchant = pickMerchant();
-    nextRefresh =
-      Date.now()
-      + state.currentMerchant.refreshTime * 1000;
+    nextRefresh = Date.now() + state.currentMerchant.refreshTime * 1000;
     genMerchantOffers();
     renderMerchantTab();
   }

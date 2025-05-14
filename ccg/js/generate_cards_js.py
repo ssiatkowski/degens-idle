@@ -73,7 +73,10 @@ def load_cards(csv_path):
                 }
             }
 
-            if se_type in ("merchantPriceReduction", "allGeneratorMultiplier"):
+            if se_type in (
+                "merchantPriceReduction", "allGeneratorMultiplier",
+                "flatMaxCardsPerPoke", "flatMinCardsPerPoke", "flatCooldownDivider"
+            ):
                 se["value"] = float(arg1) if arg1 else 0
             elif se_type in ("flatCurrencyPerPoke", "flatCurrencyPerSecond",
                              "currencyPerPokeMultiplier", "currencyPerSecMultiplier"):
@@ -179,6 +182,9 @@ def generate_stats(cards):
     mult_poke = {}
     mult_sec = {}
     all_gen_mult = 1
+    flat_max_cards = 0
+    flat_min_cards = 0
+    cooldown_divider_total = 0
 
     for card in cards:
         for se in card.get("specialEffects", []):
@@ -204,6 +210,15 @@ def generate_stats(cards):
 
             elif t == "allGeneratorMultiplier":
                 all_gen_mult *= se.get("value", 1)
+                            
+            elif t == "flatMaxCardsPerPoke":
+                flat_max_cards += se.get("value", 0)
+
+            elif t == "flatMinCardsPerPoke":
+                flat_min_cards += se.get("value", 0)
+
+            elif t == "flatCooldownDivider":
+                cooldown_divider_total += se.get("value", 0)
 
     print(f"\nMerchant Price Reduction (total): {merchant_total:.3f}")
 
@@ -225,6 +240,11 @@ def generate_stats(cards):
 
     print(f"\nAll Generator Multiplier (product): {all_gen_mult:.5f}")
 
+    print(f"\nFlat Max Cards Per Poke (total): {flat_max_cards:.3f}")
+
+    print(f"Flat Min Cards Per Poke (total): {flat_min_cards:.3f}")
+    
+    print(f"Cooldown Divider (total): {cooldown_divider_total:.3f}")
 
 
 if __name__ == "__main__":

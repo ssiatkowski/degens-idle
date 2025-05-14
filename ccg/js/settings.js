@@ -37,11 +37,19 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
+        const ownedByR      = rarities.reduce((acc, r) => (acc[r] = 0, acc), {});
+        cards.forEach(c => {
+            if (c.quantity > 0) {
+                ownedByR[c.rarity]      += c.quantity;
+            }
+        });
+        const totalOwned      = Object.values(ownedByR).reduce((a,b) => a + b, 0);
+
         const blob = new Blob([saveData], { type: 'application/json' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'booster-hole-save.json';
+        a.download = `cosmic-collection-save-${formatNumber(totalOwned)}-cards.json`;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);

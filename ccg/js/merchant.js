@@ -185,12 +185,13 @@ const merchants = [
   const offersEl = document.getElementById('merchant-offers');
   const timerEl  = document.getElementById('merchant-timer');
   
-  let nextRefresh = Date.now();
+  // nextRefresh is declared here, but initialized/set in main.js
+  let nextRefresh = null;
   
   // ——— REFRESH CHECK & TIMER ———
   function refreshMerchantIfNeeded() {
     const now = Date.now();
-    if (!state.currentMerchant || now >= nextRefresh) {
+    if (!state.currentMerchant || (nextRefresh && now >= nextRefresh)) {
       state.currentMerchant = pickMerchant();
       const baseRefreshTime = state.currentMerchant.refreshTime;
       const reducedTime = Math.max(15, baseRefreshTime - (state.effects.merchantCooldownReduction || 0));
@@ -207,7 +208,7 @@ const merchants = [
       
       renderMerchantTab();
     }
-    const rem = (nextRefresh - now) / 1000;
+    const rem = nextRefresh ? (nextRefresh - now) / 1000 : 0;
     timerEl.textContent = rem > 0
       ? `Leaves in ${formatDuration(rem)}`
       : `Refreshing…`;
@@ -365,6 +366,21 @@ const merchants = [
       a.src = `assets/images/cards/${card.realm}/${slugify(card.name)}.jpg`;
       front.append(f, a);
   
+      // Add tier progress bar
+      const barContainer = document.createElement('div');
+      barContainer.className = 'merchant-modal-bar-container';
+      const thresholds = window.tierThresholds[card.rarity];
+      const nextThresh = thresholds[card.tier] || thresholds[thresholds.length - 1];
+      const pct = Math.min(card.quantity / nextThresh, 1) * 100;
+      const bar = document.createElement('div');
+      bar.className = 'merchant-modal-bar';
+      bar.style.width = pct + '%';
+      const thresholdLab = document.createElement('div');
+      thresholdLab.className = 'tier-threshold';
+      thresholdLab.textContent = `${formatNumber(card.quantity)} / ${formatNumber(nextThresh)} for Tier ${card.tier+1}`;
+      barContainer.append(bar, thresholdLab);
+      front.appendChild(barContainer);
+  
       // add quantity badge if more than 1
       if (o.quantity > 1) {
         const qtyBadge = document.createElement('div');
@@ -412,6 +428,9 @@ const merchants = [
           }
         }
   
+      // add click handler to open modal
+      outer.addEventListener('click', () => openModal(card.id));
+  
       inner.append(front);
       outer.append(inner);
       offersEl.appendChild(outer);
@@ -444,9 +463,75 @@ const merchants = [
     renderMerchantTab();
     updateCurrencyBar();
     state.stats.merchantPurchases++;
+    saveState(); // Save state after purchase
   }
   
   
   // expose unlock helper if needed elsewhere
   window.unlockMerchantByName = unlockMerchantByName;
+  
+  function generateMerchantOffer() {
+    const player = getPlayer();
+    const specialEffects = player.specialEffects || {};
+    
+    // Calculate base values
+    let maxCardsPerPoke = 3;
+    let minCardsPerPoke = 1;
+    let cooldownDivider = 1;
+    
+    // Apply special effects
+    if (specialEffects.flatMaxCardsPerPoke) {
+      maxCardsPerPoke += specialEffects.flatMaxCardsPerPoke;
+    }
+    if (specialEffects.flatMinCardsPerPoke) {
+      minCardsPerPoke += specialEffects.flatMinCardsPerPoke;
+    }
+    if (specialEffects.flatCooldownDivider) {
+      cooldownDivider += specialEffects.flatCooldownDivider;
+    }
+    
+    // Ensure min doesn't exceed max
+    minCardsPerPoke = Math.min(minCardsPerPoke, maxCardsPerPoke);
+    
+    // Generate random number of cards between min and max
+    const numCards = Math.floor(Math.random() * (maxCardsPerPoke - minCardsPerPoke + 1)) + minCardsPerPoke;
+    
+    // Generate random cards
+    const cards = [];
+    for (let i = 0; i < numCards; i++) {
+      cards.push(generateRandomCard());
+    }
+    
+    // Calculate cooldown with divider
+    const baseCooldown = 300; // 5 minutes in seconds
+    const cooldown = Math.max(60, Math.floor(baseCooldown / cooldownDivider));
+    
+    return {
+      cards,
+      cooldown,
+      timestamp: Date.now()
+    };
+  }
+
+  function updateMerchantOffer() {
+    const offer = getMerchantOffer();
+    if (!offer) return;
+    
+    const now = Date.now();
+    const elapsed = (now - offer.timestamp) / 1000;
+    const progress = Math.min(1, elapsed / offer.cooldown);
+    
+    const bar = document.querySelector('.merchant-offer .merchant-modal-bar');
+    const threshold = document.querySelector('.merchant-offer .threshold');
+    const countBadge = document.querySelector('.merchant-offer .count-badge');
+    
+    if (bar) bar.style.width = `${progress * 100}%`;
+    if (threshold) threshold.textContent = `${Math.ceil(offer.cooldown - elapsed)}s`;
+    if (countBadge) countBadge.textContent = offer.cards.length;
+    
+    if (progress >= 1) {
+      const newOffer = generateMerchantOffer();
+      setMerchantOffer(newOffer);
+    }
+  }
   

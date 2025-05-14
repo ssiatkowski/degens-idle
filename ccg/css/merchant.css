@@ -58,6 +58,42 @@
   overflow: visible;
 }
 
+.merchant-offer .merchant-modal-bar-container {
+  position: absolute;
+  top: 1%;
+  left: 3%;
+  right: 3%;
+  height: 10%;
+  background: rgba(200, 200, 200, 0.5);
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid rgb(74, 74, 74);
+}
+
+.merchant-offer .merchant-modal-bar {
+  height: 100%;
+  background: #4caf50;
+  transition: width 0.3s ease;
+}
+
+.merchant-offer .tier-threshold {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  font-family: var(--ui-font); /* fixed typo: --- -> -- */
+  font-size: clamp(0.42em, 1.5dvh, 0.75em);
+  color: white;
+  font-weight: 550;
+
+  max-width: 100%;
+  max-height: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  line-height: 1;
+}
+
 .offer-buy-btn {
   position: absolute;
   bottom: 4px;
