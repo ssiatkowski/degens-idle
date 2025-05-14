@@ -1570,7 +1570,7 @@ function calculateCooldown() {
 
 function getCooldownColor(cooldown) {
   if (cooldown <= 0.5) return 'green';
-  if (cooldown < 10 * 60) return 'black';
+  if (cooldown < 10 * 60) return 'var(--font-color)';
   if (cooldown < 60 * 60) return 'orange';
   return 'red';
 }
