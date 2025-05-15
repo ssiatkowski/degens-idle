@@ -74,7 +74,7 @@ def load_cards(csv_path):
             }
 
             if se_type in (
-                "merchantPriceReduction", "allGeneratorMultiplier",
+                "merchantPriceDivider", "allGeneratorMultiplier",
                 "flatMaxCardsPerPoke", "flatMinCardsPerPoke", "flatCooldownDivider"
             ):
                 se["value"] = float(arg1) if arg1 else 0
@@ -189,7 +189,7 @@ def generate_stats(cards):
     for card in cards:
         for se in card.get("specialEffects", []):
             t = se["type"]
-            if t == "merchantPriceReduction":
+            if t == "merchantPriceDivider":
                 merchant_total += se.get("value", 0)
 
             elif t == "flatCurrencyPerPoke":

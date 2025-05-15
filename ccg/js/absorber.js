@@ -22,7 +22,9 @@ function updateAbsorberUI() {
     
     // toggle classes based on current state
     absorberButton.classList.toggle('active', absorberActive);
-    absorberButton.classList.toggle('maxed', state.absorberValue >= 5 && !absorberActive);
+
+    const maxAbsorberValue = skillMap[12103].purchased ? 7 : 5;
+    absorberButton.classList.toggle('maxed', state.absorberValue >= maxAbsorberValue && !absorberActive);
   }
 
 // Handle absorber button click
@@ -35,13 +37,14 @@ function handleAbsorberClick() {
 
 // Increment absorber value
 function incrementAbsorber() {
-    if (state.absorberValue < 5) {
+    const maxAbsorberValue = skillMap[12103].purchased ? 7 : 5;
+    if (state.absorberValue < maxAbsorberValue) {
         // 1) Add
         let next = state.absorberValue + (0.05 * (skillMap[12102].purchased ? 2 : 1));
         // 2) Round to 2 decimals
         next = Math.round(next * 100) / 100;
-        // 3) Clamp at 5
-        state.absorberValue = Math.min(next, 5);
+        // 3) Clamp at max value
+        state.absorberValue = Math.min(next, maxAbsorberValue);
         updateAbsorberUI();
       }
   }

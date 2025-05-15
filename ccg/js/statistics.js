@@ -192,8 +192,8 @@ function updateStatsUI() {
                 <td>${state.effects.extraMerchantRarityScaling.toFixed(1)}</td>
             </tr>
             <tr>
-                <td>${SPECIAL_EFFECT_NAMES.merchantPriceReduction}</td>
-                <td>-${formatNumber(state.effects.merchantPriceReduction*100)}%</td>
+                <td>${SPECIAL_EFFECT_NAMES.merchantPriceDivider}</td>
+                <td>${formatNumber(state.effects.merchantPriceDivider)}</td>
             </tr>
         </tbody>
     `;
@@ -276,7 +276,7 @@ function updateStatsUI() {
       <p style="line-height: 1.4; margin: 0;"><strong>Probability:</strong> ${prob}</p>
       <p style="line-height: 1.4; margin: 0;"><strong>Cards Offered:</strong> ${Math.ceil(state.effects.merchantNumCards * sel.cardMultiplier)}</p>
       <p style="line-height: 1.4; margin: 0;"><strong>Rarity Scaling:</strong> ${(sel.rarityScaling + state.effects.extraMerchantRarityScaling).toFixed(1)}</p>
-      <p style="line-height: 1.4; margin: 0;"><strong>Sale Price:</strong> ${((1 - state.effects.merchantPriceReduction)*sel.priceMultiplier*100).toFixed(0)}%</p>
+      <p style="line-height: 1.4; margin: 0;"><strong>Sale Price:</strong> ${formatNumber(sel.priceMultiplier/state.effects.merchantPriceDivider*100)}%</p>
       <p style="line-height: 1.4; margin: 0;"><strong>Offer Duration:</strong> ${formatDuration(sel.refreshTime - state.effects.merchantCooldownReduction)}</p>
     `;
     merchantsSection.appendChild(detail);

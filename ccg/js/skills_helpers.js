@@ -50,6 +50,13 @@ window.skills = [
       purchased: false
     },
     {
+      id: 1008,
+      name: "Unlock Spirit Familiars Realm",
+      description: "Black Hole pokes and Merchants can now give cards from Spirit Familiars realm.",
+      cost: { realmId: 8, currencyId: "coin", amount: 1.11e8 },
+      purchased: false
+    },
+    {
       id: 2001,
       name: "More Cards",
       description: "+2 to max cards per poke.",
@@ -131,6 +138,13 @@ window.skills = [
       name: "More Cards 12",
       description: "+100 to max cards per poke.",
       cost: { realmId: 8, currencyId: "coin", amount: 4e4 },
+      purchased: false
+    },
+    {
+      id: 2013,
+      name: "More Cards 13",
+      description: "+222 to max cards per poke.",
+      cost: { realmId: 9, currencyId: "spirit", amount: 4.44e4 },
       purchased: false
     },
     {
@@ -218,6 +232,13 @@ window.skills = [
       purchased: false
     },
     {
+      id: 2113,
+      name: "Massive Black Hole 13",
+      description: "+2222 to max cards per poke.",
+      cost: { realmId: 9, currencyId: "spirit", amount: 9e6 },
+      purchased: false
+    },
+    {
       id: 3001,
       name: "Faster Poke",
       description: "Decrease base cooldown for Rocks by 0.5s.",
@@ -274,6 +295,13 @@ window.skills = [
       purchased: false
     },
     {
+      id: 3009,
+      name: "Faster Poke 9",
+      description: "Decrease base cooldown for Spirit Familiars by 50s.",
+      cost: { realmId: 9, currencyId: "spirit", amount: 9000 },
+      purchased: false
+    },
+    {
       id: 3101,
       name: "Even Faster Poke",
       description: "Decrease base cooldown for Rocks by 0.5s.",
@@ -316,6 +344,13 @@ window.skills = [
       purchased: false
     },
     {
+      id: 3107,
+      name: "Even Faster Poke 7",
+      description: "Decrease base cooldown for Mythical Beasts by 30s.",
+      cost: { realmId: 9, currencyId: "spirit", amount: 4e7 },
+      purchased: false
+    },
+    {
       id: 4001,
       name: "Not Less Cards",
       description: "+1 to min cards per poke.",
@@ -347,28 +382,28 @@ window.skills = [
       id: 4005,
       name: "Not Less Cards 5",
       description: "+8 to min cards per poke.",
-      cost: { realmId: 3, currencyId: "rune", amount: 1e6 },
+      cost: { realmId: 3, currencyId: "rune", amount: 1e5 },
       purchased: false
     },
     {
       id: 4006,
       name: "Not Less Cards 6",
       description: "+8 to min cards per poke.",
-      cost: { realmId: 4, currencyId: "pearl", amount: 1e6 },
+      cost: { realmId: 4, currencyId: "pearl", amount: 1e5 },
       purchased: false
     },
     {
       id: 4007,
       name: "Not Less Cards 7",
       description: "+12 to min cards per poke.",
-      cost: { realmId: 5, currencyId: "royal_jelly", amount: 1e6 },
+      cost: { realmId: 5, currencyId: "royal_jelly", amount: 1e5 },
       purchased: false
     },
     {
       id: 4008,
       name: "Not Less Cards 8",
       description: "+15 to min cards per poke.",
-      cost: { realmId: 5, currencyId: "feather", amount: 1e6 },
+      cost: { realmId: 5, currencyId: "feather", amount: 1e5 },
       purchased: false
     },
     {
@@ -382,7 +417,7 @@ window.skills = [
       id: 4010,
       name: "Not Less Cards 10",
       description: "+20 to min cards per poke.",
-      cost: { realmId: 6, currencyId: "cosmic_ray", amount: 1e6 },
+      cost: { realmId: 6, currencyId: "cosmic_ray", amount: 1e5 },
       purchased: false
     },
     {
@@ -397,6 +432,13 @@ window.skills = [
       name: "Not Less Cards 12",
       description: "+30 to min cards per poke.",
       cost: { realmId: 8, currencyId: "coin", amount: 1e6 },
+      purchased: false
+    },
+    {
+      id: 4013,
+      name: "Not Less Cards 13",
+      description: "+44 to min cards per poke.",
+      cost: { realmId: 9, currencyId: "spirit", amount: 1e6 },
       purchased: false
     },
     {
@@ -448,13 +490,13 @@ window.skills = [
       cost: { realmId: 8, currencyId: "coin", amount: 1e9 },
       purchased: false
     },
-    // {
-    //   id: 5008,
-    //   name: "Incremental Games Are For Losers",
-    //   description: "Incremental Games realm deselect multiplier reduced by 50%.",
-    //   cost: { realmId: 8, currencyId: "", amount: 1e9 },
-    //   purchased: false
-    // },
+    {
+      id: 5008,
+      name: "Incremental Games Are For Losers",
+      description: "Incremental Games realm deselect multiplier reduced by 50%.",
+      cost: { realmId: 8, currencyId: "spirit", amount: 1e9 },
+      purchased: false
+    },
     {
       id: 6001,
       name: "Fan of Capitalism",
@@ -540,6 +582,13 @@ window.skills = [
       purchased: false
     },
     {
+      id: 6013,
+      name: "Fan of Capitalism 13",
+      description: "+1 card offered by merchants.",
+      cost: { realmId: 9, currencyId: "spirit", amount: 2e5 },
+      purchased: false
+    },
+    {
       id: 7001,
       name: "Unlock New Merchant",
       description: "Yvette Ambervale is added to pool of traveling merchants.",
@@ -586,6 +635,13 @@ window.skills = [
       name: "Unlock New Merchant 7",
       description: "Selene Starwhistle is added to pool of traveling merchants.",
       cost: { realmId: 8, currencyId: "tooth", amount: 2e7 },
+      purchased: false
+    },
+    {
+      id: 7008,
+      name: "Unlock New Merchant 8",
+      description: "Magnus Glimmergold is added to pool of traveling merchants.",
+      cost: { realmId: 9, currencyId: "coin", amount: 3e9 },
       purchased: false
     },
     {
@@ -673,6 +729,13 @@ window.skills = [
       purchased: false
     },
     {
+      id: 8013,
+      name: "Lucky Skip 13",
+      description: "+1% chance to skip Black Hole cooldown.",
+      cost: { realmId: 9, currencyId: "spirit", amount: 5e4 },
+      purchased: false
+    },
+    {
       id: 9001,
       name: "Faster Merchant",
       description: "Reduce merchant refresh time by 5 seconds.",
@@ -757,6 +820,13 @@ window.skills = [
       purchased: false
     },
     {
+      id: 9013,
+      name: "Faster Merchant 13",
+      description: "Reduce merchant refresh time by 5 seconds.",
+      cost: { realmId: 9, currencyId: "spirit", amount: 1.5e4 },
+      purchased: false
+    },
+    {
       id: 10001,
       name: "Resource Generator",
       description: "Generate stone equal to number of Realm 1 cards discovered squared per second.",
@@ -806,6 +876,13 @@ window.skills = [
       purchased: false
     },
     {
+      id: 10008,
+      name: "Resource Generator 8",
+      description: "Generate coin equal to number of Realm 8 cards discovered squared per second.",
+      cost: { realmId: 9, currencyId: "spirit", amount: 8e5 },
+      purchased: false
+    },
+    {
       id: 11001,
       name: "Better Merchants",
       description: "Increase Merchant Rarity Scaling by 0.1.",
@@ -848,6 +925,13 @@ window.skills = [
       purchased: false
     },
     {
+      id: 11007,
+      name: "Better Merchants 7",
+      description: "Increase Merchant Rarity Scaling by 0.1.",
+      cost: { realmId: 9, currencyId: "spirit", amount: 5e6 },
+      purchased: false
+    },
+    {
       id: 12001,
       name: "Hawking Radiation Harvester",
       description: "Unlocks a device that can passively harvest Hawking radiation from the black hole to reduce its cooldown. (10x slower offline)",
@@ -883,6 +967,13 @@ window.skills = [
       purchased: false
     },
     {
+      id: 12103,
+      name: "Absorber Upgrade 3",
+      description: "Increase maximum gravitational wave absorption to 7x.",
+      cost: { realmId: 9, currencyId: "pollen", amount: 1e9 },
+      purchased: false
+    },
+    {
       id: 12201,
       name: "Space Bending Interceptor",
       description: "Unlocks a device that intercepts space bending (both passivly and when you flip over cards), which can be activated automate flipping over cards.",
@@ -899,7 +990,7 @@ window.skills = [
     {
       id: 12301,
       name: "Time Crunch Collector",
-      description: "Unlocks a device that can passively collect time from the black hole to release 100x pokes worth of currency when used.",
+      description: "Unlocks a device that can passively collect time particles to release 50x pokes worth of currency when used.",
       cost: { realmId: 7, currencyId: "tooth", amount: 1e8 },
       purchased: false
     },
@@ -931,53 +1022,67 @@ window.skills = [
       cost: { realmId: 7, currencyId: "egg", amount: 4.04e11 },
       purchased: false
     },
-    // {
-    //   id: 13005,
-    //   name: "Anomaly 5",
-    //   description: "Multiply all generators by 4.04.",
-    //   cost: { realmId: 8, currencyId: "crystal", amount: 4.04e13 },
-    //   purchased: false
-    // },
+    {
+      id: 13005,
+      name: "Anomaly 5",
+      description: "Add 4.04 to cooldown divider.",
+      cost: { realmId: 8, currencyId: "crystal", amount: 4.04e13 },
+      purchased: false
+    },
     {
       id: 14001,
       name: "Go Away Aldric!",
       description: "Lower odds that merchant is Aldric Farwander by 5x.",
-      cost: { realmId: 6, currencyId: "stone", amount: 4e9 },
+      cost: { realmId: 6, currencyId: "stone", amount: 1e9 },
       purchased: false
     },
     {
       id: 14002,
       name: "I'm Sick of you Maribel",
       description: "Lower odds that merchant is Maribel Tealeaf by 4x.",
-      cost: { realmId: 7, currencyId: "coral", amount: 3e10 },
+      cost: { realmId: 7, currencyId: "coral", amount: 2e9 },
       purchased: false
     },
     {
       id: 14003,
       name: "Shut up Cedric",
       description: "Lower odds that merchant is Cedric Stormforge by 3x.",
-      cost: { realmId: 8, currencyId: "pollen", amount: 1e11 },
+      cost: { realmId: 8, currencyId: "pollen", amount: 4e9 },
+      purchased: false
+    },
+    {
+      id: 14004,
+      name: "You are not wanted Yvette",
+      description: "Lower odds that merchant is Yvette Ambervale by 2x.",
+      cost: { realmId: 9, currencyId: "egg", amount: 8e9 },
       purchased: false
     },
     {
       id: 15001,
       name: "Fleeting Realm",
       description: "Reduce Rocks realm odds by 5x.",
-      cost: { realmId: 6, currencyId: "rune", amount: 1e7 },
+      cost: { realmId: 6, currencyId: "rune", amount: 1e6 },
       purchased: false
     },
     {
       id: 15002,
       name: "Fleeting Realm 2",
       description: "Reduce Sea World realm odds by 5x.",
-      cost: { realmId: 7, currencyId: "pearl", amount: 1e7 },
+      cost: { realmId: 7, currencyId: "pearl", amount: 1e6 },
       purchased: false
     },
     {
       id: 15003,
       name: "Fleeting Realm 3",
       description: "Reduce Bugdom realm odds by 5x.",
-      cost: { realmId: 8, currencyId: "royal_jelly", amount: 1e7 },
+      cost: { realmId: 8, currencyId: "royal_jelly", amount: 1e6 },
+      purchased: false
+    },
+    {
+      id: 15004,
+      name: "Fleeting Realm 4",
+      description: "Reduce Aviary realm odds by 5x.",
+      cost: { realmId: 9, currencyId: "feather", amount: 1e6 },
       purchased: false
     },
     {
@@ -1006,6 +1111,20 @@ window.skills = [
       name: "No More Junk",
       description: "Junk cards no longer show up after poke (you still get them) unless they gain tier or are new.",
       cost: { realmId: 5, currencyId: "stone", amount: 2e8},
+      purchased: false
+    },
+    {
+      id: 18002,
+      name: "I Ain't No Basic Bitch",
+      description: "Basic cards no longer show up after poke (you still get them) unless they gain tier or are new.",
+      cost: { realmId: 6, currencyId: "coral", amount: 2e11},
+      purchased: false
+    },
+    {
+      id: 19001,
+      name: "More Bulk Offers Please",
+      description: "Increase chance that merchants sell multiple copies of cards from 25% to 50%.",
+      cost: { realmId: 9, currencyId: "coin", amount: 5e10},
       purchased: false
     }
   ];
@@ -1070,6 +1189,12 @@ function applySkill(id, skipCost = false) {
         renderRealmFilters();
         initializeSortedSkills();
         break;
+      case 1008: // Unlock Spirit Familiars Realm
+        realms[8].unlocked = true;
+        initCardsFilters();
+        renderRealmFilters();
+        initializeSortedSkills();
+        break;
       case 2001: // More Cards
         state.effects.maxCardsPerPoke += 2;
         break;
@@ -1106,6 +1231,9 @@ function applySkill(id, skipCost = false) {
       case 2012:
         state.effects.maxCardsPerPoke += 100;
         break;
+      case 2013:
+        state.effects.maxCardsPerPoke += 222;
+        break;
       case 2101: // Massive Black Hole
         state.effects.maxCardsPerPoke += 10;
         break;
@@ -1141,6 +1269,9 @@ function applySkill(id, skipCost = false) {
         break;
       case 2112:
         state.effects.maxCardsPerPoke += 1000;
+        break;
+      case 2113:
+        state.effects.maxCardsPerPoke += 2222;
         break;
       case 3001: // Faster Poke
         realms[s.cost.realmId - 1].cooldown -= 0.5;
@@ -1182,6 +1313,11 @@ function applySkill(id, skipCost = false) {
         updatePokeFilterStats();
         renderRealmFilters();
         break;
+      case 3009:
+        realms[s.cost.realmId - 1].cooldown -= 50;
+        updatePokeFilterStats();
+        renderRealmFilters();
+        break;
       case 3101: // Even Faster Poke
         realms[s.cost.realmId - 3].cooldown -= 0.5;
         updatePokeFilterStats();
@@ -1209,6 +1345,11 @@ function applySkill(id, skipCost = false) {
         break;
       case 3106:
         realms[s.cost.realmId - 3].cooldown -= 20;
+        updatePokeFilterStats();
+        renderRealmFilters();
+        break;
+      case 3107:
+        realms[s.cost.realmId - 3].cooldown -= 30;
         updatePokeFilterStats();
         renderRealmFilters();
         break;
@@ -1248,6 +1389,9 @@ function applySkill(id, skipCost = false) {
       case 4012:
         state.effects.minCardsPerPoke += 30;
         break;
+      case 4013:
+        state.effects.minCardsPerPoke += 44;
+        break;
       case 5001: // Nobody Likes Rocks
         realms[0].deselectMultiplier /= 2;
         updatePokeFilterStats();
@@ -1276,6 +1420,10 @@ function applySkill(id, skipCost = false) {
         realms[6].deselectMultiplier /= 2;
         updatePokeFilterStats();
         break;
+      case 5008:
+        realms[7].deselectMultiplier /= 2;
+        updatePokeFilterStats();
+        break;
       case 6001: // Merchant Card Increase
       case 6002:
       case 6003:
@@ -1288,6 +1436,7 @@ function applySkill(id, skipCost = false) {
       case 6010:
       case 6011:
       case 6012:
+      case 6013:
         state.effects.merchantNumCards += 1;
         break;
       case 7001: // Unlock New Merchant
@@ -1311,6 +1460,9 @@ function applySkill(id, skipCost = false) {
       case 7007: // Unlock New Merchant 7
         unlockMerchantByName('Selene Starwhistle');
         break;
+      case 7008: // Unlock New Merchant 8
+        unlockMerchantByName('Magnus Glimmergold');
+        break;
       case 8001: // Lucky Skip
       case 8002: // Lucky Skip 2
       case 8003: // Lucky Skip 3
@@ -1323,6 +1475,7 @@ function applySkill(id, skipCost = false) {
       case 8010: // Lucky Skip 10
       case 8011: // Lucky Skip 11
       case 8012: // Lucky Skip 12
+      case 8013: // Lucky Skip 13
         state.effects.cooldownSkipChance = (state.effects.cooldownSkipChance || 0) + 0.01;
         break;
       case 9001: // Merchant Cooldown Reduction
@@ -1337,6 +1490,7 @@ function applySkill(id, skipCost = false) {
       case 9010:
       case 9011:
       case 9012:
+      case 9013:
         state.effects.merchantCooldownReduction += 5;
         break;
       case 10001: // Resource Generator
@@ -1346,6 +1500,7 @@ function applySkill(id, skipCost = false) {
       case 10005:
       case 10006:
       case 10007:
+      case 10008:
         updateGeneratorRates();
         break;
       case 11001: // Better Merchants
@@ -1354,6 +1509,7 @@ function applySkill(id, skipCost = false) {
       case 11004: // Better Merchants 4
       case 11005: // Better Merchants 5
       case 11006: // Better Merchants 6
+      case 11007: // Better Merchants 7
         state.effects.extraMerchantRarityScaling += 0.1;
         break;
       case 12001: // Hawking Radiation Harvester
@@ -1367,6 +1523,8 @@ function applySkill(id, skipCost = false) {
         window.initGravitationalWaveAbsorber();
         break;
       case 12102: // Absorber Upgrade
+        break;
+      case 12103: // Absorber Upgrade 3
         break;
       case 12201: // Space Bending Interceptor
         window.initSpaceBendingInterceptor();
@@ -1389,6 +1547,9 @@ function applySkill(id, skipCost = false) {
         state.effects.allGeneratorMultiplier *= 4.04;
         updateGeneratorRates();
         break;
+      case 13005: // Anomaly 5
+        state.effects.cooldownDivider += 4.04;
+        break;
       case 14001: // Go Away Aldric!
         merchants[0].merchantOdds /= 5;
         break;
@@ -1397,6 +1558,9 @@ function applySkill(id, skipCost = false) {
         break;
       case 14003: // Shut up Cedric
         merchants[2].merchantOdds /= 3;
+        break;
+      case 14004: // You are not wanted Yvette
+        merchants[3].merchantOdds /= 2;
         break;
       case 15001: // Fleeting Realm
         realms[0].pokeWeight /= 5;
@@ -1408,6 +1572,10 @@ function applySkill(id, skipCost = false) {
         break;
       case 15003: // Fleeting Realm 3
         realms[2].pokeWeight /= 5;
+        updatePokeFilterStats();
+        break;
+      case 15004: // Fleeting Realm 4
+        realms[3].pokeWeight /= 5;
         updatePokeFilterStats();
         break;
       case 16001: // Gotta Catch 'Em All
@@ -1422,6 +1590,13 @@ function applySkill(id, skipCost = false) {
       case 18001: // No More Junk
         state.pokeRaritiesOmitted.push('junk');
         updatePokeFilterStats();
+        break;
+      case 18002: // I Ain't No Basic Bitch
+        state.pokeRaritiesOmitted.push('basic');
+        updatePokeFilterStats();
+        break;
+      case 19001: // More Bulk Offers Please
+        state.merchantBulkChance += 0.25;
         break;
     }
 

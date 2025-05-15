@@ -121,7 +121,20 @@ const merchants = [
       rarityScaling: 3.5,
       description: 'Some say she is a real magician. Only offers one card at a time for double the price, but it is always rare or better. (and +1 to rarity scaling).',
       unlocked: false
+    },
+    {
+      id: 11,
+      name: 'Magnus Glimmergold',
+      cardMultiplier: 1,
+      refreshTime: 300,
+      merchantOdds: 250,
+      raritiesSkipped: ['junk', 'basic', 'decent'],
+      priceMultiplier: 1,
+      rarityScaling: 2.5,
+      description: 'Some say he is a real magician, but all know he is rich. He will not even look at cards that are lower rarity than fine.',
+      unlocked: false
     }
+    
 
   ];
   
@@ -130,13 +143,13 @@ const merchants = [
     junk:      new Decimal(1),
     basic:     new Decimal(2),
     decent:    new Decimal(5),
-    fine:      new Decimal(12),
-    rare:      new Decimal(30),
-    epic:      new Decimal(100),
-    legend:    new Decimal(300),
-    mythic:    new Decimal(800),
-    exotic:    new Decimal(3000),
-    divine:    new Decimal(15000),
+    fine:      new Decimal(15),
+    rare:      new Decimal(50),
+    epic:      new Decimal(200),
+    legend:    new Decimal(500),
+    mythic:    new Decimal(2000),
+    exotic:    new Decimal(5000),
+    divine:    new Decimal(25000),
   };
 
   // ——— HELPERS ———
@@ -300,10 +313,13 @@ const merchants = [
                   .times(RARITY_PRICE_MULT[rarity] || 1);
   
       // randomness ±99%
-      price = price.times(Math.random()*1.98 + 0.01).times(1 - state.effects.merchantPriceReduction).times(state.currentMerchant.priceMultiplier).ceil();
+      // divide is not a function of Decimal, so we need to use a different approach
+
+      price = price.times(Math.random()*1.98 + 0.01).dividedBy(state.effects.merchantPriceDivider).times(state.currentMerchant.priceMultiplier).ceil();
   
+      
       let quantity = 1;
-      if (ownQty > 9 && Math.random() < 0.25) {
+      if (ownQty > 9 && Math.random() < state.merchantBulkChance) {
         const maxStack = Math.floor(Math.cbrt(ownQty));
         quantity = Math.max(1, Math.floor(Math.random() * maxStack) + 1);
         price = price.times(Math.cbrt(quantity));

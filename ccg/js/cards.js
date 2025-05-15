@@ -375,12 +375,12 @@ window.cards = [
     ],
     "specialEffects": [
       {
-        "type": "merchantPriceReduction",
+        "type": "merchantPriceDivider",
         "requirement": {
           "type": "level",
           "amount": 20
         },
-        "value": 0.1
+        "value": 1.1
       }
     ]
   },
@@ -1127,12 +1127,12 @@ window.cards = [
     ],
     "specialEffects": [
       {
-        "type": "merchantPriceReduction",
+        "type": "merchantPriceDivider",
         "requirement": {
           "type": "level",
           "amount": 5
         },
-        "value": 0.1
+        "value": 1.1
       }
     ]
   },
@@ -1770,7 +1770,7 @@ window.cards = [
         "type": "flatMinCardsPerPoke",
         "requirement": {
           "type": "level",
-          "amount": 20
+          "amount": 16
         },
         "value": 80.0
       }
@@ -1884,12 +1884,12 @@ window.cards = [
     ],
     "specialEffects": [
       {
-        "type": "merchantPriceReduction",
+        "type": "merchantPriceDivider",
         "requirement": {
           "type": "level",
           "amount": 8
         },
-        "value": 0.1
+        "value": 1.15
       }
     ]
   },
@@ -2914,12 +2914,12 @@ window.cards = [
     ],
     "specialEffects": [
       {
-        "type": "merchantPriceReduction",
+        "type": "merchantPriceDivider",
         "requirement": {
           "type": "level",
           "amount": 5
         },
-        "value": 0.1
+        "value": 1.15
       }
     ]
   },
@@ -3337,6 +3337,11 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 4,
         "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "basic"
       }
     ],
     "specialEffects": [
@@ -3397,6 +3402,11 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "decent"
       }
     ],
     "specialEffects": [
@@ -4280,12 +4290,12 @@ window.cards = [
     ],
     "specialEffects": [
       {
-        "type": "merchantPriceReduction",
+        "type": "merchantPriceDivider",
         "requirement": {
           "type": "level",
           "amount": 6
         },
-        "value": 0.1
+        "value": 1.2
       }
     ]
   },
@@ -4398,6 +4408,11 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "basic"
       }
     ]
   },
@@ -4439,6 +4454,11 @@ window.cards = [
       {
         "type": "rarityOddsDivider",
         "realm": 3,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
         "rarity": "junk"
       }
     ]
@@ -4529,6 +4549,11 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 5,
         "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "basic"
       }
     ],
     "specialEffects": [
@@ -4536,7 +4561,7 @@ window.cards = [
         "type": "currencyPerPokeMultiplier",
         "requirement": {
           "type": "level",
-          "amount": 15
+          "amount": 20
         },
         "currency": "crystal",
         "value": 2.0
@@ -4599,7 +4624,7 @@ window.cards = [
         "type": "currencyPerPokeMultiplier",
         "requirement": {
           "type": "level",
-          "amount": 10
+          "amount": 15
         },
         "currency": "rune",
         "value": 1.5
@@ -4662,7 +4687,7 @@ window.cards = [
         "type": "currencyPerPokeMultiplier",
         "requirement": {
           "type": "level",
-          "amount": 10
+          "amount": 15
         },
         "currency": "rune",
         "value": 1.5
@@ -4725,7 +4750,7 @@ window.cards = [
         "type": "currencyPerPokeMultiplier",
         "requirement": {
           "type": "level",
-          "amount": 10
+          "amount": 15
         },
         "currency": "rune",
         "value": 1.5
@@ -4788,7 +4813,7 @@ window.cards = [
         "type": "flatCurrencyPerPoke",
         "requirement": {
           "type": "level",
-          "amount": 15
+          "amount": 25
         },
         "currency": "rune",
         "value": 5000.0
@@ -4921,7 +4946,7 @@ window.cards = [
         "type": "flatCurrencyPerSecond",
         "requirement": {
           "type": "level",
-          "amount": 10
+          "amount": 15
         },
         "currency": "rune",
         "value": 50.0
@@ -4985,7 +5010,7 @@ window.cards = [
         "type": "currencyPerSecMultiplier",
         "requirement": {
           "type": "level",
-          "amount": 10
+          "amount": 12
         },
         "currency": "crystal",
         "value": 2.0
@@ -5060,7 +5085,7 @@ window.cards = [
         "type": "currencyPerPokeMultiplier",
         "requirement": {
           "type": "level",
-          "amount": 20
+          "amount": 30
         },
         "currency": "rune",
         "value": 10.0
@@ -5419,12 +5444,12 @@ window.cards = [
     ],
     "specialEffects": [
       {
-        "type": "merchantPriceReduction",
+        "type": "merchantPriceDivider",
         "requirement": {
           "type": "level",
           "amount": 8
         },
-        "value": 0.1
+        "value": 1.2
       }
     ]
   },
@@ -6240,12 +6265,12 @@ window.cards = [
     ],
     "specialEffects": [
       {
-        "type": "merchantPriceReduction",
+        "type": "merchantPriceDivider",
         "requirement": {
           "type": "level",
           "amount": 6
         },
-        "value": 0.1
+        "value": 1.3
       }
     ]
   },
@@ -6554,6 +6579,11 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 7,
         "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "junk"
       }
     ]
   },
@@ -6834,6 +6864,11 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "junk"
       }
     ]
   },
@@ -6879,6 +6914,11 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "basic"
       }
     ],
     "specialEffects": [
@@ -6932,6 +6972,11 @@ window.cards = [
       {
         "type": "rarityOddsDivider",
         "realm": 4,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
         "rarity": "decent"
       }
     ],
@@ -7111,6 +7156,11 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 5,
         "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "basic"
       }
     ],
     "specialEffects": [
@@ -7562,6 +7612,15 @@ window.cards = [
         },
         "currency": "tooth",
         "value": 3.0
+      },
+      {
+        "type": "currencyPerPokeMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 20
+        },
+        "currency": "spirit",
+        "value": 2.0
       }
     ]
   },
@@ -7712,7 +7771,7 @@ window.cards = [
       "currency": "coin",
       "amount": 10.0
     },
-    "description": "An pay-to-win idle MMO that's more grind than game.",
+    "description": "A pay-to-win idle MMO that's more grind than game.",
     "baseEffects": [
       {
         "type": "currencyPerPoke",
@@ -8024,7 +8083,7 @@ window.cards = [
       "currency": "coin",
       "amount": 20.0
     },
-    "description": "Post-apocalyptic tower-themed idle.",
+    "description": "Post-apocalyptic tower-themed idle. An attempt was made.",
     "baseEffects": [
       {
         "type": "currencyPerPoke",
@@ -8061,7 +8120,7 @@ window.cards = [
       "currency": "coin",
       "amount": 50.0
     },
-    "description": "Roguelike mechanics meet idle hero training.",
+    "description": "Roguelike mechanics meet idle hero training. Actually fun until paywalls.",
     "baseEffects": [
       {
         "type": "currencyPerSec",
@@ -8173,7 +8232,7 @@ window.cards = [
       "currency": "coin",
       "amount": 25.0
     },
-    "description": "Multi-layered idle with lots of systems.",
+    "description": "Multi-layered idle with lots of systems. Oddly disjointed.",
     "baseEffects": [
       {
         "type": "currencyPerPoke",
@@ -8203,7 +8262,7 @@ window.cards = [
       "currency": "coin",
       "amount": 50.0
     },
-    "description": "Dig and upgrade through oddities underground.",
+    "description": "Dig and upgrade through oddities underground. Basic stuff.",
     "baseEffects": [
       {
         "type": "currencyPerPoke",
@@ -8344,12 +8403,12 @@ window.cards = [
     ],
     "specialEffects": [
       {
-        "type": "merchantPriceReduction",
+        "type": "merchantPriceDivider",
         "requirement": {
           "type": "level",
           "amount": 6
         },
-        "value": 0.1
+        "value": 1.3
       }
     ]
   },
@@ -8531,7 +8590,7 @@ window.cards = [
         "type": "flatCurrencyPerPoke",
         "requirement": {
           "type": "level",
-          "amount": 15
+          "amount": 20
         },
         "currency": "coin",
         "value": 50000.0
@@ -8653,7 +8712,7 @@ window.cards = [
         "type": "currencyPerPokeMultiplier",
         "requirement": {
           "type": "level",
-          "amount": 15
+          "amount": 30
         },
         "currency": "coin",
         "value": 2.0
@@ -8814,6 +8873,11 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 7,
         "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "junk"
       }
     ],
     "specialEffects": [
@@ -8821,7 +8885,7 @@ window.cards = [
         "type": "currencyPerSecMultiplier",
         "requirement": {
           "type": "level",
-          "amount": 30
+          "amount": 40
         },
         "currency": "feather",
         "value": 2.0
@@ -8904,6 +8968,11 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 8,
         "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "junk"
       }
     ]
   },
@@ -9078,7 +9147,7 @@ window.cards = [
         "type": "currencyPerPokeMultiplier",
         "requirement": {
           "type": "level",
-          "amount": 30
+          "amount": 50
         },
         "currency": "egg",
         "value": 5.0
@@ -9124,6 +9193,16 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 4,
         "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "basic"
       }
     ],
     "specialEffects": [
@@ -9131,7 +9210,7 @@ window.cards = [
         "type": "currencyPerSecMultiplier",
         "requirement": {
           "type": "level",
-          "amount": 20
+          "amount": 40
         },
         "currency": "coin",
         "value": 2.0
@@ -9195,7 +9274,7 @@ window.cards = [
         "type": "currencyPerPokeMultiplier",
         "requirement": {
           "type": "level",
-          "amount": 10
+          "amount": 15
         },
         "currency": "coin",
         "value": 3.0
@@ -9258,7 +9337,7 @@ window.cards = [
         "type": "currencyPerPokeMultiplier",
         "requirement": {
           "type": "level",
-          "amount": 20
+          "amount": 45
         },
         "currency": "tooth",
         "value": 5.0
@@ -9321,7 +9400,7 @@ window.cards = [
         "type": "currencyPerPokeMultiplier",
         "requirement": {
           "type": "level",
-          "amount": 20
+          "amount": 45
         },
         "currency": "coral",
         "value": 5.0
@@ -9382,7 +9461,7 @@ window.cards = [
         "type": "currencyPerPokeMultiplier",
         "requirement": {
           "type": "level",
-          "amount": 15
+          "amount": 25
         },
         "currency": "pollen",
         "value": 5.0
@@ -9445,7 +9524,7 @@ window.cards = [
         "type": "currencyPerPokeMultiplier",
         "requirement": {
           "type": "level",
-          "amount": 25
+          "amount": 50
         },
         "currency": "crystal",
         "value": 5.0
@@ -9508,7 +9587,7 @@ window.cards = [
         "type": "currencyPerPokeMultiplier",
         "requirement": {
           "type": "level",
-          "amount": 20
+          "amount": 40
         },
         "currency": "pearl",
         "value": 5.0
@@ -9569,7 +9648,7 @@ window.cards = [
         "type": "currencyPerPokeMultiplier",
         "requirement": {
           "type": "level",
-          "amount": 15
+          "amount": 25
         },
         "currency": "feather",
         "value": 5.0
@@ -9645,7 +9724,7 @@ window.cards = [
         "type": "currencyPerSecMultiplier",
         "requirement": {
           "type": "level",
-          "amount": 25
+          "amount": 30
         },
         "currency": "coin",
         "value": 10.0
@@ -9673,10 +9752,10 @@ window.cards = [
         "value": 7500000.0
       },
       {
-        "type": "maxCardsPerPoke"
+        "type": "minCardsPerPoke"
       },
       {
-        "type": "minCardsPerPoke"
+        "type": "maxCardsPerPoke"
       },
       {
         "type": "rarityOddsDivider",
@@ -9709,12 +9788,12 @@ window.cards = [
         "value": 5.0
       },
       {
-        "type": "merchantPriceReduction",
+        "type": "merchantPriceDivider",
         "requirement": {
           "type": "level",
           "amount": 15
         },
-        "value": 0.1
+        "value": 5.0
       }
     ]
   },
@@ -9784,6 +9863,1163 @@ window.cards = [
           "amount": 30
         },
         "value": 100000.0
+      }
+    ]
+  },
+  {
+    "id": "901",
+    "name": "Tooth Fairy",
+    "realm": 9,
+    "rarity": "junk",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 1.5,
+    "levelCost": {
+      "currency": "spirit",
+      "amount": 5.0
+    },
+    "description": "Slips in at night to swap your teeth for cash.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "spirit",
+        "value": 1.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "junk"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "currencyPerPokeMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 22
+        },
+        "currency": "tooth",
+        "value": 1.5
+      },
+      {
+        "type": "currencyPerSecMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 44
+        },
+        "currency": "tooth",
+        "value": 2.0
+      }
+    ]
+  },
+  {
+    "id": "902",
+    "name": "Moaning Myrtle",
+    "realm": 9,
+    "rarity": "junk",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 5.0,
+    "levelCost": {
+      "currency": "spirit",
+      "amount": 5.0
+    },
+    "description": "Hogwarts’ most melodramatic ghost, forever haunting the girls’ bathroom.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "spirit",
+        "value": 2.0
+      },
+      {
+        "type": "minCardsPerPoke"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "junk"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "currencyPerPokeMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 11
+        },
+        "currency": "coral",
+        "value": 2.0
+      },
+      {
+        "type": "currencyPerSecMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 22
+        },
+        "currency": "coral",
+        "value": 2.0
+      }
+    ]
+  },
+  {
+    "id": "903",
+    "name": "Danny Phantom",
+    "realm": 9,
+    "rarity": "junk",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.5,
+    "levelCost": {
+      "currency": "spirit",
+      "amount": 5.0
+    },
+    "description": "Half-ghost teen who fights spectral threats while juggling high school.",
+    "baseEffects": [
+      {
+        "type": "currencyPerSec",
+        "currency": "spirit",
+        "value": 1.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "junk"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "currencyPerPokeMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 22
+        },
+        "currency": "crystal",
+        "value": 1.5
+      },
+      {
+        "type": "currencyPerSecMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 33
+        },
+        "currency": "coral",
+        "value": 2.0
+      }
+    ]
+  },
+  {
+    "id": "904",
+    "name": "Boo",
+    "realm": 9,
+    "rarity": "basic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 5.0,
+    "levelCost": {
+      "currency": "spirit",
+      "amount": 25.0
+    },
+    "description": "These shy little ghosts cover their faces when looked at.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "spirit",
+        "value": 20.0
+      },
+      {
+        "type": "cooldownDivider"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 3,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 4,
+        "rarity": "basic"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "flatCurrencyPerPoke",
+        "requirement": {
+          "type": "level",
+          "amount": 11
+        },
+        "currency": "egg",
+        "value": 10000.0
+      },
+      {
+        "type": "flatCurrencyPerSecond",
+        "requirement": {
+          "type": "level",
+          "amount": 22
+        },
+        "currency": "egg",
+        "value": 1500.0
+      }
+    ]
+  },
+  {
+    "id": "905",
+    "name": "Beetlejuice",
+    "realm": 9,
+    "rarity": "basic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.5,
+    "levelCost": {
+      "currency": "spirit",
+      "amount": 25.0
+    },
+    "description": "Say his name three times, and chaos follows. A trickster spirit with flair.",
+    "baseEffects": [
+      {
+        "type": "currencyPerSec",
+        "currency": "spirit",
+        "value": 2.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "basic"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "flatCurrencyPerPoke",
+        "requirement": {
+          "type": "level",
+          "amount": 22
+        },
+        "currency": "pollen",
+        "value": 10000.0
+      },
+      {
+        "type": "flatCurrencyPerSecond",
+        "requirement": {
+          "type": "level",
+          "amount": 33
+        },
+        "currency": "pollen",
+        "value": 1500.0
+      }
+    ]
+  },
+  {
+    "id": "906",
+    "name": "Casper",
+    "realm": 9,
+    "rarity": "decent",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.0,
+    "levelCost": {
+      "currency": "spirit",
+      "amount": 100.0
+    },
+    "description": "The friendliest ghost you’ll ever meet, always trying to make new human pals.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "spirit",
+        "value": 50.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "junk"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "merchantPriceDivider",
+        "requirement": {
+          "type": "level",
+          "amount": 11
+        },
+        "value": 1.4
+      },
+      {
+        "type": "flatMinCardsPerPoke",
+        "requirement": {
+          "type": "level",
+          "amount": 33
+        },
+        "value": 333.0
+      }
+    ]
+  },
+  {
+    "id": "907",
+    "name": "Banshee",
+    "realm": 9,
+    "rarity": "decent",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 5.0,
+    "levelCost": {
+      "currency": "spirit",
+      "amount": 100.0
+    },
+    "description": "Her scream foretells death. Originates from Irish folklore and ancient tales of mourning.",
+    "baseEffects": [
+      {
+        "type": "currencyPerSec",
+        "currency": "spirit",
+        "value": 8.0
+      },
+      {
+        "type": "maxCardsPerPoke"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "basic"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "flatCurrencyPerPoke",
+        "requirement": {
+          "type": "level",
+          "amount": 11
+        },
+        "currency": "rune",
+        "value": 500.0
+      },
+      {
+        "type": "flatCurrencyPerPoke",
+        "requirement": {
+          "type": "level",
+          "amount": 22
+        },
+        "currency": "royal_jelly",
+        "value": 1000.0
+      }
+    ]
+  },
+  {
+    "id": "908",
+    "name": "La Llorona",
+    "realm": 9,
+    "rarity": "fine",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.0,
+    "levelCost": {
+      "currency": "spirit",
+      "amount": 100.0
+    },
+    "description": "The “Weeping Woman” of Latin American folklore, doomed to search for her lost children.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "spirit",
+        "value": 250.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "decent"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "flatMaxCardsPerPoke",
+        "requirement": {
+          "type": "level",
+          "amount": 22
+        },
+        "value": 1000.0
+      },
+      {
+        "type": "flatMaxCardsPerPoke",
+        "requirement": {
+          "type": "level",
+          "amount": 44
+        },
+        "value": 3000.0
+      }
+    ]
+  },
+  {
+    "id": "909",
+    "name": "Flying Dutchman",
+    "realm": 9,
+    "rarity": "fine",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 4.5,
+    "levelCost": {
+      "currency": "spirit",
+      "amount": 100.0
+    },
+    "description": "A ghost ship captain cursed to sail the seas forever.",
+    "baseEffects": [
+      {
+        "type": "currencyPerSec",
+        "currency": "spirit",
+        "value": 15.0
+      },
+      {
+        "type": "cooldownDivider"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "decent"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "allGeneratorMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 22
+        },
+        "value": 2.0
+      },
+      {
+        "type": "flatCooldownDivider",
+        "requirement": {
+          "type": "level",
+          "amount": 33
+        },
+        "value": 3.0
+      }
+    ]
+  },
+  {
+    "id": "910",
+    "name": "King Boo",
+    "realm": 9,
+    "rarity": "rare",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 1.5,
+    "levelCost": {
+      "currency": "spirit",
+      "amount": 100.0
+    },
+    "description": "Ruler of the Boos and Luigi’s ultimate haunt. Smiles while plotting mischief.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "spirit",
+        "value": 1000.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 4,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "basic"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "flatCurrencyPerPoke",
+        "requirement": {
+          "type": "level",
+          "amount": 22
+        },
+        "currency": "egg",
+        "value": 20000.0
+      },
+      {
+        "type": "flatCurrencyPerSecond",
+        "requirement": {
+          "type": "level",
+          "amount": 44
+        },
+        "currency": "egg",
+        "value": 3000.0
+      }
+    ]
+  },
+  {
+    "id": "911",
+    "name": "Pennywise",
+    "realm": 9,
+    "rarity": "rare",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 5.0,
+    "levelCost": {
+      "currency": "spirit",
+      "amount": 100.0
+    },
+    "description": "Not just a clown - he’s a shapeshifting cosmic predator feeding on fear.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "spirit",
+        "value": 2000.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "spirit",
+        "value": 25.0
+      },
+      {
+        "type": "maxCardsPerPoke"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 4,
+        "rarity": "basic"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "flatCurrencyPerPoke",
+        "requirement": {
+          "type": "level",
+          "amount": 11
+        },
+        "currency": "coin",
+        "value": 20000.0
+      },
+      {
+        "type": "flatCurrencyPerSecond",
+        "requirement": {
+          "type": "level",
+          "amount": 22
+        },
+        "currency": "coin",
+        "value": 2000.0
+      }
+    ]
+  },
+  {
+    "id": "912",
+    "name": "Valkyrie",
+    "realm": 9,
+    "rarity": "epic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 4.0,
+    "levelCost": {
+      "currency": "royal_jelly",
+      "amount": 5.0
+    },
+    "description": "Norse warrior spirits who guide fallen heroes to Valhalla.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "royal_jelly",
+        "value": 30.0
+      },
+      {
+        "type": "cooldownDivider"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 4,
+        "rarity": "decent"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "currencyPerPokeMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 22
+        },
+        "currency": "stone",
+        "value": 5.0
+      },
+      {
+        "type": "currencyPerSecMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 33
+        },
+        "currency": "stone",
+        "value": 3.0
+      }
+    ]
+  },
+  {
+    "id": "913",
+    "name": "No-Face",
+    "realm": 9,
+    "rarity": "epic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.5,
+    "levelCost": {
+      "currency": "spirit",
+      "amount": 5.0
+    },
+    "description": "Starts silent, ends dangerous. Reflects the desires of those around him.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "royal_jelly",
+        "value": 20.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "spirit",
+        "value": 50.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "epic"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "flatMaxCardsPerPoke",
+        "requirement": {
+          "type": "level",
+          "amount": 22
+        },
+        "value": 2000.0
+      },
+      {
+        "type": "flatMinCardsPerPoke",
+        "requirement": {
+          "type": "level",
+          "amount": 33
+        },
+        "value": 3000.0
+      }
+    ]
+  },
+  {
+    "id": "914",
+    "name": "Ryuk",
+    "realm": 9,
+    "rarity": "legend",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 5.0,
+    "levelCost": {
+      "currency": "spirit",
+      "amount": 10.0
+    },
+    "description": "An apple-loving Shinigami who dropped a Death Note just for fun.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "spirit",
+        "value": 40000.0
+      },
+      {
+        "type": "minCardsPerPoke"
+      },
+      {
+        "type": "maxCardsPerPoke"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "8"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "fine"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "currencyPerPokeMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 11
+        },
+        "currency": "royal_jelly",
+        "value": 2.0
+      },
+      {
+        "type": "currencyPerPokeMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 22
+        },
+        "currency": "royal_jelly",
+        "value": 3.0
+      }
+    ]
+  },
+  {
+    "id": "915",
+    "name": "Oni",
+    "realm": 9,
+    "rarity": "legend",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 3.5,
+    "levelCost": {
+      "currency": "royal_jelly",
+      "amount": 10.0
+    },
+    "description": "Horned demons from Japanese folklore, often wielding massive clubs and wild grins.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "royal_jelly",
+        "value": 30.0
+      },
+      {
+        "type": "cooldownDivider"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "epic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "rare"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "currencyPerPokeMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 11
+        },
+        "currency": "pearl",
+        "value": 2.0
+      },
+      {
+        "type": "currencyPerPokeMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 33
+        },
+        "currency": "pearl",
+        "value": 3.0
+      }
+    ]
+  },
+  {
+    "id": "916",
+    "name": "Anubis",
+    "realm": 9,
+    "rarity": "mythic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 5.0,
+    "levelCost": {
+      "currency": "royal_jelly",
+      "amount": 15.0
+    },
+    "description": "Ancient Egyptian god of embalming and the dead.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "royal_jelly",
+        "value": 200.0
+      },
+      {
+        "type": "minCardsPerPoke"
+      },
+      {
+        "type": "maxCardsPerPoke"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "epic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "epic"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "currencyPerPokeMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 11
+        },
+        "currency": "feather",
+        "value": 2.0
+      },
+      {
+        "type": "currencyPerPokeMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 22
+        },
+        "currency": "feather",
+        "value": 3.0
+      }
+    ]
+  },
+  {
+    "id": "917",
+    "name": "Spectre",
+    "realm": 9,
+    "rarity": "mythic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 1.5,
+    "levelCost": {
+      "currency": "spirit",
+      "amount": 15.0
+    },
+    "description": "A ghostly wraith from Dota 2, known for vengeance and spreading dread across the map.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "spirit",
+        "value": 250000.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "epic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "epic"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "currencyPerPokeMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 22
+        },
+        "currency": "cosmic_ray",
+        "value": 2.0
+      },
+      {
+        "type": "currencyPerPokeMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 44
+        },
+        "currency": "cosmic_ray",
+        "value": 3.0
+      }
+    ]
+  },
+  {
+    "id": "918",
+    "name": "Gandalf the White",
+    "realm": 9,
+    "rarity": "exotic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 4.0,
+    "levelCost": {
+      "currency": "royal_jelly",
+      "amount": 20.0
+    },
+    "description": "Returned from death more radiant and powerful, a true guide for Middle-earth.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "spirit",
+        "value": 5000000.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "royal_jelly",
+        "value": 100.0
+      },
+      {
+        "type": "maxCardsPerPoke"
+      },
+      {
+        "type": "minCardsPerPoke"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "epic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "legend"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "epic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "legend"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "currencyPerPokeMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 11
+        },
+        "currency": "coin",
+        "value": 5.0
+      },
+      {
+        "type": "currencyPerPokeMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 33
+        },
+        "currency": "coin",
+        "value": 100.0
       }
     ]
   }

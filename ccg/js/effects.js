@@ -15,7 +15,7 @@ window.EFFECT_NAMES = {
 
 // Add special effect names
 window.SPECIAL_EFFECT_NAMES = {
-    merchantPriceReduction: "Merchant Price Reduction",
+    merchantPriceDivider: "Merchant Price Divider",
     flatCurrencyPerPoke: "Currency per Poke",
     flatCurrencyPerSecond: "Currency per Second",
     currencyPerPokeMultiplier: "Currency per Poke Multiplier",
@@ -115,8 +115,8 @@ function computeSpecialEffects(c) {
         if (!isSpecialEffectRequirementMet(c, def.requirement)) return;
 
         switch (def.type) {
-            case "merchantPriceReduction":
-                effs.merchantPriceReduction = (effs.merchantPriceReduction || 0) + def.value;
+            case "merchantPriceDivider":
+                effs.merchantPriceDivider = (effs.merchantPriceDivider || 1) * def.value;
                 break;
 
             case "flatCurrencyPerPoke":
@@ -260,8 +260,12 @@ function applyEffectsDelta(deltaMap, sign = +1) {
                 break;
             }
 
-            case "merchantPriceReduction":
-                E[parts[0]] = (E[parts[0]] || 0) + sign * v;
+            case "merchantPriceDivider":
+                if (sign > 0) {
+                    E[parts[0]] = (E[parts[0]] || 1) * v;
+                } else {
+                    E[parts[0]] = (E[parts[0]] || 1) / v;
+                }
                 break;
 
             case "allGeneratorMultiplier":

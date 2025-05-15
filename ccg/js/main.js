@@ -52,7 +52,7 @@ window.state = {
     cooldownSkipChance: 0,
     merchantCooldownReduction: 0,
     extraMerchantRarityScaling: 0,
-    merchantPriceReduction: 0,
+    merchantPriceDivider: 1,
     currencyPerPokeMultiplier: {},
     currencyPerSecMultiplier: {},
     allGeneratorMultiplier: 1,
@@ -67,6 +67,7 @@ window.state = {
   absorberValue: 1,
   interceptorValue: 0,     // Add interceptor value
   timeCrunchValue: 0,     // Add Time Crunch value
+  merchantBulkChance: 0.25,
   pokeRaritiesOmitted: [],
   hideOmittedRarities: true,  // New variable for checkbox state
 };
@@ -102,6 +103,7 @@ function loadState() {
     state.absorberValue = obj.absorberValue || 1;
     state.interceptorValue = obj.interceptorValue || 0;
     state.timeCrunchValue = obj.timeCrunchValue || 0;  // Load Time Crunch value
+    state.merchantBulkChance = obj.merchantBulkChance || 0.25;
     Object.entries(obj.ownedCards).forEach(([cid,data])=>{
       const c = cardMap[cid];
       if (c) {
@@ -141,6 +143,7 @@ function saveState() {
     absorberValue: state.absorberValue,
     interceptorValue: state.interceptorValue,
     timeCrunchValue: state.timeCrunchValue,
+    merchantBulkChance: state.merchantBulkChance,
     currentMerchantId: state.currentMerchant?.id ?? null,
     merchantOffers: state.merchantOffers.map(o => ({
       cardId:   o.cardId,
@@ -760,88 +763,90 @@ function openModal(cardId) {
   barContainer.append(bar, thresholdLab);
   right.append(barContainer);
 
-  // level up button
-  const baseCost = new Decimal(c.levelCost.amount);
-  let nextLevelCost = baseCost.times(Decimal.pow(c.levelScaling, c.level - 1));
-  nextLevelCost     = Decimal(floorTo3SigDigits(nextLevelCost));
+  if (c.tier > 0) {
+    // level up button
+    const baseCost = new Decimal(c.levelCost.amount);
+    let nextLevelCost = baseCost.times(Decimal.pow(c.levelScaling, c.level - 1));
+    nextLevelCost     = Decimal(floorTo3SigDigits(nextLevelCost));
 
-  // Calculate max affordable level and total cost
-  let maxLevel = c.level;
-  let totalMaxCost = new Decimal(0);
-  let currentCost = nextLevelCost;
-  const availableCurrency = state.currencies[c.levelCost.currency] || new Decimal(0);
-  
-  while (totalMaxCost.plus(currentCost).lessThanOrEqualTo(availableCurrency)) {
-    totalMaxCost = totalMaxCost.plus(currentCost);
-    maxLevel++;
-    currentCost = baseCost.times(Decimal.pow(c.levelScaling, maxLevel - 1));
-    currentCost = Decimal(floorTo3SigDigits(currentCost));
-  }
-  
-  const maxLevelIncrement = maxLevel - c.level;
-
-  // look up currency icon directly
-  const costCurrency = c.levelCost.currency;
-  const curEntry = currencies.find(cur => cur.id === costCurrency) || {};
-  const ico = curEntry.icon || 'question.png';
-
-  const levelControls = document.createElement('div');
-  levelControls.className = 'level-controls';
-  
-  // Create the level controls HTML with placeholder for currency icon
-  levelControls.innerHTML = `
-    <span>Level ${c.level}</span>
-    <button class="${nextLevelCost.greaterThan(availableCurrency) ? 'unaffordable' : 'affordable'}"
-            ${nextLevelCost.greaterThan(availableCurrency) ? 'disabled' : ''}>
-      +1 | ${formatNumber(nextLevelCost)} <img class="icon" alt="${costCurrency}"/>
-    </button>
-    ${maxLevelIncrement > 0 ? `
-      <button class="${totalMaxCost.greaterThan(availableCurrency) ? 'unaffordable' : 'affordable'}"
-              ${totalMaxCost.greaterThan(availableCurrency) ? 'disabled' : ''}>
-        Max: ${maxLevel} | ${formatNumber(totalMaxCost)} <img class="icon" alt="${costCurrency}"/>
-      </button>
-    ` : ''}
-  `;
-
-  // Load and set currency icons
-  const currencyPath = `assets/images/currencies/${ico}`;
-  imageCache.getImage('currencies', currencyPath).then(img => {
-    if (img) {
-      const icons = levelControls.querySelectorAll('img.icon');
-      icons.forEach(icon => {
-        icon.src = img.src;
-      });
+    // Calculate max affordable level and total cost
+    let maxLevel = c.level;
+    let totalMaxCost = new Decimal(0);
+    let currentCost = nextLevelCost;
+    const availableCurrency = state.currencies[c.levelCost.currency] || new Decimal(0);
+    
+    while (totalMaxCost.plus(currentCost).lessThanOrEqualTo(availableCurrency)) {
+      totalMaxCost = totalMaxCost.plus(currentCost);
+      maxLevel++;
+      currentCost = baseCost.times(Decimal.pow(c.levelScaling, maxLevel - 1));
+      currentCost = Decimal(floorTo3SigDigits(currentCost));
     }
-  });
+    
+    const maxLevelIncrement = maxLevel - c.level;
 
-  // Add click handlers
-  const plusOneBtn = levelControls.querySelector('button');
-  if (plusOneBtn) {
-    plusOneBtn.addEventListener('click', e => {
-      e.stopPropagation();
-      state.currencies[costCurrency] = state.currencies[costCurrency].minus(nextLevelCost);
-      levelUp(cardId, 1);
-      updateCurrencyBar();
-      openModal(cardId);
-      ov.remove();
+    // look up currency icon directly
+    const costCurrency = c.levelCost.currency;
+    const curEntry = currencies.find(cur => cur.id === costCurrency) || {};
+    const ico = curEntry.icon || 'question.png';
+
+    const levelControls = document.createElement('div');
+    levelControls.className = 'level-controls';
+    
+    // Create the level controls HTML with placeholder for currency icon
+    levelControls.innerHTML = `
+      <span>Level ${c.level}</span>
+      <button class="${nextLevelCost.greaterThan(availableCurrency) ? 'unaffordable' : 'affordable'}"
+              ${nextLevelCost.greaterThan(availableCurrency) ? 'disabled' : ''}>
+        +1 | ${formatNumber(nextLevelCost)} <img class="icon" alt="${costCurrency}"/>
+      </button>
+      ${maxLevelIncrement > 0 ? `
+        <button class="${totalMaxCost.greaterThan(availableCurrency) ? 'unaffordable' : 'affordable'}"
+                ${totalMaxCost.greaterThan(availableCurrency) ? 'disabled' : ''}>
+          Max: ${maxLevel} | ${formatNumber(totalMaxCost)} <img class="icon" alt="${costCurrency}"/>
+        </button>
+      ` : ''}
+    `;
+
+    // Load and set currency icons
+    const currencyPath = `assets/images/currencies/${ico}`;
+    imageCache.getImage('currencies', currencyPath).then(img => {
+      if (img) {
+        const icons = levelControls.querySelectorAll('img.icon');
+        icons.forEach(icon => {
+          icon.src = img.src;
+        });
+      }
     });
-  }
 
-  if (maxLevelIncrement > 0) {
-    const maxBtn = levelControls.querySelectorAll('button')[1];
-    if (maxBtn) {
-      maxBtn.addEventListener('click', e => {
+    // Add click handlers
+    const plusOneBtn = levelControls.querySelector('button');
+    if (plusOneBtn) {
+      plusOneBtn.addEventListener('click', e => {
         e.stopPropagation();
-        state.currencies[costCurrency] = state.currencies[costCurrency].minus(totalMaxCost);
-        levelUp(cardId, maxLevelIncrement);
+        state.currencies[costCurrency] = state.currencies[costCurrency].minus(nextLevelCost);
+        levelUp(cardId, 1);
         updateCurrencyBar();
         openModal(cardId);
         ov.remove();
       });
     }
-  }
 
-  right.append(levelControls);
+    if (maxLevelIncrement > 0) {
+      const maxBtn = levelControls.querySelectorAll('button')[1];
+      if (maxBtn) {
+        maxBtn.addEventListener('click', e => {
+          e.stopPropagation();
+          state.currencies[costCurrency] = state.currencies[costCurrency].minus(totalMaxCost);
+          levelUp(cardId, maxLevelIncrement);
+          updateCurrencyBar();
+          openModal(cardId);
+          ov.remove();
+        });
+      }
+    }
+
+    right.append(levelControls);
+  }
 
   // --- REALM DISPLAY ---
   const realmLine = document.createElement('p');
@@ -977,8 +982,8 @@ function openModal(cardId) {
       let label = SPECIAL_EFFECT_NAMES[def.type] || def.type;
       let valueHtml;
       switch (def.type) {
-        case "merchantPriceReduction":
-          valueHtml = `-${(def.value * 100).toFixed(0)}%`;
+        case "merchantPriceDivider":
+          valueHtml = `x${formatNumber(def.value )}`;
           break;
         case "flatCurrencyPerPoke":
         case "flatCurrencyPerSecond": {
@@ -1296,6 +1301,13 @@ function updateGeneratorRates() {
     const discoveredCount = cards.filter(c => c.realm === 7 && c.quantity > 0).length;
     const newContribution = discoveredCount * discoveredCount * state.effects.allGeneratorMultiplier;
     state.resourceGeneratorContribution.tooth = newContribution;
+  }
+
+  // Resource Generator 8 (skill 10008)
+  if (skillMap[10008].purchased) {
+    const discoveredCount = cards.filter(c => c.realm === 8 && c.quantity > 0).length;
+    const newContribution = discoveredCount * discoveredCount * state.effects.allGeneratorMultiplier;
+    state.resourceGeneratorContribution.coin = newContribution;
   }
 }
 
@@ -1888,7 +1900,6 @@ function showOfflineEarningsModal(earnings) {
   // Force a reflow to ensure proper positioning
   void ov.offsetHeight;
 
-  // Auto-remove after 5 seconds
   setTimeout(() => ov.remove(), 5000);
 }
 

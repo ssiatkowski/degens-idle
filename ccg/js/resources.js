@@ -36,6 +36,7 @@ window.realms = [
   { id: 6, name: "Celestial Bodies",  unlocked: false, cooldown: 80,  deselectMultiplier: 5, pokeWeight: 1e10 },
   { id: 7, name: "Mythical Beasts",   unlocked: false, cooldown: 120, deselectMultiplier: 5, pokeWeight: 8e9 },
   { id: 8, name: "Incremental Games", unlocked: false, cooldown: 160, deselectMultiplier: 5, pokeWeight: 6e9 },
+  { id: 9, name: "Spirit Familiars",   unlocked: false, cooldown: 300, deselectMultiplier: 5, pokeWeight: 3e9 },
 ];
 
 // 3) give every realm its own copy of the default weights for both capped and uncapped
@@ -77,6 +78,7 @@ window.currencies = [
 { id: 'cosmic_ray',  name: 'Cosmic Ray',  realm: 6, scarcity: 100, icon: 'cosmic_ray.png'  },
 { id: 'tooth',       name: 'Tooth',       realm: 7, scarcity: 1,   icon: 'tooth.png'       },
 { id: 'coin',        name: 'Coin',        realm: 8, scarcity: 1,   icon: 'coin.png'        },
+{ id: 'spirit',      name: 'Spirit',      realm: 9, scarcity: 1,   icon: 'spirit.png'      },
 ];
 
 
@@ -89,7 +91,7 @@ window.realmColors = {
     6: "#3b536c",   // celestial bodies (deep space navy)
     7: "#e74c3c",    // mythical beasts (bold crimson, evokes danger & power)
     8: "#1abc9c",   // incremental games (teal — energetic and digital)
-    9: "#c49bd4",   // spirit familiars (lavender violet — magical, soft, spiritual)
+    9: "#d4a3b7",   // spirit familiars (dull pink — soft, muted, gentle)
    10: "#985112",   // greek gods (rich orange — Olympian fire and command)
    11: "#093526",   // weapons (a rich dark green)
    12: "#a5134d"    // bosses (deep magenta — intense, climactic energy)
