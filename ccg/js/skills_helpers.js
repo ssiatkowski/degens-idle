@@ -46,7 +46,7 @@ window.skills = [
       id: 1007,
       name: "Unlock Incremental Games Realm",
       description: "Black Hole pokes and Merchants can now give cards from Incremental Games realm.",
-      cost: { realmId: 7, currencyId: "tooth", amount: 1e6 },
+      cost: { realmId: 7, currencyId: "tooth", amount: 3e6 },
       purchased: false
     },
     {
@@ -1126,7 +1126,29 @@ window.skills = [
       description: "Increase chance that merchants sell multiple copies of cards from 25% to 50%.",
       cost: { realmId: 9, currencyId: "coin", amount: 5e10},
       purchased: false
-    }
+    },
+    {
+      id: 19101,
+      name: "Negotiation Tactics",
+      description: "Unlock ability to offer merchant to buy all their cards for 5% discount.",
+      cost: { realmId: 2, currencyId: "coral", amount: 5e5},
+      purchased: false
+    },
+    {
+      id: 19102,
+      name: "Negotiation Tactics 2",
+      description: "Increase discount to 10% when buying all cards.",
+      cost: { realmId: 5, currencyId: "crystal", amount: 5e8},
+      purchased: false
+    },
+    {
+      id: 19103,
+      name: "Negotiation Tactics 3",
+      description: "Increase discount to 15% when buying all cards.",
+      cost: { realmId: 8, currencyId: "coin", amount: 5e10},
+      purchased: false
+    },
+      
   ];
 
   // --- PURCHASE LOGIC ---
@@ -1598,6 +1620,15 @@ function applySkill(id, skipCost = false) {
       case 19001: // More Bulk Offers Please
         state.merchantBulkChance += 0.25;
         break;
+      case 19101: // Negotiation Tactics
+        break;
+      case 19102: // Negotiation Tactics 2
+        state.merchantBuyAllDiscount += 0.05;
+        break;
+      case 19103: // Negotiation Tactics 3
+        state.merchantBuyAllDiscount += 0.05;
+        break;
+        
     }
 
     // Remove purchased skill from sortedSkillsByCurrency

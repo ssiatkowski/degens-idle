@@ -10005,7 +10005,7 @@ window.cards = [
           "type": "level",
           "amount": 33
         },
-        "currency": "coral",
+        "currency": "crystal",
         "value": 2.0
       }
     ]

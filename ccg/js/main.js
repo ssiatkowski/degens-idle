@@ -68,6 +68,7 @@ window.state = {
   interceptorValue: 0,     // Add interceptor value
   timeCrunchValue: 0,     // Add Time Crunch value
   merchantBulkChance: 0.25,
+  merchantBuyAllDiscount: 0.05,
   pokeRaritiesOmitted: [],
   hideOmittedRarities: true,  // New variable for checkbox state
 };
@@ -260,6 +261,7 @@ function updateCurrencyBar() {
   });
 }
 
+let currentTab = 'hole';
 
 function showTab(tab) {
   const tabs = ['hole','cards','skills','merchant','stats','settings'];
@@ -269,15 +271,17 @@ function showTab(tab) {
     document.getElementById(`tab-btn-${t}`)
       .classList.toggle('active', t===tab);
   });
-  if (tab==='cards')      renderCardsCollection();
+  if (tab==='cards')      { initCardsFilters(); renderCardsCollection(); }
   else if (tab==='stats') updateStatsUI();
   else if (tab==='skills'){ initSkillsFilters(); renderSkillsTab(); }
   else if (tab === 'merchant') {
     document.getElementById('tab-btn-merchant')
       .classList.remove('new-offers');
+      renderMerchantTab();
   } else if (tab === 'settings') {
     saveState();
   }
+  currentTab = tab;
 }
 
 // --- POKE & REVEAL ---
@@ -680,6 +684,7 @@ function openModal(cardId) {
   const alpha = parseFloat(getComputedStyle(document.documentElement)
     .getPropertyValue('--modal-opacity'));
 
+  const wasNew = c.isNew;
   c.isNew = false;
 
   checkForNewCards();
@@ -687,7 +692,13 @@ function openModal(cardId) {
   // OVERLAY
   const ov = document.createElement('div');
   ov.className = `modal-overlay modal-${rar}`;
-  ov.onclick = () => ov.remove();
+  ov.onclick = () => {
+    ov.remove();
+    if (currentTab === 'cards' && wasNew) {
+      initCardsFilters();
+      renderCardsCollection();
+    }
+  };
 
   // MODAL CONTAINER
   const mc = document.createElement('div');
@@ -802,7 +813,7 @@ function openModal(cardId) {
       ${maxLevelIncrement > 0 ? `
         <button class="${totalMaxCost.greaterThan(availableCurrency) ? 'unaffordable' : 'affordable'}"
                 ${totalMaxCost.greaterThan(availableCurrency) ? 'disabled' : ''}>
-          Max: ${maxLevel} | ${formatNumber(totalMaxCost)} <img class="icon" alt="${costCurrency}"/>
+          Max Lvl ${maxLevel} | ${formatNumber(totalMaxCost)} <img class="icon" alt="${costCurrency}"/>
         </button>
       ` : ''}
     `;
@@ -1086,6 +1097,26 @@ function initCardsFilters() {
         btn.classList.add('active');
         renderCardsCollection();
       });
+
+      // Check if any cards in this realm are new
+      const hasNewCards = cards
+        .filter(c => c.realm === r.id)  // Compare card's realm with realm's id
+        .some(c => c.isNew);
+
+      // Add NEW banner to card back button if there are new cards
+      if (hasNewCards) {
+        if (!btn.querySelector('.new-badge')) {
+          const badge = document.createElement('div');
+          badge.className = 'reveal-badge new-badge';
+          badge.textContent = 'NEW';
+          btn.appendChild(badge);
+        }
+      } else {
+        const existingBadge = btn.querySelector('.new-badge');
+        if (existingBadge) {
+          existingBadge.remove();
+        }
+      }
     }
     filtersContainer.appendChild(btn);
   });
@@ -1349,7 +1380,6 @@ function giveCard(cardId, amount = 1) {
   // Update generator rates if this is a new card discovery
   if (wasNew) {
     c.isNew = true;
-    initCardsFilters();
     updateGeneratorRates();
     checkForNewCards();
     processNewCardDiscovered();
@@ -1382,7 +1412,9 @@ function levelUp(cardId, increment = 1) {
   // Check for affordable skills after spending currency
   checkAffordableSkills();
 
-  renderCardsCollection();
+  if (currentTab === 'cards') {
+    renderCardsCollection();
+  }
 }
 
 // Helper function to calculate max affordable level

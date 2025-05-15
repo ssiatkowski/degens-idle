@@ -738,6 +738,21 @@ nav#tabs { margin-bottom: 15px; }
 }
 
 /* Centered diagonal "NEW" / "TIER UP" banner */
+.cards-filter .reveal-badge{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  padding: 0.2em 0;
+  background: rgba(0, 0, 0, 0.4);
+  text-align: center;
+  border-radius: 4px;
+  pointer-events: none;
+  z-index: 10;
+  color: #fff;
+}
+
 .card-face.front .reveal-badge {
   position: absolute;
   top: 40%;
@@ -753,6 +768,7 @@ nav#tabs { margin-bottom: 15px; }
   color: #fff;
 }
 
+.cards-filter .new-badge,
 .card-face.front .new-badge { 
   background-color: rgba(40,167,69,0.7); 
   font-size: clamp(1em, 8dvh, 2em);

@@ -141,15 +141,15 @@ const merchants = [
   // ——— RARITY PRICE MULTIPLIERS ———
   const RARITY_PRICE_MULT = {
     junk:      new Decimal(1),
-    basic:     new Decimal(2),
-    decent:    new Decimal(5),
-    fine:      new Decimal(15),
-    rare:      new Decimal(50),
-    epic:      new Decimal(200),
-    legend:    new Decimal(500),
-    mythic:    new Decimal(2000),
-    exotic:    new Decimal(5000),
-    divine:    new Decimal(25000),
+    basic:     new Decimal(5),
+    decent:    new Decimal(15),
+    fine:      new Decimal(50),
+    rare:      new Decimal(200),
+    epic:      new Decimal(1000),
+    legend:    new Decimal(5000),
+    mythic:    new Decimal(25000),
+    exotic:    new Decimal(100000),
+    divine:    new Decimal(500000),
   };
 
   // ——— HELPERS ———
@@ -198,6 +198,26 @@ const merchants = [
   const offersEl = document.getElementById('merchant-offers');
   const timerEl  = document.getElementById('merchant-timer');
   
+  // Add a container for the bulk buy button
+  let bulkBuyBtn = document.getElementById('merchant-bulkbuy-btn');
+  if (!bulkBuyBtn) {
+    bulkBuyBtn = document.createElement('button');
+    bulkBuyBtn.id = 'merchant-bulkbuy-btn';
+    bulkBuyBtn.style.display = 'none';
+    bulkBuyBtn.className = 'merchant-bulkbuy-btn';
+    bulkBuyBtn.textContent = 'How about all of them for 5% off?';  // Default text
+    // Insert after timer, before image
+    const panel = document.getElementById('merchant-panel');
+    if (panel) {
+      const timer = document.getElementById('merchant-timer');
+      if (timer && timer.nextSibling) {
+        panel.insertBefore(bulkBuyBtn, timer.nextSibling);
+      } else {
+        panel.appendChild(bulkBuyBtn);
+      }
+    }
+  }
+  
   // nextRefresh is declared here, but initialized/set in main.js
   let nextRefresh = null;
   
@@ -206,6 +226,7 @@ const merchants = [
     const now = Date.now();
     if (!state.currentMerchant || (nextRefresh && now >= nextRefresh)) {
       state.currentMerchant = pickMerchant();
+      merchantIsNew = true;
       const baseRefreshTime = state.currentMerchant.refreshTime;
       const reducedTime = Math.max(15, baseRefreshTime - (state.effects.merchantCooldownReduction || 0));
       nextRefresh = now + reducedTime * 1000;
@@ -218,7 +239,7 @@ const merchants = [
         <div class="merchant-greeting">${greeting}</div>
         <div class="merchant-pitch">${pitch}</div>
       `;
-      
+
       renderMerchantTab();
     }
     const rem = nextRefresh ? (nextRefresh - now) / 1000 : 0;
@@ -228,7 +249,7 @@ const merchants = [
       timerEl.textContent = `Refreshing…`;
     }
   
-    // toggle the “urgent” class instead of manually setting style.color
+    // toggle the "urgent" class instead of manually setting style.color
     if (rem > 0 && rem < 10) {
       timerEl.classList.add('urgent');
     } else {
@@ -246,10 +267,6 @@ const merchants = [
   
     const offers = [];
     const unlockedRealms = realms.filter(r => r.unlocked).map(r => r.id);
-    if (!unlockedRealms.length) {
-      state.merchantOffers = offers;
-      return;
-    }
   
     // precompute totals per realm
     const totalByRealm = {}, discByRealm = {};
@@ -269,7 +286,7 @@ const merchants = [
       const realmId = pickRandom(unlockedRealms);
       const realm   = realmMap[realmId];
   
-      // 2) build boosted rarity weights, skipping any merchant‐specific rarities
+      // 2) build boosted rarity weights, skipping any merchant-specific rarities
       const skip = state.currentMerchant.raritiesSkipped || [];
       const boosted = {};
       rarities
@@ -287,7 +304,7 @@ const merchants = [
       
       const ownQty = cardMap[cardId].quantity;
   
-        // 4) choose currency: only those you actually earn via per‐sec or per‐poke
+        // 4) choose currency: only those you actually earn via per-sec or per-poke
         const curSec  = state.effects.currencyPerSec;
         const curPoke = state.effects.currencyPerPoke;
 
@@ -332,6 +349,10 @@ const merchants = [
     }
   
     state.merchantOffers = offers;
+    if (merchantIsNew) {
+      merchantOffersOriginalCount = state.merchantOffers.length;
+      merchantIsNew = false;
+    }
     saveState();
   
     const btn = document.getElementById('tab-btn-merchant');
@@ -343,6 +364,16 @@ const merchants = [
     if (!state.currentMerchant) {
       refreshMerchantIfNeeded();
       return;
+    }
+  
+    // Show/hide bulk buy button and update its text
+    if (bulkBuyBtn) {
+      if (skillMap[19101].purchased && canBulkBuyAllOffers()) {
+        bulkBuyBtn.style.display = '';
+        bulkBuyBtn.innerHTML = `How about all of them for ${formatNumber(state.merchantBuyAllDiscount * 100)}% off?`;
+      } else {
+        bulkBuyBtn.style.display = 'none';
+      }
     }
   
     // Set merchant image
@@ -476,6 +507,7 @@ const merchants = [
       outer.append(inner);
       offersEl.appendChild(outer);
     });
+  
   }
   
   function buyOffer(i) {
@@ -574,5 +606,59 @@ const merchants = [
       const newOffer = generateMerchantOffer();
       setMerchantOffer(newOffer);
     }
+  }
+  
+  let merchantIsNew = false;
+  let merchantOffersOriginalCount = null;
+
+  function canBulkBuyAllOffers() {
+    // If any offer has been bought (i.e. less than the original number of offers), don't allow
+    if (!state.merchantOffers || state.merchantOffers.length === 0) return false;
+    if (merchantOffersOriginalCount === null || state.merchantOffers.length < merchantOffersOriginalCount) return false;
+    // Check if player can afford all for discount
+    const needed = {};
+    for (const o of state.merchantOffers) {
+      const price = new Decimal(o.price);
+      const discounted = price.times(1 - state.merchantBuyAllDiscount).ceil();
+      needed[o.currency] = (needed[o.currency] || new Decimal(0)).plus(discounted);
+    }
+    for (const [cur, amt] of Object.entries(needed)) {
+      if ((state.currencies[cur] || new Decimal(0)).lessThan(amt)) return false;
+    }
+    return true;
+  }
+
+  function doBulkBuyAllOffers() {
+    // Deduct all currencies and give all cards
+    const needed = {};
+    for (const o of state.merchantOffers) {
+      const price = new Decimal(o.price);
+      const discounted = price.times(1 - state.merchantBuyAllDiscount).ceil();
+      needed[o.currency] = (needed[o.currency] || new Decimal(0)).plus(discounted);
+    }
+    for (const [cur, amt] of Object.entries(needed)) {
+      state.currencies[cur] = (state.currencies[cur] || new Decimal(0)).minus(amt);
+    }
+    for (const o of state.merchantOffers) {
+      giveCard(o.cardId, o.quantity || 1);
+    }
+    state.stats.merchantPurchases += state.merchantOffers.length;
+    state.merchantOffers = [];
+    const now       = Date.now();
+    const maxRemain = 10 * 1000; // 10s in ms
+    const rem       = nextRefresh - now;
+    if (rem > maxRemain) {
+      nextRefresh = now + maxRemain;
+    }
+    renderMerchantTab();
+    updateCurrencyBar();
+    saveState();
+  }
+
+  if (bulkBuyBtn) {
+    bulkBuyBtn.onclick = function() {
+      doBulkBuyAllOffers();
+      bulkBuyBtn.style.display = 'none';
+    };
   }
   

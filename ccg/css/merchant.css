@@ -3,6 +3,7 @@
   display: grid;
   grid-template-areas:
     "timer offers"
+    "bulkbuy offers"
     "image offers"
     "message offers";
   grid-template-columns: 25% 1fr;
@@ -134,4 +135,26 @@
   width: 16px;
   height: 16px;
   margin-left: 4px;
+}
+
+#merchant-bulkbuy-btn, .merchant-bulkbuy-btn {
+  grid-column: 1;
+  grid-row: 2;
+  margin: 8px 0 8px 0;
+  width: 100%;
+  padding: 12px 0;
+  font-size: 1.1em;
+  font-weight: bold;
+  background: linear-gradient(90deg, #4caf50 60%, #81c784 100%);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  display: block;
+}
+#merchant-bulkbuy-btn:hover, .merchant-bulkbuy-btn:hover {
+  background: linear-gradient(90deg, #388e3c 60%, #66bb6a 100%);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.13);
 }
