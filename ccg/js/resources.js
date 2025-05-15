@@ -151,39 +151,12 @@ function formatNumber(d) {
     return sign + abs.toExponential(2);
 }
   
-function formatQuantity(d) {
-  const n = new Decimal(d);
-  if (n.isZero()) return "0";
-
-  const abs = n.abs();
-  // get exponent from scientific form with 2 sig-figs
-  const [, expStr] = abs.toExponential(2).split("e");
-  const exp = parseInt(expStr, 10);
-  const idx = Math.floor(exp / 3);
-
-  // if we have a valid suffix
-  if (idx > 0 && idx < suffixes.length) {
-    // scale down
-    const scaled = abs.dividedBy(new Decimal(10).pow(idx * 3));
-    // choose decimals: <10→2, <100→1, else→0
-    let decimals;
-    if (scaled.lt(10))        decimals = 2;
-    else if (scaled.lt(100))  decimals = 1;
-    else                       decimals = 0;
-
-    let str = scaled
-      .toFixed(decimals)
-      .replace(/\.?0+$/, "");  // drop trailing zeros/decimal
-    return str + suffixes[idx];
-  }
-
-  // no suffix (small numbers)
-  if (idx <= 0) {
-    return abs.toFixed(0);
-  }
-
-  // fallback for enormous values
-  return abs.toExponential(2);
+function formatQuantity(value) {
+  return new Intl.NumberFormat('en-US', {
+    notation:               'compact',
+    compactDisplay:         'short',             // “K”, “M”, etc.
+    maximumSignificantDigits: 3                   // exactly 3 sig-figs
+  }).format(value);
 }
   
 

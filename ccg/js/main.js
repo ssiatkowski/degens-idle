@@ -466,7 +466,7 @@ function performPoke() {
     if (count > 1) {
       const badge = document.createElement('div');
       badge.className = 'count-badge';
-      badge.innerHTML = formatNumber(count);
+      badge.innerHTML = formatQuantity(count);
       front.append(badge);
     }
 
