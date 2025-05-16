@@ -28,6 +28,10 @@ let touchEndHandler;
 let resizeHandler;
 let orientationHandler;
 
+// Global variables for tracking tab activity
+let lastActiveTime = Date.now();
+let tabActivityInterval;
+
 // --- LOOKUP MAPS ---
 const realmMap = {}, cardMap = {}, skillMap = {};
 realms.forEach(r => realmMap[r.id] = r);
@@ -2148,7 +2152,91 @@ document.addEventListener('DOMContentLoaded', async ()=>{
     setTimeCrunchValue(state.timeCrunchValue);
   }
   initTimeCrunchCollector();
+
+  // Start tracking tab activity
+  startTabActivityTracking();
 });
+
+// Function to handle tab visibility change
+function handleTabVisibilityChange() {
+  if (document.hidden) {
+    // Tab became hidden - store current time
+    lastActiveTime = Date.now();
+  } else {
+    // Tab became visible - check for offline gains
+    const currentTime = Date.now();
+    const timeDiff = Math.floor((currentTime - lastActiveTime) / 1000);
+    
+    if (timeDiff > 10) {
+      // Calculate offline gains
+      const offlineEarnings = {};
+      
+      // Award currency based on currencyPerSec and time difference
+      Object.entries(state.effects.currencyPerSec).forEach(([curId, rate]) => {
+        if (rate && state.currencies[curId] != null) {
+          // Get generator contribution
+          const gen = state.resourceGeneratorContribution[curId] || 0;
+          // Add generator contribution to the rate
+          const totalRate = rate + gen;
+          if (!totalRate) return;
+          const offlineGain = new Decimal(totalRate).times(timeDiff);
+          state.currencies[curId] = state.currencies[curId].plus(offlineGain);
+          offlineEarnings[curId] = offlineGain;
+        }
+      });
+
+      if (skillMap[12001].purchased) {
+        // Award harvester value based on time difference
+        const harvesterGain = timeDiff / 1000 * (skillMap[12002].purchased ? 2 : 1) * (skillMap[12003].purchased ? 10 : 1);
+        state.harvesterValue = state.harvesterValue + harvesterGain;
+        offlineEarnings['harvester'] = new Decimal(harvesterGain);
+      }
+
+      if (skillMap[12201].purchased) {
+        // Award interceptor value based on time difference
+        const interceptorGain = timeDiff / 1000 * (skillMap[12202].purchased ? 2 : 1);
+        state.interceptorValue = state.interceptorValue + interceptorGain;
+        offlineEarnings['interceptor'] = new Decimal(interceptorGain);
+      }
+
+      if (skillMap[12301].purchased) {
+        // Award Time Crunch value based on time difference
+        const timeCrunchGain = timeDiff;
+        const actualGain = Math.min(timeCrunchGain, 300 - state.timeCrunchValue);
+        state.timeCrunchValue = Math.min(state.timeCrunchValue + timeCrunchGain, 300);
+        offlineEarnings['timeCrunch'] = new Decimal(actualGain);
+      }
+
+      // Show earnings modal
+      showOfflineEarningsModal(offlineEarnings);
+    }
+    
+    // Update last active time
+    lastActiveTime = currentTime;
+  }
+}
+
+// Function to start tracking tab activity
+function startTabActivityTracking() {
+  // Set up visibility change listener
+  document.addEventListener('visibilitychange', handleTabVisibilityChange);
+  
+  // Set up interval to check for inactivity
+  tabActivityInterval = setInterval(() => {
+    if (document.hidden) {
+      // Only update lastActiveTime when tab is hidden
+      lastActiveTime = Date.now();
+    }
+  }, 1000);
+}
+
+// Function to stop tracking tab activity
+function stopTabActivityTracking() {
+  document.removeEventListener('visibilitychange', handleTabVisibilityChange);
+  if (tabActivityInterval) {
+    clearInterval(tabActivityInterval);
+  }
+}
 
 // Add cleanup function
 function cleanup() {
@@ -2166,6 +2254,9 @@ function cleanup() {
 
   // Clear any remaining animations
   if (fillAnim) anime.remove(globalFill);
+
+  // Stop tracking tab activity
+  stopTabActivityTracking();
 }
 
 // Add cleanup on page unload
