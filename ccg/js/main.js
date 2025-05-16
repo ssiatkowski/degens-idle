@@ -2179,10 +2179,22 @@ document.addEventListener('DOMContentLoaded', async ()=>{
   window.addEventListener('resize', resizeHandler);
   window.addEventListener('orientationchange', orientationHandler);
 
+  // Check for saved cooldown and apply offline reduction
   const savedRem = parseFloat(localStorage.getItem('ccgCooldownRem'));
   if (!isNaN(savedRem) && savedRem > 0) {
-    resumeCooldown(savedRem);
-  } else{
+    const timeDiff = Math.floor((Date.now() - JSON.parse(localStorage.getItem(SAVE_KEY) || '{}').lastSaveTime) / 1000);
+    const cooldownReduction = Math.min(savedRem, timeDiff);
+    const newRem = savedRem - cooldownReduction;
+    
+    if (newRem <= 0) {
+      localStorage.removeItem('ccgCooldownRem');
+      holeBtn.disabled = false;
+      holeBtn.classList.remove('disabled');
+    } else {
+      localStorage.setItem('ccgCooldownRem', newRem.toString());
+      resumeCooldown(newRem);
+    }
+  } else {
     holeBtn.disabled = false;
     holeBtn.classList.remove('disabled');
   }
