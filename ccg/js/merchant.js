@@ -331,8 +331,8 @@ const merchants = [
   
       // randomness ±99%
       // divide is not a function of Decimal, so we need to use a different approach
-      const priceRandomVal = Math.random()*1.98 + 0.01;
-      price = price.times(priceRandomVal).dividedBy(state.effects.merchantPriceDivider).times(state.currentMerchant.priceMultiplier).ceil();
+      const priceRandomVal = (Math.random()*1.98 + 0.01) * state.currentMerchant.priceMultiplier;
+      price = price.times(priceRandomVal).dividedBy(state.effects.merchantPriceDivider).ceil();
   
       
       let quantity = 1;

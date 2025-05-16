@@ -250,28 +250,6 @@
   pointer-events: none;
 }
 
-.price-intuition-cloud::before {
-  content: '';
-  position: absolute;
-  top: -10px;
-  right: 20px;
-  width: 20px;
-  height: 20px;
-  background: white;
-  border-radius: 50%;
-}
-
-.price-intuition-cloud::after {
-  content: '';
-  position: absolute;
-  top: -5px;
-  right: 40px;
-  width: 15px;
-  height: 15px;
-  background: white;
-  border-radius: 50%;
-}
-
 .price-intuition-cloud.bad {
   background: #ffebee;
   color: #c62828;
