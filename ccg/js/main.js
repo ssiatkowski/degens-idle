@@ -28,10 +28,6 @@ let touchEndHandler;
 let resizeHandler;
 let orientationHandler;
 
-// Global variables for tracking tab activity
-let lastActiveTime = Date.now();
-let tabActivityInterval;
-
 // --- LOOKUP MAPS ---
 const realmMap = {}, cardMap = {}, skillMap = {};
 realms.forEach(r => realmMap[r.id] = r);
@@ -282,8 +278,6 @@ function showTab(tab) {
     document.getElementById('tab-btn-merchant')
       .classList.remove('new-offers');
       renderMerchantTab();
-  } else if (tab === 'settings') {
-    saveState();
   }
   currentTab = tab;
 }
@@ -563,8 +557,6 @@ function performPoke() {
   startCooldown();
 
   updateHarvesterUI();
-  
-  saveState();
 }
 
 // Add this after the performPoke function
@@ -1776,7 +1768,6 @@ function updatePokeFilterStats() {
     checkbox.checked = state.hideOmittedRarities;
     checkbox.addEventListener('change', (e) => {
       state.hideOmittedRarities = e.target.checked;
-      saveState();
     });
     
     const label = document.createElement('label');
@@ -1925,6 +1916,17 @@ function showOfflineEarningsModal(earnings) {
         <span class="name">Cooldown</span>
       `;
       progressList.appendChild(cooldownItem);
+
+      // Update stored cooldown and resume it
+      const newRem = savedRem - cooldownReduction;
+      if (newRem <= 0) {
+        localStorage.removeItem('ccgCooldownRem');
+        holeBtn.disabled = false;
+        holeBtn.classList.remove('disabled');
+      } else {
+        localStorage.setItem('ccgCooldownRem', newRem.toString());
+        resumeCooldown(newRem);
+      }
     }
   }
 
@@ -2102,6 +2104,8 @@ document.addEventListener('DOMContentLoaded', async ()=>{
 
     // Show earnings modal
     showOfflineEarningsModal(offlineEarnings);
+
+    saveState();
   }
 
   ['hole','cards','skills','merchant','stats','settings'].forEach(t=>{
@@ -2152,6 +2156,55 @@ document.addEventListener('DOMContentLoaded', async ()=>{
   // Store interval IDs for cleanup
   merchantInterval = setInterval(refreshMerchantIfNeeded, 100);
   currencyInterval = setInterval(() => {
+    // First check for offline gains if enough time has passed
+    const currentTime = Date.now();
+    const timeDiff = Math.floor((currentTime - JSON.parse(localStorage.getItem(SAVE_KEY) || '{}').lastSaveTime) / 1000);
+    
+    if (timeDiff > 10) {
+      // Calculate offline gains
+      const offlineEarnings = {};
+      
+      // Award currency based on currencyPerSec and time difference
+      Object.entries(state.effects.currencyPerSec).forEach(([curId, rate]) => {
+        if (rate && state.currencies[curId] != null) {
+          // Get generator contribution
+          const gen = state.resourceGeneratorContribution[curId] || 0;
+          // Add generator contribution to the rate
+          const totalRate = rate + gen;
+          if (!totalRate) return;
+          const offlineGain = new Decimal(totalRate).times(timeDiff);
+          state.currencies[curId] = state.currencies[curId].plus(offlineGain);
+          offlineEarnings[curId] = offlineGain;
+        }
+      });
+
+      if (skillMap[12001].purchased) {
+        // Award harvester value based on time difference
+        const harvesterGain = timeDiff / 1000 * (skillMap[12002].purchased ? 2 : 1) * (skillMap[12003].purchased ? 10 : 1);
+        state.harvesterValue = state.harvesterValue + harvesterGain;
+        offlineEarnings['harvester'] = new Decimal(harvesterGain);
+      }
+
+      if (skillMap[12201].purchased) {
+        // Award interceptor value based on time difference
+        const interceptorGain = timeDiff / 1000 * (skillMap[12202].purchased ? 2 : 1);
+        state.interceptorValue = state.interceptorValue + interceptorGain;
+        offlineEarnings['interceptor'] = new Decimal(interceptorGain);
+      }
+
+      if (skillMap[12301].purchased) {
+        // Award Time Crunch value based on time difference
+        const timeCrunchGain = timeDiff;
+        const actualGain = Math.min(timeCrunchGain, 300 - state.timeCrunchValue);
+        state.timeCrunchValue = Math.min(state.timeCrunchValue + timeCrunchGain, 300);
+        offlineEarnings['timeCrunch'] = new Decimal(actualGain);
+      }
+
+      // Show earnings modal
+      showOfflineEarningsModal(offlineEarnings);
+    }
+
+    // Then update currency per second
     Object.entries(state.effects.currencyPerSec).forEach(([curId, rate]) => {
       if (state.currencies[curId] == null) return;
       const gen = state.resourceGeneratorContribution[curId] || 0;
@@ -2160,6 +2213,9 @@ document.addEventListener('DOMContentLoaded', async ()=>{
       state.currencies[curId] = state.currencies[curId].plus(new Decimal(totalRate));
     });
     updateCurrencyBar();
+
+    // Finally save the game state
+    saveState();
   }, 1000);
 
   // Store event handlers for cleanup
@@ -2179,22 +2235,10 @@ document.addEventListener('DOMContentLoaded', async ()=>{
   window.addEventListener('resize', resizeHandler);
   window.addEventListener('orientationchange', orientationHandler);
 
-  // Check for saved cooldown and apply offline reduction
   const savedRem = parseFloat(localStorage.getItem('ccgCooldownRem'));
   if (!isNaN(savedRem) && savedRem > 0) {
-    const timeDiff = Math.floor((Date.now() - JSON.parse(localStorage.getItem(SAVE_KEY) || '{}').lastSaveTime) / 1000);
-    const cooldownReduction = Math.min(savedRem, timeDiff);
-    const newRem = savedRem - cooldownReduction;
-    
-    if (newRem <= 0) {
-      localStorage.removeItem('ccgCooldownRem');
-      holeBtn.disabled = false;
-      holeBtn.classList.remove('disabled');
-    } else {
-      localStorage.setItem('ccgCooldownRem', newRem.toString());
-      resumeCooldown(newRem);
-    }
-  } else {
+    resumeCooldown(savedRem);
+  } else{
     holeBtn.disabled = false;
     holeBtn.classList.remove('disabled');
   }
@@ -2204,8 +2248,6 @@ document.addEventListener('DOMContentLoaded', async ()=>{
     setTimeCrunchValue(state.timeCrunchValue);
   }
   initTimeCrunchCollector();
-
-  tabActivityInterval = setInterval(checkForOfflineGains, 1000);
 });
 
 // Add cleanup function
@@ -2214,7 +2256,7 @@ function cleanup() {
   if (merchantInterval) clearInterval(merchantInterval);
   if (currencyInterval) clearInterval(currencyInterval);
   if (blackHoleTimer) clearInterval(blackHoleTimer);
-  if (timeCrunchInterval) clearInterval(timeCrunchInterval);  // Clear Time Crunch interval
+  if (timeCrunchInterval) clearInterval(timeCrunchInterval);
 
   // Remove event listeners
   document.removeEventListener('touchmove', touchMoveHandler);
@@ -2236,57 +2278,4 @@ if (typeof resetGame === 'function') {
     cleanup();
     originalResetGame();
   };
-}
-
-// Function to check for offline gains
-function checkForOfflineGains() {
-  const currentTime = Date.now();
-  const timeDiff = Math.floor((currentTime - lastActiveTime) / 1000);
-  
-  if (timeDiff > 10) {
-    // Calculate offline gains
-    const offlineEarnings = {};
-    
-    // Award currency based on currencyPerSec and time difference
-    Object.entries(state.effects.currencyPerSec).forEach(([curId, rate]) => {
-      if (rate && state.currencies[curId] != null) {
-        // Get generator contribution
-        const gen = state.resourceGeneratorContribution[curId] || 0;
-        // Add generator contribution to the rate
-        const totalRate = rate + gen;
-        if (!totalRate) return;
-        const offlineGain = new Decimal(totalRate).times(timeDiff);
-        state.currencies[curId] = state.currencies[curId].plus(offlineGain);
-        offlineEarnings[curId] = offlineGain;
-      }
-    });
-
-    if (skillMap[12001].purchased) {
-      // Award harvester value based on time difference
-      const harvesterGain = timeDiff / 1000 * (skillMap[12002].purchased ? 2 : 1) * (skillMap[12003].purchased ? 10 : 1);
-      state.harvesterValue = state.harvesterValue + harvesterGain;
-      offlineEarnings['harvester'] = new Decimal(harvesterGain);
-    }
-
-    if (skillMap[12201].purchased) {
-      // Award interceptor value based on time difference
-      const interceptorGain = timeDiff / 1000 * (skillMap[12202].purchased ? 2 : 1);
-      state.interceptorValue = state.interceptorValue + interceptorGain;
-      offlineEarnings['interceptor'] = new Decimal(interceptorGain);
-    }
-
-    if (skillMap[12301].purchased) {
-      // Award Time Crunch value based on time difference
-      const timeCrunchGain = timeDiff;
-      const actualGain = Math.min(timeCrunchGain, 300 - state.timeCrunchValue);
-      state.timeCrunchValue = Math.min(state.timeCrunchValue + timeCrunchGain, 300);
-      offlineEarnings['timeCrunch'] = new Decimal(actualGain);
-    }
-
-    // Show earnings modal
-    showOfflineEarningsModal(offlineEarnings);
-  }
-  
-  // Update last active time
-  lastActiveTime = currentTime;
 }

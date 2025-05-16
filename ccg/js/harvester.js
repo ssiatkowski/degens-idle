@@ -83,6 +83,4 @@ function handleHarvesterClick() {
 
   // 5) Update the UI to reflect our new state.harvesterValue
   updateHarvesterUI();
-
-  saveState();
 }
