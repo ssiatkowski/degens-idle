@@ -200,6 +200,21 @@ function renderSkillsTab() {
   // Create a set to track rendered skill IDs to avoid duplicates
   const renderedSkillIds = new Set();
 
+  // If showing purchased skills, sort them by currency and amount
+  let purchasedSkills = [];
+  if (skillFilterState.purchased === 'purchased') {
+    purchasedSkills = window.skills
+      .filter(s => s.purchased)
+      .sort((a, b) => {
+        const orderA = currencies.findIndex(c => c.id === a.cost.currencyId);
+        const orderB = currencies.findIndex(c => c.id === b.cost.currencyId);
+        if (orderA !== orderB) {
+          return orderA - orderB;
+        }
+        return a.cost.amount - b.cost.amount;
+      });
+  }
+
   // First, render skills from sortedSkillsByCurrency for unlocked and unpurchased skills
   currencies.forEach(currency => {
     const currencyId = currency.id;
@@ -266,7 +281,8 @@ function renderSkillsTab() {
   });
 
   // Now, check the original skills array for purchased and locked skills
-  window.skills.forEach(s => {
+  const skillsToCheck = skillFilterState.purchased === 'purchased' ? purchasedSkills : window.skills;
+  skillsToCheck.forEach(s => {
     const owned = s.purchased;
     const realmUnlocked = realmMap[s.cost.realmId]?.unlocked;
     const locked = !realmUnlocked;

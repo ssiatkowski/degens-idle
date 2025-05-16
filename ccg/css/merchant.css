@@ -4,10 +4,11 @@
   grid-template-areas:
     "timer offers"
     "bulkbuy offers"
+    "buyout offers"
     "image offers"
     "message offers";
   grid-template-columns: 25% 1fr;
-  grid-template-rows: auto auto 1fr;
+  grid-template-rows: auto auto auto 1fr;
   gap: 8px 16px;
   align-items: start;
 }
@@ -137,6 +138,16 @@
   margin-left: 4px;
 }
 
+
+.offer-buy-btn.unaffordable {
+  color: #ff4444;
+  background: #163117;
+}
+
+.offer-buy-btn.unaffordable:hover {
+  background: rgba(255, 68, 68, 0.3);
+}
+
 #merchant-bulkbuy-btn, .merchant-bulkbuy-btn {
   grid-column: 1;
   grid-row: 2;
@@ -157,4 +168,135 @@
 #merchant-bulkbuy-btn:hover, .merchant-bulkbuy-btn:hover {
   background: linear-gradient(90deg, #388e3c 60%, #66bb6a 100%);
   box-shadow: 0 4px 16px rgba(0,0,0,0.13);
+}
+
+/* Buyout Cost Grid Styles */
+.buyout-cost-container {
+  grid-area: buyout;
+  width: 100%;
+  background: rgba(136, 136, 136, 0.5);
+  border-radius: 4px;
+  padding: 8px;
+  margin-bottom: 8px;
+}
+
+.buyout-cost-title {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 8px;
+  font-size: 1em;
+}
+
+.buyout-cost-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+  max-width: 100%;
+  gap: 4px;
+}
+
+.buyout-cost-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: clamp(0.8em, 2dvh, 0.9em);
+  padding: 2px 6px;
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.2);
+  white-space: nowrap;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.buyout-cost-item span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+  flex: 1;
+}
+
+.buyout-cost-item img {
+  width: clamp(12px, 3dvh, 16px);
+  height: clamp(12px, 3dvh, 16px);
+  flex-shrink: 0;
+}
+
+.buyout-cost-item.unaffordable {
+  color: #ef3434;
+}
+
+.buyout-cost-item.expensive {
+  color: #d7e234;
+}
+
+.buyout-cost-item.affordable {
+  color: #81c784;
+}
+
+/* Price Intuition Cloud Styles */
+.price-intuition-cloud {
+  position: absolute;
+  right: -15px;
+  bottom: 30%;
+  background: white;
+  border-radius: 50%;
+  padding: 8px 12px;
+  font-size: 0.7em;
+  font-weight: bold;
+  text-align: center;
+  white-space: pre-line;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  z-index: 10;
+  transform: rotate(-5deg);
+  pointer-events: none;
+}
+
+.price-intuition-cloud::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  right: 20px;
+  width: 20px;
+  height: 20px;
+  background: white;
+  border-radius: 50%;
+}
+
+.price-intuition-cloud::after {
+  content: '';
+  position: absolute;
+  top: -5px;
+  right: 40px;
+  width: 15px;
+  height: 15px;
+  background: white;
+  border-radius: 50%;
+}
+
+.price-intuition-cloud.bad {
+  background: #ffebee;
+  color: #c62828;
+}
+
+.price-intuition-cloud.good {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.price-intuition-cloud.great {
+  background: #e8f5e9;
+  color: #1b5e20;
+  font-size: 0.8em;
+}
+
+.price-intuition-cloud.must-buy {
+  background: #e8f5e9;
+  color: #1b5e20;
+  font-size: 0.9em;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: rotate(-5deg) scale(1); }
+  50% { transform: rotate(-5deg) scale(1.1); }
+  100% { transform: rotate(-5deg) scale(1); }
 }

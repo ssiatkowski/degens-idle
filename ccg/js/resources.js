@@ -36,7 +36,7 @@ window.realms = [
   { id: 6, name: "Celestial Bodies",  unlocked: false, cooldown: 80,  deselectMultiplier: 5, pokeWeight: 1e10 },
   { id: 7, name: "Mythical Beasts",   unlocked: false, cooldown: 120, deselectMultiplier: 5, pokeWeight: 8e9 },
   { id: 8, name: "Incremental Games", unlocked: false, cooldown: 160, deselectMultiplier: 5, pokeWeight: 6e9 },
-  { id: 9, name: "Spirit Familiars",   unlocked: false, cooldown: 300, deselectMultiplier: 5, pokeWeight: 3e9 },
+  { id: 9, name: "Spirit Familiars",   unlocked: false, cooldown: 310, deselectMultiplier: 5, pokeWeight: 3e9 },
 ];
 
 // 3) give every realm its own copy of the default weights for both capped and uncapped

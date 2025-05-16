@@ -704,6 +704,54 @@ function openModal(cardId) {
     }
   };
 
+  // Add navigation arrows if we're in the cards tab
+  if (currentTab === 'cards') {
+    // Get all owned cards in this realm
+    const ownedCardsInRealm = cards
+      .filter(c => c.realm === realm && c.quantity > 0)
+      .map(c => c.id);
+    
+    // Find current card's position
+    const currentIndex = ownedCardsInRealm.indexOf(cardId);
+    
+    // Create left arrow
+    const leftArrow = document.createElement('div');
+    leftArrow.className = 'modal-nav-arrow modal-nav-left';
+    leftArrow.innerHTML = '←';
+    if (currentIndex > 0) {
+      leftArrow.classList.add('active');
+      leftArrow.onclick = (e) => {
+        e.stopPropagation();
+        ov.remove();
+        if (wasNew) {
+          initCardsFilters();
+          renderCardsCollection();
+        }
+        openModal(ownedCardsInRealm[currentIndex - 1]);
+      };
+    }
+    
+    // Create right arrow
+    const rightArrow = document.createElement('div');
+    rightArrow.className = 'modal-nav-arrow modal-nav-right';
+    rightArrow.innerHTML = '→';
+    if (currentIndex < ownedCardsInRealm.length - 1) {
+      rightArrow.classList.add('active');
+      rightArrow.onclick = (e) => {
+        e.stopPropagation();
+        ov.remove();
+        if (wasNew) {
+          initCardsFilters();
+          renderCardsCollection();
+        }
+        openModal(ownedCardsInRealm[currentIndex + 1]);
+      };
+    }
+    
+    ov.appendChild(leftArrow);
+    ov.appendChild(rightArrow);
+  }
+
   // MODAL CONTAINER
   const mc = document.createElement('div');
   mc.className = 'modal-content';
@@ -915,7 +963,7 @@ function openModal(cardId) {
         const cap = EFFECTS_RARITY_VALUES[c.rarity]?.oddsDividerCap;
         const cappedTotal = Math.min(total, cap);
         if (total < cap - 1) {
-          breakdown = `(base: 1+ ${formatNumber(baseDivider)} × ${formatNumber(c.level)} lvl × ${formatNumber(tierMult)} tier)`;
+          breakdown = `(1+ base: ${formatNumber(baseDivider)} × ${formatNumber(c.level)} lvl × ${formatNumber(tierMult)} tier)`;
           valueHtml = `${formatNumber(1+cappedTotal)}`;
         } else {
           breakdown = `(Capped)`;
@@ -1877,14 +1925,6 @@ function showOfflineEarningsModal(earnings) {
         <span class="name">Cooldown</span>
       `;
       progressList.appendChild(cooldownItem);
-
-      // Update stored cooldown
-      const newRem = savedRem - cooldownReduction;
-      if (newRem <= 0) {
-        localStorage.removeItem('ccgCooldownRem');
-      } else {
-        localStorage.setItem('ccgCooldownRem', newRem.toString());
-      }
     }
   }
 

@@ -25,14 +25,14 @@ window.skills = [
       id: 1004,
       name: "Unlock Ancient Relics Realm",
       description: "Black Hole pokes and Merchants can now give cards from Ancient Relics realm.",
-      cost: { realmId: 4, currencyId: "egg", amount: 3e5 },
+      cost: { realmId: 4, currencyId: "egg", amount: 4e5 },
       purchased: false
     },
     {
       id: 1005,
       name: "Unlock Celestial Bodies Realm",
       description: "Black Hole pokes and Merchants can now give cards from Celestial Bodies realm.",
-      cost: { realmId: 5, currencyId: "crystal", amount: 4e5 },
+      cost: { realmId: 5, currencyId: "crystal", amount: 6e5 },
       purchased: false
     },
     {
@@ -641,7 +641,7 @@ window.skills = [
       id: 7008,
       name: "Unlock New Merchant 8",
       description: "Magnus Glimmergold is added to pool of traveling merchants.",
-      cost: { realmId: 9, currencyId: "coin", amount: 3e9 },
+      cost: { realmId: 9, currencyId: "coin", amount: 3e10 },
       purchased: false
     },
     {
@@ -990,7 +990,7 @@ window.skills = [
     {
       id: 12301,
       name: "Time Crunch Collector",
-      description: "Unlocks a device that can passively collect time particles to release 50x pokes worth of currency when used.",
+      description: "Unlocks a device that can passively collect time particles to release 25x pokes worth of currency when used.",
       cost: { realmId: 7, currencyId: "tooth", amount: 1e8 },
       purchased: false
     },
@@ -1145,7 +1145,14 @@ window.skills = [
       id: 19103,
       name: "Negotiation Tactics 3",
       description: "Increase discount to 15% when buying all cards.",
-      cost: { realmId: 8, currencyId: "coin", amount: 5e10},
+      cost: { realmId: 8, currencyId: "coin", amount: 5e11},
+      purchased: false
+    },
+    {
+      id: 19201,
+      name: "Pricing Intuition",
+      description: "Know whether the merchant is selling a card at a good price, relative to the range of prices for that card.",
+      cost: { realmId: 8, currencyId: "egg", amount: 3e6},
       purchased: false
     },
       
@@ -1627,6 +1634,8 @@ function applySkill(id, skipCost = false) {
         break;
       case 19103: // Negotiation Tactics 3
         state.merchantBuyAllDiscount += 0.05;
+        break;
+      case 19201: // Pricing Intuition
         break;
         
     }

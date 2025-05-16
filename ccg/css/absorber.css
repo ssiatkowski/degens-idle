@@ -39,7 +39,7 @@
     bottom: 9%; /* Center vertically */
     right: 10%; /* Center horizontally */
     font-family: monospace;
-    font-size: clamp(0.6em, 2dvh, 1.3em);
+    font-size: clamp(0.6em, 2.5dvh, 1.8em);
     text-align: center;
     pointer-events: none; /* Keep this to ensure the counter is not clickable */
     z-index: 20; /* Higher z-index to ensure it appears on top */

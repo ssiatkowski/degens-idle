@@ -745,17 +745,12 @@ window.cards = [
       {
         "type": "rarityOddsDivider",
         "realm": 1,
-        "rarity": "junk"
-      },
-      {
-        "type": "rarityOddsDivider",
-        "realm": 1,
-        "rarity": "basic"
-      },
-      {
-        "type": "rarityOddsDivider",
-        "realm": 1,
         "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 1,
+        "rarity": "fine"
       },
       {
         "type": "rarityOddsDivider",
@@ -1494,6 +1489,16 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 7,
         "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 1,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "decent"
       }
     ],
     "specialEffects": [
@@ -2342,6 +2347,11 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 2,
         "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "rare"
       }
     ]
   },
@@ -2384,6 +2394,11 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 2,
         "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "fine"
       }
     ]
   },
@@ -2680,6 +2695,11 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 3,
+        "rarity": "rare"
       },
       {
         "type": "rarityOddsDivider",
@@ -3396,6 +3416,11 @@ window.cards = [
       },
       {
         "type": "rarityOddsDivider",
+        "realm": 4,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "junk"
       },
@@ -3868,6 +3893,16 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 4,
         "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 4,
+        "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 4,
+        "rarity": "epic"
       },
       {
         "type": "rarityOddsDivider",
@@ -5234,6 +5269,11 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 5,
         "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "basic"
       },
       {
         "type": "rarityOddsDivider",
@@ -7659,6 +7699,16 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 5,
         "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "rare"
       }
     ],
     "specialEffects": [
@@ -7703,6 +7753,16 @@ window.cards = [
       },
       {
         "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
         "realm": 2,
         "rarity": "rare"
       },
@@ -7718,13 +7778,13 @@ window.cards = [
       },
       {
         "type": "rarityOddsDivider",
-        "realm": 7,
-        "rarity": "basic"
+        "realm": 5,
+        "rarity": "decent"
       },
       {
         "type": "rarityOddsDivider",
-        "realm": 7,
-        "rarity": "decent"
+        "realm": 5,
+        "rarity": "fine"
       }
     ],
     "specialEffects": [
@@ -7790,6 +7850,11 @@ window.cards = [
       {
         "type": "rarityOddsDivider",
         "realm": 7,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
         "rarity": "junk"
       }
     ],
@@ -7859,6 +7924,11 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 6,
         "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "rare"
       }
     ],
     "specialEffects": [
@@ -7919,12 +7989,22 @@ window.cards = [
       {
         "type": "rarityOddsDivider",
         "realm": 5,
+        "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
         "rarity": "legend"
       },
       {
         "type": "rarityOddsDivider",
         "realm": 6,
         "rarity": "epic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "legend"
       }
     ],
     "specialEffects": [
@@ -9236,8 +9316,18 @@ window.cards = [
       },
       {
         "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
         "realm": 5,
         "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "fine"
       },
       {
         "type": "rarityOddsDivider",
@@ -9247,11 +9337,6 @@ window.cards = [
       {
         "type": "rarityOddsDivider",
         "realm": 7,
-        "rarity": "junk"
-      },
-      {
-        "type": "rarityOddsDivider",
-        "realm": 8,
         "rarity": "junk"
       }
     ]
@@ -9380,6 +9465,11 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 2,
         "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 3,
+        "rarity": "fine"
       }
     ],
     "specialEffects": [
@@ -9565,6 +9655,11 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 5,
         "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "fine"
       },
       {
         "type": "rarityOddsDivider",
@@ -9757,6 +9852,11 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 8,
         "rarity": "epic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "legend"
       }
     ],
     "specialEffects": [
@@ -9814,6 +9914,16 @@ window.cards = [
       {
         "type": "rarityOddsDivider",
         "realm": 8,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
         "rarity": "decent"
       },
       {
@@ -9856,6 +9966,16 @@ window.cards = [
       },
       {
         "type": "cooldownDivider"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "basic"
       },
       {
         "type": "rarityOddsDivider",
@@ -9948,6 +10068,16 @@ window.cards = [
       {
         "type": "rarityOddsDivider",
         "realm": 8,
+        "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "epic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
         "rarity": "legend"
       }
     ],
@@ -10000,6 +10130,11 @@ window.cards = [
       {
         "type": "rarityOddsDivider",
         "realm": 7,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
         "rarity": "rare"
       },
       {
@@ -10016,6 +10151,11 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 7,
         "rarity": "mythic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "decent"
       }
     ],
     "specialEffects": [
@@ -10085,6 +10225,16 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 8,
         "rarity": "mythic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "rare"
       }
     ],
     "specialEffects": [
@@ -10946,6 +11096,11 @@ window.cards = [
       {
         "type": "rarityOddsDivider",
         "realm": 9,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
         "rarity": "fine"
       },
       {
@@ -11002,6 +11157,11 @@ window.cards = [
       },
       {
         "type": "cooldownDivider"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "decent"
       },
       {
         "type": "rarityOddsDivider",
@@ -11240,6 +11400,11 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 8,
         "rarity": "legend"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "mythic"
       }
     ],
     "specialEffects": [

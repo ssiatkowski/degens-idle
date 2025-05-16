@@ -36,10 +36,10 @@ function updateTimeCrunchUI() {
 function handleTimeCrunchClick() {
   if (state.timeCrunchValue < MAX_CHARGE_TIME) return;
   
-  // Award 50x poke gains for each currency
+  // Award 25 poke gains for each currency
   Object.entries(state.effects.currencyPerPoke).forEach(([curId, rate]) => {
     if (!rate || state.currencies[curId] == null) return;
-    const gain = new Decimal(rate * 50 * state.effects.currencyPerPokeMultiplier[curId]);
+    const gain = new Decimal(rate * 25 * state.effects.currencyPerPokeMultiplier[curId]);
     state.currencies[curId] = state.currencies[curId].plus(gain);
   });
   

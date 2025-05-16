@@ -667,7 +667,7 @@ nav#tabs { margin-bottom: 15px; }
 .modal-effects .effect-line.locked .unlock-note {
   color: rgb(220, 22, 22);
   font-weight: bold;
-  opacity: 1; /* override parent opacity so it’s fully visible */
+  opacity: 1; /* override parent opacity so it's fully visible */
   margin-left: 0.5em;
 }
 
@@ -1394,4 +1394,42 @@ nav#tabs { margin-bottom: 15px; }
 .settings-button.warning-button:hover {
   background-color: #ffb300;
   box-shadow: 0 2px 8px rgba(255, 193, 7, 0.4);
+}
+
+/* Modal Navigation Arrows */
+.modal-nav-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 80px;
+  height: 150px;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  font-size: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  z-index: 1001;
+}
+
+.modal-nav-arrow:not(.active) {
+  background: rgba(0, 0, 0, 0.2);
+  color: rgba(255, 255, 255, 0.5);
+  cursor: default;
+}
+
+.modal-nav-arrow.active:hover {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.modal-nav-left {
+  left: calc(50% - 45vw - 60px);
+  border-radius: 0 4px 4px 0;
+}
+
+.modal-nav-right {
+  right: calc(50% - 45vw - 60px);
+  border-radius: 4px 0 0 4px;
 }

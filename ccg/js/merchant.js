@@ -331,21 +331,23 @@ const merchants = [
   
       // randomness ±99%
       // divide is not a function of Decimal, so we need to use a different approach
-
-      price = price.times(Math.random()*1.98 + 0.01).dividedBy(state.effects.merchantPriceDivider).times(state.currentMerchant.priceMultiplier).ceil();
+      const priceRandomVal = Math.random()*1.98 + 0.01;
+      price = price.times(priceRandomVal).dividedBy(state.effects.merchantPriceDivider).times(state.currentMerchant.priceMultiplier).ceil();
   
       
       let quantity = 1;
+      let quantityRandomVal = 0;
       if (ownQty > 9 && Math.random() < state.merchantBulkChance) {
         const maxStack = Math.floor(Math.cbrt(ownQty));
-        quantity = Math.max(1, Math.floor(Math.random() * maxStack) + 1);
+        quantityRandomVal = Math.random();
+        quantity = Math.max(1, Math.floor(quantityRandomVal * maxStack) + 1);
         price = price.times(Math.cbrt(quantity));
       }
 
   
       if (price.lessThan(1)) price = new Decimal(1);
       price = floorTo3SigDigits(price);
-      offers.push({ cardId, price, currency, quantity });
+      offers.push({ cardId, price, currency, quantity, priceRandomVal, quantityRandomVal });
     }
   
     state.merchantOffers = offers;
@@ -373,6 +375,81 @@ const merchants = [
         bulkBuyBtn.innerHTML = `How about all of them for ${formatNumber(state.merchantBuyAllDiscount * 100)}% off?`;
       } else {
         bulkBuyBtn.style.display = 'none';
+      }
+    }
+    
+    // Remove existing buyout cost container if it exists
+    const existingContainer = document.querySelector('.buyout-cost-container');
+    if (existingContainer) {
+      existingContainer.remove();
+    }
+
+    // Add buyout cost display if skill is purchased
+    if (skillMap[19101].purchased && state.merchantOffers.length > 1 && merchantOffersOriginalCount !== null && state.merchantOffers.length === merchantOffersOriginalCount) {
+
+      // Create new container
+      const container = document.createElement('div');
+      container.className = 'buyout-cost-container';
+
+      // Add title
+      const title = document.createElement('div');
+      title.className = 'buyout-cost-title';
+      title.textContent = 'Buyout Cost:';
+      container.appendChild(title);
+
+      // Create grid
+      const grid = document.createElement('div');
+      grid.className = 'buyout-cost-grid';
+
+      // Calculate costs
+      const needed = {};
+      if (state.merchantOffers && state.merchantOffers.length > 0) {
+        for (const o of state.merchantOffers) {
+          const price = new Decimal(o.price);
+          const discounted = price.times(1 - state.merchantBuyAllDiscount).ceil();
+          needed[o.currency] = (needed[o.currency] || new Decimal(0)).plus(discounted);
+        }
+      }
+
+      // Add currency items in order of currencies array
+      for (const currency of currencies) {
+        const amt = needed[currency.id];
+        if (amt && amt.greaterThan(0)) {
+          const item = document.createElement('div');
+          item.className = 'buyout-cost-item';
+
+          // Determine affordability class
+          const playerAmount = state.currencies[currency.id] || new Decimal(0);
+          if (playerAmount.lessThan(amt)) {
+            item.classList.add('unaffordable');
+          } else if (playerAmount.times(0.25).greaterThan(amt)) {
+            item.classList.add('affordable');
+          } else {
+            item.classList.add('expensive');
+          }
+
+          // Add currency icon
+          const icon = document.createElement('img');
+          const currencyPath = `assets/images/currencies/${currency.icon}`;
+          imageCache.getImage('currencies', currencyPath).then(img => {
+            if (img) icon.src = img.src;
+          });
+          item.appendChild(icon);
+
+          // Add amount
+          const amount = document.createElement('span');
+          amount.textContent = formatNumber(floorTo3SigDigits(amt));
+          item.appendChild(amount);
+
+          grid.appendChild(item);
+        }
+      }
+
+      container.appendChild(grid);
+
+      // Insert after bulk buy button
+      if (bulkBuyBtn && bulkBuyBtn.parentNode) {
+        bulkBuyBtn.parentNode.insertBefore(container, bulkBuyBtn.nextSibling);
       }
     }
   
@@ -460,6 +537,10 @@ const merchants = [
       const cm = currencies.find(cu => cu.id === o.currency) || { icon: 'question.png' };
       const buyBtn = document.createElement('button');
       buyBtn.className = 'offer-buy-btn';
+      const bal = state.currencies[o.currency] || new Decimal(0);
+      if (bal.lessThan(o.price)) {
+        buyBtn.classList.add('unaffordable');
+      }
       const currencyPath = `assets/images/currencies/${cm.icon}`;
       imageCache.getImage('currencies', currencyPath).then(img => {
           if (img) {
@@ -503,6 +584,35 @@ const merchants = [
       // add click handler to open modal
       outer.addEventListener('click', () => openModal(card.id));
   
+      // Add price intuition cloud if skill is purchased
+      if (skillMap[19201].purchased) {
+        const cloud = document.createElement('div');
+        cloud.className = 'price-intuition-cloud';
+        let shouldAddCloud = false;
+
+        if (o.priceRandomVal > 1.6) {
+          cloud.classList.add('bad');
+          cloud.textContent = 'Bad\nOffer';
+          shouldAddCloud = true;
+        } else if (o.priceRandomVal < 0.05 && o.quantity > 1 && o.quantityRandomVal > 0.6) {
+          cloud.classList.add('must-buy');
+          cloud.textContent = 'MUST\nBUY';
+          shouldAddCloud = true;
+        } else if (o.priceRandomVal < 0.1 && o.quantity > 1 && o.quantityRandomVal > 0.3) {
+          cloud.classList.add('great');
+          cloud.textContent = 'Great\nOffer';
+          shouldAddCloud = true;
+        } else if (o.priceRandomVal < 0.2) {
+          cloud.classList.add('good');
+          cloud.textContent = 'Good\nOffer';
+          shouldAddCloud = true;
+        } 
+        
+        if (shouldAddCloud) {
+          front.appendChild(cloud);
+        }
+      }
+  
       inner.append(front);
       outer.append(inner);
       offersEl.appendChild(outer);
@@ -533,6 +643,10 @@ const merchants = [
     }
   
     // re-render
+    const buyoutCostContainer = document.querySelector('.buyout-cost-container');
+    if (buyoutCostContainer) {
+      buyoutCostContainer.remove();
+    }
     renderMerchantTab();
     updateCurrencyBar();
     state.stats.merchantPurchases++;
@@ -613,7 +727,7 @@ const merchants = [
 
   function canBulkBuyAllOffers() {
     // If any offer has been bought (i.e. less than the original number of offers), don't allow
-    if (!state.merchantOffers || state.merchantOffers.length === 0) return false;
+    if (!state.merchantOffers || state.merchantOffers.length <= 1) return false;
     if (merchantOffersOriginalCount === null || state.merchantOffers.length < merchantOffersOriginalCount) return false;
     // Check if player can afford all for discount
     const needed = {};
@@ -659,6 +773,10 @@ const merchants = [
     bulkBuyBtn.onclick = function() {
       doBulkBuyAllOffers();
       bulkBuyBtn.style.display = 'none';
+      const buyoutCostContainer = document.querySelector('.buyout-cost-container');
+      if (buyoutCostContainer) {
+        buyoutCostContainer.remove();
+      }
     };
   }
   
