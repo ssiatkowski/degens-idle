@@ -2565,7 +2565,7 @@ window.cards = [
         "type": "currencyPerSecMultiplier",
         "requirement": {
           "type": "level",
-          "amount": 15
+          "amount": 10
         },
         "currency": "pollen",
         "value": 1.25
@@ -3657,7 +3657,7 @@ window.cards = [
         "type": "currencyPerPokeMultiplier",
         "requirement": {
           "type": "level",
-          "amount": 25
+          "amount": 20
         },
         "currency": "feather",
         "value": 2.0
@@ -7335,7 +7335,7 @@ window.cards = [
         "type": "flatCurrencyPerSecond",
         "requirement": {
           "type": "level",
-          "amount": 15
+          "amount": 20
         },
         "currency": "rune",
         "value": 25000.0
@@ -7398,7 +7398,7 @@ window.cards = [
         "type": "currencyPerPokeMultiplier",
         "requirement": {
           "type": "level",
-          "amount": 15
+          "amount": 20
         },
         "currency": "tooth",
         "value": 2.0
@@ -7863,7 +7863,7 @@ window.cards = [
         "type": "currencyPerPokeMultiplier",
         "requirement": {
           "type": "level",
-          "amount": 10
+          "amount": 15
         },
         "currency": "tooth",
         "value": 3.0
@@ -9289,6 +9289,16 @@ window.cards = [
         "realm": 9,
         "rarity": "junk"
       }
+    ],
+    "specialEffects": [
+      {
+        "type": "merchantPriceDivider",
+        "requirement": {
+          "type": "level",
+          "amount": 25
+        },
+        "value": 1.5
+      }
     ]
   },
   {
@@ -10163,7 +10173,7 @@ window.cards = [
         "type": "allGeneratorMultiplier",
         "requirement": {
           "type": "level",
-          "amount": 10
+          "amount": 15
         },
         "value": 5.0
       },
@@ -10171,7 +10181,7 @@ window.cards = [
         "type": "merchantPriceDivider",
         "requirement": {
           "type": "level",
-          "amount": 15
+          "amount": 20
         },
         "value": 5.0
       }
@@ -11334,7 +11344,7 @@ window.cards = [
         "type": "currencyPerPokeMultiplier",
         "requirement": {
           "type": "level",
-          "amount": 22
+          "amount": 33
         },
         "currency": "cosmic_ray",
         "value": 2.0
@@ -11343,7 +11353,7 @@ window.cards = [
         "type": "currencyPerPokeMultiplier",
         "requirement": {
           "type": "level",
-          "amount": 44
+          "amount": 55
         },
         "currency": "cosmic_ray",
         "value": 3.0
