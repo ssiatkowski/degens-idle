@@ -33,7 +33,7 @@ def load_cards(csv_path):
         }
 
         base_effects = []
-        for i in range(1, 9):
+        for i in range(1, 11):
             etype = row.get(f"effect{i}_type", "").strip()
             if not etype:
                 continue

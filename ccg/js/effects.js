@@ -38,25 +38,25 @@ const EFFECT_SCALES = {
       cooldownDividerBaseValue: 0.0005,  //cost scaling 5
       maxCardsPerPokeBaseValue: 0.01,
       minCardsPerPokeBaseValue: 0.005,
-      oddsDividerCap: 3
+      oddsDividerCap: 2
     },
     basic: { 
       cooldownDividerBaseValue: 0.001,  //cost scaling 5
       maxCardsPerPokeBaseValue: 0.02,
       minCardsPerPokeBaseValue: 0.01,
-      oddsDividerCap: 3.5
+      oddsDividerCap: 2.5
     },
     decent: { 
       cooldownDividerBaseValue: 0.002, //cost scaling 4.5
       maxCardsPerPokeBaseValue: 0.03,
       minCardsPerPokeBaseValue: 0.015,
-      oddsDividerCap: 4
+      oddsDividerCap: 3
     },
     fine: { 
       cooldownDividerBaseValue: 0.003,  //cost scaling 4.5
       maxCardsPerPokeBaseValue: 0.04,
       minCardsPerPokeBaseValue: 0.02,
-      oddsDividerCap: 4.5
+      oddsDividerCap: 4
     },
     rare: { 
       cooldownDividerBaseValue: 0.004,  //cost scaling 4
