@@ -494,7 +494,7 @@ window.skills = [
       id: 5008,
       name: "Incremental Games Are For Losers",
       description: "Incremental Games realm deselect multiplier reduced by 50%.",
-      cost: { realmId: 8, currencyId: "spirit", amount: 1e9 },
+      cost: { realmId: 9, currencyId: "spirit", amount: 1e9 },
       purchased: false
     },
     {
