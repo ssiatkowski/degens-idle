@@ -1152,9 +1152,16 @@ window.skills = [
       id: 19201,
       name: "Pricing Intuition",
       description: "Know whether the merchant is selling a card at a good price, relative to the range of prices for that card.",
-      cost: { realmId: 8, currencyId: "egg", amount: 3e6},
+      cost: { realmId: 4, currencyId: "egg", amount: 3e6},
       purchased: false
     },
+    // {
+    //   id: 19301,
+    //   name: "Organized Merchants",
+    //   description: "Merchants offers are sorted in reverse by rarity and then realm.",
+    //   cost: { realmId: 6, currencyId: "tooth", amount: 3e8},
+    //   purchased: false
+    // },
       
   ];
 

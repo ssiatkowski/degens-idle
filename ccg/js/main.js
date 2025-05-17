@@ -28,9 +28,6 @@ let touchEndHandler;
 let resizeHandler;
 let orientationHandler;
 
-// Add at the top with other global variables
-let lastVisibilityChange = Date.now();
-
 // --- LOOKUP MAPS ---
 const realmMap = {}, cardMap = {}, skillMap = {};
 realms.forEach(r => realmMap[r.id] = r);
@@ -2146,7 +2143,7 @@ document.addEventListener('DOMContentLoaded', async ()=>{
   merchantInterval = setInterval(refreshMerchantIfNeeded, 100);
   currencyInterval = setInterval(() => {
     // First check for offline gains if enough time has passed
-    const timeDiff = Math.floor((Date.now() - (document.hidden ? state.lastSaveTime : lastVisibilityChange)) / 1000);
+    const timeDiff = Math.floor((Date.now() - state.lastSaveTime) / 1000);
     
     if (timeDiff > 10) {
       // Calculate offline gains
@@ -2191,8 +2188,6 @@ document.addEventListener('DOMContentLoaded', async ()=>{
       // Show earnings modal
       showOfflineEarningsModal(offlineEarnings);
 
-      // Update lastVisibilityChange and save state
-      lastVisibilityChange = Date.now();
       saveState();
     }
 
@@ -2240,17 +2235,6 @@ document.addEventListener('DOMContentLoaded', async ()=>{
     setTimeCrunchValue(state.timeCrunchValue);
   }
   initTimeCrunchCollector();
-
-  // Add visibility change handler
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden) {
-      // Tab became hidden, save state immediately
-      saveState();
-    } else {
-      // Tab became visible, update lastVisibilityChange
-      lastVisibilityChange = Date.now();
-    }
-  });
 });
 
 // Add cleanup function
