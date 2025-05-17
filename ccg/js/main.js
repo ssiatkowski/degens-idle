@@ -71,6 +71,7 @@ window.state = {
   merchantBuyAllDiscount: 0.05,
   pokeRaritiesOmitted: [],
   hideOmittedRarities: true,  // New variable for checkbox state
+  remainingCooldown: 0,    // Add remaining cooldown to state
 };
 
 // init currencies & effects
@@ -116,6 +117,8 @@ function loadState() {
     });
     state.stats.totalPokes = obj.stats.totalPokes || 0;
     state.stats.merchantPurchases = obj.stats.merchantPurchases || 0;
+    state.remainingCooldown = obj.remainingCooldown || 0;
+    state.lastSaveTime = obj.lastSaveTime || null;
     if (obj.currentMerchantId != null) {
       const m = merchants.find(m=>m.id===obj.currentMerchantId);
       state.currentMerchant = m || null;
@@ -133,6 +136,7 @@ function loadState() {
   }
 }
 function saveState() {
+  state.lastSaveTime = Date.now();
   const obj = {
     unlockedRealms:  realms.filter(r=>r.unlocked).map(r=>r.id),
     purchasedSkills: skills.filter(s=>s.purchased).map(s=>s.id),
@@ -153,7 +157,8 @@ function saveState() {
       quantity: o.quantity || 1
     })),
     merchantRefreshTime: nextRefresh ? nextRefresh - Date.now() : null,
-    lastSaveTime: Date.now()
+    lastSaveTime: Date.now(),
+    remainingCooldown: state.remainingCooldown
   };
   currencies.forEach(c => {
     obj.currencies[c.id] = state.currencies[c.id].toString();
@@ -1541,13 +1546,14 @@ function startCooldown() {
     skipText.addEventListener('animationend', () => skipText.remove());
 
     state.cooldownDone = true;
+    state.remainingCooldown = 0;
     tryEnableHole();
     return;
   }
 
   // 2) Begin real cooldown
   state.cooldownDone = false;
-  const totalSec = calculateCooldown();
+  state.remainingCooldown = calculateCooldown();
 
   // 3) Clear any prior animations & timers
   if (fillAnim) anime.remove(globalFill);
@@ -1559,47 +1565,37 @@ function startCooldown() {
   // 5) (Re)create your countdown element
   countdownEl = holeBtn.querySelector('.countdown')
     || Object.assign(document.createElement('div'), { className: 'countdown' });
-  countdownEl.textContent = formatDuration(totalSec);
+  countdownEl.textContent = formatDuration(state.remainingCooldown);
   holeBtn.appendChild(countdownEl);
 
-  // 6) Persist start time
-  localStorage.setItem('ccgCooldownRem', totalSec.toString());
+  // 6) Pure-JS tick for accurate timing
+  let lastTick = Date.now();
+  blackHoleTimer = setInterval(() => {
+    const now = Date.now();
+    const delta = (now - lastTick) / 1000; // Convert to seconds
+    lastTick = now;
+    
+    state.remainingCooldown = Math.max(0, state.remainingCooldown - delta);
+    countdownEl.textContent = formatDuration(state.remainingCooldown);
 
-  // 7) Anime.js driving the bar + live update
-  fillAnim = anime({
-    targets: globalFill,
-    width: ['0%', '100%'],
-    duration: totalSec * 1000,
-    easing: 'linear',
-    update: anim => {
-      const elapsed = anim.currentTime / 1000;
-      const rem = Math.max(0, totalSec - elapsed);
-      countdownEl.textContent = formatDuration(rem);
-      localStorage.setItem('ccgCooldownRem', rem.toString());
-      state.cooldownDone = false;
-    },
-    complete: () => {
+    if (state.remainingCooldown <= 0) {
       clearInterval(blackHoleTimer);
       countdownEl.remove();
       state.cooldownDone = true;
       tryEnableHole();
     }
-  });
-
-  // 8) Fallback interval to keep state.cooldownDone accurate
-  let last = performance.now();
-  blackHoleTimer = setInterval(() => {
-    const now = performance.now();
-    const delta = (now - last) / 1000;
-    last = now;
-    const stored = parseFloat(localStorage.getItem('ccgCooldownRem')) || 0;
-    if (stored <= 0) {
-      clearInterval(blackHoleTimer);
-    }
   }, 100);
+
+  // 7) Visual animation for the fill bar
+  fillAnim = anime({
+    targets: globalFill,
+    width: ['0%', '100%'],
+    duration: state.remainingCooldown * 1000,
+    easing: 'linear'
+  });
 }
 
-function resumeCooldown(rem) {
+function resumeCooldown() {
   // 1) Disable button
   holeBtn.disabled = true;
   holeBtn.classList.add('disabled');
@@ -1612,33 +1608,34 @@ function resumeCooldown(rem) {
   // 2) Recreate countdown
   countdownEl = holeBtn.querySelector('.countdown')
     || Object.assign(document.createElement('div'), { className: 'countdown' });
-  countdownEl.textContent = formatDuration(rem);
+  countdownEl.textContent = formatDuration(state.remainingCooldown);
   holeBtn.appendChild(countdownEl);
-  localStorage.setItem('ccgCooldownRem', rem.toString());
 
-  // 3) Pure-JS tick
-  let remaining = rem;
+  // 3) Pure-JS tick for accurate timing
+  let lastTick = Date.now();
   blackHoleTimer = setInterval(() => {
-    remaining = Math.max(0, remaining - 0.1);
-    countdownEl.textContent = formatDuration(remaining);
-    localStorage.setItem('ccgCooldownRem', remaining.toString());
+    const now = Date.now();
+    const delta = (now - lastTick) / 1000; // Convert to seconds
+    lastTick = now;
+    
+    state.remainingCooldown = Math.max(0, state.remainingCooldown - delta);
+    countdownEl.textContent = formatDuration(state.remainingCooldown);
 
-    if (remaining <= 0) {
+    if (state.remainingCooldown <= 0) {
       clearInterval(blackHoleTimer);
       countdownEl.remove();
       holeBtn.disabled = false;
       holeBtn.classList.remove('disabled');
-      localStorage.removeItem('ccgCooldownRem');
       state.cooldownDone = true;
       tryEnableHole();
     }
   }, 100);
 
-  // 4) Also re-run anime bar to keep visuals in sync
+  // 4) Visual animation for the fill bar
   fillAnim = anime({
     targets: globalFill,
     width: ['0%', '100%'],
-    duration: rem * 1000,
+    duration: state.remainingCooldown * 1000,
     easing: 'linear'
   });
 }
@@ -1902,10 +1899,9 @@ function showOfflineEarningsModal(earnings) {
   progressList.className = 'offline-earnings-list';
 
   // Check for cooldown progression
-  const savedRem = parseFloat(localStorage.getItem('ccgCooldownRem'));
-  if (!isNaN(savedRem) && savedRem > 0) {
-    const timeDiff = Math.floor((Date.now() - JSON.parse(localStorage.getItem(SAVE_KEY) || '{}').lastSaveTime) / 1000);
-    const cooldownReduction = Math.min(savedRem, timeDiff);
+  if (state.remainingCooldown > 0) {
+    const timeDiff = Math.floor((Date.now() - state.lastSaveTime) / 1000);
+    const cooldownReduction = Math.min(state.remainingCooldown, timeDiff);
     
     if (cooldownReduction > 0) {
       const cooldownItem = document.createElement('div');
@@ -1918,14 +1914,12 @@ function showOfflineEarningsModal(earnings) {
       progressList.appendChild(cooldownItem);
 
       // Update stored cooldown and resume it
-      const newRem = savedRem - cooldownReduction;
-      if (newRem <= 0) {
-        localStorage.removeItem('ccgCooldownRem');
+      state.remainingCooldown = state.remainingCooldown - cooldownReduction;
+      if (state.remainingCooldown <= 0) {
         holeBtn.disabled = false;
         holeBtn.classList.remove('disabled');
       } else {
-        localStorage.setItem('ccgCooldownRem', newRem.toString());
-        resumeCooldown(newRem);
+        resumeCooldown();
       }
     }
   }
@@ -2032,8 +2026,7 @@ document.addEventListener('DOMContentLoaded', async ()=>{
   loadState();
 
   // Show welcome modal for new users
-  const savedState = JSON.parse(localStorage.getItem(SAVE_KEY) || '{}');
-  if (!savedState.lastSaveTime) {
+  if (!state.lastSaveTime) {
     const welcomeModal = document.getElementById('welcome-modal');
     welcomeModal.style.display = 'flex';
     
@@ -2060,9 +2053,8 @@ document.addEventListener('DOMContentLoaded', async ()=>{
   });
 
   // Calculate offline progress after all effects are computed
-  if (savedState.lastSaveTime) {
-    const currentTime = Date.now();
-    const timeDiff = Math.floor((currentTime - savedState.lastSaveTime) / 1000);
+  if (state.lastSaveTime) {
+    const timeDiff = Math.floor((Date.now() - state.lastSaveTime) / 1000);
     
     const offlineEarnings = {};
     
@@ -2123,8 +2115,6 @@ document.addEventListener('DOMContentLoaded', async ()=>{
   initSkillsFilters();
   renderSkillsTab();
   updateStatsUI();
-  initCardsFilters();
-  renderCardsCollection();
   checkForNewCards();
   updatePokeFilterStats();
   updateGeneratorRates();
@@ -2139,8 +2129,8 @@ document.addEventListener('DOMContentLoaded', async ()=>{
   if (state.currentMerchant) {
     // we have a saved merchant + offers,
     // so restore our refresh timer and just render
-    if (savedState.merchantRefreshTime != null) {
-      nextRefresh = Date.now() + savedState.merchantRefreshTime;
+    if (state.merchantRefreshTime != null) {
+      nextRefresh = Date.now() + state.merchantRefreshTime;
     } else {
       nextRefresh = Date.now() + state.currentMerchant.refreshTime * 1000;
     }
@@ -2157,8 +2147,7 @@ document.addEventListener('DOMContentLoaded', async ()=>{
   merchantInterval = setInterval(refreshMerchantIfNeeded, 100);
   currencyInterval = setInterval(() => {
     // First check for offline gains if enough time has passed
-    const currentTime = Date.now();
-    const timeDiff = Math.floor((currentTime - JSON.parse(localStorage.getItem(SAVE_KEY) || '{}').lastSaveTime) / 1000);
+    const timeDiff = Math.floor((Date.now() - state.lastSaveTime) / 1000);
     
     if (timeDiff > 10) {
       // Calculate offline gains
@@ -2202,6 +2191,8 @@ document.addEventListener('DOMContentLoaded', async ()=>{
 
       // Show earnings modal
       showOfflineEarningsModal(offlineEarnings);
+
+      saveState();
     }
 
     // Then update currency per second
@@ -2235,10 +2226,10 @@ document.addEventListener('DOMContentLoaded', async ()=>{
   window.addEventListener('resize', resizeHandler);
   window.addEventListener('orientationchange', orientationHandler);
 
-  const savedRem = parseFloat(localStorage.getItem('ccgCooldownRem'));
-  if (!isNaN(savedRem) && savedRem > 0) {
-    resumeCooldown(savedRem);
-  } else{
+  // Check for saved cooldown
+  if (state.remainingCooldown > 0) {
+    resumeCooldown();
+  } else {
     holeBtn.disabled = false;
     holeBtn.classList.remove('disabled');
   }
