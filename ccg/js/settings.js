@@ -67,7 +67,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Confirm reset button click handler
     confirmResetButton.addEventListener('click', function() {
         // Clear all game data from localStorage
-        localStorage.clear();
+        localStorage.removeItem('ccgSave');
+        localStorage.removeItem('lastUnstuck');
+
         // Reload the page to restart the game
         window.location.reload();
     });
@@ -192,11 +194,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Confirm unstuck
     document.getElementById('confirmUnstuckBtn').addEventListener('click', function() {
         // Clear cooldown
-        localStorage.removeItem('ccgCooldownRem');
+        state.remainingCooldown = 0;
         if (fillAnim) anime.remove(globalFill);
         clearInterval(blackHoleTimer);
         globalFill.style.width = '0%';
-        state.cooldownDone = true;
         
         // Reset currencies
         Object.keys(state.currencies).forEach(key => {

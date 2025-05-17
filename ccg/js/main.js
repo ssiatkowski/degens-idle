@@ -28,6 +28,9 @@ let touchEndHandler;
 let resizeHandler;
 let orientationHandler;
 
+// Add at the top with other global variables
+let lastVisibilityChange = Date.now();
+
 // --- LOOKUP MAPS ---
 const realmMap = {}, cardMap = {}, skillMap = {};
 realms.forEach(r => realmMap[r.id] = r);
@@ -60,7 +63,6 @@ window.state = {
   selectedRealms: [],      // newly added
   currentMerchant: null,
   merchantOffers: [],
-  cooldownDone: true,      // flag
   flipsDone: true,        // flag
   resourceGeneratorContribution: {},  // Track contributions for each resource
   harvesterValue: 0,
@@ -634,7 +636,7 @@ document.addEventListener('touchend', () => {
 }, { passive: true });
 
 function tryEnableHole() {
-  if (state.cooldownDone && state.flipsDone) {
+  if (state.remainingCooldown <= 0 && state.flipsDone) {
     holeBtn.disabled = false;
     holeBtn.classList.remove('disabled');
 
@@ -1545,14 +1547,12 @@ function startCooldown() {
     holeBtn.appendChild(skipText);
     skipText.addEventListener('animationend', () => skipText.remove());
 
-    state.cooldownDone = true;
     state.remainingCooldown = 0;
     tryEnableHole();
     return;
   }
 
   // 2) Begin real cooldown
-  state.cooldownDone = false;
   state.remainingCooldown = calculateCooldown();
 
   // 3) Clear any prior animations & timers
@@ -1581,7 +1581,7 @@ function startCooldown() {
     if (state.remainingCooldown <= 0) {
       clearInterval(blackHoleTimer);
       countdownEl.remove();
-      state.cooldownDone = true;
+      state.remainingCooldown = 0;
       tryEnableHole();
     }
   }, 100);
@@ -1600,7 +1600,6 @@ function resumeCooldown() {
   holeBtn.disabled = true;
   holeBtn.classList.add('disabled');
 
-  state.cooldownDone = false;
   clearInterval(blackHoleTimer);
   if (fillAnim) anime.remove(globalFill);
   globalFill.style.width = '0%';
@@ -1626,7 +1625,7 @@ function resumeCooldown() {
       countdownEl.remove();
       holeBtn.disabled = false;
       holeBtn.classList.remove('disabled');
-      state.cooldownDone = true;
+      state.remainingCooldown = 0;
       tryEnableHole();
     }
   }, 100);
@@ -2147,7 +2146,7 @@ document.addEventListener('DOMContentLoaded', async ()=>{
   merchantInterval = setInterval(refreshMerchantIfNeeded, 100);
   currencyInterval = setInterval(() => {
     // First check for offline gains if enough time has passed
-    const timeDiff = Math.floor((Date.now() - state.lastSaveTime) / 1000);
+    const timeDiff = Math.floor((Date.now() - (document.hidden ? state.lastSaveTime : lastVisibilityChange)) / 1000);
     
     if (timeDiff > 10) {
       // Calculate offline gains
@@ -2192,6 +2191,8 @@ document.addEventListener('DOMContentLoaded', async ()=>{
       // Show earnings modal
       showOfflineEarningsModal(offlineEarnings);
 
+      // Update lastVisibilityChange and save state
+      lastVisibilityChange = Date.now();
       saveState();
     }
 
@@ -2239,6 +2240,17 @@ document.addEventListener('DOMContentLoaded', async ()=>{
     setTimeCrunchValue(state.timeCrunchValue);
   }
   initTimeCrunchCollector();
+
+  // Add visibility change handler
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      // Tab became hidden, save state immediately
+      saveState();
+    } else {
+      // Tab became visible, update lastVisibilityChange
+      lastVisibilityChange = Date.now();
+    }
+  });
 });
 
 // Add cleanup function

@@ -30,10 +30,9 @@ function updateHarvesterUI() {
     harvesterCounter.innerHTML = formatDuration(state.harvesterValue, 2);
     
     // Enable button if value >= 1 and black hole is on cooldown
-    const isCooldown = !state.cooldownDone;
   
     // Check if harvesterValue is greater than 5 seconds and cooldown is not done
-    if (state.harvesterValue > 1 && isCooldown) {
+    if (state.harvesterValue > 1 && state.remainingCooldown > 0) {
       // Apply green filter class
       harvesterButton.classList.add('green-filter');
     } else {
@@ -46,23 +45,19 @@ function updateHarvesterUI() {
 function handleHarvesterClick() {
 
   // 1) Bail out if we can't spend or we're already done
-  if (state.harvesterValue < 1 || state.cooldownDone) {
+  if (state.harvesterValue < 1 || state.remainingCooldown <= 0) {
     return;
   }
-
-  // 2) Grab whatever is left on the cooldown
-  const cooldownRemaining = parseFloat(localStorage.getItem('ccgCooldownRem') || '0');
 
   // 3) Cancel any in-flight bar animation or tick interval
   clearInterval(blackHoleTimer);
   if (fillAnim) anime.remove(globalFill);
 
-  if (state.harvesterValue >= cooldownRemaining) {
+  if (state.harvesterValue >= state.remainingCooldown) {
     // 4a) We can pay off the cooldown entirely
     clearInterval(blackHoleTimer);
-    state.harvesterValue -= cooldownRemaining;
-    localStorage.removeItem('ccgCooldownRem');
-    state.cooldownDone = true;
+    state.harvesterValue -= state.remainingCooldown;
+    state.remainingCooldown = 0;
     if (countdownEl) countdownEl.remove();
     tryEnableHole();
 
@@ -73,12 +68,11 @@ function handleHarvesterClick() {
 
   } else {
     // 4b) We can only chip away at the remaining time
-    const newRemaining = cooldownRemaining - state.harvesterValue;
+    state.remainingCooldown -= state.harvesterValue;
     state.harvesterValue = 0;
-    localStorage.setItem('ccgCooldownRem', newRemaining.toString());
 
     // Kick off a fresh countdown + bar
-    resumeCooldown(newRemaining);
+    resumeCooldown();
   }
 
   // 5) Update the UI to reflect our new state.harvesterValue
