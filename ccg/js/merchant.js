@@ -6,7 +6,7 @@ const merchants = [
       id: 1,
       name: 'Aldric Farwander',
       cardMultiplier: 1,
-      refreshTime: 300,
+      refreshTime: 1,
       merchantOdds: 1000,
       raritiesSkipped: [],
       priceMultiplier: 1,
@@ -18,7 +18,7 @@ const merchants = [
       id: 2,
       name: 'Maribel Tealeaf',
       cardMultiplier: 1,
-      refreshTime: 150,
+      refreshTime: 0.5,
       merchantOdds: 900,
       raritiesSkipped: [],
       priceMultiplier: 1,
@@ -30,7 +30,7 @@ const merchants = [
       id: 3,
       name: 'Cedric Stormforge',
       cardMultiplier: 2,
-      refreshTime: 300,
+      refreshTime: 1,
       merchantOdds: 800,
       raritiesSkipped: [],
       priceMultiplier: 1,
@@ -42,7 +42,7 @@ const merchants = [
       id: 4,
       name: 'Yvette Ambervale',
       cardMultiplier: 1,
-      refreshTime: 300,
+      refreshTime: 1,
       merchantOdds: 700,
       raritiesSkipped: ['junk'],
       priceMultiplier: 1,
@@ -54,7 +54,7 @@ const merchants = [
       id: 5,
       name: 'Orin Saltstride',
       cardMultiplier: 0.5,
-      refreshTime: 300,
+      refreshTime: 1,
       merchantOdds: 600,
       raritiesSkipped: [],
       priceMultiplier: 0.1,
@@ -66,7 +66,7 @@ const merchants = [
       id: 6,
       name: 'Petra Moonclasp',
       cardMultiplier: 1,
-      refreshTime: 300,
+      refreshTime: 1,
       merchantOdds: 500,
       raritiesSkipped: [],
       priceMultiplier: 1,
@@ -78,7 +78,7 @@ const merchants = [
       id: 7,
       name: 'Fergus Grainhand',
       cardMultiplier: 1.5,
-      refreshTime: 200,
+      refreshTime: 2/3,
       merchantOdds: 450,
       raritiesSkipped: ['junk'],
       priceMultiplier: 0.5,
@@ -90,7 +90,7 @@ const merchants = [
       id: 8,
       name: 'Runa Frostpelt',
       cardMultiplier: 1,
-      refreshTime: 300,
+      refreshTime: 1,
       merchantOdds: 400,
       raritiesSkipped: ['basic'],
       priceMultiplier: 1,
@@ -102,7 +102,7 @@ const merchants = [
       id: 9,
       name: 'Tobias Quickpouch',
       cardMultiplier: 10,
-      refreshTime: 100,
+      refreshTime: 1/3,
       merchantOdds: 350,
       raritiesSkipped: [],
       priceMultiplier: 0.75,
@@ -114,7 +114,7 @@ const merchants = [
       id: 10,
       name: 'Selene Starwhistle',
       cardMultiplier: 0,
-      refreshTime: 300,
+      refreshTime: 1,
       merchantOdds: 300,
       raritiesSkipped: ['junk', 'basic', 'decent', 'fine'],
       priceMultiplier: 2,
@@ -126,7 +126,7 @@ const merchants = [
       id: 11,
       name: 'Magnus Glimmergold',
       cardMultiplier: 1,
-      refreshTime: 300,
+      refreshTime: 1,
       merchantOdds: 250,
       raritiesSkipped: ['junk', 'basic', 'decent'],
       priceMultiplier: 1,
@@ -227,8 +227,7 @@ const merchants = [
     if (!state.currentMerchant || (nextRefresh && now >= nextRefresh)) {
       state.currentMerchant = pickMerchant();
       merchantIsNew = true;
-      const baseRefreshTime = state.currentMerchant.refreshTime;
-      const reducedTime = Math.max(15, baseRefreshTime - (state.effects.merchantCooldownReduction || 0));
+      const reducedTime = Math.max(15, ((300 - state.effects.merchantCooldownReduction) * state.currentMerchant.refreshTime));
       nextRefresh = now + reducedTime * 1000;
       genMerchantOffers();
       
@@ -262,7 +261,7 @@ const merchants = [
     // ensure we always have a merchant
     if (!state.currentMerchant) {
       state.currentMerchant = pickMerchant();
-      nextRefresh = Date.now() + state.currentMerchant.refreshTime * 1000;
+      nextRefresh = Date.now() + (300 * state.currentMerchant.refreshTime) * 1000;
     }
   
     const offers = [];
@@ -355,7 +354,6 @@ const merchants = [
       merchantOffersOriginalCount = state.merchantOffers.length;
       merchantIsNew = false;
     }
-    saveState();
   
     const btn = document.getElementById('tab-btn-merchant');
     if (!btn.classList.contains('active')) btn.classList.add('new-offers');
@@ -480,7 +478,27 @@ const merchants = [
     offersEl.innerHTML = '';
 
     // render offers
-    state.merchantOffers.forEach((o, idx) => {
+    let offersToRender = [...state.merchantOffers];
+    
+    // Sort offers if skill 19301 is purchased
+    if (skillMap[19301].purchased) {
+      offersToRender.sort((a, b) => {
+        const cardA = cardMap[a.cardId];
+        const cardB = cardMap[b.cardId];
+        
+        // First sort by rarity (reverse order)
+        const rarityIndexA = rarities.indexOf(cardA.rarity);
+        const rarityIndexB = rarities.indexOf(cardB.rarity);
+        if (rarityIndexA !== rarityIndexB) {
+          return rarityIndexB - rarityIndexA; // Reverse order
+        }
+        
+        // Then sort by realm (reverse order)
+        return cardB.realm - cardA.realm; // Reverse order
+      });
+    }
+
+    offersToRender.forEach((o, idx) => {
       const card  = cardMap[o.cardId];
       const realm = realmMap[card.realm];
   
@@ -650,7 +668,6 @@ const merchants = [
     renderMerchantTab();
     updateCurrencyBar();
     state.stats.merchantPurchases++;
-    saveState(); // Save state after purchase
   }
   
   
@@ -766,7 +783,6 @@ const merchants = [
     }
     renderMerchantTab();
     updateCurrencyBar();
-    saveState();
   }
 
   if (bulkBuyBtn) {

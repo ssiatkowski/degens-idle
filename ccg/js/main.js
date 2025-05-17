@@ -105,6 +105,7 @@ function loadState() {
     state.interceptorValue = obj.interceptorValue || 0;
     state.timeCrunchValue = obj.timeCrunchValue || 0;  // Load Time Crunch value
     state.merchantBulkChance = obj.merchantBulkChance || 0.25;
+    state.merchantRefreshTime = obj.merchantRefreshTime || 0;
     Object.entries(obj.ownedCards).forEach(([cid,data])=>{
       const c = cardMap[cid];
       if (c) {
@@ -2128,13 +2129,13 @@ document.addEventListener('DOMContentLoaded', async ()=>{
     if (state.merchantRefreshTime != null) {
       nextRefresh = Date.now() + state.merchantRefreshTime;
     } else {
-      nextRefresh = Date.now() + state.currentMerchant.refreshTime * 1000;
+      nextRefresh = Date.now() + (300 - state.effects.merchantCooldownReduction) * state.currentMerchant.refreshTime * 1000;
     }
     renderMerchantTab();
   } else {
     // first time ever, pick a new one
     state.currentMerchant = pickMerchant();
-    nextRefresh = Date.now() + state.currentMerchant.refreshTime * 1000;
+    nextRefresh = Date.now() + (300 - state.effects.merchantCooldownReduction) * state.currentMerchant.refreshTime * 1000;
     genMerchantOffers();
     renderMerchantTab();
   }

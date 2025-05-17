@@ -1089,7 +1089,7 @@ window.skills = [
       id: 16001,
       name: "Gotta Catch 'Em All",
       description: "+1 max card draw per total discovered cards.",
-      cost: { realmId: 7, currencyId: "feather", amount: 2e6},
+      cost: { realmId: 5, currencyId: "rune", amount: 25000},
       purchased: false
     },
     {
@@ -1155,13 +1155,13 @@ window.skills = [
       cost: { realmId: 4, currencyId: "egg", amount: 3e6},
       purchased: false
     },
-    // {
-    //   id: 19301,
-    //   name: "Organized Merchants",
-    //   description: "Merchants offers are sorted in reverse by rarity and then realm.",
-    //   cost: { realmId: 6, currencyId: "tooth", amount: 3e8},
-    //   purchased: false
-    // },
+    {
+      id: 19301,
+      name: "Organized Merchants",
+      description: "Merchants offers are sorted in reverse by rarity and then realm.",
+      cost: { realmId: 6, currencyId: "tooth", amount: 3e8},
+      purchased: false
+    },
       
   ];
 
