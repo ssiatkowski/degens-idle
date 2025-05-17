@@ -479,12 +479,15 @@ const merchants = [
 
     // render offers
     let offersToRender = [...state.merchantOffers];
+    let originalIndices = offersToRender.map((_, i) => i);
     
     // Sort offers if skill 19301 is purchased
     if (skillMap[19301].purchased) {
-      offersToRender.sort((a, b) => {
-        const cardA = cardMap[a.cardId];
-        const cardB = cardMap[b.cardId];
+      // Sort both arrays together
+      const combined = offersToRender.map((offer, i) => ({offer, originalIndex: i}));
+      combined.sort((a, b) => {
+        const cardA = cardMap[a.offer.cardId];
+        const cardB = cardMap[b.offer.cardId];
         
         // First sort by rarity (reverse order)
         const rarityIndexA = rarities.indexOf(cardA.rarity);
@@ -496,9 +499,14 @@ const merchants = [
         // Then sort by realm (reverse order)
         return cardB.realm - cardA.realm; // Reverse order
       });
+      
+      // Update both arrays with sorted values
+      offersToRender = combined.map(item => item.offer);
+      originalIndices = combined.map(item => item.originalIndex);
     }
 
-    offersToRender.forEach((o, idx) => {
+    offersToRender.forEach((o, displayIdx) => {
+      const originalIdx = originalIndices[displayIdx];
       const card  = cardMap[o.cardId];
       const realm = realmMap[card.realm];
   
@@ -573,7 +581,7 @@ const merchants = [
       });
       buyBtn.addEventListener('click', e => {
         e.stopPropagation();
-        buyOffer(idx);
+        buyOffer(originalIdx);  // Use original index for purchase
       });
       front.appendChild(buyBtn);
 

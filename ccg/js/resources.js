@@ -92,8 +92,8 @@ window.realmColors = {
     7: "#e74c3c",    // mythical beasts (bold crimson, evokes danger & power)
     8: "#1abc9c",   // incremental games (teal — energetic and digital)
     9: "#d4a3b7",   // spirit familiars (dull pink — soft, muted, gentle)
-   10: "#985112",   // greek gods (rich orange — Olympian fire and command)
-   11: "#093526",   // weapons (a rich dark green)
+   10: "#093526",   // weapons (a rich dark green)
+   11: "#985112",   // greek gods (rich orange — Olympian fire and command)
    12: "#a5134d"    // bosses (deep magenta — intense, climactic energy)
   };
     
