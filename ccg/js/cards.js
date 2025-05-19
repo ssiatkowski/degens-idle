@@ -4717,6 +4717,11 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 5,
         "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "junk"
       }
     ]
   },
@@ -4769,6 +4774,11 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 9,
         "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "junk"
       }
     ],
     "specialEffects": [
