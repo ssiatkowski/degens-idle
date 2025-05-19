@@ -1047,7 +1047,7 @@ window.skills = [
       id: 12103,
       name: "Absorber Upgrade 3",
       description: "Increase maximum gravitational wave absorption to 7x.",
-      cost: { realmId: 9, currencyId: "pollen", amount: 1e9 },
+      cost: { realmId: 9, currencyId: "pollen", amount: 7e9 },
       purchased: false
     },
     {
@@ -1201,21 +1201,35 @@ window.skills = [
       id: 18001,
       name: "No More Junk",
       description: "Junk cards no longer show up after poke (you still get them) unless they gain tier or are new.",
-      cost: { realmId: 5, currencyId: "stone", amount: 2e8},
+      cost: { realmId: 5, currencyId: "stone", amount: 7.5e7},
       purchased: false
     },
     {
       id: 18002,
       name: "I Ain't No Basic Bitch",
       description: "Basic cards no longer show up after poke (you still get them) unless they gain tier or are new.",
-      cost: { realmId: 6, currencyId: "coral", amount: 2e11},
+      cost: { realmId: 7, currencyId: "coral", amount: 2e10},
       purchased: false
     },
+    {
+      id: 18003,
+      name: "Decent Cards Are Beneath Me",
+      description: "Decent cards no longer show up after poke (you still get them) unless they gain tier or are new.",
+      cost: { realmId: 9, currencyId: "pollen", amount: 1.5e13},
+      purchased: false
+    },
+    // {
+    //   id: 18004,
+    //   name: "Fine Simply Doesn't Cut It",
+    //   description: "Fine cards no longer show up after poke (you still get them) unless they gain tier or are new.",
+    //   cost: { realmId: 11, currencyId: "egg", amount: 4e20},
+    //   purchased: false
+    // },
     {
       id: 19001,
       name: "More Bulk Offers Please",
       description: "Increase chance that merchants sell multiple copies of cards from 25% to 50%.",
-      cost: { realmId: 9, currencyId: "coin", amount: 5e10},
+      cost: { realmId: 9, currencyId: "coin", amount: 3e12},
       purchased: false
     },
     {
@@ -1795,6 +1809,10 @@ function applySkill(id, skipCost = false) {
         break;
       case 18002: // I Ain't No Basic Bitch
         state.pokeRaritiesOmitted.push('basic');
+        updatePokeFilterStats();
+        break;
+      case 18003: // Decent Cards Are Beneath Me
+        state.pokeRaritiesOmitted.push('decent');
         updatePokeFilterStats();
         break;
       case 19001: // More Bulk Offers Please
