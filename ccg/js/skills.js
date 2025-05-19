@@ -39,7 +39,7 @@ function initSkillsFilters() {
   skillFilterState.purchased     = 'unpurchased';
   skillFilterState.affordability = 'all';
   skillFilterState.lock          = 'unlocked';
-  skillFilterState.currencies    = new Set(currencies.map(c => c.id)); // Initialize with all currencies
+  skillFilterState.currencies    = new Set(currencies.filter(c => state.currencies[c.id]?.greaterThan(0)).map(c => c.id)); // Initialize with only non-zero currencies
 
   const purchasedOpts = ['unpurchased','purchased'];
   const affordOpts    = ['all','affordable'];

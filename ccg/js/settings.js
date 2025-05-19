@@ -111,6 +111,9 @@ document.addEventListener('DOMContentLoaded', function() {
             const file = e.target.files[0];
             if (!file) return;
 
+            // Pause the currency interval
+            clearInterval(currencyInterval);
+
             const reader = new FileReader();
             reader.onload = function(e) {
                 try {
@@ -122,6 +125,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     window.location.reload();
                 } catch (error) {
                     alert('Invalid save file!');
+                    // Resume the interval if load fails
+                    currencyInterval = setInterval(updateCurrencyAndSave, 1000);
                 }
             };
             reader.readAsText(file);
@@ -147,6 +152,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Load from Clipboard
     loadFromClipboardBtn.addEventListener('click', function() {
+        // Pause the currency interval
+        clearInterval(currencyInterval);
+
         navigator.clipboard.readText().then(text => {
             try {
                 // Validate the save data
@@ -156,9 +164,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 window.location.reload();
             } catch (error) {
                 alert('Invalid save data in clipboard!');
+                // Resume the interval if load fails
+                currencyInterval = setInterval(updateCurrencyAndSave, 1000);
             }
         }).catch(err => {
             alert('Failed to read from clipboard: ' + err);
+            // Resume the interval if clipboard read fails
+            currencyInterval = setInterval(updateCurrencyAndSave, 1000);
         });
     });
 

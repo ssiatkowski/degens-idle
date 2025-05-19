@@ -23,7 +23,8 @@ window.SPECIAL_EFFECT_NAMES = {
     allGeneratorMultiplier: "All Generator Multiplier",
     flatMaxCardsPerPoke: "Max Cards per Poke",
     flatMinCardsPerPoke: "Min Cards per Poke",
-    flatCooldownDivider: "Cooldown Divider"
+    flatCooldownDivider: "Cooldown Divider",
+    flatExtraMerchantRarityScaling: "Extra Merchant Rarity Scaling",
 };
   
 const EFFECT_SCALES = {
@@ -154,6 +155,10 @@ function computeSpecialEffects(c) {
             case "flatCooldownDivider":
                 effs.flatCooldownDivider = (effs.flatCooldownDivider || 0) + def.value;
                 break;
+
+            case "flatExtraMerchantRarityScaling":
+                effs.extraMerchantRarityScaling = (effs.extraMerchantRarityScaling || 0) + def.value;
+                break;
         }
     });
 
@@ -230,6 +235,10 @@ function applyEffectsDelta(deltaMap, sign = +1) {
                 break;
 
             case "cooldownDivider":
+                E[parts[0]] = (E[parts[0]] || 0) + sign * v;
+                break;
+
+            case "flatExtraMerchantRarityScaling":
                 E[parts[0]] = (E[parts[0]] || 0) + sign * v;
                 break;
 

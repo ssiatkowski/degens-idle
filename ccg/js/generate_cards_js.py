@@ -75,7 +75,8 @@ def load_cards(csv_path):
 
             if se_type in (
                 "merchantPriceDivider", "allGeneratorMultiplier",
-                "flatMaxCardsPerPoke", "flatMinCardsPerPoke", "flatCooldownDivider"
+                "flatMaxCardsPerPoke", "flatMinCardsPerPoke", "flatCooldownDivider",
+                "flatExtraMerchantRarityScaling"
             ):
                 se["value"] = float(arg1) if arg1 else 0
             elif se_type in ("flatCurrencyPerPoke", "flatCurrencyPerSecond",
@@ -168,12 +169,12 @@ def generate_stats(cards):
     print(curr_stats)
 
     # New: Special Effects Summary
-    print("\n== Special Effects per Realm ==")
-    for card in cards:
-        for se in card.get("specialEffects", []):
-            realm = card["realm"]
-            req = se["requirement"]
-            print(f"[Realm {realm}] Card {card['name']} ({card['id']}): {se['type']} — requires {req['type']} {req['amount']}")
+    # print("\n== Special Effects per Realm ==")
+    # for card in cards:
+    #     for se in card.get("specialEffects", []):
+    #         realm = card["realm"]
+    #         req = se["requirement"]
+    #         print(f"[Realm {realm}] Card {card['name']} ({card['id']}): {se['type']} — requires {req['type']} {req['amount']}")
 
     print("\n== Special Effect Aggregates ==")
     merchant_total = 0
@@ -185,7 +186,7 @@ def generate_stats(cards):
     flat_max_cards = 0
     flat_min_cards = 0
     cooldown_divider_total = 0
-
+    extra_merchant_rarity_scaling_total = 0
     for card in cards:
         for se in card.get("specialEffects", []):
             t = se["type"]
@@ -220,6 +221,9 @@ def generate_stats(cards):
             elif t == "flatCooldownDivider":
                 cooldown_divider_total += se.get("value", 0)
 
+            elif t == "flatExtraMerchantRarityScaling":
+                extra_merchant_rarity_scaling_total += se.get("value", 0)
+
     print(f"\nMerchant Price Reduction (total): {merchant_total:.3f}")
 
     print("\nFlat Currency Per Poke (total):")
@@ -243,8 +247,10 @@ def generate_stats(cards):
     print(f"\nFlat Max Cards Per Poke (total): {flat_max_cards:.3f}")
 
     print(f"Flat Min Cards Per Poke (total): {flat_min_cards:.3f}")
-    
+
     print(f"Cooldown Divider (total): {cooldown_divider_total:.3f}")
+
+    print(f"Extra Merchant Rarity Scaling (total): {extra_merchant_rarity_scaling_total:.3f}")
 
 
 if __name__ == "__main__":

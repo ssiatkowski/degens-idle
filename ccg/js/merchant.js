@@ -661,7 +661,7 @@ const merchants = [
     // if that was the *last* card, force remaining cooldown ≤ 10s
     if (state.merchantOffers.length === 0) {
       const now       = Date.now();
-      const maxRemain = 10 * 1000; // 10s in ms
+      const maxRemain = skillMap[19401].purchased ? 5 * 1000 : 10 * 1000;
       const rem       = nextRefresh - now;
       if (rem > maxRemain) {
         nextRefresh = now + maxRemain;

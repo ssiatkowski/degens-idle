@@ -43,5 +43,5 @@
       grayscale(1)
       sepia(1)
       hue-rotate(120deg)
-      saturate(10);
+      saturate(3);
   }

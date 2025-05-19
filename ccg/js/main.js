@@ -65,6 +65,7 @@ window.state = {
   harvesterValue: 0,
   absorberValue: 1,
   interceptorValue: 0,     // Add interceptor value
+  interceptorActive: false, // Track if interceptor is active
   timeCrunchValue: 0,     // Add Time Crunch value
   merchantBulkChance: 0.25,
   merchantBuyAllDiscount: 0.05,
@@ -103,6 +104,7 @@ function loadState() {
     state.harvesterValue = obj.harvesterValue || 0;
     state.absorberValue = obj.absorberValue || 1;
     state.interceptorValue = obj.interceptorValue || 0;
+    state.interceptorActive = obj.interceptorActive || false;
     state.timeCrunchValue = obj.timeCrunchValue || 0;  // Load Time Crunch value
     state.merchantBulkChance = obj.merchantBulkChance || 0.25;
     state.merchantRefreshTime = obj.merchantRefreshTime || 0;
@@ -147,6 +149,7 @@ function saveState() {
     harvesterValue: state.harvesterValue,
     absorberValue: state.absorberValue,
     interceptorValue: state.interceptorValue,
+    interceptorActive: state.interceptorActive,
     timeCrunchValue: state.timeCrunchValue,
     merchantBulkChance: state.merchantBulkChance,
     currentMerchantId: state.currentMerchant?.id ?? null,
@@ -1389,6 +1392,12 @@ function updateGeneratorRates() {
     const newContribution = discoveredCount * discoveredCount * state.effects.allGeneratorMultiplier;
     state.resourceGeneratorContribution.coin = newContribution;
   }
+  // Resource Generator 9 (skill 10009)
+  if (skillMap[10009].purchased) {
+    const discoveredCount = cards.filter(c => c.realm === 9 && c.quantity > 0).length;
+    const newContribution = discoveredCount * discoveredCount * state.effects.allGeneratorMultiplier;
+    state.resourceGeneratorContribution.spirit = newContribution;
+  }
 }
 
 function giveCard(cardId, amount = 1) {
@@ -2076,7 +2085,7 @@ document.addEventListener('DOMContentLoaded', async ()=>{
       offlineEarnings['harvester'] = new Decimal(harvesterGain);
     }
 
-    if (skillMap[12201].purchased) {
+    if (skillMap[12201].purchased && !state.interceptorActive) {
       // Award interceptor value based on time difference
       const interceptorGain = timeDiff / 1000 * (skillMap[12202].purchased ? 2 : 1);
       state.interceptorValue = state.interceptorValue + interceptorGain;
@@ -2142,69 +2151,7 @@ document.addEventListener('DOMContentLoaded', async ()=>{
 
   // Store interval IDs for cleanup
   merchantInterval = setInterval(refreshMerchantIfNeeded, 100);
-  currencyInterval = setInterval(() => {
-    // First check for offline gains if enough time has passed
-    const timeDiff = Math.floor((Date.now() - state.lastSaveTime) / 1000);
-    
-    if (timeDiff > 10) {
-      // Calculate offline gains
-      const offlineEarnings = {};
-      
-      // Award currency based on currencyPerSec and time difference
-      Object.entries(state.effects.currencyPerSec).forEach(([curId, rate]) => {
-        if (rate && state.currencies[curId] != null) {
-          // Get generator contribution
-          const gen = state.resourceGeneratorContribution[curId] || 0;
-          // Add generator contribution to the rate
-          const totalRate = rate + gen;
-          if (!totalRate) return;
-          const offlineGain = new Decimal(totalRate).times(timeDiff);
-          state.currencies[curId] = state.currencies[curId].plus(offlineGain);
-          offlineEarnings[curId] = offlineGain;
-        }
-      });
-
-      if (skillMap[12001].purchased) {
-        // Award harvester value based on time difference
-        const harvesterGain = timeDiff / 1000 * (skillMap[12002].purchased ? 2 : 1) * (skillMap[12003].purchased ? 10 : 1);
-        state.harvesterValue = state.harvesterValue + harvesterGain;
-        offlineEarnings['harvester'] = new Decimal(harvesterGain);
-      }
-
-      if (skillMap[12201].purchased) {
-        // Award interceptor value based on time difference
-        const interceptorGain = timeDiff / 1000 * (skillMap[12202].purchased ? 2 : 1);
-        state.interceptorValue = state.interceptorValue + interceptorGain;
-        offlineEarnings['interceptor'] = new Decimal(interceptorGain);
-      }
-
-      if (skillMap[12301].purchased) {
-        // Award Time Crunch value based on time difference
-        const timeCrunchGain = timeDiff;
-        const actualGain = Math.min(timeCrunchGain, 300 - state.timeCrunchValue);
-        state.timeCrunchValue = Math.min(state.timeCrunchValue + timeCrunchGain, 300);
-        offlineEarnings['timeCrunch'] = new Decimal(actualGain);
-      }
-
-      // Show earnings modal
-      showOfflineEarningsModal(offlineEarnings);
-
-      saveState();
-    }
-
-    // Then update currency per second
-    Object.entries(state.effects.currencyPerSec).forEach(([curId, rate]) => {
-      if (state.currencies[curId] == null) return;
-      const gen = state.resourceGeneratorContribution[curId] || 0;
-      const totalRate = rate * state.effects.currencyPerSecMultiplier[curId] + gen;
-      if (!totalRate) return;
-      state.currencies[curId] = state.currencies[curId].plus(new Decimal(totalRate));
-    });
-    updateCurrencyBar();
-
-    // Finally save the game state
-    saveState();
-  }, 1000);
+  currencyInterval = setInterval(updateCurrencyAndSave, 1000);
 
   // Store event handlers for cleanup
   touchMoveHandler = (e) => {
@@ -2266,4 +2213,66 @@ if (typeof resetGame === 'function') {
     cleanup();
     originalResetGame();
   };
+}
+
+function updateCurrencyAndSave() {
+  // First check for offline gains if enough time has passed
+  const timeDiff = Math.floor((Date.now() - state.lastSaveTime) / 1000);
+  
+  if (timeDiff > 10) {
+    // Calculate offline gains
+    const offlineEarnings = {};
+    
+    // Award currency based on currencyPerSec and time difference
+    Object.entries(state.effects.currencyPerSec).forEach(([curId, rate]) => {
+      if (rate && state.currencies[curId] != null) {
+        // Get generator contribution
+        const gen = state.resourceGeneratorContribution[curId] || 0;
+        // Add generator contribution to the rate
+        const totalRate = rate + gen;
+        if (!totalRate) return;
+        const offlineGain = new Decimal(totalRate).times(timeDiff);
+        state.currencies[curId] = state.currencies[curId].plus(offlineGain);
+        offlineEarnings[curId] = offlineGain;
+      }
+    });
+
+    if (skillMap[12001].purchased) {
+      // Award harvester value based on time difference
+      const harvesterGain = timeDiff / 1000 * (skillMap[12002].purchased ? 2 : 1) * (skillMap[12003].purchased ? 10 : 1);
+      state.harvesterValue = state.harvesterValue + harvesterGain;
+      offlineEarnings['harvester'] = new Decimal(harvesterGain);
+    }
+
+    if (skillMap[12201].purchased && !state.interceptorActive) {
+      // Award interceptor value based on time difference
+      const interceptorGain = timeDiff / 1000 * (skillMap[12202].purchased ? 2 : 1);
+      state.interceptorValue = state.interceptorValue + interceptorGain;
+      offlineEarnings['interceptor'] = new Decimal(interceptorGain);
+    }
+
+    if (skillMap[12301].purchased) {
+      // Award Time Crunch value based on time difference
+      const timeCrunchGain = timeDiff;
+      const actualGain = Math.min(timeCrunchGain, 300 - state.timeCrunchValue);
+      state.timeCrunchValue = Math.min(state.timeCrunchValue + timeCrunchGain, 300);
+      offlineEarnings['timeCrunch'] = new Decimal(actualGain);
+    }
+
+    // Show earnings modal
+    showOfflineEarningsModal(offlineEarnings);
+  }
+
+  // Then update currency per second
+  Object.entries(state.effects.currencyPerSec).forEach(([curId, rate]) => {
+    if (state.currencies[curId] == null) return;
+    const gen = state.resourceGeneratorContribution[curId] || 0;
+    const totalRate = rate * state.effects.currencyPerSecMultiplier[curId] + gen;
+    if (!totalRate) return;
+    state.currencies[curId] = state.currencies[curId].plus(new Decimal(totalRate));
+  });
+  updateCurrencyBar();
+
+  // Finally save the game state
+  saveState();
 }

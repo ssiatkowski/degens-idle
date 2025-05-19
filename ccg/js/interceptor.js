@@ -1,6 +1,6 @@
 // Interceptor state
 let interceptorInterval = null;
-let interceptorActive = false;
+let countdownInterval = null;
 
 // DOM elements
 const interceptorContainer = document.getElementById('interceptor-container');
@@ -13,6 +13,12 @@ function initSpaceBendingInterceptor() {
   if (skillMap[12201].purchased) {
     interceptorContainer.style.display = 'flex';
     startInterceptor();
+    
+    // If interceptor was active when game was closed, restore its state
+    if (state.interceptorActive) {
+      updateInterceptorUI();
+      startInterceptorCountdown();
+    }
   }
 }
 
@@ -21,7 +27,7 @@ function startInterceptor() {
   if (interceptorInterval) return;
   
   interceptorInterval = setInterval(() => {
-    if (!interceptorActive) {
+    if (!state.interceptorActive) {
       state.interceptorValue += 0.01 * (skillMap[12202].purchased ? 2 : 1);
       updateInterceptorUI();
     }
@@ -31,32 +37,37 @@ function startInterceptor() {
 // Update interceptor UI
 function updateInterceptorUI() {
   interceptorCounter.innerHTML = formatDuration(state.interceptorValue, 2);
-  interceptorButton.classList.toggle('active', interceptorActive);
+  interceptorButton.classList.toggle('active', state.interceptorActive);
 }
 
-// Handle interceptor button click
-function handleInterceptorClick() {
-  if (interceptorActive || state.interceptorValue < 1) return;
-
-  interceptorActive = true;
-  updateInterceptorUI();
-
-  // Start countdown
-  const countdownInterval = setInterval(() => {
+// Start the interceptor countdown
+function startInterceptorCountdown() {
+  if (countdownInterval) clearInterval(countdownInterval);
+  
+  countdownInterval = setInterval(() => {
     state.interceptorValue = Math.max(0, state.interceptorValue - 1);
     updateInterceptorUI();
 
     if (state.interceptorValue <= 0) {
       clearInterval(countdownInterval);
-      interceptorActive = false;
+      state.interceptorActive = false;
       updateInterceptorUI();
     }
   }, 1000);
 }
 
+// Handle interceptor button click
+function handleInterceptorClick() {
+  if (state.interceptorActive || state.interceptorValue < 1) return;
+
+  state.interceptorActive = true;
+  updateInterceptorUI();
+  startInterceptorCountdown();
+}
+
 // Increment interceptor value
 function incrementInterceptor() {
-  if (!interceptorActive && skillMap[12201].purchased) {
+  if (!state.interceptorActive && skillMap[12201].purchased) {
     state.interceptorValue += 0.01 * (skillMap[12202].purchased ? 2 : 1);
     updateInterceptorUI();
   }
@@ -64,5 +75,5 @@ function incrementInterceptor() {
 
 // Check if interceptor is active
 function isInterceptorActive() {
-  return interceptorActive;
+  return state.interceptorActive;
 } 

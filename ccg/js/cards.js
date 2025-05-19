@@ -1300,7 +1300,7 @@ window.cards = [
       {
         "type": "rarityOddsDivider",
         "realm": 4,
-        "rarity": "junk"
+        "rarity": "basic"
       }
     ]
   },
@@ -6699,6 +6699,11 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 4,
         "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "decent"
       }
     ]
   },
@@ -10919,6 +10924,11 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 4,
         "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "junk"
       }
     ],
     "specialEffects": [
@@ -11352,6 +11362,11 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 7,
         "rarity": "epic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "junk"
       }
     ],
     "specialEffects": [
@@ -11450,6 +11465,1989 @@ window.cards = [
         },
         "currency": "coin",
         "value": 100.0
+      }
+    ]
+  },
+  {
+    "id": "1001",
+    "name": "Rusty Spoon",
+    "realm": 10,
+    "rarity": "junk",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 1.5,
+    "levelCost": {
+      "currency": "coral",
+      "amount": 1000.0
+    },
+    "description": "It was probably used for cereal this morning.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "coral",
+        "value": 10.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "basic"
+      }
+    ]
+  },
+  {
+    "id": "1002",
+    "name": "Broken Bottle",
+    "realm": 10,
+    "rarity": "junk",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 1.5,
+    "levelCost": {
+      "currency": "pollen",
+      "amount": 1000.0
+    },
+    "description": "Perfect for bar fights and regrettable decisions.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "pollen",
+        "value": 10.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "junk"
+      }
+    ]
+  },
+  {
+    "id": "1003",
+    "name": "Worn Slingshot",
+    "realm": 10,
+    "rarity": "junk",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.5,
+    "levelCost": {
+      "currency": "egg",
+      "amount": 1000.0
+    },
+    "description": "Still has a pebble stuck from 1993.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "egg",
+        "value": 25.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "egg",
+        "value": 2.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "junk"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "flatCooldownDivider",
+        "requirement": {
+          "type": "level",
+          "amount": 30
+        },
+        "value": 0.1
+      }
+    ]
+  },
+  {
+    "id": "1004",
+    "name": "Stick",
+    "realm": 10,
+    "rarity": "junk",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.5,
+    "levelCost": {
+      "currency": "crystal",
+      "amount": 1000.0
+    },
+    "description": "Straight from the ground—DIY level: toddler.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "crystal",
+        "value": 25.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "crystal",
+        "value": 2.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "junk"
+      }
+    ]
+  },
+  {
+    "id": "1005",
+    "name": "Pocket Knife",
+    "realm": 10,
+    "rarity": "basic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 5.0,
+    "levelCost": {
+      "currency": "coral",
+      "amount": 1000.0
+    },
+    "description": "Reliable, foldable, and just edgy enough.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "coral",
+        "value": 500.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "coral",
+        "value": 10.0
+      },
+      {
+        "type": "cooldownDivider"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "junk"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "merchantPriceDivider",
+        "requirement": {
+          "type": "level",
+          "amount": 15
+        },
+        "value": 1.5
+      }
+    ]
+  },
+  {
+    "id": "1006",
+    "name": "Wooden Club",
+    "realm": 10,
+    "rarity": "basic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.5,
+    "levelCost": {
+      "currency": "pollen",
+      "amount": 1000.0
+    },
+    "description": "A true caveman favorite.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "pollen",
+        "value": 250.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "pollen",
+        "value": 5.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "junk"
+      }
+    ]
+  },
+  {
+    "id": "1007",
+    "name": "Pipe Wrench",
+    "realm": 10,
+    "rarity": "basic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 5.0,
+    "levelCost": {
+      "currency": "egg",
+      "amount": 1000.0
+    },
+    "description": "Plumbing tool turned menace.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "egg",
+        "value": 500.0
+      },
+      {
+        "type": "maxCardsPerPoke"
+      },
+      {
+        "type": "minCardsPerPoke"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "basic"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "flatMinCardsPerPoke",
+        "requirement": {
+          "type": "level",
+          "amount": 15
+        },
+        "value": 250.0
+      }
+    ]
+  },
+  {
+    "id": "1008",
+    "name": "Short Bow",
+    "realm": 10,
+    "rarity": "basic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 1.5,
+    "levelCost": {
+      "currency": "crystal",
+      "amount": 1000.0
+    },
+    "description": "Perfect for squirrels or poor decisions.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "crystal",
+        "value": 100.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "junk"
+      }
+    ]
+  },
+  {
+    "id": "1009",
+    "name": "Crossbow",
+    "realm": 10,
+    "rarity": "decent",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.0,
+    "levelCost": {
+      "currency": "coral",
+      "amount": 1000.0
+    },
+    "description": "Because you watched too much 'Walking Dead'.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "coral",
+        "value": 500.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "basic"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "flatMinCardsPerPoke",
+        "requirement": {
+          "type": "level",
+          "amount": 40
+        },
+        "value": 250.0
+      }
+    ]
+  },
+  {
+    "id": "1010",
+    "name": "Machete",
+    "realm": 10,
+    "rarity": "decent",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.0,
+    "levelCost": {
+      "currency": "pollen",
+      "amount": 1000.0
+    },
+    "description": "Doubles as a jungle survival tool.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "pollen",
+        "value": 500.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "basic"
+      }
+    ]
+  },
+  {
+    "id": "1011",
+    "name": "Throwing Star",
+    "realm": 10,
+    "rarity": "decent",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.5,
+    "levelCost": {
+      "currency": "egg",
+      "amount": 1000.0
+    },
+    "description": "Looks cooler than it performs.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "egg",
+        "value": 750.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "egg",
+        "value": 10.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "junk"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "flatCurrencyPerPoke",
+        "requirement": {
+          "type": "level",
+          "amount": 30
+        },
+        "currency": "crystal",
+        "value": 100000.0
+      }
+    ]
+  },
+  {
+    "id": "1012",
+    "name": "Tactical Axe",
+    "realm": 10,
+    "rarity": "decent",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.5,
+    "levelCost": {
+      "currency": "crystal",
+      "amount": 1000.0
+    },
+    "description": "The official weapon of doomsday preppers.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "crystal",
+        "value": 750.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "crystal",
+        "value": 10.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "basic"
+      }
+    ]
+  },
+  {
+    "id": "1013",
+    "name": "Katana",
+    "realm": 10,
+    "rarity": "fine",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 4.5,
+    "levelCost": {
+      "currency": "coral",
+      "amount": 1000.0
+    },
+    "description": "Made with honor. Swings with grace.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "coral",
+        "value": 10000.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "coral",
+        "value": 50.0
+      },
+      {
+        "type": "cooldownDivider"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "decent"
+      }
+    ]
+  },
+  {
+    "id": "1014",
+    "name": "Compound Bow",
+    "realm": 10,
+    "rarity": "fine",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.5,
+    "levelCost": {
+      "currency": "pollen",
+      "amount": 1000.0
+    },
+    "description": "Used by Olympic archers and apocalypse heroes.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "pollen",
+        "value": 3000.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "pollen",
+        "value": 25.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "fine"
+      }
+    ]
+  },
+  {
+    "id": "1015",
+    "name": "Revolver",
+    "realm": 10,
+    "rarity": "fine",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.0,
+    "levelCost": {
+      "currency": "egg",
+      "amount": 1000.0
+    },
+    "description": "Classic click and bang.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "egg",
+        "value": 2500.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "fine"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "flatCooldownDivider",
+        "requirement": {
+          "type": "level",
+          "amount": 40
+        },
+        "value": 1.0
+      }
+    ]
+  },
+  {
+    "id": "1016",
+    "name": "Sawed-Off Shotgun",
+    "realm": 10,
+    "rarity": "fine",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 5.0,
+    "levelCost": {
+      "currency": "crystal",
+      "amount": 1000.0
+    },
+    "description": "Up close and devastating.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "crystal",
+        "value": 15000.0
+      },
+      {
+        "type": "maxCardsPerPoke"
+      },
+      {
+        "type": "minCardsPerPoke"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 4,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "fine"
+      }
+    ]
+  },
+  {
+    "id": "1017",
+    "name": "Sniper Rifle",
+    "realm": 10,
+    "rarity": "rare",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.5,
+    "levelCost": {
+      "currency": "coral",
+      "amount": 1000.0
+    },
+    "description": "Because why miss from a mile away?",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "coral",
+        "value": 50000.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "coral",
+        "value": 50.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "decent"
+      }
+    ]
+  },
+  {
+    "id": "1018",
+    "name": "Flamethrower",
+    "realm": 10,
+    "rarity": "rare",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.5,
+    "levelCost": {
+      "currency": "pollen",
+      "amount": 1000.0
+    },
+    "description": "Not OSHA-approved, but effective.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "pollen",
+        "value": 50000.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "pollen",
+        "value": 50.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "decent"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "flatCurrencyPerSecond",
+        "requirement": {
+          "type": "level",
+          "amount": 30
+        },
+        "currency": "royal_jelly",
+        "value": 5.0
+      }
+    ]
+  },
+  {
+    "id": "1019",
+    "name": "Railgun",
+    "realm": 10,
+    "rarity": "rare",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.5,
+    "levelCost": {
+      "currency": "egg",
+      "amount": 1000.0
+    },
+    "description": "Launches slugs at hypersonic speeds.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "egg",
+        "value": 50000.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "egg",
+        "value": 50.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "decent"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "flatCurrencyPerSecond",
+        "requirement": {
+          "type": "level",
+          "amount": 30
+        },
+        "currency": "feather",
+        "value": 5.0
+      }
+    ]
+  },
+  {
+    "id": "1020",
+    "name": "Lightsaber",
+    "realm": 10,
+    "rarity": "rare",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 4.0,
+    "levelCost": {
+      "currency": "crystal",
+      "amount": 1000.0
+    },
+    "description": "The go-to glowstick for Sith lords.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "crystal",
+        "value": 100000.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "crystal",
+        "value": 100.0
+      },
+      {
+        "type": "cooldownDivider"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "fine"
+      }
+    ]
+  },
+  {
+    "id": "1021",
+    "name": "Plasma Rifle",
+    "realm": 10,
+    "rarity": "epic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.5,
+    "levelCost": {
+      "currency": "coral",
+      "amount": 1000.0
+    },
+    "description": "Pew pew energy from the future.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "coral",
+        "value": 250000.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "coral",
+        "value": 100.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "rare"
+      }
+    ]
+  },
+  {
+    "id": "1022",
+    "name": "Gravity Hammer",
+    "realm": 10,
+    "rarity": "epic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 5.0,
+    "levelCost": {
+      "currency": "pollen",
+      "amount": 1000.0
+    },
+    "description": "Hit things so hard gravity feels it.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "pollen",
+        "value": 500000.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "pollen",
+        "value": 200.0
+      },
+      {
+        "type": "maxCardsPerPoke"
+      },
+      {
+        "type": "minCardsPerPoke"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "rare"
+      }
+    ]
+  },
+  {
+    "id": "1023",
+    "name": "Omniblade",
+    "realm": 10,
+    "rarity": "epic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.5,
+    "levelCost": {
+      "currency": "egg",
+      "amount": 1000.0
+    },
+    "description": "It’s a sword. It’s a hologram. It’s painful.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "egg",
+        "value": 250000.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "egg",
+        "value": 100.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "rare"
+      }
+    ]
+  },
+  {
+    "id": "1024",
+    "name": "Keyblade",
+    "realm": 10,
+    "rarity": "epic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.5,
+    "levelCost": {
+      "currency": "crystal",
+      "amount": 1000.0
+    },
+    "description": "Unlocks hearts and combos.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "crystal",
+        "value": 250000.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "crystal",
+        "value": 100.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "rare"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "merchantPriceDivider",
+        "requirement": {
+          "type": "level",
+          "amount": 40
+        },
+        "value": 1.5
+      }
+    ]
+  },
+  {
+    "id": "1025",
+    "name": "Wolverine Claw",
+    "realm": 10,
+    "rarity": "legend",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 1.5,
+    "levelCost": {
+      "currency": "rune",
+      "amount": 1000.0
+    },
+    "description": "Snikt! Not dishwasher safe.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "rune",
+        "value": 2000.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "epic"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "currencyPerPokeMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 30
+        },
+        "currency": "stone",
+        "value": 3.0
+      },
+      {
+        "type": "currencyPerSecMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 45
+        },
+        "currency": "stone",
+        "value": 2.0
+      }
+    ]
+  },
+  {
+    "id": "1026",
+    "name": "Mega Buster",
+    "realm": 10,
+    "rarity": "legend",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 1.5,
+    "levelCost": {
+      "currency": "pearl",
+      "amount": 1000.0
+    },
+    "description": "Arm cannon, ready to charge.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "pearl",
+        "value": 250.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 4,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 4,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 4,
+        "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 4,
+        "rarity": "epic"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "currencyPerPokeMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 30
+        },
+        "currency": "coral",
+        "value": 3.0
+      },
+      {
+        "type": "currencyPerSecMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 45
+        },
+        "currency": "stone",
+        "value": 2.0
+      }
+    ]
+  },
+  {
+    "id": "1027",
+    "name": "BFG 9000",
+    "realm": 10,
+    "rarity": "legend",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 1.5,
+    "levelCost": {
+      "currency": "royal_jelly",
+      "amount": 1000.0
+    },
+    "description": "The BFG stands for what you think.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "royal_jelly",
+        "value": 200.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "rare"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "currencyPerPokeMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 30
+        },
+        "currency": "pollen",
+        "value": 3.0
+      },
+      {
+        "type": "currencyPerSecMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 45
+        },
+        "currency": "stone",
+        "value": 2.0
+      }
+    ]
+  },
+  {
+    "id": "1028",
+    "name": "Monomolecular Dagger",
+    "realm": 10,
+    "rarity": "legend",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 3.5,
+    "levelCost": {
+      "currency": "feather",
+      "amount": 1000.0
+    },
+    "description": "So sharp it cuts molecules and egos.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "feather",
+        "value": 200.0
+      },
+      {
+        "type": "cooldownDivider"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "epic"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "flatCurrencyPerPoke",
+        "requirement": {
+          "type": "level",
+          "amount": 15
+        },
+        "currency": "spirit",
+        "value": 50000.0
+      },
+      {
+        "type": "currencyPerSecMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 25
+        },
+        "currency": "spirit",
+        "value": 2.0
+      }
+    ]
+  },
+  {
+    "id": "1029",
+    "name": "Portal Gun",
+    "realm": 10,
+    "rarity": "mythic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.5,
+    "levelCost": {
+      "currency": "royal_jelly",
+      "amount": 1000.0
+    },
+    "description": "Open portals. Avoid traffic.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "royal_jelly",
+        "value": 5000.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "royal_jelly",
+        "value": 100.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "epic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "legend"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "currencyPerPokeMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 30
+        },
+        "currency": "royal_jelly",
+        "value": 2.0
+      },
+      {
+        "type": "currencyPerSecMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 45
+        },
+        "currency": "royal_jelly",
+        "value": 2.0
+      }
+    ]
+  },
+  {
+    "id": "1030",
+    "name": "The Master Sword",
+    "realm": 10,
+    "rarity": "mythic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.5,
+    "levelCost": {
+      "currency": "rune",
+      "amount": 1000.0
+    },
+    "description": "Sealed away for when evil returns.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "rune",
+        "value": 25000.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "rune",
+        "value": 500.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "epic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "legend"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "currencyPerPokeMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 30
+        },
+        "currency": "rune",
+        "value": 2.0
+      },
+      {
+        "type": "currencyPerSecMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 45
+        },
+        "currency": "rune",
+        "value": 2.0
+      }
+    ]
+  },
+  {
+    "id": "1031",
+    "name": "Black Hole Cannon",
+    "realm": 10,
+    "rarity": "mythic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 5.0,
+    "levelCost": {
+      "currency": "cosmic_ray",
+      "amount": 1000.0
+    },
+    "description": "Fires tiny space doom.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "cosmic_ray",
+        "value": 5000.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "cosmic_ray",
+        "value": 100.0
+      },
+      {
+        "type": "maxCardsPerPoke"
+      },
+      {
+        "type": "minCardsPerPoke"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "epic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "legend"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "currencyPerPokeMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 15
+        },
+        "currency": "cosmic_ray",
+        "value": 2.0
+      },
+      {
+        "type": "currencyPerSecMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 30
+        },
+        "currency": "cosmic_ray",
+        "value": 2.0
+      }
+    ]
+  },
+  {
+    "id": "1032",
+    "name": "Golden Gun",
+    "realm": 10,
+    "rarity": "mythic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.5,
+    "levelCost": {
+      "currency": "feather",
+      "amount": 1000.0
+    },
+    "description": "One shot. One flex.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "feather",
+        "value": 5000.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "feather",
+        "value": 100.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "epic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "legend"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "fine"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "currencyPerPokeMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 30
+        },
+        "currency": "feather",
+        "value": 2.0
+      },
+      {
+        "type": "currencyPerSecMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 45
+        },
+        "currency": "feather",
+        "value": 2.0
+      }
+    ]
+  },
+  {
+    "id": "1033",
+    "name": "Zangetsu",
+    "realm": 10,
+    "rarity": "mythic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 3.5,
+    "levelCost": {
+      "currency": "pearl",
+      "amount": 1000.0
+    },
+    "description": "Wielded by Ichigo. Heavy. Sharp. Soulful.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "pearl",
+        "value": 5000.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "pearl",
+        "value": 100.0
+      },
+      {
+        "type": "cooldownDivider"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "epic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 4,
+        "rarity": "epic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "legend"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "legend"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "epic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "epic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "fine"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "currencyPerPokeMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 25
+        },
+        "currency": "pearl",
+        "value": 2.0
+      },
+      {
+        "type": "currencyPerSecMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 40
+        },
+        "currency": "pearl",
+        "value": 2.0
+      }
+    ]
+  },
+  {
+    "id": "1034",
+    "name": "Paradox Blade",
+    "realm": 10,
+    "rarity": "exotic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 3.0,
+    "levelCost": {
+      "currency": "royal_jelly",
+      "amount": 1000.0
+    },
+    "description": "Cannot be dodged, because it already hit you yesterday.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "royal_jelly",
+        "value": 200000.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "royal_jelly",
+        "value": 1000.0
+      },
+      {
+        "type": "cooldownDivider"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 3,
+        "rarity": "epic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 5,
+        "rarity": "legend"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "legend"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "epic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "mythic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "legend"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "flatCooldownDivider",
+        "requirement": {
+          "type": "level",
+          "amount": 20
+        },
+        "value": 5.0
+      },
+      {
+        "type": "flatExtraMerchantRarityScaling",
+        "requirement": {
+          "type": "level",
+          "amount": 40
+        },
+        "value": 0.5
+      }
+    ]
+  },
+  {
+    "id": "1035",
+    "name": "Infinity Gauntlet",
+    "realm": 10,
+    "rarity": "exotic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.5,
+    "levelCost": {
+      "currency": "cosmic_ray",
+      "amount": 1000.0
+    },
+    "description": "Snap responsibly.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "cosmic_ray",
+        "value": 200000.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "cosmic_ray",
+        "value": 1000.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
+        "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 7,
+        "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 9,
+        "rarity": "rare"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "flatMinCardsPerPoke",
+        "requirement": {
+          "type": "level",
+          "amount": 20
+        },
+        "value": 2500.0
+      },
+      {
+        "type": "flatMaxCardsPerPoke",
+        "requirement": {
+          "type": "level",
+          "amount": 50
+        },
+        "value": 100000.0
+      }
+    ]
+  },
+  {
+    "id": "1036",
+    "name": "Death Note",
+    "realm": 10,
+    "rarity": "exotic",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 2.5,
+    "levelCost": {
+      "currency": "spirit",
+      "amount": 1000.0
+    },
+    "description": "The human whose name is written in this note shall die.",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "spirit",
+        "value": 25000000.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "spirit",
+        "value": 25000.0
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "rare"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "epic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 10,
+        "rarity": "legend"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "currencyPerPokeMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 30
+        },
+        "currency": "spirit",
+        "value": 10.0
+      },
+      {
+        "type": "currencyPerSecMultiplier",
+        "requirement": {
+          "type": "level",
+          "amount": 45
+        },
+        "currency": "spirit",
+        "value": 3.0
       }
     ]
   }
