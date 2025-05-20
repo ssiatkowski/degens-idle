@@ -118,7 +118,7 @@
           </table>
         </div>
       </div>
-      <div id="draw-area" class="draw-area"></div>
+      <div id="draw-area" class="draw-area hole-draw-area"></div>
     </div>
   </div>
   
@@ -128,7 +128,7 @@
     <h2>Cards Collection</h2>
     <div id="cards-filters">
     </div>
-    <div id="cards-list"></div>
+    <div id="cards-list" class="draw-area cards-draw-area"></div>
   </div>
 
   <div id="tab-content-skills" class="tab-content" style="display:none;">
@@ -173,6 +173,10 @@
           <button id="darkThemeToggle" class="settings-button theme-button">
             <i class="fas fa-moon"></i> Dark Theme
           </button>
+          <div class="card-size-control">
+            <label for="cardSizeSlider">Card Size: <span id="cardSizeValue">100%</span></label>
+            <input type="range" id="cardSizeSlider" min="50" max="150" value="100" step="5">
+          </div>
         </div>
       </div>
       <div class="settings-section">

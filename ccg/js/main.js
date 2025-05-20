@@ -7,6 +7,7 @@ const globalFill = document.getElementById('global-cooldown-fill');
 let fillAnim = null;
 
 const drawArea = document.getElementById('draw-area');
+const cardsList = document.getElementById('cards-list');
 const holeBtn  = document.getElementById('hole-button');
 let revealedCount    = 0;
 let currentPackCount = 0;
@@ -295,6 +296,7 @@ function showTab(tab) {
 // --- POKE & REVEAL ---
 
 function performPoke() {
+  if (!drawArea.classList.contains('hole-draw-area')) return;
 
   holeBtn.disabled = true;
   holeBtn.classList.add('disabled');
@@ -368,28 +370,8 @@ function performPoke() {
     const rr = realmMap[realmId];
     const rarityWeights = rr.rarityWeights;
     
-    // Debug: Log original rarity weights
-    console.log('Original rarity weights:', rarityWeights);
-    
-    // Calculate total weight and probabilities
-    const totalWeight = Object.values(rarityWeights).reduce((a, b) => a + b, 0);
-    const probabilities = {};
-    Object.entries(rarityWeights).forEach(([rarity, weight]) => {
-      probabilities[rarity] = weight / totalWeight;
-    });
-    
-    // Debug: Log probabilities
-    console.log('Rarity probabilities:', probabilities);
-    
     // Sample rarities within this realm
     const rarityDraws = multinomialSample(count, Object.values(rarityWeights));
-    
-    // Debug: Log draw counts
-    console.log('Rarity draw counts:', Object.keys(rarityWeights).map((rarity, idx) => ({
-      rarity,
-      count: rarityDraws[idx],
-      expected: Math.round(count * probabilities[rarity])
-    })));
     
     // Process each rarity's draws
     Object.entries(rarityWeights).forEach(([rarity, _], rarityIdx) => {
@@ -579,7 +561,7 @@ function performPoke() {
             tryEnableHole();
           }
         }
-      }, 200);
+      }, 100);
     } else {
       // Normal hover to flip behavior
       outer.addEventListener('mouseenter', () => {
@@ -1245,15 +1227,12 @@ function renderCardsCollection() {
   const list = document.getElementById('cards-list');
   list.innerHTML = '';      // clear previous
 
-  const grid = document.createElement('div');
-  grid.className = 'draw-area';
-
   cards
     .filter(c => c.realm === currentCollectionRealm)
     .forEach(c => {
-      const outer = document.createElement('div');
-      outer.className = 'card-outer';
-      if (c.quantity === 0) outer.classList.add('unfound');
+      const cardEl = document.createElement('div');
+      cardEl.className = 'card-outer';
+      if (c.quantity === 0) cardEl.classList.add('unfound');
 
       const inner = document.createElement('div');
       inner.className = 'card-inner revealed';
@@ -1358,7 +1337,6 @@ function renderCardsCollection() {
 
       front.appendChild(btn);
 
-
       // quantity badge
       if (c.quantity >= 1) {
         const badge = document.createElement('div');
@@ -1376,17 +1354,15 @@ function renderCardsCollection() {
       }
 
       inner.append(front);
-      outer.append(inner);
+      cardEl.append(inner);
 
       // open modal on click
       if (c.quantity >= 1) {
-        outer.addEventListener('click', () => openModal(c.id));
+        cardEl.addEventListener('click', () => openModal(c.id));
       }
 
-      grid.appendChild(outer);
+      list.appendChild(cardEl);
     });
-
-  list.appendChild(grid);
 }
 
 
@@ -2244,18 +2220,20 @@ document.addEventListener('DOMContentLoaded', async ()=>{
 
   // Store event handlers for cleanup
   touchMoveHandler = (e) => {
+    if (!drawArea.classList.contains('hole-draw-area')) return;
     const touch = e.touches[0];
     // ... existing touchmove code ...
   };
-  touchEndHandler = () => {
+  touchEndHandler = (e) => {
+    if (!drawArea.classList.contains('hole-draw-area')) return;
     isScrolling = false;
     lastFlippedCard = null;
   };
   resizeHandler = checkOrientation;
   orientationHandler = checkOrientation;
 
-  document.addEventListener('touchmove', touchMoveHandler, { passive: true });
-  document.addEventListener('touchend', touchEndHandler, { passive: true });
+  drawArea.addEventListener('touchmove', touchMoveHandler, { passive: false });
+  drawArea.addEventListener('touchend', touchEndHandler);
   window.addEventListener('resize', resizeHandler);
   window.addEventListener('orientationchange', orientationHandler);
 
@@ -2283,8 +2261,8 @@ function cleanup() {
   if (timeCrunchInterval) clearInterval(timeCrunchInterval);
 
   // Remove event listeners
-  document.removeEventListener('touchmove', touchMoveHandler);
-  document.removeEventListener('touchend', touchEndHandler);
+  drawArea.removeEventListener('touchmove', touchMoveHandler);
+  drawArea.removeEventListener('touchend', touchEndHandler);
   window.removeEventListener('resize', resizeHandler);
   window.removeEventListener('orientationchange', orientationHandler);
 

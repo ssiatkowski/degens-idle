@@ -1015,9 +1015,9 @@ nav#tabs { margin-bottom: 15px; }
   align-items: start;
   align-content: start;
   justify-content: start;
-  touch-action: pan-y; /* Allow vertical scrolling */
+  touch-action: pan-y;
   overflow-y: auto;
-  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Prevent touch events from propagating to parent when touching cards */
@@ -1025,24 +1025,42 @@ nav#tabs { margin-bottom: 15px; }
   touch-action: none;
 }
 
-/* Only apply touch handling to draw area in hole tab */
+/* Hole screen specific styles */
 #tab-content-hole .draw-area {
   touch-action: pan-y;
+  --card-scale: 1;
+  --base-card-size: 120px;
+  grid-template-columns: repeat(auto-fill, calc(var(--base-card-size) * var(--card-scale)));
+  grid-auto-rows: calc(var(--base-card-size) * 1.4 * var(--card-scale));
+  gap: calc(1vw * var(--card-scale));
+  padding: calc(16px * var(--card-scale));
 }
 
-/* Allow normal scrolling in cards collection */
-#tab-content-cards .draw-area {
-  touch-action: auto;
+#tab-content-hole .draw-area .card-outer {
+  transform: scale(var(--card-scale));
+  transform-origin: top left;
+  width: var(--base-card-size);
+  aspect-ratio: 5 / 7;
+  max-width: 160px;
 }
 
 @media (max-height: 600px) {
   .draw-area {
-    grid-template-columns: repeat(auto-fit, 85px);
-    gap: 2vw;
+    --base-card-size: 85px;
+    grid-template-columns: repeat(auto-fit, calc(var(--base-card-size) * var(--card-scale)));
+    grid-auto-rows: calc(var(--base-card-size) * 1.4 * var(--card-scale));
+    gap: calc(2vw * var(--card-scale));
   }
   .card-outer {
     max-width: 90px;
   }
+}
+
+/* Collection screen specific styles */
+#tab-content-cards .draw-area {
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 1vw;
+  padding: 1vw;
 }
 
 /* cooldown counter styling */

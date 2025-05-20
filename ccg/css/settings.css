@@ -19,6 +19,7 @@
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 15px;
     margin-bottom: 20px;
+    align-items: center;
 }
 
 .settings-button {
@@ -31,6 +32,15 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
+}
+
+/* Special styling for theme button to match other buttons */
+.settings-button.theme-button {
+    padding: 0.8rem 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
 }
 
 .settings-button:hover {
@@ -231,4 +241,77 @@
     justify-content: center;
     gap: 1rem;
     margin-top: 1.5rem;
+}
+
+.card-size-control {
+    width: 100%;
+    margin: 0;
+    padding: 0.8rem 1.2rem;
+    background: var(--bg-color);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+}
+
+.card-size-control label {
+    margin: 0;
+    color: var(--font-color);
+    font-weight: bold;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    min-width: unset;
+    gap: 4px;
+}
+
+.card-size-control label span {
+    font-family: inherit;
+    min-width: unset;
+    text-align: left;
+    margin-left: 0;
+    font-weight: normal;
+    font-size: 1em;
+}
+
+.card-size-control input[type="range"] {
+    height: 8px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: var(--tab-hover);
+    border-radius: 4px;
+    outline: none;
+    margin: 0;
+    max-width: 180px;
+    width: 100%;
+}
+
+.card-size-control input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    background: var(--tab-active);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.card-size-control input[type="range"]::-webkit-slider-thumb:hover {
+    background: var(--tab-hover);
+}
+
+.card-size-control input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: var(--tab-active);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.2s;
+    border: none;
+}
+
+.card-size-control input[type="range"]::-moz-range-thumb:hover {
+    background: var(--tab-hover);
 } 

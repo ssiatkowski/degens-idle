@@ -206,73 +206,77 @@ return `rgba(${r},${g},${b},${alpha})`;
 };
 
 function multinomialSample(N, weights) {
-    // Handle edge cases
-    if (N === 0) return Array(weights.length).fill(0);
-    if (weights.length === 0) return [];
-    
-    // Calculate total weight
-    const total = weights.reduce((a,b) => a + b, 0);
-    if (total === 0) return Array(weights.length).fill(0);
-    
-    // Calculate probabilities
-    const probs = weights.map(w => w / total);
-    
-    // For very large N, use direct probability calculation with variance
-    if (N > 1000) {
-        const counts = Array(weights.length).fill(0);
-        
-        // Calculate expected counts with variance
-        for (let i = 0; i < probs.length; i++) {
-            const p = probs[i];
-            if (p > 0) {
-                const expected = N * p;
-                const variance = N * p * (1 - p);
-                const stdDev = Math.sqrt(variance);
-                
-                // Add random variance within 2 standard deviations
-                const varianceFactor = (Math.random() * 4 - 2); // Random number between -2 and 2
-                counts[i] = Math.max(0, Math.round(expected + varianceFactor * stdDev));
-            }
-        }
-        
-        // Adjust total to match N exactly
-        const currentTotal = counts.reduce((a,b) => a + b, 0);
-        if (currentTotal !== N) {
-            const diff = N - currentTotal;
-            if (diff > 0) {
-                // Add remaining draws to the highest probability category
-                const maxProbIndex = probs.indexOf(Math.max(...probs));
-                counts[maxProbIndex] += diff;
-            } else {
-                // Remove excess draws from the highest count category
-                const maxCountIndex = counts.indexOf(Math.max(...counts));
-                counts[maxCountIndex] += diff;
-            }
-        }
-        
-        return counts;
-    }
-    
-    // For smaller N, use the original method
+  if (N === 0) return Array(weights.length).fill(0);
+  if (weights.length === 0) return [];
+
+  const total = weights.reduce((a,b) => a + b, 0);
+  if (total === 0) return Array(weights.length).fill(0);
+
+  const probs = weights.map(w => w / total);
+
+  // fast path for large N
+  if (N > 1000) {
     const counts = Array(weights.length).fill(0);
-    let cum = 0;
-    const cumProbs = weights.map(w => {
-        cum += w / total;
-        return cum;
-    });
-    
-    for (let i = 0; i < N; i++) {
-        const r = Math.random();
-        for (let j = 0; j < cumProbs.length; j++) {
-            if (r < cumProbs[j]) {
-                counts[j]++;
-                break;
-            }
-        }
+    const LAMBDA_THRESHOLD = 10;
+
+    // helper: sample Poisson(lambda)
+    function samplePoisson(lambda) {
+      let L = Math.exp(-lambda), k = 0, p = 1;
+      while (p > L) {
+        p *= Math.random();
+        k++;
+      }
+      return k - 1;
     }
-    
+
+    for (let i = 0; i < probs.length; i++) {
+      const p = probs[i];
+      if (p <= 0) {
+        counts[i] = 0;
+      } else {
+        const lambda = N * p;
+        if (lambda < LAMBDA_THRESHOLD) {
+          // Poisson for small means
+          counts[i] = samplePoisson(lambda);
+        } else {
+          // Normal approx for larger means
+          const variance = lambda * (1 - p);
+          const stdDev = Math.sqrt(variance);
+          const noise = (Math.random() * 4 - 2) * stdDev; 
+          counts[i] = Math.max(0, Math.round(lambda + noise));
+        }
+      }
+    }
+
+    // adjust to sum exactly N
+    let currentTotal = counts.reduce((a,b) => a + b, 0);
+    if (currentTotal !== N) {
+      const diff = N - currentTotal;
+      // put the difference into the largest-prob bin
+      const idx = probs.indexOf(Math.max(...probs));
+      counts[idx] += diff;
+    }
+
     return counts;
+  }
+
+  // original exact-simulation for N <= 1000
+  const counts = Array(weights.length).fill(0);
+  let cum = 0;
+  const cumProbs = probs.map(p => (cum += p, cum));
+
+  for (let i = 0; i < N; i++) {
+    const r = Math.random();
+    for (let j = 0; j < cumProbs.length; j++) {
+      if (r < cumProbs[j]) {
+        counts[j]++;
+        break;
+      }
+    }
+  }
+  return counts;
 }
+
 
 function floorTo3SigDigits(num) {
   if (typeof num === 'object' && num.toNumber) num = num.toNumber();
