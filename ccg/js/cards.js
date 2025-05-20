@@ -1513,7 +1513,7 @@ window.cards = [
           "type": "level",
           "amount": 10
         },
-        "value": 1.1
+        "value": 1.25
       }
     ]
   },
@@ -1575,7 +1575,7 @@ window.cards = [
           "type": "level",
           "amount": 10
         },
-        "value": 1.1
+        "value": 1.25
       }
     ]
   },
