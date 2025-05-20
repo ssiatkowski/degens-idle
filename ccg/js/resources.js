@@ -214,14 +214,25 @@ function multinomialSample(N, weights) {
     const total = weights.reduce((a,b) => a + b, 0);
     if (total === 0) return Array(weights.length).fill(0);
     
-    // For very large N, use direct probability calculation
+    // Calculate probabilities
+    const probs = weights.map(w => w / total);
+    
+    // For very large N, use direct probability calculation with variance
     if (N > 1000) {
-        const probs = weights.map(w => w / total);
         const counts = Array(weights.length).fill(0);
         
-        // Calculate expected counts directly
-        for (let i = 0; i < weights.length; i++) {
-            counts[i] = Math.round(N * probs[i]);
+        // Calculate expected counts with variance
+        for (let i = 0; i < probs.length; i++) {
+            const p = probs[i];
+            if (p > 0) {
+                const expected = N * p;
+                const variance = N * p * (1 - p);
+                const stdDev = Math.sqrt(variance);
+                
+                // Add random variance within 2 standard deviations
+                const varianceFactor = (Math.random() * 4 - 2); // Random number between -2 and 2
+                counts[i] = Math.max(0, Math.round(expected + varianceFactor * stdDev));
+            }
         }
         
         // Adjust total to match N exactly
