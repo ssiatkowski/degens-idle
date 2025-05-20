@@ -311,24 +311,26 @@ function applyEffectsDelta(deltaMap, sign = +1) {
                     weights[rarity] = current * (1 + v);
                 }
 
-                const realm = realmMap[realmId];
-                const rarities = Object.keys(realm.rarityWeights).filter(r => realm.rarityWeights[r] > 0);
-                rarities.sort((a, b) => {
-                    const aIndex = window.rarities.indexOf(a);
-                    const bIndex = window.rarities.indexOf(b);
-                    return bIndex - aIndex;
-                });
+                if (loadFinished) {
+                    const realm = realmMap[realmId];
+                    const rarities = Object.keys(realm.rarityWeights).filter(r => realm.rarityWeights[r] > 0);
+                    rarities.sort((a, b) => {
+                        const aIndex = window.rarities.indexOf(a);
+                        const bIndex = window.rarities.indexOf(b);
+                        return bIndex - aIndex;
+                    });
 
-                let highestWeight = 0;
-                for (let i = 0; i < rarities.length; i++) {
-                    const currentRarity = rarities[i];
-                    const uncapped = realm.uncappedRarityWeights[currentRarity];
-                    
-                    if (uncapped < highestWeight) {
-                        realm.rarityWeights[currentRarity] = highestWeight;
-                    } else {
-                        realm.rarityWeights[currentRarity] = uncapped;
-                        highestWeight = uncapped;
+                    let highestWeight = 0;
+                    for (let i = 0; i < rarities.length; i++) {
+                        const currentRarity = rarities[i];
+                        const uncapped = realm.uncappedRarityWeights[currentRarity];
+                        
+                        if (uncapped < highestWeight) {
+                            realm.rarityWeights[currentRarity] = highestWeight;
+                        } else {
+                            realm.rarityWeights[currentRarity] = uncapped;
+                            highestWeight = uncapped;
+                        }
                     }
                 }
                 break;

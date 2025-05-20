@@ -101,13 +101,13 @@ const merchants = [
     {
       id: 9,
       name: 'Tobias Quickpouch',
-      cardMultiplier: 10,
+      cardMultiplier: 8,
       refreshTime: 1/3,
       merchantOdds: 350,
       raritiesSkipped: [],
       priceMultiplier: 0.75,
       rarityScaling: 2.5,
-      description: 'The only BS this guy knows is Bulk Sales. Carries 10x as many cards, sells them at 75% of the price, and stays 1/3 as long.',
+      description: 'The only BS this guy knows is Bulk Sales. Carries 8x as many cards, sells them at 75% of the price, and stays 1/3 as long.',
       unlocked: false
     },
     {
@@ -133,7 +133,22 @@ const merchants = [
       rarityScaling: 2.5,
       description: 'Some say he is a real magician, but all know he is rich. He will not even look at cards that are lower rarity than fine.',
       unlocked: false
+    },
+    {
+      id: 12,
+      name: 'Varka Embervein',
+      cardMultiplier: 1,
+      refreshTime: 1,
+      merchantOdds: 200,
+      raritiesSkipped: [],
+      priceMultiplier: 1,
+      rarityScaling: 4.5,
+      guaranteedRealm: 10,
+      guaranteedCount: 5,
+      description: 'Next level blacksmith. She guarantees at least 5 weapon cards and has +2 to rarity scaling.',
+      unlocked: false
     }
+    
     
 
   ];
@@ -280,9 +295,18 @@ const merchants = [
     const slots = Math.max(Math.ceil(state.effects.merchantNumCards
                           * state.currentMerchant.cardMultiplier), 1);
   
+    const guaranteedRealm = state.currentMerchant.guaranteedRealm || 0;
+    let guaranteedCount = state.currentMerchant.guaranteedCount || 0; 
+
     for (let i = 0; i < slots; i++) {
       // 1) pick a realm
-      const realmId = pickRandom(unlockedRealms);
+      let realmId;
+      if (guaranteedCount > 0) {
+        realmId = guaranteedRealm;
+        guaranteedCount--;
+      } else {
+        realmId = pickRandom(unlockedRealms);
+      }
       const realm   = realmMap[realmId];
   
       // 2) build boosted rarity weights, skipping any merchant-specific rarities
@@ -784,7 +808,7 @@ const merchants = [
     state.stats.merchantPurchases += state.merchantOffers.length;
     state.merchantOffers = [];
     const now       = Date.now();
-    const maxRemain = 10 * 1000; // 10s in ms
+    const maxRemain = skillMap[19401].purchased ? 5 * 1000 : 10 * 1000;
     const rem       = nextRefresh - now;
     if (rem > maxRemain) {
       nextRefresh = now + maxRemain;

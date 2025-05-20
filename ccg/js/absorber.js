@@ -18,12 +18,12 @@ function initGravitationalWaveAbsorber() {
 // Update absorber UI
 function updateAbsorberUI() {
     // show the new counter
-    absorberCounter.textContent = state.absorberValue.toFixed(2) + 'x';
+    absorberCounter.textContent = formatNumber(state.absorberValue) + 'x';
     
     // toggle classes based on current state
     absorberButton.classList.toggle('active', absorberActive);
 
-    const maxAbsorberValue = skillMap[12103].purchased ? 7 : 5;
+    const maxAbsorberValue = skillMap[12103].purchased ? 10 : 5;
     absorberButton.classList.toggle('maxed', state.absorberValue >= maxAbsorberValue && !absorberActive);
   }
 
@@ -37,10 +37,10 @@ function handleAbsorberClick() {
 
 // Increment absorber value
 function incrementAbsorber() {
-    const maxAbsorberValue = skillMap[12103].purchased ? 7 : 5;
+    const maxAbsorberValue = skillMap[12103].purchased ? 10 : 5;
     if (state.absorberValue < maxAbsorberValue) {
         // 1) Add
-        let next = state.absorberValue + (0.05 * (skillMap[12102].purchased ? 2 : 1));
+        let next = state.absorberValue + (0.05 * (skillMap[12102].purchased ? 2 : 1) * (skillMap[12104].purchased ? state.selectedRealms.length : 1));
         // 2) Round to 2 decimals
         next = Math.round(next * 100) / 100;
         // 3) Clamp at max value

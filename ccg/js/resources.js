@@ -155,7 +155,7 @@ function formatNumber(d) {
 function formatQuantity(value) {
   return new Intl.NumberFormat('en-US', {
     notation:               'compact',
-    compactDisplay:         'short',             // “K”, “M”, etc.
+    compactDisplay:         'short',             // "K", "M", etc.
     maximumSignificantDigits: 3                   // exactly 3 sig-figs
   }).format(value);
 }
@@ -206,17 +206,60 @@ return `rgba(${r},${g},${b},${alpha})`;
 };
 
 function multinomialSample(N, weights) {
+    // Handle edge cases
+    if (N === 0) return Array(weights.length).fill(0);
+    if (weights.length === 0) return [];
+    
+    // Calculate total weight
     const total = weights.reduce((a,b) => a + b, 0);
-    const probs = weights.map(w => w/total);
-    const counts = Array(weights.length).fill(0);
-  
-    for (let i = 0; i < N; i++) {
-      let r = Math.random(), cum = 0;
-      for (let j = 0; j < probs.length; j++) {
-        cum += probs[j];
-        if (r < cum) { counts[j]++; break; }
-      }
+    if (total === 0) return Array(weights.length).fill(0);
+    
+    // For very large N, use direct probability calculation
+    if (N > 1000) {
+        const probs = weights.map(w => w / total);
+        const counts = Array(weights.length).fill(0);
+        
+        // Calculate expected counts directly
+        for (let i = 0; i < weights.length; i++) {
+            counts[i] = Math.round(N * probs[i]);
+        }
+        
+        // Adjust total to match N exactly
+        const currentTotal = counts.reduce((a,b) => a + b, 0);
+        if (currentTotal !== N) {
+            const diff = N - currentTotal;
+            if (diff > 0) {
+                // Add remaining draws to the highest probability category
+                const maxProbIndex = probs.indexOf(Math.max(...probs));
+                counts[maxProbIndex] += diff;
+            } else {
+                // Remove excess draws from the highest count category
+                const maxCountIndex = counts.indexOf(Math.max(...counts));
+                counts[maxCountIndex] += diff;
+            }
+        }
+        
+        return counts;
     }
+    
+    // For smaller N, use the original method
+    const counts = Array(weights.length).fill(0);
+    let cum = 0;
+    const cumProbs = weights.map(w => {
+        cum += w / total;
+        return cum;
+    });
+    
+    for (let i = 0; i < N; i++) {
+        const r = Math.random();
+        for (let j = 0; j < cumProbs.length; j++) {
+            if (r < cumProbs[j]) {
+                counts[j]++;
+                break;
+            }
+        }
+    }
+    
     return counts;
 }
 

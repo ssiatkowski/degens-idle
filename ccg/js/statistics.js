@@ -279,6 +279,9 @@ function updateStatsUI() {
       <p style="line-height: 1.4; margin: 0;"><strong>Sale Price:</strong> ${formatNumber(sel.priceMultiplier/state.effects.merchantPriceDivider*100)}%</p>
       <p style="line-height: 1.4; margin: 0;"><strong>Offer Duration:</strong> ${formatDuration(((300 - state.effects.merchantCooldownReduction) * sel.refreshTime))}</p>
     `;
+    if (sel.guaranteedCount > 0) {
+      detail.innerHTML += `<p style="line-height: 1.4; margin: 0;"><strong>Guaranteed Cards:</strong> ${sel.guaranteedCount} ${sel.guaranteedRealm ? `(${realmMap[sel.guaranteedRealm].name})` : ''}</p>`;
+    }
     merchantsSection.appendChild(detail);
 
     // --- Build top stats grid as two separate rows ---

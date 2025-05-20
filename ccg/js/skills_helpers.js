@@ -255,8 +255,8 @@ window.skills = [
     {
       id: 2114,
       name: "Massive Black Hole 14",
-      description: "+3000 to max cards per poke.",
-      cost: { realmId: 10, currencyId: "pollen", amount: 3e12 },
+      description: "+5000 to max cards per poke.",
+      cost: { realmId: 10, currencyId: "pollen", amount: 1e12 },
       purchased: false
     },
     {
@@ -694,6 +694,13 @@ window.skills = [
       purchased: false
     },
     {
+      id: 7009,
+      name: "Unlock New Merchant 9",
+      description: "Varka Embervein is added to pool of traveling merchants.",
+      cost: { realmId: 10, currencyId: "spirit", amount: 5e10 },
+      purchased: false
+    },
+    {
       id: 8001,
       name: "Lucky Skip",
       description: "+1% chance to skip Black Hole cooldown.",
@@ -1024,9 +1031,16 @@ window.skills = [
     },
     {
       id: 12003,
-      name: "Harvester Upgrade 3",
+      name: "Harvester Upgrade 2",
       description: "Harvester offline rate is not penalized.",
-      cost: { realmId: 8, currencyId: "coral", amount: 5e6 },
+      cost: { realmId: 8, currencyId: "coral", amount: 2.5e8 },
+      purchased: false
+    },
+    {
+      id: 12004,
+      name: "Harvester Upgrade 3",
+      description: "With each poke, harvester gains 1% of the cooldown time.",
+      cost: { realmId: 10, currencyId: "coral", amount: 3e13 },
       purchased: false
     },
     {
@@ -1045,9 +1059,16 @@ window.skills = [
     },
     {
       id: 12103,
+      name: "Absorber Upgrade 2",
+      description: "Increase maximum gravitational wave absorption to 10x.",
+      cost: { realmId: 9, currencyId: "pollen", amount: 5e8 },
+      purchased: false
+    },
+    {
+      id: 12104,
       name: "Absorber Upgrade 3",
-      description: "Increase maximum gravitational wave absorption to 7x.",
-      cost: { realmId: 9, currencyId: "pollen", amount: 7e9 },
+      description: "Absorber waves absorbed are multiplied by # selected realms.",
+      cost: { realmId: 10, currencyId: "stone", amount: 5e11 },
       purchased: false
     },
     {
@@ -1062,6 +1083,13 @@ window.skills = [
       name: "Interceptor Upgrade",
       description: "Double space bending interceptor rate.",
       cost: { realmId: 6, currencyId: "crystal", amount: 1e8 },
+      purchased: false
+    },
+    {
+      id: 12203,
+      name: "Interceptor Poker Automation",
+      description: "Interceptor also auto-pokes black hole in addition to flipping cards.",
+      cost: { realmId: 10, currencyId: "spirit", amount: 3e8 },
       purchased: false
     },
     {
@@ -1201,30 +1229,30 @@ window.skills = [
       id: 18001,
       name: "No More Junk",
       description: "Junk cards no longer show up after poke (you still get them) unless they gain tier or are new.",
-      cost: { realmId: 5, currencyId: "stone", amount: 7.5e7},
+      cost: { realmId: 5, currencyId: "stone", amount: 5e7},
       purchased: false
     },
     {
       id: 18002,
       name: "I Ain't No Basic Bitch",
       description: "Basic cards no longer show up after poke (you still get them) unless they gain tier or are new.",
-      cost: { realmId: 7, currencyId: "coral", amount: 2e10},
+      cost: { realmId: 7, currencyId: "coral", amount: 3.5e8},
       purchased: false
     },
     {
       id: 18003,
       name: "Decent Cards Are Beneath Me",
       description: "Decent cards no longer show up after poke (you still get them) unless they gain tier or are new.",
-      cost: { realmId: 9, currencyId: "pollen", amount: 1.5e13},
+      cost: { realmId: 9, currencyId: "pollen", amount: 1.5e11},
       purchased: false
     },
-    // {
-    //   id: 18004,
-    //   name: "Fine Simply Doesn't Cut It",
-    //   description: "Fine cards no longer show up after poke (you still get them) unless they gain tier or are new.",
-    //   cost: { realmId: 11, currencyId: "egg", amount: 4e20},
-    //   purchased: false
-    // },
+    {
+      id: 18004,
+      name: "Fine Simply Doesn't Cut It",
+      description: "Fine cards no longer show up after poke (you still get them) unless they gain tier or are new.",
+      cost: { realmId: 10, currencyId: "egg", amount: 4e12},
+      purchased: false
+    },
     {
       id: 19001,
       name: "More Bulk Offers Please",
@@ -1270,7 +1298,7 @@ window.skills = [
     {
       id: 19401,
       name: "Merchant Pack Up and Leave Faster",
-      description: "When merchant offers are sold, they leave in 5 seconds instead of 10.",
+      description: "When merchant offers are sold out, they leave in 5 seconds instead of 10.",
       cost: { realmId: 9, currencyId: "stone", amount: 1e13},
       purchased: false
     },
@@ -1302,7 +1330,69 @@ window.skills = [
       cost: { realmId: 10, currencyId: "feather", amount: 2e9},
       purchased: false
     },
-      
+    {
+      id: 21001,
+      name: "Card Supernova",
+      description: "+1000 to max cards per poke.",
+      cost: { realmId: 8, currencyId: "stone", amount: 1e11 },
+      purchased: false
+    },
+    {
+      id: 21002,
+      name: "Card Supernova 2",
+      description: "+2000 to max cards per poke.",
+      cost: { realmId: 8, currencyId: "coral", amount: 2e11 },
+      purchased: false
+    },
+    {
+      id: 21003,
+      name: "Card Supernova 3",
+      description: "+3000 to max cards per poke.",
+      cost: { realmId: 8, currencyId: "pollen", amount: 3e11 },
+      purchased: false
+    },
+    {
+      id: 21004,
+      name: "Card Supernova 4",
+      description: "+4000 to max cards per poke.",
+      cost: { realmId: 9, currencyId: "egg", amount: 4e11 },
+      purchased: false
+    },
+    {
+      id: 21005,
+      name: "Card Supernova 5",
+      description: "+5000 to max cards per poke.",
+      cost: { realmId: 9, currencyId: "crystal", amount: 5e11 },
+      purchased: false
+    },
+    {
+      id: 21006,
+      name: "Card Supernova 6",
+      description: "+6000 to max cards per poke.",
+      cost: { realmId: 9, currencyId: "tooth", amount: 6e11 },
+      purchased: false
+    },
+    {
+      id: 21007,
+      name: "Card Supernova 7",
+      description: "+14000 to max cards per poke.",
+      cost: { realmId: 10, currencyId: "coin", amount: 7e12 },
+      purchased: false
+    },
+    {
+      id: 21008,
+      name: "Card Supernova 8",
+      description: "+16000 to max cards per poke.",
+      cost: { realmId: 10, currencyId: "spirit", amount: 8e12 },
+      purchased: false
+    },
+    {
+      id: 21009,
+      name: "Card Supernova 9",
+      description: "+18000 to max cards per poke.",
+      cost: { realmId: 10, currencyId: "rune", amount: 9e12 },
+      purchased: false
+    },
   ];
 
   // --- PURCHASE LOGIC ---
@@ -1459,7 +1549,7 @@ function applySkill(id, skipCost = false) {
         state.effects.maxCardsPerPoke += 2222;
         break;
       case 2114:
-        state.effects.maxCardsPerPoke += 3000;
+        state.effects.maxCardsPerPoke += 5000;
         break;
       case 3001: // Faster Poke
         realms[s.cost.realmId - 1].cooldown -= 0.5;
@@ -1668,6 +1758,9 @@ function applySkill(id, skipCost = false) {
       case 7008: // Unlock New Merchant 8
         unlockMerchantByName('Magnus Glimmergold');
         break;
+      case 7009: // Unlock New Merchant 9
+        unlockMerchantByName('Varka Embervein');
+        break;
       case 8001: // Lucky Skip
       case 8002: // Lucky Skip 2
       case 8003: // Lucky Skip 3
@@ -1726,19 +1819,25 @@ function applySkill(id, skipCost = false) {
         break;
       case 12002: // Harvester Upgrade
         break;
-      case 12003: // Harvester Upgrade 3
+      case 12003: // Harvester Upgrade 2
+        break;
+      case 12004: // Harvester Upgrade 3
         break;
       case 12101: // Gravitational Wave Absorber
         window.initGravitationalWaveAbsorber();
         break;
       case 12102: // Absorber Upgrade
         break;
-      case 12103: // Absorber Upgrade 3
+      case 12103: // Absorber Upgrade 2
+        break;
+      case 12104: // Absorber Upgrade 3
         break;
       case 12201: // Space Bending Interceptor
         window.initSpaceBendingInterceptor();
         break;
       case 12202: // Interceptor Upgrade
+        break;
+      case 12203: // Interceptor Poker Automation
         break;
       case 12301: // Time Crunch Collector
         window.initTimeCrunchCollector();
@@ -1815,6 +1914,10 @@ function applySkill(id, skipCost = false) {
         state.pokeRaritiesOmitted.push('decent');
         updatePokeFilterStats();
         break;
+      case 18004: // Fine Simply Doesn't Cut It
+        state.pokeRaritiesOmitted.push('fine');
+        updatePokeFilterStats();
+        break;
       case 19001: // More Bulk Offers Please
         state.merchantBulkChance += 0.25;
         break;
@@ -1843,6 +1946,33 @@ function applySkill(id, skipCost = false) {
         break;
       case 20004:
         state.effects.currencyPerPokeMultiplier['egg'] *= 2;
+        break;
+      case 21001:
+        state.effects.maxCardsPerPoke += 1000;
+        break;
+      case 21002:
+        state.effects.maxCardsPerPoke += 2000;
+        break;
+      case 21003:
+        state.effects.maxCardsPerPoke += 3000;
+        break;
+      case 21004:
+        state.effects.maxCardsPerPoke += 4000;
+        break;
+      case 21005:
+        state.effects.maxCardsPerPoke += 5000;
+        break;
+      case 21006:
+        state.effects.maxCardsPerPoke += 6000;
+        break;
+      case 21007:
+        state.effects.maxCardsPerPoke += 14000;
+        break;
+      case 21008:
+        state.effects.maxCardsPerPoke += 16000;
+        break;
+      case 21009:
+        state.effects.maxCardsPerPoke += 18000;
         break;
 
     }

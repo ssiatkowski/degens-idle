@@ -20,6 +20,8 @@ let lastFlippedCard = null;
 let blackHoleTimer; // Declare timer in a higher scope
 let countdownEl;
 
+let loadFinished = false;
+
 // Add these at the top with other global variables
 let merchantInterval;
 let currencyInterval;
@@ -293,6 +295,7 @@ function showTab(tab) {
 // --- POKE & REVEAL ---
 
 function performPoke() {
+
   holeBtn.disabled = true;
   holeBtn.classList.add('disabled');
 
@@ -342,35 +345,84 @@ function performPoke() {
   });
 
   // ————— BULK SAMPLING —————
-  // 1) sample how many draws per realm
-  const realmIds       = Object.keys(realmWeights).map(Number);
-  const realmWeightArr = realmIds.map(id => realmWeights[id]);
-  const realmDrawCounts = multinomialSample(draws, realmWeightArr);
-
-  // 2) for each realm, sample rarity counts, then individual card counts
   const picksCounts = {};
-  realmIds.forEach((realmId, idx) => {
-    const nRealm = realmDrawCounts[idx];
-    if (!nRealm) return;
-
+  
+  // Get realm IDs from weights
+  const realmIds = Object.keys(realmWeights).map(Number);
+  
+  // Pre-compute all weights and pools into flat arrays for faster access
+  const allWeights = [];
+  const allPools = [];
+  const weightToCardId = [];
+  
+  // First normalize realm weights
+  const realmWeightTotal = Object.values(realmWeights).reduce((a, b) => a + b, 0);
+  const normalizedRealmWeights = {};
+  Object.entries(realmWeights).forEach(([realmId, weight]) => {
+    normalizedRealmWeights[realmId] = weight / realmWeightTotal;
+  });
+  
+  realmIds.forEach(realmId => {
     const rr = realmMap[realmId];
-    const rarities = Object.keys(rr.rarityWeights);
-    const rarityWeightArr = rarities.map(r => rr.rarityWeights[r]);
-    const rarityDrawCounts = multinomialSample(nRealm, rarityWeightArr);
-
-    rarities.forEach((rarity, rIdx) => {
-      const nRare = rarityDrawCounts[rIdx];
-      if (!nRare) return;
-
-      const pool = realmRarityCardMap[realmId][rarity];
-      // uniform weights across that pool
-      const poolCounts = multinomialSample(nRare, Array(pool.length).fill(1));
-
-      pool.forEach((cid, cIdx) => {
-        const cCount = poolCounts[cIdx];
-        if (cCount) picksCounts[cid] = (picksCounts[cid] || 0) + cCount;
-      });
+    const realmWeight = normalizedRealmWeights[realmId];
+    
+    // Normalize rarity weights for this realm
+    const rarityWeightTotal = Object.values(rr.rarityWeights).reduce((a, b) => a + b, 0);
+    const normalizedRarityWeights = {};
+    Object.entries(rr.rarityWeights).forEach(([rarity, weight]) => {
+      normalizedRarityWeights[rarity] = weight / rarityWeightTotal;
     });
+    
+    Object.entries(normalizedRarityWeights).forEach(([rarity, rarityWeight]) => {
+      const pool = realmRarityCardMap[realmId][rarity];
+      if (!pool || pool.length === 0) return;
+      
+      // Multiply normalized weights to get final probability
+      const combinedWeight = realmWeight * rarityWeight;
+      allWeights.push(combinedWeight);
+      allPools.push(pool);
+      weightToCardId.push(pool);
+    });
+  });
+
+  // Single multinomial sample for all draws
+  const drawCounts = multinomialSample(draws, allWeights);
+  
+  // Process all draws in a single pass
+  drawCounts.forEach((count, idx) => {
+    if (!count) return;
+    
+    const pool = allPools[idx];
+    const poolSize = pool.length;
+    
+    // For large counts, use a more efficient algorithm
+    if (count > 1000) {
+      // Calculate expected distribution of cards
+      const expectedPerCard = count / poolSize;
+      const baseCount = Math.floor(expectedPerCard);
+      const remainder = count - (baseCount * poolSize);
+      
+      // Assign base count to all cards
+      pool.forEach(cid => {
+        picksCounts[cid] = (picksCounts[cid] || 0) + baseCount;
+      });
+      
+      // Distribute remainder randomly
+      if (remainder > 0) {
+        const shuffled = [...pool].sort(() => Math.random() - 0.5);
+        for (let i = 0; i < remainder; i++) {
+          const cid = shuffled[i];
+          picksCounts[cid] = (picksCounts[cid] || 0) + 1;
+        }
+      }
+    } else {
+      // For small counts, use the original random selection
+      for (let i = 0; i < count; i++) {
+        const randomIndex = Math.floor(Math.random() * poolSize);
+        const cid = pool[randomIndex];
+        picksCounts[cid] = (picksCounts[cid] || 0) + 1;
+      }
+    }
   });
 
   //increment total pokes
@@ -651,6 +703,10 @@ function tryEnableHole() {
       duration: 1000,
       easing:  'easeOutBack'
     });
+
+    if (skillMap[12203].purchased && state.interceptorActive) {
+      performPoke();
+    }
   }
 }
 
@@ -1562,6 +1618,10 @@ function startCooldown() {
   // 2) Begin real cooldown
   state.remainingCooldown = calculateCooldown();
 
+  if (skillMap[12004].purchased){
+    state.harvesterValue += state.remainingCooldown * 0.01;
+  }
+
   // 3) Clear any prior animations & timers
   if (fillAnim) anime.remove(globalFill);
   clearInterval(blackHoleTimer);
@@ -2057,6 +2117,31 @@ document.addEventListener('DOMContentLoaded', async ()=>{
       c.lastAppliedEffects = { ...c.lastAppliedEffects, ...specialEffs };
     }
   });
+
+  for (const realmId in realmMap) {
+    const realm = realmMap[realmId];
+    const rarities = Object.keys(realm.rarityWeights).filter(r => realm.rarityWeights[r] > 0);
+    rarities.sort((a, b) => {
+        const aIndex = window.rarities.indexOf(a);
+        const bIndex = window.rarities.indexOf(b);
+        return bIndex - aIndex;
+    });
+
+    let highestWeight = 0;
+    for (let i = 0; i < rarities.length; i++) {
+        const currentRarity = rarities[i];
+        const uncapped = realm.uncappedRarityWeights[currentRarity];
+        
+        if (uncapped < highestWeight) {
+            realm.rarityWeights[currentRarity] = highestWeight;
+        } else {
+            realm.rarityWeights[currentRarity] = uncapped;
+            highestWeight = uncapped;
+        }
+    }
+  }
+
+  loadFinished = true;
 
   // Calculate offline progress after all effects are computed
   if (state.lastSaveTime) {

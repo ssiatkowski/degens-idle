@@ -63,6 +63,10 @@ function handleInterceptorClick() {
   state.interceptorActive = true;
   updateInterceptorUI();
   startInterceptorCountdown();
+
+  if (skillMap[12203].purchased && !holeBtn.disabled) {
+    performPoke();
+  }
 }
 
 // Increment interceptor value
