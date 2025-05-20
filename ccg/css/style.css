@@ -1016,8 +1016,7 @@ nav#tabs { margin-bottom: 15px; }
   align-content: start;
   justify-content: start;
   touch-action: pan-y;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
+  overflow-y: visible;
 }
 
 /* Prevent touch events from propagating to parent when touching cards */
