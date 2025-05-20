@@ -254,6 +254,7 @@
     flex-direction: row;
     align-items: center;
     gap: 12px;
+    overflow: hidden;
 }
 
 .card-size-control label {
@@ -263,13 +264,11 @@
     white-space: nowrap;
     display: flex;
     align-items: center;
-    min-width: unset;
     gap: 4px;
 }
 
 .card-size-control label span {
     font-family: inherit;
-    min-width: unset;
     text-align: left;
     margin-left: 0;
     font-weight: normal;
@@ -277,15 +276,16 @@
 }
 
 .card-size-control input[type="range"] {
+    flex: 1 1 0;
     height: 8px;
-    -webkit-appearance: none;
     appearance: none;
+    -webkit-appearance: none;
     background: var(--tab-hover);
     border-radius: 4px;
     outline: none;
     margin: 0;
-    max-width: 180px;
-    width: 100%;
+    vertical-align: middle;
+    min-width: 0;
 }
 
 .card-size-control input[type="range"]::-webkit-slider-thumb {
@@ -314,4 +314,32 @@
 
 .card-size-control input[type="range"]::-moz-range-thumb:hover {
     background: var(--tab-hover);
+}
+
+.card-size-control input[type="range"]::-ms-thumb {
+    width: 20px;
+    height: 20px;
+    background: var(--tab-active);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.2s;
+    border: none;
+}
+
+.card-size-control input[type="range"]:focus {
+    outline: none;
+}
+
+.card-size-control input[type="range"]::-ms-fill-lower {
+    background: var(--tab-hover);
+    border-radius: 4px;
+}
+
+.card-size-control input[type="range"]::-ms-fill-upper {
+    background: var(--tab-hover);
+    border-radius: 4px;
+}
+
+.card-size-control input[type="range"]::-ms-tooltip {
+    display: none;
 } 
