@@ -237,37 +237,60 @@ nav#tabs { margin-bottom: 15px; }
   display: grid;
   grid-template-rows: repeat(2, auto);
   grid-auto-flow: column;
-  /* fixed column width so later columns never shift */
-  grid-auto-columns: 100px;
-  gap: 6px 12px;
+  /* reduce column width for small screens */
+  grid-auto-columns: minmax(80px, 100px);
+  gap: 4px 8px;
 
   background: var(--currency-bar-bg);
   box-shadow: 0 2px 4px var(--card-shadow);
   border-radius: 8px;
-  padding: 12px 16px;
+  padding: 8px 12px;
   margin-bottom: 16px;
 }
 
 .currency-item {
   display: flex;
   align-items: center;
-  padding: 4px 8px;
+  padding: 2px 4px;
   border-radius: 8px;
-  /* subtle "pill" */
   background: rgba(146, 146, 146, 0.447);
 }
 
 .currency-item .icon {
   flex-shrink: 0;
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
 }
 
 .currency-item .amount {
-  margin-left: 6px;
+  margin-left: 4px;
   font-weight: 600;
   font-family: monospace;
   white-space: nowrap;
+  font-size: 0.9em;
+}
+
+/* Extra small screens */
+@media (max-height: 600px) {
+  #currency-bar {
+    grid-auto-columns: minmax(60px, 85px);
+    gap: 2px 4px;
+    padding: 6px 8px;
+  }
+
+  .currency-item {
+    padding: 1px 3px;
+  }
+
+  .currency-item .icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .currency-item .amount {
+    font-size: 0.8em;
+    margin-left: 2px;
+  }
 }
 
 #poke-grid {
@@ -1015,8 +1038,8 @@ nav#tabs { margin-bottom: 15px; }
   align-items: start;
   align-content: start;
   justify-content: start;
-  touch-action: pan-y;
-  overflow-y: visible;
+  touch-action: none;  /* prevent all touch actions */
+  overflow: visible;   /* prevent scrollbars */
 }
 
 /* Prevent touch events from propagating to parent when touching cards */
@@ -1026,13 +1049,14 @@ nav#tabs { margin-bottom: 15px; }
 
 /* Hole screen specific styles */
 #tab-content-hole .draw-area {
-  touch-action: pan-y;
+  touch-action: none;  /* prevent all touch actions */
   --card-scale: 1;
   --base-card-size: 120px;
   grid-template-columns: repeat(auto-fill, calc(var(--base-card-size) * var(--card-scale)));
   grid-auto-rows: calc(var(--base-card-size) * 1.4 * var(--card-scale));
   gap: calc(1vw * var(--card-scale));
   padding: calc(16px * var(--card-scale));
+  overflow: visible;  /* prevent scrollbars */
 }
 
 #tab-content-hole .draw-area .card-outer {
@@ -1060,6 +1084,12 @@ nav#tabs { margin-bottom: 15px; }
   grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
   gap: 1vw;
   padding: 1vw;
+}
+
+@media (max-height: 600px) {
+  #tab-content-cards .draw-area {
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  }
 }
 
 /* cooldown counter styling */
