@@ -1480,3 +1480,113 @@ nav#tabs { margin-bottom: 15px; }
   right: calc(50% - 45vw - 60px);
   border-radius: 4px 0 0 4px;
 }
+
+/* Effect Filters */
+.effect-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding: 8px;
+  background: var(--stats-bg);
+  border-radius: 8px;
+}
+
+.effect-filter-group {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 8px;
+  background: var(--tab-bg);
+  border: 1px solid var(--tab-border);
+  border-radius: 4px;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s;
+}
+
+.effect-filter-group:hover {
+  background: var(--tab-hover);
+}
+
+.effect-filter-group.active {
+  background: var(--tab-active);
+  border-color: var(--accent);
+}
+
+.effect-filter-group.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.rarity-filter-submenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 4px;
+  padding: 8px;
+  background: var(--tab-content-bg);
+  border: 1px solid var(--tab-border);
+  border-radius: 4px;
+  box-shadow: 0 2px 8px var(--card-shadow);
+  z-index: 100;
+
+  display: flex;            /* ← use flex */
+  gap: 16px;                /* space between columns */
+  width: auto;
+  min-width: 360px;         /* force room for two columns */
+  align-items: flex-start;
+}
+
+.rarity-filter-column {
+  flex: 1;                  /* both columns share space equally */
+  display: flex;
+  flex-direction: column;
+}
+
+.rarity-filter-column h4 {
+  margin: 0 0 8px;
+  font-size: 0.9em;
+  color: var(--font-color);
+  border-bottom: 1px solid var(--tab-border);
+  padding-bottom: 4px;
+}
+
+.rarity-filter-options {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* indicator bubble */
+.rarity-filter-indicator {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 20px; height: 20px;
+  background: var(--tab-active);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8em;
+  font-weight: bold;
+}
+
+/* each option */
+.rarity-filter-option {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: 2px;
+  cursor: pointer;
+  font-size: 0.8em;
+}
+.rarity-filter-option:hover {
+  background: var(--tab-hover);
+}
+.rarity-filter-option.active {
+  background: var(--tab-active);
+}

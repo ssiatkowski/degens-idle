@@ -75,6 +75,12 @@ window.state = {
   pokeRaritiesOmitted: [],
   hideOmittedRarities: true,  // New variable for checkbox state
   remainingCooldown: 0,    // Add remaining cooldown to state
+  effectFilters: {
+    activeGroups: new Set(),
+    oddsRealms:      new Set(),    // <realmId>
+    oddsRarities:   new Set(),    // <rarity>
+    unlockedRarities: new Set() // Track unlocked rarities
+  },
 };
 
 // init currencies & effects
@@ -164,7 +170,7 @@ function saveState() {
     })),
     merchantRefreshTime: nextRefresh ? nextRefresh - Date.now() : null,
     lastSaveTime: Date.now(),
-    remainingCooldown: state.remainingCooldown
+    remainingCooldown: state.remainingCooldown,
   };
   currencies.forEach(c => {
     obj.currencies[c.id] = state.currencies[c.id].toString();
@@ -1223,12 +1229,187 @@ function totalInRealm(rid) {
   return cards.filter(c=>c.realm===rid).length;
 }
 
+// Add to renderCardsCollection function, before the card rendering
+function renderEffectFilters() {
+  const container = document.getElementById('effect-filters');
+  if (!container) return;
+
+  container.innerHTML = '';
+
+  // Create filter groups
+  Object.entries(EFFECT_FILTER_GROUPS).forEach(([groupName, effectTypes]) => {
+    // Check if any effects in this group are available
+    const hasAvailableEffects = effectTypes.some(type => availableEffects.has(type));
+    if (!hasAvailableEffects) return;
+
+    const groupEl = document.createElement('div');
+    groupEl.className = 'effect-filter-group';
+    if (state.effectFilters.activeGroups.has(groupName)) {
+      groupEl.classList.add('active');
+    }
+    groupEl.textContent = groupName;
+
+    // Special handling for Rarity group
+    if (groupName === 'Odds') {
+      const { oddsRealms, oddsRarities, unlockedRarities } = state.effectFilters;
+      const totalSelections = oddsRealms.size + oddsRarities.size;
+    
+      let indicator = document.createElement('div');
+      indicator.className = 'rarity-filter-indicator';
+      groupEl.appendChild(indicator);
+      // initialize it (blank if zero)
+      indicator.textContent = totalSelections > 0 ? totalSelections : '';
+      indicator.style.display = totalSelections > 0 ? 'flex' : 'none';
+    
+      // submenu container
+      const submenu = document.createElement('div');
+      submenu.className = 'rarity-filter-submenu';
+      submenu.style.display = 'none';
+    
+      // Realms column
+      const realmsColumn = document.createElement('div');
+      realmsColumn.className = 'rarity-filter-column';
+      realmsColumn.innerHTML = '<h4>Realms</h4>';
+      realms.filter(r => r.unlocked).forEach(r => {
+        const opt = document.createElement('div');
+        opt.className = 'rarity-filter-option' + (oddsRealms.has(r.id) ? ' active' : '');
+        opt.textContent = r.name;
+        opt.onclick = e => {
+          e.stopPropagation();
+          oddsRealms.has(r.id) ? oddsRealms.delete(r.id) : oddsRealms.add(r.id);
+          if (oddsRealms.size + oddsRarities.size > 0) {
+            state.effectFilters.activeGroups.add('Odds');
+          } else {
+            state.effectFilters.activeGroups.delete('Odds');
+          }
+          renderCardsCollection();
+          saveState();
+          if (indicator) {
+            const newCount = oddsRealms.size + oddsRarities.size;
+            indicator.textContent = newCount > 0 ? newCount : '';
+            indicator.style.display   = newCount > 0 ? 'flex' : 'none';
+          }
+        };
+        realmsColumn.appendChild(opt);
+      });
+    
+      // Rarities column
+      const raritiesColumn = document.createElement('div');
+      raritiesColumn.className = 'rarity-filter-column';
+      raritiesColumn.innerHTML = '<h4>Rarities</h4>';
+      Array.from(unlockedRarities).sort((a,b)=>{
+        return window.rarities.indexOf(a) - window.rarities.indexOf(b);
+      }).forEach(rarity => {
+        const opt = document.createElement('div');
+        opt.className = 'rarity-filter-option' + (oddsRarities.has(rarity) ? ' active' : '');
+        opt.textContent = rarity.charAt(0).toUpperCase() + rarity.slice(1);
+        opt.onclick = e => {
+          e.stopPropagation();
+          oddsRarities.has(rarity)
+            ? oddsRarities.delete(rarity)
+            : oddsRarities.add(rarity);
+          if (oddsRealms.size + oddsRarities.size > 0) {
+            state.effectFilters.activeGroups.add('Odds');
+          } else {
+            state.effectFilters.activeGroups.delete('Odds');
+          }
+          renderCardsCollection();
+          saveState();
+          const newCount = oddsRealms.size + oddsRarities.size;
+          indicator.textContent = newCount > 0 ? newCount : '';
+          indicator.style.display   = newCount > 0 ? 'flex' : 'none';
+        };
+        raritiesColumn.appendChild(opt);
+      });
+    
+      submenu.append(realmsColumn, raritiesColumn);
+      groupEl.append(submenu);
+    
+      // toggle submenu & close only when clicked outside
+      const closeSubmenu = ev => {
+        if (!submenu.contains(ev.target) && !groupEl.contains(ev.target)) {
+          submenu.style.display = 'none';
+          document.removeEventListener('click', closeSubmenu);
+        }
+      };
+      groupEl.onclick = e => {
+        e.stopPropagation();
+        if (submenu.style.display === 'none') {
+          submenu.style.display = 'flex';
+          setTimeout(() => document.addEventListener('click', closeSubmenu), 0);
+        }
+      };
+    } else {
+      groupEl.addEventListener('click', () => {
+        if (state.effectFilters.activeGroups.has(groupName)) {
+          state.effectFilters.activeGroups.delete(groupName);
+        } else {
+          state.effectFilters.activeGroups.add(groupName);
+        }
+        renderCardsCollection();
+        saveState();
+      });
+    }
+
+    container.appendChild(groupEl);
+  });
+}
+
+// Update renderCardsCollection to call renderEffectFilters
 function renderCardsCollection() {
+  renderEffectFilters();
   const list = document.getElementById('cards-list');
-  list.innerHTML = '';      // clear previous
+  list.innerHTML = '';
 
   cards
     .filter(c => c.realm === currentCollectionRealm)
+    .filter(c => {
+      // If no effect filters are active, show all cards
+      if (state.effectFilters.activeGroups.size === 0) return true;
+
+      // Check if card has ALL of the active effect types (intersection)
+      return Array.from(state.effectFilters.activeGroups).every(group => {
+        const effectTypes = EFFECT_FILTER_GROUPS[group];
+        if (!effectTypes) return true;
+
+        // Special handling for Odds group
+        if (group === 'Odds') {
+          // inside your .filter(c => …) for group==='Odds'
+          const { oddsRealms, oddsRarities } = state.effectFilters;
+          const selRealms   = Array.from(oddsRealms);
+          const selRarities = Array.from(oddsRarities);
+          
+          // 1) nothing selected → don’t filter at all
+          if (selRealms.length === 0 && selRarities.length === 0) {
+            return true;
+          }
+          
+          // 2) only realms → any effect.realm in selRealms
+          if (selRealms.length > 0 && selRarities.length === 0) {
+            return (c.baseEffects || []).some(e =>
+              e.type === 'rarityOddsDivider' && selRealms.includes(e.realm)
+            );
+          }
+          
+          // 3) only rarities → any effect.rarity in selRarities
+          if (selRealms.length === 0 && selRarities.length > 0) {
+            return (c.baseEffects || []).some(e =>
+              e.type === 'rarityOddsDivider' && selRarities.includes(e.rarity)
+            );
+          }
+          
+          // 4) both → matching pair
+          return (c.baseEffects || []).some(e =>
+            e.type === 'rarityOddsDivider'
+            && selRealms.includes(e.realm)
+            && selRarities.includes(e.rarity)
+          );
+        } else {
+          // For other groups, check if card has any of the effect types
+          return effectTypes.some(type => hasEffect(c, type));
+        }
+      });
+    })
     .forEach(c => {
       const cardEl = document.createElement('div');
       cardEl.className = 'card-outer';
@@ -1436,12 +1617,42 @@ function updateGeneratorRates() {
   }
 }
 
+// Add this function after updateAvailableEffects
+function checkAndUpdateAvailableEffects(card) {
+  // Skip if we already have all possible effects
+  if (availableEffects.size === Object.keys(EFFECT_NAMES).length + Object.keys(SPECIAL_EFFECT_NAMES).length) {
+    return;
+  }
+
+  // Add card's rarity to unlocked rarities
+  if (card.rarity) {
+    state.effectFilters.unlockedRarities.add(card.rarity);
+  }
+
+  // Check base effects
+  if (card.baseEffects) {
+    card.baseEffects.forEach(effect => {
+      if (!availableEffects.has(effect.type)) {
+        availableEffects.add(effect.type);
+      }
+    });
+  }
+
+  // Check special effects
+  if (card.specialEffects) {
+    card.specialEffects.forEach(effect => {
+      if (!availableEffects.has(effect.type)) {
+        availableEffects.add(effect.type);
+      }
+    });
+  }
+}
+
+// Update the giveCard function to call checkAndUpdateAvailableEffects
 function giveCard(cardId, amount = 1) {
   const c = cardMap[cardId];
   const wasNew = c.quantity === 0;  // Track if this is a new discovery
-  const oldTier = c.tier;           // <-- Add this line back
-
-
+  const oldTier = c.tier;
 
   // --- 2. Update quantity ---
   c.quantity += amount;
@@ -1455,7 +1666,7 @@ function giveCard(cardId, amount = 1) {
 
   // Only apply new effects if tier increased
   if (newTier > oldTier) {
-      // --- 1. Remove all previous effects (base + special) if present ---
+    // --- 1. Remove all previous effects (base + special) if present ---
     if (c.lastAppliedEffects) {
       applyEffectsDelta(c.lastAppliedEffects, -1);
     }
@@ -1474,6 +1685,7 @@ function giveCard(cardId, amount = 1) {
   // Update generator rates if this is a new card discovery
   if (wasNew) {
     c.isNew = true;
+    checkAndUpdateAvailableEffects(c);  // Add this line
     updateGeneratorRates();
     checkForNewCards();
     processNewCardDiscovered();
@@ -2095,6 +2307,9 @@ document.addEventListener('DOMContentLoaded', async ()=>{
       const specialEffs = computeSpecialEffects(c);
       applyEffectsDelta(specialEffs, +1);
       c.lastAppliedEffects = { ...c.lastAppliedEffects, ...specialEffs };
+
+      // Check and update available effects
+      checkAndUpdateAvailableEffects(c);
     }
   });
 

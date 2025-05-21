@@ -28,8 +28,8 @@ window.SPECIAL_EFFECT_NAMES = {
 };
   
 const EFFECT_SCALES = {
-    minCardsPerPoke: 1.75,
-    maxCardsPerPoke: 1.75,
+    minCardsPerPoke: 1.5,
+    maxCardsPerPoke: 1.5,
     rarityOddsDivider: 1.25,
     // in future you can add more types here...
   };
@@ -37,62 +37,62 @@ const EFFECT_SCALES = {
   const EFFECTS_RARITY_VALUES = {
     junk: { 
       cooldownDividerBaseValue: 0.0005,  //cost scaling 5
-      maxCardsPerPokeBaseValue: 0.01,
-      minCardsPerPokeBaseValue: 0.005,
+      maxCardsPerPokeBaseValue: 0.1,
+      minCardsPerPokeBaseValue: 0.05,
       oddsDividerCap: 2
     },
     basic: { 
       cooldownDividerBaseValue: 0.001,  //cost scaling 5
-      maxCardsPerPokeBaseValue: 0.02,
-      minCardsPerPokeBaseValue: 0.01,
+      maxCardsPerPokeBaseValue: 0.2,
+      minCardsPerPokeBaseValue: 0.1,
       oddsDividerCap: 2.5
     },
     decent: { 
       cooldownDividerBaseValue: 0.002, //cost scaling 4.5
-      maxCardsPerPokeBaseValue: 0.03,
-      minCardsPerPokeBaseValue: 0.015,
+      maxCardsPerPokeBaseValue: 0.5,
+      minCardsPerPokeBaseValue: 0.25,
       oddsDividerCap: 3
     },
     fine: { 
       cooldownDividerBaseValue: 0.003,  //cost scaling 4.5
-      maxCardsPerPokeBaseValue: 0.04,
-      minCardsPerPokeBaseValue: 0.02,
+      maxCardsPerPokeBaseValue: 1,
+      minCardsPerPokeBaseValue: 0.5,
       oddsDividerCap: 4
     },
     rare: { 
       cooldownDividerBaseValue: 0.004,  //cost scaling 4
-      maxCardsPerPokeBaseValue: 0.05,
-      minCardsPerPokeBaseValue: 0.025,
+      maxCardsPerPokeBaseValue: 2,
+      minCardsPerPokeBaseValue: 1,
       oddsDividerCap: 5
     },
     epic: { 
       cooldownDividerBaseValue: 0.005,  //cost scaling 4
-      maxCardsPerPokeBaseValue: 0.06,
-      minCardsPerPokeBaseValue: 0.03,
+      maxCardsPerPokeBaseValue: 5,
+      minCardsPerPokeBaseValue: 2.5,
       oddsDividerCap: 6
     },
     legend: { 
       cooldownDividerBaseValue: 0.006, //cost scaling 3.5
-      maxCardsPerPokeBaseValue: 0.07,
-      minCardsPerPokeBaseValue: 0.035,
+      maxCardsPerPokeBaseValue: 10,
+      minCardsPerPokeBaseValue: 5,
       oddsDividerCap: 7
     },
     mythic: { 
       cooldownDividerBaseValue: 0.007, //cost scaling 3.5
-      maxCardsPerPokeBaseValue: 0.08,
-      minCardsPerPokeBaseValue: 0.04,
+      maxCardsPerPokeBaseValue: 20,
+      minCardsPerPokeBaseValue: 10,
       oddsDividerCap: 8
     },
     exotic: { 
       cooldownDividerBaseValue: 0.008, //cost scaling 3
-      maxCardsPerPokeBaseValue: 0.09,
-      minCardsPerPokeBaseValue: 0.045,
+      maxCardsPerPokeBaseValue: 50,
+      minCardsPerPokeBaseValue: 25,
       oddsDividerCap: 9
     },
     divine: { 
       cooldownDividerBaseValue: 0.01, //cost scaling 3
-      maxCardsPerPokeBaseValue: 0.1,
-      minCardsPerPokeBaseValue: 0.5,
+      maxCardsPerPokeBaseValue: 100,
+      minCardsPerPokeBaseValue: 50,
       oddsDividerCap: 10
     }
   };
@@ -340,4 +340,67 @@ function applyEffectsDelta(deltaMap, sign = +1) {
                 console.warn("Unknown effect key:", parts[0]);
         }
     });
+}
+
+// Effect filter groupings
+const EFFECT_FILTER_GROUPS = {
+  'Per Poke': ['currencyPerPoke', 'flatCurrencyPerPoke', 'currencyPerPokeMultiplier'],
+  'Per Sec': ['currencyPerSec', 'flatCurrencyPerSecond', 'currencyPerSecMultiplier'],
+  '+Cards': ['minCardsPerPoke', 'maxCardsPerPoke', 'flatMaxCardsPerPoke', 'flatMinCardsPerPoke'],
+  Cooldown: ['cooldownDivider', 'flatCooldownDivider'],
+  Merchant: ['merchantCooldownReduction', 'extraMerchantRarityScaling', 'flatExtraMerchantRarityScaling', 'merchantPriceDivider'],
+  Odds: ['rarityOddsDivider']
+};
+
+// Track available effects from unlocked cards
+let availableEffects = new Set();
+let availableRarityFilters = new Map(); // Map<realmId, Set<rarity>>
+
+function updateAvailableEffects(card) {
+  if (!card.quantity || card.quantity === 0) return;
+
+  // Check base effects
+  if (card.baseEffects) {
+    card.baseEffects.forEach(effect => {
+      availableEffects.add(effect.type);
+      
+      // Special handling for rarity odds divider
+      if (effect.type === 'rarityOddsDivider') {
+        if (!availableRarityFilters.has(effect.realm)) {
+          availableRarityFilters.set(effect.realm, new Set());
+        }
+        availableRarityFilters.get(effect.realm).add(effect.rarity);
+      }
+    });
+  }
+
+  // Check special effects
+  if (card.specialEffects) {
+    card.specialEffects.forEach(effect => {
+      availableEffects.add(effect.type);
+    });
+  }
+}
+
+function hasEffect(card, effectType) {
+  // Check base effects
+  if (card.baseEffects) {
+    if (card.baseEffects.some(e => e.type === effectType)) return true;
+  }
+  
+  // Check special effects
+  if (card.specialEffects) {
+    if (card.specialEffects.some(e => e.type === effectType)) return true;
+  }
+  
+  return false;
+}
+
+function hasRarityEffect(card, realmId, rarity) {
+  if (!card.baseEffects) return false;
+  return card.baseEffects.some(e => 
+    e.type === 'rarityOddsDivider' && 
+    e.realm === realmId && 
+    e.rarity === rarity
+  );
 }

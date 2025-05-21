@@ -3516,11 +3516,6 @@ window.cards = [
       {
         "type": "rarityOddsDivider",
         "realm": 4,
-        "rarity": "fine"
-      },
-      {
-        "type": "rarityOddsDivider",
-        "realm": 4,
         "rarity": "basic"
       },
       {
@@ -3532,6 +3527,11 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 4,
         "rarity": "fine"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 2,
+        "rarity": "decent"
       },
       {
         "type": "rarityOddsDivider",
@@ -9214,6 +9214,72 @@ window.cards = [
   },
   {
     "id": "833",
+    "name": "Cosmic Collection",
+    "realm": 8,
+    "rarity": "fine",
+    "quantity": 0,
+    "tier": 0,
+    "level": 1,
+    "levelScaling": 5.0,
+    "levelCost": {
+      "currency": "coin",
+      "amount": 10.0
+    },
+    "description": "Gameception Error: Maximum Recursion Depth Exceeded",
+    "baseEffects": [
+      {
+        "type": "currencyPerPoke",
+        "currency": "coin",
+        "value": 500.0
+      },
+      {
+        "type": "currencyPerSec",
+        "currency": "coin",
+        "value": 20.0
+      },
+      {
+        "type": "maxCardsPerPoke"
+      },
+      {
+        "type": "minCardsPerPoke"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 8,
+        "rarity": "decent"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "flatExtraMerchantRarityScaling",
+        "requirement": {
+          "type": "level",
+          "amount": 15
+        },
+        "value": 0.1
+      },
+      {
+        "type": "flatMaxCardsPerPoke",
+        "requirement": {
+          "type": "level",
+          "amount": 40
+        },
+        "value": 1000000.0
+      }
+    ]
+  },
+  {
+    "id": "834",
     "name": "Idle Slayer",
     "realm": 8,
     "rarity": "rare",
@@ -9266,7 +9332,7 @@ window.cards = [
     ]
   },
   {
-    "id": "834",
+    "id": "835",
     "name": "Swarm Simulator",
     "realm": 8,
     "rarity": "rare",
@@ -9308,7 +9374,7 @@ window.cards = [
     ]
   },
   {
-    "id": "835",
+    "id": "836",
     "name": "Farmer Against Potatoes",
     "realm": 8,
     "rarity": "rare",
@@ -9360,7 +9426,7 @@ window.cards = [
     ]
   },
   {
-    "id": "836",
+    "id": "837",
     "name": "Synergism",
     "realm": 8,
     "rarity": "rare",
@@ -9410,7 +9476,7 @@ window.cards = [
     ]
   },
   {
-    "id": "837",
+    "id": "838",
     "name": "Idle Loops",
     "realm": 8,
     "rarity": "rare",
@@ -9455,7 +9521,7 @@ window.cards = [
     ]
   },
   {
-    "id": "838",
+    "id": "839",
     "name": "Shark Incremental",
     "realm": 8,
     "rarity": "rare",
@@ -9495,7 +9561,7 @@ window.cards = [
     ]
   },
   {
-    "id": "839",
+    "id": "840",
     "name": "Egg Inc.",
     "realm": 8,
     "rarity": "epic",
@@ -9553,7 +9619,7 @@ window.cards = [
     ]
   },
   {
-    "id": "840",
+    "id": "841",
     "name": "Trimps",
     "realm": 8,
     "rarity": "epic",
@@ -9616,7 +9682,7 @@ window.cards = [
     ]
   },
   {
-    "id": "841",
+    "id": "842",
     "name": "Cookie Clicker",
     "realm": 8,
     "rarity": "epic",
@@ -9680,7 +9746,7 @@ window.cards = [
     ]
   },
   {
-    "id": "842",
+    "id": "843",
     "name": "Dodecadragons",
     "realm": 8,
     "rarity": "legend",
@@ -9748,7 +9814,7 @@ window.cards = [
     ]
   },
   {
-    "id": "843",
+    "id": "844",
     "name": "Idle Research",
     "realm": 8,
     "rarity": "legend",
@@ -9811,7 +9877,7 @@ window.cards = [
     ]
   },
   {
-    "id": "844",
+    "id": "845",
     "name": "Clicker Heroes",
     "realm": 8,
     "rarity": "legend",
@@ -9872,7 +9938,7 @@ window.cards = [
     ]
   },
   {
-    "id": "845",
+    "id": "846",
     "name": "Antimatter Dimensions",
     "realm": 8,
     "rarity": "mythic",
@@ -9940,7 +10006,7 @@ window.cards = [
     ]
   },
   {
-    "id": "846",
+    "id": "847",
     "name": "Unnamed Space Idle",
     "realm": 8,
     "rarity": "mythic",
@@ -10013,7 +10079,7 @@ window.cards = [
     ]
   },
   {
-    "id": "847",
+    "id": "848",
     "name": "NGU Idle",
     "realm": 8,
     "rarity": "mythic",
@@ -10084,7 +10150,7 @@ window.cards = [
     ]
   },
   {
-    "id": "848",
+    "id": "849",
     "name": "Degens Adventure",
     "realm": 8,
     "rarity": "exotic",
@@ -10170,7 +10236,7 @@ window.cards = [
     ]
   },
   {
-    "id": "849",
+    "id": "850",
     "name": "Bitburner",
     "realm": 8,
     "rarity": "exotic",
@@ -10246,7 +10312,7 @@ window.cards = [
     ]
   },
   {
-    "id": "850",
+    "id": "851",
     "name": "Degens Idle",
     "realm": 8,
     "rarity": "divine",
@@ -10318,9 +10384,9 @@ window.cards = [
         "type": "flatMaxCardsPerPoke",
         "requirement": {
           "type": "level",
-          "amount": 40
+          "amount": 50
         },
-        "value": 1000000.0
+        "value": 10000000.0
       }
     ]
   },
