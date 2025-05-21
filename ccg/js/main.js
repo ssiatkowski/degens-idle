@@ -1122,6 +1122,9 @@ function openModal(cardId) {
         case "flatCooldownDivider":
           valueHtml = `+${formatNumber(def.value)}`;
           break;
+        case "flatExtraMerchantRarityScaling":
+          valueHtml = `+${formatNumber(def.value)}`;
+          break;
         default:
           valueHtml = def.value ?? '';
       }

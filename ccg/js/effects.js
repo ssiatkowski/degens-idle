@@ -157,7 +157,7 @@ function computeSpecialEffects(c) {
                 break;
 
             case "flatExtraMerchantRarityScaling":
-                effs.extraMerchantRarityScaling = (effs.extraMerchantRarityScaling || 0) + def.value;
+                effs.flatExtraMerchantRarityScaling = (effs.flatExtraMerchantRarityScaling || 0) + def.value;
                 break;
         }
     });
@@ -237,11 +237,7 @@ function applyEffectsDelta(deltaMap, sign = +1) {
             case "cooldownDivider":
                 E[parts[0]] = (E[parts[0]] || 0) + sign * v;
                 break;
-
-            case "flatExtraMerchantRarityScaling":
-                E[parts[0]] = (E[parts[0]] || 0) + sign * v;
-                break;
-
+                
             case "currencyPerPoke":
             case "currencyPerSec": {
                 const cur = parts[1];
@@ -288,7 +284,8 @@ function applyEffectsDelta(deltaMap, sign = +1) {
 
             case "flatMaxCardsPerPoke":
             case "flatMinCardsPerPoke":
-            case "flatCooldownDivider": {
+            case "flatCooldownDivider": 
+            case "flatExtraMerchantRarityScaling": {
                 const targetType = parts[0].replace('flat', '');
                 const finalType = targetType.charAt(0).toLowerCase() + targetType.slice(1);
                 E[finalType] = (E[finalType] || 0) + sign * v;
@@ -348,7 +345,7 @@ const EFFECT_FILTER_GROUPS = {
   'Per Sec': ['currencyPerSec', 'flatCurrencyPerSecond', 'currencyPerSecMultiplier'],
   '+Cards': ['minCardsPerPoke', 'maxCardsPerPoke', 'flatMaxCardsPerPoke', 'flatMinCardsPerPoke'],
   Cooldown: ['cooldownDivider', 'flatCooldownDivider'],
-  Merchant: ['merchantCooldownReduction', 'extraMerchantRarityScaling', 'flatExtraMerchantRarityScaling', 'merchantPriceDivider'],
+  Merchant: ['merchantCooldownReduction', 'flatExtraMerchantRarityScaling', 'merchantPriceDivider'],
   Odds: ['rarityOddsDivider']
 };
 
