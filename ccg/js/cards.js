@@ -2509,7 +2509,7 @@ window.cards = [
         "type": "flatCurrencyPerPoke",
         "requirement": {
           "type": "level",
-          "amount": 15
+          "amount": 17
         },
         "currency": "royal_jelly",
         "value": 5000.0
@@ -3979,22 +3979,22 @@ window.cards = [
       {
         "type": "rarityOddsDivider",
         "realm": 1,
-        "rarity": "junk"
+        "rarity": "basic"
       },
       {
         "type": "rarityOddsDivider",
         "realm": 2,
-        "rarity": "junk"
-      },
-      {
-        "type": "rarityOddsDivider",
-        "realm": 3,
-        "rarity": "junk"
+        "rarity": "basic"
       },
       {
         "type": "rarityOddsDivider",
         "realm": 3,
         "rarity": "basic"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 3,
+        "rarity": "decent"
       },
       {
         "type": "rarityOddsDivider",
@@ -6886,6 +6886,11 @@ window.cards = [
       {
         "type": "rarityOddsDivider",
         "realm": 6,
+        "rarity": "decent"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 6,
         "rarity": "fine"
       }
     ]
@@ -6981,11 +6986,6 @@ window.cards = [
         "type": "rarityOddsDivider",
         "realm": 8,
         "rarity": "decent"
-      },
-      {
-        "type": "rarityOddsDivider",
-        "realm": 8,
-        "rarity": "fine"
       }
     ]
   },
@@ -10581,7 +10581,7 @@ window.cards = [
           "amount": 11
         },
         "currency": "egg",
-        "value": 10000.0
+        "value": 100000.0
       },
       {
         "type": "flatCurrencyPerSecond",
@@ -10763,7 +10763,7 @@ window.cards = [
           "amount": 11
         },
         "currency": "rune",
-        "value": 500.0
+        "value": 2500.0
       },
       {
         "type": "flatCurrencyPerPoke",
@@ -10958,7 +10958,7 @@ window.cards = [
           "amount": 22
         },
         "currency": "egg",
-        "value": 20000.0
+        "value": 500000.0
       },
       {
         "type": "flatCurrencyPerSecond",
@@ -11038,7 +11038,7 @@ window.cards = [
           "amount": 11
         },
         "currency": "coin",
-        "value": 20000.0
+        "value": 25000.0
       },
       {
         "type": "flatCurrencyPerSecond",

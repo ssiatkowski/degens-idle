@@ -417,28 +417,28 @@ window.skills = [
       id: 4005,
       name: "Not Less Cards 5",
       description: "+8 to min cards per poke.",
-      cost: { realmId: 3, currencyId: "rune", amount: 1e5 },
+      cost: { realmId: 3, currencyId: "rune", amount: 1e4 },
       purchased: false
     },
     {
       id: 4006,
       name: "Not Less Cards 6",
       description: "+8 to min cards per poke.",
-      cost: { realmId: 4, currencyId: "pearl", amount: 1e5 },
+      cost: { realmId: 4, currencyId: "pearl", amount: 1e4 },
       purchased: false
     },
     {
       id: 4007,
       name: "Not Less Cards 7",
       description: "+12 to min cards per poke.",
-      cost: { realmId: 5, currencyId: "royal_jelly", amount: 1e5 },
+      cost: { realmId: 5, currencyId: "royal_jelly", amount: 1e4 },
       purchased: false
     },
     {
       id: 4008,
       name: "Not Less Cards 8",
       description: "+15 to min cards per poke.",
-      cost: { realmId: 5, currencyId: "feather", amount: 1e5 },
+      cost: { realmId: 5, currencyId: "feather", amount: 1e4 },
       purchased: false
     },
     {
@@ -452,7 +452,7 @@ window.skills = [
       id: 4010,
       name: "Not Less Cards 10",
       description: "+20 to min cards per poke.",
-      cost: { realmId: 6, currencyId: "cosmic_ray", amount: 1e5 },
+      cost: { realmId: 6, currencyId: "cosmic_ray", amount: 1e4 },
       purchased: false
     },
     {
@@ -1257,7 +1257,14 @@ window.skills = [
       id: 19001,
       name: "More Bulk Offers Please",
       description: "Increase chance that merchants sell multiple copies of cards from 25% to 50%.",
-      cost: { realmId: 9, currencyId: "coin", amount: 3e12},
+      cost: { realmId: 9, currencyId: "coin", amount: 5e8},
+      purchased: false
+    },
+    {
+      id: 19002,
+      name: "More Bulk Offers Please",
+      description: "Increase chance that merchants sell multiple copies of cards from 50% to 75%.",
+      cost: { realmId: 10, currencyId: "coin", amount: 7.5e12},
       purchased: false
     },
     {
@@ -1919,6 +1926,9 @@ function applySkill(id, skipCost = false) {
         updatePokeFilterStats();
         break;
       case 19001: // More Bulk Offers Please
+        state.merchantBulkChance += 0.25;
+        break;
+      case 19002: // More Bulk Offers Please 2
         state.merchantBulkChance += 0.25;
         break;
       case 19101: // Negotiation Tactics

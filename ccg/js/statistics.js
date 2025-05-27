@@ -181,7 +181,7 @@ function updateStatsUI() {
             </tr>
             <tr>
                 <td>${EFFECT_NAMES.merchantCooldownReduction}</td>
-                <td>${state.effects.merchantCooldownReduction}s</td>
+                <td>${formatNumber(state.effects.merchantCooldownReduction)}s</td>
             </tr>
             <tr>
                 <td>${EFFECT_NAMES.merchantNumCards}</td>
