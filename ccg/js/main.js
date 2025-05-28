@@ -529,11 +529,17 @@ function performPoke() {
       badge.className = 'reveal-badge new-badge';
       badge.textContent = 'NEW';
       front.append(badge);
+      if (wasNew && state.interceptorActive && skillMap[12204].purchased) {
+        state.interceptorValue = state.interceptorValue + 60;
+      }
     } else if (newTier > oldTier) {
       const badge = document.createElement('div');
       badge.className = 'reveal-badge tierup-badge';
       badge.textContent = 'TIER UP';
       front.append(badge);
+      if (state.interceptorActive && skillMap[12204].purchased) {
+        state.interceptorValue = state.interceptorValue + 5;
+      }
     }
 
     inner.append(back, front);
@@ -541,7 +547,7 @@ function performPoke() {
     drawArea.append(outer);
 
     // Check if interceptor is active
-    if (window.isInterceptorActive && window.isInterceptorActive()) {
+    if (state.interceptorActive) {
       // Auto-flip after a short delay
       setTimeout(() => {
         if (!inner.classList.contains('revealed')) {
@@ -737,7 +743,9 @@ function openModal(cardId) {
     .getPropertyValue('--modal-opacity'));
 
   const wasNew = c.isNew;
+  const hasTierUp = c.hasTierUp;
   c.isNew = false;
+  c.hasTierUp = false;  // Add this line to clear the tier up flag
 
   checkForNewCards();
 
@@ -746,7 +754,7 @@ function openModal(cardId) {
   ov.className = `modal-overlay modal-${rar}`;
   ov.onclick = () => {
     ov.remove();
-    if (currentTab === 'cards' && wasNew) {
+    if (currentTab === 'cards' && (wasNew || hasTierUp)) {
       initCardsFilters();
       renderCardsCollection();
     }
@@ -1382,7 +1390,7 @@ function renderCardsCollection() {
           const selRealms   = Array.from(oddsRealms);
           const selRarities = Array.from(oddsRarities);
           
-          // 1) nothing selected → don’t filter at all
+          // 1) nothing selected → don't filter at all
           if (selRealms.length === 0 && selRarities.length === 0) {
             return true;
           }
@@ -1535,6 +1543,11 @@ function renderCardsCollection() {
         badge.className = 'reveal-badge new-badge';
         badge.textContent = 'NEW';
         front.appendChild(badge);
+      } else if (c.hasTierUp) {
+        const badge = document.createElement('div');
+        badge.className = 'reveal-badge tierup-badge';
+        badge.textContent = 'TIER UP';
+        front.appendChild(badge);
       }
 
       inner.append(front);
@@ -1677,6 +1690,7 @@ function giveCard(cardId, amount = 1) {
       applyEffectsDelta(c.lastAppliedSpecialEffects, -1);
     }
     c.tier = newTier;
+    c.hasTierUp = true;  // Add this line to track pending tier up
     const newEffs = computeCardEffects(c);
     const specialEffs = computeSpecialEffects(c);
     applyEffectsDelta(newEffs, +1);

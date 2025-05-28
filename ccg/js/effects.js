@@ -341,12 +341,12 @@ function applyEffectsDelta(deltaMap, sign = +1) {
 
 // Effect filter groupings
 const EFFECT_FILTER_GROUPS = {
+  Odds: ['rarityOddsDivider'],
   'Per Poke': ['currencyPerPoke', 'flatCurrencyPerPoke', 'currencyPerPokeMultiplier'],
   'Per Sec': ['currencyPerSec', 'flatCurrencyPerSecond', 'currencyPerSecMultiplier'],
   '+Cards': ['minCardsPerPoke', 'maxCardsPerPoke', 'flatMaxCardsPerPoke', 'flatMinCardsPerPoke'],
   Cooldown: ['cooldownDivider', 'flatCooldownDivider'],
   Merchant: ['merchantCooldownReduction', 'flatExtraMerchantRarityScaling', 'merchantPriceDivider'],
-  Odds: ['rarityOddsDivider']
 };
 
 // Track available effects from unlocked cards

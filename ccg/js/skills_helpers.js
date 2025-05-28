@@ -1093,6 +1093,13 @@ window.skills = [
       purchased: false
     },
     {
+      id: 12204,
+      name: "Curious Interceptor",
+      description: "Discovering a new card while interceptor is active increases its duration by 1 minute. (Now you can stop to check out the new card!) Getting a Tier Up gives 5 seconds. ",
+      cost: { realmId: 6, currencyId: "egg", amount: 1.5e8 },
+      purchased: false
+    },
+    {
       id: 12301,
       name: "Time Crunch Collector",
       description: "Unlocks a device that can passively collect time particles to release 25x pokes worth of currency when used.",
@@ -1205,6 +1212,13 @@ window.skills = [
       purchased: false
     },
     {
+      id: 15101,
+      name: "Forsaken Realm 1",
+      description: "Reduce Rocks realm odds by another 5x.",
+      cost: { realmId: 10, currencyId: "rune", amount: 1e9 },
+      purchased: false
+    },
+    {
       id: 16001,
       name: "Gotta Catch 'Em All",
       description: "+1 max card draw per total discovered cards.",
@@ -1262,7 +1276,7 @@ window.skills = [
     },
     {
       id: 19002,
-      name: "More Bulk Offers Please",
+      name: "More Bulk Offers Please 2",
       description: "Increase chance that merchants sell multiple copies of cards from 50% to 75%.",
       cost: { realmId: 10, currencyId: "coin", amount: 7.5e12},
       purchased: false
@@ -1846,6 +1860,8 @@ function applySkill(id, skipCost = false) {
         break;
       case 12203: // Interceptor Poker Automation
         break;
+      case 12204: // Curious Interceptor
+        break;
       case 12301: // Time Crunch Collector
         window.initTimeCrunchCollector();
         break;
@@ -1898,6 +1914,10 @@ function applySkill(id, skipCost = false) {
         break;
       case 15005: // Fleeting Realm 5
         realms[4].pokeWeight /= 5;
+        updatePokeFilterStats();
+        break;
+      case 15101: // Forsaken Realm 1
+        realms[0].pokeWeight /= 5;
         updatePokeFilterStats();
         break;
       case 16001: // Gotta Catch 'Em All
