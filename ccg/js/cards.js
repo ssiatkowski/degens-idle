@@ -227,7 +227,30 @@ window.cards = [
       {
         "type": "rarityOddsDivider",
         "realm": 1,
+        "rarity": "junk"
+      },
+      {
+        "type": "rarityOddsDivider",
+        "realm": 1,
         "rarity": "basic"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "flatMaxCardsPerPoke",
+        "requirement": {
+          "type": "level",
+          "amount": 10
+        },
+        "value": 2.0
+      },
+      {
+        "type": "flatMaxCardsPerPoke",
+        "requirement": {
+          "type": "level",
+          "amount": 20
+        },
+        "value": 20.0
       }
     ]
   },
@@ -533,10 +556,10 @@ window.cards = [
         "type": "flatCurrencyPerPoke",
         "requirement": {
           "type": "level",
-          "amount": 30
+          "amount": 15
         },
         "currency": "crystal",
-        "value": 30.0
+        "value": 15.0
       }
     ]
   },
@@ -885,6 +908,16 @@ window.cards = [
       },
       {
         "type": "cooldownDivider"
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "flatCooldownDivider",
+        "requirement": {
+          "type": "level",
+          "amount": 8
+        },
+        "value": 0.2
       }
     ]
   },

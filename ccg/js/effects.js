@@ -236,6 +236,9 @@ function applyEffectsDelta(deltaMap, sign = +1) {
 
             case "cooldownDivider":
                 E[parts[0]] = (E[parts[0]] || 0) + sign * v;
+                if (loadFinished) {
+                    updatePokeFilterStats();
+                }
                 break;
                 
             case "currencyPerPoke":
@@ -284,12 +287,21 @@ function applyEffectsDelta(deltaMap, sign = +1) {
 
             case "flatMaxCardsPerPoke":
             case "flatMinCardsPerPoke":
-            case "flatCooldownDivider": 
             case "flatExtraMerchantRarityScaling": {
                 const targetType = parts[0].replace('flat', '');
                 const finalType = targetType.charAt(0).toLowerCase() + targetType.slice(1);
                 E[finalType] = (E[finalType] || 0) + sign * v;
                 break;
+            }
+
+            case "flatCooldownDivider": {
+              const targetType = parts[0].replace('flat', '');
+              const finalType = targetType.charAt(0).toLowerCase() + targetType.slice(1);
+              E[finalType] = (E[finalType] || 0) + sign * v;
+              if (loadFinished) {
+                  updatePokeFilterStats();
+              }
+              break;
             }
 
             case "rarityOddsDivider": {
