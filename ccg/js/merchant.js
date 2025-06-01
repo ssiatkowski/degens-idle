@@ -271,8 +271,12 @@ const merchants = [
     }
   }
   
+  let skippedOffers = 0;
+
   // ——— GENERATE MERCHANT OFFERS ———
   function genMerchantOffers() {
+    skippedOffers = 0;
+    
     // ensure we always have a merchant
     if (!state.currentMerchant) {
       state.currentMerchant = pickMerchant();
@@ -280,7 +284,7 @@ const merchants = [
     }
   
     const offers = [];
-    const unlockedRealms = realms.filter(r => r.unlocked).map(r => r.id);
+    const unlockedRealms = realms.filter(r => r.unlocked && r.id !== 11).map(r => r.id);
   
     // precompute totals per realm
     const totalByRealm = {}, discByRealm = {};
@@ -323,6 +327,18 @@ const merchants = [
       // 3) pick a card from that realm+rarity
       let pool = realmRarityCardMap[realmId][rarity] || [];
       if (!pool.length) pool = realmRarityCardMap[realmId].junk;
+      
+      // Filter out locked cards AND cards with quantity 0
+      pool = pool.filter(cardId => !cardMap[cardId].locked);
+      
+      // Only pick if we have valid cards
+      if (pool.length === 0) {
+        // Increment skipped counter
+        skippedOffers++;
+        // If no valid cards, skip this offer
+        continue;
+      }
+      
       const cardId = pickRandom(pool);
       
       const ownQty = cardMap[cardId].quantity;
@@ -361,7 +377,7 @@ const merchants = [
       let quantity = 1;
       let quantityRandomVal = 0;
       if (ownQty > 9 && Math.random() < state.merchantBulkChance) {
-        const maxStack = Math.floor(Math.cbrt(ownQty));
+        const maxStack = Math.floor(Math.pow(ownQty, 1 / state.merchantBulkRoot));
         quantityRandomVal = Math.random();
         quantity = Math.max(1, Math.floor(quantityRandomVal * maxStack) + 1);
         price = price.times(Math.cbrt(quantity));
@@ -381,6 +397,11 @@ const merchants = [
   
     const btn = document.getElementById('tab-btn-merchant');
     if (!btn.classList.contains('active')) btn.classList.add('new-offers');
+
+    // if offers length is 0, set merchant refresh time to 10 seconds
+    if (state.merchantOffers.length === 0) {
+      nextRefresh = Date.now() + 10 * 1000 + (skillMap[19401].purchased ? 5 * 1000 : 10 * 1000);
+    }
   }
   
   // ——— RENDER & BUY ———
@@ -497,6 +518,15 @@ const merchants = [
 
     // Use stored message
     msgEl.innerHTML = state.currentMerchantMessage;
+
+    
+    // Before returning, if we skipped any offers, show a message
+    if (skippedOffers > 0) {
+        const message = document.createElement('div');
+        message.className = 'merchant-skip-message';
+        message.textContent = `${skippedOffers} card${skippedOffers > 1 ? 's' : ''} skipped - due to card being locked`;
+        msgEl.appendChild(message);
+    }
 
     // Clear previous offers
     offersEl.innerHTML = '';
@@ -707,45 +737,41 @@ const merchants = [
   window.unlockMerchantByName = unlockMerchantByName;
   
   function generateMerchantOffer() {
-    const player = getPlayer();
-    const specialEffects = player.specialEffects || {};
-    
-    // Calculate base values
-    let maxCardsPerPoke = 3;
-    let minCardsPerPoke = 1;
-    let cooldownDivider = 1;
-    
-    // Apply special effects
-    if (specialEffects.flatMaxCardsPerPoke) {
-      maxCardsPerPoke += specialEffects.flatMaxCardsPerPoke;
+    // Get all cards that can be offered
+    const availableCards = cards.filter(c => {
+      // Skip cards that are locked
+      if (c.realm === 11 && isCardLocked(c.id)) {
+        return false;
+      }
+      return c.quantity > 0;
+    });
+
+    if (availableCards.length === 0) return null;
+
+    // Pick a random card
+    const card = pickRandom(availableCards);
+    if (!card) return null;
+
+    // Pick a random currency
+    const currency = pickRandom(currencies.filter(c => c.id !== 'harvester' && c.id !== 'timeCrunch'));
+
+    // Calculate base price
+    const basePrice = card.power * card.tier * Math.sqrt(card.level);
+    const price = new Decimal(basePrice)
+      .times(currency.priceMultiplier)
+      .times(1 - state.effects.merchantPriceDivider);
+
+    // Calculate quantity
+    let quantity = 1;
+    if (Math.random() < state.merchantBulkChance) {
+      quantity = Math.floor(Math.random() * 3) + 1;
     }
-    if (specialEffects.flatMinCardsPerPoke) {
-      minCardsPerPoke += specialEffects.flatMinCardsPerPoke;
-    }
-    if (specialEffects.flatCooldownDivider) {
-      cooldownDivider += specialEffects.flatCooldownDivider;
-    }
-    
-    // Ensure min doesn't exceed max
-    minCardsPerPoke = Math.min(minCardsPerPoke, maxCardsPerPoke);
-    
-    // Generate random number of cards between min and max
-    const numCards = Math.floor(Math.random() * (maxCardsPerPoke - minCardsPerPoke + 1)) + minCardsPerPoke;
-    
-    // Generate random cards
-    const cards = [];
-    for (let i = 0; i < numCards; i++) {
-      cards.push(generateRandomCard());
-    }
-    
-    // Calculate cooldown with divider
-    const baseCooldown = 300; // 5 minutes in seconds
-    const cooldown = Math.max(60, Math.floor(baseCooldown / cooldownDivider));
-    
+
     return {
-      cards,
-      cooldown,
-      timestamp: Date.now()
+      cardId: card.id,
+      currency: currency.id,
+      price: price,
+      quantity: quantity
     };
   }
 
@@ -827,4 +853,3 @@ const merchants = [
       }
     };
   }
-  

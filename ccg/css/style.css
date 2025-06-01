@@ -418,6 +418,10 @@ nav#tabs { margin-bottom: 15px; }
   font-size:0.8em; pointer-events:none;
   z-index: 10;
 }
+.count-badge.locked {
+  background: #666;
+  color: #999;
+}
 
 /* Modal overlay & content */
 .modal-overlay {
@@ -883,6 +887,31 @@ nav#tabs { margin-bottom: 15px; }
 }
 .card-inner.revealed.shake {
   animation: shake 0.4s ease-in-out;
+}
+
+/* Pulsing “locked” effect */
+@keyframes lockedPulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.1;
+  }
+}
+
+/* Apply the pulsing animation to any card-inner that has a `.locked` class */
+.card-inner.revealed.locked {
+  animation: lockedPulse 1s ease-in-out;
+  transform-origin: center center;
+}
+
+/* Ensure the card faces maintain correct visibility during animation */
+.card-inner.revealed.locked .card-face.front {
+  backface-visibility: visible;
+}
+
+.card-inner.revealed.locked .card-face.back {
+  backface-visibility: hidden;
 }
 
 .realm-filter-btn {
@@ -1589,4 +1618,79 @@ nav#tabs { margin-bottom: 15px; }
 }
 .rarity-filter-option.active {
   background: var(--tab-active);
+}
+
+.modal-stats-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 8px 0;
+  padding: 8px 0;
+}
+
+
+.base-stat {
+  font-size: 1.1em;
+  text-align: center;
+  padding: 4px 8px;
+  margin-bottom: 4px;
+}
+
+.combat-stat {
+  text-align: center;
+  padding: 4px 8px;
+  border-top: 1px solid #888;
+  border-bottom: 1px solid #fff;
+  position: relative;
+}
+
+.combat-stat::before,
+.combat-stat::after {
+  content: '';
+  position: absolute;
+  top: -1px;
+  bottom: -1px;
+  width: 1px;
+  background: linear-gradient(to bottom, #888, #fff);
+}
+
+.combat-stat::before {
+  left: 0;
+}
+
+.combat-stat::after {
+  right: 0;
+}
+
+/* Rest of the styles stay the same */
+.combat-stat i {
+  margin-right: 4px;
+}
+
+.combat-stat span {
+  font-weight: bold;
+}
+
+.combat-calc {
+  font-size: 0.8em;
+  color: var(--dark);
+  opacity: 0.8;
+  margin-top: 2px;
+}
+
+.modal-lock-status {
+  padding: 8px;
+  margin-bottom: 12px;
+  text-align: center;
+  background: rgba(0,0,0,0.1);
+  border-radius: 4px;
+  color: #ff4444;
+}
+
+.modal-lock-status i {
+  margin-right: 6px;
+}
+
+.modal-lock-status span {
+  font-weight: bold;
 }

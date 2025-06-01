@@ -1,5 +1,4 @@
 // Time-Crunch state
-const MAX_CHARGE_TIME = 300; // seconds
 let timeCrunchInterval = null;
 
 // DOM refs
@@ -10,10 +9,10 @@ function startTimeCrunch() {
   if (timeCrunchInterval) return;
   timeCrunchInterval = setInterval(() => {
     // advance your state; clamp at max
-    state.timeCrunchValue = Math.min(state.timeCrunchValue + 0.1, MAX_CHARGE_TIME);
+    state.timeCrunchValue = Math.min(state.timeCrunchValue + 0.1, state.timeCrunchMaxChargeTime);
     updateTimeCrunchUI();
     // stop when full
-    if (state.timeCrunchValue >= MAX_CHARGE_TIME) {
+    if (state.timeCrunchValue >= state.timeCrunchMaxChargeTime) {
       clearInterval(timeCrunchInterval);
       timeCrunchInterval = null;
     }
@@ -22,7 +21,7 @@ function startTimeCrunch() {
 
 // Paint the UI each tick
 function updateTimeCrunchUI() {
-  const progress = state.timeCrunchValue / MAX_CHARGE_TIME;   // 0…1
+  const progress = state.timeCrunchValue / state.timeCrunchMaxChargeTime;   // 0…1
   const degrees = progress * 360;
   // drive the CSS variable
   timeCrunchButton.style.setProperty('--charge-angle', `${degrees}deg`);
@@ -34,12 +33,12 @@ function updateTimeCrunchUI() {
 
 // Button handler (same as yours)
 function handleTimeCrunchClick() {
-  if (state.timeCrunchValue < MAX_CHARGE_TIME) return;
+  if (state.timeCrunchValue < state.timeCrunchMaxChargeTime) return;
   
-  // Award 25 poke gains for each currency
+  // Award poke gains for each currency
   Object.entries(state.effects.currencyPerPoke).forEach(([curId, rate]) => {
     if (!rate || state.currencies[curId] == null) return;
-    const gain = new Decimal(rate * 25 * state.effects.currencyPerPokeMultiplier[curId]);
+    const gain = new Decimal(rate * (skillMap[12302].purchased ? 100 : 25) * state.effects.currencyPerPokeMultiplier[curId]);
     state.currencies[curId] = state.currencies[curId].plus(gain);
   });
   
@@ -54,7 +53,7 @@ function handleTimeCrunchClick() {
 
 // If you load saved state on pageload, just do:
 function setTimeCrunchValue(value) {
-  state.timeCrunchValue = Math.min(value, MAX_CHARGE_TIME);
+  state.timeCrunchValue = Math.min(value, state.timeCrunchMaxChargeTime);
   updateTimeCrunchUI();
 }
 
@@ -65,7 +64,7 @@ function initTimeCrunchCollector() {
   
   document.getElementById('time-crunch-container').style.display = 'flex';
   // Only start charging if we're not already at max
-  if (state.timeCrunchValue < MAX_CHARGE_TIME) {
+  if (state.timeCrunchValue < state.timeCrunchMaxChargeTime) {
     startTimeCrunch();
   } else {
     updateTimeCrunchUI();

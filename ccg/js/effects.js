@@ -11,6 +11,7 @@ window.EFFECT_NAMES = {
     merchantNumCards:     "Merchant # Cards",
     merchantCooldownReduction: "Merchant Cooldown Reduction",
     extraMerchantRarityScaling: "Extra Merchant Rarity Scaling",
+    maxOfflineHours: "Max Offline Time",
   };
 
 // Add special effect names

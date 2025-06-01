@@ -72,15 +72,34 @@ window.state = {
   timeCrunchValue: 0,     // Add Time Crunch value
   merchantBulkChance: 0.25,
   merchantBuyAllDiscount: 0.05,
+  merchantBulkRoot: 3,
+  maxOfflineHours: 4, // Maximum hours to consider for offline earnings
   pokeRaritiesOmitted: [],
   hideOmittedRarities: true,  // New variable for checkbox state
+  hideLockedCards: true, // New variable for checkbox state
   remainingCooldown: 0,    // Add remaining cooldown to state
+  timeCrunchMaxChargeTime: 300, // 5 minutes max charge time
   effectFilters: {
     activeGroups: new Set(),
     oddsRealms:      new Set(),    // <realmId>
     oddsRarities:   new Set(),    // <rarity>
     unlockedRarities: new Set() // Track unlocked rarities
   },
+  battle: {
+    slots: [null, null, null], // 3 slots for cards in battle
+    currentEnemy: null,
+    lockoutTimers: {}, // Keep this for temporary lockouts
+    initialized: false,
+    sortBy: 'power',
+    paused: true,
+    sortBy: 'power',
+    sortDirection: 'desc',
+    filterRealm: null,
+    filterRarity: null
+  },
+  showTierUps: true,  // Add this line
+  autoUseAbsorber: false,  // Add this line
+  lastUnstuck: null, // Track last unstuck time
 };
 
 // init currencies & effects
@@ -117,6 +136,12 @@ function loadState() {
     state.timeCrunchValue = obj.timeCrunchValue || 0;  // Load Time Crunch value
     state.merchantBulkChance = obj.merchantBulkChance || 0.25;
     state.merchantRefreshTime = obj.merchantRefreshTime || 0;
+    state.maxOfflineHours = obj.maxOfflineHours || 4; // Load max offline hours
+        
+    // === Determine whether any saved card actually has a `locked` property ===
+    const savedOwned = obj.ownedCards || {};
+    const anySavedHasLocked = Object.values(savedOwned).some(data => data.hasOwnProperty('locked'));
+
     Object.entries(obj.ownedCards).forEach(([cid,data])=>{
       const c = cardMap[cid];
       if (c) {
@@ -124,6 +149,9 @@ function loadState() {
         c.level    = data.level;
         c.tier     = data.tier;
         c.isNew    = data.isNew;
+        if (anySavedHasLocked) {
+          c.locked   = data.locked ?? true;
+        }
       }
     });
     state.stats.totalPokes = obj.stats.totalPokes || 0;
@@ -142,6 +170,52 @@ function loadState() {
         quantity: o.quantity || 1
       }));
     }
+
+    // Load battle state
+    if (obj.battle) {
+      state.battle.slots = obj.battle.slots.map(slot => {
+        if (!slot) return null;
+        const card = cardMap[slot.id];
+        if (!card) return null;
+        return {
+          ...card,
+          attack: slot.attack,
+          currentHp: slot.currentHp,
+          maxHp: slot.maxHp,
+          quantity: slot.quantity,
+          originalQuantity: slot.originalQuantity
+        };
+      });
+      state.battle.currentEnemy = obj.battle.currentEnemy ? cardMap[obj.battle.currentEnemy.id] : null;
+      if (state.battle.currentEnemy) {
+        state.battle.currentEnemy.currentHp = obj.battle.currentEnemy.currentHp;
+        state.battle.currentEnemy.maxHp = obj.battle.currentEnemy.maxHp;
+        state.battle.currentEnemy.attack = obj.battle.currentEnemy.attack;
+      }
+      state.battle.lockoutTimers = obj.battle.lockoutTimers;
+      state.battle.sortBy = obj.battle.sortBy || 'power';
+
+      // Update lockout timer checking
+      const now = Date.now();
+      Object.entries(obj.battle.lockoutTimers || {}).forEach(([cardId, endTime]) => {
+        if (endTime <= now) {
+          delete state.battle.lockoutTimers[cardId];
+          const card = cardMap[cardId];
+          if (card) {
+            card.locked = false;
+          }
+        } else {
+          state.battle.lockoutTimers[cardId] = endTime;
+          const card = cardMap[cardId];
+          if (card) {
+            card.locked = true;
+          }
+        }
+      });
+    }
+    state.showTierUps = obj.showTierUps ?? true; // Add this line with default true
+    state.autoUseAbsorber = obj.autoUseAbsorber ?? false; // Add this line with default false
+    state.lastUnstuck = obj.lastUnstuck ? new Date(obj.lastUnstuck) : null;
   } catch(e){
     console.error("Failed to load save:", e);
   }
@@ -161,6 +235,7 @@ function saveState() {
     interceptorActive: state.interceptorActive,
     timeCrunchValue: state.timeCrunchValue,
     merchantBulkChance: state.merchantBulkChance,
+    maxOfflineHours: state.maxOfflineHours,
     currentMerchantId: state.currentMerchant?.id ?? null,
     merchantOffers: state.merchantOffers.map(o => ({
       cardId:   o.cardId,
@@ -171,6 +246,27 @@ function saveState() {
     merchantRefreshTime: nextRefresh ? nextRefresh - Date.now() : null,
     lastSaveTime: Date.now(),
     remainingCooldown: state.remainingCooldown,
+    showTierUps: state.showTierUps,  // Add this line
+    autoUseAbsorber: state.autoUseAbsorber,
+    lastUnstuck: state.lastUnstuck,
+    battle: {
+      slots: state.battle.slots.map(slot => slot ? {
+        id: slot.id,
+        attack: slot.attack,
+        currentHp: slot.currentHp,
+        maxHp: slot.maxHp,
+        quantity: slot.quantity,
+        originalQuantity: slot.originalQuantity
+      } : null),
+      currentEnemy: state.battle.currentEnemy ? {
+        id: state.battle.currentEnemy.id,
+        currentHp: state.battle.currentEnemy.currentHp,
+        maxHp: state.battle.currentEnemy.maxHp,
+        attack: state.battle.currentEnemy.attack
+      } : null,
+      lockoutTimers: state.battle.lockoutTimers,
+      sortBy: state.battle.sortBy
+    }
   };
   currencies.forEach(c => {
     obj.currencies[c.id] = state.currencies[c.id].toString();
@@ -180,7 +276,8 @@ function saveState() {
       quantity: c.quantity,
       level:    c.level,
       tier:     c.tier,
-      isNew:    c.isNew
+      isNew:    c.isNew,
+      locked:   c.locked
     };
   });
   localStorage.setItem(SAVE_KEY, JSON.stringify(obj));
@@ -281,7 +378,7 @@ function updateCurrencyBar() {
 let currentTab = 'hole';
 
 function showTab(tab) {
-  const tabs = ['hole','cards','skills','merchant','stats','settings'];
+  const tabs = ['hole','cards','skills','merchant','battles','stats','settings'];
   tabs.forEach(t=>{
     document.getElementById(`tab-content-${t}`)
       .style.display = (t===tab ? 'block' : 'none');
@@ -296,6 +393,9 @@ function showTab(tab) {
       .classList.remove('new-offers');
       renderMerchantTab();
   }
+  else if (tab === 'battles') {
+    updateBattleUI();
+  }
   currentTab = tab;
 }
 
@@ -303,6 +403,9 @@ function showTab(tab) {
 
 function performPoke() {
   if (!drawArea.classList.contains('hole-draw-area')) return;
+
+  // Check and clean expired lockouts
+  clearExpiredLockouts();
 
   holeBtn.disabled = true;
   holeBtn.classList.add('disabled');
@@ -439,13 +542,27 @@ function performPoke() {
     const c       = cardMap[cid];
     const wasNew  = c.quantity === 0;
     const oldTier = c.tier;
+    
+    if (state.hideLockedCards && skillMap[18101].purchased && c.locked) {
+      skippedCards++;
+      if (currentPackCount === skippedCards) {
+        state.flipsDone = true;
+      }
+      return;
+    }
 
-    // 3) give the cards (handles quantity, tier/level effects)
-    giveCard(cid, count);
-    const newTier = c.tier;
+    // Check if card is locked using card.locked property
+    if (!c.locked) {
+      giveCard(cid, count);
+    }
+    
+    const newTier = c.locked ? oldTier : c.tier;
 
     // Skip rendering if card meets omission criteria
-    if (state.hideOmittedRarities && state.pokeRaritiesOmitted.includes(c.rarity) && !wasNew && newTier === oldTier) {
+    if (state.hideOmittedRarities && 
+        state.pokeRaritiesOmitted.includes(c.rarity) && 
+        !wasNew && 
+        newTier === oldTier) {
       skippedCards++;
       if (currentPackCount === skippedCards) {
         state.flipsDone = true;
@@ -501,44 +618,60 @@ function performPoke() {
 
     front.append(frameImg, contentImg);
 
-    if (c.tier > 0) {
-      const tierIcon = document.createElement('img');
-      tierIcon.className = 'tier-icon';
-      const tierPath = `assets/images/tiers/tier_${c.tier}.png`;
-      imageCache.getImage('tiers', tierPath).then(img => {
-          if (img) tierIcon.src = img.src;
-      });
-      tierIcon.alt = `Tier ${c.tier}`;
+    if (c.locked) {
+      const lockedOverlay = document.createElement('div');
+      lockedOverlay.className = 'card-locked-overlay';
+      const lockedImg = document.createElement('img');
+      lockedImg.src = 'assets/images/card_locked.png';
+      lockedOverlay.appendChild(lockedImg);
+      front.append(lockedOverlay);
 
-      const lvlLabel = document.createElement('div');
-      lvlLabel.className   = 'level-label';
-      lvlLabel.textContent = `Lvl: ${formatNumber(c.level)}`;
-
-      front.append(tierIcon, lvlLabel);
-    }
-
-    if (count > 1) {
       const badge = document.createElement('div');
       badge.className = 'count-badge';
-      badge.innerHTML = formatQuantity(count);
+      badge.classList.add('locked');
+      badge.innerHTML = "0";
       front.append(badge);
     }
+    else {
+      if (c.tier > 0) {
+        const tierIcon = document.createElement('img');
+        tierIcon.className = 'tier-icon';
+        const tierPath = `assets/images/tiers/tier_${c.tier}.png`;
+        imageCache.getImage('tiers', tierPath).then(img => {
+            if (img) tierIcon.src = img.src;
+        });
+        tierIcon.alt = `Tier ${c.tier}`;
 
-    if (wasNew || c.isNew) {
-      const badge = document.createElement('div');
-      badge.className = 'reveal-badge new-badge';
-      badge.textContent = 'NEW';
-      front.append(badge);
-      if (wasNew && state.interceptorActive && skillMap[12204].purchased) {
-        state.interceptorValue = state.interceptorValue + 60;
+        const lvlLabel = document.createElement('div');
+        lvlLabel.className   = 'level-label';
+        lvlLabel.textContent = `Lvl: ${formatNumber(c.level)}`;
+
+        front.append(tierIcon, lvlLabel);
       }
-    } else if (newTier > oldTier) {
-      const badge = document.createElement('div');
-      badge.className = 'reveal-badge tierup-badge';
-      badge.textContent = 'TIER UP';
-      front.append(badge);
-      if (state.interceptorActive && skillMap[12204].purchased) {
-        state.interceptorValue = state.interceptorValue + 5;
+
+      if (count > 1) {
+        const badge = document.createElement('div');
+        badge.className = 'count-badge';
+        badge.innerHTML = formatQuantity(count);
+        front.append(badge);
+      }
+
+      if (wasNew || c.isNew) {
+        const badge = document.createElement('div');
+        badge.className = 'reveal-badge new-badge';
+        badge.textContent = 'NEW';
+        front.append(badge);
+        if (wasNew && state.interceptorActive && skillMap[12204].purchased) {
+          state.interceptorValue = state.interceptorValue + 60;
+        }
+      } else if (newTier > oldTier) {
+        const badge = document.createElement('div');
+        badge.className = 'reveal-badge tierup-badge';
+        badge.textContent = 'TIER UP';
+        front.append(badge);
+        if (state.interceptorActive && skillMap[12204].purchased) {
+          state.interceptorValue = state.interceptorValue + 5;
+        }
       }
     }
 
@@ -556,7 +689,10 @@ function performPoke() {
 
           const onFlipEnd = e => {
             if (e.propertyName === 'transform') {
-              if (wasNew) {
+              if (c.locked) {
+                inner.classList.add('locked');
+                inner.addEventListener('animationend', () => inner.classList.remove('locked'), { once: true });
+              } else if (wasNew) {
                 inner.classList.add('spin');
                 inner.addEventListener('animationend', () => inner.classList.remove('spin'), { once: true });
               } else if (newTier > oldTier) {
@@ -586,7 +722,10 @@ function performPoke() {
 
           const onFlipEnd = e => {
             if (e.propertyName === 'transform') {
-              if (wasNew) {
+              if (c.locked) {
+                inner.classList.add('locked');
+                inner.addEventListener('animationend', () => inner.classList.remove('locked'), { once: true });
+              } else if (wasNew) {
                 inner.classList.add('spin');
                 inner.addEventListener('animationend', () => inner.classList.remove('spin'), { once: true });
               } else if (newTier > oldTier) {
@@ -856,11 +995,42 @@ function openModal(cardId) {
   desc.textContent = c.description;
 
   frame.append(frameImg, nameDiv, cardImg, desc);
+
+  if (c.locked) {
+    const lockedOverlay = document.createElement('div');
+    lockedOverlay.className = 'card-locked-overlay';
+    const lockedImg = document.createElement('img');
+    lockedImg.src = 'assets/images/card_locked.png';
+    lockedOverlay.appendChild(lockedImg);
+    frame.appendChild(lockedOverlay);
+  }
+
   left.append(frame);
 
   // RIGHT SIDE (stats, level-up button)
   const right = document.createElement('div');
   right.className = 'modal-right';
+
+  // Add lock status at the top if card is locked
+  if (c.locked) {
+    const lockStatus = document.createElement('p');
+    lockStatus.className = 'modal-lock-status';
+    
+    if (state.battle.lockoutTimers[cardId]) {
+      // Calculate remaining time
+      const remainingTime = state.battle.lockoutTimers[cardId] - Date.now();
+      lockStatus.innerHTML = `
+        <i class="fas fa-lock"></i> Locked for: 
+        <span>${formatDuration(remainingTime / 1000)}</span>
+      `;
+    } else {
+      lockStatus.innerHTML = `
+        <i class="fas fa-lock"></i> 
+        <span>Defeat this card in battle to unlock</span>
+      `;
+    }
+    right.appendChild(lockStatus);
+  }
 
   const labelLine = document.createElement('p');
   labelLine.className = 'label';
@@ -986,6 +1156,32 @@ function openModal(cardId) {
     .getPropertyValue(`--rarity-${c.rarity.trim()}`);
   rarityLine.appendChild(span);
   right.appendChild(rarityLine);
+
+
+  if (realms[9].unlocked) {
+    // Add power and defense stats along with combat calculations
+    const statsContainer = document.createElement('div');
+    const attack = c.power * c.tier * Math.sqrt(c.level);
+    const hp = c.defense * Math.sqrt(c.quantity);
+    statsContainer.className = 'modal-stats-container';
+    statsContainer.innerHTML = `
+      <div class="stat-column">
+        <div class="base-stat">Power: <span>${formatNumber(c.power)}</span></div>
+        <div class="combat-stat">
+          <i class="fas fa-gavel"></i> Attack: <span>${formatNumber(attack)}</span>
+          <div class="combat-calc">(${formatNumber(c.power)} × ${c.tier} × √${c.level})</div>
+        </div>
+      </div>
+      <div class="stat-column">
+        <div class="base-stat">Defense: <span>${formatNumber(c.defense)}</span></div>
+        <div class="combat-stat">
+          <i class="fas fa-heart"></i> HP: <span>${formatNumber(hp)}</span>
+          <div class="combat-calc">(${formatNumber(c.defense)} × √${formatNumber(c.quantity)})</div>
+        </div>
+      </div>
+    `;
+    right.appendChild(statsContainer);
+  }
 
   // --- EFFECTS HEADER ---
   const effHeader = document.createElement('p');
@@ -1550,6 +1746,27 @@ function renderCardsCollection() {
         front.appendChild(badge);
       }
 
+      // Update locked overlay logic
+      if (c.locked) {
+        if (state.battle.currentEnemy && c.id === state.battle.currentEnemy.id) {
+          // Show battle overlay for current enemy
+          const battleOverlay = document.createElement('div');
+          battleOverlay.className = 'card-battle-overlay';
+          const battleImg = document.createElement('img');
+          battleImg.src = 'assets/images/card_battle.png';
+          battleOverlay.appendChild(battleImg);
+          front.appendChild(battleOverlay);
+        } else {
+          // Show locked overlay for other locked cards
+          const lockedOverlay = document.createElement('div');
+          lockedOverlay.className = 'card-locked-overlay';
+          const lockedImg = document.createElement('img');
+          lockedImg.src = 'assets/images/card_locked.png';
+          lockedOverlay.appendChild(lockedImg);
+          front.appendChild(lockedOverlay);
+        }
+      }
+
       inner.append(front);
       cardEl.append(inner);
 
@@ -1631,6 +1848,12 @@ function updateGeneratorRates() {
     const newContribution = discoveredCount * discoveredCount * state.effects.allGeneratorMultiplier;
     state.resourceGeneratorContribution.spirit = newContribution;
   }
+  // Resource Generator 10 (skill 10010)
+  if (skillMap[10010].purchased) {
+    const discoveredCount = cards.filter(c => c.realm === 10 && c.quantity > 0).length;
+    const newContribution = discoveredCount * discoveredCount * state.effects.allGeneratorMultiplier;
+    state.resourceGeneratorContribution.pearl = newContribution;
+  }
 }
 
 // Add this function after updateAvailableEffects
@@ -1690,7 +1913,8 @@ function giveCard(cardId, amount = 1) {
       applyEffectsDelta(c.lastAppliedSpecialEffects, -1);
     }
     c.tier = newTier;
-    c.hasTierUp = true;  // Add this line to track pending tier up
+    // Only set hasTierUp if showTierUps is true
+    c.hasTierUp = state.showTierUps;  // Modified this line
     const newEffs = computeCardEffects(c);
     const specialEffs = computeSpecialEffects(c);
     applyEffectsDelta(newEffs, +1);
@@ -1832,6 +2056,7 @@ function startCooldown() {
   }
 
   // 3) Clear any prior animations & timers
+ 
   if (fillAnim) anime.remove(globalFill);
   clearInterval(blackHoleTimer);
 
@@ -2050,6 +2275,23 @@ function updatePokeFilterStats() {
     flex.appendChild(checkboxContainer);
   }
 
+  if (skillMap[18101].purchased) {
+    const hideLockedCardsCheckboxContainer = document.createElement('div');
+    hideLockedCardsCheckboxContainer.className = 'hide-locked-cards-checkbox';
+    const hideLockedCardsCheckbox = document.createElement('input');
+    hideLockedCardsCheckbox.type = 'checkbox';
+    hideLockedCardsCheckbox.id = 'hide-locked-cards-checkbox';
+    hideLockedCardsCheckbox.checked = state.hideLockedCards;
+    hideLockedCardsCheckbox.addEventListener('change', (e) => {
+      state.hideLockedCards = e.target.checked;
+    });
+    const hideLockedCardsLabel = document.createElement('label');
+    hideLockedCardsLabel.htmlFor = 'hide-locked-cards-checkbox';
+    hideLockedCardsLabel.textContent = 'Hide Locked Cards';
+    hideLockedCardsCheckboxContainer.append(hideLockedCardsCheckbox, hideLockedCardsLabel);
+    flex.appendChild(hideLockedCardsCheckboxContainer);
+  }
+
   container.appendChild(flex);
 }
 
@@ -2109,29 +2351,29 @@ function processNewCardDiscovered() {
 
 // Add this function before DOMContentLoaded
 function showOfflineEarningsModal(earnings) {
-  // Only show if there are any earnings
   if (Object.keys(earnings).length === 0) return;
 
-  // OVERLAY
   const ov = document.createElement('div');
   ov.className = 'offline-earnings-modal';
   ov.onclick = () => ov.remove();
 
-  // MODAL CONTAINER
   const mc = document.createElement('div');
   mc.className = 'offline-earnings-content';
   mc.onclick = e => e.stopPropagation();
 
-  // Create grid container for two columns
   const gridContainer = document.createElement('div');
   gridContainer.className = 'offline-earnings-grid';
 
-  // HEADER
+  // Add offline time header with max hours notification if needed
+  let timeDiff = Math.floor((Date.now() - state.lastSaveTime) / 1000);
   const header = document.createElement('h3');
-  header.textContent = 'Offline Earnings';
+  header.innerHTML = `Time Offline: ${formatDuration(timeDiff)}` + 
+    (timeDiff > state.maxOfflineHours * 3600 ? 
+      ` <span style="color:#ff8888">(Max Reached: ${state.maxOfflineHours} Hours)</span>` : 
+      '');
   header.style.textAlign = 'center';
   header.style.marginBottom = '20px';
-  header.style.gridColumn = '1 / -1'; // Span both columns
+  header.style.gridColumn = '1 / -1';
   gridContainer.appendChild(header);
 
   // LEFT COLUMN - Currencies
@@ -2175,7 +2417,7 @@ function showOfflineEarningsModal(earnings) {
 
   // Check for cooldown progression
   if (state.remainingCooldown > 0) {
-    const timeDiff = Math.floor((Date.now() - state.lastSaveTime) / 1000);
+    timeDiff = Math.floor(Math.min((Date.now() - state.lastSaveTime) / 1000, state.maxOfflineHours * 3600));
     const cooldownReduction = Math.min(state.remainingCooldown, timeDiff);
     
     if (cooldownReduction > 0) {
@@ -2247,7 +2489,7 @@ function showOfflineEarningsModal(earnings) {
   // Force a reflow to ensure proper positioning
   void ov.offsetHeight;
 
-  setTimeout(() => ov.remove(), 5000);
+  setTimeout(() => ov.remove(), 10000);
 }
 
 // Preload all game assets
@@ -2312,6 +2554,7 @@ document.addEventListener('DOMContentLoaded', async ()=>{
     };
   }
 
+  // Initialize all game data
   cards.forEach(c => {
     c.lastAppliedEffects = {};
     if (c.quantity > 0) {
@@ -2330,6 +2573,7 @@ document.addEventListener('DOMContentLoaded', async ()=>{
     }
   });
 
+  // Initialize realm weights
   for (const realmId in realmMap) {
     const realm = realmMap[realmId];
     const rarities = Object.keys(realm.rarityWeights).filter(r => realm.rarityWeights[r] > 0);
@@ -2355,9 +2599,31 @@ document.addEventListener('DOMContentLoaded', async ()=>{
 
   loadFinished = true;
 
+  // Initialize all game systems
+  state.selectedRealms = realms.filter(r => r.unlocked).map(r => r.id);
+  renderRealmFilters();
+  showTab('hole');
+  updateCurrencyBar();
+  initSkillsFilters();
+  renderSkillsTab();
+  updateStatsUI();
+  checkForNewCards();
+  updatePokeFilterStats();
+  updateGeneratorRates();
+  checkAffordableSkills();
+  processNewCardDiscovered();
+  initHarvester();
+  initGravitationalWaveAbsorber();
+  initSpaceBendingInterceptor();
+
+  // Initialize battle system last, after all other systems
+  if (realms[10].unlocked) {
+    initBattleSystem();
+  }
+
   // Calculate offline progress after all effects are computed
   if (state.lastSaveTime) {
-    const timeDiff = Math.floor((Date.now() - state.lastSaveTime) / 1000);
+    const timeDiff = Math.floor(Math.min((Date.now() - state.lastSaveTime) / 1000, state.maxOfflineHours * 3600));
     
     const offlineEarnings = {};
     
@@ -2403,7 +2669,7 @@ document.addEventListener('DOMContentLoaded', async ()=>{
     saveState();
   }
 
-  ['hole','cards','skills','merchant','stats','settings'].forEach(t=>{
+  ['hole','cards','skills','merchant','battles','stats','settings'].forEach(t=>{
     document.getElementById(`tab-btn-${t}`).onclick = ()=> showTab(t);
   });
   
@@ -2516,7 +2782,7 @@ if (typeof resetGame === 'function') {
 
 function updateCurrencyAndSave() {
   // First check for offline gains if enough time has passed
-  const timeDiff = Math.floor((Date.now() - state.lastSaveTime) / 1000);
+  const timeDiff = Math.floor(Math.min((Date.now() - state.lastSaveTime) / 1000, state.maxOfflineHours * 3600));
   
   if (timeDiff > 10) {
     // Calculate offline gains
@@ -2528,7 +2794,7 @@ function updateCurrencyAndSave() {
         // Get generator contribution
         const gen = state.resourceGeneratorContribution[curId] || 0;
         // Add generator contribution to the rate
-        const totalRate = rate + gen;
+        const totalRate = rate * state.effects.currencyPerSecMultiplier[curId] + gen;
         if (!totalRate) return;
         const offlineGain = new Decimal(totalRate).times(timeDiff);
         state.currencies[curId] = state.currencies[curId].plus(offlineGain);

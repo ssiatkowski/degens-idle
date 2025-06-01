@@ -195,6 +195,10 @@ function updateStatsUI() {
                 <td>${SPECIAL_EFFECT_NAMES.merchantPriceDivider}</td>
                 <td>${formatNumber(state.effects.merchantPriceDivider)}</td>
             </tr>
+            <tr>
+                <td>${EFFECT_NAMES.maxOfflineHours}</td>
+                <td>${state.maxOfflineHours} hours</td>
+            </tr>
         </tbody>
     `;
 

@@ -113,6 +113,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Pause the currency interval
             clearInterval(currencyInterval);
+            clearInterval(blackHoleTimer);
+            clearInterval(clearInterval(state.battle.battleInterval));
 
             const reader = new FileReader();
             reader.onload = function(e) {
@@ -154,6 +156,8 @@ document.addEventListener('DOMContentLoaded', function() {
     loadFromClipboardBtn.addEventListener('click', function() {
         // Pause the currency interval
         clearInterval(currencyInterval);
+        clearInterval(blackHoleTimer);
+        clearInterval(clearInterval(state.battle.battleInterval));
 
         navigator.clipboard.readText().then(text => {
             try {
@@ -186,11 +190,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Get Unstuck functionality
     getUnstuckBtn.addEventListener('click', function() {
-        const lastUnstuck = localStorage.getItem('lastUnstuck');
         const now = Date.now();
         
-        if (lastUnstuck && (now - parseInt(lastUnstuck)) < 24 * 60 * 60 * 1000) {
-            const hoursLeft = Math.ceil((24 * 60 * 60 * 1000 - (now - parseInt(lastUnstuck))) / (60 * 60 * 1000));
+        if (state.lastUnstuck && (now - parseInt(state.lastUnstuck)) < 24 * 60 * 60 * 1000) {
+            const hoursLeft = Math.ceil((24 * 60 * 60 * 1000 - (now - parseInt(state.lastUnstuck))) / (60 * 60 * 1000));
             alert(`You can only use Get Unstuck once per day. Please try again in ${hoursLeft} hours.`);
             return;
         }
@@ -210,7 +213,10 @@ document.addEventListener('DOMContentLoaded', function() {
         if (fillAnim) anime.remove(globalFill);
         clearInterval(blackHoleTimer);
         globalFill.style.width = '0%';
-        
+
+        state.selectedRealms = realms.filter(r => r.unlocked).map(r => r.id);
+        renderRealmFilters();
+
         // Reset currencies
         Object.keys(state.currencies).forEach(key => {
             state.currencies[key] = new Decimal(0);
@@ -222,13 +228,15 @@ document.addEventListener('DOMContentLoaded', function() {
         holeBtn.classList.remove('disabled');
         
         // Save timestamp
-        localStorage.setItem('lastUnstuck', Date.now().toString());
+        state.lastUnstuck = Date.now().toString();
         
         // Close modal
         unstuckWarningModal.style.display = 'none';
         
         // Show confirmation
         alert('Successfully reset cooldown and currencies. You can use this feature again in 24 hours.');
+
+        saveState();
     });
 
     // Initialize card size slider
@@ -250,6 +258,40 @@ document.addEventListener('DOMContentLoaded', function() {
             localStorage.setItem('cardSizeScale', scale.toString());
         });
     }
+
+    // Initialize the toggle button
+    const showTierUpsToggle = document.getElementById('showTierUpsToggle');
+    showTierUpsToggle.classList.toggle('active', state.showTierUps);
+    showTierUpsToggle.innerHTML = state.showTierUps ? 
+        '<i class="fas fa-check"></i> Show Tier Ups in Collection' : 
+        '<i class="fas fa-times"></i> Show Tier Ups in Collection';
+
+    // Add click handler
+    showTierUpsToggle.addEventListener('click', function() {
+        state.showTierUps = !state.showTierUps;
+        this.classList.toggle('active');
+        this.innerHTML = state.showTierUps ? 
+            '<i class="fas fa-check"></i> Show Tier Ups in Collection' : 
+            '<i class="fas fa-times"></i> Show Tier Ups in Collection';
+        saveState();
+    });
+
+    // Initialize auto absorber toggle
+    const autoAbsorberToggle = document.getElementById('autoAbsorberToggle');
+    autoAbsorberToggle.classList.toggle('active', state.autoUseAbsorber);
+    autoAbsorberToggle.innerHTML = state.autoUseAbsorber ? 
+        '<i class="fas fa-check"></i> Auto-Use Max Absorber' : 
+        '<i class="fas fa-times"></i> Auto-Use Max Absorber';
+
+    // Add click handler
+    autoAbsorberToggle.addEventListener('click', function() {
+        state.autoUseAbsorber = !state.autoUseAbsorber;
+        this.classList.toggle('active');
+        this.innerHTML = state.autoUseAbsorber ? 
+            '<i class="fas fa-check"></i> Auto-Use Max Absorber' : 
+            '<i class="fas fa-times"></i> Auto-Use Max Absorber';
+        saveState();
+    });
 });
 
 // Add this at the top with other state variables
@@ -289,4 +331,4 @@ function updateCardSize(scale) {
     slider.value = scale * 100;
     valueDisplay.textContent = Math.round(scale * 100) + '%';
   }
-} 
+}

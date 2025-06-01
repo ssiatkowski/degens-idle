@@ -67,6 +67,12 @@
     font-size: 1.1em;
 }
 
+.settings-button.toggle-button {
+    background-color: var(--tab-bg);
+    color: var(--font-color);   
+}
+
+
 .save-button {
     background-color: #2196F3;
     color: white;

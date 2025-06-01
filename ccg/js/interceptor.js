@@ -72,7 +72,7 @@ function handleInterceptorClick() {
 // Increment interceptor value
 function incrementInterceptor() {
   if (!state.interceptorActive && skillMap[12201].purchased) {
-    state.interceptorValue += 0.01 * (skillMap[12202].purchased ? 2 : 1);
+    state.interceptorValue += 0.01 * (skillMap[12202].purchased ? 2 : 1) * (skillMap[12205].purchased ? 2.5 : 1);
     updateInterceptorUI();
   }
 }

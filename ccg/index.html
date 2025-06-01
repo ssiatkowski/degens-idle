@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/main.css" />
   <link rel="stylesheet" href="css/settings.css" />
+  <link rel="stylesheet" href="css/battles.css" />
 </head>
 <body>
   <!-- Landscape Mode Overlay -->
@@ -69,6 +70,7 @@
     <button id="tab-btn-cards"   class="tab-btn">Cards</button>
     <button id="tab-btn-skills"  class="tab-btn">Skills</button>
     <button id="tab-btn-merchant"class="tab-btn">Merchant</button>
+    <button id="tab-btn-battles" class="tab-btn">Battles</button>
     <button id="tab-btn-stats"   class="tab-btn">Stats</button>
     <button id="tab-btn-settings" class="tab-btn">Settings</button>
   </nav>
@@ -145,6 +147,9 @@
     </div>
   </div>
 
+  <div id="tab-content-battles" class="tab-content" style="display:none;">
+  </div>
+
   <div id="tab-content-stats" class="tab-content" style="display:none;">
   </div>
 
@@ -177,6 +182,12 @@
             <label for="cardSizeSlider">Card Size: <span id="cardSizeValue">100%</span></label>
             <input type="range" id="cardSizeSlider" min="50" max="150" value="100" step="5">
           </div>
+          <button id="showTierUpsToggle" class="settings-button toggle-button">
+            <i class="fas fa-check"></i> Show Tier Ups in Collection
+          </button>
+          <button id="autoAbsorberToggle" class="settings-button toggle-button" style="display: none;">
+            <i class="fas fa-times"></i> Auto-Use Max Absorber
+          </button>
         </div>
       </div>
       <div class="settings-section">
@@ -247,6 +258,7 @@
   <script src="js/absorber.js"></script>
   <script src="js/interceptor.js"></script>
   <script src="js/time_crunch.js"></script>
+  <script src="js/battles.js"></script>
 
   <!-- Main Behavior -->
   <script src="js/main.js"></script>

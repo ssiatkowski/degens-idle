@@ -64,6 +64,13 @@ window.skills = [
       purchased: false
     },
     {
+      id: 1010,
+      name: "Unlock Greek Gods Realm",
+      description: "Black Hole pokes and Merchants can now give cards from Greek Gods realm.",
+      cost: { realmId: 10, currencyId: "cosmic_ray", amount: 1e10 },
+      purchased: false
+    },
+    {
       id: 2001,
       name: "More Cards",
       description: "+2 to max cards per poke.",
@@ -159,6 +166,13 @@ window.skills = [
       name: "More Cards 14",
       description: "+300 to max cards per poke.",
       cost: { realmId: 10, currencyId: "coral", amount: 3e10 },
+      purchased: false
+    },
+    {
+      id: 2015,
+      name: "More Cards 15",
+      description: "+5000 to max cards per poke.",
+      cost: { realmId: 11, currencyId: "zeal", amount: 1e5 },
       purchased: false
     },
     {
@@ -260,6 +274,13 @@ window.skills = [
       purchased: false
     },
     {
+      id: 2115,
+      name: "Massive Black Hole 15",
+      description: "+50000 to max cards per poke.",
+      cost: { realmId: 11, currencyId: "zeal", amount: 5e9 },
+      purchased: false
+    },
+    {
       id: 3001,
       name: "Faster Poke",
       description: "Decrease base cooldown for Rocks by 0.5s.",
@@ -330,6 +351,13 @@ window.skills = [
       purchased: false
     },
     {
+      id: 3011,
+      name: "Faster Poke 11",
+      description: "Decrease base cooldown for Greek Gods by 10min.",
+      cost: { realmId: 11, currencyId: "zeal", amount: 1.1e7 },
+      purchased: false
+    },
+    {
       id: 3101,
       name: "Even Faster Poke",
       description: "Decrease base cooldown for Rocks by 0.5s.",
@@ -383,6 +411,13 @@ window.skills = [
       name: "Even Faster Poke 8",
       description: "Decrease base cooldown for Incremental Games by 40s.",
       cost: { realmId: 10, currencyId: "pearl", amount: 4e10 },
+      purchased: false
+    },
+    {
+      id: 3109,
+      name: "Even Faster Poke 9",
+      description: "Decrease base cooldown for Spirit Familiars by 50s.",
+      cost: { realmId: 11, currencyId: "royal_jelly", amount: 9e10 },
       purchased: false
     },
     {
@@ -484,66 +519,136 @@ window.skills = [
       purchased: false
     },
     {
+      id: 4015,
+      name: "Not Less Cards 15",
+      description: "+1500 to min cards per poke.",
+      cost: { realmId: 11, currencyId: "feather", amount: 1.5e12 },
+      purchased: false
+    },
+    {
       id: 5001,
       name: "Nobody Likes Rocks",
-      description: "Rocks realm deselect multiplier reduced by 50%.",
+      description: "Rocks realm deselect cooldown multiplier reduced by 50%.",
       cost: { realmId: 2, currencyId: "stone", amount: 1e8 },
       purchased: false
     },
     {
       id: 5002,
       name: "The Sea Scares Me",
-      description: "Sea World realm deselect multiplier reduced by 50%.",
+      description: "Sea World realm deselect cooldown multiplier reduced by 50%.",
       cost: { realmId: 3, currencyId: "coral", amount: 1e9 },
       purchased: false
     },
     {
       id: 5003,
       name: "To Hell with Bugs",
-      description: "Bugdom realm deselect multiplier reduced by 50%.",
+      description: "Bugdom realm deselect cooldown multiplier reduced by 50%.",
       cost: { realmId: 4, currencyId: "pollen", amount: 1e9 },
       purchased: false
     },
     {
       id: 5004,
       name: "Bird Aren't Real",
-      description: "Aviary realm deselect multiplier reduced by 50%.",
+      description: "Aviary realm deselect cooldown multiplier reduced by 50%.",
       cost: { realmId: 5, currencyId: "egg", amount: 1e9 },
       purchased: false
     },
     {
       id: 5005,
       name: "Who Cares About Old Crap",
-      description: "Ancient Relics realm deselect multiplier reduced by 50%.",
+      description: "Ancient Relics realm deselect cooldown multiplier reduced by 50%.",
       cost: { realmId: 6, currencyId: "crystal", amount: 1e9 },
       purchased: false
     },
     {
       id: 5006,
       name: "Astronomy Bores Me",
-      description: "Celestial Bodies realm deselect multiplier reduced by 50%.",
+      description: "Celestial Bodies realm deselect cooldown multiplier reduced by 50%.",
       cost: { realmId: 7, currencyId: "tooth", amount: 1e9 },
       purchased: false
     },
     {
       id: 5007,
       name: "These Beasts Are Weak",
-      description: "Mythical Beasts realm deselect multiplier reduced by 50%.",
+      description: "Mythical Beasts realm deselect cooldown multiplier reduced by 50%.",
       cost: { realmId: 8, currencyId: "coin", amount: 1e9 },
       purchased: false
     },
     {
       id: 5008,
       name: "Incremental Games Are For Losers",
-      description: "Incremental Games realm deselect multiplier reduced by 50%.",
+      description: "Incremental Games realm deselect cooldown multiplier reduced by 50%.",
       cost: { realmId: 9, currencyId: "spirit", amount: 1e10 },
       purchased: false
     },
     {
       id: 5009,
       name: "I Don't Believe In Ghosts",
-      description: "Spirit Familiars realm deselect multiplier reduced by 50%.",
+      description: "Spirit Familiars realm deselect cooldown multiplier reduced by 50%.",
       cost: { realmId: 10, currencyId: "royal_jelly", amount: 1e10 },
+      purchased: false
+    },
+    {
+      id: 5101,
+      name: "We Will Not Rock You",
+      description: "Rocks realm deselect cooldown multiplier further reduced by 20%.",
+      cost: { realmId: 11, currencyId: "stone", amount: 1e15 },
+      purchased: false
+    },
+    {
+      id: 5102,
+      name: "Marine Life Makes Me Queasy",
+      description: "Sea World realm deselect cooldown multiplier further reduced by 20%.",
+      cost: { realmId: 11, currencyId: "coral", amount: 1e15 },
+      purchased: false
+    },
+    {
+      id: 5103,
+      name: "Creepy Crawlies Creep Me Out",
+      description: "Bugdom realm deselect cooldown multiplier further reduced by 20%.",
+      cost: { realmId: 11, currencyId: "pollen", amount: 1e15 },
+      purchased: false
+    },
+    {
+      id: 5104,
+      name: "Birds Are Overrated",
+      description: "Aviary realm deselect cooldown multiplier further reduced by 20%.",
+      cost: { realmId: 11, currencyId: "egg", amount: 1e15 },
+      purchased: false
+    },
+    {
+      id: 5105,
+      name: "Dusty Artifacts, Ugh",
+      description: "Ancient Relics realm deselect cooldown multiplier further reduced by 20%.",
+      cost: { realmId: 11, currencyId: "crystal", amount: 1e15 },
+      purchased: false
+    },
+    {
+      id: 5106,
+      name: "Stars? Meh.",
+      description: "Celestial Bodies realm deselect cooldown multiplier further reduced by 20%.",
+      cost: { realmId: 11, currencyId: "tooth", amount: 1e15 },
+      purchased: false
+    },
+    {
+      id: 5107,
+      name: "Dragons? Don't Bite",
+      description: "Mythical Beasts realm deselect cooldown multiplier further reduced by 20%.",
+      cost: { realmId: 11, currencyId: "coin", amount: 1e15 },
+      purchased: false
+    },
+    {
+      id: 5108,
+      name: "Clicks, Clicks, Clicks - I'm Done",
+      description: "Incremental Games realm deselect cooldown multiplier further reduced by 20%.",
+      cost: { realmId: 11, currencyId: "spirit", amount: 1e15 },
+      purchased: false
+    },
+    {
+      id: 5109,
+      name: "Ghosts? Hard Pass",
+      description: "Spirit Familiars realm deselect cooldown multiplier further reduced by 20%.",
+      cost: { realmId: 11, currencyId: "royal_jelly", amount: 1e15 },
       purchased: false
     },
     {
@@ -799,6 +904,13 @@ window.skills = [
       purchased: false
     },
     {
+      id: 8015,
+      name: "Lucky Skip 15",
+      description: "+1% chance to skip Black Hole cooldown.",
+      cost: { realmId: 11, currencyId: "zeal", amount: 5e9 },
+      purchased: false
+    },
+    {
       id: 9001,
       name: "Faster Merchant",
       description: "Reduce merchant refresh time by 5 seconds.",
@@ -897,6 +1009,13 @@ window.skills = [
       purchased: false
     },
     {
+      id: 9015,
+      name: "Faster Merchant 15",
+      description: "Reduce merchant refresh time by 5 seconds.",
+      cost: { realmId: 11, currencyId: "zeal", amount: 1.5e9 },
+      purchased: false
+    },
+    {
       id: 10001,
       name: "Resource Generator",
       description: "Generate stone equal to number of Realm 1 cards discovered squared per second.",
@@ -957,6 +1076,13 @@ window.skills = [
       name: "Resource Generator 9",
       description: "Generate spirit equal to number of Realm 9 cards discovered squared per second.",
       cost: { realmId: 10, currencyId: "stone", amount: 8e12 },
+      purchased: false
+    },
+    {
+      id: 10010,
+      name: "Resource Generator 10",
+      description: "Generate pearl equal to number of Realm 10 cards discovered squared per second.",
+      cost: { realmId: 11, currencyId: "zeal", amount: 8e6 },
       purchased: false
     },
     {
@@ -1072,6 +1198,20 @@ window.skills = [
       purchased: false
     },
     {
+      id: 12105,
+      name: "Auto-User Absorber",
+      description: "Unlock a setting that automatically activates absorber when max value reached.",
+      cost: { realmId: 10, currencyId: "pollen", amount: 2e10 },
+      purchased: false
+    },
+    {
+      id: 12106,
+      name: "Absorber Upgrade 4",
+      description: "Increase maximum gravitational wave absorption to 100x.",
+      cost: { realmId: 11, currencyId: "pollen", amount: 2e16 },
+      purchased: false
+    },
+    {
       id: 12201,
       name: "Space Bending Interceptor",
       description: "Unlocks a device that intercepts space bending (both passivly and when you flip over cards), which can be activated automate flipping over cards.",
@@ -1100,10 +1240,24 @@ window.skills = [
       purchased: false
     },
     {
+      id: 12205,
+      name: "Interceptor Manual Appreciation",
+      description: "Manual card flips charge interceptor another 2.5x faster.",
+      cost: { realmId: 11, currencyId: "egg", amount: 2.5e18 },
+      purchased: false
+    },
+    {
       id: 12301,
       name: "Time Crunch Collector",
       description: "Unlocks a device that can passively collect time particles to release 25x pokes worth of currency when used.",
       cost: { realmId: 7, currencyId: "tooth", amount: 1e8 },
+      purchased: false
+    },
+    {
+      id: 12302,
+      name: "Time Crunch Collector Upgrade",
+      description: "Increase collector charge time from 5 to 7.5min, but increase pokes released from 25x to 100x.",
+      cost: { realmId: 11, currencyId: "tooth", amount: 1e18 },
       purchased: false
     },
     {
@@ -1138,7 +1292,7 @@ window.skills = [
       id: 13005,
       name: "Anomaly 5",
       description: "Add 4.04 to cooldown divider.",
-      cost: { realmId: 8, currencyId: "crystal", amount: 4.04e13 },
+      cost: { realmId: 8, currencyId: "crystal", amount: 4.04e12 },
       purchased: false
     },
     {
@@ -1212,10 +1366,38 @@ window.skills = [
       purchased: false
     },
     {
+      id: 15006,
+      name: "Fleeting Realm 6",
+      description: "Reduce Celestial Bodies realm odds by 5x.",
+      cost: { realmId: 11, currencyId: "zeal", amount: 1e10 },
+      purchased: false
+    },
+    {
       id: 15101,
       name: "Forsaken Realm 1",
       description: "Reduce Rocks realm odds by another 5x.",
       cost: { realmId: 10, currencyId: "rune", amount: 1e9 },
+      purchased: false
+    },
+    {
+      id: 15102,
+      name: "Forsaken Realm 2",
+      description: "Reduce Sea World realm odds by another 5x.",
+      cost: { realmId: 11, currencyId: "pearl", amount: 5e15 },
+      purchased: false
+    },
+    {
+      id: 15103,
+      name: "Forsaken Realm 3",
+      description: "Reduce Bugdom realm odds by another 5x.",
+      cost: { realmId: 11, currencyId: "royal_jelly", amount: 5e15 },
+      purchased: false
+    },
+    {
+      id: 15104,
+      name: "Forsaken Realm 4",
+      description: "Reduce Aviary realm odds by another 5x.",
+      cost: { realmId: 11, currencyId: "feather", amount: 5e15 },
       purchased: false
     },
     {
@@ -1264,7 +1446,21 @@ window.skills = [
       id: 18004,
       name: "Fine Simply Doesn't Cut It",
       description: "Fine cards no longer show up after poke (you still get them) unless they gain tier or are new.",
-      cost: { realmId: 10, currencyId: "egg", amount: 4e12},
+      cost: { realmId: 10, currencyId: "egg", amount: 4e13},
+      purchased: false
+    },
+    {
+      id: 18005,
+      name: "Rarely Impressed",
+      description: "Rare cards no longer show up after poke (you still get them) unless they gain tier or are new.",
+      cost: { realmId: 11, currencyId: "crystal", amount: 5e19},
+      purchased: false
+    },
+    {
+      id: 18101,
+      name: "Don't Show Me Locked Cards",
+      description: "Locked cards no longer show up after poke.",
+      cost: { realmId: 6, currencyId: "zeal", amount: 1e11},
       purchased: false
     },
     {
@@ -1303,6 +1499,13 @@ window.skills = [
       purchased: false
     },
     {
+      id: 19104,
+      name: "Negotiation Tactics 4",
+      description: "Increase discount to 20% when buying all cards.",
+      cost: { realmId: 11, currencyId: "cosmic_ray", amount: 2e13},
+      purchased: false
+    },
+    {
       id: 19201,
       name: "Pricing Intuition",
       description: "Know whether the merchant is selling a card at a good price, relative to the range of prices for that card.",
@@ -1321,6 +1524,20 @@ window.skills = [
       name: "Merchant Pack Up and Leave Faster",
       description: "When merchant offers are sold out, they leave in 5 seconds instead of 10.",
       cost: { realmId: 9, currencyId: "stone", amount: 1e13},
+      purchased: false
+    },
+    {
+      id: 19501,
+      name: "Larger Card Stacks",
+      description: "Increase max card bulk offer from 3√qty to 2.5√qty.",
+      cost: { realmId: 10, currencyId: "coral", amount: 1e12},
+      purchased: false
+    },
+    {
+      id: 19502,
+      name: "Larger Card Stacks 2",
+      description: "Increase max card bulk offer from 2.5√qty to 2√qty.",
+      cost: { realmId: 11, currencyId: "coral", amount: 2.5e18},
       purchased: false
     },
     {
@@ -1349,6 +1566,34 @@ window.skills = [
       name: "Resourceful Pokes 4",
       description: "2x egg gained from pokes.",
       cost: { realmId: 10, currencyId: "feather", amount: 2e9},
+      purchased: false
+    },
+    {
+      id: 20005,
+      name: "Resourceful Pokes 5",
+      description: "2x crystal gained from pokes.",
+      cost: { realmId: 11, currencyId: "cosmic_ray", amount: 2e9},
+      purchased: false
+    },
+    {
+      id: 20006,
+      name: "Resourceful Pokes 6",
+      description: "2x tooth gained from pokes.",
+      cost: { realmId: 12, currencyId: "rune", amount: 2e16},
+      purchased: false
+    },
+    {
+      id: 20007,
+      name: "Resourceful Pokes 7",
+      description: "2x coin gained from pokes.",
+      cost: { realmId: 13, currencyId: "pearl", amount: 2e16},
+      purchased: false
+    },
+    {
+      id: 20008,
+      name: "Resourceful Pokes 8",
+      description: "2x spirit gained from pokes.",
+      cost: { realmId: 14, currencyId: "royal_jelly", amount: 2e16},
       purchased: false
     },
     {
@@ -1412,6 +1657,202 @@ window.skills = [
       name: "Card Supernova 9",
       description: "+18000 to max cards per poke.",
       cost: { realmId: 10, currencyId: "rune", amount: 9e12 },
+      purchased: false
+    },
+    {
+      id: 21010,
+      name: "Card Supernova 10",
+      description: "+20000 to max cards per poke.",
+      cost: { realmId: 11, currencyId: "pearl", amount: 1e13 },
+      purchased: false
+    },
+    {
+      id: 21011,
+      name: "Card Supernova 11",
+      description: "+40000 to max cards per poke.",
+      cost: { realmId: 11, currencyId: "royal_jelly", amount: 1e14 },
+      purchased: false
+    },
+    {
+      id: 21012,
+      name: "Card Supernova 12",
+      description: "+80000 to max cards per poke.",
+      cost: { realmId: 11, currencyId: "feather", amount: 1e15 },
+      purchased: false
+    },
+    {
+      id: 21013,
+      name: "Card Supernova 13",
+      description: "+160000 to max cards per poke.",
+      cost: { realmId: 11, currencyId: "cosmic_ray", amount: 1e16 },
+      purchased: false
+    },
+    { 
+      id: 22001,
+      name: "Rare Income",
+      description: "Increase global rune per second multiplier by 1.5x.",
+      cost: { realmId: 10, currencyId: "stone", amount: 5e13 },
+      purchased: false
+    },
+    {
+      id: 22002,
+      name: "Rare Income 2",
+      description: "Increase global pearl per second multiplier by 1.5x.",
+      cost: { realmId: 10, currencyId: "coral", amount: 5e13 },
+      purchased: false
+    },
+    {
+      id: 22003,
+      name: "Rare Income 3",
+      description: "Increase global royal jelly per second multiplier by 1.5x.",
+      cost: { realmId: 10, currencyId: "pollen", amount: 5e13 },
+      purchased: false
+    },
+    {
+      id: 22004,
+      name: "Rare Income 4",
+      description: "Increase global feather per second multiplier by 1.5x.",
+      cost: { realmId: 10, currencyId: "egg", amount: 5e13 },
+      purchased: false
+    },
+    {
+      id: 22005,
+      name: "Rare Income 5",
+      description: "Increase global cosmic ray per second multiplier by 1.5x.",
+      cost: { realmId: 10, currencyId: "crystal", amount: 5e13 },
+      purchased: false
+    },
+    {
+      id: 22006,
+      name: "Rare Income 6",
+      description: "Increase global rune per second multiplier by 1.5x.",
+      cost: { realmId: 11, currencyId: "stone", amount: 1.5e19 },
+      purchased: false
+    },
+    {
+      id: 22007,
+      name: "Rare Income 7",
+      description: "Increase global pearl per second multiplier by 1.5x.",
+      cost: { realmId: 11, currencyId: "tooth", amount: 1.5e19 },
+      purchased: false
+    },
+    {
+      id: 22008,
+      name: "Rare Income 8",
+      description: "Increase global royal jelly per second multiplier by 1.5x.",
+      cost: { realmId: 11, currencyId: "coin", amount: 1.5e19 },
+      purchased: false
+    },
+    {
+      id: 22009,
+      name: "Rare Income 9",
+      description: "Increase global feather per second multiplier by 1.5x.",
+      cost: { realmId: 11, currencyId: "spirit", amount: 1.5e19 },
+      purchased: false
+    },
+    {
+      id: 22010,
+      name: "Rare Income 10",
+      description: "Increase global cosmic ray per second multiplier by 1.5x.",
+      cost: { realmId: 11, currencyId: "zeal", amount: 1.5e19 },
+      purchased: false
+    },
+    {
+      id: 23001,
+      name: "Casual Gamer",
+      description: "Increase max offline time by 4 hours.",
+      cost: { realmId: 2, currencyId: "stone", amount: 1e5 },
+      purchased: false
+    },
+    {
+      id: 23002,
+      name: "Casual Gamer 2",
+      description: "Increase max offline time by 4 hours.",
+      cost: { realmId: 3, currencyId: "coral", amount: 2e6 },
+      purchased: false
+    },
+    {
+      id: 23003,
+      name: "Casual Gamer 3",
+      description: "Increase max offline time by 4 hours.",
+      cost: { realmId: 4, currencyId: "pollen", amount: 1e7 },
+      purchased: false
+    },
+    {
+      id: 23004,
+      name: "Casual Gamer 4",
+      description: "Increase max offline time by 4 hours.",
+      cost: { realmId: 5, currencyId: "egg", amount: 4e8 },
+      purchased: false
+    },
+    {
+      id: 23005,
+      name: "Casual Gamer 5",
+      description: "Increase max offline time by 4 hours.",
+      cost: { realmId: 6, currencyId: "crystal", amount: 5e9 },
+      purchased: false
+    },
+    {
+      id: 23006,
+      name: "Casual Gamer 6",
+      description: "Increase max offline time by 4 hours.",
+      cost: { realmId: 7, currencyId: "rune", amount: 6e7 },
+      purchased: false
+    },
+    {
+      id: 23007,
+      name: "Casual Gamer 7",
+      description: "Increase max offline time by 4 hours.",
+      cost: { realmId: 8, currencyId: "tooth", amount: 7e10 },
+      purchased: false
+    },
+    {
+      id: 23008,
+      name: "Casual Gamer 8",
+      description: "Increase max offline time by 4 hours.",
+      cost: { realmId: 9, currencyId: "coin", amount: 8e11 },
+      purchased: false
+    },
+    {
+      id: 23009,
+      name: "Casual Gamer 9",
+      description: "Increase max offline time by 4 hours.",
+      cost: { realmId: 10, currencyId: "spirit", amount: 9e11 },
+      purchased: false
+    },
+    {
+      id: 23010,
+      name: "Casual Gamer 10",
+      description: "Increase max offline time by 4 hours.",
+      cost: { realmId: 10, currencyId: "pearl", amount: 1e12 },
+      purchased: false
+    },
+    {
+      id: 23011,
+      name: "Casual Gamer 11",
+      description: "Increase max offline time by 4 hours.",
+      cost: { realmId: 10, currencyId: "royal_jelly", amount: 1.1e12 },
+      purchased: false
+    },
+    {
+      id: 23012,
+      name: "Casual Gamer 12",
+      description: "Increase max offline time by 4 hours.",
+      cost: { realmId: 10, currencyId: "feather", amount: 1.2e13 },
+      purchased: false
+    },
+    {
+      id: 23013,
+      name: "Casual Gamer 13",
+      description: "Increase max offline time by 4 hours.",
+      cost: { realmId: 10, currencyId: "cosmic_ray", amount: 1.3e12 },
+      purchased: false
+    },
+    {
+      id: 23014,
+      name: "Casual Gamer 14",
+      description: "Increase max offline time by 4 hours.",
+      cost: { realmId: 11, currencyId: "zeal", amount: 1.4e13 },
       purchased: false
     },
   ];
@@ -1488,6 +1929,13 @@ function applySkill(id, skipCost = false) {
         renderRealmFilters();
         initializeSortedSkills();
         break;
+      case 1010: // Unlock Greek Gods Realm
+        realms[10].unlocked = true;
+        initCardsFilters();
+        renderRealmFilters();
+        initializeSortedSkills();
+        initBattleSystem();
+        break;
       case 2001: // More Cards
         state.effects.maxCardsPerPoke += 2;
         break;
@@ -1530,6 +1978,9 @@ function applySkill(id, skipCost = false) {
       case 2014:
         state.effects.maxCardsPerPoke += 300;
         break;
+      case 2015:
+        state.effects.maxCardsPerPoke += 500;
+        break;
       case 2101: // Massive Black Hole
         state.effects.maxCardsPerPoke += 10;
         break;
@@ -1571,6 +2022,9 @@ function applySkill(id, skipCost = false) {
         break;
       case 2114:
         state.effects.maxCardsPerPoke += 5000;
+        break;
+      case 2115:
+        state.effects.maxCardsPerPoke += 50000;
         break;
       case 3001: // Faster Poke
         realms[s.cost.realmId - 1].cooldown -= 0.5;
@@ -1622,6 +2076,11 @@ function applySkill(id, skipCost = false) {
         updatePokeFilterStats();
         renderRealmFilters();
         break;
+      case 3011:
+        realms[s.cost.realmId - 1].cooldown -= 600;
+        updatePokeFilterStats();
+        renderRealmFilters();
+        break;
       case 3101: // Even Faster Poke
         realms[s.cost.realmId - 3].cooldown -= 0.5;
         updatePokeFilterStats();
@@ -1659,6 +2118,11 @@ function applySkill(id, skipCost = false) {
         break;  
       case 3108:
         realms[s.cost.realmId - 3].cooldown -= 40;
+        updatePokeFilterStats();
+        renderRealmFilters();
+        break;
+      case 3109:
+        realms[s.cost.realmId - 3].cooldown -= 50;
         updatePokeFilterStats();
         renderRealmFilters();
         break;
@@ -1704,41 +2168,80 @@ function applySkill(id, skipCost = false) {
       case 4014:
         state.effects.minCardsPerPoke += 100;
         break;
+      case 4015:
+        state.effects.minCardsPerPoke += 1500;
+        break;
       case 5001: // Nobody Likes Rocks
         realms[0].deselectMultiplier /= 2;
-        updatePokeFilterStats();
+        if (loadFinished) updatePokeFilterStats();
         break;
       case 5002: // The Sea Scares Me
         realms[1].deselectMultiplier /= 2;
-        updatePokeFilterStats();
+        if (loadFinished) updatePokeFilterStats();
         break;
       case 5003: // To Hell with Bugs
         realms[2].deselectMultiplier /= 2;
-        updatePokeFilterStats();
+        if (loadFinished) updatePokeFilterStats();
         break;
       case 5004:
         realms[3].deselectMultiplier /= 2;
-        updatePokeFilterStats();
+        if (loadFinished) updatePokeFilterStats();
         break;
       case 5005:
         realms[4].deselectMultiplier /= 2;
-        updatePokeFilterStats();
+        if (loadFinished) updatePokeFilterStats();
         break;
       case 5006:
         realms[5].deselectMultiplier /= 2;
-        updatePokeFilterStats();
+        if (loadFinished) updatePokeFilterStats();
         break;
       case 5007:
         realms[6].deselectMultiplier /= 2;
-        updatePokeFilterStats();
+        if (loadFinished) updatePokeFilterStats();
         break;
       case 5008:
         realms[7].deselectMultiplier /= 2;
-        updatePokeFilterStats();
+        if (loadFinished) updatePokeFilterStats();
         break;
       case 5009:
         realms[8].deselectMultiplier /= 2;
-        updatePokeFilterStats();
+        if (loadFinished) updatePokeFilterStats();
+        break;
+      case 5101:
+        realms[0].deselectMultiplier /= 1.25;
+        if (loadFinished) updatePokeFilterStats();
+        break;
+      case 5102:
+        realms[1].deselectMultiplier /= 1.25;
+        if (loadFinished) updatePokeFilterStats();
+        break;
+      case 5103:
+        realms[2].deselectMultiplier /= 1.25;
+        if (loadFinished) updatePokeFilterStats();
+        break;
+      case 5104:
+        realms[3].deselectMultiplier /= 1.25;
+        if (loadFinished) updatePokeFilterStats();
+        break;
+      case 5105:
+        realms[4].deselectMultiplier /= 1.25;
+        if (loadFinished) updatePokeFilterStats();
+        break;
+      case 5106:
+        realms[5].deselectMultiplier /= 1.25;
+        if (loadFinished) updatePokeFilterStats();
+        break;
+      case 5107:
+        realms[6].deselectMultiplier /= 1.25;
+        if (loadFinished) updatePokeFilterStats();
+        break;
+      case 5108:
+        realms[7].deselectMultiplier /= 1.25;
+        if (loadFinished) updatePokeFilterStats();
+        break;
+      case 5109:
+        realms[8].deselectMultiplier /= 1.25;
+        if (loadFinished) updatePokeFilterStats();
         break;
       case 6001: // Merchant Card Increase
       case 6002:
@@ -1796,6 +2299,7 @@ function applySkill(id, skipCost = false) {
       case 8012: // Lucky Skip 12
       case 8013: // Lucky Skip 13
       case 8014: // Lucky Skip 14
+      case 8015: // Lucky Skip 15
         state.effects.cooldownSkipChance = (state.effects.cooldownSkipChance || 0) + 0.01;
         break;
       case 9001: // Merchant Cooldown Reduction
@@ -1812,6 +2316,7 @@ function applySkill(id, skipCost = false) {
       case 9012:
       case 9013:
       case 9014:
+      case 9015:
         state.effects.merchantCooldownReduction += 5;
         break;
       case 10001: // Resource Generator
@@ -1823,6 +2328,7 @@ function applySkill(id, skipCost = false) {
       case 10007:
       case 10008:
       case 10009:
+      case 10010:
         updateGeneratorRates();
         break;
       case 11001: // Better Merchants
@@ -1848,22 +2354,28 @@ function applySkill(id, skipCost = false) {
         window.initGravitationalWaveAbsorber();
         break;
       case 12102: // Absorber Upgrade
-        break;
       case 12103: // Absorber Upgrade 2
-        break;
       case 12104: // Absorber Upgrade 3
+        break;
+      case 12105: // Auto-Use Absorber
+        const autoAbsorberToggle = document.getElementById('autoAbsorberToggle');
+        autoAbsorberToggle.style.display = 'flex';
+        break;
+      case 12106: // Absorber Upgrade 4
         break;
       case 12201: // Space Bending Interceptor
         window.initSpaceBendingInterceptor();
         break;
       case 12202: // Interceptor Upgrade
-        break;
       case 12203: // Interceptor Poker Automation
-        break;
       case 12204: // Curious Interceptor
+      case 12205: // Interceptor Manual Appreciation
         break;
       case 12301: // Time Crunch Collector
         window.initTimeCrunchCollector();
+        break;
+      case 12302: // Collector Upgrade
+        state.timeCrunchMaxChargeTime += 150; // +2.5 minutes
         break;
       case 13001: // Anomaly
         state.effects.minCardsPerPoke += 4.04;
@@ -1880,6 +2392,9 @@ function applySkill(id, skipCost = false) {
         break;
       case 13005: // Anomaly 5
         state.effects.cooldownDivider += 4.04;
+        if (loadFinished) {
+          updatePokeFilterStats();
+        }
         break;
       case 13006: // Anomaly 6
         state.effects.extraMerchantRarityScaling += 0.404;
@@ -1898,27 +2413,43 @@ function applySkill(id, skipCost = false) {
         break;
       case 15001: // Fleeting Realm
         realms[0].pokeWeight /= 5;
-        updatePokeFilterStats();
+        if (loadFinished) updatePokeFilterStats();
         break;
       case 15002: // Fleeting Realm 2
         realms[1].pokeWeight /= 5;
-        updatePokeFilterStats();
+        if (loadFinished) updatePokeFilterStats();
         break;
       case 15003: // Fleeting Realm 3
         realms[2].pokeWeight /= 5;
-        updatePokeFilterStats();
+        if (loadFinished) updatePokeFilterStats();
         break;
       case 15004: // Fleeting Realm 4
         realms[3].pokeWeight /= 5;
-        updatePokeFilterStats();
+        if (loadFinished) updatePokeFilterStats();
         break;
       case 15005: // Fleeting Realm 5
         realms[4].pokeWeight /= 5;
-        updatePokeFilterStats();
+        if (loadFinished) updatePokeFilterStats();
+        break;
+      case 15006: // Fleeting Realm 6
+        realms[5].pokeWeight /= 5;
+        if (loadFinished) updatePokeFilterStats();
         break;
       case 15101: // Forsaken Realm 1
         realms[0].pokeWeight /= 5;
-        updatePokeFilterStats();
+        if (loadFinished) updatePokeFilterStats();
+        break;
+      case 15102: // Forsaken Realm 2
+        realms[1].pokeWeight /= 5;
+        if (loadFinished) updatePokeFilterStats();
+        break;
+      case 15103: // Forsaken Realm 3
+        realms[2].pokeWeight /= 5;
+        if (loadFinished) updatePokeFilterStats();
+        break;
+      case 15104: // Forsaken Realm 4
+        realms[3].pokeWeight /= 5;
+        if (loadFinished) updatePokeFilterStats();
         break;
       case 16001: // Gotta Catch 'Em All
         processNewCardDiscovered();
@@ -1931,19 +2462,26 @@ function applySkill(id, skipCost = false) {
         break;
       case 18001: // No More Junk
         state.pokeRaritiesOmitted.push('junk');
-        updatePokeFilterStats();
+        if (loadFinished) updatePokeFilterStats();
         break;
       case 18002: // I Ain't No Basic Bitch
         state.pokeRaritiesOmitted.push('basic');
-        updatePokeFilterStats();
+        if (loadFinished) updatePokeFilterStats();
         break;
       case 18003: // Decent Cards Are Beneath Me
         state.pokeRaritiesOmitted.push('decent');
-        updatePokeFilterStats();
+        if (loadFinished) updatePokeFilterStats();
         break;
       case 18004: // Fine Simply Doesn't Cut It
         state.pokeRaritiesOmitted.push('fine');
-        updatePokeFilterStats();
+        if (loadFinished) updatePokeFilterStats();
+        break;
+      case 18005: // Rarely Impressed
+        state.pokeRaritiesOmitted.push('rare');
+        if (loadFinished) updatePokeFilterStats();
+        break;
+      case 18101: // Don't Show Me Locked Cards
+        if (loadFinished) updatePokeFilterStats();
         break;
       case 19001: // More Bulk Offers Please
         state.merchantBulkChance += 0.25;
@@ -1959,11 +2497,20 @@ function applySkill(id, skipCost = false) {
       case 19103: // Negotiation Tactics 3
         state.merchantBuyAllDiscount += 0.05;
         break;
+      case 19104: // Negotiation Tactics 4
+        state.merchantBuyAllDiscount += 0.05;
+        break;
       case 19201: // Pricing Intuition
         break;
       case 19301: // Organized Merchants
         break;
       case 19401: // Merchant Pack Up and Leave Faster
+        break;
+      case 19501:
+        state.merchantBulkRoot -= 0.5;
+        break;
+      case 19502:
+        state.merchantBulkRoot -= 0.5;
         break;
       case 20001:
         state.effects.currencyPerPokeMultiplier['stone'] *= 2;
@@ -1976,6 +2523,18 @@ function applySkill(id, skipCost = false) {
         break;
       case 20004:
         state.effects.currencyPerPokeMultiplier['egg'] *= 2;
+        break;
+      case 20005:
+        state.effects.currencyPerPokeMultiplier['crystal'] *= 2;
+        break;
+      case 20006:
+        state.effects.currencyPerPokeMultiplier['tooth'] *= 2;
+        break;
+      case 20007:
+        state.effects.currencyPerPokeMultiplier['coin'] *= 2;
+        break;
+      case 20008:
+        state.effects.currencyPerPokeMultiplier['spirit'] *= 2;
         break;
       case 21001:
         state.effects.maxCardsPerPoke += 1000;
@@ -2004,7 +2563,54 @@ function applySkill(id, skipCost = false) {
       case 21009:
         state.effects.maxCardsPerPoke += 18000;
         break;
-
+      case 21010:
+        state.effects.maxCardsPerPoke += 20000;
+        break;
+      case 21011: // Card Supernova 11
+        state.effects.maxCardsPerPoke += 40000;
+        break;
+      case 21012: // Card Supernova 12
+        state.effects.maxCardsPerPoke += 80000;
+        break;
+      case 21013: // Card Supernova 13
+        state.effects.maxCardsPerPoke += 160000;
+        break;
+      case 22001: // Rare Income
+      case 22006: // Rare Income 6
+        state.effects.currencyPerSecMultiplier['rune'] *= 1.5;
+        break;
+      case 22002: // Rare Income 2
+      case 22007: // Rare Income 7
+        state.effects.currencyPerSecMultiplier['pearl'] *= 1.5;
+        break;
+      case 22003: // Rare Income 3
+      case 22008: // Rare Income 8
+        state.effects.currencyPerSecMultiplier['royal_jelly'] *= 1.5;
+        break;
+      case 22004: // Rare Income 4
+      case 22009: // Rare Income 9
+        state.effects.currencyPerSecMultiplier['feather'] *= 1.5;
+        break;
+      case 22005: // Rare Income 5
+      case 22010: // Rare Income 10
+        state.effects.currencyPerSecMultiplier['cosmic_ray'] *= 1.5;
+        break;
+      case 23001: // Casual Gamer
+      case 23002: // Casual Gamer 2
+      case 23003: // Casual Gamer 3
+      case 23004: // Casual Gamer 4
+      case 23005: // Casual Gamer 5
+      case 23006: // Casual Gamer 6
+      case 23007: // Casual Gamer 7
+      case 23008: // Casual Gamer 8
+      case 23009: // Casual Gamer 9
+      case 23010: // Casual Gamer 10
+      case 23011: // Casual Gamer 11
+      case 23012: // Casual Gamer 12
+      case 23013: // Casual Gamer 13
+      case 23014: // Casual Gamer 14
+        state.maxOfflineHours += 4;
+        break;
     }
 
     // Remove purchased skill from sortedSkillsByCurrency

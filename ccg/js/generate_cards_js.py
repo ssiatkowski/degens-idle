@@ -20,6 +20,7 @@ def load_cards(csv_path):
             "id": row["id"],
             "name": row["name"],
             "realm": int(row["realm"]),
+            "locked": int(row["realm"]) >= 11,
             "rarity": row["rarity"],
             "quantity": int(row["quantity"]),
             "tier": int(row["tier"]),
@@ -29,7 +30,9 @@ def load_cards(csv_path):
                 "currency": row["levelCost_currency"],
                 "amount": float(row["levelCost_amount"])
             },
-            "description": row["description"]
+            "description": row["description"],
+            "power": int(row["power"]),
+            "defense": int(row["defense"])
         }
 
         base_effects = []

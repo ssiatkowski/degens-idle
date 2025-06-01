@@ -38,6 +38,7 @@ window.realms = [
   { id: 8, name: "Incremental Games", unlocked: false, cooldown: 160, deselectMultiplier: 5, pokeWeight: 6e9 },
   { id: 9, name: "Spirit Familiars",  unlocked: false, cooldown: 310, deselectMultiplier: 5, pokeWeight: 3e9 },
   { id: 10, name: "Weapons",          unlocked: false, cooldown: 900, deselectMultiplier: 5, pokeWeight: 1e9 },
+  { id: 11, name: "Greek Gods",       unlocked: false, cooldown: 5400, deselectMultiplier: 5, pokeWeight: 2e8 },
 ];
 
 // 3) give every realm its own copy of the default weights for both capped and uncapped
@@ -80,6 +81,7 @@ window.currencies = [
 { id: 'tooth',       name: 'Tooth',       realm: 7, scarcity: 1,   icon: 'tooth.png'       },
 { id: 'coin',        name: 'Coin',        realm: 8, scarcity: 1,   icon: 'coin.png'        },
 { id: 'spirit',      name: 'Spirit',      realm: 9, scarcity: 1,   icon: 'spirit.png'      },
+{ id: 'zeal',        name: 'Zeal',        realm: 11,scarcity: 1,  icon: 'zeal.png'        },
 ];
 
 
