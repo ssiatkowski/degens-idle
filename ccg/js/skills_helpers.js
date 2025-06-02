@@ -806,6 +806,13 @@ window.skills = [
       purchased: false
     },
     {
+      id: 7010,
+      name: "Unlock New Merchant 10",
+      description: "Elias Pantheos is added to pool of traveling merchants.",
+      cost: { realmId: 11, currencyId: "zeal", amount: 1e12 },
+      purchased: false
+    },
+    {
       id: 8001,
       name: "Lucky Skip",
       description: "+1% chance to skip Black Hole cooldown.",
@@ -1235,7 +1242,7 @@ window.skills = [
     {
       id: 12204,
       name: "Curious Interceptor",
-      description: "Discovering a new card while interceptor is active increases its duration by 1 minute. (Now you can stop to check out the new card!) Getting a Tier Up gives 5 seconds. ",
+      description: "Discovering a new card while interceptor is active increases its duration by 30 seconds. (Now you can stop to check out the new card!) Getting a Tier Up gives 3 seconds. ",
       cost: { realmId: 6, currencyId: "egg", amount: 1.5e8 },
       purchased: false
     },
@@ -1410,7 +1417,7 @@ window.skills = [
     {
       id: 16002,
       name: "Gotta Catch 'Em All 2",
-      description: "Increass max card bonus to # discovered cards squared.",
+      description: "Increase max card bonus to # discovered cards squared.",
       cost: { realmId: 8, currencyId: "royal_jelly", amount: 5e7},
       purchased: false
     },
@@ -2284,6 +2291,9 @@ function applySkill(id, skipCost = false) {
         break;
       case 7009: // Unlock New Merchant 9
         unlockMerchantByName('Varka Embervein');
+        break;
+      case 7010: // Unlock New Merchant 10
+        unlockMerchantByName('Elias Pantheos');
         break;
       case 8001: // Lucky Skip
       case 8002: // Lucky Skip 2

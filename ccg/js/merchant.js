@@ -147,7 +147,21 @@ const merchants = [
       guaranteedCount: 5,
       description: 'Next level blacksmith. She guarantees at least 5 weapon cards and has +2 to rarity scaling.',
       unlocked: false
-    }
+    },
+    {
+      id: 13,
+      name: 'Elias Pantheos',
+      cardMultiplier: 1,
+      refreshTime: 1,
+      merchantOdds: 150,
+      raritiesSkipped: ['junk'],
+      priceMultiplier: 1,
+      rarityScaling: 2.5,
+      guaranteedRealm: 11,
+      guaranteedCount: 1,
+      description: 'Nobody knows just how old this guy is. He is the only merchant who sells Greek Gods cards - always has one. And he does not sell junk.',
+      unlocked: false
+    },
     
     
 

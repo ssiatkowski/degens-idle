@@ -1,5 +1,5 @@
 // Settings tab functionality
-document.addEventListener('DOMContentLoaded', function() {
+function initializeSettingsTab() {
     const resetGameButton = document.getElementById('resetGameButton');
     const resetWarningModal = document.getElementById('resetWarningModal');
     const confirmResetButton = document.getElementById('confirmResetButton');
@@ -243,19 +243,15 @@ document.addEventListener('DOMContentLoaded', function() {
     const cardSizeSlider = document.getElementById('cardSizeSlider');
     if (cardSizeSlider) {
         // Load saved card size on startup
-        const savedCardSize = localStorage.getItem('cardSizeScale');
-        if (savedCardSize) {
-            cardSizeScale = parseFloat(savedCardSize);
-            cardSizeSlider.value = cardSizeScale * 100;
-            document.getElementById('cardSizeValue').textContent = Math.round(cardSizeScale * 100) + '%';
-            updateCardSize(cardSizeScale);
+        if (state.cardSizeScale) {
+            cardSizeSlider.value = state.cardSizeScale * 100;
+            document.getElementById('cardSizeValue').textContent = Math.round(state.cardSizeScale * 100) + '%';
+            updateCardSize();
         }
 
         cardSizeSlider.addEventListener('input', (e) => {
-            const scale = e.target.value / 100;
-            cardSizeScale = scale;
-            updateCardSize(scale);
-            localStorage.setItem('cardSizeScale', scale.toString());
+            state.cardSizeScale = e.target.value / 100;
+            updateCardSize();
         });
     }
 
@@ -292,43 +288,20 @@ document.addEventListener('DOMContentLoaded', function() {
             '<i class="fas fa-times"></i> Auto-Use Max Absorber';
         saveState();
     });
-});
-
-// Add this at the top with other state variables
-let cardSizeScale = 1;
-
-// Add this to the loadState function
-function loadState() {
-  // ... existing loadState code ...
-  
-  // Load card size scale
-  const savedCardSize = localStorage.getItem('cardSizeScale');
-  if (savedCardSize) {
-    cardSizeScale = parseFloat(savedCardSize);
-    updateCardSize(cardSizeScale);
-  }
-}
-
-// Add this to the saveState function
-function saveState() {
-  // ... existing saveState code ...
-  
-  // Save card size scale
-  localStorage.setItem('cardSizeScale', cardSizeScale.toString());
 }
 
 // Add this new function
-function updateCardSize(scale) {
+function updateCardSize() {
   const holeDrawArea = document.querySelector('#tab-content-hole .draw-area');
   if (holeDrawArea) {
-    holeDrawArea.style.setProperty('--card-scale', scale);
+    holeDrawArea.style.setProperty('--card-scale', state.cardSizeScale);
   }
   
   // Update the slider and value display
   const slider = document.getElementById('cardSizeSlider');
   const valueDisplay = document.getElementById('cardSizeValue');
   if (slider && valueDisplay) {
-    slider.value = scale * 100;
-    valueDisplay.textContent = Math.round(scale * 100) + '%';
+    slider.value = state.cardSizeScale * 100;
+    valueDisplay.textContent = Math.round(state.cardSizeScale * 100) + '%';
   }
 }

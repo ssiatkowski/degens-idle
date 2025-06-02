@@ -100,6 +100,7 @@ window.state = {
   showTierUps: true,  // Add this line
   autoUseAbsorber: false,  // Add this line
   lastUnstuck: null, // Track last unstuck time
+  cardSizeScale: 1, // Track card size scale
 };
 
 // init currencies & effects
@@ -215,6 +216,7 @@ function loadState() {
     }
     state.showTierUps = obj.showTierUps ?? true; // Add this line with default true
     state.autoUseAbsorber = obj.autoUseAbsorber ?? false; // Add this line with default false
+    state.cardSizeScale = obj.cardSizeScale || 1;
     state.lastUnstuck = obj.lastUnstuck ? new Date(obj.lastUnstuck) : null;
   } catch(e){
     console.error("Failed to load save:", e);
@@ -248,6 +250,7 @@ function saveState() {
     remainingCooldown: state.remainingCooldown,
     showTierUps: state.showTierUps,  // Add this line
     autoUseAbsorber: state.autoUseAbsorber,
+    cardSizeScale: state.cardSizeScale,
     lastUnstuck: state.lastUnstuck,
     battle: {
       slots: state.battle.slots.map(slot => slot ? {
@@ -662,7 +665,7 @@ function performPoke() {
         badge.textContent = 'NEW';
         front.append(badge);
         if (wasNew && state.interceptorActive && skillMap[12204].purchased) {
-          state.interceptorValue = state.interceptorValue + 60;
+          state.interceptorValue = state.interceptorValue + 30;
         }
       } else if (newTier > oldTier) {
         const badge = document.createElement('div');
@@ -670,7 +673,7 @@ function performPoke() {
         badge.textContent = 'TIER UP';
         front.append(badge);
         if (state.interceptorActive && skillMap[12204].purchased) {
-          state.interceptorValue = state.interceptorValue + 5;
+          state.interceptorValue = state.interceptorValue + 3;
         }
       }
     }
@@ -2748,6 +2751,8 @@ document.addEventListener('DOMContentLoaded', async ()=>{
     setTimeCrunchValue(state.timeCrunchValue);
   }
   initTimeCrunchCollector();
+
+  initializeSettingsTab();
 });
 
 // Add cleanup function
