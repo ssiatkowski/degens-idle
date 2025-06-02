@@ -160,6 +160,7 @@ h1, h2 {
     display: flex;
     gap: 20px;
     width: 100%;
+    margin-top: 60px; /* Adjusted for banner */
 }
 
 #title-column {
@@ -1515,4 +1516,23 @@ input:checked + .slider:before {
 
 .countdown-danger {
     background-color: #FF0000;
+}
+
+/* Domain Change Banner */
+.domain-change-banner {
+    background-color: #ffeb3b;
+    color: #000;
+    text-align: center;
+    padding: 10px;
+    font-weight: bold;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.domain-change-banner a {
+    color: #1a0dab;
+    text-decoration: underline;
 }

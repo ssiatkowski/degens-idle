@@ -27,7 +27,7 @@ body {
 .container {
   max-width: 900px;
   margin: 0 auto;
-  padding-top: 100px;  /* space for fixed topStatus */
+  padding-top: 140px;  /* Increased from 100px to accommodate banner */
   padding-bottom: 60px; /* space for fixed footer */
 }
 
@@ -1349,4 +1349,27 @@ input[type="checkbox"].custom-checkbox:checked::after {
   #achievementsGrid {
     grid-template-columns: repeat(5, 1fr);
   }
+}
+
+/* Domain change banner */
+.domain-change-banner {
+  background: linear-gradient(135deg, #2c3e50, #34495e);
+  color: #fff;
+  text-align: center;
+  padding: 12px;
+  font-weight: bold;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 1001;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.domain-change-banner a {
+  color: #3498db;
+  text-decoration: underline;
+}
+
+.domain-change-banner a:hover {
+  color: #2980b9;
 }

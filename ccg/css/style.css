@@ -1694,3 +1694,41 @@ nav#tabs { margin-bottom: 15px; }
 .modal-lock-status span {
   font-weight: bold;
 }
+
+/* Domain change banner */
+.domain-change-banner {
+  background: var(--light-banner-bg);
+  color: var(--light-banner-text);
+  text-align: center;
+  padding: 12px;
+  font-weight: bold;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 1001;
+  box-shadow: 0 2px 4px var(--light-banner-shadow);
+}
+
+.domain-change-banner a {
+  color: var(--light-banner-link);
+  text-decoration: underline;
+}
+
+.domain-change-banner a:hover {
+  opacity: 0.8;
+}
+
+/* Dark theme banner */
+body.dark-theme .domain-change-banner {
+  background: var(--dark-banner-bg);
+  color: var(--dark-banner-text);
+}
+
+body.dark-theme .domain-change-banner a {
+  color: var(--dark-banner-link);
+}
+
+/* Adjust existing elements to account for banner */
+#currency-bar {
+  margin-top: 45px;
+}
